@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>WebIcons - GPL/MIT licensed web font generation webapp</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- HTML5 shiv, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="js/html5.js"></script>
+    <![endif]-->
+
+    <!-- styles -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+    <style type="text/css">
+    /* FIXME */
+      #file { display: none; }
+
+      .glyph {
+        border: 2px #888 solid;
+        border-radius: 8px 8px 8px 8px;
+        float: left;
+        margin: 4px;
+        padding: 8px;
+        width: 64px;
+        height: 64px;
+        text-align: center;
+        font-size: 55px;
+        line-height: 1;
+        cursor: pointer;
+      }
+      .glyph input { display: none; }
+      .glyph.selected {
+        border: 2px #000 solid;
+        background-color: #000;
+        color: #fff;
+      }
+      .gd {
+        font-size: 64px;
+        line-height: 1;
+        text-align: center;
+        border: 1px #ccc solid;
+        display: inline-block !important;
+        vertical-align: middle !important;
+        background-color: #fff;
+      }
+
+      .rearrange-glyph {
+        border: 2px #888 solid;
+        border-radius: 8px 8px 8px 8px;
+        float: left;
+        margin: 8px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        width: 64px;
+        text-align: center;
+        _font-size: 55px;
+        _line-height: 1;
+      }
+      .rearrange-glyph input {
+        display: none;
+        readonly: true;
+      }
+      .rearrange-glyph.selected {
+        border: 2px #000 solid;
+        cursor: pointer;
+      }
+      .rearrange-glyph.selected .rg-top { background-color: #000; }
+      .rearrange-glyph.selected .rg-bottom { background-color: #000; }
+
+      .rg-icon {
+        border: 1px #ccc solid;
+        margin-left: auto;
+        margin-right: auto;
+        width: 64px;
+        height: 64px;
+      }
+      .rg-top {
+        border: 0px #000 solid;
+        text-align: center;
+        background-color: #888;
+        color: #fff;
+        border-radius: 4px 4px 0 0;
+        font-size: 8px;
+      }
+      .rg-bottom {
+        border: 0px #000 solid;
+        text-align:center;
+        background-color: #888;
+        color: #fff;
+        border-radius: 0px 0px 4px 4px;
+        font-size: 8px;
+      }
+    </style>
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <!-- the fav and touch icons -->
+    <link rel="shortcut icon" href="img/favicon.ico">
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">WebIcons 0.02 alpha</a>
+          <div class="nav-collapse">
+            <ul class="nav nav-pills" id="tab">
+              <li class="active"><a data-toggle="tab" href="#select">Select icons</a></li>
+              <li><a class="disabled" data-toggle="tab" href="#rearrange">Rearrange</a></li>
+              <li><a data-toggle="tab" href="#save">Save Font</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="myTabContent">
+      <!-- tab0 -->
+      <div id="loading" class="tab-pane fade active in">
+      </div>
+
+      <!-- tab1 -->
+      <div id="select" class="tab-pane fade">
+        <h2>1. Select the icons</h2>
+        <form class="well" id="file-drop-zone">
+          <label>Select files to upload or drop them here</label>
+          <input id="file" type="file" multiple="multiple"/>
+          <button id="file-browse-button" class="btn" type="submit"/>Browse...</button>
+          <div id="wi-icon-size" class="btn-group" data-toggle="buttons-radio">
+            <label>Icon size</label>
+            <button id="tpl-icon-size-button" class="btn"></button>
+          </div>
+        </form>
+
+        <ul id="tab1-content" class="unstyled">
+          <li id="tpl-glyph-group-separator" class="well">
+            <a class="wi-font-name" href="#">FontName</a> <a class="wi-close-group btn btn-danger" href="#">&times;</a>
+          </li>
+          <li id="tpl-glyph-group" style="display: inline-block;">
+            <label id="tpl-glyph" class="glyph">
+              <input class="wi-glyph-id" type="checkbox" value="0"/>
+              <div id="gd0" class="gd" style="width: 64px; height: 64px;"></div>
+            </label>
+          </li>
+        </ul>
+      </div>
+
+      <!-- tab2 -->
+      <div id="rearrange" class="tab-pane fade">
+        <h2>2. Rearrange your icons</h2>
+        <form id="form-charset" class="well form-horizontal">
+          <fieldset>
+            <div class="control-group">
+              <label class="control-label">Charset</label>
+              <div class="controls">
+                <label class="radio">
+                  <input class="wi-charset" type="radio" checked="" value="basic_latin" name="charset"/>Basic Latin
+                </label>
+                <label class="radio">
+                  <input class="wi-charset" type="radio" value="unicode_private" name="charset"/>Supplementary Private Use Area-A
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+
+        <div id="tab2-content">
+          <label id="tpl-rearrange-glyph" class="rearrange-glyph">
+            <input class="wi-glyph-id" type="checkbox" readonly="readonly" value="">
+            <input id="rgu0" class="wi-unicode" type="text" value="">
+            <div class="rg-top"></div>
+            <div id="rgd0" class="rg-icon"></div>
+            <div class="rg-bottom"></div>
+          </label>
+        </div>
+      </div>
+
+      <!-- tab3 -->
+      <div id="save" class="tab-pane fade">
+        <h2>3. Copy and save your SVG font</h2>
+        <form id="results" class="well">
+          <label>Your SVG font (<a class="select-all" href="#font">Select All</a>)
+            <textarea id="font" class="span8" rows="10"></textarea>
+          </label>
+          <label>Icon assignments (<a class="select-all" href="#icon-assignments">Select All</a>)
+            <textarea id="icon-assignments" class="span8" rows="10"></textarea>
+          </label>
+        </form>
+      </div>
+    </div> <!-- /tab-content -->
+
+    <!-- javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
+    <script type="text/javascript" src="js/raphael-min.js"></script>
+    <script type="text/javascript" src="js/webicons.js"></script>
+    <script type="text/javascript">
+        $(".tabs").button();
+        //$("#tab").tab("show");    
+    </script>
+  </body>
+</html>
