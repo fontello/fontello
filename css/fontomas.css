@@ -30,18 +30,20 @@ body {
 }
 .glyph input { display: none; }
 .glyph.selected {
-  border: 2px #000 solid;
-  background-color: #000;
+  border: 2px #800 solid;
+  background-color: #fee;
   color: #fff;
+  box-shadow: 0 0 5px #444 inset;
 }
 .gd {
   font-size: 64px;
   line-height: 1;
   text-align: center;
-  border: 1px #ccc solid;
   display: inline-block !important;
   vertical-align: middle !important;
-  background-color: #fff;
+/*  background-color: #fff;
+  border: 1px #ccc solid;
+*/
 }
 
 .rearrange-glyph {
@@ -80,7 +82,8 @@ body {
   background-color: #888;
   color: #fff;
   border-radius: 4px 4px 0 0;
-  font-size: 8px;
+  font-size: 10px;
+  font-weight: bold;
 }
 .rg-bottom {
   border: 0px #000 solid;
@@ -88,5 +91,5 @@ body {
   background-color: #888;
   color: #fff;
   border-radius: 0px 0px 4px 4px;
-  font-size: 8px;
+  font-size: 10px;
 }
