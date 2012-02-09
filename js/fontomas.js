@@ -2,29 +2,26 @@ var myapp = (function () {
 
     var cfg = {
         id: {
-            file: "#file",
-            file_browse_button: "#file-browse-button",
-            file_drop_zone: "#file-drop-zone",
+            file: "#fm-file",
+            file_browse_button: "#fm-file-browse-button",
+            file_drop_zone: "#fm-file-drop-zone",
 
-            toolbar: "#toolbar",
-            icon_size: "#wi-icon-size",
-            tab1_content: "#tab1-content",
-            tab2_content: "#tab2-content",
-            select_glyphs: "#select-glyphs",
+            icon_size: "#fm-icon-size",
+            tab1_content: "#fm-tab1-content",
+            tab2_content: "#fm-tab2-content",
 
-            form_charset: "#form-charset",
-            rearrange_glyphs: "#rearrange-glyphs",
+            form_charset: "#fm-form-charset",
 
-            font: "#font",
-            icon_assignments: "#icon-assignments"
+            font: "#fm-font",
+            icon_assignments: "#fm-icon-assignments"
         },
         template: {
-            upload_status: { id: "#tpl-upload-status" },
-            icon_size_button: { id: "#tpl-icon-size-button" },
-            glyph: { id: "#tpl-glyph" },
-            glyph_group: { id: "#tpl-glyph-group" },
-            glyph_group_separator: { id: "#tpl-glyph-group-separator" },
-            rearrange_glyph: { id: "#tpl-rearrange-glyph" }
+            upload_status: { id: "#fm-tpl-upload-status" },
+            icon_size_button: { id: "#fm-tpl-icon-size-button" },
+            glyph: { id: "#fm-tpl-glyph" },
+            glyph_group: { id: "#fm-tpl-glyph-group" },
+            glyph_group_separator: { id: "#fm-tpl-glyph-group-separator" },
+            rearrange_glyph: { id: "#fm-tpl-rearrange-glyph" }
         },
         preview_icon_sizes: [64, 48, 32, 24, 16],
         live_update: true,
@@ -116,7 +113,7 @@ var myapp = (function () {
         $("#tab a:first").tab("show");
 
         // init charset selection
-        $(cfg.id.form_charset).find("input.wi-charset").change(function () {
+        $(cfg.id.form_charset).find("input.fm-charset").change(function () {
             var charset = $(this).val();
             var content = $(cfg.id.tab2_content);
             if (charset == "basic_latin") {
@@ -130,7 +127,7 @@ var myapp = (function () {
                 content.find("div.rg-bottom").each(function (index) {
                     $(this).text(toUnicode(cfg.basic_latin.str[index]));
                 });
-                content.find("input.wi-unicode").each(function (index) {
+                content.find("input.fm-unicode").each(function (index) {
                     $(this).val(cfg.basic_latin.str[index]);
                 });
             } else {
@@ -145,7 +142,7 @@ var myapp = (function () {
                         .toString(16).toUpperCase();
                     $(this).text("U+"+c);
                 });
-                content.find("input.wi-unicode").each(function (index) {
+                content.find("input.fm-unicode").each(function (index) {
                     var c = (cfg.unicode_private.begin+index)
                         .toString(16).toUpperCase();
                     $(this).val("&#x"+c+";");
@@ -164,7 +161,7 @@ var myapp = (function () {
 
             var char = cfg.basic_latin.str[i];
             tpl.attr("id", "rgl"+i);
-            tpl.find(".wi-unicode").attr("id", "rgu"+i).val(toCharRef(char));
+            tpl.find(".fm-unicode").attr("id", "rgu"+i).val(toCharRef(char));
             tpl.find(".rg-top").text(char != " " ? char : "space");
             tpl.find(".rg-bottom").text(toUnicode(char));
             tpl.find(".rg-icon").attr("id", "rgd"+i);
@@ -292,7 +289,7 @@ var myapp = (function () {
             xml_template = makeXmlTemplate($.parseXML(fileinfo.content));
 
         // FIXME
-        $(cfg.id.tab1_content).find(".wi-glyph-id").off("click");
+        $(cfg.id.tab1_content).find(".fm-glyph-id").off("click");
 
         var horiz_adv_x = $("font:first", xml).attr("horiz-adv-x") || 1000;
         var ascent = $("font-face:first", xml).attr("ascent") || 750;
@@ -304,16 +301,17 @@ var myapp = (function () {
 
         // add a separator
         var tpl_sep = $(cfg.template.glyph_group_separator.tpl).clone()
-            .attr("id", "wi-font-sep-"+fileinfo.id);
-        tpl_sep.find(".wi-font-name").text(fileinfo.fontname).attr("href", "#font-"+fileinfo.id);
-        tpl_sep.find(".wi-close-group").click(function (event) {
+            .attr("id", "fm-font-sep-"+fileinfo.id);
+        tpl_sep.find(".fm-font-name").text(fileinfo.fontname);
+        tpl_sep.find(".fm-font-anchor").attr("href", "#font-"+fileinfo.id);
+        tpl_sep.find(".fm-close-group").click(function (event) {
             removeGlyphGroup(fileinfo);
         });
         $(cfg.id.tab1_content).append(tpl_sep);
 
         // add a glyph-group
         var tpl_gg = $(cfg.template.glyph_group.tpl).clone()
-            .attr("id", "wi-font-glyphs-"+fileinfo.id);
+            .attr("id", "fm-font-glyphs-"+fileinfo.id);
         $(cfg.id.tab1_content).append(tpl_gg);
 
         // add glyphs to the glyph group
@@ -322,7 +320,7 @@ var myapp = (function () {
             return true;
         }).each(function () {
             var tpl = $(cfg.template.glyph.tpl).clone();
-            tpl.find(".wi-glyph-id").val(g_id);
+            tpl.find(".fm-glyph-id").val(g_id);
             tpl.find(".gd")
                 .attr("id", "gd"+g_id)
                 .css({
@@ -342,7 +340,7 @@ var myapp = (function () {
             g_id++;
         });
 
-        $(cfg.id.tab1_content).find(".wi-glyph-id").click(function (event) {
+        $(cfg.id.tab1_content).find(".fm-glyph-id").click(function (event) {
             $(this).parent().toggleClass("selected", $(this).is(":checked"));
             toggleGlyph($(this).attr("value"), $(this).is(":checked"));
 
@@ -374,8 +372,8 @@ var myapp = (function () {
         myfiles[file_id] = null;
 
         // remove associated html mark up
-        var sep = $(cfg.id.tab1_content).find('#wi-font-sep-'+file_id);
-        var glyphs = $(cfg.id.tab1_content).find('#wi-font-glyphs-'+file_id);
+        var sep = $(cfg.id.tab1_content).find('#fm-font-sep-'+file_id);
+        var glyphs = $(cfg.id.tab1_content).find('#fm-font-glyphs-'+file_id);
         glyphs.find("input:checkbox:checked").each(function() {
             var glyph_id = $(this).val();
             removeGlyph(glyph_id);
@@ -394,7 +392,7 @@ var myapp = (function () {
     // add a glyph to the rearrange zone
     var addGlyph = function (g_id) {
         console.log("addGlyph g_id=", g_id);
-        var checkbox=$(cfg.id.tab2_content).find(".wi-glyph-id:not(:checked):first");
+        var checkbox=$(cfg.id.tab2_content).find(".fm-glyph-id:not(:checked):first");
         checkbox.attr({value: g_id, checked: true});
         checkbox.parent().addClass("selected");
         $("#gd"+g_id).contents().clone(false).css({width: "", height: ""}).appendTo(checkbox.siblings(".rg-icon"));
@@ -404,7 +402,7 @@ var myapp = (function () {
     // remove a glyph from the rearrange zone
     var removeGlyph = function (g_id) {
         console.log("removeGlyph g_id=", g_id);
-        var checkbox=$(cfg.id.tab2_content).find(".wi-glyph-id:checked[value='"+g_id+"']");
+        var checkbox=$(cfg.id.tab2_content).find(".fm-glyph-id:checked[value='"+g_id+"']");
         checkbox.attr({value: "", checked: false});
         checkbox.parent().removeClass("selected");
         checkbox.siblings(".rg-icon").empty();
@@ -426,7 +424,7 @@ var myapp = (function () {
             .each(function () {
                 var $this = $(this);
                 var g_id = $this.val();
-                var unicode = $this.siblings("input.wi-unicode").val();
+                var unicode = $this.siblings("input.fm-unicode").val();
                 if (!myglyphs[g_id]) {
                     console.log("undefined myglyphs[", g_id, "]");
                     return; 
@@ -455,7 +453,7 @@ var myapp = (function () {
             .each(function () {
                 var $this = $(this);
                 var g_id = $this.val();
-                var unicode = $this.siblings("input.wi-unicode").val();
+                var unicode = $this.siblings("input.fm-unicode").val();
                 var tmp = toEntityAndCss(unicode);
                 lines.push(
                     rpad("n/a", 32)

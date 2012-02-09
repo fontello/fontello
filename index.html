@@ -41,14 +41,14 @@
 
         <!-- tab1 -->
         <div id="select" class="tab-pane fade">
-          <form class="well" id="file-drop-zone">
-            <input id="file" type="file" multiple="multiple"/>
+          <form class="well" id="fm-file-drop-zone">
+            <input id="fm-file" type="file" multiple="multiple"/>
             <div class="btn-toolbar fm-font-load">
               <div class="btn-group">
                 <input type="text" class="input" placeholder="Select *.svg, *.ttf, *.otf font file" />
               </div>
               <div class="btn-group">
-                <button id="file-browse-button" class="btn" type="submit"/>load</button>
+                <button id="fm-file-browse-button" class="btn" type="submit"/>load</button>
               </div>
               <div class="btn-group">
                 <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
@@ -64,21 +64,21 @@
             </div>
           </form>
           <div class="btn-toolbar">
-            <div id="wi-icon-size" class="btn-group tooltip-test" rel="tooltip" data-toggle="buttons-radio" title="Change symbols preview size" data-placement="right">
-              <button id="tpl-icon-size-button" class="btn btn-small">px</button>
+            <div id="fm-icon-size" class="btn-group tooltip-test" rel="tooltip" data-toggle="buttons-radio" title="Change symbols preview size" data-placement="right">
+              <button id="fm-tpl-icon-size-button" class="btn btn-small">px</button>
             </div>
           </div>
 
-          <ul id="tab1-content" class="unstyled">
-            <li id="tpl-glyph-group-separator" class="">
-              <h2>
-                <a class="wi-font-name" href="#">FontName</a>
-                <a class="wi-close-group" href="#"><small>close</small></a>
+          <ul id="fm-tab1-content" class="unstyled">
+            <li id="fm-tpl-glyph-group-separator" class="">
+              <h2><span class="fm-font-name">FontName</span>
+                <a class="fm-font-anchor" href="#"></a>
+                <a class="fm-close-group" href="#"><small>close</small></a>
               </h2>
             </li>
-            <li id="tpl-glyph-group" style="display: inline-block;">
-              <label id="tpl-glyph" class="glyph">
-                <input class="wi-glyph-id" type="checkbox" value="0"/>
+            <li id="fm-tpl-glyph-group" style="display: inline-block;">
+              <label id="fm-tpl-glyph" class="glyph">
+                <input class="fm-glyph-id" type="checkbox" value="0"/>
                 <div id="gd0" class="gd" style="width: 64px; height: 64px;"></div>
               </label>
             </li>
@@ -87,26 +87,26 @@
 
         <!-- tab2 -->
         <div id="rearrange" class="tab-pane fade">
-          <form id="form-charset" class="well form-horizontal">
+          <form id="fm-form-charset" class="well form-horizontal">
             <fieldset>
               <div class="control-group">
                 <label class="control-label">Charset</label>
                 <div class="controls">
                   <label class="radio">
-                    <input class="wi-charset" type="radio" checked="" value="basic_latin" name="charset"/>Basic Latin
+                    <input class="fm-charset" type="radio" checked="" value="basic_latin" name="charset"/>Basic Latin
                   </label>
                   <label class="radio">
-                    <input class="wi-charset" type="radio" value="unicode_private" name="charset"/>Supplementary Private Use Area-A
+                    <input class="fm-charset" type="radio" value="unicode_private" name="charset"/>Supplementary Private Use Area-A
                   </label>
                 </div>
               </div>
             </fieldset>
           </form>
 
-          <div id="tab2-content">
-            <label id="tpl-rearrange-glyph" class="rearrange-glyph">
-              <input class="wi-glyph-id" type="checkbox" readonly="readonly" value="">
-              <input id="rgu0" class="wi-unicode" type="text" value="">
+          <div id="fm-tab2-content">
+            <label id="fm-tpl-rearrange-glyph" class="rearrange-glyph">
+              <input class="fm-glyph-id" type="checkbox" readonly="readonly" value="">
+              <input id="rgu0" class="fm-unicode" type="text" value="">
               <div class="rg-top"></div>
               <div id="rgd0" class="rg-icon"></div>
               <div class="rg-bottom"></div>
@@ -118,10 +118,10 @@
         <div id="save" class="tab-pane fade">
           <form id="results" class="well">
             <label>Your SVG font (<a class="select-all" href="#font">Select All</a>)
-              <textarea id="font" class="span8" rows="10"></textarea>
+              <textarea id="fm-font" class="span8" rows="10"></textarea>
             </label>
             <label>Icon assignments (<a class="select-all" href="#icon-assignments">Select All</a>)
-              <textarea id="icon-assignments" class="span8" rows="10"></textarea>
+              <textarea id="fm-icon-assignments" class="span8" rows="10"></textarea>
             </label>
           </form>
         </div>
@@ -137,7 +137,7 @@
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
     <script type="text/javascript" src="js/raphael-min.js"></script>
-    <script type="text/javascript" src="js/webicons.js"></script>
+    <script type="text/javascript" src="js/fontomas.js"></script>
     <script type="text/javascript">
         $('.tooltip-test').tooltip()    
     </script>
