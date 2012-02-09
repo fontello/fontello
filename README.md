@@ -44,4 +44,6 @@ This progect is sponsored by [Nodeca](https://github.com/nodeca) - open source
 forum software on node.js engine.
 
 
-## Licence
+## License
+
+View the [LICENSE](https://github.com/shmelev/fontomas/blob/master/LICENSE) file (MIT).
