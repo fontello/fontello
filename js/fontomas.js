@@ -20,7 +20,7 @@ var myapp = (function () {
             icon_size_button: { id: "#fm-tpl-icon-size-button" },
             glyph: { id: "#fm-tpl-glyph" },
             glyph_group: { id: "#fm-tpl-glyph-group" },
-            glyph_group_separator: { id: "#fm-tpl-glyph-group-separator" },
+            font: { id: "#fm-tpl-font" },
             rearrange_glyph: { id: "#fm-tpl-rearrange-glyph" }
         },
         preview_icon_sizes: [64, 48, 32, 24, 16],
@@ -299,20 +299,19 @@ var myapp = (function () {
         var size = $(cfg.id.icon_size).find("button.active").text();
         var sizepx = size + "px";
 
-        // add a separator
-        var tpl_sep = $(cfg.template.glyph_group_separator.tpl).clone()
-            .attr("id", "fm-font-sep-"+fileinfo.id);
-        tpl_sep.find(".fm-font-name").text(fileinfo.fontname);
-        tpl_sep.find(".fm-font-anchor").attr("href", "#font-"+fileinfo.id);
-        tpl_sep.find(".fm-close-group").click(function (event) {
+        // add a font
+        var tpl_font = $(cfg.template.font.tpl).clone()
+            .attr("id", "fm-font-"+fileinfo.id);
+        tpl_font.find(".fm-font-name").text(fileinfo.fontname);
+        tpl_font.find(".fm-font-anchor").attr("href", "#font-"+fileinfo.id);
+        tpl_font.find(".fm-font-close").click(function (event) {
             removeGlyphGroup(fileinfo);
         });
-        $(cfg.id.tab1_content).append(tpl_sep);
+        $(cfg.id.tab1_content).append(tpl_font);
 
         // add a glyph-group
-        var tpl_gg = $(cfg.template.glyph_group.tpl).clone()
-            .attr("id", "fm-font-glyphs-"+fileinfo.id);
-        $(cfg.id.tab1_content).append(tpl_gg);
+        var tpl_gg = $(cfg.template.glyph_group.tpl).clone();
+        tpl_font.append(tpl_gg);
 
         // add glyphs to the glyph group
         $("glyph", xml).filter(function (i) {
@@ -372,14 +371,12 @@ var myapp = (function () {
         myfiles[file_id] = null;
 
         // remove associated html mark up
-        var sep = $(cfg.id.tab1_content).find('#fm-font-sep-'+file_id);
-        var glyphs = $(cfg.id.tab1_content).find('#fm-font-glyphs-'+file_id);
-        glyphs.find("input:checkbox:checked").each(function() {
+        var font = $('#fm-font-'+file_id);
+        font.find("input:checkbox:checked").each(function() {
             var glyph_id = $(this).val();
             removeGlyph(glyph_id);
         });
-        glyphs.remove();
-        sep.remove();
+        font.remove();
     };
 
     var toggleGlyph = function (g_id, is_checked) {
