@@ -21,19 +21,7 @@
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-<!--          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span> -->
-          </a> -->
-          <a class="brand" href="#">Fontomas</a>
-<!--          <div class="nav-collapse">
-            <ul class="nav nav-pills" id="tab">
-              <li class="active"><a data-toggle="tab" href="#select">Select icons</a></li>
-              <li><a class="disabled" data-toggle="tab" href="#rearrange">Rearrange</a></li>
-              <li><a data-toggle="tab" href="#save">Save Font</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
+          <span class="brand">Fontomas - iconic fonts scissors</span>
         </div>
       </div>
     </div>
@@ -41,7 +29,7 @@
     <div class="container">
 
       <ul class="nav nav-pills page-header" id="tab">
-        <li class="active"><a data-toggle="tab" href="#select"><h1>1. Select icons</h1></a></li>
+        <li class="active"><a data-toggle="tab" href="#select"><h1>1. Select Icons</h1></a></li>
         <li><a class="disabled" data-toggle="tab" href="#rearrange"><h1>2. Rearrange</h1></a></li>
         <li><a data-toggle="tab" href="#save"><h1>3. Save Font</h1></a></li>
       </ul>
@@ -76,7 +64,7 @@
             </div>
           </form>
           <div class="btn-toolbar">
-            <div id="wi-icon-size" class="btn-group" data-toggle="buttons-radio">
+            <div id="wi-icon-size" class="btn-group tooltip-test" rel="tooltip" data-toggle="buttons-radio" title="Change symbols preview size" data-placement="right">
               <button id="tpl-icon-size-button" class="btn btn-small">px</button>
             </div>
           </div>
@@ -151,8 +139,7 @@
     <script type="text/javascript" src="js/raphael-min.js"></script>
     <script type="text/javascript" src="js/webicons.js"></script>
     <script type="text/javascript">
-        $(".tabs").button();
-        //$("#tab").tab("show");    
+        $('.tooltip-test').tooltip()    
     </script>
   </body>
 </html>

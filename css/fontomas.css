@@ -1,17 +1,26 @@
 #tab h1 {
   color: inherit;
+  margin-left: 10px;
+  margin-right: 15px;
+}
+#tab1-content h2 {
+  margin-top: 20px;
+  font-size: 36px;
+  line-height: 54px;
 }
 div.fm-font-load {
   margin-top: 0;
   margin-bottom: 0;
-/*  padding-left: 200px; */
+}
+.page-header {
+  border-bottom: 2px solid #ddd;
+}
+body {
+  padding-top: 50px; /* 60px to make the container go all the way to the bottom of the topbar */
 }
 
 /* custom */
 
-body {
-  padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-}
 
 #file { display: none; }
 
