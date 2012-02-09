@@ -306,9 +306,7 @@ var myapp = (function () {
         var tpl_sep = $(cfg.template.glyph_group_separator.tpl).clone();
         tpl_sep.find(".wi-font-name").text(fileinfo.fontname).attr("href", "#font-"+fileinfo.id);
         tpl_sep.find(".wi-close-group").click(function (event) {
-            // FIXME
-            alert("not implemented yet");
-            //removeGlyphGroup(fileinfo);
+            removeGlyphGroup(fileinfo);
         });
         $(cfg.id.tab1_content).append(tpl_sep);
 
@@ -375,6 +373,10 @@ var myapp = (function () {
 
         // remove associated html mark up
         var li = $(cfg.id.tab1_content).find('.wi-font-name[href="#font-'+file_id+'"]').parent();
+        li.next().find("input:checkbox:checked").each(function() {
+            var g_id = $(this).val();
+            removeGlyph(g_id);
+        });
         li.next().remove();
         li.remove();
     };
