@@ -1,0 +1,92 @@
+#tab h1 {
+  color: inherit;
+}
+div.fm-font-load {
+  margin-top: 0;
+  margin-bottom: 0;
+/*  padding-left: 200px; */
+}
+
+/* custom */
+
+body {
+  padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+}
+
+#file { display: none; }
+
+.glyph {
+  border: 2px #888 solid;
+  border-radius: 8px 8px 8px 8px;
+  float: left;
+  margin: 4px;
+  padding: 8px;
+  width: 64px;
+  height: 64px;
+  text-align: center;
+  font-size: 55px;
+  line-height: 1;
+  cursor: pointer;
+}
+.glyph input { display: none; }
+.glyph.selected {
+  border: 2px #000 solid;
+  background-color: #000;
+  color: #fff;
+}
+.gd {
+  font-size: 64px;
+  line-height: 1;
+  text-align: center;
+  border: 1px #ccc solid;
+  display: inline-block !important;
+  vertical-align: middle !important;
+  background-color: #fff;
+}
+
+.rearrange-glyph {
+  border: 2px #888 solid;
+  border-radius: 8px 8px 8px 8px;
+  float: left;
+  margin: 8px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  width: 64px;
+  text-align: center;
+  _font-size: 55px;
+  _line-height: 1;
+}
+.rearrange-glyph input {
+  display: none;
+  readonly: true;
+}
+.rearrange-glyph.selected {
+  border: 2px #000 solid;
+  cursor: pointer;
+}
+.rearrange-glyph.selected .rg-top { background-color: #000; }
+.rearrange-glyph.selected .rg-bottom { background-color: #000; }
+
+.rg-icon {
+  border: 1px #ccc solid;
+  margin-left: auto;
+  margin-right: auto;
+  width: 64px;
+  height: 64px;
+}
+.rg-top {
+  border: 0px #000 solid;
+  text-align: center;
+  background-color: #888;
+  color: #fff;
+  border-radius: 4px 4px 0 0;
+  font-size: 8px;
+}
+.rg-bottom {
+  border: 0px #000 solid;
+  text-align:center;
+  background-color: #888;
+  color: #fff;
+  border-radius: 0px 0px 4px 4px;
+  font-size: 8px;
+}
