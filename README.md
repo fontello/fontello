@@ -1,7 +1,7 @@
 Fontomas - iconic fonts scissors
 ================================
 
-[Run right now in your browser!](http://shmelev.github.com/fontomas/). This tool
+[Run right now in your browser!](http://shmelev.github.com/fontomas/) This tool
 helps to combine iconic webfonts for your project. With fontomas you can:
 
 1. make a limited symbols subset, with reduced font size
@@ -37,8 +37,8 @@ high quality iconic fonts, please, contact with vitaly@rcdesign.ru .
 
 ## Authors
 
-- Roman Shmelev ([shmelev](https://github.com/shmelev)), roman.i.shmelev@gmail.com
-- Vitaly Puzrin ([puzrin](https://github.com/puzrin)), vitaly@rcdesign.ru
+- Roman Shmelev ([shmelev](https://github.com/shmelev))
+- Vitaly Puzrin ([puzrin](https://github.com/puzrin))
 
 This progect is sponsored by [Nodeca](https://github.com/nodeca) - open source
 forum software on node.js engine.
