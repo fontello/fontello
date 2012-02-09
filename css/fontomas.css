@@ -102,3 +102,17 @@ body {
   border-radius: 0px 0px 4px 4px;
   font-size: 10px;
 }
+
+/* warning for disabled JS */
+.js  .jsnotice { display: none; }
+.no-js .jsnotice {
+  position: absolute;
+  left: 30%;
+  right: 30%;
+  top: 90px;
+  z-index: 10000;
+  font-size: 54px;
+  line-height: 81px;
+  font-weight: bold;
+}
+
