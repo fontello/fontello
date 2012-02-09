@@ -303,7 +303,8 @@ var myapp = (function () {
         var sizepx = size + "px";
 
         // add a separator
-        var tpl_sep = $(cfg.template.glyph_group_separator.tpl).clone();
+        var tpl_sep = $(cfg.template.glyph_group_separator.tpl).clone()
+            .attr("id", "wi-font-sep-"+fileinfo.id);
         tpl_sep.find(".wi-font-name").text(fileinfo.fontname).attr("href", "#font-"+fileinfo.id);
         tpl_sep.find(".wi-close-group").click(function (event) {
             removeGlyphGroup(fileinfo);
@@ -311,7 +312,8 @@ var myapp = (function () {
         $(cfg.id.tab1_content).append(tpl_sep);
 
         // add a glyph-group
-        var tpl_gg = $(cfg.template.glyph_group.tpl).clone();
+        var tpl_gg = $(cfg.template.glyph_group.tpl).clone()
+            .attr("id", "wi-font-glyphs-"+fileinfo.id);
         $(cfg.id.tab1_content).append(tpl_gg);
 
         // add glyphs to the glyph group
@@ -372,13 +374,14 @@ var myapp = (function () {
         myfiles[file_id] = null;
 
         // remove associated html mark up
-        var li = $(cfg.id.tab1_content).find('.wi-font-name[href="#font-'+file_id+'"]').parent();
-        li.next().find("input:checkbox:checked").each(function() {
-            var g_id = $(this).val();
-            removeGlyph(g_id);
+        var sep = $(cfg.id.tab1_content).find('#wi-font-sep-'+file_id);
+        var glyphs = $(cfg.id.tab1_content).find('#wi-font-glyphs-'+file_id);
+        glyphs.find("input:checkbox:checked").each(function() {
+            var glyph_id = $(this).val();
+            removeGlyph(glyph_id);
         });
-        li.next().remove();
-        li.remove();
+        glyphs.remove();
+        sep.remove();
     };
 
     var toggleGlyph = function (g_id, is_checked) {
