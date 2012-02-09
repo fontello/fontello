@@ -1,7 +1,7 @@
 Fontomas - iconic fonts scissors
 ================================
 
-[Run right now in your browser!](http://shmelev.github.com/WebIcons/). This tool
+[Run right now in your browser!](http://shmelev.github.com/fontomas/). This tool
 helps to combine iconic webfonts for your project. With fontomas you can:
 
 1. make a limited symbols subset, with reduced font size
