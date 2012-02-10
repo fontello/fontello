@@ -15,6 +15,9 @@ var myapp = (function () {
             font: "#fm-font",
             icon_assignments: "#fm-icon-assignments"
         },
+        class: {
+            glyph_group: ".fm-glyph-group"
+        },
         template: {
             upload_status: { id: "#fm-tpl-upload-status" },
             icon_size_button: { id: "#fm-tpl-icon-size-button" },
@@ -23,10 +26,15 @@ var myapp = (function () {
             font: { id: "#fm-tpl-font" },
             rearrange_glyph: { id: "#fm-tpl-rearrange-glyph" }
         },
-        preview_icon_sizes: [64, 48, 32, 24, 16],
+
+        // class icon_size_prefix+"-<num>" added when icon size has changed
+        icon_size_prefix: "fm-icon-size-",
+        icon_size_classes: "", // precalculated by init()
+
+        preview_icon_sizes: [32, 24, 16],
         live_update: true,
         basic_latin: {
-            str: "",
+            str: "",    // precalculated by init()
             begin: 33,
             end: 126,
             extra: " ",
@@ -54,6 +62,11 @@ var myapp = (function () {
     var g_id = 0;   // next glyph id
 
     var init = function () {
+        // init icon_size_classes
+        cfg.icon_size_classes = cfg.preview_icon_sizes.map(function (item) {
+            return cfg.icon_size_prefix+item;
+        }).join(" ");
+
         // init cfg.basic_latin.str
         cfg.basic_latin.str = "";
         for (var i=cfg.basic_latin.begin; i<=cfg.basic_latin.end; i++)
@@ -95,11 +108,15 @@ var myapp = (function () {
         for (var i=0, len=cfg.preview_icon_sizes.length; i<len; i++) {
             var tpl = $(cfg.template.icon_size_button.tpl).clone();
             tpl.toggleClass("active", i == 0);
-            tpl.text(cfg.preview_icon_sizes[i]);
+            tpl.val(cfg.preview_icon_sizes[i]);
+            tpl.text(cfg.preview_icon_sizes[i] + "px");
             tpl.click(function (event) {
                 event.preventDefault();
-                var size = $(this).text() + "px";
+                var size = $(this).val();
+                var sizepx = size + "px";
                 console.log('size='+size);
+                $(cfg.class.glyph_group).removeClass(cfg.icon_size_classes)
+                    .addClass(cfg.icon_size_prefix+size);
                 $(cfg.id.tab1_content)
                     .find(".gd").css({
                         width: size, height: size, "font-size": size})
@@ -296,7 +313,7 @@ var myapp = (function () {
         var descent = $("font-face:first", xml).attr("descent") || -250;
         fileinfo.fontname = $("font:first", xml).attr("id") || "unknown";
 
-        var size = $(cfg.id.icon_size).find("button.active").text();
+        var size = $(cfg.id.icon_size).find("button.active").val();
         var sizepx = size + "px";
 
         // add a font
@@ -311,6 +328,7 @@ var myapp = (function () {
 
         // add a glyph-group
         var tpl_gg = $(cfg.template.glyph_group.tpl).clone();
+        tpl_gg.addClass(cfg.icon_size_prefix+size);
         tpl_font.append(tpl_gg);
 
         // add glyphs to the glyph group

@@ -28,6 +28,16 @@ body {
   /* display: none; */ /* chrome doesn't trigger events on "display: none;" elements */
 }
 
+.fm-glyph-group {
+  display: inline-block;
+}
+
+.fm-icon-size-32,
+.fm-icon-size-24,
+.fm-icon-size-16 {
+  /* FIXME */
+}
+
 .glyph {
   border: 2px #888 solid;
   border-radius: 8px 8px 8px 8px;
