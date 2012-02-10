@@ -7,6 +7,8 @@ var myapp = (function () {
             file_drop_zone: "#fm-file-drop-zone",
 
             icon_size: "#fm-icon-size",
+            use_embedded: "#fm-use-embedded",
+
             tab1_content: "#fm-tab1-content",
             tab2_content: "#fm-tab2-content",
 
@@ -21,6 +23,7 @@ var myapp = (function () {
         template: {
             upload_status: { id: "#fm-tpl-upload-status" },
             icon_size_button: { id: "#fm-tpl-icon-size-button" },
+            embedded: { id: "#fm-tpl-embedded" },
             glyph: { id: "#fm-tpl-glyph" },
             glyph_group: { id: "#fm-tpl-glyph-group" },
             font: { id: "#fm-tpl-font" },
@@ -142,6 +145,18 @@ var myapp = (function () {
             $(cfg.id.icon_size).append(tpl);
         }
 
+        // auto load embedded fonts
+        addFilesAsStrings(fm_embedded_fonts, function (fileinfo) {
+            addGlyphGroup(fileinfo);
+        });
+console.log(fm_embedded_fonts);
+        // init "use embedded" dropdown
+        for (var i=0, len=fm_embedded_fonts.length; i<len; i++) {
+            var tpl = $(cfg.template.embedded.tpl).clone();
+            tpl.find(".fm-font-name").text(fm_embedded_fonts[i].fontname);
+            $(cfg.id.use_embedded).append(tpl);
+        }
+
         $("#tab").tab("show");
         // activate first tab
         $("#tab a:first").tab("show");
@@ -237,7 +252,31 @@ var myapp = (function () {
         });
     };
 
+    var addFilesAsStrings = function (files, cb_onload) {
+        for (var i=0, f; f=files[i]; i++) {
+            var idx = myfiles.push({
+                id: null,
+                filename: f.name,
+                filesize: f.size,
+                filetype: f.type,
+                fontname: "unknown",
+                is_loaded: 0,
+                is_dup: 0,
+                is_invalid: 0,
+                content: f.content
+            }) - 1;
+            myfiles[idx].id = idx;
+
+            if (cb_onload)
+                cb_onload(myfiles[idx]);
+
+            f.fontname = myfiles[idx].fontname;
+            f.is_loaded = myfiles[idx].is_loaded;
+        }
+    };
+
     var appendFiles = function (files, cb_onload) {
+        console.log(files);
         for (var i=0, f; f=files[i]; i++) {
             var idx = myfiles.push({
                 id: null,
