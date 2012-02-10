@@ -455,7 +455,7 @@ var myapp = (function () {
                 glyphs.push(outerHtml(g));
             });
         $("glyph", xml_template).remove();
-        $("font", xml_template).append($(glyphs.join("")));
+        $("font", xml_template).append($(glyphs.join("\n")));
         $(cfg.id.font).text(xmlToString(xml_template));
     };
 
@@ -501,7 +501,7 @@ var myapp = (function () {
         //FIXME: quickfix: get rid of unwanted xmlns insertion
         result = result.replace(/ xmlns="http:\/\/www\.w3\.org\/1999\/xhtml"/g, "");
         //FIXME: quickfix: remove the extra newlines
-        result = result.replace(/>(\s)*<glyph/gm, "><glyph");
+        result = result.replace(/>(\s)*<glyph/gm, ">\n<glyph");
         //FIXME: quickfix: &amp; => &
         result = result.replace(/&amp;#x/gm, "&#x");
         return result;
