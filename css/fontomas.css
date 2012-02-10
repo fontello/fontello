@@ -22,7 +22,11 @@ body {
 /* custom */
 
 
-#fm-file { display: none; }
+#fm-file {
+  width: 0px;
+  height: 0px;
+  /* display: none; */ /* chrome doesn't trigger events on "display: none;" elements */
+}
 
 .glyph {
   border: 2px #888 solid;
