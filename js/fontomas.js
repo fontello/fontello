@@ -119,8 +119,14 @@ var myapp = (function () {
                     .addClass(cfg.icon_size_prefix+size);
                 $(cfg.id.tab1_content)
                     .find(".gd").css({
-                        width: size, height: size, "font-size": size})
-                    .find("svg").css({width: size, height: size});
+                        width: sizepx,
+                        height: sizepx,
+                        "font-size": sizepx
+                    })
+                    .find("svg").css({
+                        width: sizepx, 
+                        height: sizepx
+                    });
             });
             $(cfg.id.icon_size).append(tpl);
         }
