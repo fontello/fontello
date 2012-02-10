@@ -38,12 +38,6 @@ body {
   display: inline-block;
 }
 
-.fm-icon-size-32,
-.fm-icon-size-24,
-.fm-icon-size-16 {
-  /* FIXME */
-}
-
 .glyph {
   border: 2px #888 solid;
   border-radius: 8px 8px 8px 8px;
@@ -53,8 +47,7 @@ body {
   width: 64px;
   height: 64px;
   text-align: center;
-  font-size: 55px;
-  line-height: 1;
+  line-height: 56px;
   cursor: pointer;
 }
 .glyph input { display: none; }
@@ -74,6 +67,21 @@ body {
   border: 1px #ccc solid;
 */
 }
+
+.fm-icon-size-16 .glyph {
+}
+
+.fm-icon-size-24 .glyph {
+  width: 48px;
+  height: 48px;
+  line-height: 42px;
+}
+.fm-icon-size-16 .glyph {
+  width: 32px;
+  height: 32px;
+  line-height: 30px;
+}
+
 
 .rearrange-glyph {
   border: 2px #888 solid;
@@ -99,11 +107,12 @@ body {
 .rearrange-glyph.selected .rg-bottom { background-color: #000; }
 
 .rg-icon {
-  border: 1px #ccc solid;
+/*  border: 1px #ccc solid; */
   margin-left: auto;
   margin-right: auto;
   width: 32px;
   height: 32px;
+  padding: 16px;
 }
 .rg-top {
   border: 0px #000 solid;
