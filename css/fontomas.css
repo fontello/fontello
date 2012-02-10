@@ -1,3 +1,19 @@
+html {
+  overflow-y: scroll; /* remove glitch on step 3, when scroller disappears */
+}
+
+body {
+  padding-top: 150px; /* 60px to make the container go all the way to the bottom of the topbar */
+}
+#tab {
+  position: fixed;
+  top: 40px;
+  z-index: 100;
+  background-color: #fff;
+  margin: 0;
+  padding: 20px 0;
+}
+
 #tab h1 {
   color: inherit;
   margin-left: 10px;
@@ -14,9 +30,6 @@ div.fm-font-load {
 }
 .page-header {
   border-bottom: 2px solid #ddd;
-}
-body {
-  padding-top: 50px; /* 60px to make the container go all the way to the bottom of the topbar */
 }
 
 /* custom */
@@ -38,12 +51,6 @@ body {
   display: inline-block;
 }
 
-.fm-icon-size-32,
-.fm-icon-size-24,
-.fm-icon-size-16 {
-  /* FIXME */
-}
-
 .glyph {
   border: 2px #888 solid;
   border-radius: 8px 8px 8px 8px;
@@ -52,9 +59,8 @@ body {
   padding: 8px;
   width: 64px;
   height: 64px;
+  line-height: 60px;
   text-align: center;
-  font-size: 55px;
-  line-height: 1;
   cursor: pointer;
 }
 .glyph input { display: none; }
@@ -74,6 +80,21 @@ body {
   border: 1px #ccc solid;
 */
 }
+
+.fm-icon-size-16 .glyph {
+}
+
+.fm-icon-size-24 .glyph {
+  width: 48px;
+  height: 48px;
+  line-height: 42px;
+}
+.fm-icon-size-16 .glyph {
+  width: 32px;
+  height: 32px;
+  line-height: 30px;
+}
+
 
 .rearrange-glyph {
   border: 2px #888 solid;
@@ -99,11 +120,12 @@ body {
 .rearrange-glyph.selected .rg-bottom { background-color: #000; }
 
 .rg-icon {
-  border: 1px #ccc solid;
+/*  border: 1px #ccc solid; */
   margin-left: auto;
   margin-right: auto;
   width: 32px;
   height: 32px;
+  padding: 16px;
 }
 .rg-top {
   border: 0px #000 solid;
