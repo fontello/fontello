@@ -127,6 +127,17 @@ var myapp = (function () {
                         width: sizepx, 
                         height: sizepx
                     });
+
+                $(cfg.id.tab2_content)
+                    .find(".rg-icon").css({
+                        width: sizepx,
+                        height: sizepx,
+                        "font-size": sizepx
+                    })
+                    .find("svg").css({
+                        width: sizepx, 
+                        height: sizepx
+                    });
             });
             $(cfg.id.icon_size).append(tpl);
         }
@@ -416,8 +427,11 @@ var myapp = (function () {
         var checkbox=$(cfg.id.tab2_content).find(".fm-glyph-id:not(:checked):first");
         checkbox.attr({value: g_id, checked: true});
         checkbox.parent().addClass("selected");
-        $("#gd"+g_id).contents().clone(false).css({width: "", height: ""}).appendTo(checkbox.siblings(".rg-icon"));
-        checkbox.siblings(".rg-icon").draggable(cfg.draggable_options)
+        var svg = $("#gd"+g_id).contents().clone(false);
+        var icon = checkbox.siblings(".rg-icon");
+        icon.append(svg)
+            .draggable(cfg.draggable_options)
+            .attr("style", $("#gd"+g_id).attr("style"));
     };
 
     // remove a glyph from the rearrange zone
