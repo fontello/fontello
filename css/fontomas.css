@@ -1,3 +1,7 @@
+html {
+  overflow-y: scroll; /* remove glitch on step 3, when scroller disappears */
+}
+
 body {
   padding-top: 150px; /* 60px to make the container go all the way to the bottom of the topbar */
 }
