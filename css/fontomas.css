@@ -19,6 +19,9 @@ body {
   margin-left: 10px;
   margin-right: 15px;
 }
+.nav-pills .active > a small {
+  color: #fff;
+}
 #fm-tab1-content h2 {
   margin-top: 20px;
   font-size: 36px;
