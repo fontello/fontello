@@ -41,19 +41,22 @@
 
         <!-- tab1 -->
         <div id="select" class="tab-pane fade">
-          <form class="well" id="fm-file-drop-zone">
+          <form class="" id="fm-file-drop-zone">
             <input id="fm-file" type="file" multiple="multiple"/>
             <div class="btn-toolbar fm-font-load">
-              <div class="btn-group">
-                <input type="text" class="input" placeholder="Select *.svg, *.ttf, *.otf font file" />
+
+              <div id="fm-icon-size" class="btn-group tooltip-test" data-toggle="buttons-radio" title="Change symbols preview size" data-placement="bottom">
+                <button id="fm-tpl-icon-size-button" class="btn btn-small">px</button>
               </div>
-              <div class="btn-group">
-                <button id="fm-file-browse-button" class="btn" type="submit"/>load</button>
+
+              <div class="btn-group tooltip-test" title="SVG / OTF / TTF" data-placement="bottom">
+                <button id="fm-file-browse-button" class="btn" type="submit"/>Load Font</button>
               </div>
+
               <div class="btn-group">
                 <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                  use embedded font
-                  <span class="caret"></span>
+                  Use Embedded Font
+                  <span class="caret">dfg</span>
                 </a>
                 <ul class="dropdown-menu">
                   <li><a href="#">Iconic Fill</a></li>
@@ -64,9 +67,6 @@
             </div>
           </form>
           <div class="btn-toolbar">
-            <div id="fm-icon-size" class="btn-group tooltip-test" rel="tooltip" data-toggle="buttons-radio" title="Change symbols preview size" data-placement="right">
-              <button id="fm-tpl-icon-size-button" class="btn btn-small">px</button>
-            </div>
           </div>
 
           <ul id="fm-tab1-content" class="unstyled">
