@@ -5,6 +5,7 @@ var myapp = (function () {
             tab: "#tab",
             notification: "#notifications-container",
 
+            bad_browser: "#fm-bad-browser",
             glyph_count: "#fm-glyph-count",
 
             file: "#fm-file",
@@ -72,6 +73,12 @@ var myapp = (function () {
     var g_id = 0;   // next glyph id
 
     var init = function () {
+        // check browser's capabilities
+        if (!isOkBrowser()) {
+            console.log("bad browser");
+            $(cfg.id.bad_browser).modal({keyboard: false});
+        };
+
         // init icon_size_classes
         cfg.icon_size_classes = cfg.preview_icon_sizes.map(function (item) {
             return cfg.icon_size_prefix+item;
@@ -247,6 +254,20 @@ var myapp = (function () {
             $($(this).attr("href")).select();
             event.preventDefault();
         });
+    };
+
+    var isOkBrowser = function () {
+        // FF3.6+ Chrome6+ Opera11.1+
+        var filereader = !!window.FileReader;
+
+        // FF4+ Chrome11+
+        var indexeddb = Modernizr.indexeddb;
+
+        // IE8+ FF3.5 Chrome4+ Safari4+ Opera10.5+
+        var localstorage = Modernizr.localstorage;
+
+        //FF3.6+ Chrome6+ Opera11.1+
+        return filereader && (indexeddb || localstorage);
     };
 
     var initUseEmbedded = function () {
