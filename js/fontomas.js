@@ -77,6 +77,7 @@ var myapp = (function () {
         if (!isOkBrowser()) {
             console.log("bad browser");
             $(cfg.id.bad_browser).modal({keyboard: false});
+            return;
         };
 
         // init icon_size_classes
