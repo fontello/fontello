@@ -136,14 +136,13 @@
     <div class="jsnotice"><div class="alert alert-error">Fontomas will not work without javascript!</div></div>
 
     <div id="notifications-container" style="display:none">
-        <div id="basic-template" class="fm-notify">
+        <div id="basic-template" style="z-index: 99999; position: relative;">
             <a class="ui-notify-cross ui-notify-close" href="#">x</a>
             <div style="float:left; margin: 0 10px 0 0;"><img src="#{icon}" alt="warning"/></div>
             <h1>#{title}</h1>
             <p>#{text}</p>
         </div>
- 
-        <div id="advanced-template">
+         <div id="advanced-template">
         </div>
     </div>
 

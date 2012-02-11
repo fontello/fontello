@@ -54,14 +54,8 @@ body {
   cursor: default;
 }
 
-.fm-notify {
-  z-index: 99999;
-  position: relative;
-}
+.ui-notify { width:350px; position:fixed; top:55px; right:10px; }
 
-.ui-notify {
-  top: 55px;
-}
 
 /* custom */
 
