@@ -2,6 +2,8 @@ var myapp = (function () {
 
     var cfg = {
         id: {
+            glyph_count: "#fm-glyph-count",
+
             file: "#fm-file",
             file_browse_button: "#fm-file-browse-button",
             file_drop_zone: "#fm-file-drop-zone",
@@ -61,6 +63,7 @@ var myapp = (function () {
     };
     var myfiles = [];
     var myglyphs = [];
+    var glyph_count = 0;
     var xml_template = null;
     var g_id = 0;   // next glyph id
 
@@ -84,9 +87,7 @@ var myapp = (function () {
 
         // init file upload form
         $(cfg.id.file).change(function (event) {
-            addFonts(event.target.files, function (fileinfo) {
-                addGlyphGroup(fileinfo);
-            });
+            addUploadedFonts(event.target.files);
         });
         $(cfg.id.file_browse_button).click(function (event) {
   	        event.preventDefault();
@@ -102,9 +103,7 @@ var myapp = (function () {
         $(cfg.id.file_drop_zone).on("drop", function (event) {
 	        event.stopPropagation();
 	        event.preventDefault();
-            addFonts(event.originalEvent.dataTransfer.files, function (fileinfo) {
-                addGlyphGroup(fileinfo);
-            });
+            addUploadedFonts(event.originalEvent.dataTransfer.files);
         });
 
         // init preview icon size selection
@@ -283,9 +282,20 @@ var myapp = (function () {
                 // onclose closure
                 fm_embedded_fonts[e_id].is_added = fileinfo.is_added;
                 updateUseEmbedded();
+                updateGlyphCount();
             });
             fm_embedded_fonts[e_id].is_added = fileinfo.is_added;
             updateUseEmbedded();
+        });
+    };
+
+    var addUploadedFonts = function (files) {
+        addFonts(files, function (fileinfo) {
+            // onload closure
+            addGlyphGroup(fileinfo, function () {
+                // onclose closure
+                updateGlyphCount();
+            });
         });
     };
 
@@ -506,11 +516,16 @@ var myapp = (function () {
         fileinfo.is_added = false;
     };
 
+    var updateGlyphCount = function () {
+        $(cfg.id.glyph_count).text(glyph_count);
+    };
+
     var toggleGlyph = function (g_id, is_checked) {
         if (is_checked)
             addGlyph(g_id);
         else
             removeGlyph(g_id);
+        updateGlyphCount();
     };
 
     // add a glyph to the rearrange zone
@@ -524,6 +539,7 @@ var myapp = (function () {
         icon.append(svg)
             .draggable(cfg.draggable_options)
             .attr("style", $("#gd"+g_id).attr("style"));
+        glyph_count++;
     };
 
     // remove a glyph from the rearrange zone
@@ -533,6 +549,8 @@ var myapp = (function () {
         checkbox.attr({value: "", checked: false});
         checkbox.parent().removeClass("selected");
         checkbox.siblings(".rg-icon").empty();
+        glyph_count--;
+        console.assert(glyph_count >= 0);
     };
 
     var makeXmlTemplate = function (xml) {
