@@ -12,6 +12,7 @@ body {
   background-color: #fff;
   margin: 0;
   padding: 20px 0;
+  opacity: 0.95;
 }
 
 #tab h1 {
@@ -55,10 +56,10 @@ div.fm-font-load {
 }
 
 .glyph {
-  border: 2px #888 solid;
+  border: 2px #aaa solid;
   border-radius: 8px 8px 8px 8px;
   float: left;
-  margin: 4px;
+  margin: 5px;
   padding: 8px;
   width: 64px;
   height: 64px;
@@ -96,6 +97,8 @@ div.fm-font-load {
   width: 32px;
   height: 32px;
   line-height: 30px;
+  border-width: 1px;
+  margin: 4px;
 }
 
 
@@ -103,7 +106,7 @@ div.fm-font-load {
   border: 2px #888 solid;
   border-radius: 8px 8px 8px 8px;
   float: left;
-  margin: 8px;
+  margin: 5px;
   padding-top: 0px;
   padding-bottom: 0px;
   width: 64px;

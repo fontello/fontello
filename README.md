@@ -11,7 +11,8 @@ helps to combine iconic webfonts for your project. With fontomas you can:
 No installation needed - only modern browser. Now it's trivial to customise
 fonts for your needs with 3 simple step. At first, you select needed symbols
 on source fonts. Then rearrange those on destination font. After that, you can
-download SVG font and make webpack via fontsquirel or other services.
+download SVG font and make webpack via [fontsquirrel generator](http://www.fontsquirrel.com/fontface/generator)
+or other services.
 
 All your progress is automatically stored locally.
 
