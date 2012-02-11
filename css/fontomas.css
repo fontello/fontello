@@ -55,9 +55,12 @@ body {
 }
 
 .fm-notify {
-    z-index: 99999;
-    position: relative;
-    top: 140px;
+  z-index: 99999;
+  position: relative;
+}
+
+.ui-notify {
+  top: 55px;
 }
 
 /* custom */
