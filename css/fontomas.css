@@ -28,12 +28,18 @@ body {
   font-size: 36px;
   line-height: 54px;
 }
-div.fm-font-load {
+#select .btn-toolbar {
   margin-top: 0;
   margin-bottom: 0;
 }
 .page-header {
   border-bottom: 2px solid #ddd;
+}
+.navbar-fixed-top {
+  box-shadow: 0 0 10px #444444;
+}
+.navbar .brand {
+  padding: 9px 20px 11px;
 }
 
 /* custom */
@@ -66,6 +72,10 @@ div.fm-font-load {
   line-height: 60px;
   text-align: center;
   cursor: pointer;
+}
+.glyph:hover {
+  background: #f0f0f0;
+  opacity: .8;
 }
 .glyph input { display: none; }
 .glyph.selected {
