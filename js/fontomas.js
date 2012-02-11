@@ -2,6 +2,8 @@ var myapp = (function () {
 
     var cfg = {
         id: {
+            tab: "#tab",
+
             glyph_count: "#fm-glyph-count",
 
             file: "#fm-file",
@@ -20,7 +22,8 @@ var myapp = (function () {
             icon_assignments: "#fm-icon-assignments"
         },
         class: {
-            glyph_group: ".fm-glyph-group"
+            glyph_group: ".fm-glyph-group",
+            disable_on_demand: ".fm-disable-on-demand"
         },
         template: {
             upload_status: { id: "#fm-tpl-upload-status" },
@@ -539,7 +542,10 @@ var myapp = (function () {
         icon.append(svg)
             .draggable(cfg.draggable_options)
             .attr("style", $("#gd"+g_id).attr("style"));
+
         glyph_count++;
+        if (glyph_count > 0)
+            toggleMenu(true);
     };
 
     // remove a glyph from the rearrange zone
@@ -549,8 +555,17 @@ var myapp = (function () {
         checkbox.attr({value: "", checked: false});
         checkbox.parent().removeClass("selected");
         checkbox.siblings(".rg-icon").empty();
+
         glyph_count--;
         console.assert(glyph_count >= 0);
+        if (glyph_count <= 0)
+            toggleMenu(false);
+    };
+
+    var toggleMenu = function (enabled) {
+        console.log("toggleMenu");
+        $(cfg.id.tab).find("a"+cfg.class.disable_on_demand)
+            .toggleClass("disabled", !enabled);
     };
 
     var makeXmlTemplate = function (xml) {
