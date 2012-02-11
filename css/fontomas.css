@@ -54,6 +54,12 @@ body {
   cursor: default;
 }
 
+.fm-notify {
+    z-index: 99999;
+    position: relative;
+    top: 140px;
+}
+
 /* custom */
 
 

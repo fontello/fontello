@@ -280,8 +280,8 @@ var myapp = (function () {
 
     var addEmbeddedFonts = function (embedded_fonts) {
         addFontsAsStrings(embedded_fonts, function (fileinfo) {
-            var e_id = fileinfo.embedded_id;
             // onload closure
+            var e_id = fileinfo.embedded_id;
             addGlyphGroup(fileinfo, function (fileinfo) {
                 // onclose closure
                 fm_embedded_fonts[e_id].is_added = fileinfo.is_added;
@@ -357,7 +357,7 @@ var myapp = (function () {
                     // is there a file with the same content?
                     var is_exist = false;
                     for (var i=0, len=myfiles.length; i<len; i++) {
-                        if (!myfiles[i])
+                        if (!myfiles[i] || !myfiles.is_ok)
                             continue;
                         if (myfiles[i].content == e.target.result) {
                             fileinfo.is_dup = is_exist = true;
