@@ -3,6 +3,7 @@ var myapp = (function () {
     var cfg = {
         id: {
             tab: "#tab",
+            notification: "#notifications-container",
 
             glyph_count: "#fm-glyph-count",
 
@@ -398,6 +399,16 @@ var myapp = (function () {
     };
 */
 
+    var notify = function (title, text, extra_options) {
+        options = {
+            title: title,
+            text: text,
+            icon: "img/alert.png"
+        };
+        $.extend(options, extra_options);
+        $(cfg.id.notification).notify("create", options);
+    };
+
     var addGlyphGroup = function (fileinfo, cb_onclose) {
         console.log("addGlyphGroup id=", fileinfo.id);
         var div = cfg.id.select_glyphs;
@@ -413,6 +424,10 @@ var myapp = (function () {
             console.log("invalid xml");
             fileinfo.is_ok = false;
             fileinfo.error_msg = "invalid xml";
+
+            notify("XML parsing failed",
+                "Couldn't parse file '"+fileinfo.filename+"'"
+            );
             return;
         }
         fileinfo.is_ok = true;

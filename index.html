@@ -9,6 +9,7 @@
     <!-- styles -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="css/ui.notify.css" rel="stylesheet">
     <link href="css/fontomas.css" rel="stylesheet">
 
     <!-- the fav and touch icons -->
@@ -134,17 +135,34 @@
 
     <div class="jsnotice"><div class="alert alert-error">Fontomas will not work without javascript!</div></div>
 
+    <div id="notifications-container" style="display:none">
+        <div id="basic-template" style="z-index: 99999; position: relative;">
+            <a class="ui-notify-cross ui-notify-close" href="#">x</a>
+            <div style="float:left; margin: 0 10px 0 0;"><img src="#{icon}" alt="warning"/></div>
+            <h1>#{title}</h1>
+            <p>#{text}</p>
+        </div>
+ 
+        <div id="advanced-template">
+        </div>
+    </div>
+
     <!-- javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
+    <script type="text/javascript" src="js/jquery.notify.min.js"></script>
     <script type="text/javascript" src="js/raphael-min.js"></script>
     <script type="text/javascript" src="js/fm-embedded-fonts.js"></script>
     <script type="text/javascript" src="js/fontomas.js"></script>
     <script type="text/javascript">
-        $('.tooltip-test').tooltip()    
+        $('.tooltip-test').tooltip();
+        $("#notifications-container").notify({
+            speed: 500,
+            expires: false
+        });    
     </script>
   </body>
 </html>
