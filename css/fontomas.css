@@ -42,6 +42,12 @@ body {
   padding: 9px 20px 11px;
 }
 
+.dropdown-menu a.disabled, .dropdown-menu a.disabled:hover {
+  /* FIXME */
+  opacity: 0.3;
+  cursor: default;
+}
+
 /* custom */
 
 

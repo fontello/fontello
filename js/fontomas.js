@@ -84,7 +84,7 @@ var myapp = (function () {
 
         // init file upload form
         $(cfg.id.file).change(function (event) {
-            appendFiles(event.target.files, function (fileinfo) {
+            addFonts(event.target.files, function (fileinfo) {
                 addGlyphGroup(fileinfo);
             });
         });
@@ -102,7 +102,7 @@ var myapp = (function () {
         $(cfg.id.file_drop_zone).on("drop", function (event) {
 	        event.stopPropagation();
 	        event.preventDefault();
-            appendFiles(event.originalEvent.dataTransfer.files, function (fileinfo) {
+            addFonts(event.originalEvent.dataTransfer.files, function (fileinfo) {
                 addGlyphGroup(fileinfo);
             });
         });
@@ -145,17 +145,11 @@ var myapp = (function () {
             $(cfg.id.icon_size).append(tpl);
         }
 
-        // auto load embedded fonts
-        addFilesAsStrings(fm_embedded_fonts, function (fileinfo) {
-            addGlyphGroup(fileinfo);
-        });
-console.log(fm_embedded_fonts);
         // init "use embedded" dropdown
-        for (var i=0, len=fm_embedded_fonts.length; i<len; i++) {
-            var tpl = $(cfg.template.embedded.tpl).clone();
-            tpl.find(".fm-font-name").text(fm_embedded_fonts[i].fontname);
-            $(cfg.id.use_embedded).append(tpl);
-        }
+        initUseEmbedded();
+
+        // auto load embedded fonts
+        addEmbeddedFonts(fm_embedded_fonts);
 
         $("#tab").tab("show");
         // activate first tab
@@ -252,42 +246,93 @@ console.log(fm_embedded_fonts);
         });
     };
 
-    var addFilesAsStrings = function (files, cb_onload) {
+    var initUseEmbedded = function () {
+        for (var i=0, len=fm_embedded_fonts.length; i<len; i++) {
+            var tpl = $(cfg.template.embedded.tpl).clone();
+            var is_added = fm_embedded_fonts[i].is_added;
+            var item = tpl.find(".fm-font-name");
+            item.toggleClass("disabled", is_added)
+                .data("embedded_id", i).
+                text(fm_embedded_fonts[i].fontname);
+            if (is_added) {
+                item.off("click");
+            } else {
+                item.click(function (event) {
+                    console.log("click Use Embedded");
+                    var e_id = $(this).data("embedded_id");
+                    console.assert(fm_embedded_fonts[e_id]);
+                    if (fm_embedded_fonts[e_id])
+                        addEmbeddedFonts([fm_embedded_fonts[e_id]]);
+                });
+            }
+            $(cfg.id.use_embedded).append(tpl);
+        }
+    };
+
+    var updateUseEmbedded = function () {
+        console.log("updateUseEmbedded");
+        $(cfg.id.use_embedded).empty();
+        initUseEmbedded();
+    };
+
+    var addEmbeddedFonts = function (embedded_fonts) {
+        addFontsAsStrings(embedded_fonts, function (fileinfo) {
+            var e_id = fileinfo.embedded_id;
+            // onload closure
+            addGlyphGroup(fileinfo, function (fileinfo) {
+                // onclose closure
+                fm_embedded_fonts[e_id].is_added = fileinfo.is_added;
+                updateUseEmbedded();
+            });
+            fm_embedded_fonts[e_id].is_added = fileinfo.is_added;
+            updateUseEmbedded();
+        });
+    };
+
+    var addFontsAsStrings = function (files, cb_onload) {
+        console.log("addFontsAsStrings files.length=", files.length);
         for (var i=0, f; f=files[i]; i++) {
             var idx = myfiles.push({
-                id: null,
-                filename: f.name,
-                filesize: f.size,
-                filetype: f.type,
-                fontname: "unknown",
-                is_loaded: 0,
-                is_dup: 0,
-                is_invalid: 0,
-                content: f.content
+                id:             null,
+                filename:       f.filename,
+                filesize:       f.content.length,
+                filetype:       f.filetype,
+                fontname:       "unknown",
+                is_loaded:      true,
+                is_ok:          false,
+                is_added:       false,
+                is_dup:         false,
+                error_msg:      "",
+                content:        f.content,
+                embedded_id:    f.id
             }) - 1;
             myfiles[idx].id = idx;
 
             if (cb_onload)
                 cb_onload(myfiles[idx]);
 
+            f.is_ok = myfiles[idx].is_ok;
+            f.is_added = myfiles[idx].is_added;
             f.fontname = myfiles[idx].fontname;
-            f.is_loaded = myfiles[idx].is_loaded;
         }
     };
 
-    var appendFiles = function (files, cb_onload) {
-        console.log(files);
+    var addFonts = function (files, cb_onload) {
+        console.log("addFonts");
         for (var i=0, f; f=files[i]; i++) {
             var idx = myfiles.push({
-                id: null,
-                filename: f.name,
-                filesize: f.size, 
-                filetype: f.type,
-                fontname: "unknown",
-                is_loaded: 0,
-                is_dup: 0,
-                is_invalid: 0,
-                content: null
+                id:             null,
+                filename:       f.name,
+                filesize:       f.size, 
+                filetype:       f.type,
+                fontname:       "unknown",
+                is_loaded:      false,
+                is_ok:          false,
+                is_added:       false,
+                is_dup:         false,
+                error_msg:      "",
+                content:        null,
+                embedded_id:    null
             }) - 1;
             myfiles[idx].id = idx;
 
@@ -296,18 +341,18 @@ console.log(fm_embedded_fonts);
                 return function (e) {
                     // FIXME: race condition?
                     // is there a file with the same content?
-                    var is_exist = 0;
+                    var is_exist = false;
                     for (var i=0, len=myfiles.length; i<len; i++) {
                         if (!myfiles[i])
                             continue;
                         if (myfiles[i].content == e.target.result) {
-                            fileinfo.is_dup = is_exist = 1;
+                            fileinfo.is_dup = is_exist = true;
                             break;
                         }
                     }
                     if (!is_exist) {
                         fileinfo.content = e.target.result;
-                        fileinfo.is_loaded = 1;
+                        fileinfo.is_loaded = true;
                     }
 
                     if (cb_onload)
@@ -340,7 +385,7 @@ console.log(fm_embedded_fonts);
     };
 */
 
-    var addGlyphGroup = function (fileinfo) {
+    var addGlyphGroup = function (fileinfo, cb_onclose) {
         console.log("addGlyphGroup id=", fileinfo.id);
         var div = cfg.id.select_glyphs;
 
@@ -353,9 +398,11 @@ console.log(fm_embedded_fonts);
             xml = $.parseXML(fileinfo.content);
         } catch (e) {
             console.log("invalid xml");
-            fileinfo.is_invalid = 1;
+            fileinfo.is_ok = false;
+            fileinfo.error_msg = "invalid xml";
             return;
         }
+        fileinfo.is_ok = true;
 
         //FIXME
         if (!xml_template)
@@ -379,6 +426,8 @@ console.log(fm_embedded_fonts);
         tpl_font.find(".fm-font-anchor").attr("href", "#font-"+fileinfo.id);
         tpl_font.find(".fm-font-close").click(function (event) {
             removeGlyphGroup(fileinfo);
+            if (cb_onclose)
+                cb_onclose(fileinfo);
         });
         $(cfg.id.tab1_content).append(tpl_font);
 
@@ -423,6 +472,8 @@ console.log(fm_embedded_fonts);
             }
         });
 
+        fileinfo.is_added = true;
+
         // scroll to the loaded font
 /*
         var fonthash = 'a[href="#font-'+fileinfo.id+'"]';
@@ -451,6 +502,8 @@ console.log(fm_embedded_fonts);
             removeGlyph(glyph_id);
         });
         font.remove();
+
+        fileinfo.is_added = false;
     };
 
     var toggleGlyph = function (g_id, is_checked) {
