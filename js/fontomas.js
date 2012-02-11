@@ -543,9 +543,9 @@ var myapp = (function () {
             .draggable(cfg.draggable_options)
             .attr("style", $("#gd"+g_id).attr("style"));
 
-        glyph_count++;
-        if (glyph_count > 0)
+        if (glyph_count == 0)
             toggleMenu(true);
+        glyph_count++;
     };
 
     // remove a glyph from the rearrange zone
@@ -556,10 +556,10 @@ var myapp = (function () {
         checkbox.parent().removeClass("selected");
         checkbox.siblings(".rg-icon").empty();
 
+        if (glyph_count == 1)
+            toggleMenu(false);
         glyph_count--;
         console.assert(glyph_count >= 0);
-        if (glyph_count <= 0)
-            toggleMenu(false);
     };
 
     var toggleMenu = function (enabled) {
