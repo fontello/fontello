@@ -637,13 +637,16 @@ var myapp = (function () {
                     downloadImage: "img/transparent-129x140.png",
                     width: $(cfg.id.download_font_button).outerWidth(),
                     height: $(cfg.id.download_font_button).outerHeight(),
-                    filename: "fontomas.zip",
+                    filename: "fontomas.svg",
                     data: function () {
+/*
                         var zip = new JSZip();
                         zip.add("font.svg", $(cfg.id.font).val());
                         return zip.generate();
+*/
+                        return $(cfg.id.font).val();
                     },
-                    dataType: "base64",
+                    dataType: "string",
                     transparent: true,
                     append: true,
                     onComplete: function () {
@@ -664,10 +667,14 @@ var myapp = (function () {
                     // data:image/svg+xml
                     // data:binary/octet-stream
                     // application/x-zip-compressed
+/*
                     var zip = new JSZip();
                     zip.add("font.svg", $(cfg.id.font).val());
                     location.href = "data:application/zip;base64,"
                         + zip.generate();
+*/
+                    location.href = "data:binary/octet-stream;base64,"
+                        + base64_encode($(cfg.id.font).val());
                 });
             }
         });

@@ -117,13 +117,14 @@
         <div id="save" class="tab-pane fade">
 
           <form id="results" class="">
+<!--
             <div class="btn-toolbar">
               <div class="btn-group tooltip-test" title="Download zip archive containing all the necessary files" data-placement="bottom">
                 <div id="fm-download-font-button" class="btn btn-small">Download Font</div>
               </div>
             </div>
-
-            <label>Your SVG font (<a class="select-all" href="#fm-font">Select All</a>)
+-->
+            <label>Your SVG font (<a class="select-all" href="#fm-font">Select All</a> | <a id="fm-download-font-button" style="position: relative;" href="#">Download Font</a>)
               <textarea id="fm-font" class="span8" rows="10"></textarea>
             </label>
             <label>Icon assignments (<a class="select-all" href="#fm-icon-assignments">Select All</a>)
@@ -182,7 +183,9 @@
     <script type="text/javascript" src="js/raphael-min.js"></script>
     <script type="text/javascript" src="js/swfobject.js"></script>
     <script type="text/javascript" src="js/downloadify.min.js"></script>
+<!--
     <script type="text/javascript" src="js/jszip.js"></script>
+-->
     <script type="text/javascript" src="js/fm-embedded-fonts.js"></script>
     <script type="text/javascript" src="js/fontomas.js"></script>
     <script type="text/javascript">
