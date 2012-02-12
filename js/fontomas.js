@@ -24,6 +24,7 @@ var myapp = (function () {
 
             font: "#fm-font",
             download_font_button: "#fm-download-font-button",
+            clipboard_span: "#fm-clipboard-span",
             icon_assignments: "#fm-icon-assignments"
         },
         class: {
@@ -67,6 +68,11 @@ var myapp = (function () {
             fill: "#000",
             stroke: "#000",
             transform: "S1 -1"      // svg font's y axis goes upward
+        },
+        zero_clipboard: {
+            cb_link: "fm-clipboard-link",
+            cb_span: "fm-clipboard-span",
+            swf_path: "img/ZeroClipboard.swf"
         }
     };
 
@@ -261,6 +267,7 @@ var myapp = (function () {
         }
 
         initDownloadLink();
+        initClipboardLink();
     };
 
     var isOkBrowser = function () {
@@ -670,6 +677,57 @@ var myapp = (function () {
                     location.href = "data:binary/octet-stream;base64,"
                         + base64_encode($(cfg.id.font).val());
                 });
+            }
+        });
+    };
+
+    var initClipboardLink = function () {
+        console.log("initClipboardLink");
+
+        $(cfg.id.tab_save).one("shown", function () {
+            console.log("initClipboardLink: shown fired");
+            // flash clipboard helper doesn't work if file: proto used
+            if (!env.is_file_proto && env.flash_version.major > 0) {
+                ZeroClipboard.setMoviePath(cfg.zero_clipboard.swf_path);
+                var zcb_client = new ZeroClipboard.Client();
+                zcb_client.glue(
+                    cfg.zero_clipboard.cb_link,
+                    cfg.zero_clipboard.cb_span
+                );
+
+                // tooltip
+                $("#"+cfg.zero_clipboard.cb_link).tooltip({
+                    trigger: "manual"}
+                );
+                zcb_client.addEventListener("mouseDown", function (client) { 
+                    console.log("zcb: mousedown");
+                    zcb_client.setText($(cfg.id.font).val());
+                });
+                zcb_client.addEventListener("complete", function (client, text) {
+                    console.log("zcb: complete");
+                    $("#"+cfg.zero_clipboard.cb_link).tooltip("show");
+                    window.setTimeout(function () {
+                        $("#"+cfg.zero_clipboard.cb_link).tooltip("hide");
+                    }, 900);
+                });
+                zcb_client.addEventListener("mouseOver", function (client) {
+                    console.log("zcb: mouseover");
+                    $("#"+cfg.zero_clipboard.cb_link).trigger("mouseover");
+                });
+                zcb_client.addEventListener("mouseOut", function (client) { 
+                    console.log("zcb: mouseout");
+                    $("#"+cfg.zero_clipboard.cb_link).trigger("mouseout");
+                });
+
+                $("#"+cfg.zero_clipboard.cb_link).click(function () {
+                    console.log("noflash clipboard link clicked");
+                });
+/*
+            } else {
+                // TODO: IE clipboard code
+*/
+            } else {
+                $(cfg.id.clipboard_span).remove();
             }
         });
     };

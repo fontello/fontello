@@ -57,7 +57,8 @@ body {
 .ui-notify { width:350px; position:fixed; top:55px; right:10px; }
 
 
-#fm-download-font-button span, #fm-download-font-button object {
+#fm-download-font-button span,
+#fm-download-font-button object {
   position: absolute;
   top: 0px;
   left: 0px;
