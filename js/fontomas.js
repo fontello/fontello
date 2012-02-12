@@ -411,28 +411,6 @@ var myapp = (function () {
         }
     };
 
-/*
-    var updateFilesList = function () {
-        var output = [];
-	    for (var i=0, f; f = myfiles[i]; i++) {
-            var tr = cfg.template.upload_status.tpl.clone();
-            var row = [
-                f.name,
-                f.size,
-                f.is_invalid ? "invalid" :
-                    f.is_dup ? "duplicate, skipped" : 
-                    f.is_loaded ? "loaded" : "loading..."
-            ];
-            tr.find("td").each(function (index) {
-                $this = $(this);
-                $this.text(row[index]);
-            });
-            output.push(tr.html());
-	    }
-        $(cfg.template.upload_status.id).empty().append(output.join(""));
-    };
-*/
-
     var notify = function (title, text, extra_options) {
         options = {
             title: title,
@@ -652,9 +630,7 @@ var myapp = (function () {
 
         $(cfg.id.tab_save).one("shown", function () {
             console.log("initDownloadLink: shown fired");
-console.log("w,h=",$(cfg.id.download_font_button).outerWidth(),
-                    $(cfg.id.download_font_button).outerHeight());
-            // flash download helper doesn't work if file:// proto used
+            // flash download helper doesn't work if file: proto used
             if (!env.is_file_proto && env.flash_version.major > 0) {
                 $(cfg.id.download_font_button).downloadify({
                     swf: "img/downloadify.swf",
