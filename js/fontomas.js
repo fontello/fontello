@@ -260,12 +260,6 @@ var myapp = (function () {
             $(cfg.id.tab2_content).append(tpl);
         }
 
-        // init "select all"
-        $("a.select-all").click(function (event) {
-            $($(this).attr("href")).select();
-            event.preventDefault();
-        });
-
         initDownloadLink();
     };
 
