@@ -15,12 +15,15 @@ var myapp = (function () {
             icon_size: "#fm-icon-size",
             use_embedded: "#fm-use-embedded",
 
+            tab_save: "#fm-tab-save",
+
             tab1_content: "#fm-tab1-content",
             tab2_content: "#fm-tab2-content",
 
             form_charset: "#fm-form-charset",
 
             font: "#fm-font",
+            download_font_button: "#fm-download-font-button",
             icon_assignments: "#fm-icon-assignments"
         },
         class: {
@@ -66,6 +69,13 @@ var myapp = (function () {
             transform: "S1 -1"      // svg font's y axis goes upward
         }
     };
+
+    // environment
+    var env = {
+        flash_version: swfobject.getFlashPlayerVersion(),
+        is_file_proto: (window.location.protocol == "file:")
+    };
+
     var myfiles = [];
     var myglyphs = [];
     var glyph_count = 0;
@@ -255,6 +265,8 @@ var myapp = (function () {
             $($(this).attr("href")).select();
             event.preventDefault();
         });
+
+        initDownloadLink();
     };
 
     var isOkBrowser = function () {
@@ -635,6 +647,56 @@ var myapp = (function () {
         $(cfg.id.font).text(xmlToString(xml_template));
     };
 
+    var initDownloadLink = function () {
+        console.log("initDownloadLink");
+
+        $(cfg.id.tab_save).one("shown", function () {
+            console.log("initDownloadLink: shown fired");
+console.log("w,h=",$(cfg.id.download_font_button).outerWidth(),
+                    $(cfg.id.download_font_button).outerHeight());
+            // flash download helper doesn't work if file:// proto used
+            if (!env.is_file_proto && env.flash_version.major > 0) {
+                $(cfg.id.download_font_button).downloadify({
+                    swf: "img/downloadify.swf",
+                    downloadImage: "img/transparent-129x140.png",
+                    width: $(cfg.id.download_font_button).outerWidth(),
+                    height: $(cfg.id.download_font_button).outerHeight(),
+                    filename: "fontomas.zip",
+                    data: function () {
+                        var zip = new JSZip();
+                        zip.add("font.svg", $(cfg.id.font).val());
+                        return zip.generate();
+                    },
+                    dataType: "base64",
+                    transparent: true,
+                    append: true,
+                    onComplete: function () {
+                        console.log("downloadify onComplete");
+                    },
+                    onCancel: function () {
+                        console.log("downloadify onCancel");
+                    },
+                    onError: function () {
+                        console.log("downloadify onError");
+                    }
+                });
+            } else {
+                $(cfg.id.download_font_button).click(function (event) {
+                    console.log("noflash download button clicked");
+                    event.preventDefault();
+
+                    // data:image/svg+xml
+                    // data:binary/octet-stream
+                    // application/x-zip-compressed
+                    var zip = new JSZip();
+                    zip.add("font.svg", $(cfg.id.font).val());
+                    location.href = "data:application/zip;base64,"
+                        + zip.generate();
+                });
+            }
+        });
+    };
+
     // update IA's textarea
     var updateIconAssignments = function () {
         var lines = [];
@@ -737,6 +799,35 @@ var myapp = (function () {
             return repeat(" ", len - s.length) + s;
         else
             return s;
+    };
+
+    var base64_encode = function (s) {
+        var table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+        var result = "";
+
+        var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+
+        for (var i=0, len=s.length; i<len; i+=3) {
+            chr1 = s.charCodeAt(i);
+            chr2 = s.charCodeAt(i+1);
+            chr3 = s.charCodeAt(i+2);
+
+            enc1 = chr1 >> 2;
+            enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+            enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+            enc4 = chr3 & 63;
+
+            if (isNaN(chr2)) {
+                enc3 = enc4 = 64;
+            } else if (isNaN(chr3)) {
+                enc4 = 64;
+            }
+
+            result += table.charAt(enc1) + table.charAt(enc2)
+                + table.charAt(enc3) + table.charAt(enc4);
+        }
+
+        return result;
     };
 
     // public interface

@@ -32,7 +32,7 @@
       <ul class="nav nav-pills page-header span12" id="tab">
         <li class="active"><a data-toggle="tab" href="#select"><h1>1. Select Icons</h1></a></li>
         <li><a class="disabled fm-disable-on-demand" data-toggle="tab" href="#rearrange"><h1>2. Rearrange <small>(<span id="fm-glyph-count">0</span>)</small></h1></a></li>
-        <li><a class="disabled fm-disable-on-demand" data-toggle="tab" href="#save"><h1>3. Save Font</h1></a></li>
+        <li><a id="fm-tab-save" class="disabled fm-disable-on-demand" data-toggle="tab" href="#save"><h1>3. Save Font</h1></a></li>
       </ul>
 
       <div class="tab-content" id="myTabContent">
@@ -115,7 +115,14 @@
 
         <!-- tab3 -->
         <div id="save" class="tab-pane fade">
-          <form id="results" class="well">
+
+          <form id="results" class="">
+            <div class="btn-toolbar">
+              <div class="btn-group tooltip-test" title="Download zip archive containing all the necessary files" data-placement="bottom">
+                <div id="fm-download-font-button" class="btn btn-small"/>Download Font</div>
+              </div>
+            </div>
+
             <label>Your SVG font (<a class="select-all" href="#font">Select All</a>)
               <textarea id="fm-font" class="span8" rows="10"></textarea>
             </label>
@@ -173,6 +180,9 @@
     <script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
     <script type="text/javascript" src="js/jquery.notify.min.js"></script>
     <script type="text/javascript" src="js/raphael-min.js"></script>
+    <script type="text/javascript" src="js/swfobject.js"></script>
+    <script type="text/javascript" src="js/downloadify.min.js"></script>
+    <script type="text/javascript" src="js/jszip.js"></script>
     <script type="text/javascript" src="js/fm-embedded-fonts.js"></script>
     <script type="text/javascript" src="js/fontomas.js"></script>
     <script type="text/javascript">
