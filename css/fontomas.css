@@ -64,6 +64,11 @@ body {
   left: 0px;
 }
 
+#fm-clipboard-link.hover, #fm-clipboard-link2.hover {
+  color: #005580;
+  text-decoration: underline;
+}
+
 /* custom */
 
 
