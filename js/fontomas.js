@@ -97,7 +97,8 @@ var myapp = (function () {
                 tpl_vars: { icon: "img/alert.png" },
                 opts: { expires: 2000 }
             }
-        }
+        },
+        font_filename: "fontomas.svg"
     };
 
     // environment
@@ -756,7 +757,7 @@ var myapp = (function () {
                     downloadImage: "img/transparent-129x140.png",
                     width: $(cfg.id.download_font_button).outerWidth(),
                     height: $(cfg.id.download_font_button).outerHeight(),
-                    filename: "fontomas.svg",
+                    filename: cfg.font_filename,
                     data: function () {
 /*
                         var zip = new JSZip();
@@ -781,10 +782,9 @@ var myapp = (function () {
             } else {
                 $(cfg.id.download_font_button).click(function (event) {
                     console.log("noflash download button clicked");
-                    event.preventDefault();
 
-                    // data:image/svg+xml
-                    // data:binary/octet-stream
+                    // image/svg+xml
+                    // binary/octet-stream
                     // application/x-zip-compressed
 /*
                     var zip = new JSZip();
@@ -792,8 +792,12 @@ var myapp = (function () {
                     location.href = "data:application/zip;base64,"
                         + zip.generate();
 */
-                    location.href = "data:binary/octet-stream;base64,"
-                        + base64_encode($(cfg.id.font).val());
+                    $(cfg.id.download_font_button).attr({
+                        download: cfg.font_filename,
+                        href: "data:binary/octet-stream;base64,"
+                            + base64_encode($(cfg.id.font).val())
+                    });
+
                 });
             }
         });
