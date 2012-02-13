@@ -32,7 +32,6 @@ var myapp = (function () {
             disable_on_demand: ".fm-disable-on-demand"
         },
         template: {
-            upload_status: { id: "#fm-tpl-upload-status" },
             icon_size_button: { id: "#fm-tpl-icon-size-button" },
             embedded: { id: "#fm-tpl-embedded" },
             glyph: { id: "#fm-tpl-glyph" },
@@ -43,12 +42,12 @@ var myapp = (function () {
 
         // class icon_size_prefix+"-<num>" added when icon size has changed
         icon_size_prefix: "fm-icon-size-",
-        icon_size_classes: "", // precalculated by init()
+        icon_size_classes: "", // precalculated by initGlobals()
 
         preview_icon_sizes: [32, 24, 16],
         live_update: true,
         basic_latin: {
-            str: "",    // precalculated by init()
+            str: "",    // precalculated by initGlobals()
             begin: 33,
             end: 126,
             extra: " ",
@@ -86,7 +85,7 @@ var myapp = (function () {
     var myglyphs = [];
     var glyph_count = 0;
     var xml_template = null;
-    var g_id = 0;   // next glyph id
+    var next_glyph_id = 0;
 
     var init = function () {
         // check browser's capabilities
@@ -96,6 +95,22 @@ var myapp = (function () {
             return;
         };
 
+        initGlobals();
+
+        // show loading tab
+        $("#tab").tab("show");
+
+        initSelectTab();
+
+        // first tab is fully initialized so show it
+        $("#tab a:first").tab("show");
+
+        initRearrangeTab();
+
+        initSaveTab();
+    };
+
+    var initGlobals = function () {
         // init icon_size_classes
         cfg.icon_size_classes = cfg.preview_icon_sizes.map(function (item) {
             return cfg.icon_size_prefix+item;
@@ -112,7 +127,9 @@ var myapp = (function () {
             cfg.template[key].tpl = $(cfg.template[key].id).clone().removeAttr("id");
             $(cfg.template[key].id).remove();
         }
+    };
 
+    var initSelectTab = function () {
         // init file upload form
         $(cfg.id.file).change(function (event) {
             addUploadedFonts(event.target.files);
@@ -177,11 +194,9 @@ var myapp = (function () {
 
         // auto load embedded fonts
         addEmbeddedFonts(fm_embedded_fonts);
+    };
 
-        $("#tab").tab("show");
-        // activate first tab
-        $("#tab a:first").tab("show");
-
+    var initRearrangeTab = function () {
         // init charset selection
         $(cfg.id.form_charset).find("input.fm-charset").change(function () {
             var charset = $(this).val();
@@ -265,7 +280,9 @@ var myapp = (function () {
             });
             $(cfg.id.tab2_content).append(tpl);
         }
+    };
 
+    var initSaveTab = function () {
         initDownloadLink();
         initClipboardLink();
     };
@@ -317,7 +334,7 @@ var myapp = (function () {
         addFontsAsStrings(embedded_fonts, function (fileinfo) {
             // onload closure
             var e_id = fileinfo.embedded_id;
-            addGlyphGroup(fileinfo, function (fileinfo) {
+            addFont(fileinfo, function (fileinfo) {
                 // onclose closure
                 fm_embedded_fonts[e_id].is_added = fileinfo.is_added;
                 updateUseEmbedded();
@@ -332,7 +349,7 @@ var myapp = (function () {
     var addUploadedFonts = function (files) {
         addFonts(files, function (fileinfo) {
             // onload closure
-            addGlyphGroup(fileinfo, function () {
+            addFont(fileinfo, function () {
                 // onclose closure
                 updateGlyphCount();
             });
@@ -423,8 +440,8 @@ var myapp = (function () {
         $(cfg.id.notification).notify("create", options);
     };
 
-    var addGlyphGroup = function (fileinfo, cb_onclose) {
-        console.log("addGlyphGroup id=", fileinfo.id);
+    var addFont = function (fileinfo, cb_onclose) {
+        console.log("addFont id=", fileinfo.id);
         var div = cfg.id.select_glyphs;
 
         // if it is a dup, skip it
@@ -467,7 +484,7 @@ var myapp = (function () {
         tpl_font.find(".fm-font-name").text(fileinfo.fontname);
         tpl_font.find(".fm-font-anchor").attr("href", "#font-"+fileinfo.id);
         tpl_font.find(".fm-font-close").click(function (event) {
-            removeGlyphGroup(fileinfo);
+            removeFont(fileinfo);
             if (cb_onclose)
                 cb_onclose(fileinfo);
         });
@@ -479,14 +496,11 @@ var myapp = (function () {
         tpl_font.append(tpl_gg);
 
         // add glyphs to the glyph group
-        $("glyph", xml).filter(function (i) {
-            //return i < 10;  // for testing
-            return true;
-        }).each(function () {
+        $("glyph", xml).each(function () {
             var tpl = $(cfg.template.glyph.tpl).clone();
-            tpl.find(".fm-glyph-id").val(g_id);
+            tpl.find(".fm-glyph-id").val(next_glyph_id);
             tpl.find(".gd")
-                .attr("id", "gd"+g_id)
+                .attr("id", "gd"+next_glyph_id)
                 .css({
                     width: sizepx,
                     height: sizepx,
@@ -495,13 +509,16 @@ var myapp = (function () {
             $(tpl_gg).append(tpl);
 
             // add svg 
-            var r = Raphael("gd"+g_id, size, size);
+            var r = Raphael("gd"+next_glyph_id, size, size);
             r.setViewBox(0, descent, horiz_adv_x, ascent-descent, true);
             var g = r.path($(this).attr("d")).attr(cfg.path_options);
             g.show();
 
-            myglyphs[g_id] = { dom_node: this, file_id: fileinfo.id };
-            g_id++;
+            myglyphs[next_glyph_id] = {
+                dom_node: this,
+                file_id: fileinfo.id
+            };
+            next_glyph_id++;
         });
 
         $(cfg.id.tab1_content).find(".fm-glyph-id").click(function (event) {
@@ -523,15 +540,15 @@ var myapp = (function () {
 */
     };
 
-    var removeGlyphGroup = function (fileinfo) {
-        console.log("removeGlyphGroup id=", fileinfo.id);
+    var removeFont = function (fileinfo) {
+        console.log("removeFont id=", fileinfo.id);
 
         var file_id = fileinfo.id;
 
         // free mem
         for (var i=0, len=myglyphs.length; i<len; i++) {
             if (myglyphs[i].file_id == file_id) {
-                myglyphs[i].dom_node = null;
+                $(myglyphs[i].dom_node).remove();
                 myglyphs[i].file_id = -1;   // null?
             }
         }
