@@ -102,7 +102,13 @@ var myapp = (function () {
     var xml_template = null;
     var next_glyph_id = 0;
 
+    var debug = {
+        isOn: false
+    };
+
     var init = function () {
+        initDebug();
+
         // check browser's capabilities
         if (!isOkBrowser()) {
             console.log("bad browser");
@@ -123,6 +129,23 @@ var myapp = (function () {
         initRearrangeTab();
 
         initSaveTab();
+    };
+
+    // usage: index.html#debug:maxglyphs=10,noembedded
+    var initDebug = function () {
+        var hash = window.location.hash.substr(1);
+        var params = hash.split("&");
+        for (var i=0, len=params.length; i<len; i++) {
+            if (params[i].split(":").indexOf("debug") == 0) {
+                debug.isOn = true;
+                var vars = params[i].split(":")[1].split(",");
+                for (var i=0, len=vars.length; i<len; i++) {
+                    var pair = vars[i].split("=");
+                    debug[pair[0]] = pair[1] && pair[1] !== "" ? pair[1] : true;
+                }
+                return;
+            }
+        }
     };
 
     var initGlobals = function () {
@@ -208,6 +231,8 @@ var myapp = (function () {
         initUseEmbedded();
 
         // auto load embedded fonts
+        // debug
+        if (!debug.noembedded)
         addEmbeddedFonts(fm_embedded_fonts);
     };
 
@@ -547,7 +572,10 @@ var myapp = (function () {
         tpl_font.append(tpl_gg);
 
         // add glyphs to the glyph group
-        $("glyph", xml).each(function () {
+        $("glyph", xml).filter(function (index) {
+            // debug
+            return debug.maxglyphs && index < debug.maxglyphs || true;
+        }).each(function () {
             var tpl = $(cfg.template.glyph.tpl).clone();
             tpl.find(".fm-glyph-id").val(next_glyph_id);
             tpl.find(".gd")
