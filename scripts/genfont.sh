@@ -23,8 +23,8 @@ do
     file=$(js_escape "$file")
     echo    "    {"
     echo    "        id: $i,"               # index in the array
-    echo    "        filename: ${FONTS[$i]}"    # font filename
-    echo    "        filetype: unknown"     # mime type
+    echo    "        filename: \"${FONTS[$i]}\","   # font filename
+    echo    "        filetype: \"unknown\","     # mime type
     echo    "        is_ok: false,"         # font parsed and ready to use
     echo    "        is_added: false,"      # font added into "select icons"
     echo    "        fontname: \"unknown\","    # font name

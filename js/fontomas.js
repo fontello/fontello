@@ -324,6 +324,7 @@ var myapp = (function () {
                 updateGlyphCount();
             });
             fm_embedded_fonts[e_id].is_added = fileinfo.is_added;
+            fm_embedded_fonts[e_id].fontname = fileinfo.fontname;
             updateUseEmbedded();
         });
     };
