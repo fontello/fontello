@@ -551,7 +551,7 @@ var myapp = (function () {
             fileinfo.is_ok = false;
             fileinfo.error_msg = "invalid xml";
 
-            notify_alert("Couldn't parse file '"+fileinfo.filename+"'");
+            notify_alert("Loading error: can't parce file '"+fileinfo.filename+"'");
             return;
         }
         fileinfo.is_ok = true;
@@ -820,7 +820,7 @@ var myapp = (function () {
                     });
                     item.client.addEventListener("complete", function (client, text) {
                         console.log("zcb: complete");
-                        notify_info("The text is copied", true);
+                        notify_info("Copied to clipboard", true);
                     });
                     item.client.addEventListener("mouseOver", function (client) {
                         console.log("zcb: mouseover");
