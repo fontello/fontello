@@ -24,7 +24,6 @@ var myapp = (function () {
 
             font: "#fm-font",
             download_font_button: "#fm-download-font-button",
-            clipboard_span: "#fm-clipboard-span",
             icon_assignments: "#fm-icon-assignments"
         },
         class: {
@@ -69,9 +68,20 @@ var myapp = (function () {
             transform: "S1 -1"      // svg font's y axis goes upward
         },
         zero_clipboard: {
-            cb_link: "fm-clipboard-link",
-            cb_span: "fm-clipboard-span",
-            swf_path: "img/ZeroClipboard.swf"
+            swf_path: "img/ZeroClipboard.swf",
+
+            links: [
+                {
+                    link: "fm-clipboard-link",
+                    span: "fm-clipboard-span",
+                    target: "font"
+                },
+                {
+                    link: "fm-clipboard-link2",
+                    span: "fm-clipboard-span2",
+                    target: "icon_assignments"
+                }
+            ]
         },
         notify: {
             dup: {},    // for suppressing duplicates
@@ -164,6 +174,12 @@ var myapp = (function () {
         for (var key in cfg.template) {
             cfg.template[key].tpl = $(cfg.template[key].id).clone().removeAttr("id");
             $(cfg.template[key].id).remove();
+        }
+
+        // init clipboard link targets
+        for (var i=0, len=cfg.zero_clipboard.links.length; i<len; i++) {
+            var item=cfg.zero_clipboard.links[i];
+            item.target = cfg.id[item.target];
         }
     };
 
@@ -324,7 +340,7 @@ var myapp = (function () {
 
     var initSaveTab = function () {
         initDownloadLink();
-        initClipboardLink();
+        initClipboardLinks();
     };
 
     var isOkBrowser = function () {
@@ -778,46 +794,53 @@ var myapp = (function () {
         });
     };
 
-    var initClipboardLink = function () {
-        console.log("initClipboardLink");
+    var initClipboardLinks = function () {
+        console.log("initClipboardLinks");
 
         $(cfg.id.tab_save).one("shown", function () {
-            console.log("initClipboardLink: shown fired");
+            console.log("initClipboardLinks: shown fired");
             // flash clipboard helper doesn't work if file: proto used
             if (!env.is_file_proto && env.flash_version.major > 0) {
                 ZeroClipboard.setMoviePath(cfg.zero_clipboard.swf_path);
-                var zcb_client = new ZeroClipboard.Client();
-                zcb_client.glue(
-                    cfg.zero_clipboard.cb_link,
-                    cfg.zero_clipboard.cb_span
-                );
 
-                zcb_client.addEventListener("mouseDown", function (client) { 
-                    console.log("zcb: mousedown");
-                    zcb_client.setText($(cfg.id.font).val());
-                });
-                zcb_client.addEventListener("complete", function (client, text) {
-                    console.log("zcb: complete");
-                    notify_info("Clipboard", "The SVG font is copied", true);
-                });
-                zcb_client.addEventListener("mouseOver", function (client) {
-                    console.log("zcb: mouseover");
-                    $("#"+cfg.zero_clipboard.cb_link).trigger("mouseover");
-                });
-                zcb_client.addEventListener("mouseOut", function (client) { 
-                    console.log("zcb: mouseout");
-                    $("#"+cfg.zero_clipboard.cb_link).trigger("mouseout");
-                });
+                for (var i=0, len=cfg.zero_clipboard.links.length; i<len; i++) {
+                    var item=cfg.zero_clipboard.links[i];
+                    item.client = new ZeroClipboard.Client();
+                    item.client.fm_index = i;
+                    item.client.glue(item.link, item.span);
 
-                $("#"+cfg.zero_clipboard.cb_link).click(function () {
-                    console.log("noflash clipboard link clicked");
-                });
+                    item.client.addEventListener("mouseDown", function (client) { 
+                        console.log("zcb: mousedown");
+                        var item=cfg.zero_clipboard.links[client.fm_index];
+                        client.setText($(item.target).val());
+                    });
+                    item.client.addEventListener("complete", function (client, text) {
+                        console.log("zcb: complete");
+                        notify_info("Clipboard", "The text is copied", true);
+                    });
+                    item.client.addEventListener("mouseOver", function (client) {
+                        console.log("zcb: mouseover");
+                        $("#"+item.link).trigger("mouseover");
+                    });
+                    item.client.addEventListener("mouseOut", function (client) { 
+                        console.log("zcb: mouseout");
+                        $("#"+item.link).trigger("mouseout");
+                    });
+
+                    $("#"+item.link).click(function () {
+                        console.log("noflash clipboard link clicked");
+                    });
+                }
 /*
             } else {
                 // TODO: IE clipboard code
 */
             } else {
-                $(cfg.id.clipboard_span).remove();
+                // no clipboard support
+                for (var i=0, len=cfg.zero_clipboard.links.length; i<len; i++) {
+                    var item=cfg.zero_clipboard.links[i];
+                    $("#"+item.span).remove();
+                }
             }
         });
     };
