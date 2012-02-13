@@ -492,24 +492,23 @@ var myapp = (function () {
         }
     };
 
-    var notify = function (title, text, tpl, extra_tpl_vars, extra_opts, suppress_dup) {
+    var notify = function (text, tpl, extra_tpl_vars, extra_opts, suppress_dup) {
         var tpl_vars = {
-            title: title,
             text: text
         };
         $.extend(tpl_vars, extra_tpl_vars);
         var options = extra_opts;
 
-        if (suppress_dup && (title+text != undefined)) {
-            if (cfg.notify.dup[title+text] != undefined) {
+        if (suppress_dup && (text != undefined)) {
+            if (cfg.notify.dup[text] != undefined) {
                 console.log("notification suppressed");
                 return;
             }
 
-            cfg.notify.dup[title+text] = true;
+            cfg.notify.dup[text] = true;
             $.extend(options, {
                 close: function () {
-                    delete cfg.notify.dup[title+text];
+                    delete cfg.notify.dup[text];
                     console.log("notification can be fired again");
                 }
             });
@@ -518,9 +517,8 @@ var myapp = (function () {
         $(cfg.id.notification).notify("create", tpl, tpl_vars, options);
     };
 
-    var notify_alert = function (title, text, suppress_dup) {
-        notify(title,
-            text,
+    var notify_alert = function (text, suppress_dup) {
+        notify(text,
             cfg.notify.alert.tpl,
             cfg.notify.alert.tpl_vars,
             cfg.notify.alert.opts, 
@@ -528,9 +526,8 @@ var myapp = (function () {
         );
     };
 
-    var notify_info = function (title, text, suppress_dup) {
-        notify(title,
-            text,
+    var notify_info = function (text, suppress_dup) {
+        notify(text,
             cfg.notify.info.tpl,
             cfg.notify.info.tpl_vars,
             cfg.notify.info.opts,
@@ -554,9 +551,7 @@ var myapp = (function () {
             fileinfo.is_ok = false;
             fileinfo.error_msg = "invalid xml";
 
-            notify_alert("XML parsing failed",
-                "Couldn't parse file '"+fileinfo.filename+"'"
-            );
+            notify_alert("Couldn't parse file '"+fileinfo.filename+"'");
             return;
         }
         fileinfo.is_ok = true;
@@ -825,7 +820,7 @@ var myapp = (function () {
                     });
                     item.client.addEventListener("complete", function (client, text) {
                         console.log("zcb: complete");
-                        notify_info("Clipboard", "The text is copied", true);
+                        notify_info("The text is copied", true);
                     });
                     item.client.addEventListener("mouseOver", function (client) {
                         console.log("zcb: mouseover");
