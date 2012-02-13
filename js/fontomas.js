@@ -90,7 +90,7 @@ var myapp = (function () {
             info: {
                 tpl: "basic-template",
                 tpl_vars: {},
-                opts: { expires: 1000 },
+                opts: { expires: 2000 },
             },
             alert: {
                 tpl: "icon-template",
