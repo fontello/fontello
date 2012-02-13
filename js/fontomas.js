@@ -141,7 +141,7 @@ var myapp = (function () {
         initSaveTab();
     };
 
-    // usage: index.html#debug:maxglyphs=10,noembedded
+    // usage: index.html#debug:maxglyphs=10,noembedded,noflash
     var initDebug = function () {
         var hash = window.location.hash.substr(1);
         var params = hash.split("&");
@@ -153,9 +153,14 @@ var myapp = (function () {
                     var pair = vars[i].split("=");
                     debug[pair[0]] = pair[1] && pair[1] !== "" ? pair[1] : true;
                 }
-                return;
+                break;
             }
         }
+
+        // simulate no flash plugin installed
+        if (debug.noflash)
+            for (var key in env.flash_version)
+                env.flash_version[key] = 0;
     };
 
     var initGlobals = function () {
