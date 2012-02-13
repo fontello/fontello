@@ -90,12 +90,12 @@ var myapp = (function () {
             info: {
                 tpl: "basic-template",
                 tpl_vars: {},
-                opts: { expires: 2000 },
+                opts: { expires: 4000 },
             },
             alert: {
                 tpl: "icon-template",
                 tpl_vars: { icon: "img/alert.png" },
-                opts: { expires: 2000 }
+                opts: { expires: 4000 }
             }
         },
         font_filename: "fontomas.svg"
