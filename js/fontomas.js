@@ -72,6 +72,21 @@ var myapp = (function () {
             cb_link: "fm-clipboard-link",
             cb_span: "fm-clipboard-span",
             swf_path: "img/ZeroClipboard.swf"
+        },
+        notify: {
+            dup: {},    // for suppressing duplicates
+
+            // notication types
+            info: {
+                tpl: "basic-template",
+                tpl_vars: {},
+                opts: { expires: 1000 },
+            },
+            alert: {
+                tpl: "icon-template",
+                tpl_vars: { icon: "img/alert.png" },
+                opts: { expires: 2000 }
+            }
         }
     };
 
@@ -430,14 +445,50 @@ var myapp = (function () {
         }
     };
 
-    var notify = function (title, text, extra_options) {
-        options = {
+    var notify = function (title, text, tpl, extra_tpl_vars, extra_opts, suppress_dup) {
+        var tpl_vars = {
             title: title,
-            text: text,
-            icon: "img/alert.png"
+            text: text
         };
-        $.extend(options, extra_options);
-        $(cfg.id.notification).notify("create", options);
+        $.extend(tpl_vars, extra_tpl_vars);
+        var options = extra_opts;
+
+        if (suppress_dup && (title+text != undefined)) {
+            if (cfg.notify.dup[title+text] != undefined) {
+                console.log("notification suppressed");
+                return;
+            }
+
+            cfg.notify.dup[title+text] = true;
+            $.extend(options, {
+                close: function () {
+                    delete cfg.notify.dup[title+text];
+                    console.log("notification can be fired again");
+                }
+            });
+        }
+
+        $(cfg.id.notification).notify("create", tpl, tpl_vars, options);
+    };
+
+    var notify_alert = function (title, text, suppress_dup) {
+        notify(title,
+            text,
+            cfg.notify.alert.tpl,
+            cfg.notify.alert.tpl_vars,
+            cfg.notify.alert.opts, 
+            suppress_dup
+        );
+    };
+
+    var notify_info = function (title, text, suppress_dup) {
+        notify(title,
+            text,
+            cfg.notify.info.tpl,
+            cfg.notify.info.tpl_vars,
+            cfg.notify.info.opts,
+            suppress_dup
+        );
     };
 
     var addFont = function (fileinfo, cb_onclose) {
@@ -456,7 +507,7 @@ var myapp = (function () {
             fileinfo.is_ok = false;
             fileinfo.error_msg = "invalid xml";
 
-            notify("XML parsing failed",
+            notify_alert("XML parsing failed",
                 "Couldn't parse file '"+fileinfo.filename+"'"
             );
             return;
@@ -713,20 +764,13 @@ var myapp = (function () {
                     cfg.zero_clipboard.cb_span
                 );
 
-                // tooltip
-                $("#"+cfg.zero_clipboard.cb_link).tooltip({
-                    trigger: "manual"}
-                );
                 zcb_client.addEventListener("mouseDown", function (client) { 
                     console.log("zcb: mousedown");
                     zcb_client.setText($(cfg.id.font).val());
                 });
                 zcb_client.addEventListener("complete", function (client, text) {
                     console.log("zcb: complete");
-                    $("#"+cfg.zero_clipboard.cb_link).tooltip("show");
-                    window.setTimeout(function () {
-                        $("#"+cfg.zero_clipboard.cb_link).tooltip("hide");
-                    }, 900);
+                    notify_info("Clipboard", "The SVG font is copied", true);
                 });
                 zcb_client.addEventListener("mouseOver", function (client) {
                     console.log("zcb: mouseover");
