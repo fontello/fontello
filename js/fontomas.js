@@ -65,6 +65,7 @@ var myapp = (function () {
         path_options: {
             fill: "#000",
             stroke: "#000",
+            "stroke-width": 0,
             transform: "S1 -1"      // svg font's y axis goes upward
         },
         zero_clipboard: {
@@ -224,27 +225,40 @@ var myapp = (function () {
                 console.log('size='+size);
                 $(cfg.class.glyph_group).removeClass(cfg.icon_size_classes)
                     .addClass(cfg.icon_size_prefix+size);
-                $(cfg.id.tab1_content)
-                    .find(".gd").css({
-                        width: sizepx,
-                        height: sizepx,
-                        "font-size": sizepx
-                    })
-                    .find("svg").css({
-                        width: sizepx, 
-                        height: sizepx
-                    });
+                $(cfg.id.tab1_content).find(".gd").each(function (i) {
+                    var glyph_id = $(this).siblings(".fm-glyph-id").val();
+                    var glyph_x_scale = myglyphs[glyph_id].glyph_x_scale;
+                    var size_x_glyph = Math.round(size * glyph_x_scale);
+                    var size_x_glyph_px = size_x_glyph+"px";
+                    $(this).css({
+                            width: size_x_glyph_px,
+                            height: sizepx,
+                            "font-size": sizepx
+                        })
+                        .find("svg").css({
+                            width: size_x_glyph_px, 
+                            height: sizepx
+                        });
+                });
 
-                $(cfg.id.tab2_content)
-                    .find(".rg-icon").css({
-                        width: sizepx,
-                        height: sizepx,
-                        "font-size": sizepx
-                    })
-                    .find("svg").css({
-                        width: sizepx, 
-                        height: sizepx
-                    });
+                $(cfg.id.tab2_content).find(".rg-icon").each(function (i) {
+                    var glyph_id = $(this).siblings(".fm-glyph-id").val();
+                    var size_x_px = sizepx;
+                    if (glyph_id != "") {
+                        var glyph_x_scale = myglyphs[glyph_id].glyph_x_scale;
+                        var size_x_glyph = Math.round(size * glyph_x_scale);
+                        size_x_px = size_x_glyph+"px";
+                    }
+                    $(this).css({
+                            width: size_x_px,
+                            height: sizepx,
+                            "font-size": sizepx
+                        })
+                        .find("svg").css({
+                            width: size_x_px,
+                            height: sizepx
+                        });
+                });
             });
             $(cfg.id.icon_size).append(tpl);
         }
@@ -563,9 +577,9 @@ var myapp = (function () {
         // FIXME
         $(cfg.id.tab1_content).find(".fm-glyph-id").off("click");
 
-        var horiz_adv_x = $("font:first", xml).attr("horiz-adv-x") || 1000;
-        var ascent = $("font-face:first", xml).attr("ascent") || 750;
-        var descent = $("font-face:first", xml).attr("descent") || -250;
+        var horiz_adv_x = parseInt($("font:first", xml).attr("horiz-adv-x")) || 1000;
+        var ascent = parseInt($("font-face:first", xml).attr("ascent")) || 750;
+        var descent = parseInt($("font-face:first", xml).attr("descent")) || -250;
         fileinfo.fontname = $("font:first", xml).attr("id") || "unknown";
 
         var size = $(cfg.id.icon_size).find("button.active").val();
@@ -593,26 +607,38 @@ var myapp = (function () {
             // debug
             return debug.maxglyphs && index < debug.maxglyphs || true;
         }).each(function () {
+            var horiz_adv_x_glyph = parseInt($(this).attr("horiz-adv-x")) || horiz_adv_x;
+            var glyph_x_scale = horiz_adv_x_glyph / (ascent - descent);
+            var size_x_glyph = Math.round(size * glyph_x_scale);
+            var size_x_glyph_px = size_x_glyph+"px";
+
             var tpl = $(cfg.template.glyph.tpl).clone();
             tpl.find(".fm-glyph-id").val(next_glyph_id);
             tpl.find(".gd")
                 .attr("id", "gd"+next_glyph_id)
                 .css({
-                    width: sizepx,
+                    width: size_x_glyph_px,
                     height: sizepx,
                     "font-size": sizepx
                 });
             $(tpl_gg).append(tpl);
 
             // add svg 
-            var r = Raphael("gd"+next_glyph_id, size, size);
-            r.setViewBox(0, descent, horiz_adv_x, ascent-descent, true);
+            var r = Raphael("gd"+next_glyph_id, size_x_glyph, size);
+            var delta = Math.round((ascent-descent)/16 + 0.5);
+            r.setViewBox(
+                0 - delta,
+                descent - delta,
+                horiz_adv_x_glyph + delta,
+                (ascent - descent) + delta,
+                true);
             var g = r.path($(this).attr("d")).attr(cfg.path_options);
             g.show();
 
             myglyphs[next_glyph_id] = {
                 dom_node: this,
-                file_id: fileinfo.id
+                file_id: fileinfo.id,
+                glyph_x_scale: glyph_x_scale
             };
             next_glyph_id++;
         });

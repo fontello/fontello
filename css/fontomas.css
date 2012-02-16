@@ -174,7 +174,8 @@ body {
   margin-right: auto;
   width: 32px;
   height: 32px;
-  padding: 16px;
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
 .rg-top {
   border: 0px #000 solid;
