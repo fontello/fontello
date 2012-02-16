@@ -629,8 +629,8 @@ var myapp = (function () {
             r.setViewBox(
                 0 - delta,
                 descent - delta,
-                horiz_adv_x_glyph + delta,
-                (ascent - descent) + delta,
+                horiz_adv_x_glyph + 2 * delta,
+                (ascent - descent) + 2 * delta,
                 true);
             var g = r.path($(this).attr("d")).attr(cfg.path_options);
             g.show();
