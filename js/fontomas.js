@@ -45,6 +45,7 @@ var myapp = (function () {
 
         preview_icon_sizes: [32, 24, 16],
         live_update: true,
+        bbox_fixup: true,
         basic_latin: {
             str: "",    // precalculated by initGlobals()
             begin: 33,
@@ -66,7 +67,7 @@ var myapp = (function () {
             fill: "#000",
             stroke: "#000",
             "stroke-width": 0,
-            transform: "S1 -1"      // svg font's y axis goes upward
+            transform: "s1 -1"      // svg font's y axis goes upward
         },
         zero_clipboard: {
             swf_path: "img/ZeroClipboard.swf",
@@ -643,14 +644,24 @@ var myapp = (function () {
 
             // add svg 
             var r = Raphael("gd"+next_glyph_id, size_x_glyph, size);
-            var delta = Math.round((ascent-descent)/16 + 0.5);
-            r.setViewBox(
-                0 - delta,
-                descent - delta,
-                horiz_adv_x_glyph + 2 * delta,
-                (ascent - descent) + 2 * delta,
-                true);
             var g = r.path($(this).attr("d")).attr(cfg.path_options);
+            if (cfg.bbox_fixup) {
+                var bbox = g.getBBox();
+                delta =  Math.round((bbox.height)/16 + 0.5);
+                r.setViewBox(
+                    bbox.x - delta,
+                    bbox.y - delta,
+                    bbox.width + 2 * delta,
+                    bbox.height + 2 * delta);
+            } else {
+                var delta = Math.round((ascent-descent)/16 + 0.5);
+                r.setViewBox(
+                    0 - delta,
+                    descent - delta,
+                    horiz_adv_x_glyph + 2 * delta,
+                    (ascent - descent) + 2 * delta,
+                    true);
+            }
             g.show();
 
             myglyphs[next_glyph_id] = {
