@@ -21,12 +21,11 @@ All your progress is automatically stored locally.
 
 For your convenience, Fontomas comes with wonderful embedded iconic fonts:
 
-- __Iconic__ - https://github.com/somerandomdude/Iconic
-- __Web Symbols__ - http://www.justbenicestudio.com/studio/websymbols/
+- __Entypo__ - http://www.entypo.com/ (CC BY-SA)
+- __Iconic__ - https://github.com/somerandomdude/Iconic (SIL OFL)
+- __Web Symbols__ - http://www.justbenicestudio.com/studio/websymbols/ (SIL OFL)
 
-Those fonts are distributed under OFL licence, and don't add restrictions on
-both personal and commercial use. See details on fonts homepages. Of cause,
-you can add more fonts if you wish.
+See details on fonts homepages. Of cause, you can add more fonts if you wish.
 
 
 ## We need your help!

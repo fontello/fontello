@@ -4,7 +4,7 @@
 
 #FONTS=( $(ls -1 sample-fonts/*.svg) )
 FONT_DIR="sample-fonts"
-FONTS=(iconic_fill.svg iconic_stroke.svg websymbols.svg)
+FONTS=(entypo-webfont.svg iconic_fill.svg iconic_stroke.svg websymbols.svg)
 FLEN=${#FONTS[@]}
 OUTPUT_FILE="js/fm-embedded-fonts.js"
 
