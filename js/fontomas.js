@@ -105,7 +105,10 @@ var myapp = (function () {
     // environment
     var env = {
         flash_version: swfobject.getFlashPlayerVersion(),
-        is_file_proto: (window.location.protocol == "file:")
+        is_file_proto: (window.location.protocol == "file:"),
+        filereader: null,
+        indexeddb: null,
+        localstorage: null
     };
 
     var myfiles = [];
@@ -143,7 +146,7 @@ var myapp = (function () {
         initSaveTab();
     };
 
-    // usage: index.html#debug:maxglyphs=10,noembedded,noflash
+    // usage: index.html#debug:maxglyphs=10,noembedded,noflash,nofilereader
     var initDebug = function () {
         var hash = window.location.hash.substr(1);
         var params = hash.split("&");
@@ -191,26 +194,7 @@ var myapp = (function () {
     };
 
     var initSelectTab = function () {
-        // init file upload form
-        $(cfg.id.file).change(function (event) {
-            addUploadedFonts(event.target.files);
-        });
-        $(cfg.id.file_browse_button).click(function (event) {
-  	        event.preventDefault();
-            $(cfg.id.file).click();
-        });
-
-        // init file drag and drop
-        $(cfg.id.file_drop_zone).on("dragover", function (event) {
-	        event.stopPropagation();
-	        event.preventDefault();
-	        event.originalEvent.dataTransfer.dropEffect = 'copy';
-        });
-        $(cfg.id.file_drop_zone).on("drop", function (event) {
-	        event.stopPropagation();
-	        event.preventDefault();
-            addUploadedFonts(event.originalEvent.dataTransfer.files);
-        });
+        initFileUpload();
 
         // init preview icon size selection
         for (var i=0, len=cfg.preview_icon_sizes.length; i<len; i++) {
@@ -270,6 +254,36 @@ var myapp = (function () {
         // debug
         if (!debug.noembedded)
         addEmbeddedFonts(fm_embedded_fonts);
+    };
+
+    var initFileUpload = function () {
+        if (env.filereader) {
+            // init file upload form
+            $(cfg.id.file).change(function (event) {
+                addUploadedFonts(event.target.files);
+            });
+            $(cfg.id.file_browse_button).click(function (event) {
+                event.preventDefault();
+                $(cfg.id.file).click();
+            });
+
+            // init file drag and drop
+            $(cfg.id.file_drop_zone).on("dragover", function (event) {
+                event.stopPropagation();
+                event.preventDefault();
+                event.originalEvent.dataTransfer.dropEffect = 'copy';
+            });
+            $(cfg.id.file_drop_zone).on("drop", function (event) {
+                event.stopPropagation();
+                event.preventDefault();
+                addUploadedFonts(event.originalEvent.dataTransfer.files);
+            });
+        } else {
+            $(cfg.id.file_browse_button).click(function (event) {
+                event.preventDefault();
+                notify_alert("File upload is not supported by your browser, use embedded fonts instead");
+            });
+        }
     };
 
     var initRearrangeTab = function () {
@@ -365,16 +379,20 @@ var myapp = (function () {
 
     var isOkBrowser = function () {
         // FF3.6+ Chrome6+ Opera11.1+
-        var filereader = !!window.FileReader;
+        var filereader = env.filereader = !!window.FileReader;
+
+        // debug
+        if (debug && debug.nofilereader)
+            env.filereader = false;
 
         // FF4+ Chrome11+
-        var indexeddb = Modernizr.indexeddb;
+        var indexeddb = env.indexeddb = Modernizr.indexeddb;
 
         // IE8+ FF3.5 Chrome4+ Safari4+ Opera10.5+
-        var localstorage = Modernizr.localstorage;
+        var localstorage = env.localstorage = Modernizr.localstorage;
 
         //FF3.6+ Chrome6+ Opera11.1+
-        return filereader && (indexeddb || localstorage);
+        return /* filereader && */ (indexeddb || localstorage);
     };
 
     var initUseEmbedded = function () {
@@ -565,7 +583,7 @@ var myapp = (function () {
             fileinfo.is_ok = false;
             fileinfo.error_msg = "invalid xml";
 
-            notify_alert("Loading error: can't parce file '"+fileinfo.filename+"'");
+            notify_alert("Loading error: can't parse file '"+fileinfo.filename+"'");
             return;
         }
         fileinfo.is_ok = true;
