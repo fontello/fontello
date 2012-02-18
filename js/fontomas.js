@@ -478,6 +478,106 @@ var myapp = (function () {
         initUseEmbedded();
     };
 
+    var Font = function () {
+        if (this instanceof Font) {
+            $.extend(this, arguments[0]);
+        } else {
+            var type = arguments[0];
+            var data = arguments[1];
+
+            switch (type) {
+            case "svg":
+                return Font.initSvg(data);
+
+            case "cufonjs":
+                return Font.initCufonJs(data);
+            }
+
+            return null;    //FIXME return Error object
+        }
+    };
+
+    Font.initSvg = function (svg) {
+        console.log("Font.initSvg");
+        var font = {};
+
+        var xml = null;
+        try {
+            xml = $.parseXML(svg);
+        } catch (e) {
+            console.log("Font.initSvg: invalid xml");
+            return null; //FIXME return Error object
+        }
+
+        font.horiz_adv_x = parseInt($("font:first", xml).attr("horiz-adv-x"))
+            || 1000;
+        font.ascent = parseInt($("font-face:first", xml).attr("ascent")) || 750;
+        font.descent = parseInt($("font-face:first", xml).attr("descent"))
+                || -250;
+        font.units_per_em = parseInt($("font-face:first", xml)
+            .attr("units-per-em")) || 1000;
+        font.id = $("font:first", xml).attr("id") || "unknown";
+
+        font.glyphs = {};
+        $("glyph", xml).filter(function (index) {
+            // debug
+            return debug.is_on && debug.maxglyphs && index < debug.maxglyphs
+                || true;
+        }).each(function (i) {
+            var glyph = {};
+
+            // FIXME
+            glyph.horiz_adv_x = parseInt($(this).attr("horiz-adv-x"));
+            glyph.d = $(this).attr("d");
+            font.glyphs[i] = glyph;
+        });
+
+        return new Font(font);
+    };
+
+    Font.initCufonJs = function (js) {
+        console.log("initCufonJs");
+        var font = {};
+
+        // strip function call
+        var json_string = trimBoth(js, ".registerFont(", ")");
+
+        var json = null;
+        try {
+            json = $.parseJSON(json_string);
+        } catch (e) {
+            console.log("Font.initCufonJs: invalid json");
+            return null;    // FIXME return Error object
+        }
+
+        font.horiz_adv_x = json.w || 1000;
+        font.ascent = json.face.ascent || 750;
+        font.descent = json.face.descent || -250;
+        font.units_per_em = json.face["units-per-em"] || 1000;
+        font.id = json.face["font-family"] || "unknown";
+
+        font.glyphs = {};
+        var num_glyphs = 0;
+        for (var i in json.glyphs) {
+            num_glyphs++;
+            // debug
+            if (debug.is_on && debug.maxglyphs && debug.maxglyphs < num_glyphs)
+                break;
+
+            var glyph = {};
+
+            if (json.glyphs[i].w)
+                glyph.horiz_adv_x = json.glyphs[i].w;
+            if (json.glyphs[i].d)
+                // fix y coord and convert vml path to svg path
+                glyph.d = vmlToSvgPath(vmlNegateY(json.glyphs[i].d));
+
+            font.glyphs[i] = glyph;
+        };
+
+        return new Font(font);
+    };
+
     var addEmbeddedFonts = function (embedded_fonts) {
         addFontsAsStrings(embedded_fonts, function (fileinfo) {
             // onload closure
@@ -623,42 +723,51 @@ var myapp = (function () {
 
     var addFont = function (fileinfo, cb_onclose) {
         console.log("addFont id=", fileinfo.id);
-        var div = cfg.id.select_glyphs;
 
         // if it is a dup, skip it
         if (fileinfo.is_dup)
             return;
 
-        var xml = null;
-        try {
-            xml = $.parseXML(fileinfo.content);
-        } catch (e) {
-            console.log("invalid xml");
-            fileinfo.is_ok = false;
-            fileinfo.error_msg = "invalid xml";
+        var font = null, types = ["svg"/*, "ttf", "otf"*/, "js"];
 
-            notify_alert("Loading error: can't parse file '"+fileinfo.filename+"'");
+        var file_ext = getFileExt(fileinfo.filename);
+        switch (file_ext) {
+        case "svg":
+            font = Font("svg", fileinfo.content);
+            break;
+        case "js":
+            font = Font("cufonjs", fileinfo.content);
+            break;
+        default:
+            // unknown file exstension
+            notify_alert("Can't parse file '" + fileinfo.filename + "':"
+                + " unknown file extension. Currently, we only support "
+                + joinList(types, ", ", " and ") + "."
+            );
             return;
         }
-        fileinfo.is_ok = true;
 
-/*
-        //FIXME
-        if (!xml_template)
-            xml_template = makeXmlTemplate($.parseXML(fileinfo.content));
-*/
+        if (!font) {
+            console.log("invalid file");
+            fileinfo.is_ok = false;
+            fileinfo.error_msg = "invalid file";
+
+            notify_alert("Loading error: can't parse file '" 
+                + fileinfo.filename + "'");
+            return;
+        }
+
+        fileinfo.is_ok = true;
+        fileinfo.fontname = font.id;
+
+        var div = cfg.id.select_glyphs;
 
         // FIXME
         $(cfg.id.tab1_content).find(".fm-glyph-id").off("click");
 
-        var font_horiz_adv_x = parseInt($("font:first", xml)
-                .attr("horiz-adv-x")) || 1000,
-            ascent = parseInt($("font-face:first", xml).attr("ascent")) || 750,
-            descent = parseInt($("font-face:first", xml).attr("descent"))
-                || -250,
-            units_per_em = parseInt($("font-face:first", xml)
-                .attr("units-per-em")) || 1000;
-        fileinfo.fontname = $("font:first", xml).attr("id") || "unknown";
+        var ascent = font.ascent,
+            descent = font.descent,
+            units_per_em = font.units_per_em;
 
         var size = parseInt($(cfg.id.icon_size).find("button.active").val())
             || 32;
@@ -682,13 +791,14 @@ var myapp = (function () {
         tpl_font.append(tpl_gg);
 
         // add glyphs to the glyph group
-        $("glyph", xml).filter(function (index) {
+        var num_glyphs = 0;
+        for (var i in font.glyphs) {
+            num_glyphs++;
             // debug
-            return debug.is_on && debug.maxglyphs && index < debug.maxglyphs
-                || true;
-        }).each(function () {
-            var horiz_adv_x = parseInt($(this).attr("horiz-adv-x"))
-                || font_horiz_adv_x;
+            if (debug.is_on && debug.maxglyphs && debug.maxglyphs < num_glyphs)
+                break;
+
+            var horiz_adv_x = font.glyphs[i].horiz_adv_x || font.horiz_adv_x;
             var size_x = Math.round(size * horiz_adv_x / units_per_em),
                 size_y = font_size_y;
 
@@ -706,7 +816,7 @@ var myapp = (function () {
 
             // add svg 
             var r = Raphael("gd"+next_glyph_id, size_x, size_y);
-            var g = r.path($(this).attr("d")).attr(cfg.path_options);
+            var g = r.path(font.glyphs[i].d).attr(cfg.path_options);
 
             // calc delta_x, delta_y
             var bbox = g.getBBox();
@@ -780,8 +890,8 @@ var myapp = (function () {
             // precalc glyph sizes
             // FIXME: precalc only if glyph goes out of its default box
             var glyph_sizes = {};
-            for (var i in cfg.preview_icon_sizes) {
-                var icon_size = cfg.preview_icon_sizes[i];
+            for (var j in cfg.preview_icon_sizes) {
+                var icon_size = cfg.preview_icon_sizes[j];
                 size_y = Math.round(icon_size * (ascent - descent + 2 * delta_y)
                     / units_per_em);
                 size_x = Math.round(icon_size * (horiz_adv_x + 2 * delta_x)
@@ -790,13 +900,13 @@ var myapp = (function () {
             }
 
             myglyphs[next_glyph_id] = {
-                dom_node: this,
+                dom_node: $("<glyphs/>").attr("d", font.glyphs[i].d),
                 file_id: fileinfo.id,
                 glyph_sizes: glyph_sizes,
                 units_per_em: units_per_em  // FIXME: move it to fileinfo
             };
             next_glyph_id++;
-        });
+        }
 
         $(cfg.id.tab1_content).find(".fm-glyph-id").click(function (event) {
             $(this).parent().toggleClass("selected", $(this).is(":checked"));
@@ -817,6 +927,38 @@ var myapp = (function () {
 */
     };
 
+    var vmlToSvgPath = function (vml) {
+        var path = "";
+        if (vml)
+            path = "M" + vml.replace(/[mlcxtrv]/g, function (command) {
+                return {l: "L", c: "C", x: "z", t: "m", r: "l", v: "c"}[command]
+                    || "M";
+            }) + "z";
+        return path;
+    };
+
+    var vmlNegateY = function (vml) {
+        if (!vml)
+            return vml;
+
+        var result = "", re = /^([^a-z]*)/, re2 = /([mrvxe])([^a-z]*)/g, match;
+        match = re.exec(vml);
+        var c = match[1].split(',');
+        c = c.map(function(value, idx) {
+            return idx % 2 == 1 ? -value : value
+        });
+        result += c.join(",");
+        
+        for (var i = 0; match = re2.exec(vml); ++i) {
+            var c = match[2].split(',');
+            c = c.map(function(value, idx) {
+                return idx % 2 == 1 ? -value : value
+            });
+            result += match[1]+c.join(",");
+        }
+        return result;
+    };
+
     var removeFont = function (fileinfo) {
         console.log("removeFont id=", fileinfo.id);
 
@@ -831,7 +973,7 @@ var myapp = (function () {
         }
         myfiles[file_id] = null;
 
-        // remove associated html mark up
+        // remove associated html markup
         var font = $('#fm-font-'+file_id);
         font.find("input:checkbox:checked").each(function() {
             var glyph_id = $(this).val();
@@ -891,13 +1033,6 @@ var myapp = (function () {
         $(cfg.id.tab).find("a"+cfg.class.disable_on_demand)
             .toggleClass("disabled", !enabled);
     };
-
-/*
-    var makeXmlTemplate = function (xml) {
-        $("glyph", xml).remove();
-        return xml;
-    };
-*/
 
     // update font's textarea
     var updateFont = function () {
@@ -1125,7 +1260,53 @@ var myapp = (function () {
             };  
     };
 
+    var getFileExt = function (filepath) {
+        var defaultval = "";
+        if (!is_string(filepath))
+            return defaultval;
+
+        var index = filepath.lastIndexOf(".");
+        if (index == -1)
+            return defaultval;
+        else
+            return filepath.substr(index+1).toLowerCase();
+    };
+
+    var joinList = function (array, delim1, delim2) {
+        return array.reduce(function (prev, cur, idx, arr) {
+            return arr.length != idx+1
+                ? prev + delim1 + cur
+                : prev + delim2 + cur;
+        });
+    };
+
+    // type functinos
+    var is_string = function (s) {
+        return typeof s == "string";
+    }
+
     // string functions
+
+    // trim string at both sides:
+    // in:  s="abc{hello}def", begin="c{", end="}"
+    // out: "hello"
+    var trimBoth = function (s, begin, end) {
+        var idx1 = s.indexOf(begin) + begin.length,
+            idx2 = s.lastIndexOf(end);
+        if (idx1 < idx2)
+            return s.substr(idx1, idx2 - idx1);
+        else
+            return s;
+    };
+
+    var randomNumString = function (len) {
+        var result = "";
+        for (var i=0; i<(len/8)+1; i++) {
+            result += Math.round(Math.random()*89999999+10000000).toString(10);
+        }
+        return result.substr(0, len); 
+    };
+
     var repeat = function (s, times) {
         if (times < 1)
             return "";
