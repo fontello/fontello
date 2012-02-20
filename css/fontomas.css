@@ -94,56 +94,59 @@ body {
   display: inline-block;
 }
 
+.fm-icon-size-32 .glyph {
+  width: 64px;
+  height: 64px;
+}
+
+.fm-icon-size-24 .glyph {
+  width: 48px;
+  height: 48px;
+}
+
+.fm-icon-size-16 .glyph, .fm-icon-size-16 .glyph.selected {
+  width: 32px;
+  height: 32px;
+  border-width: 1px;
+  margin: 4px;
+}
+
 .glyph {
+  position: relative;
   border: 2px #aaa solid;
   border-radius: 8px 8px 8px 8px;
   float: left;
   margin: 5px;
   padding: 8px;
-  width: 64px;
-  height: 64px;
-  line-height: 60px;
-  text-align: center;
   cursor: pointer;
 }
+
 .glyph:hover {
   background: #f0f0f0;
   opacity: .8;
 }
+
 .glyph input { display: none; }
+
 .glyph.selected {
   border: 2px #800 solid;
   background-color: #fee;
   color: #fff;
   box-shadow: 0 0 5px #444 inset;
 }
+
 .gd {
-  font-size: 64px;
-  line-height: 1;
-  text-align: center;
-  display: inline-block !important;
-  vertical-align: middle !important;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 32px;
+  height: 32px;
+  margin-left: -16px;
+  margin-top: -16px;
 /*  background-color: #fff;
   border: 1px #ccc solid;
 */
 }
-
-.fm-icon-size-32 .glyph {
-}
-
-.fm-icon-size-24 .glyph {
-  width: 48px;
-  height: 48px;
-  line-height: 42px;
-}
-.fm-icon-size-16 .glyph {
-  width: 32px;
-  height: 32px;
-  line-height: 30px;
-  border-width: 1px;
-  margin: 4px;
-}
-
 
 .rearrange-glyph {
   border: 2px #888 solid;
@@ -154,8 +157,6 @@ body {
   padding-bottom: 0px;
   width: 64px;
   text-align: center;
-  _font-size: 55px;
-  _line-height: 1;
 }
 .rearrange-glyph input {
   display: none;
@@ -169,14 +170,21 @@ body {
 .rearrange-glyph.selected .rg-bottom { background-color: #000; }
 
 .rg-icon {
-/*  border: 1px #ccc solid; */
-  margin-left: auto;
-  margin-right: auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
   width: 32px;
   height: 32px;
+  margin-left: -16px;
+  margin-top: -16px;
+
+/*  border: 1px #ccc solid; */
+/*
   padding-top: 16px;
   padding-bottom: 16px;
+*/
 }
+
 .rg-top {
   border: 0px #000 solid;
   text-align: center;
@@ -186,6 +194,27 @@ body {
   font-size: 10px;
   font-weight: bold;
 }
+
+.fm-icon-size-32 .rg-center {
+  width: 64px;
+  height: 64px;
+}
+
+.fm-icon-size-24 .rg-center {
+  width: 64px;
+  height: 48px;
+}
+
+.fm-icon-size-16 .rg-center, .fm-icon-size-16 .selected .rg-center {
+  width: 64px;
+  height: 32px;
+}
+
+.rg-center {
+  position: relative;
+  height: 64px;
+}
+
 .rg-bottom {
   border: 0px #000 solid;
   text-align:center;
@@ -193,6 +222,9 @@ body {
   color: #fff;
   border-radius: 0px 0px 4px 4px;
   font-size: 10px;
+}
+
+.fm-drop-hover {
 }
 
 /* warning for disabled JS */
