@@ -133,7 +133,7 @@ var myapp = (function () {
     var next_glyph_id = 0;
 
     var debug = {
-        isOn: false
+        is_on: false
     };
 
     var init = function () {
@@ -149,12 +149,12 @@ var myapp = (function () {
         initGlobals();
 
         // show loading tab
-        $("#tab").tab("show");
+        $(cfg.id.tab).tab("show");
 
         initSelectTab();
 
         // first tab is fully initialized so show it
-        $("#tab a:first").tab("show");
+        $(cfg.id.tab+" a:first").tab("show");
 
         initRearrangeTab();
 
@@ -167,7 +167,7 @@ var myapp = (function () {
         var params = hash.split("&");
         for (var i=0, len=params.length; i<len; i++) {
             if (params[i].split(":").indexOf("debug") == 0) {
-                debug.isOn = true;
+                debug.is_on = true;
                 var vars = params[i].split(":")[1].split(",");
                 for (var i=0, len=vars.length; i<len; i++) {
                     var pair = vars[i].split("=");
@@ -177,8 +177,8 @@ var myapp = (function () {
             }
         }
 
-        // simulate no flash plugin installed
-        if (debug.noflash)
+        // debug: simulate no flash plugin installed
+        if (debug.is_on && debug.noflash)
             for (var key in env.flash_version)
                 env.flash_version[key] = 0;
     };
@@ -298,7 +298,7 @@ var myapp = (function () {
 
         // auto load embedded fonts
         // debug
-        if (!debug.noembedded)
+        if (!(debug.is_on && debug.noembedded))
         addEmbeddedFonts(fm_embedded_fonts);
     };
 
@@ -434,18 +434,18 @@ var myapp = (function () {
         // FF3.6+ Chrome6+ Opera11.1+
         var filereader = env.filereader = !!window.FileReader;
 
-        // debug
-        if (debug && debug.nofilereader)
+        // debug: simulate no filereader is available
+        if (debug.is_on && debug.nofilereader)
             env.filereader = false;
 
         // FF4+ Chrome11+
         var indexeddb = env.indexeddb = Modernizr.indexeddb;
 
-        // IE8+ FF3.5 Chrome4+ Safari4+ Opera10.5+
+        // IE8+ FF3.5+ Chrome4+ Safari4+ Opera10.5+
         var localstorage = env.localstorage = Modernizr.localstorage;
 
-        //FF3.6+ Chrome6+ Opera11.1+
-        return /* filereader && */ (indexeddb || localstorage);
+        //FF3.5+ Chrome4+ Opera10.5+
+        return (indexeddb || localstorage);
     };
 
     var initUseEmbedded = function () {
@@ -683,7 +683,8 @@ var myapp = (function () {
         // add glyphs to the glyph group
         $("glyph", xml).filter(function (index) {
             // debug
-            return debug.maxglyphs && index < debug.maxglyphs || true;
+            return debug.is_on && debug.maxglyphs && index < debug.maxglyphs
+                || true;
         }).each(function () {
             var horiz_adv_x = parseInt($(this).attr("horiz-adv-x"))
                 || font_horiz_adv_x;
@@ -766,8 +767,9 @@ var myapp = (function () {
             r.setViewBox(vb.x, vb.y, vb.w, vb.h, true);
 
             // flip y
-            // debug
+            // debug: turn flip off 
             if (!(debug && debug.noflip)) {
+            // FIXME
             var flip_y_matrix = [1, 0, 0, -1, 0, ascent / 2 - descent];
             g.attr({transform: "m" + flip_y_matrix});
             }
@@ -790,7 +792,7 @@ var myapp = (function () {
                 dom_node: this,
                 file_id: fileinfo.id,
                 glyph_sizes: glyph_sizes,
-                units_per_em: units_per_em
+                units_per_em: units_per_em  // FIXME: move it to fileinfo
             };
             next_glyph_id++;
         });
