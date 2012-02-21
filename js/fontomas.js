@@ -48,6 +48,7 @@ var myapp = (function () {
         preview_icon_sizes: [32, 24, 16],
         live_update: true,
         fix_edges: true,
+        scale_precision: 6, // truncate the mantissa when scaling svg paths
         basic_latin: {
             str: "",    // precalculated by initGlobals()
             begin: 33,
@@ -914,7 +915,7 @@ var myapp = (function () {
                     console.log("undefined myglyphs[", g_id, "]");
                     return; 
                 }
-                var g = $(myglyphs[g_id].dom_node);
+                var g = $(myglyphs[g_id].dom_node).clone();
                 g.attr("unicode", unicode);
                 if (myglyphs[g_id].units_per_em != cfg.output.units_per_em) {
                     var scale = cfg.output.units_per_em
@@ -929,8 +930,9 @@ var myapp = (function () {
     };
 
     var scalePath = function (path, scale) {
-        path = path.replace(/(-?\d*\.?\d*(?:e[\-+]?\d+)?)/g, function (num) {
-            num = parseFloat(num) * scale;
+        path = path.replace(/(-?\d*\.?\d*(?:e[\-+]?\d+)?)/ig, function (num) {
+            num = (parseFloat(num) * scale).toPrecision(cfg.scale_precision);
+            num = parseFloat(num);  // extra parseFloat to strip trailing zeros
             return isNaN(num) ? "" : num;
         });
         return path;
