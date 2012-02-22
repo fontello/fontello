@@ -4,7 +4,7 @@
 SCRIPT_PATH="$(pwd)/$0"
 ROOT_DIR=${SCRIPT_PATH%/*/*}
 BIN_DIR="${ROOT_DIR}/bin"
-FONT_DIR="${ROOT_DIR}/sample-fonts"
+FONT_DIR="${ROOT_DIR}/fonts"
 JS_DIR="${ROOT_DIR}/js"
 FIX_ENTYPO_SCRIPT="${BIN_DIR}/fix_entypo.pe"
 
