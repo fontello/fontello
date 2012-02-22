@@ -1,12 +1,18 @@
 #!/bin/bash
 
 # this script generates js/fm-embedded-fonts.js
+SCRIPT_PATH="$(pwd)/$0"
+ROOT_DIR=${SCRIPT_PATH%/*/*}
+BIN_DIR="${ROOT_DIR}/bin"
+FONT_DIR="${ROOT_DIR}/sample-fonts"
+JS_DIR="${ROOT_DIR}/js"
+FIX_ENTYPO_SCRIPT="${BIN_DIR}/fix_entypo.pe"
 
-#FONTS=( $(ls -1 sample-fonts/*.svg) )
-FONT_DIR="sample-fonts"
 FONTS=(entypo-webfont.svg iconic_fill.svg iconic_stroke.svg websymbols.svg)
 FLEN=${#FONTS[@]}
-OUTPUT_FILE="js/fm-embedded-fonts.js"
+FONT_ENTYPO=Entypo.otf
+FONT_ENTYPO_FIXED=entypo-webfont.svg
+OUTPUT_FILE="${JS_DIR}/fm-embedded-fonts.js"
 
 function js_escape() {
     s=$1
@@ -16,6 +22,15 @@ function js_escape() {
     echo $s
 }
 
+echo "Converting and fixing ${FONT_ENTYPO}..."
+${FIX_ENTYPO_SCRIPT} "${FONT_DIR}/${FONT_ENTYPO}" "${FONT_DIR}/${FONT_ENTYPO_FIXED}"
+echo "done"
+echo -n "Fixing ascent and descent... "
+sed -i 's/ascent="[^"]*"/ascent="800"/' ${FONT_DIR}/${FONT_ENTYPO_FIXED}
+sed -i 's/descent="[^"]*"/descent="-200"/' ${FONT_DIR}/${FONT_ENTYPO_FIXED}
+echo "done"
+
+echo -n "Generating $OUTPUT_FILE... "
 (echo "var fm_embedded_fonts = ["
 for (( i=0; i<${FLEN}; i++ ));
 do
@@ -35,3 +50,5 @@ done;
 
 echo
 echo "];") > $OUTPUT_FILE
+
+echo "done"
