@@ -25,10 +25,6 @@ function js_escape() {
 echo "Converting and fixing ${FONT_ENTYPO}..."
 ${FIX_ENTYPO_SCRIPT} "${FONT_DIR}/${FONT_ENTYPO}" "${FONT_DIR}/${FONT_ENTYPO_FIXED}"
 echo "done"
-echo -n "Fixing ascent and descent... "
-sed -i 's/ascent="[^"]*"/ascent="800"/' ${FONT_DIR}/${FONT_ENTYPO_FIXED}
-sed -i 's/descent="[^"]*"/descent="-200"/' ${FONT_DIR}/${FONT_ENTYPO_FIXED}
-echo "done"
 
 echo -n "Generating $OUTPUT_FILE... "
 (echo "var fm_embedded_fonts = ["
