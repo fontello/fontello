@@ -1,0 +1,21 @@
+#!/usr/bin/env fontforge
+Open($1)
+
+bbox=GetFontBoundingBox()
+#Print("minx=", bbox[0]);
+#Print("miny=", bbox[1]);
+#Print("maxx=", bbox[2]);
+#Print("maxy=", bbox[3]);
+
+SelectAll();
+Move(-bbox[0], -bbox[1]);
+Scale(100*1000/(bbox[3]-bbox[1]), 0, 0);
+Move(0, -200);
+
+#bbox=GetFontBoundingBox()
+#Print("minx=", bbox[0]);
+#Print("miny=", bbox[1]);
+#Print("maxx=", bbox[2]);
+#Print("maxy=", bbox[3]);
+
+Generate($2)
