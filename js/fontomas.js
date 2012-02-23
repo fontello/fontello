@@ -198,7 +198,8 @@ var myapp = (function () {
 
         // init templates
         for (var key in cfg.template) {
-            cfg.template[key].tpl = $(cfg.template[key].id).clone().removeAttr("id");
+            cfg.template[key].tpl = $(cfg.template[key].id).clone()
+                .removeAttr("id");
             $(cfg.template[key].id).remove();
         }
 
@@ -206,7 +207,8 @@ var myapp = (function () {
         try {
             xml_template = $.parseXML($(cfg.id.font_output).html());
         } catch (e) {
-            console.log("initGlobals: invalid xml template=", $(cfg.id.font_output).html(), "e=", e);
+            console.log("initGlobals: invalid xml template=",
+                $(cfg.id.font_output).html(), "e=", e);
             notify_alert("Internal error: can't parse output template.");
         }
         if (xml_template) {
@@ -268,7 +270,8 @@ var myapp = (function () {
                 $(cfg.id.tab2_content).removeClass(cfg.icon_size_classes)
                     .addClass(cfg.icon_size_prefix+size);
                 $(cfg.id.tab2_content).find(".rg-icon").each(function (i) {
-                    var glyph_id = $(this).parent().siblings(".fm-glyph-id").val();
+                    var glyph_id = $(this).parent().siblings(".fm-glyph-id")
+                        .val();
 
                     var size_x = size,
                         size_y = size;
@@ -328,7 +331,8 @@ var myapp = (function () {
         } else {
             $(cfg.id.file_browse_button).click(function (event) {
                 event.preventDefault();
-                notify_alert("File upload is not supported by your browser, use embedded fonts instead");
+                notify_alert("File upload is not supported by your browser, "
+                    + "use embedded fonts instead");
             });
         }
     };
@@ -398,7 +402,8 @@ var myapp = (function () {
                     var d=$this.contents();
 
                     $this.parent().siblings("input:checkbox").attr({value:
-                        draggable.parent().siblings("input:checkbox").attr("value")});
+                        draggable.parent().siblings("input:checkbox")
+                            .attr("value")});
                     $this.empty().append(draggable.contents());
 
                     draggable.parent().siblings("input:checkbox")
@@ -678,7 +683,7 @@ var myapp = (function () {
         }
     };
 
-    var notify = function (text, tpl, extra_tpl_vars, extra_opts, suppress_dup) {
+    var notify = function(text, tpl, extra_tpl_vars, extra_opts, suppress_dup) {
         var tpl_vars = {
             text: text
         };
@@ -999,7 +1004,8 @@ var myapp = (function () {
     // add a glyph to the rearrange zone
     var addGlyph = function (g_id) {
         console.log("addGlyph g_id=", g_id);
-        var checkbox=$(cfg.id.tab2_content).find(".fm-glyph-id:not(:checked):first");
+        var checkbox=$(cfg.id.tab2_content)
+            .find(".fm-glyph-id:not(:checked):first");
         checkbox.attr({value: g_id, checked: true});
         checkbox.parent().addClass("selected");
         var svg = $("#gd"+g_id).contents().clone(false);
@@ -1017,7 +1023,8 @@ var myapp = (function () {
     // remove a glyph from the rearrange zone
     var removeGlyph = function (g_id) {
         console.log("removeGlyph g_id=", g_id);
-        var checkbox=$(cfg.id.tab2_content).find(".fm-glyph-id:checked[value='"+g_id+"']");
+        var checkbox=$(cfg.id.tab2_content)
+            .find(".fm-glyph-id:checked[value='"+g_id+"']");
         checkbox.attr({value: "", checked: false});
         checkbox.parent().removeClass("selected");
         checkbox.parent().find(".rg-icon").empty();
@@ -1151,18 +1158,24 @@ var myapp = (function () {
                         var item=cfg.zero_clipboard.links[client.fm_index];
                         client.setText($(item.target).val());
                     });
-                    item.client.addEventListener("complete", function (client, text) {
-                        console.log("zcb: complete");
-                        notify_info("Copied to clipboard", true);
-                    });
-                    item.client.addEventListener("mouseOver", function (client) {
-                        console.log("zcb: mouseover");
-                        $("#"+item.link).trigger("mouseover");
-                    });
-                    item.client.addEventListener("mouseOut", function (client) { 
-                        console.log("zcb: mouseout");
-                        $("#"+item.link).trigger("mouseout");
-                    });
+                    item.client.addEventListener("complete",
+                        function (client, text) {
+                            console.log("zcb: complete");
+                            notify_info("Copied to clipboard", true);
+                        }
+                    );
+                    item.client.addEventListener("mouseOver",
+                        function (client) {
+                            console.log("zcb: mouseover");
+                            $("#"+item.link).trigger("mouseover");
+                        }
+                    );
+                    item.client.addEventListener("mouseOut",
+                        function (client) { 
+                            console.log("zcb: mouseout");
+                            $("#"+item.link).trigger("mouseout");
+                        }
+                    );
 
                     $("#"+item.link).click(function () {
                         console.log("noflash clipboard link clicked");
@@ -1188,7 +1201,7 @@ var myapp = (function () {
         lines.push(
             "/*",
             "", 
-            "Name                		Hex entity          CSS content",
+            "Name                       Hex entity          CSS content",
             "======================================================================"
         );
 
@@ -1224,7 +1237,8 @@ var myapp = (function () {
         //FIXME: quickfix: add xml declaration
         result = '<?xml version="1.0" standalone="no"?>\n' + result;
         //FIXME: quickfix: get rid of unwanted xmlns insertion
-        result = result.replace(/ xmlns="http:\/\/www\.w3\.org\/1999\/xhtml"/g, "");
+        result = result.replace(/ xmlns="http:\/\/www\.w3\.org\/1999\/xhtml"/g,
+            "");
         //FIXME: quickfix: remove the extra newlines
         result = result.replace(/>(\s)*<glyph/gm, ">\n<glyph");
         //FIXME: quickfix: &amp; => &
@@ -1280,7 +1294,7 @@ var myapp = (function () {
         });
     };
 
-    // type functinos
+    // type functions
     var is_string = function (s) {
         return typeof s == "string";
     }
@@ -1364,9 +1378,9 @@ var myapp = (function () {
     };
 
     // public interface
-	return {
-		init: init
-	};
+    return {
+        init: init
+    };
 })();
 
 $(document).ready(function () {
