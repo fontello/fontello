@@ -36,6 +36,11 @@ tools for end users. But we are not designers. If you can help us with creating
 high quality iconic fonts, please, contact vitaly@rcdesign.ru .
 
 
+## Discuss
+
+[Google group](https://github.com/nodeca/fontomas)
+
+
 ## Authors
 
 - Roman Shmelev ([shmelev](https://github.com/shmelev))
