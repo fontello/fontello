@@ -52,4 +52,12 @@ forum software on node.js engine.
 
 ## License
 
-View the [LICENSE](https://github.com/nodeca/fontomas/blob/master/LICENSE) file (MIT).
+Fontomas code (all files, except fonts) is distributed under MIT licence. See
+[LICENSE](https://github.com/nodeca/fontomas/blob/master/LICENSE) file for details.
+
+Embedded fonts are distributed unter their primary licences (SIL OFL / CC BY-SA).
+See section `Embedded Fonts` above for credits & links to fonts homepages.
+
+Generated fonts are intended for web usage, and should not be
+considered/distributed as `independed` artwork. Please, credit original font authors.
+Credits to Fontomas not required :)
