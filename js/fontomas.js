@@ -205,7 +205,8 @@ var myapp = (function () {
 
         // init output svg template
         try {
-            xml_template = $.parseXML($(cfg.id.font_output).html());
+            xml_template = $.parseXML(trimLeadingWS($(cfg.id.font_output)
+                .html()));
         } catch (e) {
             console.log("initGlobals: invalid xml template=",
                 $(cfg.id.font_output).html(), "e=", e);
@@ -905,7 +906,7 @@ var myapp = (function () {
             }
 
             myglyphs[next_glyph_id] = {
-                dom_node: $("<glyphs/>").attr("d", font.glyphs[i].d),
+                dom_node: $("<glyph/>").attr("d", font.glyphs[i].d),
                 file_id: fileinfo.id,
                 glyph_sizes: glyph_sizes,
                 units_per_em: units_per_em  // FIXME: move it to fileinfo
@@ -1300,6 +1301,11 @@ var myapp = (function () {
     }
 
     // string functions
+
+    // trim leading whitespaces
+    var trimLeadingWS = function (s) {
+        return s.replace(/^\s*/, "");
+    };
 
     // trim string at both sides:
     // in:  s="abc{hello}def", begin="c{", end="}"
