@@ -1235,8 +1235,6 @@ var myapp = (function () {
         var result = (typeof XMLSerializer!=="undefined")
             ? (new window.XMLSerializer()).serializeToString(xmlDom)
             : xmlDom.xml;
-        //FIXME: quickfix: add xml declaration
-        result = '<?xml version="1.0" standalone="no"?>\n' + result;
         //FIXME: quickfix: get rid of unwanted xmlns insertion
         result = result.replace(/ xmlns="http:\/\/www\.w3\.org\/1999\/xhtml"/g,
             "");
