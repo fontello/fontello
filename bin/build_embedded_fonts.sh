@@ -6,12 +6,12 @@ ROOT_DIR=${SCRIPT_PATH%/*/*}
 BIN_DIR="${ROOT_DIR}/bin"
 FONT_DIR="${ROOT_DIR}/fonts"
 JS_DIR="${ROOT_DIR}/js"
-FIX_ENTYPO_SCRIPT="${BIN_DIR}/fix_entypo.pe"
+FIX_ENTYPO_SCRIPT="${BIN_DIR}/entypo_rescale.pe"
 
-FONTS=(entypo-webfont.svg iconic_fill.svg iconic_stroke.svg websymbols.svg)
+FONTS=(entypo_rescaled.svg iconic_fill.svg iconic_stroke.svg websymbols.svg)
 FLEN=${#FONTS[@]}
 FONT_ENTYPO=Entypo.otf
-FONT_ENTYPO_FIXED=entypo-webfont.svg
+FONT_ENTYPO_FIXED=entypo_rescaled.svg
 OUTPUT_FILE="${JS_DIR}/fm-embedded-fonts.js"
 
 function js_escape() {

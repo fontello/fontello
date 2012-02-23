@@ -14,18 +14,19 @@ on source fonts. Then rearrange those on destination font. After that, you can
 download SVG font and make webpack via [fontsquirrel generator](http://www.fontsquirrel.com/fontface/generator)
 or other services.
 
-All your progress is automatically stored locally.
-
+(*) Currently we support loading only SVG fonts & [Cufon files](http://cufon.shoqolate.com/generate/).
+Other formats will be available, when we implement server-side scripts.
 
 ## Embedded Fonts
 
 For your convenience, Fontomas comes with wonderful embedded iconic fonts:
 
-- __Entypo__ - http://www.entypo.com/ (CC BY-SA)
+- __Entypo__ (rescaled) - http://www.entypo.com/ (CC BY-SA license)
 - __Iconic__ - https://github.com/somerandomdude/Iconic (SIL OFL)
 - __Web Symbols__ - http://www.justbenicestudio.com/studio/websymbols/ (SIL OFL)
 
 See details on fonts homepages. Of cause, you can add more fonts if you wish.
+Entypo is rescaled to ascent/descent, to have the same allignement as other fonts.
 
 
 ## We need your help!

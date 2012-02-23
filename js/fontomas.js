@@ -1188,7 +1188,7 @@ var myapp = (function () {
         lines.push(
             "/*",
             "", 
-            "Icon                		Hex entity          CSS content",
+            "Name                		Hex entity          CSS content",
             "======================================================================"
         );
 
