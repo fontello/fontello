@@ -1063,7 +1063,8 @@ var myapp = (function () {
                 if (myglyphs[g_id].units_per_em != cfg.output.units_per_em) {
                     var scale = cfg.output.units_per_em
                         / myglyphs[g_id].units_per_em;
-                    g.attr("d", scalePath(g.attr("d"), scale));
+// FIXME!!! It fuckups everyting 
+//                    g.attr("d", scalePath(g.attr("d"), scale));
                 }
                 glyphs.push(outerHtml(g));
             });
