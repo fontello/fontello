@@ -38,7 +38,8 @@ high quality iconic fonts, please, contact vitaly@rcdesign.ru .
 
 ## Discuss
 
-[Google group](https://github.com/nodeca/fontomas)
+- User's questions: [Google group](https://groups.google.com/group/fontomas-project/)
+- Bug reports: [Issue tracker](https://github.com/nodeca/fontomas/issues)
 
 
 ## Authors
