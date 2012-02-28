@@ -381,7 +381,7 @@ var myapp = (function () {
                 updateIconAssignments();
             }
         });
-       
+
         // init drag and drop for rearrange icons
         for (var i=0, len=cfg.basic_latin.str.length; i<len; i++) {
             var tpl = $(cfg.template.rearrange_glyph.tpl).clone();
@@ -430,6 +430,10 @@ var myapp = (function () {
             }));
             $(cfg.id.tab2_content).append(tpl);
         }
+
+        // reset rearrange zone
+        $(cfg.id.tab2_content).find(".fm-glyph-id")
+            .attr({value: "", checked: false});
     };
 
     var initSaveTab = function () {
@@ -1005,6 +1009,7 @@ var myapp = (function () {
     // add a glyph to the rearrange zone
     var addGlyph = function (g_id) {
         console.log("addGlyph g_id=", g_id);
+
         var checkbox=$(cfg.id.tab2_content)
             .find(".fm-glyph-id:not(:checked):first");
         checkbox.attr({value: g_id, checked: true});
