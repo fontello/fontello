@@ -15,11 +15,28 @@ body {
   opacity: 0.95;
 }
 
-#tab h1 {
+/*#tab h1 {
   color: inherit;
   margin-left: 10px;
   margin-right: 15px;
 }
+*/
+#tab li a {
+  display: block;
+  font-size: 30px;
+  font-weight: bold;
+  line-height: 1;
+  padding-left: 20px;
+  padding-right: 25px;
+}
+
+#tab li a small {
+  font-size: 18px;
+  line-height: 1;
+  color: #999999;
+  font-weight: normal;
+}
+
 .nav-pills .active > a small {
   color: #fff;
 }
