@@ -596,6 +596,10 @@ var myapp = (function () {
                 // onclose closure
                 fm_embedded_fonts[e_id].is_added = fileinfo.is_added;
                 updateUseEmbedded();
+                if (cfg.live_update) {
+                    updateFont();
+                    updateIconAssignments();
+                }
                 updateGlyphCount();
             });
             fm_embedded_fonts[e_id].is_added = fileinfo.is_added;
@@ -609,6 +613,10 @@ var myapp = (function () {
             // onload closure
             addFont(fileinfo, function () {
                 // onclose closure
+                if (cfg.live_update) {
+                    updateFont();
+                    updateIconAssignments();
+                }
                 updateGlyphCount();
             });
         });
