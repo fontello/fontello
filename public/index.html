@@ -14,7 +14,7 @@
 
     <!-- the fav and touch icons -->
     <link rel="shortcut icon" href="img/favicon.ico"/>
-    <script src="js/modernizr.custom.js"></script>
+    <script src="js/external/modernizr.custom.js"></script>
   </head>
 
   <body>
@@ -48,12 +48,13 @@
 
         <!-- tab1 -->
         <div id="select" class="tab-pane fade">
+
           <form class="" id="fm-file-drop-zone">
             <input id="fm-file" type="file" multiple="multiple"/>
             <div class="btn-toolbar">
 
               <div id="fm-icon-size" class="btn-group tooltip-test" data-toggle="buttons-radio" title="Change symbols preview size" data-placement="bottom">
-                <button id="fm-tpl-icon-size-button" class="btn btn-small">px</button>
+                <button id="fm-tpl-icon-size-button" class="btn btn-small fm-icon-size-button">px</button>
               </div>
 
               <div class="btn-group tooltip-test" title="SVG / Cufon" data-placement="bottom">
@@ -71,54 +72,16 @@
               </div>
             </div>
           </form>
+
           <div class="btn-toolbar">
           </div>
 
-          <ul id="fm-tab1-content" class="unstyled">
-            <li id="fm-tpl-font" class="">
-              <h2><span class="fm-font-name">FontName</span>
-                <a class="fm-font-anchor" href="#"></a>
-                <a class="fm-font-close" href="#"><small>close</small></a>
-              </h2>
-              <div id="fm-tpl-glyph-group" class="fm-glyph-group">
-                <label id="fm-tpl-glyph" class="glyph">
-                  <input class="fm-glyph-id" type="checkbox" value="0"/>
-                  <div id="gd0" class="gd" style="width: 64px; height: 64px;"></div>
-                </label>
-              </div>
-            </li>
-          </ul>
+          <ul id="fm-font-list" class="unstyled"></ul>
         </div>
 
         <!-- tab2 -->
         <div id="rearrange" class="tab-pane fade">
-          <form id="fm-form-charset" class="well form-horizontal">
-            <fieldset>
-              <div class="control-group">
-                <label class="control-label">Charset</label>
-                <div class="controls">
-                  <label class="radio">
-                    <input class="fm-charset" type="radio" checked="" value="basic_latin" name="charset"/>Basic Latin
-                  </label>
-                  <label class="radio">
-                    <input class="fm-charset" type="radio" value="unicode_private" name="charset"/>Supplementary Private Use Area-A
-                  </label>
-                </div>
-              </div>
-            </fieldset>
-          </form>
-
-          <div id="fm-tab2-content">
-            <label id="fm-tpl-rearrange-glyph" class="rearrange-glyph">
-              <input class="fm-glyph-id" type="checkbox" readonly="readonly" value=""/>
-              <input id="rgu0" class="fm-unicode" type="text" value=""/>
-              <div class="rg-top"></div>
-              <div class="rg-center">
-                <div id="rgd0" class="rg-icon"></div>
-               </div>
-              <div class="rg-bottom"></div>
-            </label>
-          </div>
+          <div id="fm-generated-font"></div>
         </div>
 
         <!-- tab3 -->
@@ -193,7 +156,7 @@
 
     <!-- templates
     ================================================== -->
-<script type="text/template" id="fm-font-output">
+    <script type="text/template" id="fm-font-output">
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg">
@@ -207,38 +170,92 @@
   </defs>
 </svg>
     </script>
+    <script type="text/template" id="fm-font-item-template">
+      <h2><span class="fm-font-name"><%= fontname %></span>
+        <a class="fm-font-anchor" href="#"></a>
+        <a class="fm-font-close" href="#"><small>close</small></a>
+      </h2>
+      <div class="fm-glyph-group"></div>
+    </script>
+    <script type="text/template" id="fm-glyph-item-template">
+      <label class="glyph">
+        <input class="fm-glyph-id" type="checkbox" value="0"/>
+        <div id="gd0" class="gd" style="width: 64px; height: 64px;"></div>
+      </label>
+    </script>
+    <script type="text/template" id="fm-rearrange-toolbar-template">
+      <!--form id="fm-form-charset" class="well form-horizontal"-->
+        <fieldset>
+          <div class="control-group">
+            <label class="control-label">Charset</label>
+            <div class="controls">
+              <label class="radio">
+                <input class="fm-charset" type="radio" checked="" value="basic_latin" name="charset"/>Basic Latin
+              </label>
+              <label class="radio">
+                <input class="fm-charset" type="radio" value="unicode_private" name="charset"/>Supplementary Private Use Area-A
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      <!--/form-->
+    </script>
+    <script type="text/template" id="fm-genfont-glyph-item-template">
+      <!--label class="rearrange-glyph"-->
+        <input class="fm-glyph-id" type="checkbox" readonly="readonly" value=""/>
+        <input id="rgu<%=num%>" class="fm-unicode" type="text" value="<%-char%>"/>
+        <div class="rg-top"><%-top%></div>
+        <div class="rg-center">
+          <div id="rgd<%=num%>" class="rg-icon"></div>
+         </div>
+        <div class="rg-bottom"><%=bottom%></div>
+      <!--/label-->
+    </script>
 
     <!-- javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 <!--
-    <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="js/external/jquery-1.7.1.min.js"></script>
 -->
-    <script type="text/javascript" src="js/jquery-1.7.1.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/external/jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="js/external/bootstrap.min.js"></script>
 <!--
     <script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
 -->
-    <script type="text/javascript" src="js/jquery-ui-1.8.17.custom.js"></script>
-    <script type="text/javascript" src="js/jquery.notify.min.js"></script>
+    <script type="text/javascript" src="js/external/jquery-ui-1.8.17.custom.js"></script>
+    <script type="text/javascript" src="js/external/jquery.notify.min.js"></script>
 <!--
-    <script type="text/javascript" src="js/raphael-min.js"></script>
+    <script type="text/javascript" src="js/external/raphael-min.js"></script>
 -->
-    <script type="text/javascript" src="js/raphael.js"></script>
-    <script type="text/javascript" src="js/swfobject.js"></script>
-    <script type="text/javascript" src="js/downloadify.min.js"></script>
-    <script type="text/javascript" src="js/ZeroClipboard.js"></script>
-<!--
-    <script type="text/javascript" src="js/jszip.js"></script>
--->
+    <script type="text/javascript" src="js/external/raphael.js"></script>
+    <script type="text/javascript" src="js/external/swfobject.js"></script>
+    <script type="text/javascript" src="js/external/downloadify.min.js"></script>
+    <script type="text/javascript" src="js/external/ZeroClipboard.js"></script>
+    <script type="text/javascript" src="js/external/underscore.js"></script>
+    <script type="text/javascript" src="js/external/backbone.js"></script>
+
     <script type="text/javascript" src="js/fm-embedded-fonts.js"></script>
-    <script type="text/javascript" src="js/fontomas.js"></script>
+
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/lib/util.js"></script>
+    <script type="text/javascript" src="js/lib/font.js"></script>
+    <script type="text/javascript" src="js/models/font.js"></script>
+    <script type="text/javascript" src="js/models/generatedfont.js"></script>
+    <script type="text/javascript" src="js/models/main.js"></script>
+    <script type="text/javascript" src="js/views/font.js"></script>
+    <script type="text/javascript" src="js/views/generatedfont.js"></script>
+    <script type="text/javascript" src="js/views/select.js"></script>
+    <script type="text/javascript" src="js/views/rearrange.js"></script>
+    <script type="text/javascript" src="js/views/main.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+
     <script type="text/javascript">
         $('.tooltip-test').tooltip();
         $("#notifications-container").notify({
             speed: 500,
             expires: 5000
-        });    
+        });
     </script>
 
 <!-- Google Analytics -->
