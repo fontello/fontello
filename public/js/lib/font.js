@@ -72,7 +72,7 @@ var fm = (function (fm) {
             json = $.parseJSON(json_string);
         } catch (e) {
             console.log("Font.initCufonJs: invalid json");
-            return null;    // FIXME return Error object
+            return null;
         }
 
         font.horiz_adv_x = json.w || 1000;

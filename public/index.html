@@ -54,7 +54,9 @@
             <div class="btn-toolbar">
 
               <div id="fm-icon-size" class="btn-group tooltip-test" data-toggle="buttons-radio" title="Change symbols preview size" data-placement="bottom">
-                <button id="fm-tpl-icon-size-button" class="btn btn-small fm-icon-size-button">px</button>
+                {{#buttons}}
+                <button class="btn btn-small fm-icon-size-button" value="{{this}}">{{this}}px</button>
+                {{/buttons}}
               </div>
 
               <div class="btn-group tooltip-test" title="SVG / Cufon" data-placement="bottom">
@@ -67,7 +69,9 @@
                   <span class="caret">dfg</span>
                 </a>
                 <ul id="fm-use-embedded" class="dropdown-menu">
-                  <li id="fm-tpl-embedded"><a class="fm-font-name" href="#">Iconic Fill</a></li>
+                  {{#options}}
+                  <li><a class="fm-font-name{{#if this.disabled}} disabled{{/if}}" href="#">{{this.text}}</a></li>
+                  {{/options}}
                 </ul>
               </div>
             </div>
@@ -81,6 +85,21 @@
 
         <!-- tab2 -->
         <div id="rearrange" class="tab-pane fade">
+          <form id="fm-form-charset" class="well form-horizontal">
+            <fieldset>
+              <div class="control-group">
+                <label class="control-label">Charset</label>
+                <div class="controls">
+                  <label class="radio">
+                    <input class="fm-charset" type="radio" checked="" value="basic_latin" name="charset"/>Basic Latin
+                  </label>
+                  <label class="radio">
+                    <input class="fm-charset" type="radio" value="unicode_private" name="charset"/>Supplementary Private Use Area-A
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+          </form>
           <div id="fm-generated-font"></div>
         </div>
 
@@ -180,25 +199,8 @@
     <script type="text/template" id="fm-glyph-item-template">
       <label class="glyph">
         <input class="fm-glyph-id" type="checkbox" value="0"/>
-        <div id="gd0" class="gd" style="width: 64px; height: 64px;"></div>
+        <div id="gd0" class="fm-glyph-div" style="width: 64px; height: 64px;"></div>
       </label>
-    </script>
-    <script type="text/template" id="fm-rearrange-toolbar-template">
-      <!--form id="fm-form-charset" class="well form-horizontal"-->
-        <fieldset>
-          <div class="control-group">
-            <label class="control-label">Charset</label>
-            <div class="controls">
-              <label class="radio">
-                <input class="fm-charset" type="radio" checked="" value="basic_latin" name="charset"/>Basic Latin
-              </label>
-              <label class="radio">
-                <input class="fm-charset" type="radio" value="unicode_private" name="charset"/>Supplementary Private Use Area-A
-              </label>
-            </div>
-          </div>
-        </fieldset>
-      <!--/form-->
     </script>
     <script type="text/template" id="fm-genfont-glyph-item-template">
       <!--label class="rearrange-glyph"-->
@@ -225,6 +227,7 @@
     <script type="text/javascript" src="js/external/ZeroClipboard.js"></script>
     <script type="text/javascript" src="js/external/underscore.js"></script>
     <script type="text/javascript" src="js/external/backbone.js"></script>
+    <script type="text/javascript" src="js/external/handlebars.js"></script>
 
     <script type="text/javascript" src="js/fm-embedded-fonts.js"></script>
 

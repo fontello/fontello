@@ -12,8 +12,6 @@ var fm = (function (fm) {
             return;
         };
 
-        //initGlobals();
-
         // show loading tab
         $(cfg.id.tab).tab("show");
 

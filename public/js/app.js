@@ -28,12 +28,13 @@ var fm = (function (fm) {
             font_output: "#fm-font-output"
         },
         class: {
+            font_name: ".fm-font-name",
             glyph_group: ".fm-glyph-group",
+            glyph_div: ".fm-glyph-div",
+            rg_icon: ".rg-icon",
             disable_on_demand: ".fm-disable-on-demand"
         },
         template: {
-            icon_size_button: { id: "#fm-tpl-icon-size-button" },
-            embedded: { id: "#fm-tpl-embedded" },
             glyph: { id: "#fm-tpl-glyph" },
             glyph_group: { id: "#fm-tpl-glyph-group" },
             font: { id: "#fm-tpl-font" },

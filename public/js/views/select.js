@@ -8,7 +8,10 @@ var fm = (function (fm) {
         tagName: "form",
         id: "fm-file-drop-zone",
 
-        //template: _.template($('#fm-select-toolbar-template').html()),
+        templates: {
+            icon_size: Handlebars.compile($(cfg.id.icon_size).html()),
+            use_embedded: Handlebars.compile($(cfg.id.use_embedded).html())
+        },
 
         events: {
             "click .fm-icon-size-button": "changeIconSize",
@@ -27,16 +30,11 @@ var fm = (function (fm) {
         render: function () {
             console.log("Views.SelectToolbar.render");
             var self = this;
-            //$(this.el).html("test");
 
-            // init preview icon size selection
-            for (var i=0, len=cfg.preview_icon_sizes.length; i<len; i++) {
-                var tpl = $(cfg.template.icon_size_button.tpl).clone();
-                tpl.toggleClass("active", i == 0);
-                tpl.val(cfg.preview_icon_sizes[i]);
-                tpl.text(cfg.preview_icon_sizes[i] + "px");
-                $(cfg.id.icon_size).append(tpl);
-            }
+            // render icon size buttons
+            var tpl_vars = {buttons: cfg.preview_icon_sizes};
+            $(cfg.id.icon_size).html(this.templates.icon_size(tpl_vars))
+                .find("button:first").addClass("active");
 
             // FIXME: workaround, because dragover/drag events don't work
             if (env.filereader) {
@@ -49,27 +47,35 @@ var fm = (function (fm) {
                 });
             }
 
-            for (var i=0, len=fm_embedded_fonts.length; i<len; i++) {
-                var tpl = $(cfg.template.embedded.tpl).clone();
-                var is_added = fm_embedded_fonts[i].is_added;
-                var item = tpl.find(".fm-font-name");
-                item.toggleClass("disabled", is_added)
-                    .data("embedded_id", i).
-                    text(fm_embedded_fonts[i].fontname);
-                $(cfg.id.use_embedded).append(tpl);
-            }
+            this.renderUseEmbedded();
 
             return this;
         },
 
-        updateUseEmbedded: function () {
-            console.log("Views.SelectToolbar.updateUseEmbedded");
-            $("#fm-file-drop-zone").find(".fm-font-name").each(function () {
-                var e_id = $(this).data("embedded_id"),
-                    is_added = fm_embedded_fonts[e_id].is_added;
-                $(this).toggleClass("disabled", is_added)
-                    .text(fm_embedded_fonts[e_id].fontname);
-            });
+        renderUseEmbedded: function () {
+            console.log("Views.SelectToolbar.renderUseEmbedded");
+            var tpl_vars = {
+                options: _.map(fm_embedded_fonts, function (item) {
+                    return {
+                        text: item.fontname,
+                        disabled: item.is_added
+                    };
+                })
+            };
+            $(cfg.id.use_embedded).html(this.templates.use_embedded(tpl_vars))
+                .find(cfg.class.font_name).each(function (i) {
+                    $(this).data("embedded_id", i);
+                });
+        },
+
+        useEmbedded: function (event) {
+            console.log("Views.SelectToolbar.useEmbedded");
+            event.preventDefault();
+            var id = $(event.target).data("embedded_id"),
+                font = fm_embedded_fonts[id];
+            console.assert(font);
+            if (font && !font.is_added)
+                App.mainview.addEmbeddedFonts([font]);
         },
 
         fileBrowse: function (event) {
@@ -106,64 +112,66 @@ var fm = (function (fm) {
             }
         },
 
-        useEmbedded: function (event) {
-            console.log("click Use Embedded");
-            var e_id = $(event.target).data("embedded_id");
-            if (!fm_embedded_fonts[e_id].is_added) {
-                console.assert(fm_embedded_fonts[e_id]);
-                if (fm_embedded_fonts[e_id])
-                    App.mainview.addEmbeddedFonts([fm_embedded_fonts[e_id]]);
-            }
-        },
-
         changeIconSize: function (event) {
-            console.log("Views.SelectToolbar.changeIconSize event=", event);
+            console.log("Views.SelectToolbar.changeIconSize");
             event.preventDefault();
-            var size = parseInt($(event.target).val()) || 32;
+            var size = parseInt($(event.target).val())
+                || cfg.preview_icon_sizes[0];
             console.log('size='+size);
-            $(cfg.class.glyph_group).removeClass(cfg.icon_size_classes)
-                .addClass(cfg.icon_size_prefix+size);
-            $(cfg.id.font_list).find(".gd").each(function (i) {
-                var size_x = $(this).data("glyph_sizes")[size][0],
-                    size_y = $(this).data("glyph_sizes")[size][1];
 
-                $(this).css({
-                        width: size_x + "px",
-                        height: size_y + "px",
-                        "margin-left": "-" + Math.round(size_x/2) + "px",
-                        "margin-top": "-" + Math.round(size_y/2) + "px"
-                    })
-                    .find("svg").css({
-                        width: size_x + "px", 
-                        height: size_y + "px"
-                    });
+            // attach class
+            $(cfg.class.glyph_group)
+                .removeClass(cfg.icon_size_classes)
+                .addClass(cfg.icon_size_prefix + size);
+
+            // change width/height
+            $(cfg.id.font_list).find(cfg.class.glyph_div).each(function (i) {
+                var $this = $(this),
+                    size_x = $this.data("glyph_sizes")[size][0],
+                    size_y = $this.data("glyph_sizes")[size][1];
+
+                $this.css({
+                    width: size_x + "px",
+                    height: size_y + "px",
+                    "margin-left": "-" + Math.round(size_x/2) + "px",
+                    "margin-top": "-" + Math.round(size_y/2) + "px"
+                }).find("svg").css({
+                    width: size_x + "px", 
+                    height: size_y + "px"
+                });
             });
 
-            $(cfg.id.generated_font).removeClass(cfg.icon_size_classes)
-                .addClass(cfg.icon_size_prefix+size);
-            $(cfg.id.generated_font).find(".rg-icon").each(function (i) {
-                var glyph_id = $(this).parent().siblings(".fm-glyph-id")
-                    .val();
+            // do the same on the rearrange tab
+            $(cfg.id.generated_font)
+                .removeClass(cfg.icon_size_classes)
+                .addClass(cfg.icon_size_prefix + size);
 
-                var size_x = size,
+            // change width/height
+            $(cfg.id.generated_font).find(cfg.class.rg_icon).each(function (i) {
+                var $this = $(this),
+                    glyph_id = $(this).parent().siblings(".fm-glyph-id").val(),
+                    size_x = size,
                     size_y = size;
 
+                // FIXME
                 if (glyph_id != "") {
-                    size_x = $(this).data("glyph_sizes")[size][0],
-                    size_y = $(this).data("glyph_sizes")[size][1];
+                    size_x = $this.data("glyph_sizes")[size][0],
+                    size_y = $this.data("glyph_sizes")[size][1];
                 }
 
-                $(this).css({
-                        width: size_x + "px",
-                        height: size_y + "px",
-                        "margin-left": "-" + Math.round(size_x/2) + "px",
-                        "margin-top": "-" + Math.round(size_y/2) + "px"
-                    })
-                    .css({width: "100%", left: "0px", "margin-left": "0px"})
-                    .find("svg").css({
-                        width: size_x + "px",
-                        height: size_y + "px"
-                    });
+                $this.css({
+                    width: size_x + "px",
+                    height: size_y + "px",
+                    "margin-left": "-" + Math.round(size_x/2) + "px",
+                    "margin-top": "-" + Math.round(size_y/2) + "px"
+                }).css({    // FIXME: move it to css
+                    width: "100%",
+                    left: "0px",
+                    "margin-left": "0px"
+                }).find("svg").css({
+                    width: size_x + "px",
+                    height: size_y + "px"
+                });
             });
         }
     });

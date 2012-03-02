@@ -5,11 +5,6 @@ var fm = (function (fm) {
         debug = fm.debug;
 
     App.Views.RearrangeToolbar = Backbone.View.extend({
-        tagName: "form",
-        id: "fm-form-charset",
-        className: "well form-horizontal",
-        template: _.template($('#fm-rearrange-toolbar-template').html()),
-
         events: {
             "click .fm-charset": "changeCharset"
         },
@@ -21,20 +16,13 @@ var fm = (function (fm) {
 
         render: function () {
             console.log("Views.RearrangeToolbar.render");
-            $(this.el).html(this.template());
-
             return this;
         },
 
         changeCharset: function (event) {
             console.log("Views.RearrangeToolbar.changeCharset");
-            var charset_list = ["basic_latin", "unicode_private"],
-                charset = event.target.value;
-
-            // FIXME
-            if (_.indexOf(charset_list, charset) != -1) {
-                App.main.genfont.setCharset(charset);
-            }
+            var charset = event.target.value;
+            App.main.genfont.setCharset(charset);
         }
     });
 

@@ -64,12 +64,12 @@ var fm = (function (fm) {
 
             case "unicode_private":
                 _.each(this.glyphs.models, function (glyph, i) {
-                    var c = (cfg.unicode_private.begin+i).toString(16)
+                    var code = (cfg.unicode_private.begin+i).toString(16)
                         .toUpperCase(),
                         values = {
-                            char: "&#x" + c + ";",
-                            top: "&#x" + c + ";",
-                            bottom: "U+" + c
+                            char: "&#x" + code + ";",
+                            top: "&#x" + code + ";",
+                            bottom: "U+" + code
                         };
                     glyph.set(values);
                 });
@@ -91,7 +91,7 @@ var fm = (function (fm) {
         toUnicode: function (char) {
             var c = char.charCodeAt(0).toString(16).toUpperCase();
             if (c.length < 4)
-                c = "0000".substr(0, 4-c.length) + c;
+                c = "0000".substr(0, 4 - c.length) + c;
             return "U+" + c;
         },
 

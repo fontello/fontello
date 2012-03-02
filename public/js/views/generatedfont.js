@@ -6,8 +6,6 @@ var fm = (function (fm) {
         util = fm.lib.util;
 
     App.Views.GeneratedFont = Backbone.View.extend({
-        tagName:  "div",
-
         glyphviews: [],
 
         events: {
@@ -20,27 +18,21 @@ var fm = (function (fm) {
             this.model.glyphs.each(this.addGlyph);
             this.model.glyphs.bind("add", this.addGlyph, this);
 
-            //this.model.bind("all", this.catchAll, this);
             this.model.bind("change:charset", this.onChangeCharset, this);
             this.model.bind("change:glyph_count",
                 this.updateGlyphCount, this);
             this.model.bind("change", this.onChange, this);
         },
 
-        catchAll: function (a, b, c) {
-            console.log("Views.GeneratedFont.catchAll", a, b, c);
-        },
-
         render: function () {
-            console.log("Views.GeneratedFont.render el=", this.el);
-
+            console.log("Views.GeneratedFont.render");
             _(this.glyphviews).each(function (glyph) {
                 $(cfg.id.generated_font).append(glyph.render().el);
             });
 
             // reset rearrange zone
-            $(cfg.id.generated_font).find(".fm-glyph-id")
-                .attr({value: "", checked: false});
+            $(cfg.id.generated_font)
+                .find(".fm-glyph-id").attr({value: "", checked: false});
 
             return this;
         },
@@ -90,14 +82,14 @@ var fm = (function (fm) {
                 .find("input:checkbox:checked")
                 .each(function () {
                     var $this = $(this),
-                        g_id = $this.val(),
+                        glyph_id = $this.val(),
                         unicode = $this.siblings("input.fm-unicode").val();
 
-                    var font = App.main.fonts.getFont(g_id),
-                        glyph = App.main.fonts.getGlyph(g_id);
+                    var font = App.main.fonts.getFont(glyph_id),
+                        glyph = App.main.fonts.getGlyph(glyph_id);
 
                     if (!font || !glyph) {
-                        console.log("can't getFont/getGlyph id=", g_id);
+                        console.log("can't getFont/getGlyph id=", glyph_id);
                         return; 
                     }
 
@@ -141,7 +133,6 @@ var fm = (function (fm) {
                 .find("input:checkbox:checked")
                 .each(function () {
                     var $this = $(this);
-                    var g_id = $this.val();
                     var unicode = $this.siblings("input.fm-unicode").val();
                     var tmp = self.model.toEntityAndCss(unicode);
                     lines.push(
@@ -171,7 +162,7 @@ var fm = (function (fm) {
 
             $(this.el).html(this.template(this.model.toJSON()));
             $(this.el).attr("id", "rgl" + this.model.get("num"));
-            this.$(".rg-icon").droppable($.extend(
+            this.$(cfg.class.rg_icon).droppable($.extend(
                 {}, cfg.droppable_options, {drop: function (event, ui) {
                 console.log("drop");
                 $this=$(this);

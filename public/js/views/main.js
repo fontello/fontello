@@ -21,13 +21,14 @@ var fm = (function (fm) {
 
             this.model.fonts.bind('add',   this.addOneFont, this);
             this.model.fonts.bind('reset', this.addAllFonts, this);
-            //this.model.fonts.bind('all',   this.render, this);
             //this.model.fonts.fetch();
 
             this.select_toolbar = new App.Views.SelectToolbar({
                 el: $(cfg.id.file_drop_zone)[0]
             });
-            this.rearrange_toolbar = new App.Views.RearrangeToolbar;
+            this.rearrange_toolbar = new App.Views.RearrangeToolbar({
+                el: $(cfg.id.form_charset)[0]
+            });
 
             this.genfontview = new App.Views.GeneratedFont({
                 model: this.model.genfont
@@ -65,9 +66,8 @@ var fm = (function (fm) {
 
         render: function () {
             console.log("Views.Main.render");
-
             // render the select tab
-            $(cfg.id.font_list).before(this.select_toolbar.render().el);
+            this.select_toolbar.render();
 
             // auto load embedded fonts
             // debug
@@ -75,12 +75,10 @@ var fm = (function (fm) {
             this.addEmbeddedFonts(fm_embedded_fonts);
 
             // first tab is fully initialized so show it
-            $(cfg.id.tab+" a:first").tab("show");
+            $(cfg.id.tab + " a:first").tab("show");
 
             // render the rearrange tab
-            $(cfg.id.generated_font)
-                .before(this.rearrange_toolbar.render().el);
-            $(cfg.id.generated_font).append(this.genfontview.render().el);
+            this.genfontview.render();
 
             // render the save tab
             this.initDownloadLink();
@@ -97,11 +95,11 @@ var fm = (function (fm) {
                 App.mainview.addFont(fileinfo, function (fileinfo) {
                     // onclose closure
                     fm_embedded_fonts[e_id].is_added = fileinfo.is_added;
-                    App.mainview.select_toolbar.updateUseEmbedded();
+                    App.mainview.select_toolbar.renderUseEmbedded();
                 });
                 fm_embedded_fonts[e_id].is_added = fileinfo.is_added;
                 fm_embedded_fonts[e_id].fontname = fileinfo.fontname;
-                App.mainview.select_toolbar.updateUseEmbedded();
+                App.mainview.select_toolbar.renderUseEmbedded();
             });
         },
 
@@ -192,7 +190,6 @@ var fm = (function (fm) {
 
         addFont: function (fileinfo, cb_onclose) {
             console.log("Views.Main.addFont id=", fileinfo.id);
-
             // if it is a dup, skip it
             if (fileinfo.is_dup)
                 return;
@@ -209,8 +206,8 @@ var fm = (function (fm) {
                 break;
             default:
                 // unknown file exstension
-                util.notify_alert("Can't parse file '" + fileinfo.filename + "':"
-                    + " unknown file extension. Currently, we only support "
+                util.notify_alert("Can't parse file '" + fileinfo.filename
+                    + "': unknown file extension. Currently, we only support "
                     + util.joinList(types, ", ", " and ") + "."
                 );
                 return;
@@ -230,7 +227,6 @@ var fm = (function (fm) {
             fileinfo.fontname = font.id;
 
             // FIXME
-            // MVC
             var tmp = $.extend({}, fileinfo);
             tmp.font = font;
             App.mainview.createFont(tmp);
@@ -264,16 +260,15 @@ var fm = (function (fm) {
         },
 
         toggleMenu: function (enabled) {
-            console.log("toggleMenu");
+            console.log("Views.Main.toggleMenu");
             $(cfg.id.tab).find("a"+cfg.class.disable_on_demand)
                 .toggleClass("disabled", !enabled);
         },
 
         initDownloadLink: function () {
-            console.log("initDownloadLink");
-
+            console.log("Views.Main.initDownloadLink");
             $(cfg.id.tab_save).one("shown", function () {
-                console.log("initDownloadLink: shown fired");
+                console.log("Views.Main.initDownloadLink: shown fired");
                 // flash download helper doesn't work if file: proto used
                 if (!env.is_file_proto && env.flash_version.major > 0) {
                     $(cfg.id.download_font_button).downloadify({
@@ -318,17 +313,16 @@ var fm = (function (fm) {
         },
 
         initClipboardLinks: function () {
-            console.log("initClipboardLinks");
-
+            console.log("Views.Main.initClipboardLinks");
             $(cfg.id.tab_save).one("shown", function () {
-                console.log("initClipboardLinks: shown fired");
+                console.log("Views.Main.initClipboardLinks: shown fired");
                 // flash clipboard helper doesn't work if file: proto used
                 if (!env.is_file_proto && env.flash_version.major > 0) {
                     ZeroClipboard.setMoviePath(cfg.zero_clipboard.swf_path);
 
                     for (var i=0, len=cfg.zero_clipboard.links.length;
                         i<len; i++) {
-                        var item=cfg.zero_clipboard.links[i];
+                        var item = cfg.zero_clipboard.links[i];
                         item.client = new ZeroClipboard.Client();
                         item.client.fm_index = i;
                         item.client.glue(item.link, item.span);
@@ -336,7 +330,7 @@ var fm = (function (fm) {
                         item.client.addEventListener("mouseDown",
                             function (client) { 
                             console.log("zcb: mousedown");
-                            var item=cfg.zero_clipboard
+                            var item = cfg.zero_clipboard
                                 .links[client.fm_index];
                             client.setText($(item.target).val());
                         });
@@ -349,17 +343,17 @@ var fm = (function (fm) {
                         item.client.addEventListener("mouseOver",
                             function (client) {
                                 console.log("zcb: mouseover");
-                                $("#"+item.link).trigger("mouseover");
+                                $("#" + item.link).trigger("mouseover");
                             }
                         );
                         item.client.addEventListener("mouseOut",
                             function (client) { 
                                 console.log("zcb: mouseout");
-                                $("#"+item.link).trigger("mouseout");
+                                $("#" + item.link).trigger("mouseout");
                             }
                         );
 
-                        $("#"+item.link).click(function () {
+                        $("#" + item.link).click(function () {
                             console.log("noflash clipboard link clicked");
                         });
                     }
@@ -371,8 +365,8 @@ var fm = (function (fm) {
                     // no clipboard support
                     for (var i=0, len=cfg.zero_clipboard.links.length;
                         i<len; i++) {
-                        var item=cfg.zero_clipboard.links[i];
-                        $("#"+item.span).remove();
+                        var item = cfg.zero_clipboard.links[i];
+                        $("#" + item.span).remove();
                     }
                 }
             });
