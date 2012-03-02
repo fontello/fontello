@@ -121,9 +121,7 @@ var fm = (function (fm) {
     var env = {
         flash_version: swfobject.getFlashPlayerVersion(),
         is_file_proto: (window.location.protocol == "file:"),
-        filereader: null,
-        indexeddb: null,
-        localstorage: null
+        filereader: null
     };
 
     var App = {

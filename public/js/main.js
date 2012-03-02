@@ -33,14 +33,7 @@ var fm = (function (fm) {
         if (debug.is_on && debug.nofilereader)
             env.filereader = false;
 
-        // FF4+ Chrome11+
-        var indexeddb = env.indexeddb = Modernizr.indexeddb;
-
-        // IE8+ FF3.5+ Chrome4+ Safari4+ Opera10.5+
-        var localstorage = env.localstorage = Modernizr.localstorage;
-
-        // IE8+ FF3.5+ Chrome4+ Safari4+ Opera10.5+
-        return (indexeddb || localstorage);
+        return true;
     };
 
     // public interface
