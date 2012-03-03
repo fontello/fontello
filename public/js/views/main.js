@@ -7,6 +7,7 @@ var fm = (function (fm) {
         Font = fm.lib.Font;
 
     App.Views.Main = Backbone.View.extend({
+        templates: {},
         fontviews: {},
         genfontview: null,
         select_toolbar: null,
@@ -19,22 +20,46 @@ var fm = (function (fm) {
             console.log("Views.Main.initialize");
             _.bindAll(this);
 
+            this.initTemplates();
+            this.initSvgFontTemplate();
+
             this.model.fonts.bind('add',   this.addOneFont, this);
             this.model.fonts.bind('reset', this.addAllFonts, this);
             //this.model.fonts.fetch();
 
             this.select_toolbar = new App.Views.SelectToolbar({
-                el: $(cfg.id.file_drop_zone)[0]
+                el: $(cfg.id.file_drop_zone)[0],
+                topview: this
             });
             this.rearrange_toolbar = new App.Views.RearrangeToolbar({
-                el: $(cfg.id.form_charset)[0]
+                el: $(cfg.id.form_charset)[0],
+                topview: this
             });
-
             this.genfontview = new App.Views.GeneratedFont({
-                model: this.model.genfont
+                model: this.model.genfont,
+                topview: this
             });
+        },
 
-            this.initSvgFontTemplate();
+        // compile templates defined in cfg.templates and place them into
+        // this.templates for later use
+        initTemplates: function () {
+            console.log("Views.Main.initTemplates");
+            var self = this;
+            _.each(cfg.templates, function (el_id, tpl_name) {
+                self.templates[tpl_name] = Handlebars.compile($(el_id).html());
+                $(el_id).remove();
+            });
+        },
+
+        // subviews call this to get their templates
+        getTemplates: function (tpl_names) {
+            var result = {};
+            _.each(this.templates, function (item, key) {
+                 if (_.include(tpl_names, key))
+                    result[key] = item;
+            });
+            return result;
         },
 
         initSvgFontTemplate: function () {
@@ -249,7 +274,10 @@ var fm = (function (fm) {
 
         addOneFont: function (font) {
             console.log("Views.Main.addOneFont");
-            var view = new App.Views.Font({model: font});
+            var view = new App.Views.Font({
+                model: font,
+                topview: this
+            });
             this.fontviews[font.id] = view;
             $("#fm-font-list").append(view.render().el);
         },

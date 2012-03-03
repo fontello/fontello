@@ -54,9 +54,11 @@
             <div class="btn-toolbar">
 
               <div id="fm-icon-size" class="btn-group tooltip-test" data-toggle="buttons-radio" title="Change symbols preview size" data-placement="bottom">
+                <script id="fm-icon-size-template" type="text/x-fm-template">
                 {{#buttons}}
                 <button class="btn btn-small fm-icon-size-button" value="{{this}}">{{this}}px</button>
                 {{/buttons}}
+                </script>
               </div>
 
               <div class="btn-group tooltip-test" title="SVG / Cufon" data-placement="bottom">
@@ -69,9 +71,11 @@
                   <span class="caret">dfg</span>
                 </a>
                 <ul id="fm-use-embedded" class="dropdown-menu">
+                <script type="text/x-fm-template" id="fm-use-embedded-template">
                   {{#options}}
                   <li><a class="fm-font-name{{#if this.disabled}} disabled{{/if}}" href="#">{{this.text}}</a></li>
                   {{/options}}
+                </script>
                 </ul>
               </div>
             </div>
@@ -80,7 +84,22 @@
           <div class="btn-toolbar">
           </div>
 
-          <ul id="fm-font-list" class="unstyled"></ul>
+          <ul id="fm-font-list" class="unstyled">
+            <script type="text/x-fm-template" id="fm-font-item-template">
+              <h2><span class="fm-font-name">{{fontname}}</span>
+                <a class="fm-font-anchor" href="#font-{{id}}"></a>
+                <a class="fm-font-close" href="#"><small>close</small></a>
+              </h2>
+              <div class="fm-glyph-group">
+              </div>
+            </script>
+            <script type="text/x-fm-template" id="fm-glyph-item-template">
+              <label class="glyph">
+                <input class="fm-glyph-id" type="checkbox" value="0"/>
+                <div id="gd0" class="fm-glyph-div" style="width: 64px; height: 64px;">{{test}}</div>
+              </label>
+            </script>
+          </ul>
         </div>
 
         <!-- tab2 -->
@@ -100,7 +119,19 @@
               </div>
             </fieldset>
           </form>
-          <div id="fm-generated-font"></div>
+          <div id="fm-generated-font">
+            <script type="text/x-fm-template" id="fm-genfont-glyph-item-template">
+              <!-label class="rearrange-glyph"->
+                <input class="fm-glyph-id" type="checkbox" readonly="readonly" value=""/>
+                <input _id="rgu<%=num%>" class="fm-unicode" type="text" value="{{{char}}}" _value="<%-char%>"/>
+                <div class="rg-top">{{{top}}}</div>
+                <div class="rg-center">
+                  <div _id="rgd<%=num%>" class="rg-icon"></div>
+                 </div>
+                <div class="rg-bottom">{{bottom}}</div>
+              <!-/label->
+            </script>
+          </div>
         </div>
 
         <!-- tab3 -->
@@ -188,30 +219,6 @@
     </font>
   </defs>
 </svg>
-    </script>
-    <script type="text/template" id="fm-font-item-template">
-      <h2><span class="fm-font-name"><%= fontname %></span>
-        <a class="fm-font-anchor" href="#"></a>
-        <a class="fm-font-close" href="#"><small>close</small></a>
-      </h2>
-      <div class="fm-glyph-group"></div>
-    </script>
-    <script type="text/template" id="fm-glyph-item-template">
-      <label class="glyph">
-        <input class="fm-glyph-id" type="checkbox" value="0"/>
-        <div id="gd0" class="fm-glyph-div" style="width: 64px; height: 64px;"></div>
-      </label>
-    </script>
-    <script type="text/template" id="fm-genfont-glyph-item-template">
-      <!--label class="rearrange-glyph"-->
-        <input class="fm-glyph-id" type="checkbox" readonly="readonly" value=""/>
-        <input id="rgu<%=num%>" class="fm-unicode" type="text" value="<%-char%>"/>
-        <div class="rg-top"><%-top%></div>
-        <div class="rg-center">
-          <div id="rgd<%=num%>" class="rg-icon"></div>
-         </div>
-        <div class="rg-bottom"><%=bottom%></div>
-      <!--/label-->
     </script>
 
     <!-- javascript

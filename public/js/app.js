@@ -34,11 +34,12 @@ var fm = (function (fm) {
             rg_icon: ".rg-icon",
             disable_on_demand: ".fm-disable-on-demand"
         },
-        template: {
-            glyph: { id: "#fm-tpl-glyph" },
-            glyph_group: { id: "#fm-tpl-glyph-group" },
-            font: { id: "#fm-tpl-font" },
-            rearrange_glyph: { id: "#fm-tpl-rearrange-glyph" }
+        templates: {
+            icon_size: "#fm-icon-size-template",
+            use_embedded: "#fm-use-embedded-template",
+            font_item: "#fm-font-item-template",
+            glyph_item: "#fm-glyph-item-template",
+            genfont_glyph_item: "#fm-genfont-glyph-item-template"
         },
 
         // class icon_size_prefix+"-<num>" added when icon size has changed
@@ -148,13 +149,6 @@ var fm = (function (fm) {
         for (var i=cfg.basic_latin.begin; i<=cfg.basic_latin.end; i++)
             cfg.basic_latin.str += String.fromCharCode(i);
         cfg.basic_latin.str += cfg.basic_latin.extra;
-
-        // init templates
-        for (var key in cfg.template) {
-            cfg.template[key].tpl = $(cfg.template[key].id).clone()
-                .removeAttr("id");
-            $(cfg.template[key].id).remove();
-        }
 
         // init clipboard link targets
         for (var i=0, len=cfg.zero_clipboard.links.length; i<len; i++) {

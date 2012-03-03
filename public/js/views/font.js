@@ -6,8 +6,7 @@ var fm = (function (fm) {
 
     App.Views.Font = Backbone.View.extend({
         tagName: "li",
-        template: _.template($('#fm-font-item-template').html()),
-        template_glyph: _.template($('#fm-glyph-item-template').html()),
+        templates: {},
 
         events: {
             "click .fm-font-close": "close",
@@ -17,10 +16,14 @@ var fm = (function (fm) {
         initialize: function () {
             console.log("Views.Font.initialize");
             _.bindAll(this);
-            $(this.el).attr('id', "fm-font-" + this.model.id);
-
-            this.model.bind('change', this.render, this);
-            this.model.bind('destroy', this.remove, this);
+            this.topview = this.options.topview;
+            this.templates = this.topview.getTemplates([
+                "font_item",
+                "glyph_item"
+            ]);
+            this.$el.attr("id", "fm-font-" + this.model.id);
+            this.model.bind("change", this.render, this);
+            this.model.bind("destroy", this.remove, this);
         },
 
         render: function () {
@@ -31,13 +34,17 @@ var fm = (function (fm) {
                 descent = font.descent,
                 units_per_em = font.units_per_em;
 
-            var size = parseInt($(cfg.id.icon_size).find("button.active")
-                .val()) || 32;
-            var font_size_y = Math.round(size * (ascent - descent)
-                / units_per_em);
+            var size_string = $(cfg.id.icon_size).find("button.active").val(),
+                size = parseInt(size_string) || cfg.preview_icon_sizes[0],
+                font_size_y = Math.round(size * (ascent - descent)
+                    / units_per_em);
 
-            $(this.el).html(this.template(this.model.toJSON()));
-            this.$(".fm-font-anchor").attr("href", "#font-" + this.model.id);
+            var tpl_vars = {
+                id: this.model.id,
+                fontname: this.model.get("fontname")
+            };
+
+            this.$el.html(this.templates.font_item(tpl_vars));
             this.$(".fm-glyph-group").addClass(cfg.icon_size_prefix+size);
 
             for (var glyph_id in font.glyphs) {
@@ -47,7 +54,7 @@ var fm = (function (fm) {
                 var size_x = Math.round(size * horiz_adv_x / units_per_em),
                     size_y = font_size_y;
 
-                var $glyph = $(this.template_glyph(item));
+                var $glyph = $(this.templates.glyph_item(item));
 
                 this.$(".fm-glyph-group").append($glyph);
 
@@ -163,15 +170,16 @@ var fm = (function (fm) {
                 var glyph_id = $(this).val();
                 self.removeGlyph(glyph_id);
             });
-            $(this.el).remove();
+            this.$el.remove();
         },
 
-        close: function () {
+        close: function (event) {
             console.log("Views.Font.close el=", this.el);
+            event.preventDefault();
             var embedded_id = this.model.get("embedded_id");
             if (embedded_id !== null) {
                 fm_embedded_fonts[embedded_id].is_added = false;
-                App.mainview.select_toolbar.renderUseEmbedded();
+                this.topview.select_toolbar.renderUseEmbedded();
             }
             this.model.destroy();
         },
@@ -209,7 +217,7 @@ var fm = (function (fm) {
                 .css({width: "100%", left: "0px", "margin-left": "0px"});
 
             if (App.main.genfont.get("glyph_count") == 0)
-                App.mainview.toggleMenu(true);
+                this.topview.toggleMenu(true);
             App.main.genfont.incCounter();
         },
 
@@ -224,7 +232,7 @@ var fm = (function (fm) {
                 .removeData("glyph_sizes").empty();
 
             if (App.main.genfont.get("glyph_count") == 1)
-                App.mainview.toggleMenu(false);
+                this.topview.toggleMenu(false);
             App.main.genfont.decCounter();
         }
     });

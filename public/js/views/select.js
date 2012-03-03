@@ -8,10 +8,7 @@ var fm = (function (fm) {
         tagName: "form",
         id: "fm-file-drop-zone",
 
-        templates: {
-            icon_size: Handlebars.compile($(cfg.id.icon_size).html()),
-            use_embedded: Handlebars.compile($(cfg.id.use_embedded).html())
-        },
+        templates: {},
 
         events: {
             "click .fm-icon-size-button": "changeIconSize",
@@ -25,6 +22,11 @@ var fm = (function (fm) {
         initialize: function () {
             console.log("Views.SelectToolbar.initialize");
             _.bindAll(this);
+            this.topview = this.options.topview;
+            this.templates = this.topview.getTemplates([
+                "icon_size",
+                "use_embedded"
+            ]);
         },
 
         render: function () {
@@ -75,7 +77,7 @@ var fm = (function (fm) {
                 font = fm_embedded_fonts[id];
             console.assert(font);
             if (font && !font.is_added)
-                App.mainview.addEmbeddedFonts([font]);
+                this.topview.addEmbeddedFonts([font]);
         },
 
         fileBrowse: function (event) {
@@ -89,7 +91,7 @@ var fm = (function (fm) {
         },
 
         fileUpload: function (event) {
-            App.mainview.addUploadedFonts(event.target.files);
+            this.topview.addUploadedFonts(event.target.files);
         },
 
         fileDragOver: function (event) {
@@ -106,7 +108,7 @@ var fm = (function (fm) {
             if (env.filereader) {
                 event.stopPropagation();
                 event.preventDefault();
-                App.mainview.addUploadedFonts(
+                this.topview.addUploadedFonts(
                     event.originalEvent.dataTransfer.files
                 );
             }

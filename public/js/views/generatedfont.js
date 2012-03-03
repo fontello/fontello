@@ -14,6 +14,7 @@ var fm = (function (fm) {
         initialize: function () {
             console.log("Views.GeneratedFont.initialize");
             _.bindAll(this);
+            this.topview = this.options.topview;
 
             this.model.glyphs.each(this.addGlyph);
             this.model.glyphs.bind("add", this.addGlyph, this);
@@ -39,7 +40,10 @@ var fm = (function (fm) {
 
         addGlyph: function (glyph) {
             //console.log("Views.GeneratedFont.addGlyph");
-            this.glyphviews.push(new App.Views.Glyph({model: glyph}));
+            this.glyphviews.push(new App.Views.Glyph({
+                model: glyph,
+                topview: this.topview
+            }));
         },
 
         updateGlyphCount: function () {
@@ -149,7 +153,8 @@ var fm = (function (fm) {
     App.Views.Glyph = Backbone.View.extend({
         tagName: "label",
         className: "rearrange-glyph",
-        template: _.template($('#fm-genfont-glyph-item-template').html()),
+        //template: _.template($('#fm-genfont-glyph-item-template').html()),
+        templates: {},
 
         events: {
         },
@@ -157,11 +162,13 @@ var fm = (function (fm) {
         initialize: function () {
             //console.log("Views.Glyph.initialize");
             _.bindAll(this);
-
+            this.topview = this.options.topview;
+            this.templates = this.topview.getTemplates(["genfont_glyph_item"]);
             this.model.bind('change', this.render, this);
 
-            $(this.el).html(this.template(this.model.toJSON()));
-            $(this.el).attr("id", "rgl" + this.model.get("num"));
+            //this.$el.html(this.template(this.model.toJSON()));
+            this.$el.html(this.templates.genfont_glyph_item(this.model.toJSON()));
+            this.$el.attr("id", "rgl" + this.model.get("num"));
             this.$(cfg.class.rg_icon).droppable($.extend(
                 {}, cfg.droppable_options, {drop: function (event, ui) {
                 console.log("drop");
@@ -204,8 +211,8 @@ var fm = (function (fm) {
         render: function () {
             //console.log("Views.Glyph.render el=", this.el);
             // FIXME: performance
-            //$(this.el).html(this.template(this.model.toJSON()));
-            //$(this.el).attr("id", "rgl" + this.model.get("num"));
+            //this.$el.html(this.template(this.model.toJSON()));
+            //this.$el.attr("id", "rgl" + this.model.get("num"));
             this.$(".fm-unicode").val(this.model.get("char"));
             this.$(".rg-top").text(this.model.get("top"));
             this.$(".rg-bottom").text(this.model.get("bottom"));
