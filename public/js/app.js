@@ -103,7 +103,7 @@ var fm = (function (fm) {
             },
             alert: {
                 tpl: "icon-template",
-                tpl_vars: { icon: "img/alert.png" },
+                tpl_vars: { icon: "vendor/jquery.notify/alert.png" },
                 opts: { expires: 4000 }
             }
         },
