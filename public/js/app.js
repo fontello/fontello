@@ -77,7 +77,7 @@ var fm = (function (fm) {
             "stroke-width": 0
         },
         zero_clipboard: {
-            swf_path: "img/ZeroClipboard.swf",
+            swf_path: "vendor/zero-clipboard/ZeroClipboard.swf",
 
             links: [
                 {

@@ -300,8 +300,8 @@ var fm = (function (fm) {
                 // flash download helper doesn't work if file: proto used
                 if (!env.is_file_proto && env.flash_version.major > 0) {
                     $(cfg.id.download_font_button).downloadify({
-                        swf: "img/downloadify.swf",
-                        downloadImage: "img/transparent-129x140.png",
+                        swf: "vendor/downloadify/downloadify.swf",
+                        downloadImage: "vendor/downloadify/transparent-129x140.png",
                         width: $(cfg.id.download_font_button).outerWidth(),
                         height: $(cfg.id.download_font_button).outerHeight(),
                         filename: cfg.output.filename,
