@@ -2,7 +2,8 @@ var fm = (function (fm) {
     var App = fm.App,
         cfg = fm.cfg,
         env = fm.env,
-        debug = fm.debug;
+        debug = fm.debug,
+        util = fm.lib.util;
 
     App.Views.SelectToolbar = Backbone.View.extend({
         tagName: "form",
