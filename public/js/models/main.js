@@ -1,8 +1,8 @@
-var fm = (function (fm) {
-    var App = fm.App,
-        cfg = fm.cfg,
-        env = fm.env,
-        debug = fm.debug;
+var Fontomas = (function (Fontomas) {
+    var App = Fontomas.App,
+        cfg = Fontomas.cfg,
+        env = Fontomas.env,
+        debug = Fontomas.debug;
 
     App.Models.Main = Backbone.Model.extend({
         fonts: new App.Collections.Font,
@@ -12,5 +12,5 @@ var fm = (function (fm) {
         myfiles: []
     });
 
-    return fm;
-})(fm || {});
+    return Fontomas;
+})(Fontomas || {});

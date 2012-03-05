@@ -1,8 +1,8 @@
-var fm = (function (fm) {
-    var App = fm.App,
-        cfg = fm.cfg,
-        env = fm.env,
-        debug = fm.debug;
+var Fontomas = (function (Fontomas) {
+    var App = Fontomas.App,
+        cfg = Fontomas.cfg,
+        env = Fontomas.env,
+        debug = Fontomas.debug;
 
     var init = function () {
         // check browser's capabilities
@@ -35,10 +35,10 @@ var fm = (function (fm) {
     };
 
     // public interface
-    return $.extend(true, fm, {
+    return $.extend(true, Fontomas, {
         init: init
     });
-})(fm || {});
+})(Fontomas || {});
 
 // entry point
-$(fm.init);
+$(Fontomas.init);

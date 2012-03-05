@@ -1,6 +1,6 @@
-var fm = (function (fm) {
-    var debug = fm.debug,
-        util = fm.lib.util;
+var Fontomas = (function (Fontomas) {
+    var debug = Fontomas.debug,
+        util = Fontomas.lib.util;
 
     var Font = function () {
         if (this instanceof Font) {
@@ -139,9 +139,9 @@ var fm = (function (fm) {
     };
 
     // public interface
-    return $.extend(true, fm, {
+    return $.extend(true, Fontomas, {
         lib: {
             Font: Font
         }
     });
-})(fm || {});
+})(Fontomas || {});

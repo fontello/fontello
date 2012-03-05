@@ -1,8 +1,8 @@
-var fm = (function (fm) {
-    var App = fm.App,
-        cfg = fm.cfg,
-        env = fm.env,
-        debug = fm.debug;
+var Fontomas = (function (Fontomas) {
+    var App = Fontomas.App,
+        cfg = Fontomas.cfg,
+        env = Fontomas.env,
+        debug = Fontomas.debug;
 
     App.Models.Glyph = Backbone.Model.extend({
         // FIXME: the model isn't sync()ed to server yet
@@ -11,5 +11,5 @@ var fm = (function (fm) {
         }
     });
 
-    return fm;
-})(fm || {});
+    return Fontomas;
+})(Fontomas || {});

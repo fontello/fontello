@@ -1,5 +1,5 @@
-var fm = (function (fm) {
-    var cfg = fm.cfg;
+var Fontomas = (function (Fontomas) {
+    var cfg = Fontomas.cfg;
 
     var notify = function(text, tpl, suppress_dup) {
         var tpl_vars = {
@@ -180,7 +180,7 @@ var fm = (function (fm) {
     };
 
     // public interface
-    return $.extend(true, fm, {
+    return $.extend(true, Fontomas, {
         lib: { 
             util: {
                 notify_alert: notify_alert,
@@ -201,4 +201,4 @@ var fm = (function (fm) {
             }
         }
     });
-})(fm || {});
+})(Fontomas || {});

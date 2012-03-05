@@ -1,9 +1,9 @@
-var fm = (function (fm) {
-    var App = fm.App,
-        cfg = fm.cfg,
-        env = fm.env,
-        debug = fm.debug,
-        util = fm.lib.util;
+var Fontomas = (function (Fontomas) {
+    var App = Fontomas.App,
+        cfg = Fontomas.cfg,
+        env = Fontomas.env,
+        debug = Fontomas.debug,
+        util = Fontomas.lib.util;
 
     App.Views.SelectToolbar = Backbone.View.extend({
         tagName: "form",
@@ -179,5 +179,5 @@ var fm = (function (fm) {
         }
     });
 
-    return fm;
-})(fm || {});
+    return Fontomas;
+})(Fontomas || {});

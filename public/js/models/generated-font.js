@@ -1,8 +1,8 @@
-var fm = (function (fm) {
-    var App = fm.App,
-        cfg = fm.cfg,
-        env = fm.env,
-        debug = fm.debug;
+var Fontomas = (function (Fontomas) {
+    var App = Fontomas.App,
+        cfg = Fontomas.cfg,
+        env = Fontomas.env,
+        debug = Fontomas.debug;
 
     App.Models.GeneratedFont = Backbone.Model.extend({
         defaults: {
@@ -105,5 +105,5 @@ var fm = (function (fm) {
         }
     });
 
-    return fm;
-})(fm || {});
+    return Fontomas;
+})(Fontomas || {});

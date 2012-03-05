@@ -1,4 +1,4 @@
-var fm = (function (fm) {
+var Fontomas = (function (Fontomas) {
     var cfg = {
         id: {
             tab: "#tab",
@@ -178,10 +178,10 @@ var fm = (function (fm) {
     })();
 
     // public interface
-    return $.extend(true, fm, {
+    return $.extend(true, Fontomas, {
         cfg: cfg,
         env: env,
         App: App,
         debug: debug
     });
-})(fm || {});
+})(Fontomas || {});

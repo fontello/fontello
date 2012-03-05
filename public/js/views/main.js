@@ -1,10 +1,10 @@
-var fm = (function (fm) {
-    var App = fm.App,
-        cfg = fm.cfg,
-        env = fm.env,
-        debug = fm.debug,
-        util = fm.lib.util,
-        Font = fm.lib.Font;
+var Fontomas = (function (Fontomas) {
+    var App = Fontomas.App,
+        cfg = Fontomas.cfg,
+        env = Fontomas.env,
+        debug = Fontomas.debug,
+        util = Fontomas.lib.util,
+        Font = Fontomas.lib.Font;
 
     App.Views.Main = Backbone.View.extend({
         templates: {},
@@ -401,5 +401,5 @@ var fm = (function (fm) {
         }
     });
 
-    return fm;
-})(fm || {});
+    return Fontomas;
+})(Fontomas || {});
