@@ -1,10 +1,10 @@
 var Fontomas = (function (Fontomas) {
-    var App = Fontomas.App,
+    var app = Fontomas.app,
         cfg = Fontomas.cfg,
         env = Fontomas.env,
         debug = Fontomas.debug;
 
-    App.Models.Font = Backbone.Model.extend({
+    app.models.Font = Backbone.Model.extend({
         defaults: function () {
             return {
                 fontname:   "unknown",
@@ -16,7 +16,7 @@ var Fontomas = (function (Fontomas) {
 
         // FIXME: the model isn't sync()ed to server yet
         sync: function () {
-            console.log("Models.Font.sync()");
+            console.log("app.models.Font.sync()");
         }
     });
 

@@ -119,10 +119,10 @@ var Fontomas = (function (Fontomas) {
         filereader: null
     };
 
-    var App = {
-        Models: {},
-        Collections: {},
-        Views: {}
+    var app = {
+        models: {},
+        collections: {},
+        views: {}
     };
 
     var debug = {
@@ -181,7 +181,7 @@ var Fontomas = (function (Fontomas) {
     return $.extend(true, Fontomas, {
         cfg: cfg,
         env: env,
-        App: App,
+        app: app,
         debug: debug
     });
 })(Fontomas || {});

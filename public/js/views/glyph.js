@@ -1,11 +1,11 @@
 var Fontomas = (function (Fontomas) {
-    var App = Fontomas.App,
+    var app = Fontomas.app,
         cfg = Fontomas.cfg,
         env = Fontomas.env,
         debug = Fontomas.debug,
         util = Fontomas.lib.util;
 
-    App.Views.Glyph = Backbone.View.extend({
+    app.views.Glyph = Backbone.View.extend({
         tagName: "label",
         className: "rearrange-glyph",
 
@@ -15,7 +15,7 @@ var Fontomas = (function (Fontomas) {
         },
 
         initialize: function () {
-            //console.log("Views.Glyph.initialize");
+            //console.log("app.views.Glyph.initialize");
             _.bindAll(this);
             this.topview = this.options.topview;
             this.templates = this.topview.getTemplates(["genfont_glyph_item"]);
@@ -57,14 +57,14 @@ var Fontomas = (function (Fontomas) {
                 }
 
                 if (cfg.live_update) {
-                    App.mainview.genfontview.updateFont();
-                    App.mainview.genfontview.updateIconAssignments();
+                    app.mainview.genfontview.updateFont();
+                    app.mainview.genfontview.updateIconAssignments();
                 }
             }}));
         },
 
         render: function () {
-            //console.log("Views.Glyph.render el=", this.el);
+            //console.log("app.views.Glyph.render el=", this.el);
             // FIXME: performance
             //this.$el.html(this.template(this.model.toJSON()));
             //this.$el.attr("id", "rgl" + this.model.get("num"));

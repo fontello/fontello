@@ -1,18 +1,18 @@
 var Fontomas = (function (Fontomas) {
-    var App = Fontomas.App,
+    var app = Fontomas.app,
         cfg = Fontomas.cfg,
         env = Fontomas.env,
         debug = Fontomas.debug;
 
-    App.Models.GeneratedFont = Backbone.Model.extend({
+    app.models.GeneratedFont = Backbone.Model.extend({
         defaults: {
             charset: "basic_latin",
             glyph_count: 0
         },
 
         initialize: function () {
-            console.log("Models.GeneratedFont.initialize");
-            this.glyphs = new App.Collections.Glyph;
+            console.log("app.models.GeneratedFont.initialize");
+            this.glyphs = new app.collections.Glyph;
 
             for (var i=0, len=cfg.basic_latin.str.length; i<len; i++) {
                 var char = cfg.basic_latin.str[i];
@@ -66,7 +66,7 @@ var Fontomas = (function (Fontomas) {
                 break;
 
             default:
-                console.log("Models.GeneratedFont.setCharset: bad charset");
+                console.log("app.models.GeneratedFont.setCharset: bad charset");
                 break;
             }
         },
@@ -101,7 +101,7 @@ var Fontomas = (function (Fontomas) {
 
         // FIXME: the model isn't sync()ed to server yet
         sync: function () {
-            console.log("Models.GeneratedFont.sync()");
+            console.log("app.models.GeneratedFont.sync()");
         }
     });
 

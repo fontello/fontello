@@ -1,18 +1,18 @@
 var Fontomas = (function (Fontomas) {
-    var App = Fontomas.App,
+    var app = Fontomas.app,
         cfg = Fontomas.cfg,
         env = Fontomas.env,
         debug = Fontomas.debug,
         util = Fontomas.lib.util;
 
-    App.Views.GeneratedFont = Backbone.View.extend({
+    app.views.GeneratedFont = Backbone.View.extend({
         glyphviews: [],
 
         events: {
         },
 
         initialize: function () {
-            console.log("Views.GeneratedFont.initialize");
+            console.log("app.views.GeneratedFont.initialize");
             _.bindAll(this);
             this.topview = this.options.topview;
 
@@ -26,7 +26,7 @@ var Fontomas = (function (Fontomas) {
         },
 
         render: function () {
-            console.log("Views.GeneratedFont.render");
+            console.log("app.views.GeneratedFont.render");
             _(this.glyphviews).each(function (glyph) {
                 $(cfg.id.generated_font).append(glyph.render().el);
             });
@@ -39,25 +39,25 @@ var Fontomas = (function (Fontomas) {
         },
 
         addGlyph: function (glyph) {
-            //console.log("Views.GeneratedFont.addGlyph");
-            this.glyphviews.push(new App.Views.Glyph({
+            //console.log("app.views.GeneratedFont.addGlyph");
+            this.glyphviews.push(new app.views.Glyph({
                 model: glyph,
                 topview: this.topview
             }));
         },
 
         updateGlyphCount: function () {
-            console.log("Views.GeneratedFont.updateGlyphCount");
+            console.log("app.views.GeneratedFont.updateGlyphCount");
             $(cfg.id.glyph_count).text(this.model.get("glyph_count"));
         },
 
         onChangeCharset: function (o, value) {
-            console.log("Views.GeneratedFont.onChangeCharset", o, value);
+            console.log("app.views.GeneratedFont.onChangeCharset", o, value);
             //this.model.setCharset(value);
         },
 
         onChange: function () {
-            console.log("Views.GeneratedFont.onChange");
+            console.log("app.views.GeneratedFont.onChange");
             if (cfg.live_update) {
                 this.updateFont();
                 this.updateIconAssignments();
@@ -78,7 +78,7 @@ var Fontomas = (function (Fontomas) {
 
         // update font's textarea
         updateFont: function () {
-            if (!App.main.xml_template)
+            if (!app.main.xml_template)
                 return;
 
             var glyphs = [];
@@ -89,8 +89,8 @@ var Fontomas = (function (Fontomas) {
                         glyph_id = $this.val(),
                         unicode = $this.siblings("input.fm-unicode").val();
 
-                    var font = App.main.fonts.getFont(glyph_id),
-                        glyph = App.main.fonts.getGlyph(glyph_id);
+                    var font = app.main.fonts.getFont(glyph_id),
+                        glyph = app.main.fonts.getGlyph(glyph_id);
 
                     if (!font || !glyph) {
                         console.log("can't getFont/getGlyph id=", glyph_id);
@@ -117,9 +117,9 @@ var Fontomas = (function (Fontomas) {
 
                     glyphs.push(util.outerHtml(g));
                 });
-            $("glyph", App.main.xml_template).remove();
-            $("font", App.main.xml_template).append($(glyphs.join("\n")));
-            $(cfg.id.font).text(util.xmlToString(App.main.xml_template));
+            $("glyph", app.main.xml_template).remove();
+            $("font", app.main.xml_template).append($(glyphs.join("\n")));
+            $(cfg.id.font).text(util.xmlToString(app.main.xml_template));
         },
 
         // update IA's textarea

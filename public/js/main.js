@@ -1,5 +1,5 @@
 var Fontomas = (function (Fontomas) {
-    var App = Fontomas.App,
+    var app = Fontomas.app,
         cfg = Fontomas.cfg,
         env = Fontomas.env,
         debug = Fontomas.debug;
@@ -16,11 +16,11 @@ var Fontomas = (function (Fontomas) {
         $(cfg.id.tab).tab("show");
 
         // main model
-        App.main = new App.Models.Main;
+        app.main = new app.models.Main;
         // main view
-        App.mainview = new App.Views.Main({model: App.main});
+        app.mainview = new app.views.Main({model: app.main});
 
-        App.mainview.render();
+        app.mainview.render();
     };
 
     var isOkBrowser = function () {

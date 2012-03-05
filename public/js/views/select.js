@@ -1,11 +1,11 @@
 var Fontomas = (function (Fontomas) {
-    var App = Fontomas.App,
+    var app = Fontomas.app,
         cfg = Fontomas.cfg,
         env = Fontomas.env,
         debug = Fontomas.debug,
         util = Fontomas.lib.util;
 
-    App.Views.SelectToolbar = Backbone.View.extend({
+    app.views.SelectToolbar = Backbone.View.extend({
         tagName: "form",
         id: "fm-file-drop-zone",
 
@@ -21,7 +21,7 @@ var Fontomas = (function (Fontomas) {
         },
 
         initialize: function () {
-            console.log("Views.SelectToolbar.initialize");
+            console.log("app.views.SelectToolbar.initialize");
             _.bindAll(this);
             this.topview = this.options.topview;
             this.templates = this.topview.getTemplates([
@@ -31,7 +31,7 @@ var Fontomas = (function (Fontomas) {
         },
 
         render: function () {
-            console.log("Views.SelectToolbar.render");
+            console.log("app.views.SelectToolbar.render");
             var self = this;
 
             // render icon size buttons
@@ -56,7 +56,7 @@ var Fontomas = (function (Fontomas) {
         },
 
         renderUseEmbedded: function () {
-            console.log("Views.SelectToolbar.renderUseEmbedded");
+            console.log("app.views.SelectToolbar.renderUseEmbedded");
             var tpl_vars = {
                 options: _.map(fm_embedded_fonts, function (item) {
                     return {
@@ -72,7 +72,7 @@ var Fontomas = (function (Fontomas) {
         },
 
         useEmbedded: function (event) {
-            console.log("Views.SelectToolbar.useEmbedded");
+            console.log("app.views.SelectToolbar.useEmbedded");
             event.preventDefault();
             var id = $(event.target).data("embedded_id"),
                 font = fm_embedded_fonts[id];
@@ -116,7 +116,7 @@ var Fontomas = (function (Fontomas) {
         },
 
         changeIconSize: function (event) {
-            console.log("Views.SelectToolbar.changeIconSize");
+            console.log("app.views.SelectToolbar.changeIconSize");
             event.preventDefault();
             var size = parseInt($(event.target).val())
                 || cfg.preview_icon_sizes[0];

@@ -1,12 +1,12 @@
 var Fontomas = (function (Fontomas) {
-    var App = Fontomas.App,
+    var app = Fontomas.app,
         cfg = Fontomas.cfg,
         env = Fontomas.env,
         debug = Fontomas.debug,
         util = Fontomas.lib.util,
         Font = Fontomas.lib.Font;
 
-    App.Views.Main = Backbone.View.extend({
+    app.views.Main = Backbone.View.extend({
         templates: {},
         fontviews: {},
         genfontview: null,
@@ -17,7 +17,7 @@ var Fontomas = (function (Fontomas) {
         },
 
         initialize: function () {
-            console.log("Views.Main.initialize");
+            console.log("app.views.Main.initialize");
             _.bindAll(this);
 
             this.initTemplates();
@@ -27,15 +27,15 @@ var Fontomas = (function (Fontomas) {
             this.model.fonts.bind('reset', this.addAllFonts, this);
             //this.model.fonts.fetch();
 
-            this.select_toolbar = new App.Views.SelectToolbar({
+            this.select_toolbar = new app.views.SelectToolbar({
                 el: $(cfg.id.file_drop_zone)[0],
                 topview: this
             });
-            this.rearrange_toolbar = new App.Views.RearrangeToolbar({
+            this.rearrange_toolbar = new app.views.RearrangeToolbar({
                 el: $(cfg.id.form_charset)[0],
                 topview: this
             });
-            this.genfontview = new App.Views.GeneratedFont({
+            this.genfontview = new app.views.GeneratedFont({
                 model: this.model.genfont,
                 topview: this
             });
@@ -44,7 +44,7 @@ var Fontomas = (function (Fontomas) {
         // compile templates defined in cfg.templates and place them into
         // this.templates for later use
         initTemplates: function () {
-            console.log("Views.Main.initTemplates");
+            console.log("app.views.Main.initTemplates");
             var self = this;
             _.each(cfg.templates, function (el_id, tpl_name) {
                 self.templates[tpl_name] = Handlebars.compile($(el_id).html());
@@ -90,7 +90,7 @@ var Fontomas = (function (Fontomas) {
         },
 
         render: function () {
-            console.log("Views.Main.render");
+            console.log("app.views.Main.render");
             // render the select tab
             this.select_toolbar.render();
 
@@ -117,21 +117,21 @@ var Fontomas = (function (Fontomas) {
                 // onload closure
                 var e_id = fileinfo.embedded_id;
                 // FIXME
-                App.mainview.addFont(fileinfo, function (fileinfo) {
+                app.mainview.addFont(fileinfo, function (fileinfo) {
                     // onclose closure
                     fm_embedded_fonts[e_id].is_added = fileinfo.is_added;
-                    App.mainview.select_toolbar.renderUseEmbedded();
+                    app.mainview.select_toolbar.renderUseEmbedded();
                 });
                 fm_embedded_fonts[e_id].is_added = fileinfo.is_added;
                 fm_embedded_fonts[e_id].fontname = fileinfo.fontname;
-                App.mainview.select_toolbar.renderUseEmbedded();
+                app.mainview.select_toolbar.renderUseEmbedded();
             });
         },
 
         addFontsAsStrings: function (files, cb_onload) {
-            console.log("Views.Main.addFontsAsStrings flen=", files.length);
+            console.log("app.views.Main.addFontsAsStrings flen=", files.length);
             for (var i=0, f; f=files[i]; i++) {
-                var idx = App.main.myfiles.push({
+                var idx = app.main.myfiles.push({
                     id:             null,
                     filename:       f.filename,
                     filesize:       f.content.length,
@@ -145,14 +145,14 @@ var Fontomas = (function (Fontomas) {
                     content:        f.content,
                     embedded_id:    f.id
                 }) - 1;
-                App.main.myfiles[idx].id = idx;
+                app.main.myfiles[idx].id = idx;
 
                 if (cb_onload)
-                    cb_onload(App.main.myfiles[idx]);
+                    cb_onload(app.main.myfiles[idx]);
 
-                f.is_ok = App.main.myfiles[idx].is_ok;
-                f.is_added = App.main.myfiles[idx].is_added;
-                f.fontname = App.main.myfiles[idx].fontname;
+                f.is_ok = app.main.myfiles[idx].is_ok;
+                f.is_added = app.main.myfiles[idx].is_added;
+                f.fontname = app.main.myfiles[idx].fontname;
             }
         },
 
@@ -160,14 +160,14 @@ var Fontomas = (function (Fontomas) {
             this.addFonts(files, function (fileinfo) {
                 // onload closure
                 // FIXME
-                App.mainview.addFont(fileinfo);
+                app.mainview.addFont(fileinfo);
             });
         },
 
         addFonts: function (files, cb_onload) {
-            console.log("Views.Main.addFonts");
+            console.log("app.views.Main.addFonts");
             for (var i=0, f; f=files[i]; i++) {
-                var idx = App.main.myfiles.push({
+                var idx = app.main.myfiles.push({
                     id:             null,
                     filename:       f.name,
                     filesize:       f.size, 
@@ -181,7 +181,7 @@ var Fontomas = (function (Fontomas) {
                     content:        null,
                     embedded_id:    null
                 }) - 1;
-                App.main.myfiles[idx].id = idx;
+                app.main.myfiles[idx].id = idx;
 
                 var reader = new FileReader();
                 reader.onload = (function (fileinfo) {
@@ -189,12 +189,12 @@ var Fontomas = (function (Fontomas) {
                         // FIXME: race condition?
                         // is there a file with the same content?
                         var is_exist = false;
-                        for (var i=0, len=App.main.myfiles.length;
+                        for (var i=0, len=app.main.myfiles.length;
                             i<len; i++) {
-                            if (!App.main.myfiles[i]
-                                || !App.main.myfiles.is_ok)
+                            if (!app.main.myfiles[i]
+                                || !app.main.myfiles.is_ok)
                                 continue;
-                            if (App.main.myfiles[i].content
+                            if (app.main.myfiles[i].content
                                 == e.target.result) {
                                 fileinfo.is_dup = is_exist = true;
                                 break;
@@ -208,13 +208,13 @@ var Fontomas = (function (Fontomas) {
                         if (cb_onload)
                             cb_onload(fileinfo);
                     };
-                })(App.main.myfiles[idx]);
+                })(app.main.myfiles[idx]);
                 reader.readAsBinaryString(f);
             }
         },
 
         addFont: function (fileinfo, cb_onclose) {
-            console.log("Views.Main.addFont id=", fileinfo.id);
+            console.log("app.views.Main.addFont id=", fileinfo.id);
             // if it is a dup, skip it
             if (fileinfo.is_dup)
                 return;
@@ -254,7 +254,7 @@ var Fontomas = (function (Fontomas) {
             // FIXME
             var tmp = $.extend({}, fileinfo);
             tmp.font = font;
-            App.mainview.createFont(tmp);
+            app.mainview.createFont(tmp);
 
             fileinfo.is_added = true;
 
@@ -266,15 +266,15 @@ var Fontomas = (function (Fontomas) {
         },
 
         createFont: function (attrs) {
-            console.log("Views.Main.create attrs=", attrs);
+            console.log("app.views.Main.create attrs=", attrs);
             //if (!attrs.id) // FIXME
                 attrs.id = this.model.next_font_id++;
             this.model.fonts.create(attrs);
         },
 
         addOneFont: function (font) {
-            console.log("Views.Main.addOneFont");
-            var view = new App.Views.Font({
+            console.log("app.views.Main.addOneFont");
+            var view = new app.views.Font({
                 model: font,
                 topview: this
             });
@@ -283,20 +283,20 @@ var Fontomas = (function (Fontomas) {
         },
 
         addAllFonts: function () {
-            console.log("Views.Main.addAllFonts");
+            console.log("app.views.Main.addAllFonts");
             this.model.fonts.each(this.addOneFont);
         },
 
         toggleMenu: function (enabled) {
-            console.log("Views.Main.toggleMenu");
+            console.log("app.views.Main.toggleMenu");
             $(cfg.id.tab).find("a"+cfg.class.disable_on_demand)
                 .toggleClass("disabled", !enabled);
         },
 
         initDownloadLink: function () {
-            console.log("Views.Main.initDownloadLink");
+            console.log("app.views.Main.initDownloadLink");
             $(cfg.id.tab_save).one("shown", function () {
-                console.log("Views.Main.initDownloadLink: shown fired");
+                console.log("app.views.Main.initDownloadLink: shown fired");
                 // flash download helper doesn't work if file: proto used
                 if (!env.is_file_proto && env.flash_version.major > 0) {
                     $(cfg.id.download_font_button).downloadify({
@@ -341,9 +341,9 @@ var Fontomas = (function (Fontomas) {
         },
 
         initClipboardLinks: function () {
-            console.log("Views.Main.initClipboardLinks");
+            console.log("app.views.Main.initClipboardLinks");
             $(cfg.id.tab_save).one("shown", function () {
-                console.log("Views.Main.initClipboardLinks: shown fired");
+                console.log("app.views.Main.initClipboardLinks: shown fired");
                 // flash clipboard helper doesn't work if file: proto used
                 if (!env.is_file_proto && env.flash_version.major > 0) {
                     ZeroClipboard.setMoviePath(cfg.zero_clipboard.swf_path);

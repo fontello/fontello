@@ -1,28 +1,28 @@
 var Fontomas = (function (Fontomas) {
-    var App = Fontomas.App,
+    var app = Fontomas.app,
         cfg = Fontomas.cfg,
         env = Fontomas.env,
         debug = Fontomas.debug;
 
-    App.Views.RearrangeToolbar = Backbone.View.extend({
+    app.views.RearrangeToolbar = Backbone.View.extend({
         events: {
             "click .fm-charset": "changeCharset"
         },
 
         initialize: function () {
-            console.log("Views.RearrangeToolbar.initialize");
+            console.log("app.views.RearrangeToolbar.initialize");
             _.bindAll(this);
         },
 
         render: function () {
-            console.log("Views.RearrangeToolbar.render");
+            console.log("app.views.RearrangeToolbar.render");
             return this;
         },
 
         changeCharset: function (event) {
-            console.log("Views.RearrangeToolbar.changeCharset");
+            console.log("app.views.RearrangeToolbar.changeCharset");
             var charset = event.target.value;
-            App.main.genfont.setCharset(charset);
+            app.main.genfont.setCharset(charset);
         }
     });
 

@@ -1,10 +1,10 @@
 var Fontomas = (function (Fontomas) {
-    var App = Fontomas.App,
+    var app = Fontomas.app,
         cfg = Fontomas.cfg,
         env = Fontomas.env,
         debug = Fontomas.debug;
 
-    App.Views.Font = Backbone.View.extend({
+    app.views.Font = Backbone.View.extend({
         tagName: "li",
         templates: {},
 
@@ -14,7 +14,7 @@ var Fontomas = (function (Fontomas) {
         },
 
         initialize: function () {
-            console.log("Views.Font.initialize");
+            console.log("app.views.Font.initialize");
             _.bindAll(this);
             this.topview = this.options.topview;
             this.templates = this.topview.getTemplates([
@@ -27,7 +27,7 @@ var Fontomas = (function (Fontomas) {
         },
 
         render: function () {
-            console.log("Views.Font.render el=", this.el);
+            console.log("app.views.Font.render el=", this.el);
             var font = this.model.get("font");
 
             var ascent = font.ascent,
@@ -163,7 +163,7 @@ var Fontomas = (function (Fontomas) {
         },
 
         remove: function () {
-            console.log("Views.Font.remove el=", this.el);
+            console.log("app.views.Font.remove el=", this.el);
             var self = this;
             // remove associated html markup
             this.$("input:checkbox:checked").each(function() {
@@ -174,7 +174,7 @@ var Fontomas = (function (Fontomas) {
         },
 
         close: function (event) {
-            console.log("Views.Font.close el=", this.el);
+            console.log("app.views.Font.close el=", this.el);
             event.preventDefault();
             var embedded_id = this.model.get("embedded_id");
             if (embedded_id !== null) {
@@ -185,7 +185,7 @@ var Fontomas = (function (Fontomas) {
         },
 
         toggleGlyph: function (event) {
-            console.log("Views.Font.toggleGlyph event=", event);
+            console.log("app.views.Font.toggleGlyph event=", event);
             var $target = $(event.target),
                 glyph_id = $target.attr("value"),
                 is_checked = $target.is(":checked");
@@ -216,9 +216,9 @@ var Fontomas = (function (Fontomas) {
                 .attr("style", $(el_id).attr("style"))
                 .css({width: "100%", left: "0px", "margin-left": "0px"});
 
-            if (App.main.genfont.get("glyph_count") == 0)
+            if (app.main.genfont.get("glyph_count") == 0)
                 this.topview.toggleMenu(true);
-            App.main.genfont.incCounter();
+            app.main.genfont.incCounter();
         },
 
         // remove a glyph from the rearrange zone
@@ -231,9 +231,9 @@ var Fontomas = (function (Fontomas) {
             checkbox.parent().find(cfg.class.rg_icon)
                 .removeData("glyph_sizes").empty();
 
-            if (App.main.genfont.get("glyph_count") == 1)
+            if (app.main.genfont.get("glyph_count") == 1)
                 this.topview.toggleMenu(false);
-            App.main.genfont.decCounter();
+            app.main.genfont.decCounter();
         }
     });
 

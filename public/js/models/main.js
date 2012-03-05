@@ -1,12 +1,12 @@
 var Fontomas = (function (Fontomas) {
-    var App = Fontomas.App,
+    var app = Fontomas.app,
         cfg = Fontomas.cfg,
         env = Fontomas.env,
         debug = Fontomas.debug;
 
-    App.Models.Main = Backbone.Model.extend({
-        fonts: new App.Collections.Font,
-        genfont: new App.Models.GeneratedFont,
+    app.models.Main = Backbone.Model.extend({
+        fonts: new app.collections.Font,
+        genfont: new app.models.GeneratedFont,
         next_font_id: 1,
         xml_template: null,
         myfiles: []

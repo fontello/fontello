@@ -1,13 +1,13 @@
 var Fontomas = (function (Fontomas) {
-    var App = Fontomas.App,
+    var app = Fontomas.app,
         cfg = Fontomas.cfg,
         env = Fontomas.env,
         debug = Fontomas.debug;
 
-    App.Models.Glyph = Backbone.Model.extend({
+    app.models.Glyph = Backbone.Model.extend({
         // FIXME: the model isn't sync()ed to server yet
         sync: function () {
-            console.log("Models.Font.sync()");
+            console.log("app.models.Font.sync()");
         }
     });
 
