@@ -1,12 +1,11 @@
 var fm = (function (fm) {
     var cfg = fm.cfg;
 
-    var notify = function(text, tpl, extra_tpl_vars, extra_opts, suppress_dup) {
+    var notify = function(text, tpl, suppress_dup) {
         var tpl_vars = {
             text: text
         };
-        $.extend(tpl_vars, extra_tpl_vars);
-        var options = extra_opts;
+        var options = cfg.notify.options;
 
         if (suppress_dup && (text != undefined)) {
             if (cfg.notify.dup[text] != undefined) {
@@ -28,18 +27,14 @@ var fm = (function (fm) {
 
     var notify_alert = function (text, suppress_dup) {
         notify(text,
-            cfg.notify.alert.tpl,
-            cfg.notify.alert.tpl_vars,
-            cfg.notify.alert.opts,
+            cfg.notify.templates.alert,
             suppress_dup
         );
     };
 
     var notify_info = function (text, suppress_dup) {
         notify(text,
-            cfg.notify.info.tpl,
-            cfg.notify.info.tpl_vars,
-            cfg.notify.info.opts,
+            cfg.notify.templates.info,
             suppress_dup
         );
     };

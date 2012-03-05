@@ -94,17 +94,10 @@ var fm = (function (fm) {
         },
         notify: {
             dup: {},    // for suppressing duplicates
-
-            // notication types
-            info: {
-                tpl: "basic-template",
-                tpl_vars: {},
-                opts: { expires: 4000 },
-            },
-            alert: {
-                tpl: "icon-template",
-                tpl_vars: { icon: "vendor/jquery.notify/alert.png" },
-                opts: { expires: 4000 }
+            options: {expires: 4000},
+            templates: {
+                info: "basic-template",
+                alert: "icon-template"
             }
         },
         output: {
