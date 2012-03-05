@@ -54,11 +54,6 @@
             <div class="btn-toolbar">
 
               <div id="fm-icon-size" class="btn-group tooltip-test" data-toggle="buttons-radio" title="Change symbols preview size" data-placement="bottom">
-                <script id="fm-icon-size-template" type="text/x-fm-template">
-                {{#buttons}}
-                <button class="btn btn-small fm-icon-size-button" value="{{this}}">{{this}}px</button>
-                {{/buttons}}
-                </script>
               </div>
 
               <div class="btn-group tooltip-test" title="SVG / Cufon" data-placement="bottom">
@@ -71,11 +66,6 @@
                   <span class="caret">dfg</span>
                 </a>
                 <ul id="fm-use-embedded" class="dropdown-menu">
-                <script type="text/x-fm-template" id="fm-use-embedded-template">
-                  {{#options}}
-                  <li><a class="fm-font-name{{#disabled}} disabled{{/disabled}}" href="#">{{this.text}}</a></li>
-                  {{/options}}
-                </script>
                 </ul>
               </div>
             </div>
@@ -85,20 +75,6 @@
           </div>
 
           <ul id="fm-font-list" class="unstyled">
-            <script type="text/x-fm-template" id="fm-font-item-template">
-              <h2><span class="fm-font-name">{{fontname}}</span>
-                <a class="fm-font-anchor" href="#font-{{id}}"></a>
-                <a class="fm-font-close" href="#"><small>close</small></a>
-              </h2>
-              <div class="fm-glyph-group">
-              </div>
-            </script>
-            <script type="text/x-fm-template" id="fm-glyph-item-template">
-              <label class="glyph">
-                <input class="fm-glyph-id" type="checkbox" value="0"/>
-                <div id="gd0" class="fm-glyph-div" style="width: 64px; height: 64px;">{{test}}</div>
-              </label>
-            </script>
           </ul>
         </div>
 
@@ -120,17 +96,6 @@
             </fieldset>
           </form>
           <div id="fm-generated-font">
-            <script type="text/x-fm-template" id="fm-genfont-glyph-item-template">
-              <!-label class="rearrange-glyph"->
-                <input class="fm-glyph-id" type="checkbox" readonly="readonly" value=""/>
-                <input _id="rgu<%=num%>" class="fm-unicode" type="text" value="{{{char}}}" _value="<%-char%>"/>
-                <div class="rg-top">{{{top}}}</div>
-                <div class="rg-center">
-                  <div _id="rgd<%=num%>" class="rg-icon"></div>
-                 </div>
-                <div class="rg-bottom">{{bottom}}</div>
-              <!-/label->
-            </script>
           </div>
         </div>
 
@@ -219,6 +184,41 @@
     </font>
   </defs>
 </svg>
+    </script>
+    <script id="fm-icon-size-template" type="text/x-fm-template">
+      {{#buttons}}
+        <button class="btn btn-small fm-icon-size-button" value="{{this}}">{{this}}px</button>
+      {{/buttons}}
+    </script>
+    <script id="fm-use-embedded-template" type="text/x-fm-template">
+      {{#options}}
+        <li><a class="fm-font-name{{#disabled}} disabled{{/disabled}}" href="#">{{this.text}}</a></li>
+      {{/options}}
+    </script>
+    <script id="fm-font-item-template" type="text/x-fm-template">
+      <h2><span class="fm-font-name">{{fontname}}</span>
+        <a class="fm-font-anchor" href="#font-{{id}}"></a>
+        <a class="fm-font-close" href="#"><small>close</small></a>
+      </h2>
+      <div class="fm-glyph-group">
+      </div>
+    </script>
+    <script id="fm-glyph-item-template" type="text/x-fm-template">
+      <label class="glyph">
+        <input class="fm-glyph-id" type="checkbox" value="0"/>
+        <div id="gd0" class="fm-glyph-div" style="width: 64px; height: 64px;">{{test}}</div>
+      </label>
+    </script>
+    <script id="fm-genfont-glyph-item-template" type="text/x-fm-template">
+      <!-label class="rearrange-glyph"->
+        <input class="fm-glyph-id" type="checkbox" readonly="readonly" value=""/>
+        <input class="fm-unicode" type="text" value="{{{char}}}"/>
+        <div class="rg-top">{{{top}}}</div>
+        <div class="rg-center">
+          <div class="rg-icon"></div>
+         </div>
+        <div class="rg-bottom">{{bottom}}</div>
+      <!-/label->
     </script>
 
     <!-- javascript
