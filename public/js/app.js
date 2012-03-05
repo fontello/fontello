@@ -43,14 +43,14 @@ var Fontomas = (function (Fontomas) {
 
         // class icon_size_prefix+"-<num>" added when icon size has changed
         icon_size_prefix: "fm-icon-size-",
-        icon_size_classes: "", // precalculated by initGlobals()
+        icon_size_classes: "", // precalculated by initCfg()
 
         preview_icon_sizes: [32, 24, 16],
         live_update: true,
         fix_edges: true,
         scale_precision: 6, // truncate the mantissa when scaling svg paths
         basic_latin: {
-            str: "",    // precalculated by initGlobals()
+            str: "",    // precalculated by initCfg()
             begin: 33,
             end: 126,
             extra: " ",

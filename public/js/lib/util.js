@@ -73,7 +73,7 @@ var Fontomas = (function (Fontomas) {
 
     var getFileExt = function (filepath) {
         var defaultval = "";
-        if (!is_string(filepath))
+        if (!_.isString(filepath))
             return defaultval;
 
         var index = filepath.lastIndexOf(".");
@@ -91,13 +91,6 @@ var Fontomas = (function (Fontomas) {
         });
     };
 
-    // type functions
-    var is_string = function (s) {
-        return typeof s == "string";
-    }
-
-    // string functions
-
     // trim leading whitespaces
     var trimLeadingWS = function (s) {
         return s.replace(/^\s*/, "");
@@ -113,14 +106,6 @@ var Fontomas = (function (Fontomas) {
             return s.substr(idx1, idx2 - idx1);
         else
             return s;
-    };
-
-    var randomNumString = function (len) {
-        var result = "";
-        for (var i=0; i<(len/8)+1; i++) {
-            result += Math.round(Math.random()*89999999+10000000).toString(10);
-        }
-        return result.substr(0, len);
     };
 
     var repeat = function (s, times) {
@@ -190,10 +175,8 @@ var Fontomas = (function (Fontomas) {
                 xmlToString: xmlToString,
                 getFileExt: getFileExt,
                 joinList: joinList,
-                is_string: is_string,
                 trimLeadingWS: trimLeadingWS,
                 trimBoth: trimBoth,
-                randomNumString: randomNumString,
                 repeat: repeat,
                 rpad: rpad,
                 lpad: lpad,
