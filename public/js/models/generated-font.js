@@ -84,21 +84,6 @@ var Fontomas = (function (Fontomas) {
             return "U+" + c;
         },
 
-        //FIXME
-        toEntityAndCss: function (char) {
-            var code = char.charCodeAt(0);
-            if (32 <= code && code <= 127)
-                return {
-                    entity: char,
-                    css: "content: '"+char+"';"
-                };
-            else
-                return {
-                    entity: this.toCharRef(char),
-                    css: "content: '\\"+code.toString(16)+"';"
-                };  
-        },
-
         // FIXME: the model isn't sync()ed to server yet
         sync: function () {
             console.log("app.models.GeneratedFont.sync()");

@@ -24,7 +24,6 @@ var Fontomas = (function (Fontomas) {
 
             font: "#fm-font",
             download_font_button: "#fm-download-font-button",
-            icon_assignments: "#fm-icon-assignments",
             font_output: "#fm-font-output"
         },
         class: {
@@ -76,22 +75,6 @@ var Fontomas = (function (Fontomas) {
             stroke: "#000",
             "stroke-width": 0
         },
-        zero_clipboard: {
-            swf_path: "vendor/zero-clipboard/ZeroClipboard.swf",
-
-            links: [
-                {
-                    link: "fm-clipboard-link",
-                    span: "fm-clipboard-span",
-                    target: "font"
-                },
-                {
-                    link: "fm-clipboard-link2",
-                    span: "fm-clipboard-span2",
-                    target: "icon_assignments"
-                }
-            ]
-        },
         notify: {
             dup: {},    // for suppressing duplicates
             options: {expires: 4000},
@@ -114,7 +97,6 @@ var Fontomas = (function (Fontomas) {
 
     // environment
     var env = {
-        flash_version: swfobject.getFlashPlayerVersion(),
         is_file_proto: (window.location.protocol == "file:"),
         filereader: null
     };
@@ -142,15 +124,9 @@ var Fontomas = (function (Fontomas) {
         for (var i=cfg.basic_latin.begin; i<=cfg.basic_latin.end; i++)
             cfg.basic_latin.str += String.fromCharCode(i);
         cfg.basic_latin.str += cfg.basic_latin.extra;
-
-        // init clipboard link targets
-        for (var i=0, len=cfg.zero_clipboard.links.length; i<len; i++) {
-            var item=cfg.zero_clipboard.links[i];
-            item.target = cfg.id[item.target];
-        }
     };
 
-    // usage: index.html#debug:maxglyphs=10,noembedded,noflash,nofilereader
+    // usage: index.html#debug:maxglyphs=10,noembedded,nofilereader
     var initDebug = function () {
         var hash = window.location.hash.substr(1);
         var params = hash.split("&");
@@ -165,11 +141,6 @@ var Fontomas = (function (Fontomas) {
                 break;
             }
         }
-
-        // debug: simulate no flash plugin installed
-        if (debug.is_on && debug.noflash)
-            for (var key in env.flash_version)
-                env.flash_version[key] = 0;
     };
 
     (function () {

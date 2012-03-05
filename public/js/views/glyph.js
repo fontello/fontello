@@ -58,7 +58,6 @@ var Fontomas = (function (Fontomas) {
 
                 if (cfg.live_update) {
                     app.mainview.genfontview.updateFont();
-                    app.mainview.genfontview.updateIconAssignments();
                 }
             }}));
         },

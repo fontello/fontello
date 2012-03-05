@@ -107,7 +107,6 @@ var Fontomas = (function (Fontomas) {
 
             // render the save tab
             this.initDownloadLink();
-            this.initClipboardLinks();
 
             return this;
         },
@@ -297,106 +296,20 @@ var Fontomas = (function (Fontomas) {
             console.log("app.views.Main.initDownloadLink");
             $(cfg.id.tab_save).one("shown", function () {
                 console.log("app.views.Main.initDownloadLink: shown fired");
-                // flash download helper doesn't work if file: proto used
-                if (!env.is_file_proto && env.flash_version.major > 0) {
-                    $(cfg.id.download_font_button).downloadify({
-                        swf: "vendor/downloadify/downloadify.swf",
-                        downloadImage: "vendor/downloadify/transparent-129x140.png",
-                        width: $(cfg.id.download_font_button).outerWidth(),
-                        height: $(cfg.id.download_font_button).outerHeight(),
-                        filename: cfg.output.filename,
-                        data: function () {
-                            return $(cfg.id.font).val();
-                        },
-                        dataType: "string",
-                        transparent: true,
-                        append: true,
-                        onComplete: function () {
-                            console.log("downloadify onComplete");
-                        },
-                        onCancel: function () {
-                            console.log("downloadify onCancel");
-                        },
-                        onError: function () {
-                            console.log("downloadify onError");
-                        }
+                $(cfg.id.download_font_button).click(function (event) {
+                    console.log("download button clicked");
+
+                    // image/svg+xml
+                    // binary/octet-stream
+                    // application/x-zip-compressed
+
+                    $(cfg.id.download_font_button).attr({
+                        download: cfg.output.filename,
+                        href: "data:binary/octet-stream;base64,"
+                            + util.base64_encode($(cfg.id.font).val())
                     });
-                } else {
-                    $(cfg.id.download_font_button).click(function (event) {
-                        console.log("noflash download button clicked");
 
-                        // image/svg+xml
-                        // binary/octet-stream
-                        // application/x-zip-compressed
-
-                        $(cfg.id.download_font_button).attr({
-                            download: cfg.output.filename,
-                            href: "data:binary/octet-stream;base64,"
-                                + util.base64_encode($(cfg.id.font).val())
-                        });
-
-                    });
-                }
-            });
-        },
-
-        initClipboardLinks: function () {
-            console.log("app.views.Main.initClipboardLinks");
-            $(cfg.id.tab_save).one("shown", function () {
-                console.log("app.views.Main.initClipboardLinks: shown fired");
-                // flash clipboard helper doesn't work if file: proto used
-                if (!env.is_file_proto && env.flash_version.major > 0) {
-                    ZeroClipboard.setMoviePath(cfg.zero_clipboard.swf_path);
-
-                    for (var i=0, len=cfg.zero_clipboard.links.length;
-                        i<len; i++) {
-                        var item = cfg.zero_clipboard.links[i];
-                        item.client = new ZeroClipboard.Client();
-                        item.client.fm_index = i;
-                        item.client.glue(item.link, item.span);
-
-                        item.client.addEventListener("mouseDown",
-                            function (client) { 
-                            console.log("zcb: mousedown");
-                            var item = cfg.zero_clipboard
-                                .links[client.fm_index];
-                            client.setText($(item.target).val());
-                        });
-                        item.client.addEventListener("complete",
-                            function (client, text) {
-                                console.log("zcb: complete");
-                                util.notify_info("Copied to clipboard", true);
-                            }
-                        );
-                        item.client.addEventListener("mouseOver",
-                            function (client) {
-                                console.log("zcb: mouseover");
-                                $("#" + item.link).trigger("mouseover");
-                            }
-                        );
-                        item.client.addEventListener("mouseOut",
-                            function (client) { 
-                                console.log("zcb: mouseout");
-                                $("#" + item.link).trigger("mouseout");
-                            }
-                        );
-
-                        $("#" + item.link).click(function () {
-                            console.log("noflash clipboard link clicked");
-                        });
-                    }
-    /*
-                } else {
-                    // TODO: IE clipboard code
-    */
-                } else {
-                    // no clipboard support
-                    for (var i=0, len=cfg.zero_clipboard.links.length;
-                        i<len; i++) {
-                        var item = cfg.zero_clipboard.links[i];
-                        $("#" + item.span).remove();
-                    }
-                }
+                });
             });
         }
     });

@@ -60,7 +60,6 @@ var Fontomas = (function (Fontomas) {
             console.log("app.views.GeneratedFont.onChange");
             if (cfg.live_update) {
                 this.updateFont();
-                this.updateIconAssignments();
             }
         },
 
@@ -120,33 +119,6 @@ var Fontomas = (function (Fontomas) {
             $("glyph", app.main.xml_template).remove();
             $("font", app.main.xml_template).append($(glyphs.join("\n")));
             $(cfg.id.font).text(util.xmlToString(app.main.xml_template));
-        },
-
-        // update IA's textarea
-        updateIconAssignments: function () {
-            var self = this;
-            var lines = [];
-            lines.push(
-                "/*",
-                "", 
-                "Name                       Hex entity          CSS content",
-                "======================================================================"
-            );
-
-            $(cfg.id.generated_font)
-                .find("input:checkbox:checked")
-                .each(function () {
-                    var $this = $(this);
-                    var unicode = $this.siblings("input.fm-unicode").val();
-                    var tmp = self.model.toEntityAndCss(unicode);
-                    lines.push(
-                        util.rpad("n/a", 32)
-                        + util.rpad(tmp.entity, 20)
-                        + tmp.css
-                    );
-                });
-            lines.push("", "*/");
-            $(cfg.id.icon_assignments).text(lines.join("\n"));
         }
     });
 
