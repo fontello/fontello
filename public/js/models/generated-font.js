@@ -4,17 +4,6 @@ var fm = (function (fm) {
         env = fm.env,
         debug = fm.debug;
 
-    App.Models.Glyph = Backbone.Model.extend({
-        // FIXME: the model isn't sync()ed to server yet
-        sync: function () {
-            console.log("Models.Font.sync()");
-        }
-    });
-
-    App.Collections.Glyph = Backbone.Collection.extend({
-        model: App.Models.Glyph
-    });
-
     App.Models.GeneratedFont = Backbone.Model.extend({
         defaults: {
             charset: "basic_latin",

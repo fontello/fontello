@@ -4,16 +4,7 @@ var fm = (function (fm) {
         env = fm.env,
         debug = fm.debug;
 
-    App.Models.Font = Backbone.Model.extend({
-        defaults: function () {
-            return {
-                fontname:   "unknown",
-                is_loaded:  false,
-                is_ok:      false,
-                is_added:   false
-            };
-        },
-
+    App.Models.Glyph = Backbone.Model.extend({
         // FIXME: the model isn't sync()ed to server yet
         sync: function () {
             console.log("Models.Font.sync()");
