@@ -5,10 +5,10 @@ SCRIPT_PATH="$(pwd)/$0"
 ROOT_DIR=${SCRIPT_PATH%/*/*}
 BIN_DIR="${ROOT_DIR}/bin"
 FONT_DIR="${ROOT_DIR}/fonts"
-JS_DIR="${ROOT_DIR}/public/js"
+JS_DIR="${ROOT_DIR}/js"
 FIX_ENTYPO_SCRIPT="${BIN_DIR}/entypo_rescale.pe"
 
-FONTS=(entypo_rescaled.svg iconic_fill.svg iconic_stroke.svg websymbols.svg fontawesome-webfont.svg)
+FONTS=(entypo_rescaled.svg iconic_fill.svg iconic_stroke.svg websymbols.svg)
 FLEN=${#FONTS[@]}
 FONT_ENTYPO=Entypo.otf
 FONT_ENTYPO_FIXED=entypo_rescaled.svg
