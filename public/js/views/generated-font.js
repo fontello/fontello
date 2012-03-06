@@ -79,6 +79,7 @@ var Fontomas = (function (Fontomas) {
 
         // update font's textarea
         updateFont: function () {
+            var self = this;
             if (!app.main.xml_template) {
                 return;
             }
@@ -103,7 +104,7 @@ var Fontomas = (function (Fontomas) {
                         var scale = cfg.output.units_per_em /
                             font.units_per_em;
                         if (glyph.d) {
-                            glyph.d = this.scalePath(glyph.d, scale);
+                            glyph.d = self.scalePath(glyph.d, scale);
                         }
                         if (glyph.horiz_adv_x) {
                             glyph.horiz_adv_x *= scale;
