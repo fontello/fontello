@@ -2,14 +2,14 @@ var Fontomas = (function (Fontomas) {
     "use strict";
 
     var debug = Fontomas.debug,
-        util = Fontomas.lib.util;
+        util = Fontomas.lib.util,
 
-    var Font = function () {
+    Font = function () {
         if (this instanceof Font) {
             $.extend(this, arguments[0]);
         } else {
-            var type = arguments[0];
-            var data = arguments[1];
+            var type = arguments[0],
+                data = arguments[1];
 
             switch (type) {
             case "svg":
@@ -25,9 +25,9 @@ var Fontomas = (function (Fontomas) {
 
     Font.initSvg = function (svg) {
         console.log("Font.initSvg");
-        var font = {};
+        var font = {},
+            xml = null;
 
-        var xml = null;
         try {
             xml = $.parseXML(svg);
         } catch (e) {
@@ -65,12 +65,15 @@ var Fontomas = (function (Fontomas) {
 
     Font.initCufonJs = function (js) {
         console.log("initCufonJs");
-        var font = {};
+        var font = {},
 
         // strip function call
-        var json_string = util.trimBoth(js, ".registerFont(", ")");
+            json_string = util.trimBoth(js, ".registerFont(", ")"),
+            json = null,
+            num_glyphs,
+            i,
+            glyph;
 
-        var json = null;
         try {
             json = $.parseJSON(json_string);
         } catch (e) {
@@ -85,15 +88,15 @@ var Fontomas = (function (Fontomas) {
         font.id = json.face["font-family"] || "unknown";
 
         font.glyphs = {};
-        var num_glyphs = 0;
-        for (var i in json.glyphs) {
-            num_glyphs += 1;
+        num_glyphs = 0;
+        for (i in json.glyphs) {
+            num_glyphs++;
             // debug
             if (debug.is_on && debug.maxglyphs && debug.maxglyphs < num_glyphs) {
                 break;
             }
 
-            var glyph = json.glyphs[i];
+            glyph = json.glyphs[i];
             glyph.unicode = i;
 
             if (glyph.w) {
@@ -133,14 +136,16 @@ var Fontomas = (function (Fontomas) {
             match,
             negateEverySecond = function (value, idx) {
                 return idx % 2 === 1 ? -value : value;
-            };
+            },
+            c,
+            i;
 
         match = re.exec(vml);
-        var c = match[1].split(',');
+        c = match[1].split(',');
         c = c.map(negateEverySecond);
         result += c.join(",");
 
-        for (var i = 0; (match = re2.exec(vml)); i += 1) {
+        for (i = 0; (match = re2.exec(vml)); i++) {
             c = match[2].split(',');
             c = c.map(negateEverySecond);
             result += match[1]+c.join(",");

@@ -4,9 +4,9 @@ var Fontomas = (function (Fontomas) {
     var app = Fontomas.app,
         cfg = Fontomas.cfg,
         env = Fontomas.env,
-        debug = Fontomas.debug;
+        debug = Fontomas.debug,
 
-    var init = function () {
+    init = function () {
         // check browser's capabilities
         if (!isOkBrowser()) {
             console.log("bad browser");
@@ -23,9 +23,9 @@ var Fontomas = (function (Fontomas) {
         app.mainview = new app.views.Main({model: app.main});
 
         app.mainview.render();
-    };
+    },
 
-    var isOkBrowser = function () {
+    isOkBrowser = function () {
         // FF3.6+ Chrome6+ Opera11.1+
         var filereader = env.filereader = !!window.FileReader;
 

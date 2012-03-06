@@ -2,13 +2,13 @@ var Fontomas = (function (Fontomas) {
     "use strict";
 
     var cfg = Fontomas.cfg,
-        _ = window._;
+        _ = window._,
 
-    var notify = function(text, tpl, suppress_dup) {
+    notify = function(text, tpl, suppress_dup) {
         var tpl_vars = {
-            text: text
-        };
-        var options = cfg.notify.options;
+                text: text
+            },
+            options = cfg.notify.options;
 
         if (suppress_dup && (text !== undefined)) {
             if (cfg.notify.dup[text] !== undefined) {
@@ -26,41 +26,42 @@ var Fontomas = (function (Fontomas) {
         }
 
         $(cfg.id.notification).notify("create", tpl, tpl_vars, options);
-    };
+    },
 
-    var notify_alert = function (text, suppress_dup) {
+    notify_alert = function (text, suppress_dup) {
         notify(text,
             cfg.notify.templates.alert,
             suppress_dup
         );
-    };
+    },
 
-    var notify_info = function (text, suppress_dup) {
+    notify_info = function (text, suppress_dup) {
         notify(text,
             cfg.notify.templates.info,
             suppress_dup
         );
-    };
+    },
 
     // ===============
     // misc functions
     // ===============
-    var outerHtml = function (jquery_object) {
+    outerHtml = function (jquery_object) {
         return $("<div/>").append(jquery_object.clone()).html();
-    };
+    },
 
-    var getAllAttrs = function (dom_node) {
+    getAllAttrs = function (dom_node) {
         var result = {},
-            attrs = dom_node.attributes;
+            attrs = dom_node.attributes,
+            i, len;
 
-        for (var i=0, len=attrs.length; i<len; i+=1) {
+        for (i=0, len=attrs.length; i<len; i++) {
             result[attrs[i].nodeName] = attrs[i].nodeValue;
         }
 
         return result;
-    };
+    },
 
-    var xmlToString = function(xmlDom) {
+    xmlToString = function(xmlDom) {
         // cross-browser
         var result = (typeof XMLSerializer !== "undefined") ?
             (new window.XMLSerializer()).serializeToString(xmlDom) :
@@ -73,39 +74,40 @@ var Fontomas = (function (Fontomas) {
         //FIXME: quickfix: &amp; => &
         result = result.replace(/&amp;#x/gm, "&#x");
         return result;
-    };
+    },
 
-    var getFileExt = function (filepath) {
-        var defaultval = "";
+    getFileExt = function (filepath) {
+        var defaultval = "",
+            index;
         if (!_.isString(filepath)) {
             return defaultval;
         }
 
-        var index = filepath.lastIndexOf(".");
+        index = filepath.lastIndexOf(".");
         if (index === -1) {
             return defaultval;
         } else {
             return filepath.substr(index+1).toLowerCase();
         }
-    };
+    },
 
-    var joinList = function (array, delim1, delim2) {
+    joinList = function (array, delim1, delim2) {
         return array.reduce(function (prev, cur, idx, arr) {
             return arr.length !== idx+1 ?
                 prev + delim1 + cur :
                 prev + delim2 + cur;
         });
-    };
+    },
 
     // trim leading whitespaces
-    var trimLeadingWS = function (s) {
+    trimLeadingWS = function (s) {
         return s.replace(/^\s*/, "");
-    };
+    },
 
     // trim string at both sides:
     // in:  s="abc{hello}def", begin="c{", end="}"
     // out: "hello"
-    var trimBoth = function (s, begin, end) {
+    trimBoth = function (s, begin, end) {
         var idx1 = s.indexOf(begin) + begin.length,
             idx2 = s.lastIndexOf(end);
         if (idx1 < idx2) {
@@ -113,10 +115,10 @@ var Fontomas = (function (Fontomas) {
         } else {
             return s;
         }
-    };
+    },
 
     /*jshint bitwise:false*/
-    var repeat = function (s, times) {
+    repeat = function (s, times) {
         if (times < 1) {
             return "";
         }
@@ -130,33 +132,34 @@ var Fontomas = (function (Fontomas) {
             s += s;
         }
         return result;
-    };
+    },
     /*jshint bitwise:true*/
 
-    var rpad = function (s, len) {
+    rpad = function (s, len) {
         if (s.length < len) {
             return s + repeat(" ", len - s.length);
         } else {
             return s;
         }
-    };
+    },
 
-    var lpad = function (s, len) {
+    lpad = function (s, len) {
         if (s.length < len) {
             return repeat(" ", len - s.length) + s;
         } else {
             return s;
         }
-    };
+    },
 
     /*jshint bitwise:false*/
-    var base64_encode = function (s) {
-        var table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-        var result = "";
+    base64_encode = function (s) {
+        var table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+            result = "",
 
-        var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+            chr1, chr2, chr3, enc1, enc2, enc3, enc4,
+            i, len;
 
-        for (var i=0, len=s.length; i<len; i+=3) {
+        for (i=0, len=s.length; i<len; i+=3) {
             chr1 = s.charCodeAt(i);
             chr2 = s.charCodeAt(i+1);
             chr3 = s.charCodeAt(i+2);

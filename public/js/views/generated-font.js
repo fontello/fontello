@@ -81,21 +81,24 @@ var Fontomas = (function (Fontomas) {
 
         // update font's textarea
         updateFont: function () {
-            var self = this;
+            var self = this,
+                glyphs;
             if (!app.main.xml_template) {
                 return;
             }
 
-            var glyphs = [];
+            glyphs = [];
             $(cfg.id.generated_font)
                 .find("input:checkbox:checked")
                 .each(function () {
                     var $this = $(this),
                         glyph_id = $this.val(),
-                        unicode = $this.siblings("input.fm-unicode").val();
+                        unicode = $this.siblings("input.fm-unicode").val(),
 
-                    var font = app.main.fonts.getFont(glyph_id),
-                        glyph = app.main.fonts.getGlyph(glyph_id);
+                        font = app.main.fonts.getFont(glyph_id),
+                        glyph = app.main.fonts.getGlyph(glyph_id),
+                        scale,
+                        g;
 
                     if (!font || !glyph) {
                         console.log("can't getFont/getGlyph id=", glyph_id);
@@ -103,8 +106,7 @@ var Fontomas = (function (Fontomas) {
                     }
 
                     if (font.units_per_em !== cfg.output.units_per_em) {
-                        var scale = cfg.output.units_per_em /
-                            font.units_per_em;
+                        scale = cfg.output.units_per_em / font.units_per_em;
                         if (glyph.d) {
                             glyph.d = self.scalePath(glyph.d, scale);
                         }
@@ -113,7 +115,7 @@ var Fontomas = (function (Fontomas) {
                         }
                     }
 
-                    var g = $("<glyph/>");
+                    g = $("<glyph/>");
                     g.attr("unicode", unicode);
 
                     if (glyph.horiz_adv_x) {

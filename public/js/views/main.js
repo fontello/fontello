@@ -136,8 +136,10 @@ var Fontomas = (function (Fontomas) {
 
         addFontsAsStrings: function (files, cb_onload) {
             console.log("app.views.Main.addFontsAsStrings flen=", files.length);
-            for (var i=0, f; (f=files[i]); i+=1) {
-                var idx = app.main.myfiles.push({
+            var i, f, idx;
+
+            for (i=0, f; (f=files[i]); i++) {
+                idx = app.main.myfiles.push({
                     id:             null,
                     filename:       f.filename,
                     filesize:       f.content.length,
@@ -173,8 +175,13 @@ var Fontomas = (function (Fontomas) {
 
         addFonts: function (files, cb_onload) {
             console.log("app.views.Main.addFonts");
-            for (var i=0, f; (f=files[i]); i+=1) {
-                var idx = app.main.myfiles.push({
+
+            var i, f,
+                idx,
+                reader;
+
+            for (i=0, f; (f=files[i]); i++) {
+                idx = app.main.myfiles.push({
                     id:             null,
                     filename:       f.name,
                     filesize:       f.size, 
@@ -190,14 +197,14 @@ var Fontomas = (function (Fontomas) {
                 }) - 1;
                 app.main.myfiles[idx].id = idx;
 
-                var reader = new FileReader();
+                reader = new FileReader();
                 reader.onload = (function (fileinfo) {
                     return function (e) {
                         // FIXME: race condition?
                         // is there a file with the same content?
-                        var is_exist = false;
-                        for (var i=0, len=app.main.myfiles.length;
-                            i<len; i+=1) {
+                        var is_exist = false,
+                            i, len;
+                        for (i=0, len=app.main.myfiles.length; i<len; i++) {
                             if (!app.main.myfiles[i] ||
                                 !app.main.myfiles.is_ok) {
                                 continue;
@@ -230,9 +237,11 @@ var Fontomas = (function (Fontomas) {
                 return;
             }
 
-            var font = null, types = ["svg"/*, "ttf", "otf"*/, "js"];
+            var font = null,
+                types = ["svg"/*, "ttf", "otf"*/, "js"],
+                file_ext = util.getFileExt(fileinfo.filename),
+                tmp;
 
-            var file_ext = util.getFileExt(fileinfo.filename);
             switch (file_ext) {
             case "svg":
                 font = Font("svg", fileinfo.content);
@@ -263,7 +272,7 @@ var Fontomas = (function (Fontomas) {
             fileinfo.fontname = font.id;
 
             // FIXME
-            var tmp = $.extend({}, fileinfo);
+            tmp = $.extend({}, fileinfo);
             tmp.font = font;
             app.mainview.createFont(tmp);
 
@@ -280,7 +289,7 @@ var Fontomas = (function (Fontomas) {
         createFont: function (attrs) {
             console.log("app.views.Main.create attrs=", attrs);
             //if (!attrs.id) // FIXME
-                attrs.id = this.model.next_font_id += 1;
+                attrs.id = this.model.next_font_id++;
             this.model.fonts.create(attrs);
         },
 

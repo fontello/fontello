@@ -36,10 +36,11 @@ var Fontomas = (function (Fontomas) {
 
         render: function () {
             console.log("app.views.SelectToolbar.render");
-            var self = this;
+            var self = this,
+                tpl_vars;
 
             // render icon size buttons
-            var tpl_vars = {buttons: cfg.preview_icon_sizes};
+            tpl_vars = {buttons: cfg.preview_icon_sizes};
             $(cfg.id.icon_size).html(this.templates.icon_size(tpl_vars))
                 .find("button:first").addClass("active");
 

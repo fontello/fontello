@@ -17,9 +17,10 @@ var Fontomas = (function (Fontomas) {
         initialize: function () {
             console.log("app.models.GeneratedFont.initialize");
             this.glyphs = new app.collections.Glyph;
+            var i, len, char;
 
-            for (var i=0, len=cfg.basic_latin.str.length; i<len; i+=1) {
-                var char = cfg.basic_latin.str[i];
+            for (i=0, len=cfg.basic_latin.str.length; i<len; i++) {
+                char = cfg.basic_latin.str[i];
                 this.glyphs.add({
                     num: i,
                     char: this.toCharRef(char),

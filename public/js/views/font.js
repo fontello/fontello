@@ -33,39 +33,64 @@ var Fontomas = (function (Fontomas) {
 
         render: function () {
             console.log("app.views.Font.render el=", this.el);
-            var font = this.model.get("font");
+            var font = this.model.get("font"),
 
-            var ascent = font.ascent,
+                ascent = font.ascent,
                 descent = font.descent,
-                units_per_em = font.units_per_em;
+                units_per_em = font.units_per_em,
 
-            var size_string = $(cfg.id.icon_size).find("button.active").val(),
+                size_string = $(cfg.id.icon_size).find("button.active").val(),
                 size = parseInt(size_string, 10) || cfg.preview_icon_sizes[0],
                 font_size_y = Math.round(size * (ascent - descent) /
-                    units_per_em);
+                    units_per_em),
 
-            var tpl_vars = {
-                id: this.model.id,
-                fontname: this.model.get("fontname")
-            };
+                tpl_vars = {
+                    id: this.model.id,
+                    fontname: this.model.get("fontname")
+                },
+                glyph_id,
+                item,
+                horiz_adv_x,
+                size_x, size_y,
+                $glyph,
+                gd,
+                gd_id,
+                dom,
+                path,
+                r,
+                g,
+                bbox,
+                delta_ascent,
+                delta_descent,
+                delta_y,
+                delta_left,
+                delta_right,
+                delta_x,
+                vb,
+                delta_xx,
+                delta_yy,
+                flip_y_matrix,
+                glyph_sizes,
+                j,
+                icon_size;
 
             this.$el.html(this.templates.font_item(tpl_vars));
             this.$(".fm-glyph-group").addClass(cfg.icon_size_prefix+size);
 
-            for (var glyph_id in font.glyphs) {
-                var item = font.glyphs[glyph_id];
+            for (glyph_id in font.glyphs) {
+                item = font.glyphs[glyph_id];
 
-                var horiz_adv_x = item.horiz_adv_x || font.horiz_adv_x;
-                var size_x = Math.round(size * horiz_adv_x / units_per_em),
-                    size_y = font_size_y;
+                horiz_adv_x = item.horiz_adv_x || font.horiz_adv_x;
+                size_x = Math.round(size * horiz_adv_x / units_per_em);
+                size_y = font_size_y;
 
-                var $glyph = $(this.templates.glyph_item(item));
+                $glyph = $(this.templates.glyph_item(item));
 
                 this.$(".fm-glyph-group").append($glyph);
 
                 $glyph.find(".fm-glyph-id").val(this.model.id + "-" + glyph_id);
-                var gd = $glyph.find(cfg.css_class.glyph_div),
-                    gd_id = "fm-font-glyph-"+this.model.id+"-"+glyph_id;
+                gd = $glyph.find(cfg.css_class.glyph_div);
+                gd_id = "fm-font-glyph-"+this.model.id+"-"+glyph_id;
                 gd.attr("id", gd_id)
                     .css({
                         width: size_x + "px",
@@ -75,24 +100,22 @@ var Fontomas = (function (Fontomas) {
                     });
 
                 // add svg
-                var dom = $glyph.find("#" + gd_id)[0];
-                var path = item.d;
-                var r = new Raphael(dom, size_x, size_y);
-                var g = r.path(path).attr(cfg.path_options);
+                dom = $glyph.find("#" + gd_id)[0];
+                path = item.d;
+                r = new Raphael(dom, size_x, size_y);
+                g = r.path(path).attr(cfg.path_options);
 
                 // calc delta_x, delta_y
-                var bbox = g.getBBox();
-                var delta_ascent = Math.max(0, (bbox.y + bbox.height) -
-                        ascent),
-                    delta_descent = Math.max(0, descent - bbox.y),
-                    delta_y = Math.max(delta_ascent, delta_descent);
-                var delta_left = Math.max(0, 0 - bbox.x),
-                    delta_right = Math.max(0, (bbox.x + bbox.width) -
-                        horiz_adv_x),
-                    delta_x = Math.max(delta_left, delta_right);
+                bbox = g.getBBox();
+                delta_ascent = Math.max(0, (bbox.y + bbox.height) - ascent);
+                delta_descent = Math.max(0, descent - bbox.y);
+                delta_y = Math.max(delta_ascent, delta_descent);
+                delta_left = Math.max(0, 0 - bbox.x);
+                delta_right = Math.max(0, (bbox.x + bbox.width) - horiz_adv_x);
+                delta_x = Math.max(delta_left, delta_right);
 
                 // SVG's ViewBox
-                var vb = {
+                vb = {
                     x: 0 - delta_x,
                     y: descent - delta_y,
                     w: horiz_adv_x + 2 * delta_x,
@@ -113,8 +136,8 @@ var Fontomas = (function (Fontomas) {
                 // FIXME: hack to avoid clipped edges by adding 1 pixel on
                 // each side and adjusting viewbox accordingly
                 if (cfg.fix_edges) {
-                    var delta_xx = vb.w / size_x,
-                        delta_yy = vb.h / size_y;
+                    delta_xx = vb.w / size_x;
+                    delta_yy = vb.h / size_y;
 
                     vb.x -= delta_xx;
                     vb.y -= delta_yy;
@@ -143,17 +166,17 @@ var Fontomas = (function (Fontomas) {
                 // debug: turn flip off 
                 if (!(debug && debug.noflip)) {
                 // transform matrix 3x3
-                var flip_y_matrix = [1, 0, 0, -1, 0, ascent / 2 - descent];
-                g.attr({transform: "m" + flip_y_matrix});
+                    flip_y_matrix = [1, 0, 0, -1, 0, ascent / 2 - descent];
+                    g.attr({transform: "m" + flip_y_matrix});
                 }
 
                 g.show();
 
                 // precalc glyph sizes
                 // FIXME: precalc only if glyph goes out of its default box
-                var glyph_sizes = {};
-                for (var j in cfg.preview_icon_sizes) {
-                    var icon_size = cfg.preview_icon_sizes[j];
+                glyph_sizes = {};
+                for (j in cfg.preview_icon_sizes) {
+                    icon_size = cfg.preview_icon_sizes[j];
                     size_y = Math.round(icon_size * (ascent - descent +
                         2 * delta_y) / units_per_em);
                     size_x = Math.round(icon_size * (horiz_adv_x +
@@ -208,14 +231,15 @@ var Fontomas = (function (Fontomas) {
         addGlyph: function (glyph_id) {
             console.log("addGlyph glyph_id=", glyph_id);
             var checkbox=$(cfg.id.rearrange)
-                .find(".fm-glyph-id:not(:checked):first");
+                .find(".fm-glyph-id:not(:checked):first"),
+                el_id, svg, icon;
             checkbox.attr({value: glyph_id, checked: true});
             checkbox.parent().addClass("selected");
 
-            var el_id = "#fm-font-glyph-" + glyph_id;
+            el_id = "#fm-font-glyph-" + glyph_id;
 
-            var svg = $(el_id).contents().clone(false);
-            var icon = checkbox.parent().find(cfg.css_class.rg_icon);
+            svg = $(el_id).contents().clone(false);
+            icon = checkbox.parent().find(cfg.css_class.rg_icon);
             icon.append(svg)
                 .data("glyph_sizes", $(el_id).data("glyph_sizes"))
                 .draggable(cfg.draggable_options)

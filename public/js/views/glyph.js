@@ -31,12 +31,12 @@ var Fontomas = (function (Fontomas) {
             this.$(cfg.css_class.rg_icon).droppable($.extend(
                 {}, cfg.droppable_options, {drop: function (event, ui) {
                 console.log("drop");
-                var $this=$(this);
-                var draggable=ui.draggable;
-                var g_id=$this.parent().siblings("input:checkbox")
-                    .attr("value");
-                var d=$this.contents();
-                var data = $this.data("glyph_sizes");
+                var $this=$(this),
+                    draggable=ui.draggable,
+                    g_id=$this.parent().siblings("input:checkbox")
+                    .attr("value"),
+                    d=$this.contents(),
+                    data = $this.data("glyph_sizes");
 
                 $this.parent().siblings("input:checkbox").attr({value:
                     draggable.parent().siblings("input:checkbox")
