@@ -11,7 +11,7 @@
   "noarg"         : true,   // Prohibit use of `arguments.caller` and `arguments.callee`.
   "noempty"       : true,   // Prohibit use of empty blocks.
   "nonew"         : true,   // Prohibit use of constructors for side-effects.
-  "plusplus"      : true,   // Prohibit use of `++` & `--`.
+  "plusplus"      : false,  // Prohibit use of `++` & `--`.
   "regexp"        : false,  // Prohibit `.` and `[^...]` in regular expressions.
   "undef"         : true,   // Require all non-global variables be declared before they are used.
   "strict"        : true,   // Require `use strict` pragma  in every file.
@@ -60,7 +60,7 @@
   // Legacy ////////////////////////////////////////////////////////////////////
 
   "nomen"         : false,  // Prohibit use of initial or trailing underbars in names.
-  "onevar"        : false,  // Allow only one `var` statement per function.
+  "onevar"        : true,   // Allow only one `var` statement per function.
   "passfail"      : false,  // Stop on first error.
   "white"         : false,  // Check against strict whitespace and indentation rules.
 

@@ -5,7 +5,9 @@ var Fontomas = (function (Fontomas) {
         cfg = Fontomas.cfg,
         env = Fontomas.env,
         debug = Fontomas.debug,
-        util = Fontomas.lib.util;
+        util = Fontomas.lib.util,
+        Backbone = window.Backbone,
+        _ = window._;
 
     app.views.Glyph = Backbone.View.extend({
         tagName: "label",

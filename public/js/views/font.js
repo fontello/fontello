@@ -4,7 +4,10 @@ var Fontomas = (function (Fontomas) {
     var app = Fontomas.app,
         cfg = Fontomas.cfg,
         env = Fontomas.env,
-        debug = Fontomas.debug;
+        debug = Fontomas.debug,
+        Backbone = window.Backbone,
+        _ = window._,
+        Raphael = window.Raphael;
 
     app.views.Font = Backbone.View.extend({
         tagName: "li",

@@ -4,7 +4,8 @@ var Fontomas = (function (Fontomas) {
     var app = Fontomas.app,
         cfg = Fontomas.cfg,
         env = Fontomas.env,
-        debug = Fontomas.debug;
+        debug = Fontomas.debug,
+        Backbone = window.Backbone;
 
     app.models.Glyph = Backbone.Model.extend({
         // FIXME: the model isn't sync()ed to server yet

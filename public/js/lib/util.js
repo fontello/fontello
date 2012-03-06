@@ -1,7 +1,8 @@
 var Fontomas = (function (Fontomas) {
     "use strict";
 
-    var cfg = Fontomas.cfg;
+    var cfg = Fontomas.cfg,
+        _ = window._;
 
     var notify = function(text, tpl, suppress_dup) {
         var tpl_vars = {

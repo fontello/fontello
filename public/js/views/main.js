@@ -6,7 +6,10 @@ var Fontomas = (function (Fontomas) {
         env = Fontomas.env,
         debug = Fontomas.debug,
         util = Fontomas.lib.util,
-        Font = Fontomas.lib.Font;
+        Font = Fontomas.lib.Font,
+        Backbone = window.Backbone,
+        _ = window._,
+        Handlebars = window.Handlebars;
 
     app.views.Main = Backbone.View.extend({
         templates: {},
