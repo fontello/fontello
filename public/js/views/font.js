@@ -1,4 +1,6 @@
 var Fontomas = (function (Fontomas) {
+    "use strict";
+
     var app = Fontomas.app,
         cfg = Fontomas.cfg,
         env = Fontomas.env,
@@ -35,9 +37,9 @@ var Fontomas = (function (Fontomas) {
                 units_per_em = font.units_per_em;
 
             var size_string = $(cfg.id.icon_size).find("button.active").val(),
-                size = parseInt(size_string) || cfg.preview_icon_sizes[0],
-                font_size_y = Math.round(size * (ascent - descent)
-                    / units_per_em);
+                size = parseInt(size_string, 10) || cfg.preview_icon_sizes[0],
+                font_size_y = Math.round(size * (ascent - descent) /
+                    units_per_em);
 
             var tpl_vars = {
                 id: this.model.id,
@@ -59,7 +61,7 @@ var Fontomas = (function (Fontomas) {
                 this.$(".fm-glyph-group").append($glyph);
 
                 $glyph.find(".fm-glyph-id").val(this.model.id + "-" + glyph_id);
-                var gd = $glyph.find(cfg.class.glyph_div),
+                var gd = $glyph.find(cfg.css_class.glyph_div),
                     gd_id = "fm-font-glyph-"+this.model.id+"-"+glyph_id;
                 gd.attr("id", gd_id)
                     .css({
@@ -72,18 +74,18 @@ var Fontomas = (function (Fontomas) {
                 // add svg
                 var dom = $glyph.find("#" + gd_id)[0];
                 var path = item.d;
-                var r = Raphael(dom, size_x, size_y);
+                var r = new Raphael(dom, size_x, size_y);
                 var g = r.path(path).attr(cfg.path_options);
 
                 // calc delta_x, delta_y
                 var bbox = g.getBBox();
-                var delta_ascent = Math.max(0, (bbox.y + bbox.height)
-                        - ascent),
+                var delta_ascent = Math.max(0, (bbox.y + bbox.height) -
+                        ascent),
                     delta_descent = Math.max(0, descent - bbox.y),
                     delta_y = Math.max(delta_ascent, delta_descent);
                 var delta_left = Math.max(0, 0 - bbox.x),
-                    delta_right = Math.max(0, (bbox.x + bbox.width)
-                        - horiz_adv_x),
+                    delta_right = Math.max(0, (bbox.x + bbox.width) -
+                        horiz_adv_x),
                     delta_x = Math.max(delta_left, delta_right);
 
                 // SVG's ViewBox
@@ -97,12 +99,12 @@ var Fontomas = (function (Fontomas) {
                 // calc new size_y, size_x if glyph goes out of its default
                 // box
                 if (delta_y > 0) {
-                    size_y = Math.round(size * (ascent - descent
-                        + 2 * delta_y) / units_per_em );
+                    size_y = Math.round(size * (ascent - descent +
+                        2 * delta_y) / units_per_em );
                 }
                 if (delta_x > 0) {
-                    size_x = Math.round(size * (horiz_adv_x + 2 * delta_x)
-                        / units_per_em);
+                    size_x = Math.round(size * (horiz_adv_x + 2 * delta_x) /
+                        units_per_em);
                 }
 
                 // FIXME: hack to avoid clipped edges by adding 1 pixel on
@@ -149,10 +151,10 @@ var Fontomas = (function (Fontomas) {
                 var glyph_sizes = {};
                 for (var j in cfg.preview_icon_sizes) {
                     var icon_size = cfg.preview_icon_sizes[j];
-                    size_y = Math.round(icon_size * (ascent - descent
-                        + 2 * delta_y) / units_per_em);
-                    size_x = Math.round(icon_size * (horiz_adv_x
-                        + 2 * delta_x) / units_per_em);
+                    size_y = Math.round(icon_size * (ascent - descent +
+                        2 * delta_y) / units_per_em);
+                    size_x = Math.round(icon_size * (horiz_adv_x +
+                        2 * delta_x) / units_per_em);
                     glyph_sizes[icon_size] = [size_x, size_y];
                 }
                 // FIXME: is this the right place?
@@ -192,10 +194,11 @@ var Fontomas = (function (Fontomas) {
 
             $target.parent().toggleClass("selected", is_checked);
 
-            if (is_checked)
+            if (is_checked) {
                 this.addGlyph(glyph_id);
-            else
+            } else {
                 this.removeGlyph(glyph_id);
+            }
         },
 
         // add a glyph to the rearrange zone
@@ -209,15 +212,16 @@ var Fontomas = (function (Fontomas) {
             var el_id = "#fm-font-glyph-" + glyph_id;
 
             var svg = $(el_id).contents().clone(false);
-            var icon = checkbox.parent().find(cfg.class.rg_icon);
+            var icon = checkbox.parent().find(cfg.css_class.rg_icon);
             icon.append(svg)
                 .data("glyph_sizes", $(el_id).data("glyph_sizes"))
                 .draggable(cfg.draggable_options)
                 .attr("style", $(el_id).attr("style"))
                 .css({width: "100%", left: "0px", "margin-left": "0px"});
 
-            if (app.main.genfont.get("glyph_count") == 0)
+            if (app.main.genfont.get("glyph_count") === 0) {
                 this.topview.toggleMenu(true);
+            }
             app.main.genfont.incCounter();
         },
 
@@ -228,14 +232,15 @@ var Fontomas = (function (Fontomas) {
                 .find(".fm-glyph-id:checked[value='" + glyph_id + "']");
             checkbox.attr({value: "", checked: false});
             checkbox.parent().removeClass("selected");
-            checkbox.parent().find(cfg.class.rg_icon)
+            checkbox.parent().find(cfg.css_class.rg_icon)
                 .removeData("glyph_sizes").empty();
 
-            if (app.main.genfont.get("glyph_count") == 1)
+            if (app.main.genfont.get("glyph_count") === 1) {
                 this.topview.toggleMenu(false);
+            }
             app.main.genfont.decCounter();
         }
     });
 
     return Fontomas;
-})(Fontomas || {});
+}(Fontomas || {}));

@@ -1,4 +1,6 @@
 var Fontomas = (function (Fontomas) {
+    "use strict";
+
     var cfg = {
         id: {
             tab: "#tab",
@@ -26,7 +28,7 @@ var Fontomas = (function (Fontomas) {
             download_font_button: "#fm-download-font-button",
             font_output: "#fm-font-output"
         },
-        class: {
+        css_class: {
             font_name: ".fm-font-name",
             glyph_group: ".fm-glyph-group",
             glyph_div: ".fm-glyph-div",
@@ -53,7 +55,7 @@ var Fontomas = (function (Fontomas) {
             str: "",    // precalculated by initCfg()
             begin: 33,
             end: 126,
-            extra: " ",
+            extra: " "
         },
         unicode_private: {
             begin: 0xf0000,
@@ -97,7 +99,7 @@ var Fontomas = (function (Fontomas) {
 
     // environment
     var env = {
-        is_file_proto: (window.location.protocol == "file:"),
+        is_file_proto: (window.location.protocol === "file:"),
         filereader: null
     };
 
@@ -121,8 +123,9 @@ var Fontomas = (function (Fontomas) {
 
         // init cfg.basic_latin.str
         cfg.basic_latin.str = "";
-        for (var i=cfg.basic_latin.begin; i<=cfg.basic_latin.end; i++)
+        for (var i=cfg.basic_latin.begin; i<=cfg.basic_latin.end; i+=1) {
             cfg.basic_latin.str += String.fromCharCode(i);
+        }
         cfg.basic_latin.str += cfg.basic_latin.extra;
     };
 
@@ -130,12 +133,12 @@ var Fontomas = (function (Fontomas) {
     var initDebug = function () {
         var hash = window.location.hash.substr(1);
         var params = hash.split("&");
-        for (var i=0, len=params.length; i<len; i++) {
-            if (params[i].split(":").indexOf("debug") == 0) {
+        for (var i=0, len=params.length; i<len; i+=1) {
+            if (params[i].split(":").indexOf("debug") === 0) {
                 debug.is_on = true;
                 var vars = params[i].split(":")[1].split(",");
-                for (var i=0, len=vars.length; i<len; i++) {
-                    var pair = vars[i].split("=");
+                for (var j=0, len2=vars.length; j<len2; i+=1) {
+                    var pair = vars[j].split("=");
                     debug[pair[0]] = pair[1] && pair[1] !== "" ? pair[1] : true;
                 }
                 break;
@@ -146,7 +149,7 @@ var Fontomas = (function (Fontomas) {
     (function () {
         initCfg();
         initDebug();
-    })();
+    }());
 
     // public interface
     return $.extend(true, Fontomas, {
@@ -155,4 +158,4 @@ var Fontomas = (function (Fontomas) {
         app: app,
         debug: debug
     });
-})(Fontomas || {});
+}(Fontomas || {}));

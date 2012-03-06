@@ -1,4 +1,6 @@
 var Fontomas = (function (Fontomas) {
+    "use strict";
+
     var app = Fontomas.app,
         cfg = Fontomas.cfg,
         env = Fontomas.env,
@@ -66,7 +68,7 @@ var Fontomas = (function (Fontomas) {
                 })
             };
             $(cfg.id.use_embedded).html(this.templates.use_embedded(tpl_vars))
-                .find(cfg.class.font_name).each(function (i) {
+                .find(cfg.css_class.font_name).each(function (i) {
                     $(this).data("embedded_id", i);
                 });
         },
@@ -77,8 +79,9 @@ var Fontomas = (function (Fontomas) {
             var id = $(event.target).data("embedded_id"),
                 font = fm_embedded_fonts[id];
             console.assert(font);
-            if (font && !font.is_added)
+            if (font && !font.is_added) {
                 this.topview.addEmbeddedFonts([font]);
+            }
         },
 
         fileBrowse: function (event) {
@@ -86,8 +89,8 @@ var Fontomas = (function (Fontomas) {
             if (env.filereader) {
                 $(cfg.id.file).click();
             } else {
-                util.notify_alert("File upload is not supported by your"
-                    + " browser, use embedded fonts instead");
+                util.notify_alert("File upload is not supported by your" +
+                    " browser, use embedded fonts instead");
             }
         },
 
@@ -118,17 +121,17 @@ var Fontomas = (function (Fontomas) {
         changeIconSize: function (event) {
             console.log("app.views.SelectToolbar.changeIconSize");
             event.preventDefault();
-            var size = parseInt($(event.target).val())
-                || cfg.preview_icon_sizes[0];
+            var size = parseInt($(event.target).val(), 10) ||
+                cfg.preview_icon_sizes[0];
             console.log('size='+size);
 
             // attach class
-            $(cfg.class.glyph_group)
+            $(cfg.css_class.glyph_group)
                 .removeClass(cfg.icon_size_classes)
                 .addClass(cfg.icon_size_prefix + size);
 
             // change width/height
-            $(cfg.id.font_list).find(cfg.class.glyph_div).each(function (i) {
+            $(cfg.id.font_list).find(cfg.css_class.glyph_div).each(function (i) {
                 var $this = $(this),
                     size_x = $this.data("glyph_sizes")[size][0],
                     size_y = $this.data("glyph_sizes")[size][1];
@@ -150,15 +153,15 @@ var Fontomas = (function (Fontomas) {
                 .addClass(cfg.icon_size_prefix + size);
 
             // change width/height
-            $(cfg.id.generated_font).find(cfg.class.rg_icon).each(function (i) {
+            $(cfg.id.generated_font).find(cfg.css_class.rg_icon).each(function (i) {
                 var $this = $(this),
                     glyph_id = $(this).parent().siblings(".fm-glyph-id").val(),
                     size_x = size,
                     size_y = size;
 
                 // FIXME
-                if (glyph_id != "") {
-                    size_x = $this.data("glyph_sizes")[size][0],
+                if (glyph_id !== "") {
+                    size_x = $this.data("glyph_sizes")[size][0];
                     size_y = $this.data("glyph_sizes")[size][1];
                 }
 
@@ -180,4 +183,4 @@ var Fontomas = (function (Fontomas) {
     });
 
     return Fontomas;
-})(Fontomas || {});
+}(Fontomas || {}));

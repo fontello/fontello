@@ -1,4 +1,6 @@
 var Fontomas = (function (Fontomas) {
+    "use strict";
+
     var app = Fontomas.app,
         cfg = Fontomas.cfg,
         env = Fontomas.env,
@@ -56,8 +58,9 @@ var Fontomas = (function (Fontomas) {
         getTemplates: function (tpl_names) {
             var result = {};
             _.each(this.templates, function (item, key) {
-                 if (_.include(tpl_names, key))
+                 if (_.include(tpl_names, key)) {
                     result[key] = item;
+                 }
             });
             return result;
         },
@@ -96,8 +99,9 @@ var Fontomas = (function (Fontomas) {
 
             // auto load embedded fonts
             // debug
-            if (!(debug.is_on && debug.noembedded))
-            this.addEmbeddedFonts(fm_embedded_fonts);
+            if (!(debug.is_on && debug.noembedded)) {
+                this.addEmbeddedFonts(fm_embedded_fonts);
+            }
 
             // first tab is fully initialized so show it
             $(cfg.id.tab + " a:first").tab("show");
@@ -129,7 +133,7 @@ var Fontomas = (function (Fontomas) {
 
         addFontsAsStrings: function (files, cb_onload) {
             console.log("app.views.Main.addFontsAsStrings flen=", files.length);
-            for (var i=0, f; f=files[i]; i++) {
+            for (var i=0, f; (f=files[i]); i+=1) {
                 var idx = app.main.myfiles.push({
                     id:             null,
                     filename:       f.filename,
@@ -146,8 +150,9 @@ var Fontomas = (function (Fontomas) {
                 }) - 1;
                 app.main.myfiles[idx].id = idx;
 
-                if (cb_onload)
+                if (cb_onload) {
                     cb_onload(app.main.myfiles[idx]);
+                }
 
                 f.is_ok = app.main.myfiles[idx].is_ok;
                 f.is_added = app.main.myfiles[idx].is_added;
@@ -165,7 +170,7 @@ var Fontomas = (function (Fontomas) {
 
         addFonts: function (files, cb_onload) {
             console.log("app.views.Main.addFonts");
-            for (var i=0, f; f=files[i]; i++) {
+            for (var i=0, f; (f=files[i]); i+=1) {
                 var idx = app.main.myfiles.push({
                     id:             null,
                     filename:       f.name,
@@ -189,12 +194,13 @@ var Fontomas = (function (Fontomas) {
                         // is there a file with the same content?
                         var is_exist = false;
                         for (var i=0, len=app.main.myfiles.length;
-                            i<len; i++) {
-                            if (!app.main.myfiles[i]
-                                || !app.main.myfiles.is_ok)
+                            i<len; i+=1) {
+                            if (!app.main.myfiles[i] ||
+                                !app.main.myfiles.is_ok) {
                                 continue;
-                            if (app.main.myfiles[i].content
-                                == e.target.result) {
+                            }
+                            if (app.main.myfiles[i].content ===
+                                e.target.result) {
                                 fileinfo.is_dup = is_exist = true;
                                 break;
                             }
@@ -204,19 +210,22 @@ var Fontomas = (function (Fontomas) {
                             fileinfo.is_loaded = true;
                         }
 
-                        if (cb_onload)
+                        if (cb_onload) {
                             cb_onload(fileinfo);
+                        }
                     };
                 })(app.main.myfiles[idx]);
                 reader.readAsBinaryString(f);
             }
         },
 
+        /*jshint newcap:false*/
         addFont: function (fileinfo, cb_onclose) {
             console.log("app.views.Main.addFont id=", fileinfo.id);
             // if it is a dup, skip it
-            if (fileinfo.is_dup)
+            if (fileinfo.is_dup) {
                 return;
+            }
 
             var font = null, types = ["svg"/*, "ttf", "otf"*/, "js"];
 
@@ -230,9 +239,9 @@ var Fontomas = (function (Fontomas) {
                 break;
             default:
                 // unknown file exstension
-                util.notify_alert("Can't parse file '" + fileinfo.filename
-                    + "': unknown file extension. Currently, we only support "
-                    + util.joinList(types, ", ", " and ") + "."
+                util.notify_alert("Can't parse file '" + fileinfo.filename +
+                    "': unknown file extension. Currently, we only support " +
+                    util.joinList(types, ", ", " and ") + "."
                 );
                 return;
             }
@@ -242,8 +251,8 @@ var Fontomas = (function (Fontomas) {
                 fileinfo.is_ok = false;
                 fileinfo.error_msg = "invalid file";
 
-                util.notify_alert("Loading error: can't parse file '" 
-                    + fileinfo.filename + "'");
+                util.notify_alert("Loading error: can't parse file '" + 
+                    fileinfo.filename + "'");
                 return;
             }
 
@@ -263,11 +272,12 @@ var Fontomas = (function (Fontomas) {
             $("html,body").animate({scrollTop: $(fonthash).offset().top}, 500);
     */
         },
+        /*jshint newcap:true*/
 
         createFont: function (attrs) {
             console.log("app.views.Main.create attrs=", attrs);
             //if (!attrs.id) // FIXME
-                attrs.id = this.model.next_font_id++;
+                attrs.id = this.model.next_font_id += 1;
             this.model.fonts.create(attrs);
         },
 
@@ -288,7 +298,7 @@ var Fontomas = (function (Fontomas) {
 
         toggleMenu: function (enabled) {
             console.log("app.views.Main.toggleMenu");
-            $(cfg.id.tab).find("a"+cfg.class.disable_on_demand)
+            $(cfg.id.tab).find("a"+cfg.css_class.disable_on_demand)
                 .toggleClass("disabled", !enabled);
         },
 
@@ -305,8 +315,8 @@ var Fontomas = (function (Fontomas) {
 
                     $(cfg.id.download_font_button).attr({
                         download: cfg.output.filename,
-                        href: "data:binary/octet-stream;base64,"
-                            + util.base64_encode($(cfg.id.font).val())
+                        href: "data:binary/octet-stream;base64," +
+                            util.base64_encode($(cfg.id.font).val())
                     });
 
                 });
@@ -315,4 +325,4 @@ var Fontomas = (function (Fontomas) {
     });
 
     return Fontomas;
-})(Fontomas || {});
+}(Fontomas || {}));

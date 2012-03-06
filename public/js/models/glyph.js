@@ -1,4 +1,6 @@
 var Fontomas = (function (Fontomas) {
+    "use strict";
+
     var app = Fontomas.app,
         cfg = Fontomas.cfg,
         env = Fontomas.env,
@@ -12,4 +14,4 @@ var Fontomas = (function (Fontomas) {
     });
 
     return Fontomas;
-})(Fontomas || {});
+}(Fontomas || {}));

@@ -1,4 +1,6 @@
 var Fontomas = (function (Fontomas) {
+    "use strict";
+
     var app = Fontomas.app,
         cfg = Fontomas.cfg,
         env = Fontomas.env,
@@ -77,8 +79,9 @@ var Fontomas = (function (Fontomas) {
 
         // update font's textarea
         updateFont: function () {
-            if (!app.main.xml_template)
+            if (!app.main.xml_template) {
                 return;
+            }
 
             var glyphs = [];
             $(cfg.id.generated_font)
@@ -96,23 +99,27 @@ var Fontomas = (function (Fontomas) {
                         return; 
                     }
 
-                    if (font.units_per_em != cfg.output.units_per_em) {
-                        var scale = cfg.output.units_per_em
-                            / font.units_per_em;
-                        if (glyph.d)
+                    if (font.units_per_em !== cfg.output.units_per_em) {
+                        var scale = cfg.output.units_per_em /
+                            font.units_per_em;
+                        if (glyph.d) {
                             glyph.d = this.scalePath(glyph.d, scale);
-                        if (glyph.horiz_adv_x)
+                        }
+                        if (glyph.horiz_adv_x) {
                             glyph.horiz_adv_x *= scale;
+                        }
                     }
 
                     var g = $("<glyph/>");
                     g.attr("unicode", unicode);
 
-                    if (glyph.horiz_adv_x)
+                    if (glyph.horiz_adv_x) {
                         g.attr("horiz-adv-x", glyph.horiz_adv_x);
+                    }
 
-                    if (glyph.d)
+                    if (glyph.d) {
                         g.attr("d", glyph.d);
+                    }
 
                     glyphs.push(util.outerHtml(g));
                 });
@@ -123,4 +130,4 @@ var Fontomas = (function (Fontomas) {
     });
 
     return Fontomas;
-})(Fontomas || {});
+}(Fontomas || {}));

@@ -1,4 +1,6 @@
 var Fontomas = (function (Fontomas) {
+    "use strict";
+
     var cfg = Fontomas.cfg;
 
     var notify = function(text, tpl, suppress_dup) {
@@ -7,8 +9,8 @@ var Fontomas = (function (Fontomas) {
         };
         var options = cfg.notify.options;
 
-        if (suppress_dup && (text != undefined)) {
-            if (cfg.notify.dup[text] != undefined) {
+        if (suppress_dup && (text !== undefined)) {
+            if (cfg.notify.dup[text] !== undefined) {
                 console.log("notification suppressed");
                 return;
             }
@@ -50,17 +52,18 @@ var Fontomas = (function (Fontomas) {
         var result = {},
             attrs = dom_node.attributes;
 
-        for (var i=0, len=attrs.length; i<len; i++)
+        for (var i=0, len=attrs.length; i<len; i+=1) {
             result[attrs[i].nodeName] = attrs[i].nodeValue;
+        }
 
         return result;
-    }
+    };
 
     var xmlToString = function(xmlDom) {
         // cross-browser
-        var result = (typeof XMLSerializer!=="undefined")
-            ? (new window.XMLSerializer()).serializeToString(xmlDom)
-            : xmlDom.xml;
+        var result = (typeof XMLSerializer !== "undefined") ?
+            (new window.XMLSerializer()).serializeToString(xmlDom) :
+            xmlDom.xml;
         //FIXME: quickfix: get rid of unwanted xmlns insertion
         result = result.replace(/ xmlns="http:\/\/www\.w3\.org\/1999\/xhtml"/g,
             "");
@@ -73,21 +76,23 @@ var Fontomas = (function (Fontomas) {
 
     var getFileExt = function (filepath) {
         var defaultval = "";
-        if (!_.isString(filepath))
+        if (!_.isString(filepath)) {
             return defaultval;
+        }
 
         var index = filepath.lastIndexOf(".");
-        if (index == -1)
+        if (index === -1) {
             return defaultval;
-        else
+        } else {
             return filepath.substr(index+1).toLowerCase();
+        }
     };
 
     var joinList = function (array, delim1, delim2) {
         return array.reduce(function (prev, cur, idx, arr) {
-            return arr.length != idx+1
-                ? prev + delim1 + cur
-                : prev + delim2 + cur;
+            return arr.length !== idx+1 ?
+                prev + delim1 + cur :
+                prev + delim2 + cur;
         });
     };
 
@@ -102,39 +107,48 @@ var Fontomas = (function (Fontomas) {
     var trimBoth = function (s, begin, end) {
         var idx1 = s.indexOf(begin) + begin.length,
             idx2 = s.lastIndexOf(end);
-        if (idx1 < idx2)
+        if (idx1 < idx2) {
             return s.substr(idx1, idx2 - idx1);
-        else
+        } else {
             return s;
+        }
     };
 
+    /*jshint bitwise:false*/
     var repeat = function (s, times) {
-        if (times < 1)
+        if (times < 1) {
             return "";
+        }
+
         var result = "";
         while (times > 0) {
-            if (times & 1)
+            if (times & 1) {
                 result += s;
+            }
             times >>= 1;
             s += s;
         }
         return result;
     };
+    /*jshint bitwise:true*/
 
     var rpad = function (s, len) {
-        if (s.length < len)
+        if (s.length < len) {
             return s + repeat(" ", len - s.length);
-        else
+        } else {
             return s;
+        }
     };
 
     var lpad = function (s, len) {
-        if (s.length < len)
+        if (s.length < len) {
             return repeat(" ", len - s.length) + s;
-        else
+        } else {
             return s;
+        }
     };
 
+    /*jshint bitwise:false*/
     var base64_encode = function (s) {
         var table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
         var result = "";
@@ -157,12 +171,13 @@ var Fontomas = (function (Fontomas) {
                 enc4 = 64;
             }
 
-            result += table.charAt(enc1) + table.charAt(enc2)
-                + table.charAt(enc3) + table.charAt(enc4);
+            result += table.charAt(enc1) + table.charAt(enc2) +
+                table.charAt(enc3) + table.charAt(enc4);
         }
 
         return result;
     };
+    /*jshint bitwise:true*/
 
     // public interface
     return $.extend(true, Fontomas, {
@@ -184,4 +199,4 @@ var Fontomas = (function (Fontomas) {
             }
         }
     });
-})(Fontomas || {});
+}(Fontomas || {}));

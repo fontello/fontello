@@ -1,4 +1,6 @@
 var Fontomas = (function (Fontomas) {
+    "use strict";
+
     var app = Fontomas.app,
         cfg = Fontomas.cfg,
         env = Fontomas.env,
@@ -24,10 +26,10 @@ var Fontomas = (function (Fontomas) {
             //this.$el.html(this.template(this.model.toJSON()));
             this.$el.html(this.templates.genfont_glyph_item(this.model.toJSON()));
             this.$el.attr("id", "rgl" + this.model.get("num"));
-            this.$(cfg.class.rg_icon).droppable($.extend(
+            this.$(cfg.css_class.rg_icon).droppable($.extend(
                 {}, cfg.droppable_options, {drop: function (event, ui) {
                 console.log("drop");
-                $this=$(this);
+                var $this=$(this);
                 var draggable=ui.draggable;
                 var g_id=$this.parent().siblings("input:checkbox")
                     .attr("value");
@@ -76,4 +78,4 @@ var Fontomas = (function (Fontomas) {
     });
 
     return Fontomas;
-})(Fontomas || {});
+}(Fontomas || {}));

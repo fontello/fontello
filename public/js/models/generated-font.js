@@ -1,4 +1,6 @@
 var Fontomas = (function (Fontomas) {
+    "use strict";
+
     var app = Fontomas.app,
         cfg = Fontomas.cfg,
         env = Fontomas.env,
@@ -14,12 +16,12 @@ var Fontomas = (function (Fontomas) {
             console.log("app.models.GeneratedFont.initialize");
             this.glyphs = new app.collections.Glyph;
 
-            for (var i=0, len=cfg.basic_latin.str.length; i<len; i++) {
+            for (var i=0, len=cfg.basic_latin.str.length; i<len; i+=1) {
                 var char = cfg.basic_latin.str[i];
                 this.glyphs.add({
                     num: i,
                     char: this.toCharRef(char),
-                    top: (char != " " ? char : "space"),
+                    top: (char !== " " ? char : "space"),
                     bottom: this.toUnicode(char)
                 });
             }
@@ -43,7 +45,7 @@ var Fontomas = (function (Fontomas) {
                     var char = cfg.basic_latin.str[i],
                         values = {
                             char: self.toCharRef(char),
-                            top: (char != " " ? char : "space"),
+                            top: (char !== " " ? char : "space"),
                             bottom: self.toUnicode(char)
                         };
                     glyph.set(values);
@@ -79,8 +81,9 @@ var Fontomas = (function (Fontomas) {
         // return char in U+ notation
         toUnicode: function (char) {
             var c = char.charCodeAt(0).toString(16).toUpperCase();
-            if (c.length < 4)
+            if (c.length < 4) {
                 c = "0000".substr(0, 4 - c.length) + c;
+            }
             return "U+" + c;
         },
 
@@ -91,4 +94,4 @@ var Fontomas = (function (Fontomas) {
     });
 
     return Fontomas;
-})(Fontomas || {});
+}(Fontomas || {}));

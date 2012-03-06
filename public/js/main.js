@@ -1,4 +1,6 @@
 var Fontomas = (function (Fontomas) {
+    "use strict";
+
     var app = Fontomas.app,
         cfg = Fontomas.cfg,
         env = Fontomas.env,
@@ -10,7 +12,7 @@ var Fontomas = (function (Fontomas) {
             console.log("bad browser");
             $(cfg.id.bad_browser).modal({keyboard: false});
             return;
-        };
+        }
 
         // show loading tab
         $(cfg.id.tab).tab("show");
@@ -28,8 +30,9 @@ var Fontomas = (function (Fontomas) {
         var filereader = env.filereader = !!window.FileReader;
 
         // debug: simulate no filereader is available
-        if (debug.is_on && debug.nofilereader)
+        if (debug.is_on && debug.nofilereader) {
             env.filereader = false;
+        }
 
         return true;
     };
@@ -38,7 +41,7 @@ var Fontomas = (function (Fontomas) {
     return $.extend(true, Fontomas, {
         init: init
     });
-})(Fontomas || {});
+}(Fontomas || {}));
 
 // entry point
 $(Fontomas.init);

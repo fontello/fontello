@@ -1,4 +1,6 @@
 var Fontomas = (function (Fontomas) {
+    "use strict";
+
     var debug = Fontomas.debug,
         util = Fontomas.lib.util;
 
@@ -33,24 +35,25 @@ var Fontomas = (function (Fontomas) {
             return null;
         }
 
-        font.horiz_adv_x = parseInt($("font:first", xml).attr("horiz-adv-x"))
-            || 1000;
-        font.ascent = parseInt($("font-face:first", xml).attr("ascent")) || 750;
-        font.descent = parseInt($("font-face:first", xml).attr("descent"))
-                || -250;
+        font.horiz_adv_x = parseInt($("font:first", xml).attr("horiz-adv-x"),
+                10) || 1000;
+        font.ascent = parseInt($("font-face:first", xml).attr("ascent"),
+                10) || 750;
+        font.descent = parseInt($("font-face:first", xml).attr("descent"),
+                10) || -250;
         font.units_per_em = parseInt($("font-face:first", xml)
-            .attr("units-per-em")) || 1000;
+            .attr("units-per-em"), 10) || 1000;
         font.id = $("font:first", xml).attr("id") || "unknown";
 
         font.glyphs = {};
         $("glyph", xml).filter(function (index) {
             // debug
-            return debug.is_on && debug.maxglyphs && index < debug.maxglyphs
-                || true;
+            return debug.is_on && debug.maxglyphs &&
+                index < debug.maxglyphs || true;
         }).each(function (i) {
             var glyph = util.getAllAttrs(this);
             if (glyph["horiz-adv-x"]) {
-                glyph.horiz_adv_x = parseInt(glyph["horiz-adv-x"]);
+                glyph.horiz_adv_x = parseInt(glyph["horiz-adv-x"], 10);
                 delete glyph["horiz-adv-x"];
             }
 
@@ -84,55 +87,62 @@ var Fontomas = (function (Fontomas) {
         font.glyphs = {};
         var num_glyphs = 0;
         for (var i in json.glyphs) {
-            num_glyphs++;
+            num_glyphs += 1;
             // debug
-            if (debug.is_on && debug.maxglyphs && debug.maxglyphs < num_glyphs)
+            if (debug.is_on && debug.maxglyphs && debug.maxglyphs < num_glyphs) {
                 break;
+            }
 
             var glyph = json.glyphs[i];
             glyph.unicode = i;
 
             if (glyph.w) {
                 glyph.horiz_adv_x = glyph.w;
-                delete glyph.w
+                delete glyph.w;
             }
-            if (glyph.d)
+            if (glyph.d) {
                 // fix y coord and convert vml path to svg path
                 glyph.d = Font.vmlToSvgPath(Font.vmlNegateY(glyph.d));
+            }
 
             font.glyphs[num_glyphs] = glyph;    // 1 based
-        };
+        }
 
         return new Font(font);
     };
 
     Font.vmlToSvgPath = function (vml) {
         var path = "";
-        if (vml)
+        if (vml) {
             path = "M" + vml.replace(/[mlcxtrv]/g, function (command) {
-                return {l: "L", c: "C", x: "z", t: "m", r: "l", v: "c"}[command]
-                    || "M";
+                return {l: "L", c: "C", x: "z", t: "m", r: "l", v: "c"}
+                    [command] || "M";
             }) + "z";
+        }
         return path;
     };
 
     Font.vmlNegateY = function (vml) {
-        if (!vml)
+        if (!vml) {
             return vml;
+        }
 
-        var result = "", re = /^([^a-z]*)/, re2 = /([mrvxe])([^a-z]*)/g, match;
+        var result = "",
+            re = /^([^a-z]*)/,
+            re2 = /([mrvxe])([^a-z]*)/g,
+            match,
+            negateEverySecond = function (value, idx) {
+                return idx % 2 === 1 ? -value : value;
+            };
+
         match = re.exec(vml);
         var c = match[1].split(',');
-        c = c.map(function(value, idx) {
-            return idx % 2 == 1 ? -value : value
-        });
+        c = c.map(negateEverySecond);
         result += c.join(",");
 
-        for (var i = 0; match = re2.exec(vml); ++i) {
-            var c = match[2].split(',');
-            c = c.map(function(value, idx) {
-                return idx % 2 == 1 ? -value : value
-            });
+        for (var i = 0; (match = re2.exec(vml)); i += 1) {
+            c = match[2].split(',');
+            c = c.map(negateEverySecond);
             result += match[1]+c.join(",");
         }
         return result;
@@ -144,4 +154,4 @@ var Fontomas = (function (Fontomas) {
             Font: Font
         }
     });
-})(Fontomas || {});
+}(Fontomas || {}));

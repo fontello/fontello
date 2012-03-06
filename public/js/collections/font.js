@@ -1,4 +1,6 @@
 var Fontomas = (function (Fontomas) {
+    "use strict";
+
     var app = Fontomas.app,
         cfg = Fontomas.cfg,
         env = Fontomas.env,
@@ -24,8 +26,8 @@ var Fontomas = (function (Fontomas) {
                 font = this.get(pair.font_id),
                 glyph = font.get("font").glyphs[pair.glyph_id];
             return glyph;
-        },
+        }
     });
 
     return Fontomas;
-})(Fontomas || {});
+}(Fontomas || {}));
