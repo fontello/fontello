@@ -3,8 +3,6 @@ var Fontomas = (function (Fontomas) {
 
     var app = Fontomas.app,
         cfg = Fontomas.cfg,
-        env = Fontomas.env,
-        debug = Fontomas.debug,
         util = Fontomas.lib.util,
         Backbone = window.Backbone,
         _ = window._;
@@ -102,7 +100,7 @@ var Fontomas = (function (Fontomas) {
 
                     if (!font || !glyph) {
                         console.log("can't getFont/getGlyph id=", glyph_id);
-                        return; 
+                        return;
                     }
 
                     if (font.units_per_em !== cfg.output.units_per_em) {

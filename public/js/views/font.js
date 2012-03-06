@@ -3,7 +3,6 @@ var Fontomas = (function (Fontomas) {
 
     var app = Fontomas.app,
         cfg = Fontomas.cfg,
-        env = Fontomas.env,
         debug = Fontomas.debug,
         Backbone = window.Backbone,
         _ = window._,
@@ -163,7 +162,7 @@ var Fontomas = (function (Fontomas) {
                 r.setViewBox(vb.x, vb.y, vb.w, vb.h, true);
 
                 // flip y, because svg font's y axis goes upward
-                // debug: turn flip off 
+                // debug: turn flip off
                 if (!(debug && debug.noflip)) {
                 // transform matrix 3x3
                     flip_y_matrix = [1, 0, 0, -1, 0, ascent / 2 - descent];
@@ -206,7 +205,7 @@ var Fontomas = (function (Fontomas) {
             event.preventDefault();
             var embedded_id = this.model.get("embedded_id");
             if (embedded_id !== null) {
-                fm_embedded_fonts[embedded_id].is_added = false;
+                app.embedded_fonts[embedded_id].is_added = false;
                 this.topview.select_toolbar.renderUseEmbedded();
             }
             this.model.destroy();

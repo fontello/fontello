@@ -4,7 +4,6 @@ var Fontomas = (function (Fontomas) {
     var app = Fontomas.app,
         cfg = Fontomas.cfg,
         env = Fontomas.env,
-        debug = Fontomas.debug,
         util = Fontomas.lib.util,
         Backbone = window.Backbone,
         _ = window._;
@@ -63,7 +62,7 @@ var Fontomas = (function (Fontomas) {
         renderUseEmbedded: function () {
             console.log("app.views.SelectToolbar.renderUseEmbedded");
             var tpl_vars = {
-                options: _.map(fm_embedded_fonts, function (item) {
+                options: _.map(app.embedded_fonts, function (item) {
                     return {
                         text: item.fontname,
                         disabled: item.is_added
@@ -80,7 +79,7 @@ var Fontomas = (function (Fontomas) {
             console.log("app.views.SelectToolbar.useEmbedded");
             event.preventDefault();
             var id = $(event.target).data("embedded_id"),
-                font = fm_embedded_fonts[id];
+                font = app.embedded_fonts[id];
             console.assert(font);
             if (font && !font.is_added) {
                 this.topview.addEmbeddedFonts([font]);
@@ -145,7 +144,7 @@ var Fontomas = (function (Fontomas) {
                     "margin-left": "-" + Math.round(size_x/2) + "px",
                     "margin-top": "-" + Math.round(size_y/2) + "px"
                 }).find("svg").css({
-                    width: size_x + "px", 
+                    width: size_x + "px",
                     height: size_y + "px"
                 });
             });

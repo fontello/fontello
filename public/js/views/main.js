@@ -3,7 +3,6 @@ var Fontomas = (function (Fontomas) {
 
     var app = Fontomas.app,
         cfg = Fontomas.cfg,
-        env = Fontomas.env,
         debug = Fontomas.debug,
         util = Fontomas.lib.util,
         Font = Fontomas.lib.Font,
@@ -103,7 +102,7 @@ var Fontomas = (function (Fontomas) {
             // auto load embedded fonts
             // debug
             if (!(debug.is_on && debug.noembedded)) {
-                this.addEmbeddedFonts(fm_embedded_fonts);
+                this.addEmbeddedFonts(app.embedded_fonts);
             }
 
             // first tab is fully initialized so show it
@@ -125,11 +124,11 @@ var Fontomas = (function (Fontomas) {
                 // FIXME
                 app.mainview.addFont(fileinfo, function (fileinfo) {
                     // onclose closure
-                    fm_embedded_fonts[e_id].is_added = fileinfo.is_added;
+                    app.embedded_fonts[e_id].is_added = fileinfo.is_added;
                     app.mainview.select_toolbar.renderUseEmbedded();
                 });
-                fm_embedded_fonts[e_id].is_added = fileinfo.is_added;
-                fm_embedded_fonts[e_id].fontname = fileinfo.fontname;
+                app.embedded_fonts[e_id].is_added = fileinfo.is_added;
+                app.embedded_fonts[e_id].fontname = fileinfo.fontname;
                 app.mainview.select_toolbar.renderUseEmbedded();
             });
         },
@@ -178,27 +177,8 @@ var Fontomas = (function (Fontomas) {
 
             var i, f,
                 idx,
-                reader;
-
-            for (i=0, f; (f=files[i]); i++) {
-                idx = app.main.myfiles.push({
-                    id:             null,
-                    filename:       f.name,
-                    filesize:       f.size, 
-                    filetype:       f.type,
-                    fontname:       "unknown",
-                    is_loaded:      false,
-                    is_ok:          false,
-                    is_added:       false,
-                    is_dup:         false,
-                    error_msg:      "",
-                    content:        null,
-                    embedded_id:    null
-                }) - 1;
-                app.main.myfiles[idx].id = idx;
-
-                reader = new FileReader();
-                reader.onload = (function (fileinfo) {
+                reader,
+                reader_onload = function (fileinfo) {
                     return function (e) {
                         // FIXME: race condition?
                         // is there a file with the same content?
@@ -224,7 +204,27 @@ var Fontomas = (function (Fontomas) {
                             cb_onload(fileinfo);
                         }
                     };
-                })(app.main.myfiles[idx]);
+                };
+
+            for (i=0, f; (f=files[i]); i++) {
+                idx = app.main.myfiles.push({
+                    id:             null,
+                    filename:       f.name,
+                    filesize:       f.size,
+                    filetype:       f.type,
+                    fontname:       "unknown",
+                    is_loaded:      false,
+                    is_ok:          false,
+                    is_added:       false,
+                    is_dup:         false,
+                    error_msg:      "",
+                    content:        null,
+                    embedded_id:    null
+                }) - 1;
+                app.main.myfiles[idx].id = idx;
+
+                reader = new FileReader();
+                reader.onload = reader_onload(app.main.myfiles[idx]);
                 reader.readAsBinaryString(f);
             }
         },
@@ -263,7 +263,7 @@ var Fontomas = (function (Fontomas) {
                 fileinfo.is_ok = false;
                 fileinfo.error_msg = "invalid file";
 
-                util.notify_alert("Loading error: can't parse file '" + 
+                util.notify_alert("Loading error: can't parse file '" +
                     fileinfo.filename + "'");
                 return;
             }

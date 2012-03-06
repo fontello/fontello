@@ -27,7 +27,7 @@ var Fontomas = (function (Fontomas) {
 
     isOkBrowser = function () {
         // FF3.6+ Chrome6+ Opera11.1+
-        var filereader = env.filereader = !!window.FileReader;
+        env.filereader = !!window.FileReader;
 
         // debug: simulate no filereader is available
         if (debug.is_on && debug.nofilereader) {

@@ -27,24 +27,38 @@ ${FIX_ENTYPO_SCRIPT} "${FONT_DIR}/${FONT_ENTYPO}" "${FONT_DIR}/${FONT_ENTYPO_FIX
 echo "done"
 
 echo -n "Generating $OUTPUT_FILE... "
-(echo "var fm_embedded_fonts = ["
+(cat <<END
+var Fontomas = (function (Fontomas) {
+  "use strict";
+
+  var app = Fontomas.app;
+
+  app.embedded_fonts = [
+END
+
 for (( i=0; i<${FLEN}; i++ ));
 do
     file=$(cat ${FONT_DIR}/${FONTS[$i]})
     file=$(js_escape "$file")
     echo    "    {"
-    echo    "        id: $i,"               # index in the array
-    echo    "        filename: \"${FONTS[$i]}\","   # font filename
-    echo    "        filetype: \"unknown\","     # mime type
-    echo    "        is_ok: false,"         # font parsed and ready to use
-    echo    "        is_added: false,"      # font added into "select icons"
-    echo    "        fontname: \"unknown\","    # font name
-    echo    "        content: \"$file\""    # font file content
+    echo    "      id: $i,"               # index in the array
+    echo    "      filename: \"${FONTS[$i]}\","   # font filename
+    echo    "      filetype: \"unknown\","     # mime type
+    echo    "      is_ok: false,"         # font parsed and ready to use
+    echo    "      is_added: false,"      # font added into "select icons"
+    echo    "      fontname: \"unknown\","    # font name
+    echo    "      content: \"$file\""    # font file content
     echo -n "    }"
     if [ $(($i+1)) -ne ${FLEN} ]; then echo ","; fi
 done;
 
-echo
-echo "];") > $OUTPUT_FILE
+cat <<END
+
+  ];
+
+  return Fontomas;
+}(Fontomas || {}));
+END
+) > $OUTPUT_FILE
 
 echo "done"

@@ -3,6 +3,7 @@ var Fontomas = (function (Fontomas) {
 
     var cfg = Fontomas.cfg,
         _ = window._,
+        XMLSerializer = window.XMLSerializer,
 
     notify = function(text, tpl, suppress_dup) {
         var tpl_vars = {
@@ -185,7 +186,7 @@ var Fontomas = (function (Fontomas) {
 
     // public interface
     return $.extend(true, Fontomas, {
-        lib: { 
+        lib: {
             util: {
                 notify_alert: notify_alert,
                 notify_info: notify_info,
