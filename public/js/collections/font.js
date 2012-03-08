@@ -1,31 +1,24 @@
-var Fontomas = (function (Fontomas) {
+var Fontomas = (function (Backbone, Fontomas) {
   "use strict";
 
-  var app = Fontomas.app,
-    Backbone = window.Backbone;
-
-  app.collections.Font = Backbone.Collection.extend({
-    model: app.models.Font,
+  Fontomas.app.collections.Font = Backbone.Collection.extend({
+    model: Fontomas.app.models.Font,
 
     parseId: function (pair_id) {
-      var pair = pair_id.split("-"),
-        result = {font_id: pair[0], glyph_id: pair[1]};
-      return result;
+      var pair = pair_id.split("-");
+      return {font_id: pair[0], glyph_id: pair[1]};
     },
 
     getFont: function (pair_id) {
-      var pair = this.parseId(pair_id),
-        font = this.get(pair.font_id);
-      return font.get("font");
+      var font_id = this.parseId(pair_id).font_id;
+      return this.get(font_id).get("font");
     },
 
     getGlyph: function (pair_id) {
-      var pair = this.parseId(pair_id),
-        font = this.get(pair.font_id),
-        glyph = font.get("font").glyphs[pair.glyph_id];
-      return glyph;
+      var glyph_id = this.parseId(pair_id).glyph_id;
+      return this.getFont(pair_id).glyphs[glyph_id];
     }
   });
 
   return Fontomas;
-}(Fontomas || {}));
+}(window.Backbone, Fontomas || {}));
