@@ -1,10 +1,7 @@
-var Fontomas = (function (Fontomas) {
+var Fontomas = (function (Backbone, Fontomas) {
   "use strict";
 
-  var app = Fontomas.app,
-    Backbone = window.Backbone;
-
-  app.models.Font = Backbone.Model.extend({
+  Fontomas.app.models.Font = Backbone.Model.extend({
     defaults: function () {
       return {
         fontname:   "unknown",
@@ -21,4 +18,4 @@ var Fontomas = (function (Fontomas) {
   });
 
   return Fontomas;
-}(Fontomas || {}));
+}(window.Backbone, Fontomas || {}));
