@@ -1,31 +1,27 @@
-var Fontomas = (function (Fontomas) {
+var Fontomas = (function (_, Backbone, Fontomas) {
   "use strict";
 
-  var app = Fontomas.app,
-    cfg = Fontomas.cfg,
-    Backbone = window.Backbone,
-    _ = window._;
+  var config = Fontomas.cfg;
 
-  app.models.GeneratedFont = Backbone.Model.extend({
+  Fontomas.app.models.GeneratedFont = Backbone.Model.extend({
     defaults: {
-      charset: "basic_latin",
-      glyph_count: 0
+      charset:      "basic_latin",
+      glyph_count:  0
     },
 
     initialize: function () {
       console.log("app.models.GeneratedFont.initialize");
-      this.glyphs = new app.collections.Glyph;
-      var i, len, char;
+      this.glyphs = new Fontomas.app.collections.Glyph;
 
-      for (i=0, len=cfg.basic_latin.str.length; i<len; i++) {
-        char = cfg.basic_latin.str[i];
+      _.each(config.basic_latin.str.split(''), function (ch, i) {
         this.glyphs.add({
           num: i,
-          char: this.toCharRef(char),
-          top: (char !== " " ? char : "space"),
-          bottom: this.toUnicode(char)
+          char: this.toCharRef(ch),
+          top: (ch !== " " ? ch : "space"),
+          bottom: this.toUnicode(ch)
         });
-      }
+      }, this);
+
       this.setCharset(this.get("charset"));
     },
 
@@ -39,38 +35,32 @@ var Fontomas = (function (Fontomas) {
     },
 
     setCharset: function (charset) {
-      var self = this;
-      switch (charset) {
-      case "basic_latin":
+      if ("basic_latin" === charset) {
         _.each(this.glyphs.models, function (glyph, i) {
-          var char = cfg.basic_latin.str[i],
-            values = {
-              char: self.toCharRef(char),
-              top: (char !== " " ? char : "space"),
-              bottom: self.toUnicode(char)
-            };
-          glyph.set(values);
-        });
-        this.set("charset", charset);
-        break;
+          var char = config.basic_latin.str[i];
 
-      case "unicode_private":
+          glyph.set({
+            char: this.toCharRef(char),
+            top: (char !== " " ? char : "space"),
+            bottom: this.toUnicode(char)
+          });
+        }, this);
+
+        this.set("charset", charset);
+      } else if ("unicode_private" === charset) {
         _.each(this.glyphs.models, function (glyph, i) {
-          var code = (cfg.unicode_private.begin+i).toString(16)
-            .toUpperCase(),
-            values = {
-              char: "&#x" + code + ";",
-              top: "&#x" + code + ";",
-              bottom: "U+" + code
-            };
-          glyph.set(values);
-        });
-        this.set("charset", charset);
-        break;
+          var code = (config.unicode_private.begin + i).toString(16).toUpperCase();
 
-      default:
+          glyph.set({
+            char:   "&#x" + code + ";",
+            top:    "&#x" + code + ";",
+            bottom: "U+" + code
+          });
+        }, this);
+
+        this.set("charset", charset);
+      } else {
         console.log("app.models.GeneratedFont.setCharset: bad charset");
-        break;
       }
     },
 
@@ -82,10 +72,7 @@ var Fontomas = (function (Fontomas) {
     // return char in U+ notation
     toUnicode: function (char) {
       var c = char.charCodeAt(0).toString(16).toUpperCase();
-      if (c.length < 4) {
-        c = "0000".substr(0, 4 - c.length) + c;
-      }
-      return "U+" + c;
+      return "U+" + "0000".substr(0, 4 - c.length % 4) + c;
     },
 
     // FIXME: the model isn't sync()ed to server yet
@@ -95,4 +82,4 @@ var Fontomas = (function (Fontomas) {
   });
 
   return Fontomas;
-}(Fontomas || {}));
+}(window._, window.Backbone, Fontomas || {}));
