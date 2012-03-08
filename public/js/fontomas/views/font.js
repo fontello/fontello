@@ -1,14 +1,9 @@
-var Fontomas = (function (Fontomas) {
+var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
   "use strict";
 
-  var app = Fontomas.app,
-    cfg = Fontomas.cfg,
-    debug = Fontomas.debug,
-    Backbone = window.Backbone,
-    _ = window._,
-    Raphael = window.Raphael;
+  var config = Fontomas.cfg;
 
-  app.views.Font = Backbone.View.extend({
+  Fontomas.app.views.Font = Backbone.View.extend({
     tagName: "li",
     templates: {},
 
@@ -38,8 +33,8 @@ var Fontomas = (function (Fontomas) {
         descent = font.descent,
         units_per_em = font.units_per_em,
 
-        size_string = $(cfg.id.icon_size).find("button.active").val(),
-        size = parseInt(size_string, 10) || cfg.preview_icon_sizes[0],
+        size_string = $(config.id.icon_size).find("button.active").val(),
+        size = parseInt(size_string, 10) || config.preview_icon_sizes[0],
         font_size_y = Math.round(size * (ascent - descent) /
           units_per_em),
 
@@ -74,7 +69,7 @@ var Fontomas = (function (Fontomas) {
         icon_size;
 
       this.$el.html(this.templates.font_item(tpl_vars));
-      this.$(".fm-glyph-group").addClass(cfg.icon_size_prefix+size);
+      this.$(".fm-glyph-group").addClass(config.icon_size_prefix+size);
 
       for (glyph_id in font.glyphs) {
         item = font.glyphs[glyph_id];
@@ -88,7 +83,7 @@ var Fontomas = (function (Fontomas) {
         this.$(".fm-glyph-group").append($glyph);
 
         $glyph.find(".fm-glyph-id").val(this.model.id + "-" + glyph_id);
-        gd = $glyph.find(cfg.css_class.glyph_div);
+        gd = $glyph.find(config.css_class.glyph_div);
         gd_id = "fm-font-glyph-"+this.model.id+"-"+glyph_id;
         gd.attr("id", gd_id)
           .css({
@@ -102,7 +97,7 @@ var Fontomas = (function (Fontomas) {
         dom = $glyph.find("#" + gd_id)[0];
         path = item.d;
         r = new Raphael(dom, size_x, size_y);
-        g = r.path(path).attr(cfg.path_options);
+        g = r.path(path).attr(config.path_options);
 
         // calc delta_x, delta_y
         bbox = g.getBBox();
@@ -134,7 +129,7 @@ var Fontomas = (function (Fontomas) {
 
         // FIXME: hack to avoid clipped edges by adding 1 pixel on
         // each side and adjusting viewbox accordingly
-        if (cfg.fix_edges) {
+        if (config.fix_edges) {
           delta_xx = vb.w / size_x;
           delta_yy = vb.h / size_y;
 
@@ -148,7 +143,7 @@ var Fontomas = (function (Fontomas) {
         }
 
         // set new size
-        if (cfg.fix_edges || delta_x > 0 || delta_y > 0) {
+        if (config.fix_edges || delta_x > 0 || delta_y > 0) {
           r.setSize(size_x, size_y);
 
           gd.css({
@@ -163,7 +158,7 @@ var Fontomas = (function (Fontomas) {
 
         // flip y, because svg font's y axis goes upward
         // debug: turn flip off
-        if (!(debug && debug.noflip)) {
+        if (!(Fontomas.debug && Fontomas.debug.noflip)) {
         // transform matrix 3x3
           flip_y_matrix = [1, 0, 0, -1, 0, ascent / 2 - descent];
           g.attr({transform: "m" + flip_y_matrix});
@@ -174,8 +169,8 @@ var Fontomas = (function (Fontomas) {
         // precalc glyph sizes
         // FIXME: precalc only if glyph goes out of its default box
         glyph_sizes = {};
-        for (j in cfg.preview_icon_sizes) {
-          icon_size = cfg.preview_icon_sizes[j];
+        for (j in config.preview_icon_sizes) {
+          icon_size = config.preview_icon_sizes[j];
           size_y = Math.round(icon_size * (ascent - descent +
             2 * delta_y) / units_per_em);
           size_x = Math.round(icon_size * (horiz_adv_x +
@@ -205,7 +200,7 @@ var Fontomas = (function (Fontomas) {
       event.preventDefault();
       var embedded_id = this.model.get("embedded_id");
       if (embedded_id !== null) {
-        app.embedded_fonts[embedded_id].is_added = false;
+        Fontomas.app.embedded_fonts[embedded_id].is_added = false;
         this.topview.select_toolbar.renderUseEmbedded();
       }
       this.model.destroy();
@@ -229,7 +224,7 @@ var Fontomas = (function (Fontomas) {
     // add a glyph to the rearrange zone
     addGlyph: function (glyph_id) {
       console.log("addGlyph glyph_id=", glyph_id);
-      var checkbox=$(cfg.id.rearrange)
+      var checkbox=$(config.id.rearrange)
         .find(".fm-glyph-id:not(:checked):first"),
         el_id, svg, icon;
       checkbox.attr({value: glyph_id, checked: true});
@@ -238,35 +233,35 @@ var Fontomas = (function (Fontomas) {
       el_id = "#fm-font-glyph-" + glyph_id;
 
       svg = $(el_id).contents().clone(false);
-      icon = checkbox.parent().find(cfg.css_class.rg_icon);
+      icon = checkbox.parent().find(config.css_class.rg_icon);
       icon.append(svg)
         .data("glyph_sizes", $(el_id).data("glyph_sizes"))
-        .draggable(cfg.draggable_options)
+        .draggable(config.draggable_options)
         .attr("style", $(el_id).attr("style"))
         .css({width: "100%", left: "0px", "margin-left": "0px"});
 
-      if (app.main.genfont.get("glyph_count") === 0) {
+      if (Fontomas.app.main.genfont.get("glyph_count") === 0) {
         this.topview.toggleMenu(true);
       }
-      app.main.genfont.incCounter();
+      Fontomas.app.main.genfont.incCounter();
     },
 
     // remove a glyph from the rearrange zone
     removeGlyph: function (glyph_id) {
       console.log("removeGlyph glyph_id=", glyph_id);
-      var checkbox=$(cfg.id.rearrange)
+      var checkbox=$(config.id.rearrange)
         .find(".fm-glyph-id:checked[value='" + glyph_id + "']");
       checkbox.attr({value: "", checked: false});
       checkbox.parent().removeClass("selected");
-      checkbox.parent().find(cfg.css_class.rg_icon)
+      checkbox.parent().find(config.css_class.rg_icon)
         .removeData("glyph_sizes").empty();
 
-      if (app.main.genfont.get("glyph_count") === 1) {
+      if (Fontomas.app.main.genfont.get("glyph_count") === 1) {
         this.topview.toggleMenu(false);
       }
-      app.main.genfont.decCounter();
+      Fontomas.app.main.genfont.decCounter();
     }
   });
 
   return Fontomas;
-}(Fontomas || {}));
+}(window._, window.Backbone, window.Raphael, Fontomas || {}));
