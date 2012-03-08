@@ -15,7 +15,6 @@ var Fontomas = (function (Fontomas) {
     fontviews: {},
     genfontview: null,
     select_toolbar: null,
-    rearrange_toolbar: null,
 
     events: {
     },
@@ -33,10 +32,6 @@ var Fontomas = (function (Fontomas) {
 
       this.select_toolbar = new app.views.SelectToolbar({
         el: $(cfg.id.file_drop_zone)[0],
-        topview: this
-      });
-      this.rearrange_toolbar = new app.views.RearrangeToolbar({
-        el: $(cfg.id.form_charset)[0],
         topview: this
       });
       this.genfontview = new app.views.GeneratedFont({

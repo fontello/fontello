@@ -18,8 +18,6 @@ var Fontomas = (function (Fontomas) {
       file_drop_zone: "#fm-file-drop-zone",
       use_embedded: "#fm-use-embedded",
 
-      form_charset: "#fm-form-charset",
-
       tab_save: "#fm-tab-save",
       font_list: "#fm-font-list",
       generated_font: "#fm-generated-font",
@@ -51,16 +49,6 @@ var Fontomas = (function (Fontomas) {
     live_update: true,
     fix_edges: true,
     scale_precision: 6, // truncate the mantissa when scaling svg paths
-    basic_latin: {
-      str: "",    // precalculated by initCfg()
-      begin: 33,
-      end: 126,
-      extra: " "
-    },
-    unicode_private: {
-      begin: 0xf0000,
-      end: 0xf005e
-    },
     draggable_options: {
       revert: "invalid",
       cursor: "move",
@@ -120,13 +108,6 @@ var Fontomas = (function (Fontomas) {
     cfg.icon_size_classes = cfg.preview_icon_sizes.map(function (item) {
       return cfg.icon_size_prefix+item;
     }).join(" ");
-
-    // init cfg.basic_latin.str
-    cfg.basic_latin.str = "";
-    for (var i=cfg.basic_latin.begin; i<=cfg.basic_latin.end; i++) {
-      cfg.basic_latin.str += String.fromCharCode(i);
-    }
-    cfg.basic_latin.str += cfg.basic_latin.extra;
   },
 
   // usage: index.html#debug:maxglyphs=10,noembedded,nofilereader

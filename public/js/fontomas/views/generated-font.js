@@ -21,7 +21,6 @@ var Fontomas = (function (Fontomas) {
       this.model.glyphs.each(this.addGlyph);
       this.model.glyphs.bind("add", this.addGlyph, this);
 
-      this.model.bind("change:charset", this.onChangeCharset, this);
       this.model.bind("change:glyph_count",
         this.updateGlyphCount, this);
       this.model.bind("change", this.onChange, this);
@@ -51,11 +50,6 @@ var Fontomas = (function (Fontomas) {
     updateGlyphCount: function () {
       console.log("app.views.GeneratedFont.updateGlyphCount");
       $(cfg.id.glyph_count).text(this.model.get("glyph_count"));
-    },
-
-    onChangeCharset: function (o, value) {
-      console.log("app.views.GeneratedFont.onChangeCharset", o, value);
-      //this.model.setCharset(value);
     },
 
     onChange: function () {
