@@ -1,16 +1,13 @@
-var Fontomas = (function (Fontomas) {
+var Fontomas = (function (Backbone, Fontomas) {
   "use strict";
 
-  var app = Fontomas.app,
-    Backbone = window.Backbone;
-
-  app.models.Main = Backbone.Model.extend({
-    fonts: new app.collections.Font,
-    genfont: new app.models.GeneratedFont,
+  Fontomas.app.models.Main = Backbone.Model.extend({
+    fonts:        new Fontomas.app.collections.Font,
+    genfont:      new Fontomas.app.models.GeneratedFont,
     next_font_id: 1,
     xml_template: null,
-    myfiles: []
+    myfiles:      []
   });
 
   return Fontomas;
-}(Fontomas || {}));
+}(window.Backbone, Fontomas || {}));
