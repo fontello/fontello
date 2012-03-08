@@ -3,26 +3,43 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
 
   var config = Fontomas.cfg;
 
+
+  function get_delta(glyph_path, ascent, descent, adv_x) {
+    var bbox, delta_ascent, delta_descent, delta_left, delta_right;
+
+    bbox          = glyph_path.getBBox();
+    delta_ascent  = Math.max(0, (bbox.y + bbox.height) - ascent);
+    delta_descent = Math.max(0, descent - bbox.y);
+    delta_left    = Math.max(0, 0 - bbox.x);
+    delta_right   = Math.max(0, (bbox.x + bbox.width) - adv_x);
+
+    return {
+      x: Math.max(delta_left, delta_right),
+      y: Math.max(delta_ascent, delta_descent)
+    };
+  }
+
   Fontomas.app.views.Font = Backbone.View.extend({
     tagName: "li",
     templates: {},
 
     events: {
       "click .fm-font-close": "close",
-      "click .fm-glyph-id": "toggleGlyph"
+      "click .fm-glyph-id":   "toggleGlyph"
     },
 
     initialize: function () {
       console.log("app.views.Font.initialize");
+
       _.bindAll(this);
-      this.topview = this.options.topview;
-      this.templates = this.topview.getTemplates([
-        "font_item",
-        "glyph_item"
-      ]);
+
+      this.topview    = this.options.topview;
+      this.templates  = this.topview.getTemplates(["font_item", "glyph_item"]);
+
+
       this.$el.attr("id", "fm-font-" + this.model.id);
-      this.model.bind("change", this.render, this);
-      this.model.bind("destroy", this.remove, this);
+      this.model.bind("change",   this.render, this);
+      this.model.bind("destroy",  this.remove, this);
     },
 
     render: function () {
@@ -42,8 +59,6 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
           id: this.model.id,
           fontname: this.model.get("fontname")
         },
-        glyph_id,
-        item,
         horiz_adv_x,
         size_x, size_y,
         $glyph,
@@ -53,27 +68,17 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
         path,
         r,
         g,
-        bbox,
-        delta_ascent,
-        delta_descent,
-        delta_y,
-        delta_left,
-        delta_right,
-        delta_x,
         vb,
+        delta,
         delta_xx,
         delta_yy,
         flip_y_matrix,
-        glyph_sizes,
-        j,
-        icon_size;
+        glyph_sizes;
 
       this.$el.html(this.templates.font_item(tpl_vars));
       this.$(".fm-glyph-group").addClass(config.icon_size_prefix+size);
 
-      for (glyph_id in font.glyphs) {
-        item = font.glyphs[glyph_id];
-
+      _.each(font.glyphs, function (item, glyph_id) {
         horiz_adv_x = item.horiz_adv_x || font.horiz_adv_x;
         size_x = Math.round(size * horiz_adv_x / units_per_em);
         size_y = font_size_y;
@@ -100,30 +105,24 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
         g = r.path(path).attr(config.path_options);
 
         // calc delta_x, delta_y
-        bbox = g.getBBox();
-        delta_ascent = Math.max(0, (bbox.y + bbox.height) - ascent);
-        delta_descent = Math.max(0, descent - bbox.y);
-        delta_y = Math.max(delta_ascent, delta_descent);
-        delta_left = Math.max(0, 0 - bbox.x);
-        delta_right = Math.max(0, (bbox.x + bbox.width) - horiz_adv_x);
-        delta_x = Math.max(delta_left, delta_right);
+        delta = get_delta(g, ascent, descent, horiz_adv_x);
 
         // SVG's ViewBox
         vb = {
-          x: 0 - delta_x,
-          y: descent - delta_y,
-          w: horiz_adv_x + 2 * delta_x,
-          h: (ascent - descent) + 2 * delta_y
+          x: 0 - delta.x,
+          y: descent - delta.y,
+          w: horiz_adv_x + 2 * delta.x,
+          h: (ascent - descent) + 2 * delta.y
         };
 
         // calc new size_y, size_x if glyph goes out of its default
         // box
-        if (delta_y > 0) {
+        if (delta.y > 0) {
           size_y = Math.round(size * (ascent - descent +
-            2 * delta_y) / units_per_em );
+            2 * delta.y) / units_per_em );
         }
-        if (delta_x > 0) {
-          size_x = Math.round(size * (horiz_adv_x + 2 * delta_x) /
+        if (delta.x > 0) {
+          size_x = Math.round(size * (horiz_adv_x + 2 * delta.x) /
             units_per_em);
         }
 
@@ -143,7 +142,7 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
         }
 
         // set new size
-        if (config.fix_edges || delta_x > 0 || delta_y > 0) {
+        if (config.fix_edges || delta.x > 0 || delta.y > 0) {
           r.setSize(size_x, size_y);
 
           gd.css({
@@ -169,96 +168,111 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
         // precalc glyph sizes
         // FIXME: precalc only if glyph goes out of its default box
         glyph_sizes = {};
-        for (j in config.preview_icon_sizes) {
-          icon_size = config.preview_icon_sizes[j];
-          size_y = Math.round(icon_size * (ascent - descent +
-            2 * delta_y) / units_per_em);
-          size_x = Math.round(icon_size * (horiz_adv_x +
-            2 * delta_x) / units_per_em);
-          glyph_sizes[icon_size] = [size_x, size_y];
-        }
+        _.each(config.preview_icon_sizes, function (size) {
+          glyph_sizes[size] = [
+            // width
+            Math.round(size * (ascent - descent + 2 * delta.y) / units_per_em),
+            // height
+            Math.round(size * (horiz_adv_x + 2 * delta.x) / units_per_em)
+          ];
+        });
+
         // FIXME: is this the right place?
         gd.data("glyph_sizes", glyph_sizes);
-      }
+      }, this);
 
       return this;
     },
 
     remove: function () {
-      console.log("app.views.Font.remove el=", this.el);
       var self = this;
+
+      console.log("app.views.Font.remove el=", this.el);
+
       // remove associated html markup
       this.$("input:checkbox:checked").each(function() {
         var glyph_id = $(this).val();
         self.removeGlyph(glyph_id);
       });
+
       this.$el.remove();
     },
 
     close: function (event) {
       console.log("app.views.Font.close el=", this.el);
-      event.preventDefault();
+
       var embedded_id = this.model.get("embedded_id");
+
+      event.preventDefault();
+
       if (embedded_id !== null) {
         Fontomas.app.embedded_fonts[embedded_id].is_added = false;
         this.topview.select_toolbar.renderUseEmbedded();
       }
+
       this.model.destroy();
     },
 
     toggleGlyph: function (event) {
       console.log("app.views.Font.toggleGlyph event=", event);
-      var $target = $(event.target),
-        glyph_id = $target.attr("value"),
-        is_checked = $target.is(":checked");
 
-      $target.parent().toggleClass("selected", is_checked);
+      var $target   = $(event.target),
+          glyph_id  = $target.attr("value");
 
-      if (is_checked) {
+      if ($target.is(":checked")) {
         this.addGlyph(glyph_id);
+        $target.parent().addClass("selected");
       } else {
         this.removeGlyph(glyph_id);
+        $target.parent().removeClass("selected");
       }
     },
 
     // add a glyph to the rearrange zone
     addGlyph: function (glyph_id) {
       console.log("addGlyph glyph_id=", glyph_id);
-      var checkbox=$(config.id.rearrange)
-        .find(".fm-glyph-id:not(:checked):first"),
-        el_id, svg, icon;
+
+      var checkbox  = $(config.id.rearrange).find(".fm-glyph-id:not(:checked):first"),
+          el_id     = "#fm-font-glyph-" + glyph_id,
+          svg       = $(el_id).contents().clone(false),
+          icon      = checkbox.parent().find(config.css_class.rg_icon);
+
       checkbox.attr({value: glyph_id, checked: true});
       checkbox.parent().addClass("selected");
 
-      el_id = "#fm-font-glyph-" + glyph_id;
-
-      svg = $(el_id).contents().clone(false);
-      icon = checkbox.parent().find(config.css_class.rg_icon);
       icon.append(svg)
-        .data("glyph_sizes", $(el_id).data("glyph_sizes"))
         .draggable(config.draggable_options)
+        .data("glyph_sizes", $(el_id).data("glyph_sizes"))
         .attr("style", $(el_id).attr("style"))
-        .css({width: "100%", left: "0px", "margin-left": "0px"});
+        .css({
+          "width":        "100%",
+          "left":         "0px",
+          "margin-left":  "0px"
+        });
 
       if (Fontomas.app.main.genfont.get("glyph_count") === 0) {
         this.topview.toggleMenu(true);
       }
+
       Fontomas.app.main.genfont.incCounter();
     },
 
     // remove a glyph from the rearrange zone
     removeGlyph: function (glyph_id) {
       console.log("removeGlyph glyph_id=", glyph_id);
-      var checkbox=$(config.id.rearrange)
-        .find(".fm-glyph-id:checked[value='" + glyph_id + "']");
+
+      var checkbox=$(config.id.rearrange).find(".fm-glyph-id:checked[value='" + glyph_id + "']");
+
       checkbox.attr({value: "", checked: false});
-      checkbox.parent().removeClass("selected");
-      checkbox.parent().find(config.css_class.rg_icon)
-        .removeData("glyph_sizes").empty();
+      checkbox.parent()
+        .removeClass("selected")
+        .find(config.css_class.rg_icon)
+          .removeData("glyph_sizes").empty();
 
       if (Fontomas.app.main.genfont.get("glyph_count") === 1) {
         this.topview.toggleMenu(false);
       }
+
       Fontomas.app.main.genfont.decCounter();
     }
   });
