@@ -15,6 +15,11 @@ body {
   opacity: 0.95;
 }
 
+iframe.twitter-follow-button {
+  margin-left: 10px;
+  margin-top: 9px;
+}
+
 /*#tab h1 {
   color: inherit;
   margin-left: 10px;
