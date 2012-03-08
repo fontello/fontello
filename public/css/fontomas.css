@@ -3,7 +3,7 @@ html {
 }
 
 body {
-  padding-top: 150px; /* 60px to make the container go all the way to the bottom of the topbar */
+  padding-top: 170px; /* 60px to make the container go all the way to the bottom of the topbar */
 }
 #tab {
   position: fixed;
@@ -11,7 +11,7 @@ body {
   z-index: 100;
   background-color: #fff;
   margin: 0;
-  padding: 20px 0;
+  padding: 40px 0 20px;
   opacity: 0.95;
 }
 
