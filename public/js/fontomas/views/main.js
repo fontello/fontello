@@ -1,107 +1,106 @@
-var Fontomas = (function (Fontomas) {
+var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
   "use strict";
 
-  var app = Fontomas.app,
-    cfg = Fontomas.cfg,
-    debug = Fontomas.debug,
-    util = Fontomas.lib.util,
-    Font = Fontomas.lib.Font,
-    Backbone = window.Backbone,
-    _ = window._,
-    Handlebars = window.Handlebars;
+  var config = Fontomas.cfg;
 
-  app.views.Main = Backbone.View.extend({
-    templates: {},
-    fontviews: {},
-    genfontview: null,
+  Fontomas.app.views.Main = Backbone.View.extend({
+    templates:      {},
+    fontviews:      {},
+    genfontview:    null,
     select_toolbar: null,
-
-    events: {
-    },
+    events:         {},
 
     initialize: function () {
       console.log("app.views.Main.initialize");
+
       _.bindAll(this);
 
-      this.initTemplates();
+      // compile templates defined in config.templates and place them into
+      // this.templates for later use
+      _.each(config.templates, function (el_id, tpl_name) {
+        this.templates[tpl_name] = Handlebars.compile($(el_id).html());
+        $(el_id).remove();
+      }, this);
+
       this.initSvgFontTemplate();
 
       this.model.fonts.bind('add',   this.addOneFont, this);
       this.model.fonts.bind('reset', this.addAllFonts, this);
       //this.model.fonts.fetch();
 
-      this.select_toolbar = new app.views.SelectToolbar({
-        el: $(cfg.id.file_drop_zone)[0],
-        topview: this
+      this.select_toolbar = new Fontomas.app.views.SelectToolbar({
+        el:       $(config.id.file_drop_zone)[0],
+        topview:  this
       });
-      this.genfontview = new app.views.GeneratedFont({
-        model: this.model.genfont,
-        topview: this
-      });
-    },
 
-    // compile templates defined in cfg.templates and place them into
-    // this.templates for later use
-    initTemplates: function () {
-      console.log("app.views.Main.initTemplates");
-      var self = this;
-      _.each(cfg.templates, function (el_id, tpl_name) {
-        self.templates[tpl_name] = Handlebars.compile($(el_id).html());
-        $(el_id).remove();
+      this.genfontview = new Fontomas.app.views.GeneratedFont({
+        model:    this.model.genfont,
+        topview:  this
       });
     },
 
     // subviews call this to get their templates
     getTemplates: function (tpl_names) {
       var result = {};
+
       _.each(this.templates, function (item, key) {
          if (_.include(tpl_names, key)) {
           result[key] = item;
          }
       });
+
       return result;
     },
 
     initSvgFontTemplate: function () {
-      var xml_string = util.trimLeadingWS($(cfg.id.font_output).html());
+      var xml_string;
+
       try {
+        xml_string = $(config.id.font_output).html().trimLeft();
         this.model.xml_template = $.parseXML(xml_string);
       } catch (e) {
-        console.log("initSvgFontTemplate: invalid xml template=",
-          $(cfg.id.font_output).html(), "e=", e);
-        util.notify_alert("Internal error: can't parse output template.");
+        console.log(
+          "initSvgFontTemplate: invalid xml template=",
+          $(config.id.font_output).html(),
+          "e=", e
+        );
+        Fontomas.lib.util.notify_alert("Internal error: can't parse output template.");
+        return;
       }
-      if (this.model.xml_template) {
-        $("metadata", this.model.xml_template)
-          .text(cfg.output.metadata);
-        $("font", this.model.xml_template).attr({
-          id: cfg.output.font_id,
-          "horiz-adv-x": cfg.output.horiz_adv_x
+
+      $(this.model.xml_template)
+        .find("metadata").text(config.output.metadata)
+        .end()
+        .find("font").attr({
+          "id":           config.output.font_id,
+          "horiz-adv-x":  config.output.horiz_adv_x
+        })
+        .end()
+        .find("font-face").attr({
+          "units-per-em": config.output.units_per_em,
+          "ascent":       config.output.ascent,
+          "descent":      config.output.descent
+        })
+        .end()
+        .find("missing-glyph").attr({
+          "horiz-adv-x":  config.output.missing_glyph_horiz_adv_x
         });
-        $("font-face", this.model.xml_template).attr({
-          "units-per-em": cfg.output.units_per_em,
-          ascent: cfg.output.ascent,
-          descent: cfg.output.descent
-        });
-        $("missing-glyph", this.model.xml_template).attr({
-          "horiz-adv-x": cfg.output.missing_glyph_horiz_adv_x
-        });
-      }
     },
 
     render: function () {
       console.log("app.views.Main.render");
+
       // render the select tab
       this.select_toolbar.render();
 
       // auto load embedded fonts
       // debug
-      if (!(debug.is_on && debug.noembedded)) {
-        this.addEmbeddedFonts(app.embedded_fonts);
+      if (!(Fontomas.debug.is_on && Fontomas.debug.noembedded)) {
+        this.addEmbeddedFonts(Fontomas.app.embedded_fonts);
       }
 
       // first tab is fully initialized so show it
-      $(cfg.id.tab + " a:first").tab("show");
+      $(config.id.tab + " a:first").tab("show");
 
       // render the rearrange tab
       this.genfontview.render();
@@ -116,24 +115,28 @@ var Fontomas = (function (Fontomas) {
       this.addFontsAsStrings(embedded_fonts, function (fileinfo) {
         // onload closure
         var e_id = fileinfo.embedded_id;
+
         // FIXME
-        app.mainview.addFont(fileinfo, function (fileinfo) {
+        Fontomas.app.mainview.addFont(fileinfo, function (fileinfo) {
           // onclose closure
-          app.embedded_fonts[e_id].is_added = fileinfo.is_added;
-          app.mainview.select_toolbar.renderUseEmbedded();
+          Fontomas.app.embedded_fonts[e_id].is_added = fileinfo.is_added;
+          Fontomas.app.mainview.select_toolbar.renderUseEmbedded();
         });
-        app.embedded_fonts[e_id].is_added = fileinfo.is_added;
-        app.embedded_fonts[e_id].fontname = fileinfo.fontname;
-        app.mainview.select_toolbar.renderUseEmbedded();
+
+        Fontomas.app.embedded_fonts[e_id].is_added = fileinfo.is_added;
+        Fontomas.app.embedded_fonts[e_id].fontname = fileinfo.fontname;
+
+        Fontomas.app.mainview.select_toolbar.renderUseEmbedded();
       });
     },
 
     addFontsAsStrings: function (files, cb_onload) {
       console.log("app.views.Main.addFontsAsStrings flen=", files.length);
-      var i, f, idx;
 
-      for (i=0, f; (f=files[i]); i++) {
-        idx = app.main.myfiles.push({
+      _.each(files, function (f) {
+        var idx;
+
+        Fontomas.app.main.myfiles.push({
           id:             null,
           filename:       f.filename,
           filesize:       f.content.length,
@@ -146,64 +149,38 @@ var Fontomas = (function (Fontomas) {
           error_msg:      "",
           content:        f.content,
           embedded_id:    f.id
-        }) - 1;
-        app.main.myfiles[idx].id = idx;
+        });
+
+        idx = Fontomas.app.main.myfiles.length - 1;
+
+        Fontomas.app.main.myfiles[idx].id = idx;
 
         if (cb_onload) {
-          cb_onload(app.main.myfiles[idx]);
+          cb_onload(Fontomas.app.main.myfiles[idx]);
         }
 
-        f.is_ok = app.main.myfiles[idx].is_ok;
-        f.is_added = app.main.myfiles[idx].is_added;
-        f.fontname = app.main.myfiles[idx].fontname;
-      }
+        f.is_ok     = Fontomas.app.main.myfiles[idx].is_ok;
+        f.is_added  = Fontomas.app.main.myfiles[idx].is_added;
+        f.fontname  = Fontomas.app.main.myfiles[idx].fontname;
+      });
     },
 
     addUploadedFonts: function (files) {
       this.addFonts(files, function (fileinfo) {
         // onload closure
         // FIXME
-        app.mainview.addFont(fileinfo);
+        Fontomas.app.mainview.addFont(fileinfo);
       });
     },
 
-    addFonts: function (files, cb_onload) {
+    addFonts: function (files, callback) {
       console.log("app.views.Main.addFonts");
 
-      var i, f,
-        idx,
-        reader,
-        reader_onload = function (fileinfo) {
-          return function (e) {
-            // FIXME: race condition?
-            // is there a file with the same content?
-            var is_exist = false,
-              i, len;
-            for (i=0, len=app.main.myfiles.length; i<len; i++) {
-              if (!app.main.myfiles[i] ||
-                !app.main.myfiles.is_ok) {
-                continue;
-              }
-              if (app.main.myfiles[i].content ===
-                e.target.result) {
-                fileinfo.is_dup = is_exist = true;
-                break;
-              }
-            }
-            if (!is_exist) {
-              fileinfo.content = e.target.result;
-              fileinfo.is_loaded = true;
-            }
+      _.each(files, function (f) {
+        var fileinfo, reader = new FileReader();
 
-            if (cb_onload) {
-              cb_onload(fileinfo);
-            }
-          };
-        };
-
-      for (i=0, f; (f=files[i]); i++) {
-        idx = app.main.myfiles.push({
-          id:             null,
+        fileinfo = {
+          id:             Fontomas.app.main.myfiles.length,
           filename:       f.name,
           filesize:       f.size,
           filetype:       f.type,
@@ -215,85 +192,104 @@ var Fontomas = (function (Fontomas) {
           error_msg:      "",
           content:        null,
           embedded_id:    null
-        }) - 1;
-        app.main.myfiles[idx].id = idx;
+        };
 
-        reader = new FileReader();
-        reader.onload = reader_onload(app.main.myfiles[idx]);
+        Fontomas.app.main.myfiles.push(fileinfo);
+
+        reader.onload = function (e) {
+          // FIXME: race condition?
+          // is there a file with the same content?
+          var is_exist = false;
+
+          _.each(Fontomas.app.main.myfiles, function (f) {
+            if (event.target.result === f.content) {
+              is_exist = fileinfo.is_dup = true;
+            }
+          });
+
+          if (!is_exist) {
+            fileinfo.content    = e.target.result;
+            fileinfo.is_loaded  = true;
+          }
+
+          if (callback) {
+            callback(fileinfo);
+          }
+        };
+
         reader.readAsBinaryString(f);
-      }
+      });
     },
 
-    /*jshint newcap:false*/
     addFont: function (fileinfo, cb_onclose) {
+      /*jshint newcap:false*/
       console.log("app.views.Main.addFont id=", fileinfo.id);
+
+      var tmp, font, types, file_ext;
+
       // if it is a dup, skip it
       if (fileinfo.is_dup) {
         return;
       }
 
-      var font = null,
-        types = ["svg"/*, "ttf", "otf"*/, "js"],
-        file_ext = util.getFileExt(fileinfo.filename),
-        tmp;
+      types     = {"svg": "svg", "js": "cufonjs"};
+      file_ext  = Fontomas.lib.util.getFileExt(fileinfo.filename);
 
-      switch (file_ext) {
-      case "svg":
-        font = Font("svg", fileinfo.content);
-        break;
-      case "js":
-        font = Font("cufonjs", fileinfo.content);
-        break;
-      default:
+      if (_.include(_.keys(types), file_ext)) {
+        font = Fontomas.lib.Font(types[file_ext], fileinfo.content);
+      } else {
         // unknown file exstension
-        util.notify_alert("Can't parse file '" + fileinfo.filename +
-          "': unknown file extension. Currently, we only support " +
-          util.joinList(types, ", ", " and ") + "."
+        Fontomas.lib.util.notify_alert(
+          "Can't parse file '" + fileinfo.filename +
+          "': unknown file extension. Currently, we support only: " +
+          _.keys(types).join(", ") + "."
         );
         return;
       }
 
       if (!font) {
         console.log("invalid file");
-        fileinfo.is_ok = false;
+
+        fileinfo.is_ok     = false;
         fileinfo.error_msg = "invalid file";
 
-        util.notify_alert("Loading error: can't parse file '" +
-          fileinfo.filename + "'");
+        Fontomas.lib.util.notify_alert(
+          "Loading error: can't parse file '" +
+          fileinfo.filename + "'"
+        );
+
         return;
       }
 
-      fileinfo.is_ok = true;
+      this.createFont(_.extend({}, fileinfo, {font: font}));
+
+      fileinfo.is_ok    = true;
+      fileinfo.is_added = true;
       fileinfo.fontname = font.id;
 
-      // FIXME
-      tmp = $.extend({}, fileinfo);
-      tmp.font = font;
-      app.mainview.createFont(tmp);
-
-      fileinfo.is_added = true;
-
-  /*
-      // scroll to the loaded font
-      var fonthash = 'a[href="#font-'+fileinfo.id+'"]';
-      $("html,body").animate({scrollTop: $(fonthash).offset().top}, 500);
-  */
+      /*
+          // scroll to the loaded font
+          var fonthash = 'a[href="#font-'+fileinfo.id+'"]';
+          $("html,body").animate({scrollTop: $(fonthash).offset().top}, 500);
+      */
     },
-    /*jshint newcap:true*/
 
     createFont: function (attrs) {
       console.log("app.views.Main.create attrs=", attrs);
+
       //if (!attrs.id) // FIXME
-        attrs.id = this.model.next_font_id++;
+      attrs.id = this.model.next_font_id++;
       this.model.fonts.create(attrs);
     },
 
     addOneFont: function (font) {
       console.log("app.views.Main.addOneFont");
-      var view = new app.views.Font({
+
+      var view = new Fontomas.app.views.Font({
         model: font,
         topview: this
       });
+
       this.fontviews[font.id] = view;
       $("#fm-font-list").append(view.render().el);
     },
@@ -305,25 +301,28 @@ var Fontomas = (function (Fontomas) {
 
     toggleMenu: function (enabled) {
       console.log("app.views.Main.toggleMenu");
-      $(cfg.id.tab).find("a"+cfg.css_class.disable_on_demand)
-        .toggleClass("disabled", !enabled);
+      $(config.id.tab)
+        .find("a"+config.css_class.disable_on_demand)
+          .toggleClass("disabled", !enabled);
     },
 
     initDownloadLink: function () {
       console.log("app.views.Main.initDownloadLink");
-      $(cfg.id.tab_save).one("shown", function () {
+
+      $(config.id.tab_save).one("shown", function () {
         console.log("app.views.Main.initDownloadLink: shown fired");
-        $(cfg.id.download_font_button).click(function (event) {
+
+        $(config.id.download_font_button).click(function (event) {
           console.log("download button clicked");
 
           // image/svg+xml
           // binary/octet-stream
           // application/x-zip-compressed
 
-          $(cfg.id.download_font_button).attr({
-            download: cfg.output.filename,
-            href: "data:binary/octet-stream;base64," +
-              util.base64_encode($(cfg.id.font).val())
+          $(config.id.download_font_button).attr({
+            download: config.output.filename,
+            href:     "data:binary/octet-stream;base64," +
+                      Fontomas.lib.util.base64_encode($(config.id.font).val())
           });
 
         });
@@ -332,4 +331,4 @@ var Fontomas = (function (Fontomas) {
   });
 
   return Fontomas;
-}(Fontomas || {}));
+}(window._, window.Backbone, window.Handlebars, Fontomas || {}));

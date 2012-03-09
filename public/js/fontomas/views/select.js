@@ -42,10 +42,13 @@ var Fontomas = (function (_, Backbone, Fontomas) {
       // FIXME: workaround, because dragover/drag events don't work
       if (Fontomas.env.filereader) {
         // init file drag and drop
-        $(config.id.file_drop_zone).on("dragover",  function (event) {
+        $(config.id.file_drop_zone).on("dragover", function (event) {
           self.fileDragOver(event);
         });
-        $(config.id.file_drop_zone).on("drop",      this.fileDrop.bind(this));
+
+        $(config.id.file_drop_zone).on("drop", function (event) {
+          self.fileDrop(event);
+        });
       }
 
       this.renderUseEmbedded();

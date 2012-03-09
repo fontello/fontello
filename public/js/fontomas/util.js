@@ -100,11 +100,6 @@ var Fontomas = (function (Fontomas) {
     });
   },
 
-  // trim leading whitespaces
-  trimLeadingWS = function (s) {
-    return s.replace(/^\s*/, "");
-  },
-
   // trim string at both sides:
   // in:  s="abc{hello}def", begin="c{", end="}"
   // out: "hello"
@@ -195,7 +190,6 @@ var Fontomas = (function (Fontomas) {
         xmlToString: xmlToString,
         getFileExt: getFileExt,
         joinList: joinList,
-        trimLeadingWS: trimLeadingWS,
         trimBoth: trimBoth,
         repeat: repeat,
         rpad: rpad,
