@@ -134,10 +134,10 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
       console.log("app.views.Main.addFontsAsStrings flen=", files.length);
 
       _.each(files, function (f) {
-        var idx;
+        var idx, fileinfo;
 
-        Fontomas.app.main.myfiles.push({
-          id:             null,
+        fileinfo = {
+          id:             Fontomas.app.main.myfiles.length,
           filename:       f.filename,
           filesize:       f.content.length,
           filetype:       f.filetype,
@@ -149,19 +149,17 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
           error_msg:      "",
           content:        f.content,
           embedded_id:    f.id
-        });
+        };
 
-        idx = Fontomas.app.main.myfiles.length - 1;
-
-        Fontomas.app.main.myfiles[idx].id = idx;
+        Fontomas.app.main.myfiles.push(fileinfo);
 
         if (cb_onload) {
-          cb_onload(Fontomas.app.main.myfiles[idx]);
+          cb_onload(fileinfo);
         }
 
-        f.is_ok     = Fontomas.app.main.myfiles[idx].is_ok;
-        f.is_added  = Fontomas.app.main.myfiles[idx].is_added;
-        f.fontname  = Fontomas.app.main.myfiles[idx].fontname;
+        f.is_ok     = fileinfo.is_ok;
+        f.is_added  = fileinfo.is_added;
+        f.fontname  = fileinfo.fontname;
       });
     },
 
@@ -261,11 +259,11 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
         return;
       }
 
-      this.createFont(_.extend({}, fileinfo, {font: font}));
-
       fileinfo.is_ok    = true;
       fileinfo.is_added = true;
       fileinfo.fontname = font.id;
+
+      this.createFont(_.extend({}, fileinfo, {font: font}));
 
       /*
           // scroll to the loaded font
