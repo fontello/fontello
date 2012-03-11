@@ -1,9 +1,7 @@
 var Fontomas = (function (Fontomas) {
   "use strict";
 
-  var app = Fontomas.app;
-
-  app.embedded_fonts = [
+  Fontomas.embedded_fonts = [
     {
       id: 0,
       filename: "entypo_rescaled.svg",

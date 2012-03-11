@@ -3,7 +3,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
 
   var config = Fontomas.cfg;
 
-  Fontomas.app.views.SelectToolbar = Backbone.View.extend({
+  Fontomas.views.SelectToolbar = Backbone.View.extend({
     tagName: "form",
     id: "fm-file-drop-zone",
 
@@ -19,7 +19,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
     },
 
     initialize: function () {
-      console.log("app.views.SelectToolbar.initialize");
+      console.log("views.SelectToolbar.initialize");
 
       _.bindAll(this);
 
@@ -28,7 +28,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
     },
 
     render: function () {
-      console.log("app.views.SelectToolbar.render");
+      console.log("views.SelectToolbar.render");
 
       var self      = this,
           tpl_vars  = {buttons: config.preview_icon_sizes};
@@ -57,10 +57,10 @@ var Fontomas = (function (_, Backbone, Fontomas) {
     },
 
     renderUseEmbedded: function () {
-      console.log("app.views.SelectToolbar.renderUseEmbedded");
+      console.log("views.SelectToolbar.renderUseEmbedded");
 
       var tpl_vars = {
-        options: _.map(Fontomas.app.embedded_fonts, function (item) {
+        options: _.map(Fontomas.embedded_fonts, function (item) {
           return {text: item.fontname, disabled: item.is_added};
         })
       };
@@ -74,10 +74,10 @@ var Fontomas = (function (_, Backbone, Fontomas) {
     },
 
     useEmbedded: function (event) {
-      console.log("app.views.SelectToolbar.useEmbedded");
+      console.log("views.SelectToolbar.useEmbedded");
 
       var id    = $(event.target).data("embedded_id"),
-          font  = Fontomas.app.embedded_fonts[id];
+          font  = Fontomas.embedded_fonts[id];
 
       console.assert(font);
       event.preventDefault();
@@ -124,7 +124,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
     },
 
     changeIconSize: function (event) {
-      console.log("app.views.SelectToolbar.changeIconSize");
+      console.log("views.SelectToolbar.changeIconSize");
 
       var size = parseInt($(event.target).val(), 10) ||
                  config.preview_icon_sizes[0];

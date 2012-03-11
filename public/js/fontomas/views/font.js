@@ -19,7 +19,7 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
     };
   }
 
-  Fontomas.app.views.Font = Backbone.View.extend({
+  Fontomas.views.Font = Backbone.View.extend({
     tagName: "li",
     templates: {},
 
@@ -29,7 +29,7 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
     },
 
     initialize: function () {
-      console.log("app.views.Font.initialize");
+      console.log("views.Font.initialize");
 
       _.bindAll(this);
 
@@ -43,7 +43,7 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
     },
 
     render: function () {
-      console.log("app.views.Font.render el=", this.el);
+      console.log("views.Font.render el=", this.el);
       var font         = this.model.get("font"),
           ascent       = font.ascent,
           descent      = font.descent,
@@ -173,7 +173,7 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
     remove: function () {
       var self = this;
 
-      console.log("app.views.Font.remove el=", this.el);
+      console.log("views.Font.remove el=", this.el);
 
       // remove associated html markup
       this.$("input:checkbox:checked").each(function() {
@@ -185,14 +185,14 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
     },
 
     close: function (event) {
-      console.log("app.views.Font.close el=", this.el);
+      console.log("views.Font.close el=", this.el);
 
       var embedded_id = this.model.get("embedded_id");
 
       event.preventDefault();
 
       if (embedded_id !== null) {
-        Fontomas.app.embedded_fonts[embedded_id].is_added = false;
+        Fontomas.embedded_fonts[embedded_id].is_added = false;
         this.topview.select_toolbar.renderUseEmbedded();
       }
 
@@ -200,7 +200,7 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
     },
 
     toggleGlyph: function (event) {
-      console.log("app.views.Font.toggleGlyph event=", event);
+      console.log("views.Font.toggleGlyph event=", event);
 
       var $target   = $(event.target),
           glyph_id  = $target.attr("value");
@@ -236,11 +236,11 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
           "margin-left":  "0px"
         });
 
-      if (Fontomas.app.main.genfont.get("glyph_count") === 0) {
+      if (Fontomas.main.genfont.get("glyph_count") === 0) {
         this.topview.toggleMenu(true);
       }
 
-      Fontomas.app.main.genfont.incCounter();
+      Fontomas.main.genfont.incCounter();
     },
 
     // remove a glyph from the rearrange zone
@@ -255,11 +255,11 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
         .find(config.css_class.rg_icon)
           .removeData("glyph_sizes").empty();
 
-      if (Fontomas.app.main.genfont.get("glyph_count") === 1) {
+      if (Fontomas.main.genfont.get("glyph_count") === 1) {
         this.topview.toggleMenu(false);
       }
 
-      Fontomas.app.main.genfont.decCounter();
+      Fontomas.main.genfont.decCounter();
     }
   });
 

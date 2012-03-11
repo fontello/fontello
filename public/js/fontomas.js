@@ -1,7 +1,7 @@
-var Fontomas = (function (Fontomas) {
+var Fontomas = (function (_, Fontomas) {
   "use strict";
 
-  var cfg, app, env, debug;
+  var cfg, env, debug;
 
   cfg = {
     id: {
@@ -94,12 +94,6 @@ var Fontomas = (function (Fontomas) {
     filereader:     null
   };
 
-  app = {
-    models:      {},
-    collections: {},
-    views:       {}
-  };
-
   debug = {is_on: false};
 
   // init icon_size_classes
@@ -122,9 +116,11 @@ var Fontomas = (function (Fontomas) {
 
   // public interface
   return $.extend(true, Fontomas, {
-    cfg: cfg,
-    env: env,
-    app: app,
-    debug: debug
+    cfg:          cfg,
+    env:          env,
+    debug:        debug,
+    models:       {},
+    collections:  {},
+    views:        {}
   });
-}(Fontomas || {}));
+}(window._, Fontomas || {}));

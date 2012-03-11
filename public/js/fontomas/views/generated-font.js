@@ -3,12 +3,12 @@ var Fontomas = (function (_, Backbone, Fontomas) {
 
   var config = Fontomas.cfg;
 
-  Fontomas.app.views.GeneratedFont = Backbone.View.extend({
+  Fontomas.views.GeneratedFont = Backbone.View.extend({
     glyphviews:  [],
     events:      {},
 
     initialize: function () {
-      console.log("app.views.GeneratedFont.initialize");
+      console.log("views.GeneratedFont.initialize");
 
       _.bindAll(this);
 
@@ -22,7 +22,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
     },
 
     render: function () {
-      console.log("app.views.GeneratedFont.render");
+      console.log("views.GeneratedFont.render");
 
       _.each(this.glyphviews, function (glyph) {
         $(config.id.generated_font).append(glyph.render().el);
@@ -37,20 +37,20 @@ var Fontomas = (function (_, Backbone, Fontomas) {
     },
 
     addGlyph: function (glyph) {
-      //console.log("app.views.GeneratedFont.addGlyph");
-      this.glyphviews.push(new Fontomas.app.views.Glyph({
+      //console.log("views.GeneratedFont.addGlyph");
+      this.glyphviews.push(new Fontomas.views.Glyph({
         model:    glyph,
         topview:  this.topview
       }));
     },
 
     updateGlyphCount: function () {
-      console.log("app.views.GeneratedFont.updateGlyphCount");
+      console.log("views.GeneratedFont.updateGlyphCount");
       $(config.id.glyph_count).text(this.model.get("glyph_count"));
     },
 
     onChange: function () {
-      console.log("app.views.GeneratedFont.onChange");
+      console.log("views.GeneratedFont.onChange");
 
       if (config.live_update) {
         this.updateFont();
@@ -70,7 +70,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
     updateFont: function () {
       var self = this, glyphs = [];
 
-      if (!Fontomas.app.main.xml_template) {
+      if (!Fontomas.main.xml_template) {
         return;
       }
 
@@ -80,8 +80,8 @@ var Fontomas = (function (_, Backbone, Fontomas) {
           var $this    = $(this),
               glyph_id = $this.val(),
               unicode  = $this.siblings("input.fm-unicode").val(),
-              font     = Fontomas.app.main.fonts.getFont(glyph_id),
-              glyph    = Fontomas.app.main.fonts.getGlyph(glyph_id),
+              font     = Fontomas.main.fonts.getFont(glyph_id),
+              glyph    = Fontomas.main.fonts.getGlyph(glyph_id),
               scale,
               g;
 
@@ -116,9 +116,9 @@ var Fontomas = (function (_, Backbone, Fontomas) {
           glyphs.push(Fontomas.lib.util.outerHtml(g));
         });
 
-      $("glyph", Fontomas.app.main.xml_template).remove();
-      $("font", Fontomas.app.main.xml_template).append($(glyphs.join("\n")));
-      $(config.id.font).text(Fontomas.lib.util.xmlToString(Fontomas.app.main.xml_template));
+      $("glyph", Fontomas.main.xml_template).remove();
+      $("font", Fontomas.main.xml_template).append($(glyphs.join("\n")));
+      $(config.id.font).text(Fontomas.lib.util.xmlToString(Fontomas.main.xml_template));
     }
   });
 

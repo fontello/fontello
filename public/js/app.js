@@ -21,12 +21,12 @@
     $(Fontomas.cfg.id.tab).tab("show");
 
     // main model
-    Fontomas.app.main = new Fontomas.app.models.Main;
+    Fontomas.main = new Fontomas.models.Main;
     // main view
-    Fontomas.app.mainview = new Fontomas.app.views.Main({
-      model: Fontomas.app.main
+    Fontomas.mainview = new Fontomas.views.Main({
+      model: Fontomas.main
     });
 
-    Fontomas.app.mainview.render();
+    Fontomas.mainview.render();
   });
 }(jQuery, window.Fontomas));

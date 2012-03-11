@@ -3,14 +3,14 @@ var Fontomas = (function (_, Backbone, Fontomas) {
 
   var config = Fontomas.cfg;
 
-  Fontomas.app.views.Glyph = Backbone.View.extend({
+  Fontomas.views.Glyph = Backbone.View.extend({
     tagName:    "label",
     className:  "rearrange-glyph",
     templates:  {},
     events:     {},
 
     initialize: function () {
-      //console.log("app.views.Glyph.initialize");
+      //console.log("views.Glyph.initialize");
 
       _.bindAll(this);
 
@@ -65,14 +65,14 @@ var Fontomas = (function (_, Backbone, Fontomas) {
           }
 
           if (config.live_update) {
-            Fontomas.app.mainview.genfontview.updateFont();
+            Fontomas.mainview.genfontview.updateFont();
           }
         }
       }));
     },
 
     render: function () {
-      //console.log("app.views.Glyph.render el=", this.el);
+      //console.log("views.Glyph.render el=", this.el);
       // FIXME: performance
       //this.$el.html(this.template(this.model.toJSON()));
       //this.$el.attr("id", "rgl" + this.model.get("num"));

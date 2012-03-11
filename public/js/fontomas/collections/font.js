@@ -1,8 +1,8 @@
 var Fontomas = (function (Backbone, Fontomas) {
   "use strict";
 
-  Fontomas.app.collections.Font = Backbone.Collection.extend({
-    model: Fontomas.app.models.Font,
+  Fontomas.collections.Font = Backbone.Collection.extend({
+    model: Fontomas.models.Font,
 
     parseId: function (pair_id) {
       var pair = pair_id.split("-");

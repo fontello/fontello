@@ -1,14 +1,14 @@
 var Fontomas = (function (_, Backbone, Fontomas) {
   "use strict";
 
-  Fontomas.app.models.GeneratedFont = Backbone.Model.extend({
+  Fontomas.models.GeneratedFont = Backbone.Model.extend({
     defaults: {glyph_count: 0},
 
     initialize: function () {
       var i, ch;
 
-      console.log("app.models.GeneratedFont.initialize");
-      this.glyphs = new Fontomas.app.collections.Glyph;
+      console.log("models.GeneratedFont.initialize");
+      this.glyphs = new Fontomas.collections.Glyph;
 
       // add space glyph
       this.glyphs.add({
@@ -53,7 +53,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
 
     // FIXME: the model isn't sync()ed to server yet
     sync: function () {
-      console.log("app.models.GeneratedFont.sync()");
+      console.log("models.GeneratedFont.sync()");
     }
   });
 

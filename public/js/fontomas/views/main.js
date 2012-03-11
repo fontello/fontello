@@ -3,7 +3,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
 
   var config = Fontomas.cfg;
 
-  Fontomas.app.views.Main = Backbone.View.extend({
+  Fontomas.views.Main = Backbone.View.extend({
     templates:      {},
     fontviews:      {},
     genfontview:    null,
@@ -11,7 +11,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
     events:         {},
 
     initialize: function () {
-      console.log("app.views.Main.initialize");
+      console.log("views.Main.initialize");
 
       _.bindAll(this);
 
@@ -28,12 +28,12 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
       this.model.fonts.bind('reset', this.addAllFonts, this);
       //this.model.fonts.fetch();
 
-      this.select_toolbar = new Fontomas.app.views.SelectToolbar({
+      this.select_toolbar = new Fontomas.views.SelectToolbar({
         el:       $(config.id.file_drop_zone)[0],
         topview:  this
       });
 
-      this.genfontview = new Fontomas.app.views.GeneratedFont({
+      this.genfontview = new Fontomas.views.GeneratedFont({
         model:    this.model.genfont,
         topview:  this
       });
@@ -88,7 +88,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
     },
 
     render: function () {
-      console.log("app.views.Main.render");
+      console.log("views.Main.render");
 
       // render the select tab
       this.select_toolbar.render();
@@ -96,7 +96,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
       // auto load embedded fonts
       // debug
       if (!(Fontomas.debug.is_on && Fontomas.debug.noembedded)) {
-        this.addEmbeddedFonts(Fontomas.app.embedded_fonts);
+        this.addEmbeddedFonts(Fontomas.embedded_fonts);
       }
 
       // first tab is fully initialized so show it
@@ -117,27 +117,27 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
         var e_id = fileinfo.embedded_id;
 
         // FIXME
-        Fontomas.app.mainview.addFont(fileinfo, function (fileinfo) {
+        Fontomas.mainview.addFont(fileinfo, function (fileinfo) {
           // onclose closure
-          Fontomas.app.embedded_fonts[e_id].is_added = fileinfo.is_added;
-          Fontomas.app.mainview.select_toolbar.renderUseEmbedded();
+          Fontomas.embedded_fonts[e_id].is_added = fileinfo.is_added;
+          Fontomas.mainview.select_toolbar.renderUseEmbedded();
         });
 
-        Fontomas.app.embedded_fonts[e_id].is_added = fileinfo.is_added;
-        Fontomas.app.embedded_fonts[e_id].fontname = fileinfo.fontname;
+        Fontomas.embedded_fonts[e_id].is_added = fileinfo.is_added;
+        Fontomas.embedded_fonts[e_id].fontname = fileinfo.fontname;
 
-        Fontomas.app.mainview.select_toolbar.renderUseEmbedded();
+        Fontomas.mainview.select_toolbar.renderUseEmbedded();
       });
     },
 
     addFontsAsStrings: function (files, cb_onload) {
-      console.log("app.views.Main.addFontsAsStrings flen=", files.length);
+      console.log("views.Main.addFontsAsStrings flen=", files.length);
 
       _.each(files, function (f) {
         var idx, fileinfo;
 
         fileinfo = {
-          id:             Fontomas.app.main.myfiles.length,
+          id:             Fontomas.main.myfiles.length,
           filename:       f.filename,
           filesize:       f.content.length,
           filetype:       f.filetype,
@@ -151,7 +151,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
           embedded_id:    f.id
         };
 
-        Fontomas.app.main.myfiles.push(fileinfo);
+        Fontomas.main.myfiles.push(fileinfo);
 
         if (cb_onload) {
           cb_onload(fileinfo);
@@ -167,18 +167,18 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
       this.addFonts(files, function (fileinfo) {
         // onload closure
         // FIXME
-        Fontomas.app.mainview.addFont(fileinfo);
+        Fontomas.mainview.addFont(fileinfo);
       });
     },
 
     addFonts: function (files, callback) {
-      console.log("app.views.Main.addFonts");
+      console.log("views.Main.addFonts");
 
       _.each(files, function (f) {
         var fileinfo, reader = new FileReader();
 
         fileinfo = {
-          id:             Fontomas.app.main.myfiles.length,
+          id:             Fontomas.main.myfiles.length,
           filename:       f.name,
           filesize:       f.size,
           filetype:       f.type,
@@ -192,14 +192,14 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
           embedded_id:    null
         };
 
-        Fontomas.app.main.myfiles.push(fileinfo);
+        Fontomas.main.myfiles.push(fileinfo);
 
         reader.onload = function (event) {
           // FIXME: race condition?
           // is there a file with the same content?
           var is_exist = false;
 
-          _.each(Fontomas.app.main.myfiles, function (f) {
+          _.each(Fontomas.main.myfiles, function (f) {
             if (event.target.result === f.content) {
               is_exist = fileinfo.is_dup = true;
             }
@@ -221,7 +221,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
 
     addFont: function (fileinfo, cb_onclose) {
       /*jshint newcap:false*/
-      console.log("app.views.Main.addFont id=", fileinfo.id);
+      console.log("views.Main.addFont id=", fileinfo.id);
 
       var tmp, font, types, file_ext;
 
@@ -273,7 +273,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
     },
 
     createFont: function (attrs) {
-      console.log("app.views.Main.create attrs=", attrs);
+      console.log("views.Main.create attrs=", attrs);
 
       //if (!attrs.id) // FIXME
       attrs.id = this.model.next_font_id++;
@@ -281,9 +281,9 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
     },
 
     addOneFont: function (font) {
-      console.log("app.views.Main.addOneFont");
+      console.log("views.Main.addOneFont");
 
-      var view = new Fontomas.app.views.Font({
+      var view = new Fontomas.views.Font({
         model: font,
         topview: this
       });
@@ -293,22 +293,22 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
     },
 
     addAllFonts: function () {
-      console.log("app.views.Main.addAllFonts");
+      console.log("views.Main.addAllFonts");
       this.model.fonts.each(this.addOneFont);
     },
 
     toggleMenu: function (enabled) {
-      console.log("app.views.Main.toggleMenu");
+      console.log("views.Main.toggleMenu");
       $(config.id.tab)
         .find("a"+config.css_class.disable_on_demand)
           .toggleClass("disabled", !enabled);
     },
 
     initDownloadLink: function () {
-      console.log("app.views.Main.initDownloadLink");
+      console.log("views.Main.initDownloadLink");
 
       $(config.id.tab_save).one("shown", function () {
-        console.log("app.views.Main.initDownloadLink: shown fired");
+        console.log("views.Main.initDownloadLink: shown fired");
 
         $(config.id.download_font_button).click(function (event) {
           console.log("download button clicked");
