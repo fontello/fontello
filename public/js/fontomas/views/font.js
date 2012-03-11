@@ -44,64 +44,50 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
 
     render: function () {
       console.log("app.views.Font.render el=", this.el);
-      var font = this.model.get("font"),
+      var font         = this.model.get("font"),
+          ascent       = font.ascent,
+          descent      = font.descent,
+          units_per_em = font.units_per_em,
+          size_string  = $(config.id.icon_size).find("button.active").val(),
+          size         = parseInt(size_string, 10) || config.preview_icon_sizes[0],
+          font_size_y  = Math.round(size * (ascent - descent) / units_per_em);
 
-        ascent = font.ascent,
-        descent = font.descent,
-        units_per_em = font.units_per_em,
 
-        size_string = $(config.id.icon_size).find("button.active").val(),
-        size = parseInt(size_string, 10) || config.preview_icon_sizes[0],
-        font_size_y = Math.round(size * (ascent - descent) /
-          units_per_em),
+      this.$el.html(this.templates.font_item({
+        id:        this.model.id,
+        fontname:  this.model.get("fontname")
+      }));
 
-        tpl_vars = {
-          id: this.model.id,
-          fontname: this.model.get("fontname")
-        },
-        horiz_adv_x,
-        size_x, size_y,
-        $glyph,
-        gd,
-        gd_id,
-        dom,
-        path,
-        r,
-        g,
-        vb,
-        delta,
-        delta_xx,
-        delta_yy,
-        flip_y_matrix,
-        glyph_sizes;
-
-      this.$el.html(this.templates.font_item(tpl_vars));
-      this.$(".fm-glyph-group").addClass(config.icon_size_prefix+size);
+      this.$(".fm-glyph-group").addClass(config.icon_size_prefix + size);
 
       _.each(font.glyphs, function (item, glyph_id) {
-        horiz_adv_x = item.horiz_adv_x || font.horiz_adv_x;
-        size_x = Math.round(size * horiz_adv_x / units_per_em);
-        size_y = font_size_y;
-
-        $glyph = $(this.templates.glyph_item(item));
+        var horiz_adv_x = item.horiz_adv_x || font.horiz_adv_x,
+            size_x      = Math.round(size * horiz_adv_x / units_per_em),
+            size_y      = font_size_y,
+            $glyph      = $(this.templates.glyph_item(item)),
+            gd          = $glyph.find(config.css_class.glyph_div),
+            gd_id       = "fm-font-glyph-" + this.model.id + "-" + glyph_id,
+            path        = item.d,
+            r,
+            g,
+            vb,
+            delta,
+            flip_y_matrix,
+            glyph_sizes;
 
         this.$(".fm-glyph-group").append($glyph);
 
         $glyph.find(".fm-glyph-id").val(this.model.id + "-" + glyph_id);
-        gd = $glyph.find(config.css_class.glyph_div);
-        gd_id = "fm-font-glyph-"+this.model.id+"-"+glyph_id;
-        gd.attr("id", gd_id)
-          .css({
-            width: size_x + "px",
-            height: size_y + "px",
-            "margin-left": "-" + Math.round(size_x/2) + "px",
-            "margin-top": "-" + Math.round(size_y/2) + "px"
-          });
+
+        gd.attr("id", gd_id).css({
+          "width":        size_x + "px",
+          "height":       size_y + "px",
+          "margin-left":  "-" + Math.round(size_x/2) + "px",
+          "margin-top":   "-" + Math.round(size_y/2) + "px"
+        });
 
         // add svg
-        dom = $glyph.find("#" + gd_id)[0];
-        path = item.d;
-        r = new Raphael(dom, size_x, size_y);
+        r = new Raphael($glyph.find("#" + gd_id).get(0), size_x, size_y);
         g = r.path(path).attr(config.path_options);
 
         // calc delta_x, delta_y
@@ -118,27 +104,27 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
         // calc new size_y, size_x if glyph goes out of its default
         // box
         if (delta.y > 0) {
-          size_y = Math.round(size * (ascent - descent +
-            2 * delta.y) / units_per_em );
+          size_y = Math.round(size * (ascent - descent + 2 * delta.y) / units_per_em );
         }
         if (delta.x > 0) {
-          size_x = Math.round(size * (horiz_adv_x + 2 * delta.x) /
-            units_per_em);
+          size_x = Math.round(size * (horiz_adv_x + 2 * delta.x) / units_per_em);
         }
 
         // FIXME: hack to avoid clipped edges by adding 1 pixel on
         // each side and adjusting viewbox accordingly
         if (config.fix_edges) {
-          delta_xx = vb.w / size_x;
-          delta_yy = vb.h / size_y;
+          (function (x, y) {
+            x = vb.w / size_x;
+            y = vb.h / size_y;
 
-          vb.x -= delta_xx;
-          vb.y -= delta_yy;
-          vb.w += 2 * delta_xx;
-          vb.h += 2 * delta_yy;
+            vb.x -= x;
+            vb.y -= y;
+            vb.w += 2 * x;
+            vb.h += 2 * y;
 
-          size_x += 2;
-          size_y += 2;
+            size_x += 2;
+            size_y += 2;
+          }());
         }
 
         // set new size
@@ -146,10 +132,10 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
           r.setSize(size_x, size_y);
 
           gd.css({
-            width: size_x + "px",
-            height: size_y + "px",
-            "margin-left": "-" + Math.round(size_x/2) + "px",
-            "margin-top": "-" + Math.round(size_y/2) + "px"
+            "width":        size_x + "px",
+            "height":       size_y + "px",
+            "margin-left":  "-" + Math.round(size_x/2) + "px",
+            "margin-top":   "-" + Math.round(size_y/2) + "px"
           });
         }
 
