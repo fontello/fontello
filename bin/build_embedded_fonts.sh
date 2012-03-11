@@ -12,7 +12,7 @@ FONTS=(entypo_rescaled.svg iconic_fill.svg iconic_stroke.svg websymbols.svg font
 FLEN=${#FONTS[@]}
 FONT_ENTYPO=Entypo.otf
 FONT_ENTYPO_FIXED=entypo_rescaled.svg
-OUTPUT_FILE="${JS_DIR}/fm-embedded-fonts.js"
+OUTPUT_FILE="${JS_DIR}/embedded-fonts.js"
 
 function js_escape() {
     s=$1
