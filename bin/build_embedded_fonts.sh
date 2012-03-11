@@ -31,9 +31,7 @@ echo -n "Generating $OUTPUT_FILE... "
 var Fontomas = (function (Fontomas) {
   "use strict";
 
-  var app = Fontomas.app;
-
-  app.embedded_fonts = [
+  Fontomas.embedded_fonts = [
 END
 
 for (( i=0; i<${FLEN}; i++ ));
