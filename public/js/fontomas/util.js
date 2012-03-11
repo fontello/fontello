@@ -1,15 +1,11 @@
 var Fontomas = (function (_, XMLSerializer, Fontomas) {
   "use strict";
 
-  $.extend(true, Fontomas, {lib: {util: {}}});
+  var exports = {}, config = Fontomas.cfg;
 
-  var config = Fontomas.cfg;
-
-  function notify(text, tpl, suppress_dup) {
-    var tpl_vars = {
-        text: text
-      },
-      options = config.notify.options;
+  function notify(tpl, text, suppress_dup) {
+    var tpl_vars = {text: text},
+        options  = config.notify.options;
 
     if (suppress_dup && (text !== undefined)) {
       if (config.notify.dup[text] !== undefined) {
@@ -18,6 +14,7 @@ var Fontomas = (function (_, XMLSerializer, Fontomas) {
       }
 
       config.notify.dup[text] = true;
+
       $.extend(options, {
         close: function () {
           delete config.notify.dup[text];
@@ -29,132 +26,95 @@ var Fontomas = (function (_, XMLSerializer, Fontomas) {
     $(config.id.notification).notify("create", tpl, tpl_vars, options);
   }
 
-  Fontomas.lib.util.notify_alert = function (text, suppress_dup) {
-    notify(text,
-      config.notify.templates.alert,
-      suppress_dup
-    );
+  exports.notify_alert = function (text, suppress_dup) {
+    notify(config.notify.templates.alert, text, suppress_dup);
   };
 
-  Fontomas.lib.util.notify_info = function (text, suppress_dup) {
-    notify(text,
-      config.notify.templates.info,
-      suppress_dup
-    );
+  exports.notify_info = function (text, suppress_dup) {
+    notify(config.notify.templates.info, text, suppress_dup);
   };
 
   // ===============
   // misc functions
   // ===============
-  Fontomas.lib.util.outerHtml = function (jquery_object) {
+  exports.outerHtml = function (jquery_object) {
     return $("<div/>").append(jquery_object.clone()).html();
   };
 
-  Fontomas.lib.util.getAllAttrs = function (dom_node) {
-    var result = {},
-      attrs = dom_node.attributes,
-      i, len;
+  exports.getAllAttrs = function (dom_node) {
+    var result = {};
 
-    for (i=0, len=attrs.length; i<len; i++) {
-      result[attrs[i].nodeName] = attrs[i].nodeValue;
-    }
+    _.each(dom_node.attributes, function (attr) {
+      result[attr.nodeName] = attr.nodeValue;
+    });
 
     return result;
   };
 
-  Fontomas.lib.util.xmlToString = function(xmlDom) {
+  exports.xmlToString = function(xmlDom) {
+    var result;
+
     // cross-browser
-    var result = (typeof XMLSerializer !== "undefined") ?
-      (new window.XMLSerializer()).serializeToString(xmlDom) :
-      xmlDom.xml;
-    //FIXME: quickfix: get rid of unwanted xmlns insertion
-    result = result.replace(/ xmlns="http:\/\/www\.w3\.org\/1999\/xhtml"/g,
-      "");
-    //FIXME: quickfix: remove the extra newlines
-    result = result.replace(/>(\s)*<glyph/gm, ">\n<glyph");
-    //FIXME: quickfix: &amp; => &
-    result = result.replace(/&amp;#x/gm, "&#x");
+    result = ("undefined" === typeof XMLSerializer) ? xmlDom.xml
+      : (new window.XMLSerializer()).serializeToString(xmlDom);
+
+    result = result
+      //FIXME: quickfix: get rid of unwanted xmlns insertion
+      .replace(/ xmlns="http:\/\/www\.w3\.org\/1999\/xhtml"/g, "")
+      //FIXME: quickfix: remove the extra newlines
+      .replace(/>(\s)*<glyph/gm, ">\n<glyph")
+      //FIXME: quickfix: &amp; => &
+      .replace(/&amp;#x/gm, "&#x");
+
     return result;
   };
 
-  Fontomas.lib.util.getFileExt = function (filepath) {
-    var defaultval = "",
-      index;
-    if (!_.isString(filepath)) {
-      return defaultval;
-    }
-
-    index = filepath.lastIndexOf(".");
-    if (index === -1) {
-      return defaultval;
-    } else {
-      return filepath.substr(index+1).toLowerCase();
-    }
+  exports.getFileExt = function (filepath) {
+    var index = String(filepath).lastIndexOf(".");
+    return (index === -1) ? "" : filepath.substr(index+1).toLowerCase();
   };
 
-  Fontomas.lib.util.joinList = function (array, delim1, delim2) {
-    return array.reduce(function (prev, cur, idx, arr) {
-      return arr.length !== idx+1 ?
-        prev + delim1 + cur :
-        prev + delim2 + cur;
+  exports.joinList = function (array, delim1, delim2) {
+    return _.reduce(array, function (prev, cur, idx, arr) {
+      return prev + ((arr.length !== idx + 1) ? delim1 : delim2) + cur;
     });
   };
 
   // trim string at both sides:
   // in:  s="abc{hello}def", begin="c{", end="}"
   // out: "hello"
-  Fontomas.lib.util.trimBoth = function (s, begin, end) {
-    var idx1 = s.indexOf(begin) + begin.length,
-      idx2 = s.lastIndexOf(end);
-    if (idx1 < idx2) {
-      return s.substr(idx1, idx2 - idx1);
-    } else {
-      return s;
-    }
+  exports.trimBoth = function (s, begin, end) {
+    var idx1 = s.indexOf(begin) + begin.length, idx2 = s.lastIndexOf(end);
+    return (idx1 >= idx2) ? s : s.substr(idx1, idx2 - idx1);
   };
 
-  Fontomas.lib.util.repeat = function (s, times) {
-    /*jshint bitwise:false*/
-    if (times < 1) {
-      return "";
+  exports.repeat = function (s, times) {
+    var result = "";
+
+    while (0 < times) {
+      result += s;
+      times -= 1;
     }
 
-    var result = "";
-    while (times > 0) {
-      if (times & 1) {
-        result += s;
-      }
-      times >>= 1;
-      s += s;
-    }
     return result;
   };
 
-  Fontomas.lib.util.rpad = function (s, len) {
-    if (s.length < len) {
-      return s + Fontomas.lib.util.repeat(" ", len - s.length);
-    } else {
-      return s;
-    }
+  exports.rpad = function (s, len) {
+    return s + exports.repeat(" ", len - s.length);
   };
 
-  Fontomas.lib.util.lpad = function (s, len) {
-    if (s.length < len) {
-      return Fontomas.lib.util.repeat(" ", len - s.length) + s;
-    } else {
-      return s;
-    }
+  exports.lpad = function (s, len) {
+    return exports.repeat(" ", len - s.length) + s;
   };
 
-  Fontomas.lib.util.base64_encode = function (s) {
+  exports.base64_encode = function (s) {
     /*jshint bitwise:false*/
     var table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
-      result = "",
+        result = "",
+        chr1, chr2, chr3, enc1, enc2, enc3, enc4,
+        i, l;
 
-      chr1, chr2, chr3, enc1, enc2, enc3, enc4,
-      i, len;
-
-    for (i=0, len=s.length; i<len; i+=3) {
+    for (i = 0, l = s.length; i < l; i += 3) {
       chr1 = s.charCodeAt(i);
       chr2 = s.charCodeAt(i+1);
       chr3 = s.charCodeAt(i+2);
@@ -170,10 +130,11 @@ var Fontomas = (function (_, XMLSerializer, Fontomas) {
         enc4 = 64;
       }
 
-      result += table.charAt(enc1) + table.charAt(enc2) +
-        table.charAt(enc3) + table.charAt(enc4);
+      result += table.charAt(enc1) + table.charAt(enc2) + table.charAt(enc3) + table.charAt(enc4);
     }
 
     return result;
   };
+
+  return $.extend(true, Fontomas, {lib: {util: exports}});
 }(window._, window.XMLSerializer, Fontomas || {}));
