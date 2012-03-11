@@ -1,56 +1,56 @@
-var Fontomas = (function (Fontomas) {
+var Fontomas = (function (_, XMLSerializer, Fontomas) {
   "use strict";
 
-  var cfg = Fontomas.cfg,
-    _ = window._,
-    XMLSerializer = window.XMLSerializer,
+  $.extend(true, Fontomas, {lib: {util: {}}});
 
-  notify = function(text, tpl, suppress_dup) {
+  var config = Fontomas.cfg;
+
+  function notify(text, tpl, suppress_dup) {
     var tpl_vars = {
         text: text
       },
-      options = cfg.notify.options;
+      options = config.notify.options;
 
     if (suppress_dup && (text !== undefined)) {
-      if (cfg.notify.dup[text] !== undefined) {
+      if (config.notify.dup[text] !== undefined) {
         console.log("notification suppressed");
         return;
       }
 
-      cfg.notify.dup[text] = true;
+      config.notify.dup[text] = true;
       $.extend(options, {
         close: function () {
-          delete cfg.notify.dup[text];
+          delete config.notify.dup[text];
           console.log("notification can be fired again");
         }
       });
     }
 
-    $(cfg.id.notification).notify("create", tpl, tpl_vars, options);
-  },
+    $(config.id.notification).notify("create", tpl, tpl_vars, options);
+  }
 
-  notify_alert = function (text, suppress_dup) {
+  Fontomas.lib.util.notify_alert = function (text, suppress_dup) {
     notify(text,
-      cfg.notify.templates.alert,
+      config.notify.templates.alert,
       suppress_dup
     );
-  },
+  };
 
-  notify_info = function (text, suppress_dup) {
+  Fontomas.lib.util.notify_info = function (text, suppress_dup) {
     notify(text,
-      cfg.notify.templates.info,
+      config.notify.templates.info,
       suppress_dup
     );
-  },
+  };
 
   // ===============
   // misc functions
   // ===============
-  outerHtml = function (jquery_object) {
+  Fontomas.lib.util.outerHtml = function (jquery_object) {
     return $("<div/>").append(jquery_object.clone()).html();
-  },
+  };
 
-  getAllAttrs = function (dom_node) {
+  Fontomas.lib.util.getAllAttrs = function (dom_node) {
     var result = {},
       attrs = dom_node.attributes,
       i, len;
@@ -60,9 +60,9 @@ var Fontomas = (function (Fontomas) {
     }
 
     return result;
-  },
+  };
 
-  xmlToString = function(xmlDom) {
+  Fontomas.lib.util.xmlToString = function(xmlDom) {
     // cross-browser
     var result = (typeof XMLSerializer !== "undefined") ?
       (new window.XMLSerializer()).serializeToString(xmlDom) :
@@ -75,9 +75,9 @@ var Fontomas = (function (Fontomas) {
     //FIXME: quickfix: &amp; => &
     result = result.replace(/&amp;#x/gm, "&#x");
     return result;
-  },
+  };
 
-  getFileExt = function (filepath) {
+  Fontomas.lib.util.getFileExt = function (filepath) {
     var defaultval = "",
       index;
     if (!_.isString(filepath)) {
@@ -90,20 +90,20 @@ var Fontomas = (function (Fontomas) {
     } else {
       return filepath.substr(index+1).toLowerCase();
     }
-  },
+  };
 
-  joinList = function (array, delim1, delim2) {
+  Fontomas.lib.util.joinList = function (array, delim1, delim2) {
     return array.reduce(function (prev, cur, idx, arr) {
       return arr.length !== idx+1 ?
         prev + delim1 + cur :
         prev + delim2 + cur;
     });
-  },
+  };
 
   // trim string at both sides:
   // in:  s="abc{hello}def", begin="c{", end="}"
   // out: "hello"
-  trimBoth = function (s, begin, end) {
+  Fontomas.lib.util.trimBoth = function (s, begin, end) {
     var idx1 = s.indexOf(begin) + begin.length,
       idx2 = s.lastIndexOf(end);
     if (idx1 < idx2) {
@@ -111,10 +111,10 @@ var Fontomas = (function (Fontomas) {
     } else {
       return s;
     }
-  },
+  };
 
-  /*jshint bitwise:false*/
-  repeat = function (s, times) {
+  Fontomas.lib.util.repeat = function (s, times) {
+    /*jshint bitwise:false*/
     if (times < 1) {
       return "";
     }
@@ -128,27 +128,26 @@ var Fontomas = (function (Fontomas) {
       s += s;
     }
     return result;
-  },
-  /*jshint bitwise:true*/
+  };
 
-  rpad = function (s, len) {
+  Fontomas.lib.util.rpad = function (s, len) {
     if (s.length < len) {
-      return s + repeat(" ", len - s.length);
+      return s + Fontomas.lib.util.repeat(" ", len - s.length);
     } else {
       return s;
     }
-  },
+  };
 
-  lpad = function (s, len) {
+  Fontomas.lib.util.lpad = function (s, len) {
     if (s.length < len) {
-      return repeat(" ", len - s.length) + s;
+      return Fontomas.lib.util.repeat(" ", len - s.length) + s;
     } else {
       return s;
     }
-  },
+  };
 
-  /*jshint bitwise:false*/
-  base64_encode = function (s) {
+  Fontomas.lib.util.base64_encode = function (s) {
+    /*jshint bitwise:false*/
     var table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
       result = "",
 
@@ -177,25 +176,4 @@ var Fontomas = (function (Fontomas) {
 
     return result;
   };
-  /*jshint bitwise:true*/
-
-  // public interface
-  return $.extend(true, Fontomas, {
-    lib: {
-      util: {
-        notify_alert: notify_alert,
-        notify_info: notify_info,
-        outerHtml: outerHtml,
-        getAllAttrs: getAllAttrs,
-        xmlToString: xmlToString,
-        getFileExt: getFileExt,
-        joinList: joinList,
-        trimBoth: trimBoth,
-        repeat: repeat,
-        rpad: rpad,
-        lpad: lpad,
-        base64_encode: base64_encode
-      }
-    }
-  });
-}(Fontomas || {}));
+}(window._, window.XMLSerializer, Fontomas || {}));
