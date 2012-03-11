@@ -60,7 +60,7 @@
   // Legacy ////////////////////////////////////////////////////////////////////
 
   "nomen"         : false,  // Prohibit use of initial or trailing underbars in names.
-  "onevar"        : true,   // Allow only one `var` statement per function.
+  "onevar"        : false,  // Allow only one `var` statement per function.
   "passfail"      : false,  // Stop on first error.
   "white"         : false,  // Check against strict whitespace and indentation rules.
 
