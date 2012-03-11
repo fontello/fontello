@@ -120,7 +120,6 @@ var Fontomas = (function (_, Fontomas) {
     env:          env,
     debug:        debug,
     models:       {},
-    collections:  {},
     views:        {}
   });
 }(window._, Fontomas || {}));

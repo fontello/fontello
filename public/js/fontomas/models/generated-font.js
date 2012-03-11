@@ -8,7 +8,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
       var i, ch;
 
       console.log("models.GeneratedFont.initialize");
-      this.glyphs = new Fontomas.collections.Glyph;
+      this.glyphs = new Fontomas.models.Glyph.collection;
 
       // add space glyph
       this.glyphs.add({

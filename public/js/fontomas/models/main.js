@@ -2,7 +2,7 @@ var Fontomas = (function (Backbone, Fontomas) {
   "use strict";
 
   Fontomas.models.Main = Backbone.Model.extend({
-    fonts:        new Fontomas.collections.Font,
+    fonts:        new Fontomas.models.Font.collection,
     genfont:      new Fontomas.models.GeneratedFont,
     next_font_id: 1,
     xml_template: null,
