@@ -1,66 +1,74 @@
-var Fontomas = (function (Fontomas) {
+var Fontomas = (function (_, Backbone, Fontomas) {
   "use strict";
 
-  var app = Fontomas.app,
-    cfg = Fontomas.cfg,
-    Backbone = window.Backbone,
-    _ = window._;
+  var config = Fontomas.cfg;
 
-  app.views.Glyph = Backbone.View.extend({
-    tagName: "label",
-    className: "rearrange-glyph",
-
-    templates: {},
-
-    events: {
-    },
+  Fontomas.app.views.Glyph = Backbone.View.extend({
+    tagName:    "label",
+    className:  "rearrange-glyph",
+    templates:  {},
+    events:     {},
 
     initialize: function () {
       //console.log("app.views.Glyph.initialize");
+
       _.bindAll(this);
-      this.topview = this.options.topview;
+
+      this.topview   = this.options.topview;
       this.templates = this.topview.getTemplates(["genfont_glyph_item"]);
+
       this.model.bind('change', this.render, this);
 
       //this.$el.html(this.template(this.model.toJSON()));
+
       this.$el.html(this.templates.genfont_glyph_item(this.model.toJSON()));
       this.$el.attr("id", "rgl" + this.model.get("num"));
-      this.$(cfg.css_class.rg_icon).droppable($.extend(
-        {}, cfg.droppable_options, {drop: function (event, ui) {
-        console.log("drop");
-        var $this=$(this),
-          draggable=ui.draggable,
-          g_id=$this.parent().siblings("input:checkbox")
-          .attr("value"),
-          d=$this.contents(),
-          data = $this.data("glyph_sizes");
 
-        $this.parent().siblings("input:checkbox").attr({value:
-          draggable.parent().siblings("input:checkbox")
-            .attr("value")});
-        $this.data("glyph_sizes", draggable.data("glyph_sizes"));
-        $this.empty().append(draggable.contents());
+      this.$(config.css_class.rg_icon).droppable($.extend({}, config.droppable_options, {
+        drop: function (event, ui) {
+          console.log("drop");
 
-        draggable.parent().siblings("input:checkbox")
-          .attr({value: g_id});
-        draggable.data("glyph_sizes", data);
-        draggable.empty().append(d);
+          var $this     = $(this),
+              draggable = ui.draggable,
+              g_id      = $this.parent().siblings("input:checkbox").attr("value"),
+              d         = $this.contents(),
+              data      = $this.data("glyph_sizes");
 
-        if (!$this.parent().parent().hasClass("selected")) {
-          $this.parent().parent().addClass("selected");
-          draggable.parent().parent().removeClass("selected");
-          $this.draggable(cfg.draggable_options);
-          draggable.draggable("disable");
-          $this.parent().siblings("input:checkbox")
-            .attr({checked: true});
-          draggable.parent().siblings("input:checkbox")
-            .attr({checked: false});
+          $this.parent()
+            .siblings("input:checkbox")
+            .attr({
+              value: draggable.parent().siblings("input:checkbox").attr("value")
+            });
+
+          $this.data("glyph_sizes", draggable.data("glyph_sizes"));
+          $this.empty().append(draggable.contents());
+
+          draggable.parent()
+            .siblings("input:checkbox")
+            .attr({value: g_id});
+
+          draggable.data("glyph_sizes", data);
+          draggable.empty().append(d);
+
+          if (!$this.parent().parent().hasClass("selected")) {
+            $this.parent().parent().addClass("selected");
+            draggable.parent().parent().removeClass("selected");
+            $this.draggable(config.draggable_options);
+
+            draggable
+              .draggable("disable")
+              .parent()
+                .siblings("input:checkbox")
+                .attr({checked: false});
+
+            $this.parent().siblings("input:checkbox").attr({checked: true});
+          }
+
+          if (config.live_update) {
+            Fontomas.app.mainview.genfontview.updateFont();
+          }
         }
-
-        if (cfg.live_update) {
-          app.mainview.genfontview.updateFont();
-        }
-      }}));
+      }));
     },
 
     render: function () {
@@ -68,6 +76,7 @@ var Fontomas = (function (Fontomas) {
       // FIXME: performance
       //this.$el.html(this.template(this.model.toJSON()));
       //this.$el.attr("id", "rgl" + this.model.get("num"));
+
       this.$(".fm-unicode").val(this.model.get("char"));
       this.$(".rg-top").text(this.model.get("top"));
       this.$(".rg-bottom").text(this.model.get("bottom"));
@@ -77,4 +86,4 @@ var Fontomas = (function (Fontomas) {
   });
 
   return Fontomas;
-}(Fontomas || {}));
+}(window._, window.Backbone, Fontomas || {}));
