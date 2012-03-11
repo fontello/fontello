@@ -194,7 +194,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
 
         Fontomas.app.main.myfiles.push(fileinfo);
 
-        reader.onload = function (e) {
+        reader.onload = function (event) {
           // FIXME: race condition?
           // is there a file with the same content?
           var is_exist = false;
@@ -206,7 +206,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
           });
 
           if (!is_exist) {
-            fileinfo.content    = e.target.result;
+            fileinfo.content    = event.target.result;
             fileinfo.is_loaded  = true;
           }
 
