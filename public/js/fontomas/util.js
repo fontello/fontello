@@ -136,5 +136,5 @@ var Fontomas = (function (_, XMLSerializer, Fontomas) {
     return result;
   };
 
-  return $.extend(true, Fontomas, {lib: {util: exports}});
+  return $.extend(true, Fontomas, {util: exports});
 }(window._, window.XMLSerializer, Fontomas || {}));

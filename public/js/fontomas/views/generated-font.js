@@ -113,12 +113,12 @@ var Fontomas = (function (_, Backbone, Fontomas) {
             g.attr("d", glyph.d);
           }
 
-          glyphs.push(Fontomas.lib.util.outerHtml(g));
+          glyphs.push(Fontomas.util.outerHtml(g));
         });
 
       $("glyph", Fontomas.main.xml_template).remove();
       $("font", Fontomas.main.xml_template).append($(glyphs.join("\n")));
-      $(config.id.font).text(Fontomas.lib.util.xmlToString(Fontomas.main.xml_template));
+      $(config.id.font).text(Fontomas.util.xmlToString(Fontomas.main.xml_template));
     }
   });
 

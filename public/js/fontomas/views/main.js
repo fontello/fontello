@@ -64,7 +64,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
           $(config.id.font_output).html(),
           "e=", e
         );
-        Fontomas.lib.util.notify_alert("Internal error: can't parse output template.");
+        Fontomas.util.notify_alert("Internal error: can't parse output template.");
         return;
       }
 
@@ -231,13 +231,13 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
       }
 
       types     = {"svg": "svg", "js": "cufonjs"};
-      file_ext  = Fontomas.lib.util.getFileExt(fileinfo.filename);
+      file_ext  = Fontomas.util.getFileExt(fileinfo.filename);
 
       if (_.include(_.keys(types), file_ext)) {
-        font = Fontomas.lib.Font(types[file_ext], fileinfo.content);
+        font = Fontomas.Font(types[file_ext], fileinfo.content);
       } else {
         // unknown file exstension
-        Fontomas.lib.util.notify_alert(
+        Fontomas.util.notify_alert(
           "Can't parse file '" + fileinfo.filename +
           "': unknown file extension. Currently, we support only: " +
           _.keys(types).join(", ") + "."
@@ -251,7 +251,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
         fileinfo.is_ok     = false;
         fileinfo.error_msg = "invalid file";
 
-        Fontomas.lib.util.notify_alert(
+        Fontomas.util.notify_alert(
           "Loading error: can't parse file '" +
           fileinfo.filename + "'"
         );
@@ -320,7 +320,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
           $(config.id.download_font_button).attr({
             download: config.output.filename,
             href:     "data:binary/octet-stream;base64," +
-                      Fontomas.lib.util.base64_encode($(config.id.font).val())
+                      Fontomas.util.base64_encode($(config.id.font).val())
           });
 
         });

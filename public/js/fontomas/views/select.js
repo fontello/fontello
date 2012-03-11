@@ -93,7 +93,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
       if (Fontomas.env.filereader) {
         $(config.id.file).click();
       } else {
-        Fontomas.lib.util.notify_alert(
+        Fontomas.util.notify_alert(
           "File upload is not supported by your" +
           " browser, use embedded fonts instead"
         );

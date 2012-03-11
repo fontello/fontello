@@ -51,7 +51,7 @@ var Fontomas = (function (_, Fontomas) {
     font.glyphs       = [];
 
     $("glyph", xml).slice(0, max_glyphs).each(function (i) {
-      var glyph = Fontomas.lib.util.getAllAttrs(this);
+      var glyph = Fontomas.util.getAllAttrs(this);
 
       if (glyph["horiz-adv-x"]) {
         glyph.horiz_adv_x = parseInt(glyph["horiz-adv-x"], 10);
@@ -72,7 +72,7 @@ var Fontomas = (function (_, Fontomas) {
 
     try {
       // strip function call
-      json_string = Fontomas.lib.util.trimBoth(js, ".registerFont(", ")");
+      json_string = Fontomas.util.trimBoth(js, ".registerFont(", ")");
       json = $.parseJSON(json_string);
     } catch (e) {
       console.log("Font.initCufonJs: invalid json");
@@ -144,5 +144,5 @@ var Fontomas = (function (_, Fontomas) {
   };
 
   // public interface
-  return $.extend(true, Fontomas, {lib: {Font: Font}});
+  return $.extend(true, Fontomas, {Font: Font});
 }(window._, Fontomas || {}));
