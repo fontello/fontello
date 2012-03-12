@@ -3,14 +3,14 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
 
   var config = Fontomas.cfg;
 
-  Fontomas.views.Main = Backbone.View.extend({
+  Fontomas.views.app = Backbone.View.extend({
     fontviews:      {},
     genfontview:    null,
     select_toolbar: null,
     events:         {},
 
     initialize: function () {
-      console.log("views.Main.initialize");
+      console.log("views.app.initialize");
 
       _.bindAll(this);
 
@@ -67,7 +67,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
     },
 
     render: function () {
-      console.log("views.Main.render");
+      console.log("views.app.render");
 
       // render the select tab
       this.select_toolbar.render();
@@ -91,26 +91,28 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
     },
 
     addEmbeddedFonts: function (embedded_fonts) {
+      var self = this;
+
       this.addFontsAsStrings(embedded_fonts, function (fileinfo) {
         // onload closure
         var e_id = fileinfo.embedded_id;
 
         // FIXME
-        Fontomas.mainview.addFont(fileinfo, function (fileinfo) {
+        self.addFont(fileinfo, function (fileinfo) {
           // onclose closure
           Fontomas.embedded_fonts[e_id].is_added = fileinfo.is_added;
-          Fontomas.mainview.select_toolbar.renderUseEmbedded();
+          self.select_toolbar.renderUseEmbedded();
         });
 
         Fontomas.embedded_fonts[e_id].is_added = fileinfo.is_added;
         Fontomas.embedded_fonts[e_id].fontname = fileinfo.fontname;
 
-        Fontomas.mainview.select_toolbar.renderUseEmbedded();
+        self.select_toolbar.renderUseEmbedded();
       });
     },
 
     addFontsAsStrings: function (files, cb_onload) {
-      console.log("views.Main.addFontsAsStrings flen=", files.length);
+      console.log("views.app.addFontsAsStrings flen=", files.length);
 
       _.each(files, function (f) {
         var idx, fileinfo;
@@ -143,15 +145,11 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
     },
 
     addUploadedFonts: function (files) {
-      this.addFonts(files, function (fileinfo) {
-        // onload closure
-        // FIXME
-        Fontomas.mainview.addFont(fileinfo);
-      });
+      this.addFonts(files, _.bind(this.addFont, this));
     },
 
     addFonts: function (files, callback) {
-      console.log("views.Main.addFonts");
+      console.log("views.app.addFonts");
 
       _.each(files, function (f) {
         var fileinfo, reader = new FileReader();
@@ -200,7 +198,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
 
     addFont: function (fileinfo, cb_onclose) {
       /*jshint newcap:false*/
-      console.log("views.Main.addFont id=", fileinfo.id);
+      console.log("views.app.addFont id=", fileinfo.id);
 
       var tmp, font, types, file_ext;
 
@@ -252,7 +250,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
     },
 
     createFont: function (attrs) {
-      console.log("views.Main.create attrs=", attrs);
+      console.log("views.app.create attrs=", attrs);
 
       //if (!attrs.id) // FIXME
       attrs.id = this.model.next_font_id++;
@@ -260,7 +258,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
     },
 
     addOneFont: function (font) {
-      console.log("views.Main.addOneFont");
+      console.log("views.app.addOneFont");
 
       var view = new Fontomas.views.Font({
         model: font,
@@ -272,22 +270,22 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
     },
 
     addAllFonts: function () {
-      console.log("views.Main.addAllFonts");
+      console.log("views.app.addAllFonts");
       this.model.fonts.each(this.addOneFont);
     },
 
     toggleMenu: function (enabled) {
-      console.log("views.Main.toggleMenu");
+      console.log("views.app.toggleMenu");
       $('#tab')
         .find("a.fm-disable-on-demand")
           .toggleClass("disabled", !enabled);
     },
 
     initDownloadLink: function () {
-      console.log("views.Main.initDownloadLink");
+      console.log("views.app.initDownloadLink");
 
       $('#fm-tab-save').one("shown", function () {
-        console.log("views.Main.initDownloadLink: shown fired");
+        console.log("views.app.initDownloadLink: shown fired");
 
         $('#fm-download-font-button').click(function (event) {
           console.log("download button clicked");

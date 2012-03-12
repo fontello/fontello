@@ -19,6 +19,8 @@ var Fontomas = (function (_, Backbone, Fontomas) {
 
       this.model.bind("change:glyph_count", this.updateGlyphCount, this);
       this.model.bind("change",             this.onChange, this);
+
+
     },
 
     render: function () {
@@ -37,11 +39,21 @@ var Fontomas = (function (_, Backbone, Fontomas) {
     },
 
     addGlyph: function (glyph) {
-      //console.log("views.GeneratedFont.addGlyph");
-      this.glyphviews.push(new Fontomas.views.Glyph({
+      var self = this, view;
+
+      view = new Fontomas.views.Glyph({
         model:    glyph,
         topview:  this.topview
-      }));
+      });
+
+      if (config.live_update) {
+        view.on('drop', function () {
+          self.updateFont();
+        });
+      }
+
+      //console.log("views.GeneratedFont.addGlyph");
+      this.glyphviews.push(view);
     },
 
     updateGlyphCount: function () {

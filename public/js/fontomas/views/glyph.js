@@ -9,6 +9,8 @@ var Fontomas = (function (_, Backbone, Fontomas) {
     events:     {},
 
     initialize: function () {
+      var self = this;
+
       //console.log("views.Glyph.initialize");
 
       _.bindAll(this);
@@ -62,9 +64,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
             $this.parent().siblings("input:checkbox").attr({checked: true});
           }
 
-          if (config.live_update) {
-            Fontomas.mainview.genfontview.updateFont();
-          }
+          self.trigger('drop');
         }
       }));
     },

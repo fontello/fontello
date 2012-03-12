@@ -23,7 +23,7 @@
     // main model
     Fontomas.main = new Fontomas.models.Main;
     // main view
-    Fontomas.mainview = new Fontomas.views.Main({
+    Fontomas.mainview = new Fontomas.views.app({
       model: Fontomas.main
     });
 
