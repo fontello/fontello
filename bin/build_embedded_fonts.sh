@@ -4,7 +4,7 @@
 SCRIPT_PATH="$(pwd)/$0"
 ROOT_DIR=${SCRIPT_PATH%/*/*}
 BIN_DIR="${ROOT_DIR}/bin"
-FONT_DIR="${ROOT_DIR}/fonts"
+FONT_DIR="${ROOT_DIR}/src/fonts-original"
 JS_DIR="${ROOT_DIR}/public/js/fontomas"
 FIX_ENTYPO_SCRIPT="${BIN_DIR}/entypo_rescale.pe"
 
