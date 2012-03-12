@@ -168,17 +168,17 @@
   </defs>
 </svg>
     </script>
-    <script id="fm-icon-size-template" type="text/x-fm-template">
+    <script data-tpl-id="icon-size" type="text/x-fm-template">
       {{#buttons}}
         <button class="btn btn-small fm-icon-size-button" value="{{this}}">{{this}}px</button>
       {{/buttons}}
     </script>
-    <script id="fm-use-embedded-template" type="text/x-fm-template">
+    <script data-tpl-id="use-embedded" type="text/x-fm-template">
       {{#options}}
         <li><a class="fm-font-name{{#disabled}} disabled{{/disabled}}" href="#">{{this.text}}</a></li>
       {{/options}}
     </script>
-    <script id="fm-font-item-template" type="text/x-fm-template">
+    <script data-tpl-id="font-item" type="text/x-fm-template">
       <h2><span class="fm-font-name">{{fontname}}</span>
         <a class="fm-font-anchor" href="#font-{{id}}"></a>
         <a class="fm-font-close" href="#"><small>close</small></a>
@@ -186,13 +186,13 @@
       <div class="fm-glyph-group">
       </div>
     </script>
-    <script id="fm-glyph-item-template" type="text/x-fm-template">
+    <script data-tpl-id="glyph-item" type="text/x-fm-template">
       <label class="glyph">
         <input class="fm-glyph-id" type="checkbox" value="0"/>
         <div id="gd0" class="fm-glyph-div" style="width: 64px; height: 64px;">{{test}}</div>
       </label>
     </script>
-    <script id="fm-genfont-glyph-item-template" type="text/x-fm-template">
+    <script data-tpl-id="genfont-glyph-item" type="text/x-fm-template">
       <!-label class="rearrange-glyph"->
         <input class="fm-glyph-id" type="checkbox" readonly="readonly" value=""/>
         <input class="fm-unicode" type="text" value="{{{char}}}"/>

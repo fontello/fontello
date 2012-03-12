@@ -1,17 +1,9 @@
-var Fontomas = (function (_, Fontomas) {
+var Fontomas = (function (_, Handlebars, Fontomas) {
   "use strict";
 
-  var cfg, env, debug;
+  var cfg, env, debug, tpl_cache = {};
 
   cfg = {
-    templates: {
-      icon_size:          "#fm-icon-size-template",
-      use_embedded:       "#fm-use-embedded-template",
-      font_item:          "#fm-font-item-template",
-      glyph_item:         "#fm-glyph-item-template",
-      genfont_glyph_item: "#fm-genfont-glyph-item-template"
-    },
-
     // class icon_size_prefix+"-<num>" added when icon size has changed
     icon_size_prefix:   "fm-icon-size-",
     icon_size_classes:  "", // precalculated by initCfg()
@@ -81,6 +73,16 @@ var Fontomas = (function (_, Fontomas) {
     env:          env,
     debug:        debug,
     models:       {},
-    views:        {}
+    views:        {},
+    template:     function (name) {
+      var $tpl;
+
+      if (!tpl_cache[name]) {
+        $tpl = $('[data-tpl-id=' + name + ']').remove();
+        tpl_cache[name] = Handlebars.compile($tpl.html());
+      }
+
+      return tpl_cache[name];
+    }
   });
-}(window._, Fontomas || {}));
+}(window._, window.Handlebars, Fontomas || {}));

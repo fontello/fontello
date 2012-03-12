@@ -4,7 +4,6 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
   var config = Fontomas.cfg;
 
   Fontomas.views.Main = Backbone.View.extend({
-    templates:      {},
     fontviews:      {},
     genfontview:    null,
     select_toolbar: null,
@@ -14,13 +13,6 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
       console.log("views.Main.initialize");
 
       _.bindAll(this);
-
-      // compile templates defined in config.templates and place them into
-      // this.templates for later use
-      _.each(config.templates, function (el_id, tpl_name) {
-        this.templates[tpl_name] = Handlebars.compile($(el_id).html());
-        $(el_id).remove();
-      }, this);
 
       this.initSvgFontTemplate();
 
@@ -37,19 +29,6 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
         model:    this.model.genfont,
         topview:  this
       });
-    },
-
-    // subviews call this to get their templates
-    getTemplates: function (tpl_names) {
-      var result = {};
-
-      _.each(this.templates, function (item, key) {
-         if (_.include(tpl_names, key)) {
-          result[key] = item;
-         }
-      });
-
-      return result;
     },
 
     initSvgFontTemplate: function () {

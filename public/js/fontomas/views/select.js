@@ -7,8 +7,6 @@ var Fontomas = (function (_, Backbone, Fontomas) {
     tagName: "form",
     id: "fm-file-drop-zone",
 
-    templates: {},
-
     events: {
       "click .fm-icon-size-button":   "changeIconSize",
       "click #fm-file-browse-button": "fileBrowse",
@@ -24,7 +22,6 @@ var Fontomas = (function (_, Backbone, Fontomas) {
       _.bindAll(this);
 
       this.topview    = this.options.topview;
-      this.templates  = this.topview.getTemplates(["icon_size", "use_embedded"]);
     },
 
     render: function () {
@@ -35,7 +32,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
 
       // render icon size buttons
       $('#fm-icon-size')
-        .html(this.templates.icon_size(tpl_vars))
+        .html(Fontomas.template('icon-size')(tpl_vars))
         .find("button:first")
           .addClass("active");
 
@@ -66,7 +63,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
       };
 
       $('#fm-use-embedded')
-        .html(this.templates.use_embedded(tpl_vars))
+        .html(Fontomas.template('use-embedded')(tpl_vars))
         .find('.fm-font-name')
           .each(function (id) {
             $(this).data("embedded_id", id);

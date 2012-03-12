@@ -6,7 +6,6 @@ var Fontomas = (function (_, Backbone, Fontomas) {
   Fontomas.views.Glyph = Backbone.View.extend({
     tagName:    "label",
     className:  "rearrange-glyph",
-    templates:  {},
     events:     {},
 
     initialize: function () {
@@ -15,13 +14,12 @@ var Fontomas = (function (_, Backbone, Fontomas) {
       _.bindAll(this);
 
       this.topview   = this.options.topview;
-      this.templates = this.topview.getTemplates(["genfont_glyph_item"]);
 
       this.model.bind('change', this.render, this);
 
       //this.$el.html(this.template(this.model.toJSON()));
 
-      this.$el.html(this.templates.genfont_glyph_item(this.model.toJSON()));
+      this.$el.html(Fontomas.template('genfont-glyph-item')(this.model.toJSON()));
       this.$el.attr("id", "rgl" + this.model.get("num"));
 
       this.$('.rg-icon').droppable($.extend({}, config.droppable_options, {
