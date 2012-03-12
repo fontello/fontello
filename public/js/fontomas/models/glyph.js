@@ -10,10 +10,5 @@ var Fontomas = (function (Backbone, Fontomas) {
   });
 
 
-  Fontomas.models.Glyph.collection = Backbone.Collection.extend({
-    model: Fontomas.models.Glyph
-  });
-
-
   return Fontomas;
 }(window.Backbone, Fontomas || {}));
