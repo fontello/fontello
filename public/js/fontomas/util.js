@@ -4,9 +4,6 @@ var Fontomas = (function (_, XMLSerializer, Fontomas) {
   var exports = {}, config = Fontomas.cfg, notify_dup = {};
 
   function notify(tpl, text, suppress_dup) {
-    var tpl_vars = {text: text},
-        options  = config.notify.options;
-
     if (suppress_dup && (text !== undefined)) {
       if (notify_dup[text] !== undefined) {
         console.log("notification suppressed");
@@ -23,7 +20,7 @@ var Fontomas = (function (_, XMLSerializer, Fontomas) {
       });
     }
 
-    $('#notifications-container').notify("create", tpl, tpl_vars, {expires: 4000});
+    $('#notifications-container').notify("create", tpl, {text: text}, {expires: 4000});
   }
 
   exports.notify_alert = function (text, suppress_dup) {
