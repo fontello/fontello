@@ -300,7 +300,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
     toggleMenu: function (enabled) {
       console.log("views.Main.toggleMenu");
       $('#tab')
-        .find("a"+config.css_class.disable_on_demand)
+        .find("a.fm-disable-on-demand")
           .toggleClass("disabled", !enabled);
     },
 

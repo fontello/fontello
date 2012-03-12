@@ -67,7 +67,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
 
       $('#fm-use-embedded')
         .html(this.templates.use_embedded(tpl_vars))
-        .find(config.css_class.font_name)
+        .find('.fm-font-name')
           .each(function (id) {
             $(this).data("embedded_id", id);
           });
@@ -133,13 +133,13 @@ var Fontomas = (function (_, Backbone, Fontomas) {
       event.preventDefault();
 
       // attach class
-      $(config.css_class.glyph_group)
+      $('.fm-glyph-group')
         .removeClass(config.icon_size_classes)
         .addClass(config.icon_size_prefix + size);
 
       // change width/height
       $('#fm-font-list')
-        .find(config.css_class.glyph_div)
+        .find('.fm-glyph-div')
         .each(function (i) {
           var $this   = $(this),
               size_x  = $this.data("glyph_sizes")[size][0],
@@ -163,7 +163,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
 
       // change width/height
       $('#fm-generated-font')
-        .find(config.css_class.rg_icon)
+        .find('.rg-icon')
         .each(function (i) {
           var $this    = $(this),
               glyph_id = $(this).parent().siblings(".fm-glyph-id").val(),

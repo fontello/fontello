@@ -4,13 +4,6 @@ var Fontomas = (function (_, Fontomas) {
   var cfg, env, debug;
 
   cfg = {
-    css_class: {
-      font_name:          ".fm-font-name",
-      glyph_group:        ".fm-glyph-group",
-      glyph_div:          ".fm-glyph-div",
-      rg_icon:            ".rg-icon",
-      disable_on_demand:  ".fm-disable-on-demand"
-    },
     templates: {
       icon_size:          "#fm-icon-size-template",
       use_embedded:       "#fm-use-embedded-template",

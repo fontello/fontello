@@ -65,7 +65,7 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
             size_x      = Math.round(size * horiz_adv_x / units_per_em),
             size_y      = font_size_y,
             $glyph      = $(this.templates.glyph_item(item)),
-            gd          = $glyph.find(config.css_class.glyph_div),
+            gd          = $glyph.find('.fm-glyph-div'),
             gd_id       = "fm-font-glyph-" + this.model.id + "-" + glyph_id,
             path        = item.d,
             r,
@@ -221,7 +221,7 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
       var checkbox  = $('#rearrange').find(".fm-glyph-id:not(:checked):first"),
           el_id     = "#fm-font-glyph-" + glyph_id,
           svg       = $(el_id).contents().clone(false),
-          icon      = checkbox.parent().find(config.css_class.rg_icon);
+          icon      = checkbox.parent().find('.rg-icon');
 
       checkbox.attr({value: glyph_id, checked: true});
       checkbox.parent().addClass("selected");
@@ -252,7 +252,7 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
       checkbox.attr({value: "", checked: false});
       checkbox.parent()
         .removeClass("selected")
-        .find(config.css_class.rg_icon)
+        .find('.rg-icon')
           .removeData("glyph_sizes").empty();
 
       if (Fontomas.main.genfont.get("glyph_count") === 1) {
