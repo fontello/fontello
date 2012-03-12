@@ -50,7 +50,7 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
           font_size_y  = Math.round(size * (ascent - descent) / units_per_em);
 
 
-      this.$el.html(Fontomas.template('font-item')({
+      this.$el.html(Fontomas.render('font-item', {
         id:        this.model.id,
         fontname:  this.model.get("fontname")
       }));
@@ -61,7 +61,7 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
         var horiz_adv_x = item.horiz_adv_x || font.horiz_adv_x,
             size_x      = Math.round(size * horiz_adv_x / units_per_em),
             size_y      = font_size_y,
-            $glyph      = $(Fontomas.template('glyph-item')(item)),
+            $glyph      = $(Fontomas.render('glyph-item', item)),
             gd          = $glyph.find('.fm-glyph-div'),
             gd_id       = "fm-font-glyph-" + this.model.id + "-" + glyph_id,
             path        = item.d,

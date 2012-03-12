@@ -32,7 +32,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
 
       // render icon size buttons
       $('#fm-icon-size')
-        .html(Fontomas.template('icon-size')(tpl_vars))
+        .html(Fontomas.render('icon-size', tpl_vars))
         .find("button:first")
           .addClass("active");
 
@@ -63,7 +63,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
       };
 
       $('#fm-use-embedded')
-        .html(Fontomas.template('use-embedded')(tpl_vars))
+        .html(Fontomas.render('use-embedded', tpl_vars))
         .find('.fm-font-name')
           .each(function (id) {
             $(this).data("embedded_id", id);

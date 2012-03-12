@@ -19,7 +19,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
 
       //this.$el.html(this.template(this.model.toJSON()));
 
-      this.$el.html(Fontomas.template('genfont-glyph-item')(this.model.toJSON()));
+      this.$el.html(Fontomas.render('genfont-glyph-item', this.model.toJSON()));
       this.$el.attr("id", "rgl" + this.model.get("num"));
 
       this.$('.rg-icon').droppable($.extend({}, config.droppable_options, {

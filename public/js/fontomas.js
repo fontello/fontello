@@ -74,15 +74,15 @@ var Fontomas = (function (_, Handlebars, Fontomas) {
     debug:        debug,
     models:       {},
     views:        {},
-    template:     function (name) {
+    render:       function (id, locals) {
       var $tpl;
 
-      if (!tpl_cache[name]) {
-        $tpl = $('[data-tpl-id=' + name + ']').remove();
-        tpl_cache[name] = Handlebars.compile($tpl.html());
+      if (!tpl_cache[id]) {
+        $tpl = $('[data-tpl-id=' + id + ']').remove();
+        tpl_cache[id] = Handlebars.compile($tpl.html());
       }
 
-      return tpl_cache[name];
+      return tpl_cache[id](locals || {});
     }
   });
 }(window._, window.Handlebars, Fontomas || {}));
