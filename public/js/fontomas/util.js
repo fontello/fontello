@@ -1,29 +1,29 @@
 var Fontomas = (function (_, XMLSerializer, Fontomas) {
   "use strict";
 
-  var exports = {}, config = Fontomas.cfg;
+  var exports = {}, config = Fontomas.cfg, notify_dup = {};
 
   function notify(tpl, text, suppress_dup) {
     var tpl_vars = {text: text},
         options  = config.notify.options;
 
     if (suppress_dup && (text !== undefined)) {
-      if (config.notify.dup[text] !== undefined) {
+      if (notify_dup[text] !== undefined) {
         console.log("notification suppressed");
         return;
       }
 
-      config.notify.dup[text] = true;
+      notify_dup[text] = true;
 
       $.extend(options, {
         close: function () {
-          delete config.notify.dup[text];
+          delete notify_dup[text];
           console.log("notification can be fired again");
         }
       });
     }
 
-    $('#notifications-container').notify("create", tpl, tpl_vars, options);
+    $('#notifications-container').notify("create", tpl, tpl_vars, {expires: 4000});
   }
 
   exports.notify_alert = function (text, suppress_dup) {

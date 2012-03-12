@@ -37,10 +37,6 @@ var Fontomas = (function (_, Fontomas) {
       "stroke":       "#000",
       "stroke-width": 0
     },
-    notify: {
-      dup:        {},    // for suppressing duplicates
-      options:    {expires: 4000}
-    },
     output: {
       filename:     "fontomas.svg",
       font_id:      "FontomasCustom",
