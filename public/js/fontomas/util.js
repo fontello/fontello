@@ -27,11 +27,11 @@ var Fontomas = (function (_, XMLSerializer, Fontomas) {
   }
 
   exports.notify_alert = function (text, suppress_dup) {
-    notify(config.notify.templates.alert, text, suppress_dup);
+    notify('icon-template', text, suppress_dup);
   };
 
   exports.notify_info = function (text, suppress_dup) {
-    notify(config.notify.templates.info, text, suppress_dup);
+    notify('basic-template', text, suppress_dup);
   };
 
   // ===============

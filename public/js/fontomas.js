@@ -39,11 +39,7 @@ var Fontomas = (function (_, Fontomas) {
     },
     notify: {
       dup:        {},    // for suppressing duplicates
-      options:    {expires: 4000},
-      templates:  {
-        info:   "basic-template",
-        alert:  "icon-template"
-      }
+      options:    {expires: 4000}
     },
     output: {
       filename:     "fontomas.svg",
