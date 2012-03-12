@@ -48,7 +48,7 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
           ascent       = font.ascent,
           descent      = font.descent,
           units_per_em = font.units_per_em,
-          size_string  = $(config.id.icon_size).find("button.active").val(),
+          size_string  = $('#fm-icon-size').find("button.active").val(),
           size         = parseInt(size_string, 10) || config.preview_icon_sizes[0],
           font_size_y  = Math.round(size * (ascent - descent) / units_per_em);
 
@@ -218,7 +218,7 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
     addGlyph: function (glyph_id) {
       console.log("addGlyph glyph_id=", glyph_id);
 
-      var checkbox  = $(config.id.rearrange).find(".fm-glyph-id:not(:checked):first"),
+      var checkbox  = $('#rearrange').find(".fm-glyph-id:not(:checked):first"),
           el_id     = "#fm-font-glyph-" + glyph_id,
           svg       = $(el_id).contents().clone(false),
           icon      = checkbox.parent().find(config.css_class.rg_icon);
@@ -247,7 +247,7 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
     removeGlyph: function (glyph_id) {
       console.log("removeGlyph glyph_id=", glyph_id);
 
-      var checkbox=$(config.id.rearrange).find(".fm-glyph-id:checked[value='" + glyph_id + "']");
+      var checkbox=$('#rearrange').find(".fm-glyph-id:checked[value='" + glyph_id + "']");
 
       checkbox.attr({value: "", checked: false});
       checkbox.parent()

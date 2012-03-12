@@ -25,11 +25,11 @@ var Fontomas = (function (_, Backbone, Fontomas) {
       console.log("views.GeneratedFont.render");
 
       _.each(this.glyphviews, function (glyph) {
-        $(config.id.generated_font).append(glyph.render().el);
+        $('#fm-generated-font').append(glyph.render().el);
       });
 
       // reset rearrange zone
-      $(config.id.generated_font)
+      $('#fm-generated-font')
         .find(".fm-glyph-id")
         .attr({value: "", checked: false});
 
@@ -46,7 +46,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
 
     updateGlyphCount: function () {
       console.log("views.GeneratedFont.updateGlyphCount");
-      $(config.id.glyph_count).text(this.model.get("glyph_count"));
+      $('#fm-glyph-count').text(this.model.get("glyph_count"));
     },
 
     onChange: function () {
@@ -74,7 +74,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
         return;
       }
 
-      $(config.id.generated_font)
+      $('#fm-generated-font')
         .find("input:checkbox:checked")
         .each(function () {
           var $this    = $(this),
@@ -118,7 +118,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
 
       $("glyph", Fontomas.main.xml_template).remove();
       $("font", Fontomas.main.xml_template).append($(glyphs.join("\n")));
-      $(config.id.font).text(Fontomas.util.xmlToString(Fontomas.main.xml_template));
+      $('#fm-font').text(Fontomas.util.xmlToString(Fontomas.main.xml_template));
     }
   });
 

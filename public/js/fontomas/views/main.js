@@ -29,7 +29,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
       //this.model.fonts.fetch();
 
       this.select_toolbar = new Fontomas.views.SelectToolbar({
-        el:       $(config.id.file_drop_zone)[0],
+        el:       $('#fm-file-drop-zone')[0],
         topview:  this
       });
 
@@ -56,12 +56,12 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
       var xml_string;
 
       try {
-        xml_string = $(config.id.font_output).html().trimLeft();
+        xml_string = $('#fm-font-output').html().trimLeft();
         this.model.xml_template = $.parseXML(xml_string);
       } catch (e) {
         console.log(
           "initSvgFontTemplate: invalid xml template=",
-          $(config.id.font_output).html(),
+          $('#fm-font-output').html(),
           "e=", e
         );
         Fontomas.util.notify_alert("Internal error: can't parse output template.");
@@ -100,7 +100,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
       }
 
       // first tab is fully initialized so show it
-      $(config.id.tab + " a:first").tab("show");
+      $("#tab a:first").tab("show");
 
       // render the rearrange tab
       this.genfontview.render();
@@ -299,7 +299,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
 
     toggleMenu: function (enabled) {
       console.log("views.Main.toggleMenu");
-      $(config.id.tab)
+      $('#tab')
         .find("a"+config.css_class.disable_on_demand)
           .toggleClass("disabled", !enabled);
     },
@@ -307,20 +307,20 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
     initDownloadLink: function () {
       console.log("views.Main.initDownloadLink");
 
-      $(config.id.tab_save).one("shown", function () {
+      $('#fm-tab-save').one("shown", function () {
         console.log("views.Main.initDownloadLink: shown fired");
 
-        $(config.id.download_font_button).click(function (event) {
+        $('#fm-download-font-button').click(function (event) {
           console.log("download button clicked");
 
           // image/svg+xml
           // binary/octet-stream
           // application/x-zip-compressed
 
-          $(config.id.download_font_button).attr({
+          $('#fm-download-font-button').attr({
             download: config.output.filename,
             href:     "data:binary/octet-stream;base64," +
-                      Fontomas.util.base64_encode($(config.id.font).val())
+                      Fontomas.util.base64_encode($('#fm-font').val())
           });
 
         });

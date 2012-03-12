@@ -4,30 +4,6 @@ var Fontomas = (function (_, Fontomas) {
   var cfg, env, debug;
 
   cfg = {
-    id: {
-      tab:                  "#tab",
-      select:               "#select",
-      rearrange:            "#rearrange",
-      save:                 "#save",
-      notification:         "#notifications-container",
-
-      bad_browser:          "#fm-bad-browser",
-      glyph_count:          "#fm-glyph-count",
-
-      icon_size:            "#fm-icon-size",
-      file:                 "#fm-file",
-      file_browse_button:   "#fm-file-browse-button",
-      file_drop_zone:       "#fm-file-drop-zone",
-      use_embedded:         "#fm-use-embedded",
-
-      tab_save:             "#fm-tab-save",
-      font_list:            "#fm-font-list",
-      generated_font:       "#fm-generated-font",
-
-      font:                 "#fm-font",
-      download_font_button: "#fm-download-font-button",
-      font_output:          "#fm-font-output"
-    },
     css_class: {
       font_name:          ".fm-font-name",
       glyph_group:        ".fm-glyph-group",

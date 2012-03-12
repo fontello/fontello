@@ -34,7 +34,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
           tpl_vars  = {buttons: config.preview_icon_sizes};
 
       // render icon size buttons
-      $(config.id.icon_size)
+      $('#fm-icon-size')
         .html(this.templates.icon_size(tpl_vars))
         .find("button:first")
           .addClass("active");
@@ -42,11 +42,11 @@ var Fontomas = (function (_, Backbone, Fontomas) {
       // FIXME: workaround, because dragover/drag events don't work
       if (Fontomas.env.filereader) {
         // init file drag and drop
-        $(config.id.file_drop_zone).on("dragover", function (event) {
+        $('#fm-file-drop-zone').on("dragover", function (event) {
           self.fileDragOver(event);
         });
 
-        $(config.id.file_drop_zone).on("drop", function (event) {
+        $('#fm-file-drop-zone').on("drop", function (event) {
           self.fileDrop(event);
         });
       }
@@ -65,7 +65,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
         })
       };
 
-      $(config.id.use_embedded)
+      $('#fm-use-embedded')
         .html(this.templates.use_embedded(tpl_vars))
         .find(config.css_class.font_name)
           .each(function (id) {
@@ -91,7 +91,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
       event.preventDefault();
 
       if (Fontomas.env.filereader) {
-        $(config.id.file).click();
+        $('#fm-file').click();
       } else {
         Fontomas.util.notify_alert(
           "File upload is not supported by your" +
@@ -138,7 +138,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
         .addClass(config.icon_size_prefix + size);
 
       // change width/height
-      $(config.id.font_list)
+      $('#fm-font-list')
         .find(config.css_class.glyph_div)
         .each(function (i) {
           var $this   = $(this),
@@ -157,12 +157,12 @@ var Fontomas = (function (_, Backbone, Fontomas) {
         });
 
       // do the same on the rearrange tab
-      $(config.id.generated_font)
+      $('#fm-generated-font')
         .removeClass(config.icon_size_classes)
         .addClass(config.icon_size_prefix + size);
 
       // change width/height
-      $(config.id.generated_font)
+      $('#fm-generated-font')
         .find(config.css_class.rg_icon)
         .each(function (i) {
           var $this    = $(this),

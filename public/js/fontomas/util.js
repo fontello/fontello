@@ -23,7 +23,7 @@ var Fontomas = (function (_, XMLSerializer, Fontomas) {
       });
     }
 
-    $(config.id.notification).notify("create", tpl, tpl_vars, options);
+    $('#notifications-container').notify("create", tpl, tpl_vars, options);
   }
 
   exports.notify_alert = function (text, suppress_dup) {

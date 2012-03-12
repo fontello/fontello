@@ -13,12 +13,12 @@
     // check browser's capabilities
     //if ([> check if browser is OK <]) {
     //  console.log("bad browser");
-    //  $(Fontomas.cfg.id.bad_browser).modal({keyboard: false});
+    //  $('#fm-bad-browser').modal({keyboard: false});
     //  return;
     //}
 
     // show loading tab
-    $(Fontomas.cfg.id.tab).tab("show");
+    $('#tab').tab("show");
 
     // main model
     Fontomas.main = new Fontomas.models.Main;
