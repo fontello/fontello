@@ -27,6 +27,7 @@
             <li><a href="https://groups.google.com/group/fontomas-project" target="_blank">Forum</a></li>
             <li><a href="https://github.com/nodeca/fontomas/issues" target="_blank">Bug reports</a></li>
             <li><a href="https://github.com/nodeca/fontomas#readme" target="_blank">About</a></li>
+            <li><a href="https://twitter.com/puzrin" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow</a></li>
           </ul>
         </div>
       </div>
@@ -54,11 +55,6 @@
             <div class="btn-toolbar">
 
               <div id="fm-icon-size" class="btn-group tooltip-test" data-toggle="buttons-radio" title="Change symbols preview size" data-placement="bottom">
-                <script id="fm-icon-size-template" type="text/x-fm-template">
-                {{#buttons}}
-                <button class="btn btn-small fm-icon-size-button" value="{{this}}">{{this}}px</button>
-                {{/buttons}}
-                </script>
               </div>
 
               <div class="btn-group tooltip-test" title="SVG / Cufon" data-placement="bottom">
@@ -71,11 +67,6 @@
                   <span class="caret">dfg</span>
                 </a>
                 <ul id="fm-use-embedded" class="dropdown-menu">
-                <script type="text/x-fm-template" id="fm-use-embedded-template">
-                  {{#options}}
-                  <li><a class="fm-font-name{{#if this.disabled}} disabled{{/if}}" href="#">{{this.text}}</a></li>
-                  {{/options}}
-                </script>
                 </ul>
               </div>
             </div>
@@ -85,52 +76,12 @@
           </div>
 
           <ul id="fm-font-list" class="unstyled">
-            <script type="text/x-fm-template" id="fm-font-item-template">
-              <h2><span class="fm-font-name">{{fontname}}</span>
-                <a class="fm-font-anchor" href="#font-{{id}}"></a>
-                <a class="fm-font-close" href="#"><small>close</small></a>
-              </h2>
-              <div class="fm-glyph-group">
-              </div>
-            </script>
-            <script type="text/x-fm-template" id="fm-glyph-item-template">
-              <label class="glyph">
-                <input class="fm-glyph-id" type="checkbox" value="0"/>
-                <div id="gd0" class="fm-glyph-div" style="width: 64px; height: 64px;">{{test}}</div>
-              </label>
-            </script>
           </ul>
         </div>
 
         <!-- tab2 -->
         <div id="rearrange" class="tab-pane fade">
-          <form id="fm-form-charset" class="well form-horizontal">
-            <fieldset>
-              <div class="control-group">
-                <label class="control-label">Charset</label>
-                <div class="controls">
-                  <label class="radio">
-                    <input class="fm-charset" type="radio" checked="" value="basic_latin" name="charset"/>Basic Latin
-                  </label>
-                  <label class="radio">
-                    <input class="fm-charset" type="radio" value="unicode_private" name="charset"/>Supplementary Private Use Area-A
-                  </label>
-                </div>
-              </div>
-            </fieldset>
-          </form>
           <div id="fm-generated-font">
-            <script type="text/x-fm-template" id="fm-genfont-glyph-item-template">
-              <!-label class="rearrange-glyph"->
-                <input class="fm-glyph-id" type="checkbox" readonly="readonly" value=""/>
-                <input _id="rgu<%=num%>" class="fm-unicode" type="text" value="{{{char}}}" _value="<%-char%>"/>
-                <div class="rg-top">{{{top}}}</div>
-                <div class="rg-center">
-                  <div _id="rgd<%=num%>" class="rg-icon"></div>
-                 </div>
-                <div class="rg-bottom">{{bottom}}</div>
-              <!-/label->
-            </script>
           </div>
         </div>
 
@@ -145,7 +96,7 @@
               </div>
             </div>
 -->
-            <label>Your SVG font (<a id="fm-download-font-button" style="position: relative;" href="#">Download</a><span id="fm-clipboard-span" style="position: relative;"> | <a id="fm-clipboard-link" href="#">Copy to clipboard</a></span>)
+            <label>Your SVG font (<a id="fm-download-font-button" style="position: relative;" href="#">Download</a>)
               <textarea id="fm-font" class="span8" rows="10"></textarea>
             </label>
 
@@ -157,9 +108,6 @@
                 </ul>
             </div>
 
-            <label>Icon assignments <span id="fm-clipboard-span2" style="position: relative;">(<a id="fm-clipboard-link2" href="#">Copy to clipboard</a>)</span>
-              <textarea id="fm-icon-assignments" class="span8" rows="10"></textarea>
-            </label>
           </form>
         </div>
       </div> <!-- /tab-content -->
@@ -176,7 +124,7 @@
       </div>
       <div id="icon-template">
         <a class="ui-notify-cross ui-notify-close" href="#">x</a>
-        <div style="float:left; margin: 0 10px 0 0;"><img src="#{icon}" alt="warning"/></div>
+        <div style="float:left; margin: 0 10px 0 0;"><img src="vendor/jquery.notify/alert.png" alt="warning"/></div>
         <p>#{text}</p>
       </div>
     </div>
@@ -220,6 +168,41 @@
   </defs>
 </svg>
     </script>
+    <script data-tpl-id="icon-size" type="text/x-fm-template">
+      {{#buttons}}
+        <button class="btn btn-small fm-icon-size-button" value="{{this}}">{{this}}px</button>
+      {{/buttons}}
+    </script>
+    <script data-tpl-id="use-embedded" type="text/x-fm-template">
+      {{#options}}
+        <li><a class="fm-font-name{{#disabled}} disabled{{/disabled}}" href="#">{{this.text}}</a></li>
+      {{/options}}
+    </script>
+    <script data-tpl-id="font-item" type="text/x-fm-template">
+      <h2><span class="fm-font-name">{{fontname}}</span>
+        <a class="fm-font-anchor" href="#font-{{id}}"></a>
+        <a class="fm-font-close" href="#"><small>close</small></a>
+      </h2>
+      <div class="fm-glyph-group">
+      </div>
+    </script>
+    <script data-tpl-id="glyph-item" type="text/x-fm-template">
+      <label class="glyph">
+        <input class="fm-glyph-id" type="checkbox" value="0"/>
+        <div id="gd0" class="fm-glyph-div" style="width: 64px; height: 64px;">{{test}}</div>
+      </label>
+    </script>
+    <script data-tpl-id="genfont-glyph-item" type="text/x-fm-template">
+      <!-label class="rearrange-glyph"->
+        <input class="fm-glyph-id" type="checkbox" readonly="readonly" value=""/>
+        <input class="fm-unicode" type="text" value="{{{char}}}"/>
+        <div class="rg-top">{{{top}}}</div>
+        <div class="rg-center">
+          <div class="rg-icon"></div>
+         </div>
+        <div class="rg-bottom">{{bottom}}</div>
+      <!-/label->
+    </script>
 
     <!-- javascript
     ================================================== -->
@@ -229,35 +212,24 @@
     <script type="text/javascript" src="vendor/jquery.notify/jquery.notify.js"></script>
     <script type="text/javascript" src="vendor/bootstrap/bootstrap.min.js"></script>
     <script type="text/javascript" src="vendor/raphael.js"></script>
-    <script type="text/javascript" src="vendor/swfobject.js"></script>
-    <script type="text/javascript" src="vendor/downloadify/downloadify.min.js"></script>
-    <script type="text/javascript" src="vendor/zero-clipboard/ZeroClipboard.js"></script>
     <script type="text/javascript" src="vendor/underscore.js"></script>
     <script type="text/javascript" src="vendor/backbone.js"></script>
     <script type="text/javascript" src="vendor/handlebars.js"></script>
 
-    <script type="text/javascript" src="js/fm-embedded-fonts.js"></script>
-
+    <script type="text/javascript" src="js/fontomas.js"></script>
+    <script type="text/javascript" src="js/fontomas/embedded-fonts.js"></script>
+    <script type="text/javascript" src="js/fontomas/util.js"></script>
+    <script type="text/javascript" src="js/fontomas/models/glyph.js"></script>
+    <script type="text/javascript" src="js/fontomas/models/glyphs-collection.js"></script>
+    <script type="text/javascript" src="js/fontomas/models/source-font.js"></script>
+    <script type="text/javascript" src="js/fontomas/models/source-fonts-collection.js"></script>
+    <script type="text/javascript" src="js/fontomas/models/result-font.js"></script>
+    <script type="text/javascript" src="js/fontomas/views/source-font.js"></script>
+    <script type="text/javascript" src="js/fontomas/views/result-font.js"></script>
+    <script type="text/javascript" src="js/fontomas/views/glyph.js"></script>
+    <script type="text/javascript" src="js/fontomas/views/select-glyphs.js"></script>
+    <script type="text/javascript" src="js/fontomas/views/app.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
-    <script type="text/javascript" src="js/lib/util.js"></script>
-    <script type="text/javascript" src="js/lib/font.js"></script>
-    <script type="text/javascript" src="js/models/font.js"></script>
-    <script type="text/javascript" src="js/models/generatedfont.js"></script>
-    <script type="text/javascript" src="js/models/main.js"></script>
-    <script type="text/javascript" src="js/views/font.js"></script>
-    <script type="text/javascript" src="js/views/generatedfont.js"></script>
-    <script type="text/javascript" src="js/views/select.js"></script>
-    <script type="text/javascript" src="js/views/rearrange.js"></script>
-    <script type="text/javascript" src="js/views/main.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>
-
-    <script type="text/javascript">
-        $('.tooltip-test').tooltip();
-        $("#notifications-container").notify({
-            speed: 500,
-            expires: 5000
-        });
-    </script>
 
 <!-- Google Analytics -->
 
@@ -284,6 +256,10 @@
 var options={ "publisher": "3bb1548e-3632-4023-9be9-f06c59cb5897", "position": "right", "ad": { "visible": false, "openDelay": 5, "closeDelay": 0}, "chicklets": { "items": ["facebook", "twitter", "email", "sharethis"]}};
 var st_hover_widget = new sharethis.widgets.hoverbuttons(options);
 </script>
+
+<!-- Twitter button generator -->
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
   </body>
 </html>
