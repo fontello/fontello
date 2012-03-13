@@ -147,12 +147,10 @@ var Fontomas = (function (_, Backbone, Fontomas) {
       console.log("models.Font.sync()");
     }
   }, {
+    supported_types: _.keys(parsers),
     parse: function (type, data) {
-      switch (type) {
-        case "svg":     return parsers.svg(data);
-        case "cufonjs": return parsers.js(data);
-        default:        return null;
-      }
+      var func = parsers[type];
+      return func ? func(data) : null;
     }
   });
 

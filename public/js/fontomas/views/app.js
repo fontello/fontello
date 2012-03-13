@@ -200,24 +200,22 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
       /*jshint newcap:false*/
       console.log("views.app.addFont id=", fileinfo.id);
 
-      var tmp, font, types, file_ext;
+      var tmp, font, file_ext;
 
       // if it is a dup, skip it
       if (fileinfo.is_dup) {
         return;
       }
 
-      types     = {"svg": "svg", "js": "cufonjs"};
       file_ext  = Fontomas.util.getFileExt(fileinfo.filename);
+      font      = Fontomas.models.Font.parse(file_ext, fileinfo.content);
 
-      if (_.include(_.keys(types), file_ext)) {
-        font = Fontomas.models.Font.parse(types[file_ext], fileinfo.content);
-      } else {
+      if (!font) {
         // unknown file exstension
         Fontomas.util.notify_alert(
           "Can't parse file '" + fileinfo.filename +
           "': unknown file extension. Currently, we support only: " +
-          _.keys(types).join(", ") + "."
+          Fontomas.models.Font.supported_types.join(", ") + "."
         );
         return;
       }
