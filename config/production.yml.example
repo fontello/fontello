@@ -1,0 +1,5 @@
+^production:
+  listen:
+    host: localhost
+    port: 80
+    path: /

@@ -1,0 +1,7 @@
+locales:
+  enabled: [en]
+  default: en
+listen:
+  host: localhost
+  port: 3000
+  path: /

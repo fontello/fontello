@@ -1,0 +1,4 @@
+router:
+  map:
+    app:
+      "/": ~
