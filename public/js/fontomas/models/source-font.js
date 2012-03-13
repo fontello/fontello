@@ -61,12 +61,12 @@ var Fontomas = (function (_, Backbone, Fontomas) {
   parsers.svg = function (svg) {
     var font = {}, xml;
 
-    console.log("Font.initSvg");
+    Fontomas.logger.debug("Font.initSvg");
 
     try {
       xml = $.parseXML(svg);
     } catch (e) {
-      console.log("Font.initSvg: invalid xml");
+      Fontomas.logger.error("Font.initSvg: invalid xml");
       return null;
     }
 
@@ -95,14 +95,14 @@ var Fontomas = (function (_, Backbone, Fontomas) {
   parsers.js = function (js) {
     var font = {}, json_string, json;
 
-    console.log("initCufonJs");
+    Fontomas.logger.debug("initCufonJs");
 
     try {
       // strip function call
       json_string = Fontomas.util.trimBoth(js, ".registerFont(", ")");
       json = $.parseJSON(json_string);
     } catch (e) {
-      console.log("Font.initCufonJs: invalid json");
+      Fontomas.logger.error("Font.initCufonJs: invalid json");
       return null;
     }
 
@@ -144,7 +144,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
 
     // FIXME: the model isn't sync()ed to server yet
     sync: function () {
-      console.log("models.Font.sync()");
+      Fontomas.logger.debug("models.Font.sync()");
     }
   }, {
     supported_types: _.keys(parsers),

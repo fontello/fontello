@@ -12,7 +12,7 @@
 
     // check browser's capabilities
     //if ([> check if browser is OK <]) {
-    //  console.log("bad browser");
+    //  Fontomas.logger.error("bad browser");
     //  $('#fm-bad-browser').modal({keyboard: false});
     //  return;
     //}

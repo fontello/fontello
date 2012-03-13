@@ -28,7 +28,7 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
     },
 
     initialize: function () {
-      console.log("views.Font.initialize");
+      Fontomas.logger.debug("views.Font.initialize");
 
       _.bindAll(this);
 
@@ -40,7 +40,7 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
     },
 
     render: function () {
-      console.log("views.Font.render el=", this.el);
+      Fontomas.logger.debug("views.Font.render el=", this.el);
       var font         = this.model.get("font"),
           ascent       = font.ascent,
           descent      = font.descent,
@@ -170,7 +170,7 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
     remove: function () {
       var self = this;
 
-      console.log("views.Font.remove el=", this.el);
+      Fontomas.logger.debug("views.Font.remove el=", this.el);
 
       // remove associated html markup
       this.$("input:checkbox:checked").each(function() {
@@ -182,7 +182,7 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
     },
 
     close: function (event) {
-      console.log("views.Font.close el=", this.el);
+      Fontomas.logger.debug("views.Font.close el=", this.el);
 
       var embedded_id = this.model.get("embedded_id");
 
@@ -197,7 +197,7 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
     },
 
     toggleGlyph: function (event) {
-      console.log("views.Font.toggleGlyph event=", event);
+      Fontomas.logger.debug("views.Font.toggleGlyph event=", event);
 
       var $target   = $(event.target),
           glyph_id  = $target.attr("value");
@@ -213,7 +213,7 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
 
     // add a glyph to the rearrange zone
     addGlyph: function (glyph_id) {
-      console.log("addGlyph glyph_id=", glyph_id);
+      Fontomas.logger.debug("addGlyph glyph_id=", glyph_id);
 
       var checkbox  = $('#rearrange').find(".fm-glyph-id:not(:checked):first"),
           el_id     = "#fm-font-glyph-" + glyph_id,
@@ -242,7 +242,7 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
 
     // remove a glyph from the rearrange zone
     removeGlyph: function (glyph_id) {
-      console.log("removeGlyph glyph_id=", glyph_id);
+      Fontomas.logger.debug("removeGlyph glyph_id=", glyph_id);
 
       var checkbox=$('#rearrange').find(".fm-glyph-id:checked[value='" + glyph_id + "']");
 

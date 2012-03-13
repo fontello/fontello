@@ -11,7 +11,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
     initialize: function () {
       var self = this;
 
-      //console.log("views.Glyph.initialize");
+      //Fontomas.logger.debug("views.Glyph.initialize");
 
       _.bindAll(this);
 
@@ -26,7 +26,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
 
       this.$('.rg-icon').droppable($.extend({}, config.droppable_options, {
         drop: function (event, ui) {
-          console.log("drop");
+          Fontomas.logger.debug("drop");
 
           var $this     = $(this),
               draggable = ui.draggable,
@@ -70,7 +70,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
     },
 
     render: function () {
-      //console.log("views.Glyph.render el=", this.el);
+      //Fontomas.logger.debug("views.Glyph.render el=", this.el);
       // FIXME: performance
       //this.$el.html(this.template(this.model.toJSON()));
       //this.$el.attr("id", "rgl" + this.model.get("num"));

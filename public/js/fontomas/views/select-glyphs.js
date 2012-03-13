@@ -17,7 +17,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
     },
 
     initialize: function () {
-      console.log("views.SelectToolbar.initialize");
+      Fontomas.logger.debug("views.SelectToolbar.initialize");
 
       _.bindAll(this);
 
@@ -25,7 +25,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
     },
 
     render: function () {
-      console.log("views.SelectToolbar.render");
+      Fontomas.logger.debug("views.SelectToolbar.render");
 
       var self      = this,
           tpl_vars  = {buttons: config.preview_icon_sizes};
@@ -54,7 +54,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
     },
 
     renderUseEmbedded: function () {
-      console.log("views.SelectToolbar.renderUseEmbedded");
+      Fontomas.logger.debug("views.SelectToolbar.renderUseEmbedded");
 
       var tpl_vars = {
         options: _.map(Fontomas.embedded_fonts, function (item) {
@@ -71,12 +71,12 @@ var Fontomas = (function (_, Backbone, Fontomas) {
     },
 
     useEmbedded: function (event) {
-      console.log("views.SelectToolbar.useEmbedded");
+      Fontomas.logger.debug("views.SelectToolbar.useEmbedded");
 
       var id    = $(event.target).data("embedded_id"),
           font  = Fontomas.embedded_fonts[id];
 
-      console.assert(font);
+      Fontomas.logger.debug(font);
       event.preventDefault();
 
       if (font && !font.is_added) {
@@ -102,7 +102,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
     },
 
     fileDragOver: function (event) {
-      //console.log("fileDragOver");
+      //Fontomas.logger.debug("fileDragOver");
       if (Fontomas.env.filereader) {
         event.stopPropagation();
         event.preventDefault();
@@ -111,7 +111,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
     },
 
     fileDrop: function (event) {
-      console.log("fileDrop");
+      Fontomas.logger.debug("fileDrop");
 
       if (Fontomas.env.filereader) {
         event.stopPropagation();
@@ -121,12 +121,12 @@ var Fontomas = (function (_, Backbone, Fontomas) {
     },
 
     changeIconSize: function (event) {
-      console.log("views.SelectToolbar.changeIconSize");
+      Fontomas.logger.debug("views.SelectToolbar.changeIconSize");
 
       var size = parseInt($(event.target).val(), 10) ||
                  config.preview_icon_sizes[0];
 
-      console.log('size='+size);
+      Fontomas.logger.debug('size='+size);
       event.preventDefault();
 
       // attach class

@@ -7,7 +7,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
     initialize: function () {
       var i, ch;
 
-      console.log("models.GeneratedFont.initialize");
+      Fontomas.logger.debug("models.GeneratedFont.initialize");
       this.glyphs = new Fontomas.models.GlyphsCollection;
 
       // add space glyph
@@ -37,7 +37,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
 
     decCounter: function () {
       this.set("glyph_count", this.get("glyph_count") - 1);
-      console.assert(this.get("glyph_count") >= 0);
+      Fontomas.logger.assert(this.get("glyph_count") >= 0);
     },
 
     // return char in CharRef notation
@@ -53,7 +53,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
 
     // FIXME: the model isn't sync()ed to server yet
     sync: function () {
-      console.log("models.GeneratedFont.sync()");
+      Fontomas.logger.debug("models.GeneratedFont.sync()");
     }
   });
 

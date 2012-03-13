@@ -8,7 +8,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
     events:      {},
 
     initialize: function () {
-      console.log("views.GeneratedFont.initialize");
+      Fontomas.logger.debug("views.GeneratedFont.initialize");
 
       _.bindAll(this);
 
@@ -24,7 +24,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
     },
 
     render: function () {
-      console.log("views.GeneratedFont.render");
+      Fontomas.logger.debug("views.GeneratedFont.render");
 
       _.each(this.glyphviews, function (glyph) {
         $('#fm-generated-font').append(glyph.render().el);
@@ -52,17 +52,17 @@ var Fontomas = (function (_, Backbone, Fontomas) {
         });
       }
 
-      //console.log("views.GeneratedFont.addGlyph");
+      //Fontomas.logger.debug("views.GeneratedFont.addGlyph");
       this.glyphviews.push(view);
     },
 
     updateGlyphCount: function () {
-      console.log("views.GeneratedFont.updateGlyphCount");
+      Fontomas.logger.debug("views.GeneratedFont.updateGlyphCount");
       $('#fm-glyph-count').text(this.model.get("glyph_count"));
     },
 
     onChange: function () {
-      console.log("views.GeneratedFont.onChange");
+      Fontomas.logger.debug("views.GeneratedFont.onChange");
 
       if (config.live_update) {
         this.updateFont();
@@ -98,7 +98,7 @@ var Fontomas = (function (_, Backbone, Fontomas) {
               g;
 
           if (!font || !glyph) {
-            console.log("can't getFont/getGlyph id=", glyph_id);
+            Fontomas.logger.error("can't getFont/getGlyph id=", glyph_id);
             return;
           }
 

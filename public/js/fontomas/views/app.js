@@ -10,7 +10,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
     events:         {},
 
     initialize: function () {
-      console.log("views.app.initialize");
+      Fontomas.logger.debug("views.app.initialize");
 
       _.bindAll(this);
 
@@ -38,7 +38,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
         xml_string = $('#fm-font-output').html().trimLeft();
         this.model.xml_template = $.parseXML(xml_string);
       } catch (e) {
-        console.log(
+        Fontomas.logger.error(
           "initSvgFontTemplate: invalid xml template=",
           $('#fm-font-output').html(),
           "e=", e
@@ -67,7 +67,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
     },
 
     render: function () {
-      console.log("views.app.render");
+      Fontomas.logger.debug("views.app.render");
 
       // render the select tab
       this.select_toolbar.render();
@@ -112,7 +112,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
     },
 
     addFontsAsStrings: function (files, cb_onload) {
-      console.log("views.app.addFontsAsStrings flen=", files.length);
+      Fontomas.logger.debug("views.app.addFontsAsStrings flen=", files.length);
 
       _.each(files, function (f) {
         var idx, fileinfo;
@@ -149,7 +149,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
     },
 
     addFonts: function (files, callback) {
-      console.log("views.app.addFonts");
+      Fontomas.logger.debug("views.app.addFonts");
 
       _.each(files, function (f) {
         var fileinfo, reader = new FileReader();
@@ -198,7 +198,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
 
     addFont: function (fileinfo, cb_onclose) {
       /*jshint newcap:false*/
-      console.log("views.app.addFont id=", fileinfo.id);
+      Fontomas.logger.debug("views.app.addFont id=", fileinfo.id);
 
       var tmp, font, file_ext;
 
@@ -221,7 +221,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
       }
 
       if (!font) {
-        console.log("invalid file");
+        Fontomas.logger.error("invalid file");
 
         fileinfo.is_ok     = false;
         fileinfo.error_msg = "invalid file";
@@ -248,7 +248,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
     },
 
     createFont: function (attrs) {
-      console.log("views.app.create attrs=", attrs);
+      Fontomas.logger.debug("views.app.create attrs=", attrs);
 
       //if (!attrs.id) // FIXME
       attrs.id = this.model.next_font_id++;
@@ -256,7 +256,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
     },
 
     addOneFont: function (font) {
-      console.log("views.app.addOneFont");
+      Fontomas.logger.debug("views.app.addOneFont");
 
       var view = new Fontomas.views.Font({
         model: font,
@@ -268,25 +268,25 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
     },
 
     addAllFonts: function () {
-      console.log("views.app.addAllFonts");
+      Fontomas.logger.debug("views.app.addAllFonts");
       this.model.fonts.each(this.addOneFont);
     },
 
     toggleMenu: function (enabled) {
-      console.log("views.app.toggleMenu");
+      Fontomas.logger.debug("views.app.toggleMenu");
       $('#tab')
         .find("a.fm-disable-on-demand")
           .toggleClass("disabled", !enabled);
     },
 
     initDownloadLink: function () {
-      console.log("views.app.initDownloadLink");
+      Fontomas.logger.debug("views.app.initDownloadLink");
 
       $('#fm-tab-save').one("shown", function () {
-        console.log("views.app.initDownloadLink: shown fired");
+        Fontomas.logger.debug("views.app.initDownloadLink: shown fired");
 
         $('#fm-download-font-button').click(function (event) {
-          console.log("download button clicked");
+          Fontomas.logger.debug("download button clicked");
 
           // image/svg+xml
           // binary/octet-stream

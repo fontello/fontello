@@ -1,7 +1,8 @@
 var Fontomas = (function (_, Handlebars, Fontomas) {
   "use strict";
 
-  var cfg, env, debug, tpl_cache = {};
+  var cfg, env, debug, logger = {}, tpl_cache = {};
+
 
   cfg = {
     // class icon_size_prefix+"-<num>" added when icon size has changed
@@ -60,12 +61,27 @@ var Fontomas = (function (_, Handlebars, Fontomas) {
 
     if ("debug" === vars.shift()) {
       debug.is_on = true;
-      _.each(vars.shift().split(","), function (str) {
-        var pair = str.split("=");
-        debug[pair[0]] = pair[1] && pair[1] !== "" ? pair[1] : true;
-      });
+
+      if (vars.length) {
+        _.each(vars.shift().split(","), function (str) {
+          var pair = str.split("=");
+          debug[pair[0]] = pair[1] && pair[1] !== "" ? pair[1] : true;
+        });
+      }
     }
   });
+
+
+  logger.assert =
+  logger.error  =
+  logger.debug  = function () {};
+
+  if (debug.is_on) {
+    logger.assert = console.assert;
+    logger.error  = console.error;
+    logger.debug  = console.debug;
+  }
+
 
   // public interface
   return $.extend(true, Fontomas, {
@@ -83,6 +99,7 @@ var Fontomas = (function (_, Handlebars, Fontomas) {
       }
 
       return tpl_cache[id](locals || {});
-    }
+    },
+    logger:       logger
   });
 }(window._, window.Handlebars, Fontomas || {}));

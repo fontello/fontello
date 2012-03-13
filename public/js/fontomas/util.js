@@ -4,9 +4,11 @@ var Fontomas = (function (_, XMLSerializer, Fontomas) {
   var exports = {}, config = Fontomas.cfg, notify_dup = {};
 
   function notify(tpl, text, suppress_dup) {
+    var options = {expires: 4000};
+
     if (suppress_dup && (text !== undefined)) {
       if (notify_dup[text] !== undefined) {
-        console.log("notification suppressed");
+        Fontomas.logger.debug("notification suppressed");
         return;
       }
 
@@ -15,12 +17,12 @@ var Fontomas = (function (_, XMLSerializer, Fontomas) {
       $.extend(options, {
         close: function () {
           delete notify_dup[text];
-          console.log("notification can be fired again");
+          Fontomas.logger.debug("notification can be fired again");
         }
       });
     }
 
-    $('#notifications-container').notify("create", tpl, {text: text}, {expires: 4000});
+    $('#notifications-container').notify("create", tpl, {text: text}, options);
   }
 
   exports.notify_alert = function (text, suppress_dup) {
