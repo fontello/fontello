@@ -211,7 +211,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
       file_ext  = Fontomas.util.getFileExt(fileinfo.filename);
 
       if (_.include(_.keys(types), file_ext)) {
-        font = Fontomas.Font(types[file_ext], fileinfo.content);
+        font = Fontomas.models.Font.parse(types[file_ext], fileinfo.content);
       } else {
         // unknown file exstension
         Fontomas.util.notify_alert(
