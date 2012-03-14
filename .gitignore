@@ -1,3 +1,4 @@
+/config/*.local.yml
 /node_modules/
 /doc/
 *.log
