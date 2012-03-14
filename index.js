@@ -45,14 +45,19 @@ function find_view(scope, api_path) {
 
 
 nodeca.hooks.init.after('init-complete', function (next) {
-  var connect = require('connect'), fontomas = connect();
+  var connect = require('connect'), fontomas = connect(), default_host;
+
+  default_host = nodeca.config.listen.host;
+  if (nodeca.config.listen.port && 80 !== +nodeca.config.listen.port) {
+    default_host += ':' + nodeca.config.listen.port;
+  }
 
   fontomas.use("/static/", nodeca.runtime.assets_server.middleware);
   fontomas.use(function (req, res) {
-    var host = req.headers.host, env, match;
+    var host = req.headers.host || default_host, env, match;
 
     // remove port part if it's 80
-    if ('80' === host.split(':')[1]) {
+    if (host && '80' === host.split(':')[1]) {
       host = host.split(':')[0];
     }
 
