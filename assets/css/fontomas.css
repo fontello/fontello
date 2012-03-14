@@ -15,7 +15,8 @@ body {
   opacity: 0.95;
 }
 
-iframe.twitter-follow-button {
+iframe.twitter-follow-button,
+iframe.twitter-share-button {
   margin-left: 10px;
   margin-top: 9px;
 }
