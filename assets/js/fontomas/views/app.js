@@ -84,9 +84,6 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
       // render the rearrange tab
       this.genfontview.render();
 
-      // render the save tab
-      this.initDownloadLink();
-
       return this;
     },
 
@@ -277,29 +274,6 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
       $('#tab')
         .find("a.fm-disable-on-demand")
           .toggleClass("disabled", !enabled);
-    },
-
-    initDownloadLink: function () {
-      Fontomas.logger.debug("views.app.initDownloadLink");
-
-      $('#fm-tab-save').one("shown", function () {
-        Fontomas.logger.debug("views.app.initDownloadLink: shown fired");
-
-        $('#fm-download-font-button').click(function (event) {
-          Fontomas.logger.debug("download button clicked");
-
-          // image/svg+xml
-          // binary/octet-stream
-          // application/x-zip-compressed
-
-          $('#fm-download-font-button').attr({
-            download: config.output.filename,
-            href:     "data:binary/octet-stream;base64," +
-                      Fontomas.util.base64_encode($('#fm-font').val())
-          });
-
-        });
-      });
     }
   });
 

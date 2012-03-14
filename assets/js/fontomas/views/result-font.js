@@ -130,7 +130,6 @@ var Fontomas = (function (_, Backbone, Fontomas) {
 
       $("glyph", Fontomas.main.xml_template).remove();
       $("font", Fontomas.main.xml_template).append($(glyphs.join("\n")));
-      $('#fm-font').text(Fontomas.util.xmlToString(Fontomas.main.xml_template));
     }
   });
 
