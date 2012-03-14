@@ -50,7 +50,7 @@ iframe.twitter-follow-button {
   font-size: 36px;
   line-height: 54px;
 }
-#select .btn-toolbar {
+#select .btn-toolbar, #rearrange .btn-toolbar {
   margin-top: 0;
   margin-bottom: 0;
 }
