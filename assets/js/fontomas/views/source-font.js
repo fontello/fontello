@@ -224,6 +224,7 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
       checkbox.parent().addClass("selected");
 
       icon.append(svg)
+        .draggable(config.draggable_options)
         .data("glyph_sizes", $(el_id).data("glyph_sizes"))
         .attr("style", $(el_id).attr("style"))
         .css({

@@ -47,7 +47,9 @@ var Fontomas = (function (_, Backbone, Fontomas) {
       });
 
       if (config.live_update) {
-        self.updateFont();
+        view.on('drop', function () {
+          self.updateFont();
+        });
       }
 
       //Fontomas.logger.debug("views.GeneratedFont.addGlyph");
