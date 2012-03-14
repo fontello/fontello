@@ -23,50 +23,6 @@ var Fontomas = (function (_, Backbone, Fontomas) {
 
       this.$el.html(Fontomas.render('genfont-glyph-item', this.model.toJSON()));
       this.$el.attr("id", "rgl" + this.model.get("num"));
-
-      this.$('.rg-icon').droppable($.extend({}, config.droppable_options, {
-        drop: function (event, ui) {
-          Fontomas.logger.debug("drop");
-
-          var $this     = $(this),
-              draggable = ui.draggable,
-              g_id      = $this.parent().siblings("input:checkbox").attr("value"),
-              d         = $this.contents(),
-              data      = $this.data("glyph_sizes");
-
-          $this.parent()
-            .siblings("input:checkbox")
-            .attr({
-              value: draggable.parent().siblings("input:checkbox").attr("value")
-            });
-
-          $this.data("glyph_sizes", draggable.data("glyph_sizes"));
-          $this.empty().append(draggable.contents());
-
-          draggable.parent()
-            .siblings("input:checkbox")
-            .attr({value: g_id});
-
-          draggable.data("glyph_sizes", data);
-          draggable.empty().append(d);
-
-          if (!$this.parent().parent().hasClass("selected")) {
-            $this.parent().parent().addClass("selected");
-            draggable.parent().parent().removeClass("selected");
-            $this.draggable(config.draggable_options);
-
-            draggable
-              .draggable("disable")
-              .parent()
-                .siblings("input:checkbox")
-                .attr({checked: false});
-
-            $this.parent().siblings("input:checkbox").attr({checked: true});
-          }
-
-          self.trigger('drop');
-        }
-      }));
     },
 
     render: function () {

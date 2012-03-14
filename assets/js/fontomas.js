@@ -14,17 +14,6 @@ var Fontomas = (function (_, Handlebars, Fontomas) {
     fix_edges:          true,
     scale_precision:    6, // truncate the mantissa when scaling svg paths
 
-    draggable_options: {
-      revert:     "invalid",
-      cursor:     "move",
-      helper:     "clone",
-      opacity:    0.5,
-      disabled:   false
-    },
-    droppable_options: {
-      hoverClass: "fm-drop-hover",
-      tolerance:  "pointer"
-    },
     path_options: {
       "fill":         "#000",
       "stroke":       "#000",
