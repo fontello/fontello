@@ -1,4 +1,6 @@
-var Fontomas = (function (Backbone, Fontomas) {
+/*global Backbone*/
+
+var Fontomas = (function (Fontomas) {
   "use strict";
 
 
@@ -8,4 +10,4 @@ var Fontomas = (function (Backbone, Fontomas) {
 
 
   return Fontomas;
-}(window.Backbone, Fontomas || {}));
+}(Fontomas || {}));

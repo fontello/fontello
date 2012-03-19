@@ -1,4 +1,6 @@
-var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
+/*global _, Backbone, Raphael*/
+
+var Fontomas = (function (Fontomas) {
   "use strict";
 
   var config = Fontomas.cfg;
@@ -260,4 +262,4 @@ var Fontomas = (function (_, Backbone, Raphael, Fontomas) {
   });
 
   return Fontomas;
-}(window._, window.Backbone, window.Raphael, Fontomas || {}));
+}(Fontomas || {}));

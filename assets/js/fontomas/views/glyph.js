@@ -1,7 +1,7 @@
-var Fontomas = (function (_, Backbone, Fontomas) {
-  "use strict";
+/*global _, Backbone*/
 
-  var config = Fontomas.cfg;
+var Fontomas = (function (Fontomas) {
+  "use strict";
 
   Fontomas.views.Glyph = Backbone.View.extend({
     tagName:    "label",
@@ -9,8 +9,6 @@ var Fontomas = (function (_, Backbone, Fontomas) {
     events:     {},
 
     initialize: function () {
-      var self = this;
-
       //Fontomas.logger.debug("views.Glyph.initialize");
 
       _.bindAll(this);
@@ -40,4 +38,4 @@ var Fontomas = (function (_, Backbone, Fontomas) {
   });
 
   return Fontomas;
-}(window._, window.Backbone, Fontomas || {}));
+}(Fontomas || {}));

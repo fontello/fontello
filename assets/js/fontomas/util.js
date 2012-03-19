@@ -1,7 +1,9 @@
-var Fontomas = (function (_, XMLSerializer, Fontomas) {
+/*global _, XMLSerializer*/
+
+var Fontomas = (function (Fontomas) {
   "use strict";
 
-  var exports = {}, config = Fontomas.cfg, notify_dup = {};
+  var exports = {}, notify_dup = {};
 
   function notify(tpl, text, suppress_dup) {
     var options = {expires: 4000};
@@ -136,4 +138,4 @@ var Fontomas = (function (_, XMLSerializer, Fontomas) {
   };
 
   return $.extend(true, Fontomas, {util: exports});
-}(window._, window.XMLSerializer, Fontomas || {}));
+}(Fontomas || {}));

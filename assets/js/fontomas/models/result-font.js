@@ -1,4 +1,6 @@
-var Fontomas = (function (_, Backbone, Fontomas) {
+/*global _, Backbone*/
+
+var Fontomas = (function (Fontomas) {
   "use strict";
 
   Fontomas.models.GeneratedFont = Backbone.Model.extend({
@@ -58,4 +60,4 @@ var Fontomas = (function (_, Backbone, Fontomas) {
   });
 
   return Fontomas;
-}(window._, window.Backbone, Fontomas || {}));
+}(Fontomas || {}));

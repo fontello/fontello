@@ -1,4 +1,6 @@
-(function ($, Fontomas) {
+/*global Fontomas, $, Backbone*/
+
+(function (Fontomas) {
   "use strict";
 
   $(function () {
@@ -39,4 +41,4 @@
     $('.tooltip-test').tooltip();
     $("#notifications-container").notify({speed: 500, expires: 5000});
   });
-}(jQuery, window.Fontomas));
+}(Fontomas || {}));

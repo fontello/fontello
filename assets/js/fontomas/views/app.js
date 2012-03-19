@@ -1,4 +1,6 @@
-var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
+/*global _, Backbone, Handlebars*/
+
+var Fontomas = (function (Fontomas) {
   "use strict";
 
   var config = Fontomas.cfg;
@@ -112,7 +114,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
       Fontomas.logger.debug("views.app.addFontsAsStrings flen=", files.length);
 
       _.each(files, function (f) {
-        var idx, fileinfo;
+        var fileinfo;
 
         fileinfo = {
           id:             Fontomas.main.myfiles.length,
@@ -197,7 +199,7 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
       /*jshint newcap:false*/
       Fontomas.logger.debug("views.app.addFont id=", fileinfo.id);
 
-      var tmp, font, file_ext;
+      var font, file_ext;
 
       // if it is a dup, skip it
       if (fileinfo.is_dup) {
@@ -278,4 +280,4 @@ var Fontomas = (function (_, Backbone, Handlebars, Fontomas) {
   });
 
   return Fontomas;
-}(window._, window.Backbone, window.Handlebars, Fontomas || {}));
+}(Fontomas || {}));

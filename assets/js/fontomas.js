@@ -1,4 +1,6 @@
-var Fontomas = (function (_, Handlebars, Fontomas) {
+/*global _, Handlebars*/
+
+var Fontomas = (function (Fontomas) {
   "use strict";
 
   var cfg, env, debug, logger = {}, tpl_cache = {};
@@ -91,4 +93,4 @@ var Fontomas = (function (_, Handlebars, Fontomas) {
     },
     logger:       logger
   });
-}(window._, window.Handlebars, Fontomas || {}));
+}(Fontomas || {}));
