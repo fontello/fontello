@@ -1,9 +1,10 @@
-/*global _, Backbone, Raphael*/
+/*global Fontomas, _, Backbone, Raphael*/
 
-var Fontomas = (function (Fontomas) {
+;(function () {
   "use strict";
 
-  var config = Fontomas.cfg;
+
+  var config = Fontomas.config;
 
 
   function get_delta(glyph_path, ascent, descent, adv_x) {
@@ -21,13 +22,16 @@ var Fontomas = (function (Fontomas) {
     };
   }
 
+
   Fontomas.views.Font = Backbone.View.extend({
     tagName: "li",
+
 
     events: {
       "click .fm-font-close": "close",
       "click .fm-glyph-id":   "toggleGlyph"
     },
+
 
     initialize: function () {
       Fontomas.logger.debug("views.Font.initialize");
@@ -40,6 +44,7 @@ var Fontomas = (function (Fontomas) {
       this.model.bind("change",   this.render, this);
       this.model.bind("destroy",  this.remove, this);
     },
+
 
     render: function () {
       Fontomas.logger.debug("views.Font.render el=", this.el);
@@ -169,6 +174,7 @@ var Fontomas = (function (Fontomas) {
       return this;
     },
 
+
     remove: function () {
       var self = this;
 
@@ -182,6 +188,7 @@ var Fontomas = (function (Fontomas) {
 
       this.$el.remove();
     },
+
 
     close: function (event) {
       Fontomas.logger.debug("views.Font.close el=", this.el);
@@ -198,6 +205,7 @@ var Fontomas = (function (Fontomas) {
       this.model.destroy();
     },
 
+
     toggleGlyph: function (event) {
       Fontomas.logger.debug("views.Font.toggleGlyph event=", event);
 
@@ -212,6 +220,7 @@ var Fontomas = (function (Fontomas) {
         $target.parent().removeClass("selected");
       }
     },
+
 
     // add a glyph to the rearrange zone
     addGlyph: function (glyph_id) {
@@ -241,6 +250,7 @@ var Fontomas = (function (Fontomas) {
       Fontomas.main.genfont.incCounter();
     },
 
+
     // remove a glyph from the rearrange zone
     removeGlyph: function (glyph_id) {
       Fontomas.logger.debug("removeGlyph glyph_id=", glyph_id);
@@ -261,5 +271,4 @@ var Fontomas = (function (Fontomas) {
     }
   });
 
-  return Fontomas;
-}(Fontomas || {}));
+}());

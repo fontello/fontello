@@ -1,13 +1,16 @@
-/*global _, Backbone*/
+/*global Fontomas, _, Backbone*/
 
-var Fontomas = (function (Fontomas) {
+;(function () {
   "use strict";
 
-  var config = Fontomas.cfg;
+
+  var config = Fontomas.config;
+
 
   Fontomas.views.GeneratedFont = Backbone.View.extend({
     glyphviews:  [],
     events:      {},
+
 
     initialize: function () {
       Fontomas.logger.debug("views.GeneratedFont.initialize");
@@ -25,6 +28,7 @@ var Fontomas = (function (Fontomas) {
 
     },
 
+
     render: function () {
       Fontomas.logger.debug("views.GeneratedFont.render");
 
@@ -39,6 +43,7 @@ var Fontomas = (function (Fontomas) {
 
       return this;
     },
+
 
     addGlyph: function (glyph) {
       var self = this, view;
@@ -56,10 +61,12 @@ var Fontomas = (function (Fontomas) {
       this.glyphviews.push(view);
     },
 
+
     updateGlyphCount: function () {
       Fontomas.logger.debug("views.GeneratedFont.updateGlyphCount");
       $('#fm-glyph-count').text(this.model.get("glyph_count"));
     },
+
 
     onChange: function () {
       Fontomas.logger.debug("views.GeneratedFont.onChange");
@@ -69,6 +76,7 @@ var Fontomas = (function (Fontomas) {
       }
     },
 
+
     scalePath: function (path, scale) {
       return path.replace(/(-?\d*\.?\d*(?:e[\-+]?\d+)?)/ig, function (num) {
         num = (parseFloat(num) * scale).toPrecision(config.scale_precision);
@@ -77,6 +85,7 @@ var Fontomas = (function (Fontomas) {
         return isNaN(num) ? "" : num;
       });
     },
+
 
     // update font's textarea
     updateFont: function () {
@@ -133,5 +142,4 @@ var Fontomas = (function (Fontomas) {
     }
   });
 
-  return Fontomas;
-}(Fontomas || {}));
+}());

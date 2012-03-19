@@ -1,6 +1,6 @@
-/*global Backbone*/
+/*global Fontomas, Backbone*/
 
-var Fontomas = (function (Fontomas) {
+;(function () {
   "use strict";
 
 
@@ -8,6 +8,4 @@ var Fontomas = (function (Fontomas) {
     model: Fontomas.models.Glyph
   });
 
-
-  return Fontomas;
-}(Fontomas || {}));
+}());

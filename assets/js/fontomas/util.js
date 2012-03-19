@@ -1,9 +1,11 @@
-/*global _, XMLSerializer*/
+/*global Fontomas, _, XMLSerializer*/
 
-var Fontomas = (function (Fontomas) {
+;(function () {
   "use strict";
 
+
   var exports = {}, notify_dup = {};
+
 
   function notify(tpl, text, suppress_dup) {
     var options = {expires: 4000};
@@ -27,9 +29,11 @@ var Fontomas = (function (Fontomas) {
     $('#notifications-container').notify("create", tpl, {text: text}, options);
   }
 
+
   exports.notify_alert = function (text, suppress_dup) {
     notify('icon-template', text, suppress_dup);
   };
+
 
   exports.notify_info = function (text, suppress_dup) {
     notify('basic-template', text, suppress_dup);
@@ -42,6 +46,7 @@ var Fontomas = (function (Fontomas) {
     return $("<div/>").append(jquery_object.clone()).html();
   };
 
+
   exports.getAllAttrs = function (dom_node) {
     var result = {};
 
@@ -51,6 +56,7 @@ var Fontomas = (function (Fontomas) {
 
     return result;
   };
+
 
   exports.xmlToString = function(xmlDom) {
     var result;
@@ -70,16 +76,19 @@ var Fontomas = (function (Fontomas) {
     return result;
   };
 
+
   exports.getFileExt = function (filepath) {
     var index = String(filepath).lastIndexOf(".");
     return (index === -1) ? "" : filepath.substr(index+1).toLowerCase();
   };
+
 
   exports.joinList = function (array, delim1, delim2) {
     return _.reduce(array, function (prev, cur, idx, arr) {
       return prev + ((arr.length !== idx + 1) ? delim1 : delim2) + cur;
     });
   };
+
 
   // trim string at both sides:
   // in:  s="abc{hello}def", begin="c{", end="}"
@@ -88,6 +97,7 @@ var Fontomas = (function (Fontomas) {
     var idx1 = s.indexOf(begin) + begin.length, idx2 = s.lastIndexOf(end);
     return (idx1 >= idx2) ? s : s.substr(idx1, idx2 - idx1);
   };
+
 
   exports.repeat = function (s, times) {
     var result = "";
@@ -100,13 +110,16 @@ var Fontomas = (function (Fontomas) {
     return result;
   };
 
+
   exports.rpad = function (s, len) {
     return s + exports.repeat(" ", len - s.length);
   };
 
+
   exports.lpad = function (s, len) {
     return exports.repeat(" ", len - s.length) + s;
   };
+
 
   exports.base64_encode = function (s) {
     /*jshint bitwise:false*/
@@ -137,5 +150,6 @@ var Fontomas = (function (Fontomas) {
     return result;
   };
 
-  return $.extend(true, Fontomas, {util: exports});
-}(Fontomas || {}));
+  Fontomas.util = exports;
+
+}());

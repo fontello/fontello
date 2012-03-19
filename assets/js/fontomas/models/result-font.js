@@ -1,10 +1,12 @@
-/*global _, Backbone*/
+/*global Fontomas, _, Backbone*/
 
-var Fontomas = (function (Fontomas) {
+;(function () {
   "use strict";
+
 
   Fontomas.models.GeneratedFont = Backbone.Model.extend({
     defaults: {glyph_count: 0},
+
 
     initialize: function () {
       var i, ch;
@@ -30,22 +32,25 @@ var Fontomas = (function (Fontomas) {
           char:   this.toCharRef(ch)
         });
       }
-
     },
+
 
     incCounter: function () {
       this.set("glyph_count", this.get("glyph_count") + 1);
     },
+
 
     decCounter: function () {
       this.set("glyph_count", this.get("glyph_count") - 1);
       Fontomas.logger.assert(this.get("glyph_count") >= 0);
     },
 
+
     // return char in CharRef notation
     toCharRef: function (char) {
       return "&#x" + char.charCodeAt(0).toString(16) + ";";
     },
+
 
     // return char in U+ notation
     toUnicode: function (char) {
@@ -53,11 +58,11 @@ var Fontomas = (function (Fontomas) {
       return "U+" + "0000".substr(0, 4 - c.length % 4) + c;
     },
 
+
     // FIXME: the model isn't sync()ed to server yet
     sync: function () {
       Fontomas.logger.debug("models.GeneratedFont.sync()");
     }
   });
 
-  return Fontomas;
-}(Fontomas || {}));
+}());

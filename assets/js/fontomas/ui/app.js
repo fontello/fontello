@@ -1,9 +1,11 @@
-/*global _, Backbone, Handlebars*/
+/*global Fontomas, _, Backbone, Handlebars*/
 
-var Fontomas = (function (Fontomas) {
+;(function () {
   "use strict";
 
-  var config = Fontomas.cfg;
+
+  var config = Fontomas.config;
+
 
   Fontomas.views.app = Backbone.View.extend({
     fontviews:      {},
@@ -32,6 +34,7 @@ var Fontomas = (function (Fontomas) {
         topview:  this
       });
     },
+
 
     initSvgFontTemplate: function () {
       var xml_string;
@@ -68,6 +71,7 @@ var Fontomas = (function (Fontomas) {
         });
     },
 
+
     render: function () {
       Fontomas.logger.debug("views.app.render");
 
@@ -89,6 +93,7 @@ var Fontomas = (function (Fontomas) {
       return this;
     },
 
+
     addEmbeddedFonts: function (embedded_fonts) {
       var self = this;
 
@@ -109,6 +114,7 @@ var Fontomas = (function (Fontomas) {
         self.select_toolbar.renderUseEmbedded();
       });
     },
+
 
     addFontsAsStrings: function (files, cb_onload) {
       Fontomas.logger.debug("views.app.addFontsAsStrings flen=", files.length);
@@ -143,9 +149,11 @@ var Fontomas = (function (Fontomas) {
       });
     },
 
+
     addUploadedFonts: function (files) {
       this.addFonts(files, _.bind(this.addFont, this));
     },
+
 
     addFonts: function (files, callback) {
       Fontomas.logger.debug("views.app.addFonts");
@@ -194,6 +202,7 @@ var Fontomas = (function (Fontomas) {
         reader.readAsBinaryString(f);
       });
     },
+
 
     addFont: function (fileinfo, cb_onclose) {
       /*jshint newcap:false*/
@@ -246,6 +255,7 @@ var Fontomas = (function (Fontomas) {
       */
     },
 
+
     createFont: function (attrs) {
       Fontomas.logger.debug("views.app.create attrs=", attrs);
 
@@ -253,6 +263,7 @@ var Fontomas = (function (Fontomas) {
       attrs.id = this.model.next_font_id++;
       this.model.fonts.create(attrs);
     },
+
 
     addOneFont: function (font) {
       Fontomas.logger.debug("views.app.addOneFont");
@@ -266,10 +277,12 @@ var Fontomas = (function (Fontomas) {
       $("#fm-font-list").append(view.render().el);
     },
 
+
     addAllFonts: function () {
       Fontomas.logger.debug("views.app.addAllFonts");
       this.model.fonts.each(this.addOneFont);
     },
+
 
     toggleMenu: function (enabled) {
       Fontomas.logger.debug("views.app.toggleMenu");
@@ -279,5 +292,4 @@ var Fontomas = (function (Fontomas) {
     }
   });
 
-  return Fontomas;
-}(Fontomas || {}));
+}());

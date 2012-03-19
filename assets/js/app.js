@@ -1,7 +1,8 @@
 /*global Fontomas, $, Backbone*/
 
-(function (Fontomas) {
+;(function () {
   "use strict";
+
 
   $(function () {
     // FF3.6+ Chrome6+ Opera11.1+
@@ -41,4 +42,5 @@
     $('.tooltip-test').tooltip();
     $("#notifications-container").notify({speed: 500, expires: 5000});
   });
-}(Fontomas || {}));
+
+}());

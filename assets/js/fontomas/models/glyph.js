@@ -1,6 +1,6 @@
-/*global Backbone*/
+/*global Fontomas, Backbone*/
 
-var Fontomas = (function (Fontomas) {
+;(function () {
   "use strict";
 
 
@@ -11,6 +11,4 @@ var Fontomas = (function (Fontomas) {
     }
   });
 
-
-  return Fontomas;
-}(Fontomas || {}));
+}());

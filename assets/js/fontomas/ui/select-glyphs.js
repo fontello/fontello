@@ -1,13 +1,16 @@
-/*global _, Backbone*/
+/*global Fontomas, _, Backbone*/
 
-var Fontomas = (function (Fontomas) {
+;(function () {
   "use strict";
 
-  var config = Fontomas.cfg;
+
+  var config = Fontomas.config;
+
 
   Fontomas.views.SelectToolbar = Backbone.View.extend({
     tagName: "form",
     id: "fm-file-drop-zone",
+
 
     events: {
       "click .fm-icon-size-button":   "changeIconSize",
@@ -18,6 +21,7 @@ var Fontomas = (function (Fontomas) {
       "click .fm-font-name":          "useEmbedded"
     },
 
+
     initialize: function () {
       Fontomas.logger.debug("views.SelectToolbar.initialize");
 
@@ -25,6 +29,7 @@ var Fontomas = (function (Fontomas) {
 
       this.topview    = this.options.topview;
     },
+
 
     render: function () {
       Fontomas.logger.debug("views.SelectToolbar.render");
@@ -55,6 +60,7 @@ var Fontomas = (function (Fontomas) {
       return this;
     },
 
+
     renderUseEmbedded: function () {
       Fontomas.logger.debug("views.SelectToolbar.renderUseEmbedded");
 
@@ -72,6 +78,7 @@ var Fontomas = (function (Fontomas) {
           });
     },
 
+
     useEmbedded: function (event) {
       Fontomas.logger.debug("views.SelectToolbar.useEmbedded");
 
@@ -86,6 +93,7 @@ var Fontomas = (function (Fontomas) {
       }
     },
 
+
     fileBrowse: function (event) {
       event.preventDefault();
 
@@ -99,9 +107,11 @@ var Fontomas = (function (Fontomas) {
       }
     },
 
+
     fileUpload: function (event) {
       this.topview.addUploadedFonts(event.target.files);
     },
+
 
     fileDragOver: function (event) {
       //Fontomas.logger.debug("fileDragOver");
@@ -112,6 +122,7 @@ var Fontomas = (function (Fontomas) {
       }
     },
 
+
     fileDrop: function (event) {
       Fontomas.logger.debug("fileDrop");
 
@@ -121,6 +132,7 @@ var Fontomas = (function (Fontomas) {
         this.topview.addUploadedFonts(event.originalEvent.dataTransfer.files);
       }
     },
+
 
     changeIconSize: function (event) {
       Fontomas.logger.debug("views.SelectToolbar.changeIconSize");
@@ -189,5 +201,4 @@ var Fontomas = (function (Fontomas) {
     }
   });
 
-  return Fontomas;
-}(Fontomas || {}));
+}());

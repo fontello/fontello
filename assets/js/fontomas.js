@@ -1,12 +1,18 @@
-/*global _, Handlebars*/
+/*global Fontomas, _, Handlebars*/
 
-var Fontomas = (function (Fontomas) {
+;(function () {
   "use strict";
 
-  var cfg, env, debug, logger = {}, tpl_cache = {};
+
+  window.Fontomas = {};
+  Fontomas.models = {};
+  Fontomas.views  = {};
 
 
-  cfg = {
+  var logger = {}, tpl_cache = {};
+
+
+  Fontomas.config = {
     // class icon_size_prefix+"-<num>" added when icon size has changed
     icon_size_prefix:   "fm-icon-size-",
     icon_size_classes:  "", // precalculated by initCfg()
@@ -33,30 +39,34 @@ var Fontomas = (function (Fontomas) {
     }
   };
 
+  // init icon_size_classes
+  Fontomas.config.icon_size_classes = Fontomas.config.preview_icon_sizes.map(
+    function (item) {
+      return Fontomas.config.icon_size_prefix + item;
+    }
+  ).join(" ");
+
+
   // environment
-  env = {
+  Fontomas.env = {
     is_file_proto:  (window.location.protocol === "file:"),
     filereader:     null
   };
 
-  debug = {is_on: false};
 
-  // init icon_size_classes
-  cfg.icon_size_classes = cfg.preview_icon_sizes.map(function (item) {
-    return cfg.icon_size_prefix+item;
-  }).join(" ");
+  Fontomas.debug = {is_on: false};
 
   // usage: index.html#debug:maxglyphs=10,noembedded,nofilereader
   _.each(window.location.hash.substr(1).split("&"), function (str) {
     var vars = str.split(":");
 
     if ("debug" === vars.shift()) {
-      debug.is_on = true;
+      Fontomas.debug.is_on = true;
 
       if (vars.length) {
         _.each(vars.shift().split(","), function (str) {
           var pair = str.split("=");
-          debug[pair[0]] = pair[1] && pair[1] !== "" ? pair[1] : true;
+          Fontomas.debug[pair[0]] = pair[1] && pair[1] !== "" ? pair[1] : true;
         });
       }
     }
@@ -67,30 +77,24 @@ var Fontomas = (function (Fontomas) {
   logger.error  =
   logger.debug  = function () {};
 
-  if (debug.is_on) {
+  if (Fontomas.debug.is_on) {
     logger.assert = console.assert;
     logger.error  = console.error;
     logger.debug  = console.debug;
   }
 
+  Fontomas.logger = logger;
 
-  // public interface
-  return $.extend(true, Fontomas, {
-    cfg:          cfg,
-    env:          env,
-    debug:        debug,
-    models:       {},
-    views:        {},
-    render:       function (id, locals) {
-      var $tpl;
 
-      if (!tpl_cache[id]) {
-        $tpl = $('[data-tpl-id=' + id + ']').remove();
-        tpl_cache[id] = Handlebars.compile($tpl.html());
-      }
+  Fontomas.render = function (id, locals) {
+    var $tpl;
 
-      return tpl_cache[id](locals || {});
-    },
-    logger:       logger
-  });
-}(Fontomas || {}));
+    if (!tpl_cache[id]) {
+      $tpl = $('[data-tpl-id=' + id + ']').remove();
+      tpl_cache[id] = Handlebars.compile($tpl.html());
+    }
+
+    return tpl_cache[id](locals || {});
+  };
+
+}());

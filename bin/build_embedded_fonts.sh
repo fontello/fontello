@@ -5,11 +5,18 @@ SCRIPT_PATH="$(pwd)/$0"
 ROOT_DIR=${SCRIPT_PATH%/*/*}
 BIN_DIR="${ROOT_DIR}/bin"
 FONT_DIR="${ROOT_DIR}/src/fonts-original"
-JS_DIR="${ROOT_DIR}/public/js/fontomas"
+JS_DIR="${ROOT_DIR}/assets/js/fontomas"
 FIX_ENTYPO_SCRIPT="${BIN_DIR}/entypo_rescale.pe"
 
-FONTS=(entypo_rescaled.svg iconic_fill.svg iconic_stroke.svg websymbols.svg)
+FONTS=(
+    entypo_rescaled.svg
+    iconic_fill.svg
+    iconic_stroke.svg
+    websymbols.svg
+    fontawesome-webfont.svg
+)
 FLEN=${#FONTS[@]}
+
 FONT_ENTYPO=Entypo.otf
 FONT_ENTYPO_FIXED=entypo_rescaled.svg
 OUTPUT_FILE="${JS_DIR}/embedded-fonts.js"
@@ -28,8 +35,10 @@ echo "done"
 
 echo -n "Generating $OUTPUT_FILE... "
 (cat <<END
-var Fontomas = (function (Fontomas) {
+/*global Fontomas*/
+;(function () {
   "use strict";
+
 
   Fontomas.embedded_fonts = [
 END
@@ -54,8 +63,7 @@ cat <<END
 
   ];
 
-  return Fontomas;
-}(Fontomas || {}));
+}());
 END
 ) > $OUTPUT_FILE
 
