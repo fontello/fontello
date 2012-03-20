@@ -18,8 +18,6 @@
 
       _.bindAll(this);
 
-      this.topview   = this.options.topview;
-
       this.model.on("change",   this.render, this);
       this.model.on("destroy",  this.remove, this);
 

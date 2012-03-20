@@ -38,8 +38,6 @@
 
       _.bindAll(this);
 
-      this.topview    = this.options.topview;
-
       this.$el.attr("id", "fm-font-" + this.model.id);
       this.model.on("change",   this.render,  this);
       this.model.on("destroy",  this.remove,  this);
@@ -201,7 +199,7 @@
 
       if (embedded_id !== null) {
         Fontomas.embedded_fonts[embedded_id].is_added = false;
-        this.topview.select_toolbar.renderUseEmbedded();
+        this.trigger("closeEmbeddedFont");
       }
 
       this.model.destroy();

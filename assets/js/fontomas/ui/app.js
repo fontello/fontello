@@ -20,20 +20,40 @@
       _.bindAll(this);
 
       this.select_toolbar = new Fontomas.views.SelectToolbar({
-        el:       $('#fm-file-drop-zone')[0],
-        topview:  this
+        el: $('#fm-file-drop-zone')[0]
       });
+      this.select_toolbar.on("useEmbeddedFont", this.onUseEmbeddedFont, this);
+      this.select_toolbar.on("fileUpload",      this.onFileUpload,      this);
+      this.select_toolbar.on("fileDrop",        this.onFileDrop,        this);
 
       this.fonts = new Fontomas.models.FontsCollection;
       this.fonts.on("add",   this.addOneFont,  this);
       this.fonts.on("reset", this.addAllFonts, this);
 
       var genfont = new Fontomas.models.GeneratedFont;
-      this.genfontview = new Fontomas.views.GeneratedFont({
-        model:    genfont,
-        topview:  this
-      });
+      this.genfontview = new Fontomas.views.GeneratedFont({model: genfont});
       this.genfontview.on("toggleMenu", this.toggleMenu, this);
+    },
+
+
+    onUseEmbeddedFont: function (font) {
+      Fontomas.logger.debug("views.app.onUseEmbeddedFont");
+
+      this.addEmbeddedFonts([font]);
+    },
+
+
+    onFileUpload: function (files) {
+      Fontomas.logger.debug("views.app.onFileUpload");
+
+      this.addUploadedFonts(files);
+    },
+
+
+    onFileDrop: function (files) {
+      Fontomas.logger.debug("views.app.onFileDrop");
+
+      this.addUploadedFonts(files);
     },
 
 
@@ -237,12 +257,9 @@
     addOneFont: function (font) {
       Fontomas.logger.debug("views.app.addOneFont");
 
-      var view = new Fontomas.views.Font({
-        model: font,
-        topview: this
-      });
-
-      view.on("toggleGlyph", this.toggleGlyph, this);
+      var view = new Fontomas.views.Font({model: font});
+      view.on("toggleGlyph",        this.toggleGlyph,         this);
+      view.on("closeEmbeddedFont",  this.onCloseEmbeddedFont, this);
 
       this.fontviews[font.id] = view;
       $("#fm-font-list").append(view.render().el);
@@ -265,6 +282,12 @@
           glyph:    glyph
         });
       }
+    },
+
+
+    onCloseEmbeddedFont: function () {
+      Fontomas.logger.debug("views.app.onCloseEmbeddedFont");
+      this.select_toolbar.renderUseEmbedded();
     },
 
 

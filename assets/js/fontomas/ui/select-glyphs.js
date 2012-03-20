@@ -26,8 +26,6 @@
       Fontomas.logger.debug("views.SelectToolbar.initialize");
 
       _.bindAll(this);
-
-      this.topview = this.options.topview;
     },
 
 
@@ -85,11 +83,10 @@
       var id    = $(event.target).data("embedded_id"),
           font  = Fontomas.embedded_fonts[id];
 
-      Fontomas.logger.debug(font);
       event.preventDefault();
 
       if (font && !font.is_added) {
-        this.topview.addEmbeddedFonts([font]);
+        this.trigger("useEmbeddedFont", font);
       }
     },
 
@@ -109,7 +106,7 @@
 
 
     fileUpload: function (event) {
-      this.topview.addUploadedFonts(event.target.files);
+      this.trigger("fileUpload", event.target.files);
     },
 
 
@@ -129,7 +126,7 @@
       if (Fontomas.env.filereader) {
         event.stopPropagation();
         event.preventDefault();
-        this.topview.addUploadedFonts(event.originalEvent.dataTransfer.files);
+        this.trigger("fileDrop", event.originalEvent.dataTransfer.files);
       }
     },
 

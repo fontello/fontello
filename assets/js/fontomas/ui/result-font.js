@@ -17,8 +17,6 @@
 
       _.bindAll(this);
 
-      this.topview = this.options.topview;
-
       this.model.glyphs.each(this.addGlyph);
       this.model.glyphs.on("add", this.addGlyph, this);
 
@@ -48,10 +46,7 @@
 
       Fontomas.logger.debug("views.GeneratedFont.addGlyph");
 
-      view = new Fontomas.views.Glyph({
-        model:    glyph,
-        topview:  this.topview
-      });
+      view = new Fontomas.views.Glyph({model: glyph});
 
       if (config.live_update) {
         self.updateFont();
