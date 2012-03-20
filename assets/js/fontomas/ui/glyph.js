@@ -21,7 +21,7 @@
       this.model.on("change",   this.render, this);
       this.model.on("destroy",  this.remove, this);
 
-      this.$el.html(Fontomas.render('genfont-glyph-item', this.model.toJSON()));
+      this.$el.html(Fontomas.render('resultfont-glyph-item', this.model.toJSON()));
     },
 
 

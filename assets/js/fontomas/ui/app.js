@@ -10,7 +10,7 @@
     fonts:          null,
     fontviews:      {},
     select_toolbar: null,
-    genfontview:    null,
+    resultfontview: null,
     events:         {},
 
 
@@ -30,10 +30,10 @@
       this.fonts.on("add",   this.addOneFont,  this);
       this.fonts.on("reset", this.addAllFonts, this);
 
-      var genfont = new Fontomas.models.GeneratedFont;
-      this.genfontview = new Fontomas.views.GeneratedFont({model: genfont});
-      this.genfontview.on("someGlyphsSelected", this.menuOn,  this);
-      this.genfontview.on("noGlyphsSelected",   this.menuOff, this);
+      var resultfont = new Fontomas.models.ResultFont;
+      this.resultfontview = new Fontomas.views.ResultFont({model: resultfont});
+      this.resultfontview.on("someGlyphsSelected", this.menuOn,  this);
+      this.resultfontview.on("noGlyphsSelected",   this.menuOff, this);
     },
 
 
@@ -74,7 +74,7 @@
       $("#tab a:first").tab("show");
 
       // render the rearrange tab
-      this.genfontview.render();
+      this.resultfontview.render();
 
       return this;
     },
@@ -270,14 +270,14 @@
     toggleGlyph: function (glyph_id, glyph) {
       Fontomas.logger.debug("views.app.toggleGlyph glyph=", glyph);
 
-      var found_glyph = this.genfontview.model.glyphs.find(function (item) {
+      var found_glyph = this.resultfontview.model.glyphs.find(function (item) {
         return item.get("glyph_id") === glyph_id;
       });
 
       if (found_glyph) {
         found_glyph.destroy();
       } else {
-        this.genfontview.model.glyphs.add({
+        this.resultfontview.model.glyphs.add({
           //unicode:  0x0020,
           glyph_id: glyph_id,
           glyph:    glyph

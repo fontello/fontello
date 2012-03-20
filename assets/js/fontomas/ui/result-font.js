@@ -7,13 +7,13 @@
   var config = Fontomas.config;
 
 
-  Fontomas.views.GeneratedFont = Backbone.View.extend({
+  Fontomas.views.ResultFont = Backbone.View.extend({
     glyphviews:  [],
     events:      {},
 
 
     initialize: function () {
-      Fontomas.logger.debug("views.GeneratedFont.initialize");
+      Fontomas.logger.debug("views.ResultFont.initialize");
 
       _.bindAll(this);
 
@@ -26,7 +26,7 @@
 
 
     render: function () {
-      Fontomas.logger.debug("views.GeneratedFont.render");
+      Fontomas.logger.debug("views.ResultFont.render");
 
       _.each(this.glyphviews, function (glyph) {
         $('#fm-generated-font').append(glyph.render().el);
@@ -44,7 +44,7 @@
     addGlyph: function (glyph) {
       var self = this, view;
 
-      Fontomas.logger.debug("views.GeneratedFont.addGlyph");
+      Fontomas.logger.debug("views.ResultFont.addGlyph");
 
       view = new Fontomas.views.Glyph({model: glyph});
 
@@ -58,7 +58,7 @@
 
 
     onChangeGlyphCount: function (model, glyph_count) {
-      Fontomas.logger.debug("views.GeneratedFont.onChangeGlyphCount");
+      Fontomas.logger.debug("views.ResultFont.onChangeGlyphCount");
       $('#fm-glyph-count').text(glyph_count);
 
       if (model.previous("glyph_count") === 0 && glyph_count > 0) {
@@ -70,7 +70,7 @@
 
 
     onChange: function () {
-      Fontomas.logger.debug("views.GeneratedFont.onChange");
+      Fontomas.logger.debug("views.ResultFont.onChange");
 
       if (config.live_update) {
         this.updateFont();
