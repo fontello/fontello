@@ -20,12 +20,10 @@
       this.topview = this.options.topview;
 
       this.model.glyphs.each(this.addGlyph);
-      this.model.glyphs.bind("add", this.addGlyph, this);
+      this.model.glyphs.on("add", this.addGlyph, this);
 
-      this.model.bind("change:glyph_count", this.updateGlyphCount, this);
-      this.model.bind("change",             this.onChange, this);
-
-
+      this.model.on("change:glyph_count", this.updateGlyphCount,  this);
+      this.model.on("change",             this.onChange,          this);
     },
 
 
@@ -48,6 +46,8 @@
     addGlyph: function (glyph) {
       var self = this, view;
 
+      Fontomas.logger.debug("views.GeneratedFont.addGlyph");
+
       view = new Fontomas.views.Glyph({
         model:    glyph,
         topview:  this.topview
@@ -57,14 +57,20 @@
         self.updateFont();
       }
 
-      //Fontomas.logger.debug("views.GeneratedFont.addGlyph");
       this.glyphviews.push(view);
+      $('#fm-generated-font').append(view.render().el);
     },
 
 
-    updateGlyphCount: function () {
+    updateGlyphCount: function (model, glyph_count) {
       Fontomas.logger.debug("views.GeneratedFont.updateGlyphCount");
-      $('#fm-glyph-count').text(this.model.get("glyph_count"));
+      $('#fm-glyph-count').text(glyph_count);
+
+      if (model.previous("glyph_count") === 0 && glyph_count > 0) {
+        this.trigger("toggleMenu", true);
+      } else if (model.previous("glyph_count") > 0 && glyph_count === 0) {
+        this.trigger("toggleMenu", false);
+      }
     },
 
 
@@ -89,11 +95,13 @@
 
     // update font's textarea
     updateFont: function () {
+/*
+      // TODO
       var self = this, glyphs = [];
 
-      if (!Fontomas.main.xml_template) {
-        return;
-      }
+      //if (!Fontomas.main.xml_template) {
+      //  return;
+      //}
 
       $('#fm-generated-font')
         .find("input:checkbox:checked")
@@ -101,8 +109,8 @@
           var $this    = $(this),
               glyph_id = $this.val(),
               unicode  = $this.siblings("input.fm-unicode").val(),
-              font     = Fontomas.main.fonts.getFont(glyph_id),
-              glyph    = Fontomas.main.fonts.getGlyph(glyph_id),
+              //font     = Fontomas.main.fonts.getFont(glyph_id),
+              //glyph    = Fontomas.main.fonts.getGlyph(glyph_id),
               scale,
               g;
 
@@ -137,8 +145,9 @@
           glyphs.push(Fontomas.util.outerHtml(g));
         });
 
-      $("glyph", Fontomas.main.xml_template).remove();
-      $("font", Fontomas.main.xml_template).append($(glyphs.join("\n")));
+      //$("glyph", Fontomas.main.xml_template).remove();
+      //$("font", Fontomas.main.xml_template).append($(glyphs.join("\n")));
+*/
     }
   });
 

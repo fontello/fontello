@@ -114,6 +114,7 @@
     font.units_per_em = json.face["units-per-em"] || 1000;
     font.id           = json.face["font-family"] || "unknown";
 
+    // FIXME: slice
     _.each(json.glyphs.slice(0, max_glyphs), function (glyph, i) {
       glyph.unicode = i;
 
@@ -143,6 +144,19 @@
         is_added:   false
       };
     },
+
+
+    parseId: function (pair_id) {
+      var pair = pair_id.split("-");
+      return {font_id: pair[0], glyph_id: pair[1]};
+    },
+
+
+    getGlyph: function (pair_id) {
+      var glyph_id = this.parseId(pair_id).glyph_id;
+      return this.get("font").glyphs[glyph_id];
+    },
+
 
     // FIXME: the model isn't sync()ed to server yet
     sync: function () {

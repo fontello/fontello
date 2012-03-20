@@ -104,7 +104,7 @@
 
     while (0 < times) {
       result += s;
-      times -= 1;
+      times--;
     }
 
     return result;

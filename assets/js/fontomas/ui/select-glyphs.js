@@ -8,8 +8,8 @@
 
 
   Fontomas.views.SelectToolbar = Backbone.View.extend({
-    tagName: "form",
-    id: "fm-file-drop-zone",
+    tagName:  "form",
+    id:       "fm-file-drop-zone",
 
 
     events: {
@@ -27,7 +27,7 @@
 
       _.bindAll(this);
 
-      this.topview    = this.options.topview;
+      this.topview = this.options.topview;
     },
 
 
@@ -176,16 +176,9 @@
       $('#fm-generated-font')
         .find('.rg-icon')
         .each(function (i) {
-          var $this    = $(this),
-              glyph_id = $(this).parent().siblings(".fm-glyph-id").val(),
-              size_x   = size,
-              size_y   = size;
-
-          // FIXME
-          if (glyph_id !== "") {
-            size_x = $this.data("glyph_sizes")[size][0];
-            size_y = $this.data("glyph_sizes")[size][1];
-          }
+          var $this = $(this),
+            size_x  = $this.data("glyph_sizes")[size][0],
+            size_y  = $this.data("glyph_sizes")[size][1];
 
           $this.css({
             "width":        "100%",

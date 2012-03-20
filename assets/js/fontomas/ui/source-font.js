@@ -41,8 +41,8 @@
       this.topview    = this.options.topview;
 
       this.$el.attr("id", "fm-font-" + this.model.id);
-      this.model.bind("change",   this.render, this);
-      this.model.bind("destroy",  this.remove, this);
+      this.model.on("change",   this.render,  this);
+      this.model.on("destroy",  this.remove,  this);
     },
 
 
@@ -169,6 +169,8 @@
 
         // FIXME: is this the right place?
         gd.data("glyph_sizes", glyph_sizes);
+        item.glyph_sizes  = glyph_sizes;
+        item.svg          = Fontomas.util.outerHtml($glyph.find("svg"));
       }, this);
 
       return this;
@@ -183,7 +185,7 @@
       // remove associated html markup
       this.$("input:checkbox:checked").each(function() {
         var glyph_id = $(this).val();
-        self.removeGlyph(glyph_id);
+        self.trigger("toggleGlyph", glyph_id, self.model.getGlyph(glyph_id));
       });
 
       this.$el.remove();
@@ -212,62 +214,10 @@
       var $target   = $(event.target),
           glyph_id  = $target.attr("value");
 
-      if ($target.is(":checked")) {
-        this.addGlyph(glyph_id);
-        $target.parent().addClass("selected");
-      } else {
-        this.removeGlyph(glyph_id);
-        $target.parent().removeClass("selected");
-      }
-    },
+      // FIXME
+      $target.parent().toggleClass("selected", $target.is(":checked"));
 
-
-    // add a glyph to the rearrange zone
-    addGlyph: function (glyph_id) {
-      Fontomas.logger.debug("addGlyph glyph_id=", glyph_id);
-
-      var checkbox  = $('#rearrange').find(".fm-glyph-id:not(:checked):first"),
-          el_id     = "#fm-font-glyph-" + glyph_id,
-          svg       = $(el_id).contents().clone(false),
-          icon      = checkbox.parent().find('.rg-icon');
-
-      checkbox.attr({value: glyph_id, checked: true});
-      checkbox.parent().addClass("selected");
-
-      icon.append(svg)
-        .data("glyph_sizes", $(el_id).data("glyph_sizes"))
-        .attr("style", $(el_id).attr("style"))
-        .css({
-          "width":        "100%",
-          "left":         "0px",
-          "margin-left":  "0px"
-        });
-
-      if (Fontomas.main.genfont.get("glyph_count") === 0) {
-        this.topview.toggleMenu(true);
-      }
-
-      Fontomas.main.genfont.incCounter();
-    },
-
-
-    // remove a glyph from the rearrange zone
-    removeGlyph: function (glyph_id) {
-      Fontomas.logger.debug("removeGlyph glyph_id=", glyph_id);
-
-      var checkbox=$('#rearrange').find(".fm-glyph-id:checked[value='" + glyph_id + "']");
-
-      checkbox.attr({value: "", checked: false});
-      checkbox.parent()
-        .removeClass("selected")
-        .find('.rg-icon')
-          .removeData("glyph_sizes").empty();
-
-      if (Fontomas.main.genfont.get("glyph_count") === 1) {
-        this.topview.toggleMenu(false);
-      }
-
-      Fontomas.main.genfont.decCounter();
+      this.trigger("toggleGlyph", glyph_id, this.model.getGlyph(glyph_id));
     }
   });
 

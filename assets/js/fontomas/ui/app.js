@@ -4,71 +4,36 @@
   "use strict";
 
 
-  var config = Fontomas.config;
-
-
   Fontomas.views.app = Backbone.View.extend({
+    myfiles:        [],
+    next_font_id:   1,
+    fonts:          null,
     fontviews:      {},
-    genfontview:    null,
     select_toolbar: null,
+    genfontview:    null,
     events:         {},
+
 
     initialize: function () {
       Fontomas.logger.debug("views.app.initialize");
 
       _.bindAll(this);
 
-      this.initSvgFontTemplate();
-
-      this.model.fonts.bind('add',   this.addOneFont, this);
-      this.model.fonts.bind('reset', this.addAllFonts, this);
-      //this.model.fonts.fetch();
-
       this.select_toolbar = new Fontomas.views.SelectToolbar({
         el:       $('#fm-file-drop-zone')[0],
         topview:  this
       });
 
+      this.fonts = new Fontomas.models.FontsCollection;
+      this.fonts.on("add",   this.addOneFont,  this);
+      this.fonts.on("reset", this.addAllFonts, this);
+
+      var genfont = new Fontomas.models.GeneratedFont;
       this.genfontview = new Fontomas.views.GeneratedFont({
-        model:    this.model.genfont,
+        model:    genfont,
         topview:  this
       });
-    },
-
-
-    initSvgFontTemplate: function () {
-      var xml_string;
-
-      try {
-        xml_string = $('#fm-font-output').html().trimLeft();
-        this.model.xml_template = $.parseXML(xml_string);
-      } catch (e) {
-        Fontomas.logger.error(
-          "initSvgFontTemplate: invalid xml template=",
-          $('#fm-font-output').html(),
-          "e=", e
-        );
-        Fontomas.util.notify_alert("Internal error: can't parse output template.");
-        return;
-      }
-
-      $(this.model.xml_template)
-        .find("metadata").text(config.output.metadata)
-        .end()
-        .find("font").attr({
-          "id":           config.output.font_id,
-          "horiz-adv-x":  config.output.horiz_adv_x
-        })
-        .end()
-        .find("font-face").attr({
-          "units-per-em": config.output.units_per_em,
-          "ascent":       config.output.ascent,
-          "descent":      config.output.descent
-        })
-        .end()
-        .find("missing-glyph").attr({
-          "horiz-adv-x":  config.output.missing_glyph_horiz_adv_x
-        });
+      this.genfontview.on("toggleMenu", this.toggleMenu, this);
     },
 
 
@@ -117,13 +82,15 @@
 
 
     addFontsAsStrings: function (files, cb_onload) {
+      var self = this;
+
       Fontomas.logger.debug("views.app.addFontsAsStrings flen=", files.length);
 
       _.each(files, function (f) {
         var fileinfo;
 
         fileinfo = {
-          id:             Fontomas.main.myfiles.length,
+          id:             self.myfiles.length,
           filename:       f.filename,
           filesize:       f.content.length,
           filetype:       f.filetype,
@@ -137,7 +104,7 @@
           embedded_id:    f.id
         };
 
-        Fontomas.main.myfiles.push(fileinfo);
+        self.myfiles.push(fileinfo);
 
         if (cb_onload) {
           cb_onload(fileinfo);
@@ -156,13 +123,15 @@
 
 
     addFonts: function (files, callback) {
+      var self = this;
+
       Fontomas.logger.debug("views.app.addFonts");
 
       _.each(files, function (f) {
         var fileinfo, reader = new FileReader();
 
         fileinfo = {
-          id:             Fontomas.main.myfiles.length,
+          id:             self.myfiles.length,
           filename:       f.name,
           filesize:       f.size,
           filetype:       f.type,
@@ -176,14 +145,14 @@
           embedded_id:    null
         };
 
-        Fontomas.main.myfiles.push(fileinfo);
+        self.myfiles.push(fileinfo);
 
         reader.onload = function (event) {
           // FIXME: race condition?
           // is there a file with the same content?
           var is_exist = false;
 
-          _.each(Fontomas.main.myfiles, function (f) {
+          _.each(self.myfiles, function (f) {
             if (event.target.result === f.content) {
               is_exist = fileinfo.is_dup = true;
             }
@@ -260,8 +229,8 @@
       Fontomas.logger.debug("views.app.create attrs=", attrs);
 
       //if (!attrs.id) // FIXME
-      attrs.id = this.model.next_font_id++;
-      this.model.fonts.create(attrs);
+      attrs.id = this.next_font_id++;
+      this.fonts.create(attrs);
     },
 
 
@@ -273,14 +242,35 @@
         topview: this
       });
 
+      view.on("toggleGlyph", this.toggleGlyph, this);
+
       this.fontviews[font.id] = view;
       $("#fm-font-list").append(view.render().el);
     },
 
 
+    toggleGlyph: function (glyph_id, glyph) {
+      Fontomas.logger.debug("views.app.toggleGlyph glyph=", glyph);
+
+      var found_glyph = this.genfontview.model.glyphs.find(function (item) {
+        return item.get("glyph_id") === glyph_id;
+      });
+
+      if (found_glyph) {
+        found_glyph.destroy();
+      } else {
+        this.genfontview.model.glyphs.add({
+          //unicode:  0x0020,
+          glyph_id: glyph_id,
+          glyph:    glyph
+        });
+      }
+    },
+
+
     addAllFonts: function () {
       Fontomas.logger.debug("views.app.addAllFonts");
-      this.model.fonts.each(this.addOneFont);
+      this.fonts.each(this.addOneFont);
     },
 
 

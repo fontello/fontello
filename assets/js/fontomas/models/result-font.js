@@ -4,34 +4,62 @@
   "use strict";
 
 
+  var config = Fontomas.config;
+
+
   Fontomas.models.GeneratedFont = Backbone.Model.extend({
-    defaults: {glyph_count: 0},
+    defaults: {
+      glyph_count:  0,
+      xml_template: null
+    },
 
 
     initialize: function () {
-      var i, ch;
-
       Fontomas.logger.debug("models.GeneratedFont.initialize");
+
+      this.set("xml_template", this.initSvgFontTemplate());
       this.glyphs = new Fontomas.models.GlyphsCollection;
 
-      // add space glyph
-      this.glyphs.add({
-        num:    20,
-        top:    "space",
-        bottom: this.toUnicode(" "),
-        char:   this.toCharRef(" ")
-      });
+      this.glyphs.on("add",     this.incCounter, this);
+      this.glyphs.on("remove",  this.decCounter, this);
+    },
 
-      // add basic latin glyphs
-      for (i = 33; i <= 126; i++) {
-        ch = String.fromCharCode(i);
-        this.glyphs.add({
-          num:    i,
-          top:    ch,
-          bottom: this.toUnicode(ch),
-          char:   this.toCharRef(ch)
-        });
+
+    initSvgFontTemplate: function () {
+      var xml_string, xml_template;
+
+      try {
+        xml_string    = $('#fm-font-output').html().trimLeft();
+        xml_template  = $.parseXML(xml_string);
+      } catch (e) {
+        Fontomas.logger.error(
+          "initSvgFontTemplate: invalid xml template=",
+          $('#fm-font-output').html(),
+          "e=", e
+        );
+        Fontomas.util.notify_alert("Internal error: can't parse output template.");
+        return null;
       }
+
+      $(xml_template)
+        .find("metadata").text(config.output.metadata)
+        .end()
+        .find("font").attr({
+          "id":           config.output.font_id,
+          "horiz-adv-x":  config.output.horiz_adv_x
+        })
+        .end()
+        .find("font-face").attr({
+          "units-per-em": config.output.units_per_em,
+          "ascent":       config.output.ascent,
+          "descent":      config.output.descent
+        })
+        .end()
+        .find("missing-glyph").attr({
+          "horiz-adv-x":  config.output.missing_glyph_horiz_adv_x
+        });
+
+        return xml_template;
     },
 
 
@@ -43,19 +71,6 @@
     decCounter: function () {
       this.set("glyph_count", this.get("glyph_count") - 1);
       Fontomas.logger.assert(this.get("glyph_count") >= 0);
-    },
-
-
-    // return char in CharRef notation
-    toCharRef: function (char) {
-      return "&#x" + char.charCodeAt(0).toString(16) + ";";
-    },
-
-
-    // return char in U+ notation
-    toUnicode: function (char) {
-      var c = char.charCodeAt(0).toString(16).toUpperCase();
-      return "U+" + "0000".substr(0, 4 - c.length % 4) + c;
     },
 
 
