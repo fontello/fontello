@@ -4,6 +4,9 @@
   "use strict";
 
 
+  var config = Fontomas.config;
+
+
   Fontomas.views.app = Backbone.View.extend({
     myfiles:        [],
     next_font_id:   1,
@@ -22,9 +25,10 @@
       this.select_toolbar = new Fontomas.views.SelectToolbar({
         el: $('#fm-file-drop-zone')[0]
       });
-      this.select_toolbar.on("useEmbeddedFont", this.onUseEmbeddedFont, this);
-      this.select_toolbar.on("fileUpload",      this.onFileUpload,      this);
+      this.select_toolbar.on("changeIconSize",  this.onChangeIconSize,  this);
       this.select_toolbar.on("fileDrop",        this.onFileDrop,        this);
+      this.select_toolbar.on("fileUpload",      this.onFileUpload,      this);
+      this.select_toolbar.on("useEmbeddedFont", this.onUseEmbeddedFont, this);
 
       this.fonts = new Fontomas.models.FontsCollection;
       this.fonts.on("add",   this.addOneFont,  this);
@@ -34,6 +38,60 @@
       this.resultfontview = new Fontomas.views.ResultFont({model: resultfont});
       this.resultfontview.on("someGlyphsSelected", this.menuOn,  this);
       this.resultfontview.on("noGlyphsSelected",   this.menuOff, this);
+    },
+
+
+    onChangeIconSize: function (size) {
+      Fontomas.logger.debug("views.app.onChangeIconSize");
+
+      // attach class
+      $('.fm-glyph-group')
+        .removeClass(config.icon_size_classes)
+        .addClass(config.icon_size_prefix + size);
+
+      // change width/height
+      $('#fm-font-list')
+        .find('.fm-glyph-div')
+        .each(function (i) {
+          var $this   = $(this),
+              size_x  = $this.data("glyph_sizes")[size][0],
+              size_y  = $this.data("glyph_sizes")[size][1];
+
+          $this.css({
+            "width":        size_x + "px",
+            "height":       size_y + "px",
+            "margin-left":  "-" + Math.round(size_x / 2) + "px",
+            "margin-top":   "-" + Math.round(size_y / 2) + "px"
+          }).find("svg").css({
+            "width":        size_x + "px",
+            "height":       size_y + "px"
+          });
+        });
+
+      // do the same on the rearrange tab
+      $('#fm-generated-font')
+        .removeClass(config.icon_size_classes)
+        .addClass(config.icon_size_prefix + size);
+
+      // change width/height
+      $('#fm-generated-font')
+        .find('.rg-icon')
+        .each(function (i) {
+          var $this = $(this),
+            size_x  = $this.data("glyph_sizes")[size][0],
+            size_y  = $this.data("glyph_sizes")[size][1];
+
+          $this.css({
+            "width":        "100%",
+            "height":       size_y + "px",
+            "left":         "0px",
+            "margin-left":  "0px",
+            "margin-top":   "-" + Math.round(size_y/2) + "px"
+          }).find("svg").css({
+            width: size_x + "px",
+            height: size_y + "px"
+          });
+        });
     },
 
 

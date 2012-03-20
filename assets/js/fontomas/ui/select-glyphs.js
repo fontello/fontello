@@ -137,57 +137,10 @@
       var size = parseInt($(event.target).val(), 10) ||
                  config.preview_icon_sizes[0];
 
-      Fontomas.logger.debug('size='+size);
+      Fontomas.logger.debug('size=' + size);
+
       event.preventDefault();
-
-      // attach class
-      $('.fm-glyph-group')
-        .removeClass(config.icon_size_classes)
-        .addClass(config.icon_size_prefix + size);
-
-      // change width/height
-      $('#fm-font-list')
-        .find('.fm-glyph-div')
-        .each(function (i) {
-          var $this   = $(this),
-              size_x  = $this.data("glyph_sizes")[size][0],
-              size_y  = $this.data("glyph_sizes")[size][1];
-
-          $this.css({
-            "width":        size_x + "px",
-            "height":       size_y + "px",
-            "margin-left":  "-" + Math.round(size_x / 2) + "px",
-            "margin-top":   "-" + Math.round(size_y / 2) + "px"
-          }).find("svg").css({
-            "width":        size_x + "px",
-            "height":       size_y + "px"
-          });
-        });
-
-      // do the same on the rearrange tab
-      $('#fm-generated-font')
-        .removeClass(config.icon_size_classes)
-        .addClass(config.icon_size_prefix + size);
-
-      // change width/height
-      $('#fm-generated-font')
-        .find('.rg-icon')
-        .each(function (i) {
-          var $this = $(this),
-            size_x  = $this.data("glyph_sizes")[size][0],
-            size_y  = $this.data("glyph_sizes")[size][1];
-
-          $this.css({
-            "width":        "100%",
-            "height":       size_y + "px",
-            "left":         "0px",
-            "margin-left":  "0px",
-            "margin-top":   "-" + Math.round(size_y/2) + "px"
-          }).find("svg").css({
-            width: size_x + "px",
-            height: size_y + "px"
-          });
-        });
+      this.trigger("changeIconSize", size);
     }
   });
 
