@@ -95,7 +95,7 @@
 
 
   parsers.js = function (js) {
-    var font = {}, json_string, json;
+    var font = {}, json_string, json, cur_glyph = 0;
 
     Fontomas.logger.debug("initCufonJs");
 
@@ -113,9 +113,14 @@
     font.descent      = json.face.descent || -250;
     font.units_per_em = json.face["units-per-em"] || 1000;
     font.id           = json.face["font-family"] || "unknown";
+    font.glyphs       = [];
 
-    // FIXME: slice
-    _.each(json.glyphs.slice(0, max_glyphs), function (glyph, i) {
+    _.each(json.glyphs, function (glyph, i) {
+      cur_glyph++;
+      if (max_glyphs && (cur_glyph > max_glyphs)) {
+        return;
+      }
+
       glyph.unicode = i;
 
       if (glyph.w) {
@@ -128,7 +133,7 @@
         glyph.d = vmlToSvgPath(vmlNegateY(glyph.d));
       }
 
-      font.glyphs[i + 1] = glyph; // font.glyphs first el idx = 1
+      font.glyphs[cur_glyph] = glyph; // font.glyphs first el idx = 1
     });
 
     return font;
