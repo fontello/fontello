@@ -20,8 +20,8 @@
       this.model.glyphs.each(this.addGlyph);
       this.model.glyphs.on("add", this.addGlyph, this);
 
-      this.model.on("change:glyph_count", this.updateGlyphCount,  this);
-      this.model.on("change",             this.onChange,          this);
+      this.model.on("change:glyph_count", this.onChangeGlyphCount,  this);
+      this.model.on("change",             this.onChange,            this);
     },
 
 
@@ -57,14 +57,14 @@
     },
 
 
-    updateGlyphCount: function (model, glyph_count) {
-      Fontomas.logger.debug("views.GeneratedFont.updateGlyphCount");
+    onChangeGlyphCount: function (model, glyph_count) {
+      Fontomas.logger.debug("views.GeneratedFont.onChangeGlyphCount");
       $('#fm-glyph-count').text(glyph_count);
 
       if (model.previous("glyph_count") === 0 && glyph_count > 0) {
-        this.trigger("toggleMenu", true);
+        this.trigger("someGlyphsSelected");
       } else if (model.previous("glyph_count") > 0 && glyph_count === 0) {
-        this.trigger("toggleMenu", false);
+        this.trigger("noGlyphsSelected");
       }
     },
 

@@ -32,7 +32,8 @@
 
       var genfont = new Fontomas.models.GeneratedFont;
       this.genfontview = new Fontomas.views.GeneratedFont({model: genfont});
-      this.genfontview.on("toggleMenu", this.toggleMenu, this);
+      this.genfontview.on("someGlyphsSelected", this.menuOn,  this);
+      this.genfontview.on("noGlyphsSelected",   this.menuOff, this);
     },
 
 
@@ -302,6 +303,16 @@
       $('#tab')
         .find("a.fm-disable-on-demand")
           .toggleClass("disabled", !enabled);
+    },
+
+
+    menuOn: function () {
+      this.toggleMenu(true);
+    },
+
+
+    menuOff: function () {
+      this.toggleMenu(false);
     }
   });
 
