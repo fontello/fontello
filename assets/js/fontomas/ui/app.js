@@ -97,21 +97,18 @@
 
     onUseEmbeddedFont: function (font) {
       Fontomas.logger.debug("views.app.onUseEmbeddedFont");
-
       this.addEmbeddedFonts([font]);
     },
 
 
     onFileUpload: function (files) {
       Fontomas.logger.debug("views.app.onFileUpload");
-
       this.addUploadedFonts(files);
     },
 
 
     onFileDrop: function (files) {
       Fontomas.logger.debug("views.app.onFileDrop");
-
       this.addUploadedFonts(files);
     },
 

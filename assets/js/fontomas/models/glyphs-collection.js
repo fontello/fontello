@@ -35,8 +35,8 @@
           return;
         }
 
-        glyph.unicode   = found_code.code;
-        found_code.is_used = true;
+        glyph.unicode       = found_code.code;
+        found_code.is_used  = true;
       }
 
       char          = String.fromCharCode(glyph.unicode);

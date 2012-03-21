@@ -65,7 +65,6 @@
 
     remove: function () {
       Fontomas.logger.debug("views.Glyph.remove");
-
       this.$el.remove();
     }
   });

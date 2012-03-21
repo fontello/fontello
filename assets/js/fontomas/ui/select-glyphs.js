@@ -24,7 +24,6 @@
 
     initialize: function () {
       Fontomas.logger.debug("views.SelectToolbar.initialize");
-
       _.bindAll(this);
     },
 
@@ -32,8 +31,7 @@
     render: function () {
       Fontomas.logger.debug("views.SelectToolbar.render");
 
-      var self      = this,
-          tpl_vars  = {buttons: config.preview_icon_sizes};
+      var tpl_vars = {buttons: config.preview_icon_sizes};
 
       // render icon size buttons
       $('#fm-icon-size')
@@ -44,13 +42,8 @@
       // FIXME: workaround, because dragover/drag events don't work
       if (Fontomas.env.filereader) {
         // init file drag and drop
-        $('#fm-file-drop-zone').on("dragover", function (event) {
-          self.fileDragOver(event);
-        });
-
-        $('#fm-file-drop-zone').on("drop", function (event) {
-          self.fileDrop(event);
-        });
+        $('#fm-file-drop-zone').on("dragover",  this.fileDragOver);
+        $('#fm-file-drop-zone').on("drop",      this.fileDrop);
       }
 
       this.renderUseEmbedded();
