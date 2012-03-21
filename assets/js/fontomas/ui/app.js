@@ -40,6 +40,8 @@
       this.resultfontview = new Fontomas.views.ResultFont({model: resultfont});
       this.resultfontview.on("someGlyphsSelected", this.menuOn,  this);
       this.resultfontview.on("noGlyphsSelected",   this.menuOff, this);
+
+      this.on("fileLoaded", this.onLoadFont, this);
     },
 
 
@@ -99,13 +101,13 @@
 
     onFileDrop: function (files) {
       Fontomas.logger.debug("views.app.onFileDrop");
-      this.addUploadedFonts(files);
+      this.doUploadFonts(files);
     },
 
 
     onFileUpload: function (files) {
       Fontomas.logger.debug("views.app.onFileUpload");
-      this.addUploadedFonts(files);
+      this.doUploadFonts(files);
     },
 
 
@@ -153,27 +155,91 @@
     },
 
     
-    addUploadedFonts: function (files) {
-      this.addFonts(files, _.bind(this.addFont, this));
+    doUploadFonts: function (files) {
+      var self = this;
+
+      Fontomas.logger.debug("views.app.doUploadFonts");
+
+      _.each(files, function (f) {
+        var fileinfo, reader = new FileReader();
+
+        fileinfo = {
+          id:             self.myfiles.length,
+          filename:       f.name,
+          filesize:       f.size,
+          filetype:       f.type,
+          fontname:       "unknown",
+          is_loaded:      false,
+          is_ok:          false,
+          is_added:       false,
+          is_dup:         false,
+          error_msg:      "",
+          content:        null,
+          embedded_id:    null
+        };
+
+        self.myfiles.push(fileinfo);
+
+        reader.onload = function (event) {
+          self.trigger("fileLoaded", event, fileinfo);
+        };
+
+        reader.readAsBinaryString(f);
+      });
+    },
+
+
+    onLoadFont: function (event, fileinfo) {
+      Fontomas.logger.debug("views.app.onLoadFont");
+
+      // is there a file with the same content?
+      var is_exist = false;
+
+      _.each(this.myfiles, function (f) {
+        if (event.target.result === f.content) {
+          is_exist = fileinfo.is_dup = true;
+        }
+      });
+
+      if (!is_exist) {
+        fileinfo.content    = event.target.result;
+        fileinfo.is_loaded  = true;
+      }
+
+      this.addFont(fileinfo);
     },
 
 
     addEmbeddedFonts: function (embedded_fonts) {
       var self = this;
 
-      this.addFontsAsStrings(embedded_fonts, function (fileinfo) {
-        // onload closure
-        var e_id = fileinfo.embedded_id;
+      Fontomas.logger.debug("views.app.addEmbeddedFonts");
 
-        // FIXME
-        self.addFont(fileinfo, function (fileinfo) {
-          // onclose closure
-          Fontomas.embedded_fonts[e_id].is_added = fileinfo.is_added;
-          self.select_toolbar.renderUseEmbedded();
-        });
+      _.each(embedded_fonts, function (f) {
+        var fileinfo;
 
-        Fontomas.embedded_fonts[e_id].is_added = fileinfo.is_added;
-        Fontomas.embedded_fonts[e_id].fontname = fileinfo.fontname;
+        fileinfo = {
+          id:             self.myfiles.length,
+          filename:       f.filename,
+          filesize:       f.content.length,
+          filetype:       f.filetype,
+          fontname:       "unknown",
+          is_loaded:      true,
+          is_ok:          false,
+          is_added:       false,
+          is_dup:         false,
+          error_msg:      "",
+          content:        f.content,
+          embedded_id:    f.id
+        };
+
+        self.myfiles.push(fileinfo);
+
+        self.addFont(fileinfo);
+
+        f.is_ok     = fileinfo.is_ok;
+        f.is_added  = fileinfo.is_added;
+        f.fontname  = fileinfo.fontname;
 
         self.select_toolbar.renderUseEmbedded();
       });
@@ -205,94 +271,7 @@
     },
 
 
-    addFonts: function (files, callback) {
-      var self = this;
-
-      Fontomas.logger.debug("views.app.addFonts");
-
-      _.each(files, function (f) {
-        var fileinfo, reader = new FileReader();
-
-        fileinfo = {
-          id:             self.myfiles.length,
-          filename:       f.name,
-          filesize:       f.size,
-          filetype:       f.type,
-          fontname:       "unknown",
-          is_loaded:      false,
-          is_ok:          false,
-          is_added:       false,
-          is_dup:         false,
-          error_msg:      "",
-          content:        null,
-          embedded_id:    null
-        };
-
-        self.myfiles.push(fileinfo);
-
-        reader.onload = function (event) {
-          // FIXME: race condition?
-          // is there a file with the same content?
-          var is_exist = false;
-
-          _.each(self.myfiles, function (f) {
-            if (event.target.result === f.content) {
-              is_exist = fileinfo.is_dup = true;
-            }
-          });
-
-          if (!is_exist) {
-            fileinfo.content    = event.target.result;
-            fileinfo.is_loaded  = true;
-          }
-
-          if (callback) {
-            callback(fileinfo);
-          }
-        };
-
-        reader.readAsBinaryString(f);
-      });
-    },
-
-
-    addFontsAsStrings: function (files, cb_onload) {
-      var self = this;
-
-      Fontomas.logger.debug("views.app.addFontsAsStrings flen=", files.length);
-
-      _.each(files, function (f) {
-        var fileinfo;
-
-        fileinfo = {
-          id:             self.myfiles.length,
-          filename:       f.filename,
-          filesize:       f.content.length,
-          filetype:       f.filetype,
-          fontname:       "unknown",
-          is_loaded:      true,
-          is_ok:          false,
-          is_added:       false,
-          is_dup:         false,
-          error_msg:      "",
-          content:        f.content,
-          embedded_id:    f.id
-        };
-
-        self.myfiles.push(fileinfo);
-
-        if (cb_onload) {
-          cb_onload(fileinfo);
-        }
-
-        f.is_ok     = fileinfo.is_ok;
-        f.is_added  = fileinfo.is_added;
-        f.fontname  = fileinfo.fontname;
-      });
-    },
-
-
-    addFont: function (fileinfo, cb_onclose) {
+    addFont: function (fileinfo) {
       /*jshint newcap:false*/
       Fontomas.logger.debug("views.app.addFont id=", fileinfo.id);
 
@@ -306,6 +285,7 @@
       file_ext  = Fontomas.util.getFileExt(fileinfo.filename);
       font      = Fontomas.models.Font.parse(file_ext, fileinfo.content);
 
+      // FIXME: failed refactoring?
       if (!font) {
         // unknown file exstension
         Fontomas.util.notify_alert(
@@ -316,6 +296,7 @@
         return;
       }
 
+      // FIXME: failed refactoring?
       if (!font) {
         Fontomas.logger.error("invalid file");
 
