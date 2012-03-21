@@ -11,9 +11,11 @@
     myfiles:        [],
     next_font_id:   1,
     fonts:          null,
-    fontviews:      {},
+
     select_toolbar: null,
+    fontviews:      {},
     resultfontview: null,
+
     events:         {},
 
 
@@ -31,8 +33,8 @@
       this.select_toolbar.on("useEmbeddedFont", this.onUseEmbeddedFont, this);
 
       this.fonts = new Fontomas.models.FontsCollection;
-      this.fonts.on("add",   this.addOneFont,  this);
-      this.fonts.on("reset", this.addAllFonts, this);
+      this.fonts.on("add",   this.onAddOneFont,   this);
+      this.fonts.on("reset", this.onAddAllFonts,  this);
 
       var resultfont = new Fontomas.models.ResultFont;
       this.resultfontview = new Fontomas.views.ResultFont({model: resultfont});
@@ -95,9 +97,9 @@
     },
 
 
-    onUseEmbeddedFont: function (font) {
-      Fontomas.logger.debug("views.app.onUseEmbeddedFont");
-      this.addEmbeddedFonts([font]);
+    onFileDrop: function (files) {
+      Fontomas.logger.debug("views.app.onFileDrop");
+      this.addUploadedFonts(files);
     },
 
 
@@ -107,31 +109,52 @@
     },
 
 
-    onFileDrop: function (files) {
-      Fontomas.logger.debug("views.app.onFileDrop");
-      this.addUploadedFonts(files);
+    onUseEmbeddedFont: function (font) {
+      Fontomas.logger.debug("views.app.onUseEmbeddedFont");
+      this.addEmbeddedFonts([font]);
     },
 
 
-    render: function () {
-      Fontomas.logger.debug("views.app.render");
+    // a model has been added, so we create a corresponding view for it
+    onAddOneFont: function (font) {
+      Fontomas.logger.debug("views.app.addOneFont");
 
-      // render the select tab
-      this.select_toolbar.render();
+      var view = new Fontomas.views.Font({model: font});
+      view.on("toggleGlyph",        this.onToggleGlyph,       this);
+      view.on("closeEmbeddedFont",  this.onCloseEmbeddedFont, this);
 
-      // auto load embedded fonts
-      // debug
-      if (!(Fontomas.debug.is_on && Fontomas.debug.noembedded)) {
-        this.addEmbeddedFonts(Fontomas.embedded_fonts);
-      }
+      this.fontviews[font.id] = view;
+      $("#fm-font-list").append(view.render().el);
+    },
 
-      // first tab is fully initialized so show it
-      $("#tab a:first").tab("show");
 
-      // render the rearrange tab
-      this.resultfontview.render();
+    // models have been added, so we create views for all of them
+    onAddAllFonts: function () {
+      Fontomas.logger.debug("views.app.addAllFonts");
+      this.fonts.each(this.onAddOneFont);
+    },
 
-      return this;
+
+    toggleMenu: function (enabled) {
+      Fontomas.logger.debug("views.app.toggleMenu");
+      $('#tab')
+        .find("a.fm-disable-on-demand")
+          .toggleClass("disabled", !enabled);
+    },
+
+
+    menuOn: function () {
+      this.toggleMenu(true);
+    },
+
+
+    menuOff: function () {
+      this.toggleMenu(false);
+    },
+
+    
+    addUploadedFonts: function (files) {
+      this.addFonts(files, _.bind(this.addFont, this));
     },
 
 
@@ -157,44 +180,28 @@
     },
 
 
-    addFontsAsStrings: function (files, cb_onload) {
-      var self = this;
+    onToggleGlyph: function (glyph_id, glyph) {
+      Fontomas.logger.debug("views.app.onToggleGlyph glyph=", glyph);
 
-      Fontomas.logger.debug("views.app.addFontsAsStrings flen=", files.length);
-
-      _.each(files, function (f) {
-        var fileinfo;
-
-        fileinfo = {
-          id:             self.myfiles.length,
-          filename:       f.filename,
-          filesize:       f.content.length,
-          filetype:       f.filetype,
-          fontname:       "unknown",
-          is_loaded:      true,
-          is_ok:          false,
-          is_added:       false,
-          is_dup:         false,
-          error_msg:      "",
-          content:        f.content,
-          embedded_id:    f.id
-        };
-
-        self.myfiles.push(fileinfo);
-
-        if (cb_onload) {
-          cb_onload(fileinfo);
-        }
-
-        f.is_ok     = fileinfo.is_ok;
-        f.is_added  = fileinfo.is_added;
-        f.fontname  = fileinfo.fontname;
+      var found_glyph = this.resultfontview.model.glyphs.find(function (item) {
+        return item.get("glyph_id") === glyph_id;
       });
+
+      if (found_glyph) {
+        found_glyph.destroy();
+      } else {
+        this.resultfontview.model.glyphs.add({
+          //unicode:  0x0020,
+          glyph_id: glyph_id,
+          glyph:    glyph
+        });
+      }
     },
 
 
-    addUploadedFonts: function (files) {
-      this.addFonts(files, _.bind(this.addFont, this));
+    onCloseEmbeddedFont: function () {
+      Fontomas.logger.debug("views.app.onCloseEmbeddedFont");
+      this.select_toolbar.renderUseEmbedded();
     },
 
 
@@ -249,6 +256,42 @@
     },
 
 
+    addFontsAsStrings: function (files, cb_onload) {
+      var self = this;
+
+      Fontomas.logger.debug("views.app.addFontsAsStrings flen=", files.length);
+
+      _.each(files, function (f) {
+        var fileinfo;
+
+        fileinfo = {
+          id:             self.myfiles.length,
+          filename:       f.filename,
+          filesize:       f.content.length,
+          filetype:       f.filetype,
+          fontname:       "unknown",
+          is_loaded:      true,
+          is_ok:          false,
+          is_added:       false,
+          is_dup:         false,
+          error_msg:      "",
+          content:        f.content,
+          embedded_id:    f.id
+        };
+
+        self.myfiles.push(fileinfo);
+
+        if (cb_onload) {
+          cb_onload(fileinfo);
+        }
+
+        f.is_ok     = fileinfo.is_ok;
+        f.is_added  = fileinfo.is_added;
+        f.fontname  = fileinfo.fontname;
+      });
+    },
+
+
     addFont: function (fileinfo, cb_onclose) {
       /*jshint newcap:false*/
       Fontomas.logger.debug("views.app.addFont id=", fileinfo.id);
@@ -293,11 +336,11 @@
 
       this.createFont(_.extend({}, fileinfo, {font: font}));
 
-      /*
-          // scroll to the loaded font
-          var fonthash = 'a[href="#font-'+fileinfo.id+'"]';
-          $("html,body").animate({scrollTop: $(fonthash).offset().top}, 500);
-      */
+/*
+      // scroll to the loaded font
+      var fonthash = 'a[href="#font-'+fileinfo.id+'"]';
+      $("html,body").animate({scrollTop: $(fonthash).offset().top}, 500);
+*/
     },
 
 
@@ -310,64 +353,25 @@
     },
 
 
-    addOneFont: function (font) {
-      Fontomas.logger.debug("views.app.addOneFont");
+    render: function () {
+      Fontomas.logger.debug("views.app.render");
 
-      var view = new Fontomas.views.Font({model: font});
-      view.on("toggleGlyph",        this.toggleGlyph,         this);
-      view.on("closeEmbeddedFont",  this.onCloseEmbeddedFont, this);
+      // render the select tab
+      this.select_toolbar.render();
 
-      this.fontviews[font.id] = view;
-      $("#fm-font-list").append(view.render().el);
-    },
-
-
-    toggleGlyph: function (glyph_id, glyph) {
-      Fontomas.logger.debug("views.app.toggleGlyph glyph=", glyph);
-
-      var found_glyph = this.resultfontview.model.glyphs.find(function (item) {
-        return item.get("glyph_id") === glyph_id;
-      });
-
-      if (found_glyph) {
-        found_glyph.destroy();
-      } else {
-        this.resultfontview.model.glyphs.add({
-          //unicode:  0x0020,
-          glyph_id: glyph_id,
-          glyph:    glyph
-        });
+      // auto load embedded fonts
+      // debug
+      if (!(Fontomas.debug.is_on && Fontomas.debug.noembedded)) {
+        this.addEmbeddedFonts(Fontomas.embedded_fonts);
       }
-    },
 
+      // first tab is fully initialized so show it
+      $("#tab a:first").tab("show");
 
-    onCloseEmbeddedFont: function () {
-      Fontomas.logger.debug("views.app.onCloseEmbeddedFont");
-      this.select_toolbar.renderUseEmbedded();
-    },
+      // render the rearrange tab
+      this.resultfontview.render();
 
-
-    addAllFonts: function () {
-      Fontomas.logger.debug("views.app.addAllFonts");
-      this.fonts.each(this.addOneFont);
-    },
-
-
-    toggleMenu: function (enabled) {
-      Fontomas.logger.debug("views.app.toggleMenu");
-      $('#tab')
-        .find("a.fm-disable-on-demand")
-          .toggleClass("disabled", !enabled);
-    },
-
-
-    menuOn: function () {
-      this.toggleMenu(true);
-    },
-
-
-    menuOff: function () {
-      this.toggleMenu(false);
+      return this;
     }
   });
 
