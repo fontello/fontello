@@ -24,8 +24,9 @@
 
 
   Fontomas.views.Font = Backbone.View.extend({
-    tagName: "li",
+    tagName:  "li",
 
+    iconsize: null,
 
     events: {
       "click .fm-font-close": "close",
@@ -37,6 +38,7 @@
       Fontomas.logger.debug("views.Font.initialize");
 
       _.bindAll(this);
+      this.iconsize = this.options.iconsize;
 
       this.$el.attr("id", "fm-font-" + this.model.id);
       this.model.on("change",   this.render,  this);
@@ -171,12 +173,16 @@
         item.svg          = Fontomas.util.outerHtml($glyph.find("svg"));
       }, this);
 
+      this.changeIconSize(this.iconsize);
+
       return this;
     },
 
 
     changeIconSize: function (size) {
       Fontomas.logger.debug("views.Font.changeIconSize");
+
+      this.iconsize = size;
 
       this.$('.fm-glyph-group')
         .removeClass(config.icon_size_classes)
@@ -205,7 +211,7 @@
     remove: function () {
       var self = this;
 
-      Fontomas.logger.debug("views.Font.remove el=", this.el);
+      Fontomas.logger.debug("views.Font.remove");
 
       // remove associated html markup
       this.$("input:checkbox:checked").each(function() {
@@ -214,11 +220,12 @@
       });
 
       this.$el.remove();
+      this.trigger("remove", this.model.id);
     },
 
 
     close: function (event) {
-      Fontomas.logger.debug("views.Font.close el=", this.el);
+      Fontomas.logger.debug("views.Font.close");
 
       var embedded_id = this.model.get("embedded_id");
 

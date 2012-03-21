@@ -64,12 +64,13 @@
 
 
     fileUpload: function (event) {
+      Fontomas.logger.debug("views.SelectToolbar.fileUpload");
       this.trigger("fileUpload", event.target.files);
     },
 
 
     fileDragOver: function (event) {
-      //Fontomas.logger.debug("fileDragOver");
+      //Fontomas.logger.debug("views.SelectToolbar.fileDragOver");
       if (Fontomas.env.filereader) {
         event.stopPropagation();
         event.preventDefault();
@@ -79,7 +80,7 @@
 
 
     fileDrop: function (event) {
-      Fontomas.logger.debug("fileDrop");
+      Fontomas.logger.debug("views.SelectToolbar.fileDrop");
 
       if (Fontomas.env.filereader) {
         event.stopPropagation();

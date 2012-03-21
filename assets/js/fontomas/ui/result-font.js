@@ -8,14 +8,16 @@
 
 
   Fontomas.views.ResultFont = Backbone.View.extend({
-    glyphviews:  [],
-    events:      {},
+    glyphviews: [],
+    events:     {},
+    iconsize:   null,
 
 
     initialize: function () {
       Fontomas.logger.debug("views.ResultFont.initialize");
 
       _.bindAll(this);
+      this.iconsize = this.options.iconsize;
 
       this.model.glyphs.each(this.onAddGlyph);
       this.model.glyphs.on("add", this.onAddGlyph, this);
@@ -26,11 +28,21 @@
 
     // a model has been added, so we create a corresponding view for it
     onAddGlyph: function (glyph) {
-      Fontomas.logger.debug("views.ResultFont.addGlyph");
+      Fontomas.logger.debug("views.ResultFont.onAddGlyph");
 
-      var view = new Fontomas.views.Glyph({model: glyph});
+      var view = new Fontomas.views.Glyph({
+        model: glyph,
+        iconsize: this.iconsize
+      });
+      view.on("remove", this.onRemoveGlyph, this);
       this.glyphviews.push(view);
       this.$el.append(view.el);
+    },
+
+
+    onRemoveGlyph: function (view) {
+      Fontomas.logger.debug("views.ResultFont.onRemoveGlyph");
+      this.glyphviews = _.without(this.glyphviews, view);
     },
 
 
@@ -61,6 +73,8 @@
 
     changeIconSize: function (size) {
       Fontomas.logger.debug("views.ResultFont.changeIconSize");
+
+      this.iconsize = size;
 
       this.$el
         .removeClass(config.icon_size_classes)

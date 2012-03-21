@@ -11,6 +11,7 @@
     myfiles:        [],
     next_font_id:   1,
     fonts:          null,
+    iconsize:       config.preview_icon_sizes[0],
 
     select_toolbar: null,
     fontviews:      {},
@@ -33,12 +34,13 @@
       this.select_toolbar.on("useEmbeddedFont", this.onUseEmbeddedFont, this);
 
       this.fonts = new Fontomas.models.FontsCollection;
-      this.fonts.on("add",   this.onAddOneFont,   this);
+      this.fonts.on("add",   this.onAddFont,      this);
       this.fonts.on("reset", this.onAddAllFonts,  this);
 
       this.resultfontview = new Fontomas.views.ResultFont({
-        el:     $("#fm-result-font")[0],
-        model:  new Fontomas.models.ResultFont
+        el:       $("#fm-result-font")[0],
+        model:    new Fontomas.models.ResultFont,
+        iconsize: this.iconsize
       });
       this.resultfontview.on("someGlyphsSelected", this.menuOn,  this);
       this.resultfontview.on("noGlyphsSelected",   this.menuOff, this);
@@ -49,6 +51,8 @@
 
     onChangeIconSize: function (size) {
       Fontomas.logger.debug("views.app.onChangeIconSize");
+
+      this.iconsize = size;
 
       _.each(this.fontviews, function (view) {
         view.changeIconSize(size);
@@ -77,12 +81,16 @@
 
 
     // a model has been added, so we create a corresponding view for it
-    onAddOneFont: function (font) {
-      Fontomas.logger.debug("views.app.addOneFont");
+    onAddFont: function (font) {
+      Fontomas.logger.debug("views.app.onAddFont");
 
-      var view = new Fontomas.views.Font({model: font});
+      var view = new Fontomas.views.Font({
+        model:    font,
+        iconsize: this.iconsize
+      });
       view.on("toggleGlyph",        this.onToggleGlyph,       this);
       view.on("closeEmbeddedFont",  this.onCloseEmbeddedFont, this);
+      view.on("remove",             this.onRemoveFont,        this);
 
       this.fontviews[font.id] = view;
       $("#fm-font-list").append(view.render().el);
@@ -91,8 +99,14 @@
 
     // models have been added, so we create views for all of them
     onAddAllFonts: function () {
-      Fontomas.logger.debug("views.app.addAllFonts");
-      this.fonts.each(this.onAddOneFont);
+      Fontomas.logger.debug("views.app.onAddAllFonts");
+      this.fonts.each(this.onAddFont);
+    },
+
+
+    onRemoveFont: function (id) {
+      Fontomas.logger.debug("views.app.onRemoveFont id=", id);
+      delete this.fontviews[id];
     },
 
 
@@ -285,7 +299,7 @@
 
 
     createFont: function (attrs) {
-      Fontomas.logger.debug("views.app.create attrs=", attrs);
+      Fontomas.logger.debug("views.app.createFont attrs=", attrs);
 
       //if (!attrs.id) // FIXME
       attrs.id = this.next_font_id++;
@@ -304,9 +318,6 @@
 
       // first tab is fully initialized so show it
       $("#tab a:first").tab("show");
-
-      // render the rearrange tab
-      //this.resultfontview.render();
 
       return this;
     }
