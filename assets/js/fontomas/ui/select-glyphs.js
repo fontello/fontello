@@ -25,62 +25,27 @@
     initialize: function () {
       Fontomas.logger.debug("views.SelectToolbar.initialize");
       _.bindAll(this);
-    },
 
-
-    render: function () {
-      Fontomas.logger.debug("views.SelectToolbar.render");
-
-      var tpl_vars = {buttons: config.preview_icon_sizes};
-
-      // render icon size buttons
-      $('#fm-icon-size')
-        .html(Fontomas.render('icon-size', tpl_vars))
-        .find("button:first")
-          .addClass("active");
+      this.render();
 
       // FIXME: workaround, because dragover/drag events don't work
       if (Fontomas.env.filereader) {
-        // init file drag and drop
         $('#fm-file-drop-zone').on("dragover",  this.fileDragOver);
         $('#fm-file-drop-zone').on("drop",      this.fileDrop);
       }
-
-      this.renderUseEmbedded();
-
-      return this;
     },
 
 
-    renderUseEmbedded: function () {
-      Fontomas.logger.debug("views.SelectToolbar.renderUseEmbedded");
+    changeIconSize: function (event) {
+      Fontomas.logger.debug("views.SelectToolbar.changeIconSize");
 
-      var tpl_vars = {
-        options: _.map(Fontomas.embedded_fonts, function (item) {
-          return {text: item.fontname, disabled: item.is_added};
-        })
-      };
+      var size = parseInt($(event.target).val(), 10) ||
+                 config.preview_icon_sizes[0];
 
-      $('#fm-use-embedded')
-        .html(Fontomas.render('use-embedded', tpl_vars))
-        .find('.fm-font-name')
-          .each(function (id) {
-            $(this).data("embedded_id", id);
-          });
-    },
-
-
-    useEmbedded: function (event) {
-      Fontomas.logger.debug("views.SelectToolbar.useEmbedded");
-
-      var id    = $(event.target).data("embedded_id"),
-          font  = Fontomas.embedded_fonts[id];
+      Fontomas.logger.debug("size=", size);
 
       event.preventDefault();
-
-      if (font && !font.is_added) {
-        this.trigger("useEmbeddedFont", font);
-      }
+      this.trigger("changeIconSize", size);
     },
 
 
@@ -124,16 +89,54 @@
     },
 
 
-    changeIconSize: function (event) {
-      Fontomas.logger.debug("views.SelectToolbar.changeIconSize");
+    useEmbedded: function (event) {
+      Fontomas.logger.debug("views.SelectToolbar.useEmbedded");
 
-      var size = parseInt($(event.target).val(), 10) ||
-                 config.preview_icon_sizes[0];
-
-      Fontomas.logger.debug('size=' + size);
+      var id    = $(event.target).data("embedded_id"),
+          font  = Fontomas.embedded_fonts[id];
 
       event.preventDefault();
-      this.trigger("changeIconSize", size);
+
+      if (font && !font.is_added) {
+        this.trigger("useEmbeddedFont", font);
+      }
+    },
+
+
+    render: function () {
+      Fontomas.logger.debug("views.SelectToolbar.render");
+
+      var tpl_vars = {buttons: config.preview_icon_sizes};
+
+      // render icon size buttons
+      $('#fm-icon-size')
+        .html(Fontomas.render('icon-size', tpl_vars))
+        .find("button:first")
+          .addClass("active");
+
+      this.renderUseEmbedded();
+
+      return this;
+    },
+
+
+    renderUseEmbedded: function () {
+      Fontomas.logger.debug("views.SelectToolbar.renderUseEmbedded");
+
+      var tpl_vars = {
+        options: _.map(Fontomas.embedded_fonts, function (item) {
+          return {text: item.fontname, disabled: item.is_added};
+        })
+      };
+
+      $('#fm-use-embedded')
+        .html(Fontomas.render('use-embedded', tpl_vars))
+        .find('.fm-font-name')
+          .each(function (id) {
+            $(this).data("embedded_id", id);
+          });
+
+      return this;
     }
   });
 

@@ -18,7 +18,6 @@
     icon_size_classes:  "", // precalculated by initCfg()
 
     preview_icon_sizes: [32, 24, 16],
-    live_update:        true,
     fix_edges:          true,
     scale_precision:    6, // truncate the mantissa when scaling svg paths
 

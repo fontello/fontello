@@ -146,7 +146,7 @@
         // flip y, because svg font's y axis goes upward
         // debug: turn flip off
         if (!(Fontomas.debug && Fontomas.debug.noflip)) {
-        // transform matrix 3x3
+          // transform matrix 3x3
           flip_y_matrix = [1, 0, 0, -1, 0, ascent / 2 - descent];
           g.attr({transform: "m" + flip_y_matrix});
         }
@@ -172,6 +172,33 @@
       }, this);
 
       return this;
+    },
+
+
+    changeIconSize: function (size) {
+      Fontomas.logger.debug("views.Font.changeIconSize");
+
+      this.$('.fm-glyph-group')
+        .removeClass(config.icon_size_classes)
+        .addClass(config.icon_size_prefix + size);
+
+      // change width/height
+      this.$(".fm-glyph-div")
+        .each(function (i) {
+          var $this   = $(this),
+              size_x  = $this.data("glyph_sizes")[size][0],
+              size_y  = $this.data("glyph_sizes")[size][1];
+
+          $this.css({
+            "width":        size_x + "px",
+            "height":       size_y + "px",
+            "margin-left":  "-" + Math.round(size_x / 2) + "px",
+            "margin-top":   "-" + Math.round(size_y / 2) + "px"
+          }).find("svg").css({
+            "width":        size_x + "px",
+            "height":       size_y + "px"
+          });
+        });
     },
 
 
@@ -207,7 +234,7 @@
 
 
     toggleGlyph: function (event) {
-      Fontomas.logger.debug("views.Font.toggleGlyph event=", event);
+      Fontomas.logger.debug("views.Font.toggleGlyph");
 
       var $target   = $(event.target),
           glyph_id  = $target.attr("value");

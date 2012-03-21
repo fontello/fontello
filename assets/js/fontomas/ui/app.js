@@ -25,7 +25,7 @@
       _.bindAll(this);
 
       this.select_toolbar = new Fontomas.views.SelectToolbar({
-        el: $('#fm-file-drop-zone')[0]
+        el: $("#fm-file-drop-zone")[0]
       });
       this.select_toolbar.on("changeIconSize",  this.onChangeIconSize,  this);
       this.select_toolbar.on("fileDrop",        this.onFileDrop,        this);
@@ -36,8 +36,10 @@
       this.fonts.on("add",   this.onAddOneFont,   this);
       this.fonts.on("reset", this.onAddAllFonts,  this);
 
-      var resultfont = new Fontomas.models.ResultFont;
-      this.resultfontview = new Fontomas.views.ResultFont({model: resultfont});
+      this.resultfontview = new Fontomas.views.ResultFont({
+        el:     $("#fm-result-font")[0],
+        model:  new Fontomas.models.ResultFont
+      });
       this.resultfontview.on("someGlyphsSelected", this.menuOn,  this);
       this.resultfontview.on("noGlyphsSelected",   this.menuOff, this);
 
@@ -48,54 +50,11 @@
     onChangeIconSize: function (size) {
       Fontomas.logger.debug("views.app.onChangeIconSize");
 
-      // attach class
-      $('.fm-glyph-group')
-        .removeClass(config.icon_size_classes)
-        .addClass(config.icon_size_prefix + size);
+      _.each(this.fontviews, function (view) {
+        view.changeIconSize(size);
+      });
 
-      // change width/height
-      $('#fm-font-list')
-        .find('.fm-glyph-div')
-        .each(function (i) {
-          var $this   = $(this),
-              size_x  = $this.data("glyph_sizes")[size][0],
-              size_y  = $this.data("glyph_sizes")[size][1];
-
-          $this.css({
-            "width":        size_x + "px",
-            "height":       size_y + "px",
-            "margin-left":  "-" + Math.round(size_x / 2) + "px",
-            "margin-top":   "-" + Math.round(size_y / 2) + "px"
-          }).find("svg").css({
-            "width":        size_x + "px",
-            "height":       size_y + "px"
-          });
-        });
-
-      // do the same on the rearrange tab
-      $('#fm-generated-font')
-        .removeClass(config.icon_size_classes)
-        .addClass(config.icon_size_prefix + size);
-
-      // change width/height
-      $('#fm-generated-font')
-        .find('.rg-icon')
-        .each(function (i) {
-          var $this = $(this),
-            size_x  = $this.data("glyph_sizes")[size][0],
-            size_y  = $this.data("glyph_sizes")[size][1];
-
-          $this.css({
-            "width":        "100%",
-            "height":       size_y + "px",
-            "left":         "0px",
-            "margin-left":  "0px",
-            "margin-top":   "-" + Math.round(size_y/2) + "px"
-          }).find("svg").css({
-            width: size_x + "px",
-            height: size_y + "px"
-          });
-        });
+      this.resultfontview.changeIconSize(size);
     },
 
 
@@ -337,9 +296,6 @@
     render: function () {
       Fontomas.logger.debug("views.app.render");
 
-      // render the select tab
-      this.select_toolbar.render();
-
       // auto load embedded fonts
       // debug
       if (!(Fontomas.debug.is_on && Fontomas.debug.noembedded)) {
@@ -350,7 +306,7 @@
       $("#tab a:first").tab("show");
 
       // render the rearrange tab
-      this.resultfontview.render();
+      //this.resultfontview.render();
 
       return this;
     }
