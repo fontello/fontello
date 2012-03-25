@@ -21,11 +21,6 @@
     fix_edges:          true,
     scale_precision:    6, // truncate the mantissa when scaling svg paths
 
-    path_options: {
-      "fill":         "#000",
-      "stroke":       "#000",
-      "stroke-width": 0
-    },
     output: {
       filename:     "fontomas.svg",
       font_id:      "FontomasCustom",

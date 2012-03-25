@@ -113,7 +113,11 @@
 
         // add svg
         r = new Raphael($glyph[0], size_x, size_y);
-        g = r.path(path).attr(config.path_options);
+        g = r.path(path).attr({
+          "fill":         "#000",
+          "stroke":       "#000",
+          "stroke-width": 0
+        });
 
         // calc delta_x, delta_y
         delta = get_delta(g, ascent, descent, horiz_adv_x);
