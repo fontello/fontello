@@ -7,6 +7,7 @@
   var config = Fontomas.config;
 
 
+  // this is obsolete, will be removed soon
   function get_delta(glyph_path, ascent, descent, adv_x) {
     var bbox, delta_ascent, delta_descent, delta_left, delta_right;
 
@@ -47,15 +48,44 @@
 
 
     render: function () {
-      Fontomas.logger.debug("views.Font.render el=", this.el);
-      var font         = this.model.get("font"),
-          ascent       = font.ascent,
-          descent      = font.descent,
-          units_per_em = font.units_per_em,
-          size_string  = $('#fm-icon-size').find("button.active").val(),
-          size         = parseInt(size_string, 10) || config.preview_icon_sizes[0],
-          font_size_y  = Math.round(size * (ascent - descent) / units_per_em);
+      Fontomas.logger.debug("views.Font.render_fontface el=", this.el);
 
+      // FIXME
+      if (!this.model.get("is_embedded")) {
+        return this.render_old();
+      }
+
+      this.$el.html(Fontomas.render('font-item', {
+        id:         this.model.id,
+        fontname:   this.model.get("fontname"),
+        css_class:  "fm-embedded-" + this.model.get("embedded_id")
+      }));
+
+      this.$(".fm-glyph-group")
+        .addClass(config.icon_size_prefix + this.iconsize);
+
+      _.each(this.model.get("glyphs"), function (item, glyph_id) {
+        var glyph = Fontomas.render('glyph-item', {
+          glyph_id: glyph_id,
+          unicode:  item.unicode
+        });
+
+        this.$(".fm-glyph-group").append(glyph);
+      }, this);
+
+      return this;
+    },
+
+
+    // this is obsolete, will be removed soon
+    render_old: function () {
+      Fontomas.logger.debug("views.Font.render_old el=", this.el);
+
+      var ascent       = this.model.get("ascent"),
+          descent      = this.model.get("descent"),
+          units_per_em = this.model.get("units_per_em"),
+          size         = this.iconsize,
+          font_size_y  = Math.round(size * (ascent - descent) / units_per_em);
 
       this.$el.html(Fontomas.render('font-item', {
         id:        this.model.id,
@@ -64,13 +94,13 @@
 
       this.$(".fm-glyph-group").addClass(config.icon_size_prefix + size);
 
-      _.each(font.glyphs, function (item, glyph_id) {
-        var horiz_adv_x = item.horiz_adv_x || font.horiz_adv_x,
+      _.each(this.model.get("glyphs"), function (item, glyph_id) {
+        var horiz_adv_x = item.horiz_adv_x || this.model.get("horiz_adv_x"),
             size_x      = Math.round(size * horiz_adv_x / units_per_em),
             size_y      = font_size_y,
-            $glyph      = $(Fontomas.render('glyph-item', item)),
-            gd          = $glyph.find('.fm-glyph-div'),
-            gd_id       = "fm-font-glyph-" + this.model.id + "-" + glyph_id,
+            $glyph      = $(Fontomas.render('glyph-item-old', {
+              glyph_id: glyph_id
+            })),
             path        = item.d,
             r,
             g,
@@ -81,17 +111,8 @@
 
         this.$(".fm-glyph-group").append($glyph);
 
-        $glyph.find(".fm-glyph-id").val(this.model.id + "-" + glyph_id);
-
-        gd.attr("id", gd_id).css({
-          "width":        size_x + "px",
-          "height":       size_y + "px",
-          "margin-left":  "-" + Math.round(size_x/2) + "px",
-          "margin-top":   "-" + Math.round(size_y/2) + "px"
-        });
-
         // add svg
-        r = new Raphael($glyph.find("#" + gd_id).get(0), size_x, size_y);
+        r = new Raphael($glyph[0], size_x, size_y);
         g = r.path(path).attr(config.path_options);
 
         // calc delta_x, delta_y
@@ -134,13 +155,6 @@
         // set new size
         if (config.fix_edges || delta.x > 0 || delta.y > 0) {
           r.setSize(size_x, size_y);
-
-          gd.css({
-            "width":        size_x + "px",
-            "height":       size_y + "px",
-            "margin-left":  "-" + Math.round(size_x/2) + "px",
-            "margin-top":   "-" + Math.round(size_y/2) + "px"
-          });
         }
 
         r.setViewBox(vb.x, vb.y, vb.w, vb.h, true);
@@ -154,6 +168,12 @@
         }
 
         g.show();
+        $glyph.find("svg").css({
+          "display": "      inline-block",
+          "line-height":    size_y + "px",
+          "vertical-align": "middle"
+        });
+
 
         // precalc glyph sizes
         // FIXME: precalc only if glyph goes out of its default box
@@ -167,8 +187,8 @@
           ];
         });
 
-        // FIXME: is this the right place?
-        gd.data("glyph_sizes", glyph_sizes);
+        $glyph.find("svg").data("glyph_sizes", glyph_sizes);
+
         item.glyph_sizes  = glyph_sizes;
         item.svg          = Fontomas.util.outerHtml($glyph.find("svg"));
       }, this);
@@ -188,36 +208,28 @@
         .removeClass(config.icon_size_classes)
         .addClass(config.icon_size_prefix + size);
 
-      // change width/height
-      this.$(".fm-glyph-div")
+      // FIXME
+      if (this.model.get("is_embedded")) {
+        return;
+      }
+
+      // FIXME: will be removed soon
+      this.$(".fm-glyph svg")
         .each(function (i) {
           var $this   = $(this),
               size_x  = $this.data("glyph_sizes")[size][0],
               size_y  = $this.data("glyph_sizes")[size][1];
-
           $this.css({
             "width":        size_x + "px",
             "height":       size_y + "px",
-            "margin-left":  "-" + Math.round(size_x / 2) + "px",
-            "margin-top":   "-" + Math.round(size_y / 2) + "px"
-          }).find("svg").css({
-            "width":        size_x + "px",
-            "height":       size_y + "px"
+            "line-height":  size_y + "px"
           });
         });
     },
 
 
     remove: function () {
-      var self = this;
-
       Fontomas.logger.debug("views.Font.remove");
-
-      // remove associated html markup
-      this.$("input:checkbox:checked").each(function() {
-        var glyph_id = $(this).val();
-        self.trigger("toggleGlyph", glyph_id, self.model.getGlyph(glyph_id));
-      });
 
       this.$el.remove();
       this.trigger("remove", this.model.id);
@@ -227,15 +239,15 @@
     close: function (event) {
       Fontomas.logger.debug("views.Font.close");
 
-      var embedded_id = this.model.get("embedded_id");
-
       event.preventDefault();
 
-      if (embedded_id !== null) {
+      if (this.model.get("is_embedded")) {
+        var embedded_id = this.model.get("embedded_id");
         Fontomas.embedded_fonts[embedded_id].is_added = false;
         this.trigger("closeEmbeddedFont");
       }
 
+      this.trigger("closeFont", this.model.id);
       this.model.destroy();
     },
 
@@ -244,12 +256,20 @@
       Fontomas.logger.debug("views.Font.toggleGlyph");
 
       var $target   = $(event.target),
-          glyph_id  = $target.attr("value");
+          glyph_id  = parseInt($target.val(), 10),
+          data      = this.model.getGlyph(glyph_id);
 
-      // FIXME
-      $target.parent().toggleClass("selected", $target.is(":checked"));
+      data = _.extend(data, {
+        font_id:      this.model.id,
+        glyph_id:     glyph_id,
+        is_embedded:  this.model.get("is_embedded"),
+        embedded_id:  this.model.get("embedded_id")
+      });
 
-      this.trigger("toggleGlyph", glyph_id, this.model.getGlyph(glyph_id));
+      $target.closest(".fm-glyph")
+        .toggleClass("selected", $target.is(":checked"));
+
+      this.trigger("toggleGlyph", data);
     }
   });
 

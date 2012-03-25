@@ -46,11 +46,13 @@ iframe.twitter-share-button {
 .nav-pills .active > a small {
   color: #fff;
 }
-#fm-tab1-content h2 {
+
+#select h2 {
   margin-top: 20px;
   font-size: 36px;
   line-height: 54px;
 }
+
 #select .btn-toolbar, #rearrange .btn-toolbar {
   margin-top: 0;
   margin-bottom: 0;
@@ -71,25 +73,17 @@ iframe.twitter-share-button {
   cursor: default;
 }
 
-#tab .disabled, #tab.disabled:hover {
+#tab.disabled, #tab.disabled:hover {
   /* FIXME */
   opacity: 0.3;
   cursor: default;
 }
 
-.ui-notify { width:350px; position:fixed; top:55px; right:10px; }
-
-
-#fm-download-font-button span,
-#fm-download-font-button object {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-}
-
-#fm-clipboard-link.hover, #fm-clipboard-link2.hover {
-  color: #005580;
-  text-decoration: underline;
+.ui-notify {
+  position: fixed;
+  width: 350px;
+  top: 55px;
+  right: 10px;
 }
 
 .ui-notify-message-style {
@@ -98,8 +92,22 @@ iframe.twitter-share-button {
   overflow: auto;
 }
 
+/* warning for disabled JS */
+.js  .jsnotice { display: none; }
+.no-js .jsnotice {
+  position: absolute;
+  left: 30%;
+  right: 30%;
+  top: 90px;
+  z-index: 10000;
+  font-size: 54px;
+  line-height: 81px;
+  font-weight: bold;
+}
+
 /* custom */
 
+/* Select Icons */
 
 #fm-file {
   /* chrome/opera doesn't trigger events on "display: none;" elements */
@@ -117,98 +125,72 @@ iframe.twitter-share-button {
   display: inline-block;
 }
 
-.fm-icon-size-32 .glyph {
-  width: 64px;
-  height: 64px;
-}
-
-.fm-icon-size-24 .glyph {
-  width: 48px;
-  height: 48px;
-}
-
-.fm-icon-size-16 .glyph, .fm-icon-size-16 .glyph.selected {
-  width: 32px;
-  height: 32px;
-  border-width: 1px;
-  margin: 4px;
-}
-
-.glyph {
+.fm-glyph {
   position: relative;
-  border: 2px #aaa solid;
-  border-radius: 8px 8px 8px 8px;
   float: left;
   margin: 5px;
   padding: 8px;
+  border: 2px #aaa solid;
+  border-radius: 8px 8px 8px 8px;
   cursor: pointer;
+  text-align: center;
 }
 
-.glyph:hover {
+.fm-glyph:hover {
   background: #f0f0f0;
   opacity: .8;
 }
 
-.glyph input { display: none; }
-
-.glyph.selected {
+.fm-glyph.selected {
   border: 2px #800 solid;
   background-color: #fee;
-  color: #fff;
+  /*color: #fff;*/
   box-shadow: 0 0 5px #444 inset;
 }
 
-.fm-glyph-div {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 32px;
-  height: 32px;
-  margin-left: -16px;
-  margin-top: -16px;
-/*  background-color: #fff;
-  border: 1px #ccc solid;
-*/
+.fm-icon-size-32 .fm-glyph {
+  width: 64px;
+  height: 64px;
+  line-height: 64px;
+  font-size: 32px;
 }
 
-.rearrange-glyph {
+.fm-icon-size-24 .fm-glyph {
+  width: 48px;
+  height: 48px;
+  line-height: 48px;
+  font-size: 24px;
+}
+
+.fm-icon-size-16 .fm-glyph,
+.fm-icon-size-16 .fm-glyph.selected {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  font-size: 16px;
+
+  border-width: 1px;
+  margin: 4px;
+}
+
+.fm-glyph-id {
+  display: none;
+}
+
+/* Rearrange */
+
+.fm-result-glyph {
+  float: left;
+  width: 64px;
   border: 2px #888 solid;
   border-radius: 8px 8px 8px 8px;
-  float: left;
   margin: 5px;
   padding-top: 0px;
   padding-bottom: 0px;
-  width: 64px;
   text-align: center;
 }
-.rearrange-glyph input {
-  display: none;
-  readonly: true;
-}
-.rearrange-glyph.selected {
-  border: 2px #000 solid;
-  cursor: pointer;
-}
-.rearrange-glyph.selected .rg-top { background-color: #000; }
-.rearrange-glyph.selected .rg-bottom { background-color: #000; }
 
-.rg-icon {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 32px;
-  height: 32px;
-  margin-left: -16px;
-  margin-top: -16px;
-
-/*  border: 1px #ccc solid; */
-/*
-  padding-top: 16px;
-  padding-bottom: 16px;
-*/
-}
-
-.rg-top {
+.fm-result-glyph .top {
   border: 0px #000 solid;
   text-align: center;
   background-color: #888;
@@ -218,27 +200,11 @@ iframe.twitter-share-button {
   font-weight: bold;
 }
 
-.fm-icon-size-32 .rg-center {
-  width: 64px;
-  height: 64px;
+.fm-result-glyph .center {
+  margin: 0px;
 }
 
-.fm-icon-size-24 .rg-center {
-  width: 64px;
-  height: 48px;
-}
-
-.fm-icon-size-16 .rg-center, .fm-icon-size-16 .selected .rg-center {
-  width: 64px;
-  height: 32px;
-}
-
-.rg-center {
-  position: relative;
-  height: 64px;
-}
-
-.rg-bottom {
+.fm-result-glyph .bottom {
   border: 0px #000 solid;
   text-align:center;
   background-color: #888;
@@ -247,16 +213,23 @@ iframe.twitter-share-button {
   font-size: 10px;
 }
 
-/* warning for disabled JS */
-.js  .jsnotice { display: none; }
-.no-js .jsnotice {
-  position: absolute;
-  left: 30%;
-  right: 30%;
-  top: 90px;
-  z-index: 10000;
-  font-size: 54px;
-  line-height: 81px;
-  font-weight: bold;
+.fm-icon-size-32 .fm-result-glyph .center {
+  height: 64px;
+  line-height: 64px;
+  font-size: 32px;
+}
+
+.fm-icon-size-24 .fm-result-glyph .center {
+  height: 48px;
+  line-height: 48px;
+  font-size: 24px;
+}
+
+.fm-icon-size-16 .fm-result-glyph .center {
+  height: 32px;
+  line-height: 32px;
+  font-size: 16px;
+
+  border-width: 1px;
 }
 

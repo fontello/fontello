@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo "this script is obsolete, use bin/build_embedded_fonts.py instead"
+exit 1
+
 # this script generates js/fm-embedded-fonts.js
 SCRIPT_PATH="$(pwd)/$0"
 ROOT_DIR=${SCRIPT_PATH%/*/*}

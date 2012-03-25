@@ -87,7 +87,7 @@
         delete glyph["horiz-adv-x"];
       }
 
-      font.glyphs[i + 1] = glyph; // font.glyphs first el idx = 1
+      font.glyphs[i] = glyph;
     });
 
     return font;
@@ -116,8 +116,7 @@
     font.glyphs       = [];
 
     _.each(json.glyphs, function (glyph, i) {
-      cur_glyph++;
-      if (max_glyphs && (cur_glyph > max_glyphs)) {
+      if (max_glyphs && (cur_glyph >= max_glyphs)) {
         return;
       }
 
@@ -133,7 +132,8 @@
         glyph.d = vmlToSvgPath(vmlNegateY(glyph.d));
       }
 
-      font.glyphs[cur_glyph] = glyph; // font.glyphs first el idx = 1
+      font.glyphs[cur_glyph] = glyph;
+      cur_glyph++;
     });
 
     return font;
@@ -143,23 +143,15 @@
   Fontomas.models.Font = Backbone.Model.extend({
     defaults: function () {
       return {
-        fontname:   "unknown",
-        is_loaded:  false,
-        is_ok:      false,
-        is_added:   false
+        fontname:     "unknown",
+        glyphs:       [],
+        is_embedded:  false
       };
     },
 
 
-    parseId: function (pair_id) {
-      var pair = pair_id.split("-");
-      return {font_id: pair[0], glyph_id: pair[1]};
-    },
-
-
-    getGlyph: function (pair_id) {
-      var glyph_id = this.parseId(pair_id).glyph_id;
-      return this.get("font").glyphs[glyph_id];
+    getGlyph: function (glyph_id) {
+      return this.get("glyphs")[glyph_id];
     },
 
 

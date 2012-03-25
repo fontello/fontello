@@ -90,6 +90,7 @@
       });
       view.on("toggleGlyph",        this.onToggleGlyph,       this);
       view.on("closeEmbeddedFont",  this.onCloseEmbeddedFont, this);
+      view.on("closeFont",          this.onCloseFont,         this);
       view.on("remove",             this.onRemoveFont,        this);
 
       this.fontviews[font.id] = view;
@@ -137,7 +138,7 @@
         var fileinfo, reader = new FileReader();
 
         fileinfo = {
-          id:             self.myfiles.length,
+          id:             this.myfiles.length,
           filename:       f.name,
           filesize:       f.size,
           filetype:       f.type,
@@ -148,112 +149,41 @@
           is_dup:         false,
           error_msg:      "",
           content:        null,
+          font_id:        null,
           embedded_id:    null
         };
 
-        self.myfiles.push(fileinfo);
+        this.myfiles.push(fileinfo);
 
         reader.onload = function (event) {
+          // FIXME self?
           self.trigger("fileLoaded", event, fileinfo);
         };
 
         reader.readAsBinaryString(f);
-      });
+      }, this);
     },
 
 
     onLoadFont: function (event, fileinfo) {
       Fontomas.logger.debug("views.app.onLoadFont");
 
-      // is there a file with the same content?
-      var is_exist = false;
+      var font, file_ext, is_exist = false;
 
+      // is there a file with the same content?
       _.each(this.myfiles, function (f) {
-        if (event.target.result === f.content) {
+        if (f.is_added && f.content === event.target.result) {
           is_exist = fileinfo.is_dup = true;
         }
       });
-
-      if (!is_exist) {
-        fileinfo.content    = event.target.result;
-        fileinfo.is_loaded  = true;
-      }
-
-      this.addFont(fileinfo);
-    },
-
-
-    addEmbeddedFonts: function (embedded_fonts) {
-      var self = this;
-
-      Fontomas.logger.debug("views.app.addEmbeddedFonts");
-
-      _.each(embedded_fonts, function (f) {
-        var fileinfo;
-
-        fileinfo = {
-          id:             self.myfiles.length,
-          filename:       f.filename,
-          filesize:       f.content.length,
-          filetype:       f.filetype,
-          fontname:       "unknown",
-          is_loaded:      true,
-          is_ok:          false,
-          is_added:       false,
-          is_dup:         false,
-          error_msg:      "",
-          content:        f.content,
-          embedded_id:    f.id
-        };
-
-        self.myfiles.push(fileinfo);
-
-        self.addFont(fileinfo);
-
-        f.is_ok     = fileinfo.is_ok;
-        f.is_added  = fileinfo.is_added;
-        f.fontname  = fileinfo.fontname;
-
-        self.select_toolbar.renderUseEmbedded();
-      });
-    },
-
-
-    onToggleGlyph: function (glyph_id, glyph) {
-      Fontomas.logger.debug("views.app.onToggleGlyph glyph=", glyph);
-
-      var found_glyph = this.resultfontview.model.glyphs.find(function (item) {
-        return item.get("glyph_id") === glyph_id;
-      });
-
-      if (found_glyph) {
-        found_glyph.destroy();
-      } else {
-        this.resultfontview.model.glyphs.add({
-          //unicode:  0x0020,
-          glyph_id: glyph_id,
-          glyph:    glyph
-        });
-      }
-    },
-
-
-    onCloseEmbeddedFont: function () {
-      Fontomas.logger.debug("views.app.onCloseEmbeddedFont");
-      this.select_toolbar.renderUseEmbedded();
-    },
-
-
-    addFont: function (fileinfo) {
-      /*jshint newcap:false*/
-      Fontomas.logger.debug("views.app.addFont id=", fileinfo.id);
-
-      var font, file_ext;
 
       // if it is a dup, skip it
       if (fileinfo.is_dup) {
         return;
       }
+
+      fileinfo.content    = event.target.result;
+      fileinfo.is_loaded  = true;
 
       file_ext  = Fontomas.util.getFileExt(fileinfo.filename);
       font      = Fontomas.models.Font.parse(file_ext, fileinfo.content);
@@ -280,7 +210,6 @@
           "Loading error: can't parse file '" +
           fileinfo.filename + "'"
         );
-
         return;
       }
 
@@ -288,13 +217,76 @@
       fileinfo.is_added = true;
       fileinfo.fontname = font.id;
 
-      this.createFont(_.extend({}, fileinfo, {font: font}));
+      font = _.extend(font, {
+        fontname:     fileinfo.fontname,
+        is_embedded:  false
+      });
+      fileinfo.font_id = this.createFont(font);
 
-/*
       // scroll to the loaded font
-      var fonthash = 'a[href="#font-'+fileinfo.id+'"]';
-      $("html,body").animate({scrollTop: $(fonthash).offset().top}, 500);
-*/
+      //var fonthash = 'a[href="#font-'+fileinfo.id+'"]';
+      //$("html,body").animate({scrollTop: $(fonthash).offset().top}, 500);
+    },
+
+
+    addEmbeddedFonts: function (embedded_fonts) {
+      Fontomas.logger.debug("views.app.addEmbeddedFonts");
+
+      _.each(embedded_fonts, function (f) {
+        var font = {
+          fontname:     f.fontname,
+          glyphs:       _.map(f.glyphs, function (i) { return {unicode: i}; }),
+          is_embedded:  true,
+          embedded_id:  f.id
+        };
+        this.createFont(font);
+
+        f.is_added = true;
+      }, this);
+
+      this.select_toolbar.renderUseEmbedded();
+    },
+
+
+    onToggleGlyph: function (data) {
+      Fontomas.logger.debug("views.app.onToggleGlyph data=", data);
+
+      var glyph, found_glyph;
+
+      found_glyph = this.resultfontview.model.glyphs.find(function (item) {
+        var glyph = item.get("source_glyph");
+
+        return  glyph.font_id === data.font_id &&
+                glyph.glyph_id === data.glyph_id;
+      });
+
+      if (found_glyph) {
+        found_glyph.destroy();
+      } else {
+        glyph = {source_glyph: data};
+        this.resultfontview.model.glyphs.add(glyph);
+      }
+    },
+
+
+    onCloseEmbeddedFont: function () {
+      Fontomas.logger.debug("views.app.onCloseEmbeddedFont");
+      this.select_toolbar.renderUseEmbedded();
+    },
+
+
+    onCloseFont: function (font_id) {
+      Fontomas.logger.debug("views.app.onCloseFont");
+      this.resultfontview.removeGlyphsByFont(font_id);
+
+      var found_font = _.find(this.myfiles, function (f) {
+        return f.font_id === font_id;
+      }, this);
+
+      if (found_font !== undefined) {
+        found_font.font_id = null;
+        found_font.is_added = false;
+      }
     },
 
 
@@ -304,6 +296,7 @@
       //if (!attrs.id) // FIXME
       attrs.id = this.next_font_id++;
       this.fonts.create(attrs);
+      return attrs.id;
     },
 
 

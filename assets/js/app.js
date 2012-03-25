@@ -1,4 +1,4 @@
-/*global Fontomas, $, Backbone*/
+/*global Fontomas, $, Backbone, Modernizr*/
 
 ;(function () {
   "use strict";
@@ -13,12 +13,19 @@
       Fontomas.env.filereader = false;
     }
 
+    Fontomas.env.fontface = Modernizr.fontface;
+
+    // debug: simulate no fontface is available
+    if (Fontomas.debug.is_on && Fontomas.debug.nofontface) {
+      Fontomas.env.fontface = false;
+    }
+
     // check browser's capabilities
-    //if ([> check if browser is OK <]) {
-    //  Fontomas.logger.error("bad browser");
-    //  $('#fm-bad-browser').modal({keyboard: false});
-    //  return;
-    //}
+    if (!Fontomas.env.fontface) {
+      Fontomas.logger.error("bad browser");
+      $('#fm-bad-browser').modal({keyboard: false});
+      return;
+    }
 
     // show loading tab
     $('#tab').tab("show");

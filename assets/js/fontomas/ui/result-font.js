@@ -58,14 +58,23 @@
     },
 
 
-    render: function () {
-      var self = this;
+    removeGlyphsByFont: function (font_id) {
+      Fontomas.logger.debug("views.ResultFont.removeGlyphsByFont");
 
+      _.each(this.glyphviews, function (view) {
+        if (view.model.get("source_glyph").font_id === font_id) {
+          view.model.destroy();
+        }
+      });
+    },
+
+
+    render: function () {
       Fontomas.logger.debug("views.ResultFont.render");
 
-      _.each(this.glyphviews, function (glyph) {
-        self.$el.append(glyph.el);
-      });
+      _.each(this.glyphviews, function (view) {
+        this.$el.append(view.el);
+      }, this);
 
       return this;
     },
@@ -80,10 +89,12 @@
         .removeClass(config.icon_size_classes)
         .addClass(config.icon_size_prefix + size);
 
+      // FIXME: will be removed soon
       _.each(this.glyphviews, function (view) {
         view.changeIconSize(size);
       });
     },
+
 
     scalePath: function (path, scale) {
       return path.replace(/(-?\d*\.?\d*(?:e[\-+]?\d+)?)/ig, function (num) {

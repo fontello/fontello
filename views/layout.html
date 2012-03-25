@@ -11,6 +11,7 @@
     <link href="static/assets/vendor/bootstrap/bootstrap-responsive.min.css" rel="stylesheet"/>
     <link href="static/assets/vendor/jquery.notify/ui.notify.css" rel="stylesheet"/>
     <link href="static/assets/css/fontomas.css" rel="stylesheet"/>
+    <link href="static/assets/css/fontface-embedded.css" rel="stylesheet"/>
 
     <!-- the fav and touch icons -->
     <link rel="shortcut icon" href="static/assets/img/favicon.ico"/>
@@ -88,7 +89,7 @@
               </div>
             </div>
           </form>
-          <div id="fm-result-font">
+          <div id="fm-result-font" class="fm-icon-size-32">
           </div>
         </div>
       </div> <!-- /tab-content -->
@@ -164,25 +165,38 @@
         <a class="fm-font-anchor" href="#font-{{id}}"></a>
         <a class="fm-font-close" href="#"><small>close</small></a>
       </h2>
-      <div class="fm-glyph-group">
+      <div class="fm-glyph-group {{css_class}}">
       </div>
     </script>
     <script data-tpl-id="glyph-item" type="text/x-fm-template">
-      <label class="glyph">
-        <input class="fm-glyph-id" type="checkbox" value="0"/>
-        <div id="gd0" class="fm-glyph-div" style="width: 64px; height: 64px;">{{test}}</div>
+      <label class="fm-glyph">
+        <input class="fm-glyph-id" type="checkbox" value="{{glyph_id}}"/>
+        <span class="fm-icon">{{{unicode}}}</span>
+      </label>
+    </script>
+    <script data-tpl-id="glyph-item-old" type="text/x-fm-template">
+      <label class="fm-glyph">
+        <!-- svg goes here -->
+        <input class="fm-glyph-id" type="checkbox" value="{{glyph_id}}"/>
       </label>
     </script>
     <script data-tpl-id="resultfont-glyph-item" type="text/x-fm-template">
-      <!-label class="rearrange-glyph"->
-        <input class="fm-glyph-id" type="checkbox" readonly="readonly" value=""/>
-        <input class="fm-unicode" type="text" value="{{{char}}}"/>
-        <div class="rg-top">{{{top}}}</div>
-        <div class="rg-center">
-          <div class="rg-icon">{{{glyph.svg}}}</div>
-         </div>
-        <div class="rg-bottom">{{bottom}}</div>
-      <!-/label->
+      <!--div class="fm-result-glyph"-->
+        <div class="top">{{{top}}}</div>
+        <div class="center {{css_class}}">
+          <span class="fm-icon">{{{char}}}</span>
+        </div>
+        <div class="bottom">{{bottom}}</div>
+      <!--/div-->
+    </script>
+    <script data-tpl-id="resultfont-glyph-item-old" type="text/x-fm-template">
+      <!--div class="fm-result-glyph"-->
+        <div class="top">{{{top}}}</div>
+        <div class="center">
+          <!-- svg goes here -->
+        </div>
+        <div class="bottom">{{bottom}}</div>
+      <!--/div-->
     </script>
 
     <!-- javascript

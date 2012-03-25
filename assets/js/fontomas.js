@@ -39,23 +39,23 @@
   };
 
   // init icon_size_classes
-  Fontomas.config.icon_size_classes = Fontomas.config.preview_icon_sizes.map(
+  Fontomas.config.icon_size_classes = _.map(Fontomas.config.preview_icon_sizes,
     function (item) {
       return Fontomas.config.icon_size_prefix + item;
     }
   ).join(" ");
 
-
   // environment
   Fontomas.env = {
     is_file_proto:  (window.location.protocol === "file:"),
-    filereader:     null
+    filereader:     null,
+    fontface:       null
   };
 
 
   Fontomas.debug = {is_on: false};
 
-  // usage: index.html#debug:maxglyphs=10,noembedded,nofilereader
+  // usage: index.html#debug:maxglyphs=10,noembedded,nofilereader,nofontface
   _.each(window.location.hash.substr(1).split("&"), function (str) {
     var vars = str.split(":");
 
@@ -79,7 +79,7 @@
   if (Fontomas.debug.is_on) {
     logger.assert = console.assert;
     logger.error  = console.error;
-    logger.debug  = console.debug;
+    logger.debug  = console.debug ? console.debug : console.log;
   }
 
   Fontomas.logger = logger;
