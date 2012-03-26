@@ -5,8 +5,7 @@
 
 
   Fontomas.models.glyphs_collection = Backbone.Collection.extend({
-    model:            Fontomas.models.glyph,
-    unicode_use_map:  [],
+    unicode_use_map: [],
 
 
     initialize: function () {
@@ -34,7 +33,7 @@
         return;
       }
 
-      glyph.unicode_code  = found_code.code;
+      glyph.set("unicode_code", found_code.code);
       found_code.is_used  = true;
 
       Backbone.Collection.prototype.add.call(this, glyph, options);

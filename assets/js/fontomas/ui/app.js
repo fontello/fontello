@@ -33,7 +33,7 @@
       this.font_toolbar.on("fileUpload",      this.onFileUpload,      this);
       this.font_toolbar.on("useEmbeddedFont", this.onUseEmbeddedFont, this);
 
-      this.fonts = new Fontomas.models.source_fonts_collection;
+      this.fonts = new Backbone.Collection;
       this.fonts.on("add",   this.onAddFont,      this);
       this.fonts.on("reset", this.onAddAllFonts,  this);
 
@@ -274,7 +274,7 @@
       if (found_glyph) {
         found_glyph.destroy();
       } else {
-        glyph = {source_glyph: data};
+        glyph = new Fontomas.models.glyph({source_glyph: data});
         this.resultfontview.model.glyphs.add(glyph);
       }
     },
@@ -307,7 +307,9 @@
 
       //if (!attrs.id) // FIXME
       attrs.id = this.next_font_id++;
-      this.fonts.create(attrs);
+      var font = new Fontomas.models.source_font(attrs);
+
+      this.fonts.create(font);
       return attrs.id;
     },
 
