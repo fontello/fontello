@@ -46,6 +46,17 @@
       this.resultfontview.on("noGlyphsSelected",   this.menuOff, this);
 
       this.on("fileLoaded", this.onLoadFont, this);
+
+      // FIXME
+      $("#fm-download-font-button").click(this.download);
+    },
+
+
+    download: function (event) {
+      Fontomas.logger.debug("views.app.download");
+
+      Fontomas.util.notify_alert("Not yet implemented. Stay tuned.", true);
+      event.preventDefault();
     },
 
 
