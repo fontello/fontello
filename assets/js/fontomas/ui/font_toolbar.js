@@ -7,7 +7,7 @@
   var config = fontomas.config;
 
 
-  fontomas.views.font_toolbar = Backbone.View.extend({
+  fontomas.ui.font_toolbar = Backbone.View.extend({
     tagName:  "form",
     id:       "fm-file-drop-zone",
 
@@ -23,7 +23,7 @@
 
 
     initialize: function () {
-      fontomas.logger.debug("views.font_toolbar.initialize");
+      fontomas.logger.debug("ui.font_toolbar.initialize");
 
       _.bindAll(this);
 
@@ -38,7 +38,7 @@
 
 
     changeGlyphSize: function (event) {
-      fontomas.logger.debug("views.font_toolbar.changeGlyphSize");
+      fontomas.logger.debug("ui.font_toolbar.changeGlyphSize");
 
       var size = parseInt($(event.target).val(), 10) ||
                  config.preview_glyph_sizes[0];
@@ -65,13 +65,13 @@
 
 
     fileUpload: function (event) {
-      fontomas.logger.debug("views.font_toolbar.fileUpload");
+      fontomas.logger.debug("ui.font_toolbar.fileUpload");
       this.trigger("fileUpload", event.target.files);
     },
 
 
     fileDragOver: function (event) {
-      //fontomas.logger.debug("views.font_toolbar.fileDragOver");
+      //fontomas.logger.debug("ui.font_toolbar.fileDragOver");
       if (fontomas.env.filereader) {
         event.stopPropagation();
         event.preventDefault();
@@ -81,7 +81,7 @@
 
 
     fileDrop: function (event) {
-      fontomas.logger.debug("views.font_toolbar.fileDrop");
+      fontomas.logger.debug("ui.font_toolbar.fileDrop");
 
       if (fontomas.env.filereader) {
         event.stopPropagation();
@@ -92,7 +92,7 @@
 
 
     useEmbedded: function (event) {
-      fontomas.logger.debug("views.font_toolbar.useEmbedded");
+      fontomas.logger.debug("ui.font_toolbar.useEmbedded");
 
       var id    = $(event.target).data("embedded_id"),
           font  = fontomas.embedded_fonts[id];
@@ -106,7 +106,7 @@
 
 
     render: function () {
-      fontomas.logger.debug("views.font_toolbar.render");
+      fontomas.logger.debug("ui.font_toolbar.render");
 
       var tpl_vars = {buttons: config.preview_glyph_sizes};
 
@@ -123,7 +123,7 @@
 
 
     renderUseEmbedded: function () {
-      fontomas.logger.debug("views.font_toolbar.renderUseEmbedded");
+      fontomas.logger.debug("ui.font_toolbar.renderUseEmbedded");
 
       var tpl_vars = {
         options: _.map(fontomas.embedded_fonts, function (item) {

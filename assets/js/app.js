@@ -31,7 +31,7 @@
     $('#tab').tab("show");
 
     // main view
-    var view = new fontomas.views.app;
+    var view = new fontomas.ui.app;
     view.render();
 
     $('.tooltip-test').tooltip();

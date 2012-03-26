@@ -6,7 +6,7 @@
 
   window.fontomas = {};
   fontomas.models = {};
-  fontomas.views  = {};
+  fontomas.ui     = {};
 
 
   var logger = {}, tpl_cache = {};

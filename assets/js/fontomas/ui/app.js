@@ -7,7 +7,7 @@
   var config = fontomas.config;
 
 
-  fontomas.views.app = Backbone.View.extend({
+  fontomas.ui.app = Backbone.View.extend({
     myfiles:        [],
     next_font_id:   1,
     fonts:          null,
@@ -21,11 +21,11 @@
 
 
     initialize: function () {
-      fontomas.logger.debug("views.app.initialize");
+      fontomas.logger.debug("ui.app.initialize");
 
       _.bindAll(this);
 
-      this.font_toolbar = new fontomas.views.font_toolbar({
+      this.font_toolbar = new fontomas.ui.font_toolbar({
         el: $("#fm-file-drop-zone")[0]
       });
       this.font_toolbar.on("changeGlyphSize", this.onChangeGlyphSize, this);
@@ -37,7 +37,7 @@
       this.fonts.on("add",   this.onAddFont,      this);
       this.fonts.on("reset", this.onAddAllFonts,  this);
 
-      this.resultfontview = new fontomas.views.result_font({
+      this.resultfontview = new fontomas.ui.result_font({
         el:         $("#fm-result-font")[0],
         model:      new fontomas.models.result_font,
         glyph_size: this.glyph_size
@@ -53,7 +53,7 @@
 
 
     download: function (event) {
-      fontomas.logger.debug("views.app.download");
+      fontomas.logger.debug("ui.app.download");
 
       fontomas.util.notify_alert("Not yet implemented. Stay tuned.", true);
       event.preventDefault();
@@ -61,7 +61,7 @@
 
 
     onChangeGlyphSize: function (size) {
-      fontomas.logger.debug("views.app.onChangeGlyphSize");
+      fontomas.logger.debug("ui.app.onChangeGlyphSize");
 
       this.glyph_size = size;
 
@@ -74,28 +74,28 @@
 
 
     onFileDrop: function (files) {
-      fontomas.logger.debug("views.app.onFileDrop");
+      fontomas.logger.debug("ui.app.onFileDrop");
       this.doUploadFonts(files);
     },
 
 
     onFileUpload: function (files) {
-      fontomas.logger.debug("views.app.onFileUpload");
+      fontomas.logger.debug("ui.app.onFileUpload");
       this.doUploadFonts(files);
     },
 
 
     onUseEmbeddedFont: function (font) {
-      fontomas.logger.debug("views.app.onUseEmbeddedFont");
+      fontomas.logger.debug("ui.app.onUseEmbeddedFont");
       this.addEmbeddedFonts([font]);
     },
 
 
     // a model has been added, so we create a corresponding view for it
     onAddFont: function (font) {
-      fontomas.logger.debug("views.app.onAddFont");
+      fontomas.logger.debug("ui.app.onAddFont");
 
-      var view = new fontomas.views.source_font({
+      var view = new fontomas.ui.source_font({
         model:      font,
         glyph_size: this.glyph_size
       });
@@ -111,19 +111,19 @@
 
     // models have been added, so we create views for all of them
     onAddAllFonts: function () {
-      fontomas.logger.debug("views.app.onAddAllFonts");
+      fontomas.logger.debug("ui.app.onAddAllFonts");
       this.fonts.each(this.onAddFont);
     },
 
 
     onRemoveFont: function (id) {
-      fontomas.logger.debug("views.app.onRemoveFont id=", id);
+      fontomas.logger.debug("ui.app.onRemoveFont id=", id);
       delete this.fontviews[id];
     },
 
 
     toggleMenu: function (enabled) {
-      fontomas.logger.debug("views.app.toggleMenu");
+      fontomas.logger.debug("ui.app.toggleMenu");
       $('#tab')
         .find("a.fm-disable-on-demand")
           .toggleClass("disabled", !enabled);
@@ -141,7 +141,7 @@
 
     
     doUploadFonts: function (files) {
-      fontomas.logger.debug("views.app.doUploadFonts");
+      fontomas.logger.debug("ui.app.doUploadFonts");
 
       var self = this;
 
@@ -177,7 +177,7 @@
 
 
     onLoadFont: function (event, fileinfo) {
-      fontomas.logger.debug("views.app.onLoadFont");
+      fontomas.logger.debug("ui.app.onLoadFont");
 
       var font, file_ext, is_exist = false;
 
@@ -241,7 +241,7 @@
 
 
     addEmbeddedFonts: function (embedded_fonts) {
-      fontomas.logger.debug("views.app.addEmbeddedFonts");
+      fontomas.logger.debug("ui.app.addEmbeddedFonts");
 
       _.each(embedded_fonts, function (f) {
         var font = {
@@ -260,7 +260,7 @@
 
 
     onToggleGlyph: function (data) {
-      fontomas.logger.debug("views.app.onToggleGlyph data=", data);
+      fontomas.logger.debug("ui.app.onToggleGlyph data=", data);
 
       var glyph, found_glyph;
 
@@ -281,13 +281,13 @@
 
 
     onCloseEmbeddedFont: function () {
-      fontomas.logger.debug("views.app.onCloseEmbeddedFont");
+      fontomas.logger.debug("ui.app.onCloseEmbeddedFont");
       this.font_toolbar.renderUseEmbedded();
     },
 
 
     onCloseFont: function (font_id) {
-      fontomas.logger.debug("views.app.onCloseFont");
+      fontomas.logger.debug("ui.app.onCloseFont");
 
       this.resultfontview.removeGlyphsByFont(font_id);
 
@@ -303,7 +303,7 @@
 
 
     createFont: function (attrs) {
-      fontomas.logger.debug("views.app.createFont attrs=", attrs);
+      fontomas.logger.debug("ui.app.createFont attrs=", attrs);
 
       //if (!attrs.id) // FIXME
       attrs.id = this.next_font_id++;
@@ -315,7 +315,7 @@
 
 
     render: function () {
-      fontomas.logger.debug("views.app.render");
+      fontomas.logger.debug("ui.app.render");
 
       // auto load embedded fonts
       // debug

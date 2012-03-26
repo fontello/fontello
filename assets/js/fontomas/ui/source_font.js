@@ -24,7 +24,7 @@
   }
 
 
-  fontomas.views.source_font = Backbone.View.extend({
+  fontomas.ui.source_font = Backbone.View.extend({
     tagName:    "li",
 
     glyph_size: null,
@@ -36,7 +36,7 @@
 
 
     initialize: function () {
-      fontomas.logger.debug("views.source_font.initialize");
+      fontomas.logger.debug("ui.source_font.initialize");
 
       _.bindAll(this);
       this.glyph_size = this.options.glyph_size;
@@ -48,7 +48,7 @@
 
 
     render: function () {
-      fontomas.logger.debug("views.source_font.render_fontface el=", this.el);
+      fontomas.logger.debug("ui.source_font.render_fontface el=", this.el);
 
       // FIXME
       if (!this.model.get("is_embedded")) {
@@ -79,7 +79,7 @@
 
     // this is obsolete, will be removed soon
     render_old: function () {
-      fontomas.logger.debug("views.source_font.render_old el=", this.el);
+      fontomas.logger.debug("ui.source_font.render_old el=", this.el);
 
       var ascent       = this.model.get("ascent"),
           descent      = this.model.get("descent"),
@@ -204,7 +204,7 @@
 
 
     changeGlyphSize: function (new_size) {
-      fontomas.logger.debug("views.source_font.changeGlyphSize");
+      fontomas.logger.debug("ui.source_font.changeGlyphSize");
 
       this.$(".fm-glyph-group")
         .removeClass("glyph-size-" + this.glyph_size)
@@ -233,7 +233,7 @@
 
 
     remove: function () {
-      fontomas.logger.debug("views.source_font.remove");
+      fontomas.logger.debug("ui.source_font.remove");
 
       this.$el.remove();
       this.trigger("remove", this.model.id);
@@ -241,7 +241,7 @@
 
 
     close: function (event) {
-      fontomas.logger.debug("views.source_font.close");
+      fontomas.logger.debug("ui.source_font.close");
 
       event.preventDefault();
 
@@ -257,7 +257,7 @@
 
 
     toggleGlyph: function (event) {
-      fontomas.logger.debug("views.source_font.toggleGlyph");
+      fontomas.logger.debug("ui.source_font.toggleGlyph");
 
       var $target   = $(event.target),
           glyph_id  = parseInt($target.val(), 10),
