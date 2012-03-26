@@ -25,9 +25,9 @@
 
 
   Fontomas.views.source_font = Backbone.View.extend({
-    tagName:  "li",
+    tagName:    "li",
 
-    iconsize: null,
+    glyph_size: null,
 
     events: {
       "click .fm-font-close": "close",
@@ -39,7 +39,7 @@
       Fontomas.logger.debug("views.source_font.initialize");
 
       _.bindAll(this);
-      this.iconsize = this.options.iconsize;
+      this.glyph_size = this.options.glyph_size;
 
       this.$el.attr("id", "fm-font-" + this.model.id);
       this.model.on("change",   this.render,  this);
@@ -62,7 +62,7 @@
       }));
 
       this.$(".fm-glyph-group")
-        .addClass(config.icon_size_prefix + this.iconsize);
+        .addClass("glyph-size-" + this.glyph_size);
 
       _.each(this.model.get("glyphs"), function (item, glyph_id) {
         var glyph = Fontomas.render('glyph-item', {
@@ -84,7 +84,7 @@
       var ascent       = this.model.get("ascent"),
           descent      = this.model.get("descent"),
           units_per_em = this.model.get("units_per_em"),
-          size         = this.iconsize,
+          size         = this.glyph_size,
           font_size_y  = Math.round(size * (ascent - descent) / units_per_em);
 
       this.$el.html(Fontomas.render('font-item', {
@@ -92,7 +92,7 @@
         fontname:  this.model.get("fontname")
       }));
 
-      this.$(".fm-glyph-group").addClass(config.icon_size_prefix + size);
+      this.$(".fm-glyph-group").addClass("glyph-size-" + size);
 
       _.each(this.model.get("glyphs"), function (item, glyph_id) {
         var horiz_adv_x = item.horiz_adv_x || this.model.get("horiz_adv_x"),
@@ -182,7 +182,7 @@
         // precalc glyph sizes
         // FIXME: precalc only if glyph goes out of its default box
         glyph_sizes = {};
-        _.each(config.preview_icon_sizes, function (size) {
+        _.each(config.preview_glyph_sizes, function (size) {
           glyph_sizes[size] = [
             // width
             Math.round(size * (ascent - descent + 2 * delta.y) / units_per_em),
@@ -197,20 +197,20 @@
         item.svg          = Fontomas.util.outerHtml($glyph.find("svg"));
       }, this);
 
-      this.changeIconSize(this.iconsize);
+      this.changeGlyphSize(this.glyph_size);
 
       return this;
     },
 
 
-    changeIconSize: function (size) {
-      Fontomas.logger.debug("views.source_font.changeIconSize");
+    changeGlyphSize: function (new_size) {
+      Fontomas.logger.debug("views.source_font.changeGlyphSize");
 
-      this.iconsize = size;
+      this.$(".fm-glyph-group")
+        .removeClass("glyph-size-" + this.glyph_size)
+        .addClass("glyph-size-" + new_size);
 
-      this.$('.fm-glyph-group')
-        .removeClass(config.icon_size_classes)
-        .addClass(config.icon_size_prefix + size);
+      this.glyph_size = new_size;
 
       // FIXME
       if (this.model.get("is_embedded")) {
@@ -221,8 +221,8 @@
       this.$(".fm-glyph svg")
         .each(function (i) {
           var $this   = $(this),
-              size_x  = $this.data("glyph_sizes")[size][0],
-              size_y  = $this.data("glyph_sizes")[size][1];
+              size_x  = $this.data("glyph_sizes")[new_size][0],
+              size_y  = $this.data("glyph_sizes")[new_size][1];
           $this.css({
             "width":        size_x + "px",
             "height":       size_y + "px",

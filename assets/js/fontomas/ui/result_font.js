@@ -10,14 +10,14 @@
   Fontomas.views.result_font = Backbone.View.extend({
     glyphviews: [],
     events:     {},
-    iconsize:   null,
+    glyph_size: null,
 
 
     initialize: function () {
       Fontomas.logger.debug("views.result_font.initialize");
 
       _.bindAll(this);
-      this.iconsize = this.options.iconsize;
+      this.glyph_size = this.options.glyph_size;
 
       this.model.glyphs.each(this.onAddGlyph);
       this.model.glyphs.on("add", this.onAddGlyph, this);
@@ -31,8 +31,8 @@
       Fontomas.logger.debug("views.result_font.onAddGlyph");
 
       var view = new Fontomas.views.glyph({
-        model: glyph,
-        iconsize: this.iconsize
+        model:      glyph,
+        glyph_size: this.glyph_size
       });
 
       view.on("remove", this.onRemoveGlyph, this);
@@ -82,18 +82,18 @@
     },
 
 
-    changeIconSize: function (size) {
-      Fontomas.logger.debug("views.result_font.changeIconSize");
-
-      this.iconsize = size;
+    changeGlyphSize: function (new_size) {
+      Fontomas.logger.debug("views.result_font.changeGlyphSize");
 
       this.$el
-        .removeClass(config.icon_size_classes)
-        .addClass(config.icon_size_prefix + size);
+        .removeClass("glyph-size-" + this.glyph_size)
+        .addClass("glyph-size-" + new_size);
+
+      this.glyph_size = new_size;
 
       // FIXME: will be removed soon
       _.each(this.glyphviews, function (view) {
-        view.changeIconSize(size);
+        view.changeGlyphSize(new_size);
       });
     },
 

@@ -13,13 +13,9 @@
 
 
   Fontomas.config = {
-    // class icon_size_prefix+"-<num>" added when icon size has changed
-    icon_size_prefix:   "fm-icon-size-",
-    icon_size_classes:  "", // precalculated by initCfg()
-
-    preview_icon_sizes: [32, 24, 16],
-    fix_edges:          true,
-    scale_precision:    6, // truncate the mantissa when scaling svg paths
+    preview_glyph_sizes:  [32, 24, 16],
+    fix_edges:            true,
+    scale_precision:      6, // truncate the mantissa when scaling svg paths
 
     output: {
       filename:     "fontomas.svg",
@@ -33,12 +29,6 @@
     }
   };
 
-  // init icon_size_classes
-  Fontomas.config.icon_size_classes = _.map(Fontomas.config.preview_icon_sizes,
-    function (item) {
-      return Fontomas.config.icon_size_prefix + item;
-    }
-  ).join(" ");
 
   // environment
   Fontomas.env = {

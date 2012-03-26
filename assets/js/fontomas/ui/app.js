@@ -11,7 +11,7 @@
     myfiles:        [],
     next_font_id:   1,
     fonts:          null,
-    iconsize:       config.preview_icon_sizes[0],
+    glyph_size:     config.preview_glyph_sizes[0],
 
     font_toolbar:   null,
     fontviews:      {},
@@ -28,7 +28,7 @@
       this.font_toolbar = new Fontomas.views.font_toolbar({
         el: $("#fm-file-drop-zone")[0]
       });
-      this.font_toolbar.on("changeIconSize",  this.onChangeIconSize,  this);
+      this.font_toolbar.on("changeGlyphSize", this.onChangeGlyphSize, this);
       this.font_toolbar.on("fileDrop",        this.onFileDrop,        this);
       this.font_toolbar.on("fileUpload",      this.onFileUpload,      this);
       this.font_toolbar.on("useEmbeddedFont", this.onUseEmbeddedFont, this);
@@ -38,9 +38,9 @@
       this.fonts.on("reset", this.onAddAllFonts,  this);
 
       this.resultfontview = new Fontomas.views.result_font({
-        el:       $("#fm-result-font")[0],
-        model:    new Fontomas.models.result_font,
-        iconsize: this.iconsize
+        el:         $("#fm-result-font")[0],
+        model:      new Fontomas.models.result_font,
+        glyph_size: this.glyph_size
       });
       this.resultfontview.on("someGlyphsSelected", this.menuOn,  this);
       this.resultfontview.on("noGlyphsSelected",   this.menuOff, this);
@@ -60,16 +60,16 @@
     },
 
 
-    onChangeIconSize: function (size) {
-      Fontomas.logger.debug("views.app.onChangeIconSize");
+    onChangeGlyphSize: function (size) {
+      Fontomas.logger.debug("views.app.onChangeGlyphSize");
 
-      this.iconsize = size;
+      this.glyph_size = size;
 
       _.each(this.fontviews, function (view) {
-        view.changeIconSize(size);
+        view.changeGlyphSize(size);
       });
 
-      this.resultfontview.changeIconSize(size);
+      this.resultfontview.changeGlyphSize(size);
     },
 
 
@@ -96,8 +96,8 @@
       Fontomas.logger.debug("views.app.onAddFont");
 
       var view = new Fontomas.views.source_font({
-        model:    font,
-        iconsize: this.iconsize
+        model:      font,
+        glyph_size: this.glyph_size
       });
       view.on("toggleGlyph",        this.onToggleGlyph,       this);
       view.on("closeEmbeddedFont",  this.onCloseEmbeddedFont, this);

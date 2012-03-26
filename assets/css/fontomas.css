@@ -148,22 +148,22 @@ iframe.twitter-share-button {
   box-shadow: 0 0 5px #444 inset;
 }
 
-.fm-icon-size-32 .fm-glyph {
+.glyph-size-32 .fm-glyph {
   width: 64px;
   height: 64px;
   line-height: 64px;
   font-size: 32px;
 }
 
-.fm-icon-size-24 .fm-glyph {
+.glyph-size-24 .fm-glyph {
   width: 48px;
   height: 48px;
   line-height: 48px;
   font-size: 24px;
 }
 
-.fm-icon-size-16 .fm-glyph,
-.fm-icon-size-16 .fm-glyph.selected {
+.glyph-size-16 .fm-glyph,
+.glyph-size-16 .fm-glyph.selected {
   width: 32px;
   height: 32px;
   line-height: 32px;
@@ -213,19 +213,19 @@ iframe.twitter-share-button {
   font-size: 10px;
 }
 
-.fm-icon-size-32 .fm-result-glyph .center {
+.glyph-size-32 .fm-result-glyph .center {
   height: 64px;
   line-height: 64px;
   font-size: 32px;
 }
 
-.fm-icon-size-24 .fm-result-glyph .center {
+.glyph-size-24 .fm-result-glyph .center {
   height: 48px;
   line-height: 48px;
   font-size: 24px;
 }
 
-.fm-icon-size-16 .fm-result-glyph .center {
+.glyph-size-16 .fm-result-glyph .center {
   height: 32px;
   line-height: 32px;
   font-size: 16px;

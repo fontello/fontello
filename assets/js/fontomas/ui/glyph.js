@@ -8,13 +8,13 @@
     tagName:    "div",
     className:  "fm-result-glyph",
     events:     {},
-    iconsize:   null, // FIXME: will be removed soon
+    glyph_size: null, // FIXME: will be removed soon
 
     initialize: function () {
       //Fontomas.logger.debug("views.glyph.initialize");
 
       _.bindAll(this);
-      this.iconsize = this.options.iconsize;  // FIXME: will be removed soon
+      this.glyph_size = this.options.glyph_size;  // FIXME: will be removed soon
 
       this.model.on("change",   this.render, this);
       this.model.on("destroy",  this.remove, this);
@@ -79,21 +79,21 @@
 
       this.$el.html(html);
       this.$(".center").html(source_glyph.svg);
-      this.changeIconSize(this.iconsize);
+      this.changeGlyphSize(this.glyph_size);
 
       return this;
     },
 
 
     // this is obsolete, will be removed soon
-    changeIconSize: function (size) {
-      Fontomas.logger.debug("views.glyph.changeIconSize");
+    changeGlyphSize: function (size) {
+      Fontomas.logger.debug("views.glyph.changeGlyphSize");
 
       if (this.model.get("source_glyph").embedded_id !== undefined) {
         return;
       }
 
-      this.iconsize = size;
+      this.glyph_size   = size;
       var source_glyph  = this.model.get("source_glyph"),
           size_x        = source_glyph.glyph_sizes[size][0],
           size_y        = source_glyph.glyph_sizes[size][1];

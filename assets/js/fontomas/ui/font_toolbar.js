@@ -13,7 +13,7 @@
 
 
     events: {
-      "click .fm-icon-size-button":   "changeIconSize",
+      "click .glyph-size-button":     "changeGlyphSize",
       "click #fm-file-browse-button": "fileBrowse",
       "change #fm-file":              "fileUpload",
       "dragover #fm-file-drop-zone":  "fileDragOver", // doesn't work
@@ -37,16 +37,16 @@
     },
 
 
-    changeIconSize: function (event) {
-      Fontomas.logger.debug("views.font_toolbar.changeIconSize");
+    changeGlyphSize: function (event) {
+      Fontomas.logger.debug("views.font_toolbar.changeGlyphSize");
 
       var size = parseInt($(event.target).val(), 10) ||
-                 config.preview_icon_sizes[0];
+                 config.preview_glyph_sizes[0];
 
       Fontomas.logger.debug("size=", size);
 
       event.preventDefault();
-      this.trigger("changeIconSize", size);
+      this.trigger("changeGlyphSize", size);
     },
 
 
@@ -108,10 +108,10 @@
     render: function () {
       Fontomas.logger.debug("views.font_toolbar.render");
 
-      var tpl_vars = {buttons: config.preview_icon_sizes};
+      var tpl_vars = {buttons: config.preview_glyph_sizes};
 
       // render icon size buttons
-      $('#fm-icon-size')
+      $('#glyph-size')
         .html(Fontomas.render('icon-size', tpl_vars))
         .find("button:first")
           .addClass("active");
