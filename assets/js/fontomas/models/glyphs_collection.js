@@ -1,15 +1,15 @@
-/*global Fontomas, _, Backbone*/
+/*global fontomas, _, Backbone*/
 
 ;(function () {
   "use strict";
 
 
-  Fontomas.models.glyphs_collection = Backbone.Collection.extend({
+  fontomas.models.glyphs_collection = Backbone.Collection.extend({
     unicode_use_map: [],
 
 
     initialize: function () {
-      Fontomas.logger.debug("models.glyphs_collection.initialize");
+      fontomas.logger.debug("models.glyphs_collection.initialize");
 
       var code;
 
@@ -20,7 +20,7 @@
 
 
     add: function (glyph, options) {
-      Fontomas.logger.debug("models.glyphs_collection.add");
+      fontomas.logger.debug("models.glyphs_collection.add");
 
       var found_code;
 
@@ -29,7 +29,7 @@
       });
 
       if (!found_code) {
-        Fontomas.logger.debug("models.glyphs_collection.add: no room to add glyph");
+        fontomas.logger.debug("models.glyphs_collection.add: no room to add glyph");
         return;
       }
 
@@ -41,7 +41,7 @@
 
 
     remove: function (model, options) {
-      Fontomas.logger.debug("models.glyphs_collection.remove");
+      fontomas.logger.debug("models.glyphs_collection.remove");
 
       var found_code,
           code = model.get("unicode_code");
@@ -52,7 +52,7 @@
         });
 
         if (!found_code) {
-          Fontomas.logger.error("models.glyphs_collection.remove: unicode_code not found in unicode_use_map");
+          fontomas.logger.error("models.glyphs_collection.remove: unicode_code not found in unicode_use_map");
           return;
         }
 

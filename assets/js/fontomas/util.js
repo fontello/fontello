@@ -1,4 +1,4 @@
-/*global Fontomas, _, XMLSerializer*/
+/*global fontomas, _, XMLSerializer*/
 
 ;(function () {
   "use strict";
@@ -12,7 +12,7 @@
 
     if (suppress_dup && (text !== undefined)) {
       if (notify_dup[text] !== undefined) {
-        Fontomas.logger.debug("notification suppressed");
+        fontomas.logger.debug("notification suppressed");
         return;
       }
 
@@ -21,7 +21,7 @@
       $.extend(options, {
         close: function () {
           delete notify_dup[text];
-          Fontomas.logger.debug("notification can be fired again");
+          fontomas.logger.debug("notification can be fired again");
         }
       });
     }
@@ -150,6 +150,6 @@
     return result;
   };
 
-  Fontomas.util = exports;
+  fontomas.util = exports;
 
 }());

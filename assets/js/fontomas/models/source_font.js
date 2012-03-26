@@ -1,4 +1,4 @@
-/*global Fontomas, _, Backbone*/
+/*global fontomas, _, Backbone*/
 
 ;(function () {
   "use strict";
@@ -16,8 +16,8 @@
       };
 
 
-  if (Fontomas.debug.is_on && Fontomas.debug.maxglyphs) {
-    max_glyphs = Fontomas.debug.maxglyphs;
+  if (fontomas.debug.is_on && fontomas.debug.maxglyphs) {
+    max_glyphs = fontomas.debug.maxglyphs;
   }
 
 
@@ -63,12 +63,12 @@
   parsers.svg = function (svg) {
     var font = {}, xml;
 
-    Fontomas.logger.debug("Font.initSvg");
+    fontomas.logger.debug("Font.initSvg");
 
     try {
       xml = $.parseXML(svg);
     } catch (e) {
-      Fontomas.logger.error("Font.initSvg: invalid xml");
+      fontomas.logger.error("Font.initSvg: invalid xml");
       return null;
     }
 
@@ -80,7 +80,7 @@
     font.glyphs       = [];
 
     $("glyph", xml).slice(0, max_glyphs).each(function (i) {
-      var glyph = Fontomas.util.getAllAttrs(this);
+      var glyph = fontomas.util.getAllAttrs(this);
 
       if (glyph["horiz-adv-x"]) {
         glyph.horiz_adv_x = parseInt(glyph["horiz-adv-x"], 10);
@@ -97,14 +97,14 @@
   parsers.js = function (js) {
     var font = {}, json_string, json, cur_glyph = 0;
 
-    Fontomas.logger.debug("initCufonJs");
+    fontomas.logger.debug("initCufonJs");
 
     try {
       // strip function call
-      json_string = Fontomas.util.trimBoth(js, ".registerFont(", ")");
+      json_string = fontomas.util.trimBoth(js, ".registerFont(", ")");
       json = $.parseJSON(json_string);
     } catch (e) {
-      Fontomas.logger.error("Font.initCufonJs: invalid json");
+      fontomas.logger.error("Font.initCufonJs: invalid json");
       return null;
     }
 
@@ -140,7 +140,7 @@
   };
 
 
-  Fontomas.models.source_font = Backbone.Model.extend({
+  fontomas.models.source_font = Backbone.Model.extend({
     defaults: function () {
       return {
         fontname:     "unknown",
@@ -157,7 +157,7 @@
 
     // FIXME: the model isn't sync()ed to server yet
     sync: function () {
-      Fontomas.logger.debug("models.source_font.sync()");
+      fontomas.logger.debug("models.source_font.sync()");
     }
   }, {
     supported_types: _.keys(parsers),

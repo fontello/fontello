@@ -1,10 +1,10 @@
-/*global Fontomas, Backbone*/
+/*global fontomas, Backbone*/
 
 ;(function () {
   "use strict";
 
 
-  Fontomas.models.source_fonts_collection = Backbone.Collection.extend({
+  fontomas.models.source_fonts_collection = Backbone.Collection.extend({
   });
 
 }());

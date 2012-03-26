@@ -38,12 +38,12 @@ echo "done"
 
 echo -n "Generating $OUTPUT_FILE... "
 (cat <<END
-/*global Fontomas*/
+/*global fontomas*/
 ;(function () {
   "use strict";
 
 
-  Fontomas.embedded_fonts = [
+  fontomas.embedded_fonts = [
 END
 
 for (( i=0; i<${FLEN}; i++ ));

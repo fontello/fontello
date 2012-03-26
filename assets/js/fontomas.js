@@ -1,18 +1,18 @@
-/*global Fontomas, _, Handlebars*/
+/*global fontomas, _, Handlebars*/
 
 ;(function () {
   "use strict";
 
 
-  window.Fontomas = {};
-  Fontomas.models = {};
-  Fontomas.views  = {};
+  window.fontomas = {};
+  fontomas.models = {};
+  fontomas.views  = {};
 
 
   var logger = {}, tpl_cache = {};
 
 
-  Fontomas.config = {
+  fontomas.config = {
     preview_glyph_sizes:  [32, 24, 16],
     fix_edges:            true,
     scale_precision:      6, // truncate the mantissa when scaling svg paths
@@ -31,26 +31,26 @@
 
 
   // environment
-  Fontomas.env = {
+  fontomas.env = {
     is_file_proto:  (window.location.protocol === "file:"),
     filereader:     null,
     fontface:       null
   };
 
 
-  Fontomas.debug = {is_on: false};
+  fontomas.debug = {is_on: false};
 
   // usage: index.html#debug:maxglyphs=10,noembedded,nofilereader,nofontface
   _.each(window.location.hash.substr(1).split("&"), function (str) {
     var vars = str.split(":");
 
     if ("debug" === vars.shift()) {
-      Fontomas.debug.is_on = true;
+      fontomas.debug.is_on = true;
 
       if (vars.length) {
         _.each(vars.shift().split(","), function (str) {
           var pair = str.split("=");
-          Fontomas.debug[pair[0]] = pair[1] && pair[1] !== "" ? pair[1] : true;
+          fontomas.debug[pair[0]] = pair[1] && pair[1] !== "" ? pair[1] : true;
         });
       }
     }
@@ -61,16 +61,16 @@
   logger.error  =
   logger.debug  = function () {};
 
-  if (Fontomas.debug.is_on) {
+  if (fontomas.debug.is_on) {
     logger.assert = console.assert;
     logger.error  = console.error;
     logger.debug  = console.debug ? console.debug : console.log;
   }
 
-  Fontomas.logger = logger;
+  fontomas.logger = logger;
 
 
-  Fontomas.render = function (id, locals) {
+  fontomas.render = function (id, locals) {
     var $tpl;
 
     if (!tpl_cache[id]) {

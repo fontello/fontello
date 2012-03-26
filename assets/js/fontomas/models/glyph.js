@@ -1,13 +1,13 @@
-/*global Fontomas, Backbone*/
+/*global fontomas, Backbone*/
 
 ;(function () {
   "use strict";
 
 
-  Fontomas.models.glyph = Backbone.Model.extend({
+  fontomas.models.glyph = Backbone.Model.extend({
     // FIXME: the model isn't sync()ed to server yet
     sync: function () {
-      Fontomas.logger.debug("models.glyph.sync()");
+      fontomas.logger.debug("models.glyph.sync()");
     }
   });
 

@@ -1,10 +1,10 @@
-/*global Fontomas, _, Backbone, Raphael*/
+/*global fontomas, _, Backbone, Raphael*/
 
 ;(function () {
   "use strict";
 
 
-  var config = Fontomas.config;
+  var config = fontomas.config;
 
 
   // this is obsolete, will be removed soon
@@ -24,7 +24,7 @@
   }
 
 
-  Fontomas.views.source_font = Backbone.View.extend({
+  fontomas.views.source_font = Backbone.View.extend({
     tagName:    "li",
 
     glyph_size: null,
@@ -36,7 +36,7 @@
 
 
     initialize: function () {
-      Fontomas.logger.debug("views.source_font.initialize");
+      fontomas.logger.debug("views.source_font.initialize");
 
       _.bindAll(this);
       this.glyph_size = this.options.glyph_size;
@@ -48,14 +48,14 @@
 
 
     render: function () {
-      Fontomas.logger.debug("views.source_font.render_fontface el=", this.el);
+      fontomas.logger.debug("views.source_font.render_fontface el=", this.el);
 
       // FIXME
       if (!this.model.get("is_embedded")) {
         return this.render_old();
       }
 
-      this.$el.html(Fontomas.render('font-item', {
+      this.$el.html(fontomas.render('font-item', {
         id:         this.model.id,
         fontname:   this.model.get("fontname"),
         css_class:  "fm-embedded-" + this.model.get("embedded_id")
@@ -65,7 +65,7 @@
         .addClass("glyph-size-" + this.glyph_size);
 
       _.each(this.model.get("glyphs"), function (item, glyph_id) {
-        var glyph = Fontomas.render('glyph-item', {
+        var glyph = fontomas.render('glyph-item', {
           glyph_id: glyph_id,
           unicode:  item.unicode
         });
@@ -79,7 +79,7 @@
 
     // this is obsolete, will be removed soon
     render_old: function () {
-      Fontomas.logger.debug("views.source_font.render_old el=", this.el);
+      fontomas.logger.debug("views.source_font.render_old el=", this.el);
 
       var ascent       = this.model.get("ascent"),
           descent      = this.model.get("descent"),
@@ -87,7 +87,7 @@
           size         = this.glyph_size,
           font_size_y  = Math.round(size * (ascent - descent) / units_per_em);
 
-      this.$el.html(Fontomas.render('font-item', {
+      this.$el.html(fontomas.render('font-item', {
         id:        this.model.id,
         fontname:  this.model.get("fontname")
       }));
@@ -98,7 +98,7 @@
         var horiz_adv_x = item.horiz_adv_x || this.model.get("horiz_adv_x"),
             size_x      = Math.round(size * horiz_adv_x / units_per_em),
             size_y      = font_size_y,
-            $glyph      = $(Fontomas.render('glyph-item-old', {
+            $glyph      = $(fontomas.render('glyph-item-old', {
               glyph_id: glyph_id
             })),
             path        = item.d,
@@ -165,7 +165,7 @@
 
         // flip y, because svg font's y axis goes upward
         // debug: turn flip off
-        if (!(Fontomas.debug && Fontomas.debug.noflip)) {
+        if (!(fontomas.debug && fontomas.debug.noflip)) {
           // transform matrix 3x3
           flip_y_matrix = [1, 0, 0, -1, 0, ascent / 2 - descent];
           g.attr({transform: "m" + flip_y_matrix});
@@ -194,7 +194,7 @@
         $glyph.find("svg").data("glyph_sizes", glyph_sizes);
 
         item.glyph_sizes  = glyph_sizes;
-        item.svg          = Fontomas.util.outerHtml($glyph.find("svg"));
+        item.svg          = fontomas.util.outerHtml($glyph.find("svg"));
       }, this);
 
       this.changeGlyphSize(this.glyph_size);
@@ -204,7 +204,7 @@
 
 
     changeGlyphSize: function (new_size) {
-      Fontomas.logger.debug("views.source_font.changeGlyphSize");
+      fontomas.logger.debug("views.source_font.changeGlyphSize");
 
       this.$(".fm-glyph-group")
         .removeClass("glyph-size-" + this.glyph_size)
@@ -233,7 +233,7 @@
 
 
     remove: function () {
-      Fontomas.logger.debug("views.source_font.remove");
+      fontomas.logger.debug("views.source_font.remove");
 
       this.$el.remove();
       this.trigger("remove", this.model.id);
@@ -241,13 +241,13 @@
 
 
     close: function (event) {
-      Fontomas.logger.debug("views.source_font.close");
+      fontomas.logger.debug("views.source_font.close");
 
       event.preventDefault();
 
       if (this.model.get("is_embedded")) {
         var embedded_id = this.model.get("embedded_id");
-        Fontomas.embedded_fonts[embedded_id].is_added = false;
+        fontomas.embedded_fonts[embedded_id].is_added = false;
         this.trigger("closeEmbeddedFont");
       }
 
@@ -257,7 +257,7 @@
 
 
     toggleGlyph: function (event) {
-      Fontomas.logger.debug("views.source_font.toggleGlyph");
+      fontomas.logger.debug("views.source_font.toggleGlyph");
 
       var $target   = $(event.target),
           glyph_id  = parseInt($target.val(), 10),

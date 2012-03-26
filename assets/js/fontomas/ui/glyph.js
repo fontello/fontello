@@ -1,17 +1,17 @@
-/*global Fontomas, _, Backbone*/
+/*global fontomas, _, Backbone*/
 
 ;(function () {
   "use strict";
 
 
-  Fontomas.views.glyph = Backbone.View.extend({
+  fontomas.views.glyph = Backbone.View.extend({
     tagName:    "div",
     className:  "fm-result-glyph",
     events:     {},
     glyph_size: null, // FIXME: will be removed soon
 
     initialize: function () {
-      //Fontomas.logger.debug("views.glyph.initialize");
+      //fontomas.logger.debug("views.glyph.initialize");
 
       _.bindAll(this);
       this.glyph_size = this.options.glyph_size;  // FIXME: will be removed soon
@@ -24,7 +24,7 @@
 
 
     render: function () {
-      Fontomas.logger.debug("views.glyph.render el=", this.el);
+      fontomas.logger.debug("views.glyph.render el=", this.el);
 
       // FIXME
       if (this.model.get("source_glyph").embedded_id === undefined) {
@@ -33,7 +33,7 @@
 
       var char = String.fromCharCode(this.model.get("unicode_code")),
           source_glyph = this.model.get("source_glyph"),
-          html = Fontomas.render('resultfont-glyph-item', {
+          html = fontomas.render('resultfont-glyph-item', {
             top:        this.model.get("unicode_code") === 32 ? "space" : char,
             char:       source_glyph.unicode,
             bottom:     this.toUnicode(char),
@@ -60,7 +60,7 @@
 
 
     remove: function () {
-      Fontomas.logger.debug("views.glyph.remove");
+      fontomas.logger.debug("views.glyph.remove");
       this.$el.remove();
       this.trigger("remove", this);
     },
@@ -68,11 +68,11 @@
 
     // this is obsolete, will be removed soon
     render_old: function () {
-      Fontomas.logger.debug("views.glyph.render_old el=", this.el);
+      fontomas.logger.debug("views.glyph.render_old el=", this.el);
 
       var char = String.fromCharCode(this.model.get("unicode_code")),
           source_glyph = this.model.get("source_glyph"),
-          html = Fontomas.render('resultfont-glyph-item-old', {
+          html = fontomas.render('resultfont-glyph-item-old', {
             top:        this.model.get("unicode_code") === 32 ? "space" : char,
             bottom:     this.toUnicode(char)
           });
@@ -87,7 +87,7 @@
 
     // this is obsolete, will be removed soon
     changeGlyphSize: function (size) {
-      Fontomas.logger.debug("views.glyph.changeGlyphSize");
+      fontomas.logger.debug("views.glyph.changeGlyphSize");
 
       if (this.model.get("source_glyph").embedded_id !== undefined) {
         return;

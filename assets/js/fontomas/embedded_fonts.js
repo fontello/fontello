@@ -1,9 +1,9 @@
-/*global Fontomas*/
+/*global fontomas*/
 ;(function () {
   "use strict";
 
 
-  Fontomas.embedded_fonts = [
+  fontomas.embedded_fonts = [
     {
       id: 0,
       fontname: 'EntypoUni',

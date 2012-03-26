@@ -160,12 +160,12 @@ def parse_svg_fonts():
 def generate_js(fonts_data):
     print 'Generating js...'
 
-    js = """/*global Fontomas*/
+    js = """/*global fontomas*/
 ;(function () {
   "use strict";
 
 
-  Fontomas.embedded_fonts = [
+  fontomas.embedded_fonts = [
 """
 
     flen = len(fonts_data)

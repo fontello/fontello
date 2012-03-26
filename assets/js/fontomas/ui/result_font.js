@@ -1,20 +1,20 @@
-/*global Fontomas, _, Backbone*/
+/*global fontomas, _, Backbone*/
 
 ;(function () {
   "use strict";
 
 
-  var config = Fontomas.config;
+  var config = fontomas.config;
 
 
-  Fontomas.views.result_font = Backbone.View.extend({
+  fontomas.views.result_font = Backbone.View.extend({
     glyphviews: [],
     events:     {},
     glyph_size: null,
 
 
     initialize: function () {
-      Fontomas.logger.debug("views.result_font.initialize");
+      fontomas.logger.debug("views.result_font.initialize");
 
       _.bindAll(this);
       this.glyph_size = this.options.glyph_size;
@@ -28,9 +28,9 @@
 
     // a model has been added, so we create a corresponding view for it
     onAddGlyph: function (glyph) {
-      Fontomas.logger.debug("views.result_font.onAddGlyph");
+      fontomas.logger.debug("views.result_font.onAddGlyph");
 
-      var view = new Fontomas.views.glyph({
+      var view = new fontomas.views.glyph({
         model:      glyph,
         glyph_size: this.glyph_size
       });
@@ -42,13 +42,13 @@
 
 
     onRemoveGlyph: function (view) {
-      Fontomas.logger.debug("views.result_font.onRemoveGlyph");
+      fontomas.logger.debug("views.result_font.onRemoveGlyph");
       this.glyphviews = _.without(this.glyphviews, view);
     },
 
 
     onChangeGlyphCount: function (model, glyph_count) {
-      Fontomas.logger.debug("views.result_font.onChangeGlyphCount");
+      fontomas.logger.debug("views.result_font.onChangeGlyphCount");
 
       $('#fm-glyph-count').text(glyph_count);
 
@@ -61,7 +61,7 @@
 
 
     removeGlyphsByFont: function (font_id) {
-      Fontomas.logger.debug("views.result_font.removeGlyphsByFont");
+      fontomas.logger.debug("views.result_font.removeGlyphsByFont");
 
       _.each(this.glyphviews, function (view) {
         if (view.model.get("source_glyph").font_id === font_id) {
@@ -72,7 +72,7 @@
 
 
     render: function () {
-      Fontomas.logger.debug("views.result_font.render");
+      fontomas.logger.debug("views.result_font.render");
 
       _.each(this.glyphviews, function (view) {
         this.$el.append(view.el);
@@ -83,7 +83,7 @@
 
 
     changeGlyphSize: function (new_size) {
-      Fontomas.logger.debug("views.result_font.changeGlyphSize");
+      fontomas.logger.debug("views.result_font.changeGlyphSize");
 
       this.$el
         .removeClass("glyph-size-" + this.glyph_size)
