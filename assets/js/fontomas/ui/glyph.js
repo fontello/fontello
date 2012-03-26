@@ -4,14 +4,14 @@
   "use strict";
 
 
-  Fontomas.views.Glyph = Backbone.View.extend({
+  Fontomas.views.glyph = Backbone.View.extend({
     tagName:    "div",
     className:  "fm-result-glyph",
     events:     {},
     iconsize:   null, // FIXME: will be removed soon
 
     initialize: function () {
-      //Fontomas.logger.debug("views.Glyph.initialize");
+      //Fontomas.logger.debug("views.glyph.initialize");
 
       _.bindAll(this);
       this.iconsize = this.options.iconsize;  // FIXME: will be removed soon
@@ -24,7 +24,7 @@
 
 
     render: function () {
-      Fontomas.logger.debug("views.Glyph.render el=", this.el);
+      Fontomas.logger.debug("views.glyph.render el=", this.el);
 
       // FIXME
       if (this.model.get("source_glyph").embedded_id === undefined) {
@@ -60,7 +60,7 @@
 
 
     remove: function () {
-      Fontomas.logger.debug("views.Glyph.remove");
+      Fontomas.logger.debug("views.glyph.remove");
       this.$el.remove();
       this.trigger("remove", this);
     },
@@ -68,7 +68,7 @@
 
     // this is obsolete, will be removed soon
     render_old: function () {
-      Fontomas.logger.debug("views.Glyph.render_old el=", this.el);
+      Fontomas.logger.debug("views.glyph.render_old el=", this.el);
 
       var char = String.fromCharCode(this.model.get("unicode_code")),
           source_glyph = this.model.get("source_glyph"),
@@ -87,7 +87,7 @@
 
     // this is obsolete, will be removed soon
     changeIconSize: function (size) {
-      Fontomas.logger.debug("views.Glyph.changeIconSize");
+      Fontomas.logger.debug("views.glyph.changeIconSize");
 
       if (this.model.get("source_glyph").embedded_id !== undefined) {
         return;

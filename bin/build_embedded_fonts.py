@@ -25,7 +25,7 @@ srcfont_rescaled_dir = root_dir + '/src/fonts-rescaled'
 outfont_dir = root_dir + '/assets/fonts'
 js_dir      = root_dir + '/assets/js/fontomas'
 css_dir     = root_dir + '/assets/css'
-out_jsfile  = js_dir   + '/embedded-fonts.js'
+out_jsfile  = js_dir   + '/embedded_fonts.js'
 out_cssfile = css_dir  + '/fontface-embedded.css'
 ttf2eot     = 'ttf2eot'
 

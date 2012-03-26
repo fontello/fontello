@@ -7,7 +7,7 @@
   var config = Fontomas.config;
 
 
-  Fontomas.models.ResultFont = Backbone.Model.extend({
+  Fontomas.models.result_font = Backbone.Model.extend({
     defaults: {
       glyph_count:  0,
       xml_template: null
@@ -15,10 +15,10 @@
 
 
     initialize: function () {
-      Fontomas.logger.debug("models.ResultFont.initialize");
+      Fontomas.logger.debug("models.result_font.initialize");
 
       this.set("xml_template", this.initSvgFontTemplate());
-      this.glyphs = new Fontomas.models.GlyphsCollection;
+      this.glyphs = new Fontomas.models.glyphs_collection;
 
       this.glyphs.on("add",     this.incCounter, this);
       this.glyphs.on("remove",  this.decCounter, this);
@@ -76,7 +76,7 @@
 
     // FIXME: the model isn't sync()ed to server yet
     sync: function () {
-      Fontomas.logger.debug("models.ResultFont.sync()");
+      Fontomas.logger.debug("models.result_font.sync()");
     }
   });
 

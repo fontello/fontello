@@ -140,7 +140,7 @@
   };
 
 
-  Fontomas.models.Font = Backbone.Model.extend({
+  Fontomas.models.source_font = Backbone.Model.extend({
     defaults: function () {
       return {
         fontname:     "unknown",
@@ -157,7 +157,7 @@
 
     // FIXME: the model isn't sync()ed to server yet
     sync: function () {
-      Fontomas.logger.debug("models.Font.sync()");
+      Fontomas.logger.debug("models.source_font.sync()");
     }
   }, {
     supported_types: _.keys(parsers),

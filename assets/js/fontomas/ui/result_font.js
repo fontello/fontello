@@ -7,14 +7,14 @@
   var config = Fontomas.config;
 
 
-  Fontomas.views.ResultFont = Backbone.View.extend({
+  Fontomas.views.result_font = Backbone.View.extend({
     glyphviews: [],
     events:     {},
     iconsize:   null,
 
 
     initialize: function () {
-      Fontomas.logger.debug("views.ResultFont.initialize");
+      Fontomas.logger.debug("views.result_font.initialize");
 
       _.bindAll(this);
       this.iconsize = this.options.iconsize;
@@ -28,9 +28,9 @@
 
     // a model has been added, so we create a corresponding view for it
     onAddGlyph: function (glyph) {
-      Fontomas.logger.debug("views.ResultFont.onAddGlyph");
+      Fontomas.logger.debug("views.result_font.onAddGlyph");
 
-      var view = new Fontomas.views.Glyph({
+      var view = new Fontomas.views.glyph({
         model: glyph,
         iconsize: this.iconsize
       });
@@ -42,13 +42,13 @@
 
 
     onRemoveGlyph: function (view) {
-      Fontomas.logger.debug("views.ResultFont.onRemoveGlyph");
+      Fontomas.logger.debug("views.result_font.onRemoveGlyph");
       this.glyphviews = _.without(this.glyphviews, view);
     },
 
 
     onChangeGlyphCount: function (model, glyph_count) {
-      Fontomas.logger.debug("views.ResultFont.onChangeGlyphCount");
+      Fontomas.logger.debug("views.result_font.onChangeGlyphCount");
 
       $('#fm-glyph-count').text(glyph_count);
 
@@ -61,7 +61,7 @@
 
 
     removeGlyphsByFont: function (font_id) {
-      Fontomas.logger.debug("views.ResultFont.removeGlyphsByFont");
+      Fontomas.logger.debug("views.result_font.removeGlyphsByFont");
 
       _.each(this.glyphviews, function (view) {
         if (view.model.get("source_glyph").font_id === font_id) {
@@ -72,7 +72,7 @@
 
 
     render: function () {
-      Fontomas.logger.debug("views.ResultFont.render");
+      Fontomas.logger.debug("views.result_font.render");
 
       _.each(this.glyphviews, function (view) {
         this.$el.append(view.el);
@@ -83,7 +83,7 @@
 
 
     changeIconSize: function (size) {
-      Fontomas.logger.debug("views.ResultFont.changeIconSize");
+      Fontomas.logger.debug("views.result_font.changeIconSize");
 
       this.iconsize = size;
 

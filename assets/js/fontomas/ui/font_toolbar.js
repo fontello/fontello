@@ -7,7 +7,7 @@
   var config = Fontomas.config;
 
 
-  Fontomas.views.SelectToolbar = Backbone.View.extend({
+  Fontomas.views.font_toolbar = Backbone.View.extend({
     tagName:  "form",
     id:       "fm-file-drop-zone",
 
@@ -23,7 +23,7 @@
 
 
     initialize: function () {
-      Fontomas.logger.debug("views.SelectToolbar.initialize");
+      Fontomas.logger.debug("views.font_toolbar.initialize");
 
       _.bindAll(this);
 
@@ -38,7 +38,7 @@
 
 
     changeIconSize: function (event) {
-      Fontomas.logger.debug("views.SelectToolbar.changeIconSize");
+      Fontomas.logger.debug("views.font_toolbar.changeIconSize");
 
       var size = parseInt($(event.target).val(), 10) ||
                  config.preview_icon_sizes[0];
@@ -65,13 +65,13 @@
 
 
     fileUpload: function (event) {
-      Fontomas.logger.debug("views.SelectToolbar.fileUpload");
+      Fontomas.logger.debug("views.font_toolbar.fileUpload");
       this.trigger("fileUpload", event.target.files);
     },
 
 
     fileDragOver: function (event) {
-      //Fontomas.logger.debug("views.SelectToolbar.fileDragOver");
+      //Fontomas.logger.debug("views.font_toolbar.fileDragOver");
       if (Fontomas.env.filereader) {
         event.stopPropagation();
         event.preventDefault();
@@ -81,7 +81,7 @@
 
 
     fileDrop: function (event) {
-      Fontomas.logger.debug("views.SelectToolbar.fileDrop");
+      Fontomas.logger.debug("views.font_toolbar.fileDrop");
 
       if (Fontomas.env.filereader) {
         event.stopPropagation();
@@ -92,7 +92,7 @@
 
 
     useEmbedded: function (event) {
-      Fontomas.logger.debug("views.SelectToolbar.useEmbedded");
+      Fontomas.logger.debug("views.font_toolbar.useEmbedded");
 
       var id    = $(event.target).data("embedded_id"),
           font  = Fontomas.embedded_fonts[id];
@@ -106,7 +106,7 @@
 
 
     render: function () {
-      Fontomas.logger.debug("views.SelectToolbar.render");
+      Fontomas.logger.debug("views.font_toolbar.render");
 
       var tpl_vars = {buttons: config.preview_icon_sizes};
 
@@ -123,7 +123,7 @@
 
 
     renderUseEmbedded: function () {
-      Fontomas.logger.debug("views.SelectToolbar.renderUseEmbedded");
+      Fontomas.logger.debug("views.font_toolbar.renderUseEmbedded");
 
       var tpl_vars = {
         options: _.map(Fontomas.embedded_fonts, function (item) {

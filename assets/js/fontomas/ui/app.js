@@ -13,7 +13,7 @@
     fonts:          null,
     iconsize:       config.preview_icon_sizes[0],
 
-    select_toolbar: null,
+    font_toolbar:   null,
     fontviews:      {},
     resultfontview: null,
 
@@ -25,21 +25,21 @@
 
       _.bindAll(this);
 
-      this.select_toolbar = new Fontomas.views.SelectToolbar({
+      this.font_toolbar = new Fontomas.views.font_toolbar({
         el: $("#fm-file-drop-zone")[0]
       });
-      this.select_toolbar.on("changeIconSize",  this.onChangeIconSize,  this);
-      this.select_toolbar.on("fileDrop",        this.onFileDrop,        this);
-      this.select_toolbar.on("fileUpload",      this.onFileUpload,      this);
-      this.select_toolbar.on("useEmbeddedFont", this.onUseEmbeddedFont, this);
+      this.font_toolbar.on("changeIconSize",  this.onChangeIconSize,  this);
+      this.font_toolbar.on("fileDrop",        this.onFileDrop,        this);
+      this.font_toolbar.on("fileUpload",      this.onFileUpload,      this);
+      this.font_toolbar.on("useEmbeddedFont", this.onUseEmbeddedFont, this);
 
-      this.fonts = new Fontomas.models.FontsCollection;
+      this.fonts = new Fontomas.models.source_fonts_collection;
       this.fonts.on("add",   this.onAddFont,      this);
       this.fonts.on("reset", this.onAddAllFonts,  this);
 
-      this.resultfontview = new Fontomas.views.ResultFont({
+      this.resultfontview = new Fontomas.views.result_font({
         el:       $("#fm-result-font")[0],
-        model:    new Fontomas.models.ResultFont,
+        model:    new Fontomas.models.result_font,
         iconsize: this.iconsize
       });
       this.resultfontview.on("someGlyphsSelected", this.menuOn,  this);
@@ -95,7 +95,7 @@
     onAddFont: function (font) {
       Fontomas.logger.debug("views.app.onAddFont");
 
-      var view = new Fontomas.views.Font({
+      var view = new Fontomas.views.source_font({
         model:    font,
         iconsize: this.iconsize
       });
@@ -197,7 +197,7 @@
       fileinfo.is_loaded  = true;
 
       file_ext  = Fontomas.util.getFileExt(fileinfo.filename);
-      font      = Fontomas.models.Font.parse(file_ext, fileinfo.content);
+      font      = Fontomas.models.source_font.parse(file_ext, fileinfo.content);
 
       // FIXME: failed refactoring?
       if (!font) {
@@ -205,7 +205,7 @@
         Fontomas.util.notify_alert(
           "Can't parse file '" + fileinfo.filename +
           "': unknown file extension. Currently, we support only: " +
-          Fontomas.models.Font.supported_types.join(", ") + "."
+          Fontomas.models.source_font.supported_types.join(", ") + "."
         );
         return;
       }
@@ -255,7 +255,7 @@
         f.is_added = true;
       }, this);
 
-      this.select_toolbar.renderUseEmbedded();
+      this.font_toolbar.renderUseEmbedded();
     },
 
 
@@ -282,7 +282,7 @@
 
     onCloseEmbeddedFont: function () {
       Fontomas.logger.debug("views.app.onCloseEmbeddedFont");
-      this.select_toolbar.renderUseEmbedded();
+      this.font_toolbar.renderUseEmbedded();
     },
 
 

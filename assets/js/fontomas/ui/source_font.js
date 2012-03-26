@@ -24,7 +24,7 @@
   }
 
 
-  Fontomas.views.Font = Backbone.View.extend({
+  Fontomas.views.source_font = Backbone.View.extend({
     tagName:  "li",
 
     iconsize: null,
@@ -36,7 +36,7 @@
 
 
     initialize: function () {
-      Fontomas.logger.debug("views.Font.initialize");
+      Fontomas.logger.debug("views.source_font.initialize");
 
       _.bindAll(this);
       this.iconsize = this.options.iconsize;
@@ -48,7 +48,7 @@
 
 
     render: function () {
-      Fontomas.logger.debug("views.Font.render_fontface el=", this.el);
+      Fontomas.logger.debug("views.source_font.render_fontface el=", this.el);
 
       // FIXME
       if (!this.model.get("is_embedded")) {
@@ -79,7 +79,7 @@
 
     // this is obsolete, will be removed soon
     render_old: function () {
-      Fontomas.logger.debug("views.Font.render_old el=", this.el);
+      Fontomas.logger.debug("views.source_font.render_old el=", this.el);
 
       var ascent       = this.model.get("ascent"),
           descent      = this.model.get("descent"),
@@ -204,7 +204,7 @@
 
 
     changeIconSize: function (size) {
-      Fontomas.logger.debug("views.Font.changeIconSize");
+      Fontomas.logger.debug("views.source_font.changeIconSize");
 
       this.iconsize = size;
 
@@ -233,7 +233,7 @@
 
 
     remove: function () {
-      Fontomas.logger.debug("views.Font.remove");
+      Fontomas.logger.debug("views.source_font.remove");
 
       this.$el.remove();
       this.trigger("remove", this.model.id);
@@ -241,7 +241,7 @@
 
 
     close: function (event) {
-      Fontomas.logger.debug("views.Font.close");
+      Fontomas.logger.debug("views.source_font.close");
 
       event.preventDefault();
 
@@ -257,7 +257,7 @@
 
 
     toggleGlyph: function (event) {
-      Fontomas.logger.debug("views.Font.toggleGlyph");
+      Fontomas.logger.debug("views.source_font.toggleGlyph");
 
       var $target   = $(event.target),
           glyph_id  = parseInt($target.val(), 10),
