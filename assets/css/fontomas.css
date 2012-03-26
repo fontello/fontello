@@ -73,7 +73,7 @@ iframe.twitter-share-button {
   cursor: default;
 }
 
-#tab.disabled, #tab.disabled:hover {
+#tab .disabled, #tab .disabled:hover {
   /* FIXME */
   opacity: 0.3;
   cursor: default;
