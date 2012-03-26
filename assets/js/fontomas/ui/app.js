@@ -130,9 +130,9 @@
 
     
     doUploadFonts: function (files) {
-      var self = this;
-
       Fontomas.logger.debug("views.app.doUploadFonts");
+
+      var self = this;
 
       _.each(files, function (f) {
         var fileinfo, reader = new FileReader();
@@ -277,13 +277,14 @@
 
     onCloseFont: function (font_id) {
       Fontomas.logger.debug("views.app.onCloseFont");
+
       this.resultfontview.removeGlyphsByFont(font_id);
 
       var found_font = _.find(this.myfiles, function (f) {
         return f.font_id === font_id;
       }, this);
 
-      if (found_font !== undefined) {
+      if (found_font) {
         found_font.font_id = null;
         found_font.is_added = false;
       }

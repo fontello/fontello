@@ -10,9 +10,9 @@
 
 
     initialize: function () {
-      var code;
-
       Fontomas.logger.debug("models.GlyphsCollection.initialize");
+
+      var code;
 
       for (code = 32; code <= 126; code++) {
         this.unicode_use_map.push({code: code, is_used: false});
@@ -21,9 +21,9 @@
 
 
     add: function (glyph, options) {
-      var found_code;
-
       Fontomas.logger.debug("models.GlyphsCollection.add");
+
+      var found_code;
 
       found_code = _.find(this.unicode_use_map, function (item) {
         return item.is_used === false;
@@ -42,10 +42,10 @@
 
 
     remove: function (model, options) {
+      Fontomas.logger.debug("models.GlyphsCollection.remove");
+
       var found_code,
           code = model.get("unicode_code");
-
-      Fontomas.logger.debug("models.GlyphsCollection.remove");
 
       if (code) {
         found_code = _.find(this.unicode_use_map, function (item) {

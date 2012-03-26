@@ -24,6 +24,7 @@
 
     initialize: function () {
       Fontomas.logger.debug("views.SelectToolbar.initialize");
+
       _.bindAll(this);
 
       this.render();

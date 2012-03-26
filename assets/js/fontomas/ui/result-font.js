@@ -34,6 +34,7 @@
         model: glyph,
         iconsize: this.iconsize
       });
+
       view.on("remove", this.onRemoveGlyph, this);
       this.glyphviews.push(view);
       this.$el.append(view.el);
@@ -48,6 +49,7 @@
 
     onChangeGlyphCount: function (model, glyph_count) {
       Fontomas.logger.debug("views.ResultFont.onChangeGlyphCount");
+
       $('#fm-glyph-count').text(glyph_count);
 
       if (model.previous("glyph_count") === 0 && glyph_count > 0) {
