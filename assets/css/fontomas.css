@@ -234,6 +234,8 @@ iframe.twitter-share-button {
 }
 
 .fm-result-glyph .top input {
+  margin: 0px;
+  padding: 0px;
   width: 50%;
 }
 
