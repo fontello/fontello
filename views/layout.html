@@ -183,10 +183,29 @@
     <script data-tpl-id="resultfont-glyph-item" type="text/x-fm-template">
       <!--div class="fm-result-glyph"-->
         <div class="top">{{{top}}}</div>
+        <div class="top edit">
+          <table>
+            <tbody>
+              <tr>
+                <td><input type="text"/></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div class="center {{css_class}}">
           <span class="fm-icon">{{{char}}}</span>
         </div>
-        <div class="bottom">{{bottom}}</div>
+        <div class="bottom"><span>{{bottom}}</span></div>
+        <div class="bottom edit">
+          <table>
+            <tbody>
+              <tr>
+                <td>U+</td>
+                <td><input type="text"/></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       <!--/div-->
     </script>
     <script data-tpl-id="resultfont-glyph-item-old" type="text/x-fm-template">

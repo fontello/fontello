@@ -233,3 +233,30 @@ iframe.twitter-share-button {
   border-width: 1px;
 }
 
+.fm-result-glyph .top input {
+  width: 50%;
+}
+
+.fm-result-glyph .bottom input {
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+}
+
+.fm-result-glyph.editing-top .top,
+.fm-result-glyph .top.edit {
+  display: none;
+}
+
+.fm-result-glyph.editing-top .top.edit {
+  display: block;
+}
+
+.fm-result-glyph.editing-bottom .bottom,
+.fm-result-glyph .bottom.edit {
+  display: none;
+}
+
+.fm-result-glyph.editing-bottom .bottom.edit {
+  display: block;
+}

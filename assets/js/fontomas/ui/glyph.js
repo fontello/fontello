@@ -7,8 +7,14 @@
   fontomas.ui.glyph = Backbone.View.extend({
     tagName:    "div",
     className:  "fm-result-glyph",
-    events:     {},
+
+    events:     {
+      "click .top":     "editTop",
+      "click .bottom":  "editBottom"
+    },
+
     glyph_size: null, // FIXME: will be removed soon
+
 
     initialize: function () {
       //fontomas.logger.debug("ui.glyph.initialize");
@@ -23,6 +29,56 @@
     },
 
 
+    editTop: function () {
+      fontomas.logger.debug("ui.glyph.editTop");
+
+      var self = this;
+
+      this.$el.addClass("editing-top");
+      this.$(".top.edit input")
+        .focus()
+        .off(".fm-editing")
+        .val(self.fixedFromCharCode(self.model.get("unicode_code")))
+        .on("blur.fm-editing", function (event) {
+          var code = self.fixedCharCodeAt(self.$(".top.edit input").val());
+          self.model.set("unicode_code", code);
+          self.$el.removeClass("editing-top");
+        })
+        .on("keyup.fm-editing", function (event) {
+          if (event.keyCode === 13) {
+            $(event.target).blur();
+          } else if (event.keyCode === 27) {
+            self.$el.removeClass("editing-top");
+          }
+        });
+    },
+
+
+    editBottom: function () {
+      fontomas.logger.debug("ui.glyph.editBottom");
+
+      var self = this;
+
+      this.$el.addClass("editing-bottom");
+      this.$(".bottom.edit input")
+        .focus()
+        .off(".fm-editing")
+        .val(this.model.get("unicode_code").toString(16).toUpperCase())
+        .on("blur.fm-editing", function (event) {
+          var code = parseInt(self.$(".bottom.edit input").val(), 16);
+          self.model.set("unicode_code", code);
+          self.$el.removeClass("editing-bottom");
+        })
+        .on("keyup.fm-editing", function (event) {
+          if (event.keyCode === 13) {
+            $(event.target).blur();
+          } else if (event.keyCode === 27) {
+            self.$el.removeClass("editing-bottom");
+          }
+        });
+    },
+
+
     render: function () {
       fontomas.logger.debug("ui.glyph.render el=", this.el);
 
@@ -31,12 +87,12 @@
         return this.render_old();
       }
 
-      var char = String.fromCharCode(this.model.get("unicode_code")),
+      var char = this.fixedFromCharCode(this.model.get("unicode_code")),
           source_glyph = this.model.get("source_glyph"),
           html = fontomas.render('resultfont-glyph-item', {
             top:        this.model.get("unicode_code") === 32 ? "space" : char,
             char:       source_glyph.unicode,
-            bottom:     this.toUnicode(char),
+            bottom:     this.toUnicode(this.model.get("unicode_code")),
             css_class:  "fm-embedded-" + source_glyph.embedded_id
           });
 
@@ -46,16 +102,45 @@
     },
 
 
+    // see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String/fromCharCode
+    fixedFromCharCode: function (code) {
+      /*jshint bitwise: false*/
+      if (code > 0xffff) {
+        code -= 0x10000;
+        var surrogate1 = 0xd800 + (code >> 10),
+            surrogate2 = 0xdc00 + (code & 0x3ff);
+        return String.fromCharCode(surrogate1, surrogate2);
+      } else {
+        return String.fromCharCode(code);
+      }
+    },
+
+
+    fixedCharCodeAt: function (char) {
+      /*jshint bitwise: false*/
+      var char1 = char.charCodeAt(0),
+          char2 = char.charCodeAt(1);
+
+      if ((char.length >= 2) &&
+          ((char1 & 0xfc00) === 0xd800) &&
+          ((char2 & 0xfc00) === 0xdc00)) {
+        return 0x10000 + ((char1 - 0xd800) << 10) + (char2 - 0xdc00);
+      } else {
+        return char1;
+      }
+    },
+
+
     // return char in CharRef notation
     toCharRef: function (char) {
       return "&#x" + char.charCodeAt(0).toString(16) + ";";
     },
 
 
-    // return char in U+ notation
-    toUnicode: function (char) {
-      var c = char.charCodeAt(0).toString(16).toUpperCase();
-      return "U+" + "0000".substr(0, 4 - c.length % 4) + c;
+    // return unicode code point in U+ notation
+    toUnicode: function (code) {
+      var c = code.toString(16).toUpperCase();
+      return "U+" + "0000".substr(0, Math.max(4 - c.length, 0)) + c;
     },
 
 
