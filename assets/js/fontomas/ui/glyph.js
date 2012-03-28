@@ -32,13 +32,14 @@
     editTop: function () {
       fontomas.logger.debug("ui.glyph.editTop");
 
-      var self = this;
+      var self  = this,
+          val   = self.fixedFromCharCode(self.model.get("unicode_code"));
 
       this.$el.addClass("editing-top");
       this.$(".top.edit input")
         .focus()
         .off(".fm-editing")
-        .val(self.fixedFromCharCode(self.model.get("unicode_code")))
+        .val(val)
         .on("blur.fm-editing", function (event) {
           var code = self.fixedCharCodeAt(self.$(".top.edit input").val());
           self.model.set("unicode_code", code);
@@ -48,6 +49,7 @@
           if (event.keyCode === 13) {
             $(event.target).blur();
           } else if (event.keyCode === 27) {
+            $(event.target).val(val);
             self.$el.removeClass("editing-top");
           }
         });
@@ -57,13 +59,14 @@
     editBottom: function () {
       fontomas.logger.debug("ui.glyph.editBottom");
 
-      var self = this;
+      var self  = this,
+          val   = this.model.get("unicode_code").toString(16).toUpperCase();
 
       this.$el.addClass("editing-bottom");
       this.$(".bottom.edit input")
         .focus()
         .off(".fm-editing")
-        .val(this.model.get("unicode_code").toString(16).toUpperCase())
+        .val(val)
         .on("blur.fm-editing", function (event) {
           var code = parseInt(self.$(".bottom.edit input").val(), 16);
           self.model.set("unicode_code", code);
@@ -73,6 +76,7 @@
           if (event.keyCode === 13) {
             $(event.target).blur();
           } else if (event.keyCode === 27) {
+            $(event.target).val(val);
             self.$el.removeClass("editing-bottom");
           }
         });
