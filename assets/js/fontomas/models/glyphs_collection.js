@@ -23,11 +23,7 @@
       fontomas.logger.debug("models.glyphs_collection.add");
 
       var found_code,
-          orig_unicode;
-
-      orig_unicode = glyph.get("source_glyph").unicode;
-      orig_unicode = fontomas.util.trimBoth(orig_unicode, "&#x", ";");
-      orig_unicode = parseInt(orig_unicode, 16);
+          orig_unicode = glyph.get("source_glyph").unicode_code;
 
       found_code = _.find(this.unicode_use_map, function (item) {
         return item.code === orig_unicode;

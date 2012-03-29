@@ -67,7 +67,7 @@
       _.each(this.model.get("glyphs"), function (item, glyph_id) {
         var glyph = fontomas.render('glyph-item', {
           glyph_id: glyph_id,
-          unicode:  item.unicode
+          unicode:  fontomas.util.fixedFromCharCode(item.unicode_code)
         });
 
         this.$(".fm-glyph-group").append(glyph);

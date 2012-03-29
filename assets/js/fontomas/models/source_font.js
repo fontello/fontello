@@ -60,6 +60,27 @@
   }
 
 
+  // convert svg font's unicode attribute to a unicode code point
+  // in: s="!"      out=33
+  // in: s="&#33;"  out=33
+  // in: s="&#x21;" out=33
+  function svgUnicodeAttr2codePoint(s) {
+    var result;
+
+    if (s.substr(0,2) === "&#" && s.indexOf(";") !== -1) {
+      result = s.substr(2, s.indexOf(";") - 2);
+      if (result.charAt(0) === "x") {
+        result = parseInt("0" + result, 16);
+      } else {
+        result = parseInt(result, 10);
+      }
+    } else {
+      result = fontomas.util.fixedCharCodeAt(s);
+    }
+    return result;
+  }
+
+
   parsers.svg = function (svg) {
     var font = {}, xml;
 
@@ -85,6 +106,11 @@
       if (glyph["horiz-adv-x"]) {
         glyph.horiz_adv_x = parseInt(glyph["horiz-adv-x"], 10);
         delete glyph["horiz-adv-x"];
+      }
+
+      if (glyph["unicode"]) {
+        glyph.unicode_code = svgUnicodeAttr2codePoint(glyph["unicode"]);
+        delete glyph["unicode"];
       }
 
       font.glyphs[i] = glyph;
@@ -120,7 +146,7 @@
         return;
       }
 
-      glyph.unicode = i;
+      glyph.unicode_code = fontomas.util.fixedCharCodeAt(i);
 
       if (glyph.w) {
         glyph.horiz_adv_x = glyph.w;

@@ -33,7 +33,8 @@
       fontomas.logger.debug("ui.glyph.editTop");
 
       var self  = this,
-          val   = self.fixedFromCharCode(self.model.get("unicode_code"));
+          val   = fontomas.util.fixedFromCharCode(
+                  self.model.get("unicode_code"));
 
       this.$el.addClass("editing-top");
       this.$(".top.edit input")
@@ -41,7 +42,9 @@
         .off(".fm-editing")
         .val(val)
         .on("blur.fm-editing", function (event) {
-          var code = self.fixedCharCodeAt(self.$(".top.edit input").val());
+          var code  = fontomas.util.fixedCharCodeAt(
+                      self.$(".top.edit input").val());
+
           self.model.set("unicode_code", code);
           self.$el.removeClass("editing-top");
         })
@@ -91,11 +94,12 @@
         return this.render_old();
       }
 
-      var char = this.fixedFromCharCode(this.model.get("unicode_code")),
+      var char  = fontomas.util.fixedFromCharCode(
+                  this.model.get("unicode_code")),
           source_glyph = this.model.get("source_glyph"),
           html = fontomas.render('resultfont-glyph-item', {
-            top:        this.model.get("unicode_code") === 32 ? "space" : char,
-            char:       source_glyph.unicode,
+            top:  this.model.get("unicode_code") === 32 ? "space" : char,
+            char: fontomas.util.fixedFromCharCode(source_glyph.unicode_code),
             bottom:     this.toUnicode(this.model.get("unicode_code")),
             css_class:  "fm-embedded-" + source_glyph.embedded_id
           });
@@ -103,35 +107,6 @@
       this.$el.html(html);
 
       return this;
-    },
-
-
-    // see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String/fromCharCode
-    fixedFromCharCode: function (code) {
-      /*jshint bitwise: false*/
-      if (code > 0xffff) {
-        code -= 0x10000;
-        var surrogate1 = 0xd800 + (code >> 10),
-            surrogate2 = 0xdc00 + (code & 0x3ff);
-        return String.fromCharCode(surrogate1, surrogate2);
-      } else {
-        return String.fromCharCode(code);
-      }
-    },
-
-
-    fixedCharCodeAt: function (char) {
-      /*jshint bitwise: false*/
-      var char1 = char.charCodeAt(0),
-          char2 = char.charCodeAt(1);
-
-      if ((char.length >= 2) &&
-          ((char1 & 0xfc00) === 0xd800) &&
-          ((char2 & 0xfc00) === 0xdc00)) {
-        return 0x10000 + ((char1 - 0xd800) << 10) + (char2 - 0xdc00);
-      } else {
-        return char1;
-      }
     },
 
 

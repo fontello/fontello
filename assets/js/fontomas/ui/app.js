@@ -246,7 +246,9 @@
       _.each(embedded_fonts, function (f) {
         var font = {
           fontname:     f.fontname,
-          glyphs:       _.map(f.glyphs, function (i) { return {unicode: i}; }),
+          glyphs:       _.map(f.glyphs, function (i) {
+                          return {unicode_code: i};
+                        }),
           is_embedded:  true,
           embedded_id:  f.id
         };

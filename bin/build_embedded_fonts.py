@@ -176,7 +176,7 @@ def generate_js(fonts_data):
         js += '      fontname: \'%s\',\n' % font['font_id']
         js += '      glyphs: [\n'
 
-        js += ',\n'.join(map(lambda x: '        \"&#x%x;\"'
+        js += ',\n'.join(map(lambda x: '        0x%x'
             % ord(x), font['glyph_codes']))
 
         js += '\n'
