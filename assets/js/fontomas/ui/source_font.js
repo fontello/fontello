@@ -73,6 +73,9 @@
         this.$(".fm-glyph-group").append(glyph);
       }, this);
 
+      // reset checkboxes as a browser sometimes sets them
+      this.$(".fm-glyph-id").attr({checked: false});
+
       return this;
     },
 
