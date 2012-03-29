@@ -262,3 +262,13 @@ iframe.twitter-share-button {
 .fm-result-glyph.editing-bottom .bottom.edit {
   display: block;
 }
+
+.fm-result-glyph.fm-mapping-matched {
+  border-color: #000;
+}
+
+.fm-result-glyph.fm-mapping-matched .top,
+.fm-result-glyph.fm-mapping-matched .bottom {
+  background-color: #000;
+}
+

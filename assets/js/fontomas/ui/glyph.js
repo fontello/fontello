@@ -94,7 +94,8 @@
         return this.render_old();
       }
 
-      var char  = fontomas.util.fixedFromCharCode(
+      var matched,
+          char  = fontomas.util.fixedFromCharCode(
                   this.model.get("unicode_code")),
           source_glyph = this.model.get("source_glyph"),
           html = fontomas.render('resultfont-glyph-item', {
@@ -105,6 +106,9 @@
           });
 
       this.$el.html(html);
+
+      matched = this.model.get("unicode_code") === source_glyph.unicode_code;
+      this.$el.toggleClass("fm-mapping-matched", matched);
 
       return this;
     },
