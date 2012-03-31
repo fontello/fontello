@@ -6,9 +6,26 @@ REMOTE_REPO ?= $(shell git config --get remote.${REMOTE_NAME}.url)
 
 
 help:
-	echo "make help	- Print this help"
-	echo "make lint	- Lint sources with JSHint"
-	echo "make gh-pages	- Build and push the project into gh-pages branch"
+	echo "make help			- Print this help"
+	echo "make app-start		- Run Fontomas server"
+	echo "make rebuild-fonts	- Rebuild embedded fonts"
+	echo "make dev-setup		- Install deps for development"
+	echo "make lint			- Lint sources with JSHint"
+	echo "make gh-pages		- Build and push the project into gh-pages branch"
+
+
+app-start:
+	node ./index.js
+
+
+rebuild-fonts:
+	bin/build_embedded_fonts.py
+
+
+dev-setup:
+	rm -rf node_modules
+	npm install
+	npm install -g jshint
 
 
 lint:
@@ -39,5 +56,5 @@ todo:
 	grep 'TODO' -n -r ./lib 2>/dev/null || test true
 
 
-.PHONY: help lint gh-pages todo
-.SILENT: help lint todo
+.PHONY: help app-start rebuild-fonts dev-setup lint gh-pages todo
+.SILENT: help app-start rebuild-fonts dev-setup lint todo
