@@ -39,4 +39,4 @@ Now you can point your browser to the page http://localhost:3000
 
 Detailed description will be added soon.
 
-    make rebuild_fonts
+    make rebuild-fonts
