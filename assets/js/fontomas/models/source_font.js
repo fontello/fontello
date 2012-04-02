@@ -8,7 +8,7 @@
     defaults: function () {
       return {
         fontname:     "unknown",
-        glyphs:       [],
+        glyphs:       {},
         is_embedded:  false
       };
     },

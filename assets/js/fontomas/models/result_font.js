@@ -13,11 +13,7 @@
     initialize: function () {
       this.glyphs = new fontomas.models.glyphs_collection;
 
-      this.glyphs.on("add", function () {
-        this.set("glyph_count", this.glyphs.length);
-      }, this);
-
-      this.glyphs.on("remove", function (){
+      this.glyphs.on("add remove", function (){
         this.set("glyph_count", this.glyphs.length);
       }, this);
     },
