@@ -1,15 +1,14 @@
 /*global fontomas, _, Handlebars*/
 
-;(function () {
+;(function (global) {
   "use strict";
 
 
-  window.fontomas = {};
+  var fontomas = window.fontomas = {}, tpl_cache = {};
+
+
   fontomas.models = {};
   fontomas.ui     = {};
-
-
-  var logger = {}, tpl_cache = {};
 
 
   fontomas.config = {
@@ -24,31 +23,25 @@
     fontface:       null
   };
 
-
-  fontomas.debug = false;
+  // TODO: on release - change fontomas.debug to `false`
+  //       as it's needed for developers only
 
   // usage: index.html#debug
-  _.each(window.location.hash.substr(1).split("&"), function (str) {
-    var vars = str.split(":");
+  fontomas.debug = '#debug' === window.location.hash;
 
-    if ("debug" === vars.shift()) {
-      fontomas.debug = true;
-    }
-  });
+  // debug logger
+  fontomas.logger = {};
 
-
-  logger.assert =
-  logger.error  =
-  logger.debug  = function () {};
+  // logger does nothing by default
+  fontomas.logger.assert =
+  fontomas.logger.error  =
+  fontomas.logger.debug  = function () {};
 
   if (fontomas.debug) {
-    logger.assert = console.assert;
-    logger.error  = console.error;
-    logger.debug  = console.debug ? console.debug : console.log;
+    fontomas.logger.assert = console.assert;
+    fontomas.logger.error  = console.error;
+    fontomas.logger.debug  = console.debug ? console.debug : console.log;
   }
-
-  fontomas.logger = logger;
-
 
   fontomas.render = function (id, locals) {
     var $tpl;
