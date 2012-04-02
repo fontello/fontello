@@ -1,16 +1,16 @@
-.fm-embedded-0 .fm-icon { font-family: 'EntypoUni'; }
+.fm-embedded-0 .fm-icon { font-family: 'Entypo'; }
 .fm-embedded-1 .fm-icon { font-family: 'FontAwesomeRegular'; }
 .fm-embedded-2 .fm-icon { font-family: 'IconicFill'; }
 .fm-embedded-3 .fm-icon { font-family: 'IconicStroke'; }
 .fm-embedded-4 .fm-icon { font-family: 'WebSymbols-Regular'; }
 
 @font-face {
-  font-family: 'EntypoUni';
+  font-family: 'Entypo';
   src: url('/static/assets/fonts/entypo.eot');
   src: url('/static/assets/fonts/entypo.eot?#iefix') format('embedded-opentype'),
     url('/static/assets/fonts/entypo.woff') format('woff'),
     url('/static/assets/fonts/entypo.ttf') format('truetype'),
-    url('/static/assets/fonts/entypo.svg#EntypoUni') format('svg');
+    url('/static/assets/fonts/entypo.svg#Entypo') format('svg');
   font-weight: normal;
   font-style: normal;
 }
