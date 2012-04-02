@@ -7,8 +7,8 @@
   var exports = {}, notify_dup = {};
 
 
-  function notify(tpl, text, suppress_dup) {
-    var options = {expires: 4000};
+  function notify(text, suppress_dup) {
+    var options = {time: 4000};
 
     if (suppress_dup && (text !== undefined)) {
       if (notify_dup[text] !== undefined) {
@@ -18,23 +18,25 @@
       notify_dup[text] = true;
 
       $.extend(options, {
-        close: function () {
+        after_close: function () {
           delete notify_dup[text];
         }
       });
     }
 
-    $('#notifications-container').notify("create", tpl, {text: text}, options);
+    // FIXME: title is mandatory, so we've filled it with just a space
+    $.extend(options, {title: " ", text: text});
+    $.gritter.add(options);
   }
 
 
   exports.notify_alert = function (text, suppress_dup) {
-    notify('icon-template', text, suppress_dup);
+    notify(text, suppress_dup);
   };
 
 
   exports.notify_info = function (text, suppress_dup) {
-    notify('basic-template', text, suppress_dup);
+    notify(text, suppress_dup);
   };
 
   // ===============

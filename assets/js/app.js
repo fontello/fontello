@@ -25,7 +25,6 @@
     view.render();
 
     $('.tooltip-test').tooltip();
-    $("#notifications-container").notify({speed: 500, expires: 5000});
   });
 
 }());
