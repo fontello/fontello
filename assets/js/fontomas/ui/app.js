@@ -31,8 +31,10 @@
       this.font_toolbar.on("useEmbeddedFont", this.onUseEmbeddedFont, this);
 
       this.fonts = new Backbone.Collection;
-      this.fonts.on("add",   this.onAddFont,      this);
-      this.fonts.on("reset", this.onAddAllFonts,  this);
+      this.fonts.on("add",   this.onAddFont, this);
+      this.fonts.on("reset", function () {
+        this.fonts.each(this.onAddFont);
+      }, this);
 
       this.resultfontview = new fontomas.ui.result_font({
         el:         $("#fm-result-font")[0],
@@ -80,12 +82,6 @@
 
       this.fontviews[font.id] = view;
       $("#fm-font-list").append(view.render().el);
-    },
-
-
-    // models have been added, so we create views for all of them
-    onAddAllFonts: function () {
-      this.fonts.each(this.onAddFont);
     },
 
 
