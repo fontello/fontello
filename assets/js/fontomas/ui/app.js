@@ -41,8 +41,12 @@
         model:      new fontomas.models.result_font,
         glyph_size: this.glyph_size
       });
-      this.resultfontview.on("someGlyphsSelected", this.menuOn,  this);
-      this.resultfontview.on("noGlyphsSelected",   this.menuOff, this);
+      this.resultfontview.on("someGlyphsSelected", function () {
+        this.toggleMenu(true);
+      },  this);
+      this.resultfontview.on("noGlyphsSelected", function () {
+        this.toggleMenu(false);
+      }, this);
 
       this.on("fileLoaded", this.onLoadFont, this);
     },
@@ -94,16 +98,6 @@
       $('#tab')
         .find("a.fm-disable-on-demand")
           .toggleClass("disabled", !enabled);
-    },
-
-
-    menuOn: function () {
-      this.toggleMenu(true);
-    },
-
-
-    menuOff: function () {
-      this.toggleMenu(false);
     },
 
     
