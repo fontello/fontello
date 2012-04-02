@@ -19,7 +19,9 @@
     },
 
 
-    // FIXME: the model isn't sync()ed to server yet
+    // Stub to prevent Backbone from reading or saving the model to the server.
+    // Backbone calls `Backbone.sync()` function (on fetch/save/destroy)
+    // if model doesn't have own `sync()` method.
     sync: function () {}
   });
 
