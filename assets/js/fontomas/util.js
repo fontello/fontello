@@ -7,7 +7,7 @@
   var exports = {}, notify_dup = {};
 
 
-  function notify(text, suppress_dup) {
+  function notify(text, extra_options, suppress_dup) {
     var options = {time: 4000};
 
     if (suppress_dup && (text !== undefined)) {
@@ -25,18 +25,19 @@
     }
 
     // FIXME: title is mandatory, so we've filled it with just a space
-    $.extend(options, {title: " ", text: text});
+    $.extend(options, {title: " ", text: text}, extra_options);
     $.gritter.add(options);
   }
 
 
   exports.notify_alert = function (text, suppress_dup) {
-    notify(text, suppress_dup);
+    var options = {"image": "/static/assets/vendor/jquery.gritter/alert.png"};
+    notify(text, options, suppress_dup);
   };
 
 
   exports.notify_info = function (text, suppress_dup) {
-    notify(text, suppress_dup);
+    notify(text, {}, suppress_dup);
   };
 
   // ===============
