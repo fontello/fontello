@@ -24,10 +24,9 @@
       _.bindAll(this);
 
       this.font_toolbar = new fontomas.ui.font_toolbar({
-        el: $("#fm-file-drop-zone")[0]
+        el: $("#fm-font-toolbar")[0]
       });
       this.font_toolbar.on("changeGlyphSize", this.onChangeGlyphSize, this);
-      this.font_toolbar.on("fileDrop",        this.onFileDrop,        this);
       this.font_toolbar.on("fileUpload",      this.onFileUpload,      this);
       this.font_toolbar.on("useEmbeddedFont", this.onUseEmbeddedFont, this);
 
@@ -64,11 +63,6 @@
       });
 
       this.resultfontview.changeGlyphSize(size);
-    },
-
-
-    onFileDrop: function (files) {
-      this.doUploadFonts(files);
     },
 
 

@@ -9,15 +9,12 @@
 
   fontomas.ui.font_toolbar = Backbone.View.extend({
     tagName:  "form",
-    id:       "fm-file-drop-zone",
 
 
     events: {
       "click .glyph-size-button":     "changeGlyphSize",
       "click #fm-file-browse-button": "fileBrowse",
       "change #fm-file":              "fileUpload",
-      "dragover #fm-file-drop-zone":  "fileDragOver", // doesn't work
-      "drop #fm-file-drop-zone":      "fileDrop",     // doesn't work
       "click .fm-font-name":          "useEmbedded"
     },
 
@@ -26,12 +23,6 @@
       _.bindAll(this);
 
       this.render();
-
-      // FIXME: workaround, because dragover/drag events don't work
-      if (fontomas.env.filereader) {
-        $('#fm-file-drop-zone').on("dragover",  this.fileDragOver);
-        $('#fm-file-drop-zone').on("drop",      this.fileDrop);
-      }
     },
 
 
@@ -60,24 +51,6 @@
 
     fileUpload: function (event) {
       this.trigger("fileUpload", event.target.files);
-    },
-
-
-    fileDragOver: function (event) {
-      if (fontomas.env.filereader) {
-        event.stopPropagation();
-        event.preventDefault();
-        event.originalEvent.dataTransfer.dropEffect = 'copy';
-      }
-    },
-
-
-    fileDrop: function (event) {
-      if (fontomas.env.filereader) {
-        event.stopPropagation();
-        event.preventDefault();
-        this.trigger("fileDrop", event.originalEvent.dataTransfer.files);
-      }
     },
 
 
