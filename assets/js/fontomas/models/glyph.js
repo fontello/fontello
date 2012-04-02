@@ -20,9 +20,7 @@
 
 
     // FIXME: the model isn't sync()ed to server yet
-    sync: function () {
-      fontomas.logger.debug("models.glyph.sync()");
-    }
+    sync: function () {}
   });
 
 }());

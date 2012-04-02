@@ -9,8 +9,6 @@
 
 
     initialize: function () {
-      fontomas.logger.debug("models.glyphs_collection.initialize");
-
       var code;
 
       for (code = 32; code <= 126; code++) {
@@ -20,8 +18,6 @@
 
 
     add: function (glyph, options) {
-      fontomas.logger.debug("models.glyphs_collection.add");
-
       var found_code,
           orig_unicode = glyph.get("source_glyph").unicode_code;
 
@@ -58,8 +54,6 @@
 
 
     remove: function (model, options) {
-      fontomas.logger.debug("models.glyphs_collection.remove");
-
       var found_code,
           code = model.get("unicode_code");
 
@@ -81,8 +75,6 @@
 
 
     onChangeUnicodeCode: function (model, new_code) {
-      fontomas.logger.debug("models.glyphs_collection.onChangeUnicodeCode");
-
       var found_code,
           found_glyph,
           old_code = model.previous("unicode_code");

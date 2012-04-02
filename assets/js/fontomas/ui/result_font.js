@@ -14,8 +14,6 @@
 
 
     initialize: function () {
-      fontomas.logger.debug("ui.result_font.initialize");
-
       _.bindAll(this);
       this.glyph_size = this.options.glyph_size;
 
@@ -28,8 +26,6 @@
 
     // a model has been added, so we create a corresponding view for it
     onAddGlyph: function (glyph) {
-      fontomas.logger.debug("ui.result_font.onAddGlyph");
-
       var view = new fontomas.ui.glyph({
         model:      glyph,
         glyph_size: this.glyph_size
@@ -42,14 +38,11 @@
 
 
     onRemoveGlyph: function (view) {
-      fontomas.logger.debug("ui.result_font.onRemoveGlyph");
       this.glyphviews = _.without(this.glyphviews, view);
     },
 
 
     onChangeGlyphCount: function (model, glyph_count) {
-      fontomas.logger.debug("ui.result_font.onChangeGlyphCount");
-
       $('#fm-glyph-count').text(glyph_count);
 
       if (model.previous("glyph_count") === 0 && glyph_count > 0) {
@@ -61,8 +54,6 @@
 
 
     removeGlyphsByFont: function (font_id) {
-      fontomas.logger.debug("ui.result_font.removeGlyphsByFont");
-
       _.each(this.glyphviews, function (view) {
         if (view.model.get("source_glyph").font_id === font_id) {
           view.model.destroy();
@@ -72,8 +63,6 @@
 
 
     render: function () {
-      fontomas.logger.debug("ui.result_font.render");
-
       _.each(this.glyphviews, function (view) {
         this.$el.append(view.el);
       }, this);
@@ -83,8 +72,6 @@
 
 
     changeGlyphSize: function (new_size) {
-      fontomas.logger.debug("ui.result_font.changeGlyphSize");
-
       this.$el
         .removeClass("glyph-size-" + this.glyph_size)
         .addClass("glyph-size-" + new_size);

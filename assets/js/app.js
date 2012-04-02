@@ -8,17 +8,7 @@
     // FF3.6+ Chrome6+ Opera11.1+
     fontomas.env.filereader = !!window.FileReader;
 
-    // debug: simulate no filereader is available
-    if (fontomas.debug.is_on && fontomas.debug.nofilereader) {
-      fontomas.env.filereader = false;
-    }
-
     fontomas.env.fontface = Modernizr.fontface;
-
-    // debug: simulate no fontface is available
-    if (fontomas.debug.is_on && fontomas.debug.nofontface) {
-      fontomas.env.fontface = false;
-    }
 
     // check browser's capabilities
     if (!fontomas.env.fontface) {

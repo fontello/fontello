@@ -15,8 +15,6 @@
 
 
     initialize: function () {
-      fontomas.logger.debug("models.result_font.initialize");
-
       this.set("xml_template", this.initSvgFontTemplate());
       this.glyphs = new fontomas.models.glyphs_collection;
 
@@ -75,9 +73,7 @@
 
 
     // FIXME: the model isn't sync()ed to server yet
-    sync: function () {
-      fontomas.logger.debug("models.result_font.sync()");
-    }
+    sync: function () {}
   });
 
 }());

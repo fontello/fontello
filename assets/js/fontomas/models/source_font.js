@@ -4,8 +4,7 @@
   "use strict";
 
 
-  var max_glyphs, // undefined === no limit
-      parsers = {}, // SVG, CufonJS parsers
+  var parsers = {}, // SVG, CufonJS parsers
       vml_to_svg = { // map of vml to svg instruction conversion
         l: "L",
         c: "C",
@@ -15,10 +14,6 @@
         v: "c"
       };
 
-
-  if (fontomas.debug.is_on && fontomas.debug.maxglyphs) {
-    max_glyphs = fontomas.debug.maxglyphs;
-  }
 
 
   function vmlToSvgPath(vml) {
@@ -84,8 +79,6 @@
   parsers.svg = function (svg) {
     var font = {}, xml;
 
-    fontomas.logger.debug("Font.initSvg");
-
     try {
       xml = $.parseXML(svg);
     } catch (e) {
@@ -100,7 +93,7 @@
     font.id           = $("font:first", xml).attr("id") || "unknown";
     font.glyphs       = [];
 
-    $("glyph", xml).slice(0, max_glyphs).each(function (i) {
+    $("glyph", xml).each(function (i) {
       var glyph = fontomas.util.getAllAttrs(this);
 
       if (glyph["horiz-adv-x"]) {
@@ -123,8 +116,6 @@
   parsers.js = function (js) {
     var font = {}, json_string, json, cur_glyph = 0;
 
-    fontomas.logger.debug("initCufonJs");
-
     try {
       // strip function call
       json_string = fontomas.util.trimBoth(js, ".registerFont(", ")");
@@ -142,10 +133,6 @@
     font.glyphs       = [];
 
     _.each(json.glyphs, function (glyph, i) {
-      if (max_glyphs && (cur_glyph >= max_glyphs)) {
-        return;
-      }
-
       glyph.unicode_code = fontomas.util.fixedCharCodeAt(i);
 
       if (glyph.w) {
@@ -182,9 +169,7 @@
 
 
     // FIXME: the model isn't sync()ed to server yet
-    sync: function () {
-      fontomas.logger.debug("models.source_font.sync()");
-    }
+    sync: function () {}
   }, {
     supported_types: _.keys(parsers),
     parse: function (type, data) {

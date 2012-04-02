@@ -17,8 +17,6 @@
 
 
     initialize: function () {
-      //fontomas.logger.debug("ui.glyph.initialize");
-
       _.bindAll(this);
       this.glyph_size = this.options.glyph_size;  // FIXME: will be removed soon
 
@@ -30,8 +28,6 @@
 
 
     editTop: function () {
-      fontomas.logger.debug("ui.glyph.editTop");
-
       var self  = this,
           val   = fontomas.util.fixedFromCharCode(
                   self.model.get("unicode_code"));
@@ -60,8 +56,6 @@
 
 
     editBottom: function () {
-      fontomas.logger.debug("ui.glyph.editBottom");
-
       var self  = this,
           val   = this.model.get("unicode_code").toString(16).toUpperCase();
 
@@ -87,8 +81,6 @@
 
 
     render: function () {
-      fontomas.logger.debug("ui.glyph.render el=", this.el);
-
       // FIXME
       if (this.model.get("source_glyph").embedded_id === undefined) {
         return this.render_old();
@@ -128,7 +120,6 @@
 
 
     remove: function () {
-      fontomas.logger.debug("ui.glyph.remove");
       this.$el.remove();
       this.trigger("remove", this);
     },
@@ -136,8 +127,6 @@
 
     // this is obsolete, will be removed soon
     render_old: function () {
-      fontomas.logger.debug("ui.glyph.render_old el=", this.el);
-
       var char = String.fromCharCode(this.model.get("unicode_code")),
           source_glyph = this.model.get("source_glyph"),
           html = fontomas.render('resultfont-glyph-item-old', {
@@ -155,8 +144,6 @@
 
     // this is obsolete, will be removed soon
     changeGlyphSize: function (size) {
-      fontomas.logger.debug("ui.glyph.changeGlyphSize");
-
       if (this.model.get("source_glyph").embedded_id !== undefined) {
         return;
       }

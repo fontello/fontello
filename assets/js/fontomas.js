@@ -38,21 +38,14 @@
   };
 
 
-  fontomas.debug = {is_on: false};
+  fontomas.debug = false;
 
-  // usage: index.html#debug:maxglyphs=10,noembedded,nofilereader,nofontface
+  // usage: index.html#debug
   _.each(window.location.hash.substr(1).split("&"), function (str) {
     var vars = str.split(":");
 
     if ("debug" === vars.shift()) {
-      fontomas.debug.is_on = true;
-
-      if (vars.length) {
-        _.each(vars.shift().split(","), function (str) {
-          var pair = str.split("=");
-          fontomas.debug[pair[0]] = pair[1] && pair[1] !== "" ? pair[1] : true;
-        });
-      }
+      fontomas.debug = true;
     }
   });
 
@@ -61,7 +54,7 @@
   logger.error  =
   logger.debug  = function () {};
 
-  if (fontomas.debug.is_on) {
+  if (fontomas.debug) {
     logger.assert = console.assert;
     logger.error  = console.error;
     logger.debug  = console.debug ? console.debug : console.log;

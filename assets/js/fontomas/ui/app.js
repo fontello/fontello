@@ -21,8 +21,6 @@
 
 
     initialize: function () {
-      fontomas.logger.debug("ui.app.initialize");
-
       _.bindAll(this);
 
       this.font_toolbar = new fontomas.ui.font_toolbar({
@@ -53,16 +51,12 @@
 
 
     download: function (event) {
-      fontomas.logger.debug("ui.app.download");
-
       fontomas.util.notify_alert("Not yet implemented. Stay tuned.", true);
       event.preventDefault();
     },
 
 
     onChangeGlyphSize: function (size) {
-      fontomas.logger.debug("ui.app.onChangeGlyphSize");
-
       this.glyph_size = size;
 
       _.each(this.fontviews, function (view) {
@@ -74,27 +68,22 @@
 
 
     onFileDrop: function (files) {
-      fontomas.logger.debug("ui.app.onFileDrop");
       this.doUploadFonts(files);
     },
 
 
     onFileUpload: function (files) {
-      fontomas.logger.debug("ui.app.onFileUpload");
       this.doUploadFonts(files);
     },
 
 
     onUseEmbeddedFont: function (font) {
-      fontomas.logger.debug("ui.app.onUseEmbeddedFont");
       this.addEmbeddedFonts([font]);
     },
 
 
     // a model has been added, so we create a corresponding view for it
     onAddFont: function (font) {
-      fontomas.logger.debug("ui.app.onAddFont");
-
       var view = new fontomas.ui.source_font({
         model:      font,
         glyph_size: this.glyph_size
@@ -111,19 +100,16 @@
 
     // models have been added, so we create views for all of them
     onAddAllFonts: function () {
-      fontomas.logger.debug("ui.app.onAddAllFonts");
       this.fonts.each(this.onAddFont);
     },
 
 
     onRemoveFont: function (id) {
-      fontomas.logger.debug("ui.app.onRemoveFont id=", id);
       delete this.fontviews[id];
     },
 
 
     toggleMenu: function (enabled) {
-      fontomas.logger.debug("ui.app.toggleMenu");
       $('#tab')
         .find("a.fm-disable-on-demand")
           .toggleClass("disabled", !enabled);
@@ -141,8 +127,6 @@
 
     
     doUploadFonts: function (files) {
-      fontomas.logger.debug("ui.app.doUploadFonts");
-
       var self = this;
 
       _.each(files, function (f) {
@@ -177,8 +161,6 @@
 
 
     onLoadFont: function (event, fileinfo) {
-      fontomas.logger.debug("ui.app.onLoadFont");
-
       var font, file_ext, is_exist = false;
 
       // is there a file with the same content?
@@ -241,8 +223,6 @@
 
 
     addEmbeddedFonts: function (embedded_fonts) {
-      fontomas.logger.debug("ui.app.addEmbeddedFonts");
-
       _.each(embedded_fonts, function (f) {
         var font = {
           fontname:     f.fontname,
@@ -262,8 +242,6 @@
 
 
     onToggleGlyph: function (data) {
-      fontomas.logger.debug("ui.app.onToggleGlyph data=", data);
-
       var glyph, found_glyph;
 
       found_glyph = this.resultfontview.model.glyphs.find(function (item) {
@@ -283,14 +261,11 @@
 
 
     onCloseEmbeddedFont: function () {
-      fontomas.logger.debug("ui.app.onCloseEmbeddedFont");
       this.font_toolbar.renderUseEmbedded();
     },
 
 
     onCloseFont: function (font_id) {
-      fontomas.logger.debug("ui.app.onCloseFont");
-
       this.resultfontview.removeGlyphsByFont(font_id);
 
       var found_font = _.find(this.myfiles, function (f) {
@@ -305,8 +280,6 @@
 
 
     createFont: function (attrs) {
-      fontomas.logger.debug("ui.app.createFont attrs=", attrs);
-
       //if (!attrs.id) // FIXME
       attrs.id = this.next_font_id++;
       var font = new fontomas.models.source_font(attrs);
@@ -317,13 +290,8 @@
 
 
     render: function () {
-      fontomas.logger.debug("ui.app.render");
-
       // auto load embedded fonts
-      // debug
-      if (!(fontomas.debug.is_on && fontomas.debug.noembedded)) {
-        this.addEmbeddedFonts(fontomas.embedded_fonts);
-      }
+      this.addEmbeddedFonts(fontomas.embedded_fonts);
 
       // first tab is fully initialized so show it
       $("#tab a:first").tab("show");

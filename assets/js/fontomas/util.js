@@ -12,7 +12,6 @@
 
     if (suppress_dup && (text !== undefined)) {
       if (notify_dup[text] !== undefined) {
-        fontomas.logger.debug("notification suppressed");
         return;
       }
 
@@ -21,7 +20,6 @@
       $.extend(options, {
         close: function () {
           delete notify_dup[text];
-          fontomas.logger.debug("notification can be fired again");
         }
       });
     }

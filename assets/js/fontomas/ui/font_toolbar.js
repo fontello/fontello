@@ -23,8 +23,6 @@
 
 
     initialize: function () {
-      fontomas.logger.debug("ui.font_toolbar.initialize");
-
       _.bindAll(this);
 
       this.render();
@@ -38,12 +36,8 @@
 
 
     changeGlyphSize: function (event) {
-      fontomas.logger.debug("ui.font_toolbar.changeGlyphSize");
-
       var size = parseInt($(event.target).val(), 10) ||
                  config.preview_glyph_sizes[0];
-
-      fontomas.logger.debug("size=", size);
 
       event.preventDefault();
       this.trigger("changeGlyphSize", size);
@@ -65,13 +59,11 @@
 
 
     fileUpload: function (event) {
-      fontomas.logger.debug("ui.font_toolbar.fileUpload");
       this.trigger("fileUpload", event.target.files);
     },
 
 
     fileDragOver: function (event) {
-      //fontomas.logger.debug("ui.font_toolbar.fileDragOver");
       if (fontomas.env.filereader) {
         event.stopPropagation();
         event.preventDefault();
@@ -81,8 +73,6 @@
 
 
     fileDrop: function (event) {
-      fontomas.logger.debug("ui.font_toolbar.fileDrop");
-
       if (fontomas.env.filereader) {
         event.stopPropagation();
         event.preventDefault();
@@ -92,8 +82,6 @@
 
 
     useEmbedded: function (event) {
-      fontomas.logger.debug("ui.font_toolbar.useEmbedded");
-
       var id    = $(event.target).data("embedded_id"),
           font  = fontomas.embedded_fonts[id];
 
@@ -106,8 +94,6 @@
 
 
     render: function () {
-      fontomas.logger.debug("ui.font_toolbar.render");
-
       var tpl_vars = {buttons: config.preview_glyph_sizes};
 
       // render icon size buttons
@@ -123,8 +109,6 @@
 
 
     renderUseEmbedded: function () {
-      fontomas.logger.debug("ui.font_toolbar.renderUseEmbedded");
-
       var tpl_vars = {
         options: _.map(fontomas.embedded_fonts, function (item) {
           return {text: item.fontname, disabled: item.is_added};

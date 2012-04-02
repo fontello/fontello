@@ -36,8 +36,6 @@
 
 
     initialize: function () {
-      fontomas.logger.debug("ui.source_font.initialize");
-
       _.bindAll(this);
       this.glyph_size = this.options.glyph_size;
 
@@ -48,8 +46,6 @@
 
 
     render: function () {
-      fontomas.logger.debug("ui.source_font.render_fontface el=", this.el);
-
       // FIXME
       if (!this.model.get("is_embedded")) {
         return this.render_old();
@@ -82,8 +78,6 @@
 
     // this is obsolete, will be removed soon
     render_old: function () {
-      fontomas.logger.debug("ui.source_font.render_old el=", this.el);
-
       var ascent       = this.model.get("ascent"),
           descent      = this.model.get("descent"),
           units_per_em = this.model.get("units_per_em"),
@@ -167,12 +161,9 @@
         r.setViewBox(vb.x, vb.y, vb.w, vb.h, true);
 
         // flip y, because svg font's y axis goes upward
-        // debug: turn flip off
-        if (!(fontomas.debug && fontomas.debug.noflip)) {
-          // transform matrix 3x3
-          flip_y_matrix = [1, 0, 0, -1, 0, ascent / 2 - descent];
-          g.attr({transform: "m" + flip_y_matrix});
-        }
+        // transform matrix 3x3
+        flip_y_matrix = [1, 0, 0, -1, 0, ascent / 2 - descent];
+        g.attr({transform: "m" + flip_y_matrix});
 
         g.show();
         $glyph.find("svg").css({
@@ -207,8 +198,6 @@
 
 
     changeGlyphSize: function (new_size) {
-      fontomas.logger.debug("ui.source_font.changeGlyphSize");
-
       this.$(".fm-glyph-group")
         .removeClass("glyph-size-" + this.glyph_size)
         .addClass("glyph-size-" + new_size);
@@ -236,16 +225,12 @@
 
 
     remove: function () {
-      fontomas.logger.debug("ui.source_font.remove");
-
       this.$el.remove();
       this.trigger("remove", this.model.id);
     },
 
 
     close: function (event) {
-      fontomas.logger.debug("ui.source_font.close");
-
       event.preventDefault();
 
       if (this.model.get("is_embedded")) {
@@ -260,8 +245,6 @@
 
 
     toggleGlyph: function (event) {
-      fontomas.logger.debug("ui.source_font.toggleGlyph");
-
       var $target   = $(event.target),
           glyph_id  = parseInt($target.val(), 10),
           data      = this.model.getGlyph(glyph_id);
