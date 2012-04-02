@@ -13,19 +13,14 @@
     initialize: function () {
       this.glyphs = new fontomas.models.glyphs_collection;
 
-      this.glyphs.on("add",     this.incCounter, this);
-      this.glyphs.on("remove",  this.decCounter, this);
-    },
+      this.glyphs.on("add", function () {
+        this.set("glyph_count", this.get("glyph_count") + 1);
+      }, this);
 
-
-    incCounter: function () {
-      this.set("glyph_count", this.get("glyph_count") + 1);
-    },
-
-
-    decCounter: function () {
-      this.set("glyph_count", this.get("glyph_count") - 1);
-      fontomas.logger.assert(this.get("glyph_count") >= 0);
+      this.glyphs.on("remove", function (){
+        this.set("glyph_count", this.get("glyph_count") - 1);
+        fontomas.logger.assert(this.get("glyph_count") >= 0);
+      }, this);
     },
 
 
