@@ -4,9 +4,6 @@
   "use strict";
 
 
-  var config = fontomas.config;
-
-
   fontomas.ui.result_font = Backbone.View.extend({
     glyphviews: [],
     events:     {},
@@ -77,21 +74,6 @@
         .addClass("glyph-size-" + new_size);
 
       this.glyph_size = new_size;
-
-      // FIXME: will be removed soon
-      _.each(this.glyphviews, function (view) {
-        view.changeGlyphSize(new_size);
-      });
-    },
-
-
-    scalePath: function (path, scale) {
-      return path.replace(/(-?\d*\.?\d*(?:e[\-+]?\d+)?)/ig, function (num) {
-        num = (parseFloat(num) * scale).toPrecision(config.scale_precision);
-        // extra parseFloat to strip trailing zeros
-        num = parseFloat(num);
-        return isNaN(num) ? "" : num;
-      });
     }
   });
 

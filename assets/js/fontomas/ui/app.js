@@ -155,64 +155,11 @@
 
 
     onLoadFont: function (event, fileinfo) {
-      var font, file_ext, is_exist = false;
-
-      // is there a file with the same content?
-      _.each(this.myfiles, function (f) {
-        if (f.is_added && f.content === event.target.result) {
-          is_exist = fileinfo.is_dup = true;
-        }
-      });
-
-      // if it is a dup, skip it
-      if (fileinfo.is_dup) {
-        return;
-      }
-
-      fileinfo.content    = event.target.result;
-      fileinfo.is_loaded  = true;
-
-      file_ext  = fontomas.util.getFileExt(fileinfo.filename);
-      font      = fontomas.models.source_font.parse(file_ext, fileinfo.content);
-
-      // FIXME: failed refactoring?
-      if (!font) {
-        // unknown file exstension
-        fontomas.util.notify_alert(
-          "Can't parse file '" + fileinfo.filename +
-          "': unknown file extension. Currently, we support only: " +
-          fontomas.models.source_font.supported_types.join(", ") + "."
-        );
-        return;
-      }
-
-      // FIXME: failed refactoring?
-      if (!font) {
-        fontomas.logger.error("invalid file");
-
-        fileinfo.is_ok     = false;
-        fileinfo.error_msg = "invalid file";
-
-        fontomas.util.notify_alert(
-          "Loading error: can't parse file '" +
-          fileinfo.filename + "'"
-        );
-        return;
-      }
-
-      fileinfo.is_ok    = true;
-      fileinfo.is_added = true;
-      fileinfo.fontname = font.id;
-
-      font = _.extend(font, {
-        fontname:     fileinfo.fontname,
-        is_embedded:  false
-      });
-      fileinfo.font_id = this.createFont(font);
-
-      // scroll to the loaded font
-      //var fonthash = 'a[href="#font-'+fileinfo.id+'"]';
-      //$("html,body").animate({scrollTop: $(fonthash).offset().top}, 500);
+      // font parsing is disabled
+      fontomas.util.notify_alert(
+        "Sorry, but parsing the fonts is temporary disabled."
+      );
+      return;
     },
 
 

@@ -13,9 +13,7 @@
 
 
   fontomas.config = {
-    preview_glyph_sizes:  [32, 24, 16],
-    fix_edges:            true,
-    scale_precision:      6 // truncate the mantissa when scaling svg paths
+    preview_glyph_sizes:  [32, 24, 16]
   };
 
 

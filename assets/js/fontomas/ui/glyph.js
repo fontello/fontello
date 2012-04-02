@@ -13,12 +13,9 @@
       "click .bottom":  "editBottom"
     },
 
-    glyph_size: null, // FIXME: will be removed soon
-
 
     initialize: function () {
       _.bindAll(this);
-      this.glyph_size = this.options.glyph_size;  // FIXME: will be removed soon
 
       this.model.on("change",   this.render, this);
       this.model.on("destroy",  this.remove, this);
@@ -81,11 +78,6 @@
 
 
     render: function () {
-      // FIXME
-      if (this.model.get("source_glyph").embedded_id === undefined) {
-        return this.render_old();
-      }
-
       var matched,
           char  = fontomas.util.fixedFromCharCode(
                   this.model.get("unicode_code")),
@@ -122,43 +114,6 @@
     remove: function () {
       this.$el.remove();
       this.trigger("remove", this);
-    },
-
-
-    // this is obsolete, will be removed soon
-    render_old: function () {
-      var char = String.fromCharCode(this.model.get("unicode_code")),
-          source_glyph = this.model.get("source_glyph"),
-          html = fontomas.render('resultfont-glyph-item-old', {
-            top:        this.model.get("unicode_code") === 32 ? "space" : char,
-            bottom:     this.toUnicode(char)
-          });
-
-      this.$el.html(html);
-      this.$(".center").html(source_glyph.svg);
-      this.changeGlyphSize(this.glyph_size);
-
-      return this;
-    },
-
-
-    // this is obsolete, will be removed soon
-    changeGlyphSize: function (size) {
-      if (this.model.get("source_glyph").embedded_id !== undefined) {
-        return;
-      }
-
-      this.glyph_size   = size;
-      var source_glyph  = this.model.get("source_glyph"),
-          size_x        = source_glyph.glyph_sizes[size][0],
-          size_y        = source_glyph.glyph_sizes[size][1];
-
-      this.$("svg")
-        .css({
-          "width":        size_x + "px",
-          "height":       size_y + "px",
-          "line-height":  size_y + "px"
-        });
     }
   });
 

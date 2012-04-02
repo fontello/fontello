@@ -4,9 +4,6 @@
   "use strict";
 
 
-  var config = fontomas.config;
-
-
   fontomas.models.result_font = Backbone.Model.extend({
     defaults: {
       glyph_count:  0
