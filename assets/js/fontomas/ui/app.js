@@ -11,7 +11,7 @@
     myfiles:        [],
     next_font_id:   1,
     fonts:          null,
-    glyph_size:     config.preview_glyph_sizes[0],
+    glyph_size:     config.preview_glyph_sizes[config.preview_glyph_sizes.length-1],
 
     font_toolbar:   null,
     fontviews:      {},

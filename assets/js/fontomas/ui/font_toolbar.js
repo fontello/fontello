@@ -28,7 +28,7 @@
 
     changeGlyphSize: function (event) {
       var size = parseInt($(event.target).val(), 10) ||
-                 config.preview_glyph_sizes[0];
+                 config.preview_glyph_sizes[config.preview_glyph_sizes.length-1];
 
       event.preventDefault();
       this.trigger("changeGlyphSize", size);
@@ -72,7 +72,7 @@
       // render icon size buttons
       $('#glyph-size')
         .html(fontomas.render('icon-size', tpl_vars))
-        .find("button:first")
+        .find("button:last")
           .addClass("active");
 
       this.renderUseEmbedded();

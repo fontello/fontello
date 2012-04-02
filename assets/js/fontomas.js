@@ -13,7 +13,7 @@
 
 
   fontomas.config = {
-    preview_glyph_sizes:  [32, 24, 16]
+    preview_glyph_sizes:  [24, 16]
   };
 
 

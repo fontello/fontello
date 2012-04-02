@@ -148,13 +148,6 @@ iframe.twitter-share-button {
   box-shadow: 0 0 5px #444 inset;
 }
 
-.glyph-size-32 .fm-glyph {
-  width: 64px;
-  height: 64px;
-  line-height: 64px;
-  font-size: 32px;
-}
-
 .glyph-size-24 .fm-glyph {
   width: 48px;
   height: 48px;
@@ -211,12 +204,6 @@ iframe.twitter-share-button {
   color: #fff;
   border-radius: 0px 0px 4px 4px;
   font-size: 10px;
-}
-
-.glyph-size-32 .fm-result-glyph .center {
-  height: 64px;
-  line-height: 64px;
-  font-size: 32px;
 }
 
 .glyph-size-24 .fm-result-glyph .center {
