@@ -19,7 +19,6 @@
 
       this.glyphs.on("remove", function (){
         this.set("glyph_count", this.get("glyph_count") - 1);
-        fontomas.logger.assert(this.get("glyph_count") >= 0);
       }, this);
     },
 
