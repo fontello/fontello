@@ -18,6 +18,14 @@
       this.model.glyphs.on("add", this.onAddGlyph, this);
 
       this.model.on("change:glyph_count", this.onChangeGlyphCount, this);
+
+      $("#fm-download-font-button").click(this.download);
+    },
+
+
+    download: function (event) {
+      fontomas.util.notify_alert("Not yet implemented. Stay tuned.", true);
+      event.preventDefault();
     },
 
 
