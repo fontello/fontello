@@ -13,7 +13,7 @@
     }
 
     // Init & render application interface
-    (new fontomas.ui.app()).render();
+    (new fontomas.ui.wizard.selector.pane()).render();
 
     // Attach tooltip handler to matching elements
     $('.tooltip-enabled').tooltip();
