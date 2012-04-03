@@ -12,6 +12,8 @@
       // _.without() seems to maintain the sort order
       //obj.unicode_free = _.sortBy(obj.unicode_free, function (v) { return v; });
     }
+
+    return code;
   };
 
 
@@ -51,15 +53,14 @@
           orig_unicode = glyph.get("source_glyph").unicode_code;
 
       if (!this.unicode_used[orig_unicode]) {
-        this.unicode_used[orig_unicode] = true;
-        unicode_code = orig_unicode;
+        unicode_code = takeCode(this, orig_unicode);
       } else {
         if (!this.unicode_free.length) {
           fontomas.logger.debug("models.glyphs_collection.add: no room to add glyph");
           return;
         }
 
-        unicode_code = this.unicode_free.shift();
+        unicode_code = takeCode(this, this.unicode_free[0]);
       }
 
       glyph.set("unicode_code", unicode_code);
@@ -77,8 +78,8 @@
         return;
       }
 
-      Backbone.Collection.prototype.remove.call(this, model, options);
       freeCode(this, unicode_code);
+      Backbone.Collection.prototype.remove.call(this, model, options);
     },
 
 
