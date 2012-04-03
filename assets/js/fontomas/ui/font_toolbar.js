@@ -1,4 +1,4 @@
-/*global fontomas, _, Backbone*/
+/*global fontomas, _, $, Backbone*/
 
 ;(function () {
   "use strict";
@@ -28,7 +28,7 @@
 
     changeGlyphSize: function (event) {
       var size = parseInt($(event.target).val(), 10) ||
-                 config.preview_glyph_sizes[config.preview_glyph_sizes.length-1];
+                 _.last(config.preview_glyph_sizes);
 
       event.preventDefault();
       this.trigger("changeGlyphSize", size);
