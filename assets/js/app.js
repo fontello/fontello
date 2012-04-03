@@ -16,7 +16,7 @@
     (new fontomas.ui.app()).render();
 
     // Attach tooltip handler to matching elements
-    $('.tooltip-test').tooltip();
+    $('.tooltip-enabled').tooltip();
   });
 
 }());
