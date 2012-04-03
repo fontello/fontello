@@ -16,6 +16,7 @@
     font_toolbar:   null,
     fontviews:      {},
     resultfontview: null,
+    wizard_steps:   null,
 
     events:         {},
 
@@ -23,9 +24,7 @@
     initialize: function () {
       _.bindAll(this);
 
-      // Init tabs plugin
-      $('#wizard-steps').tab("show");
-
+      this.wizard_steps = new fontomas.ui.wizard_steps();
       this.font_toolbar = new fontomas.ui.font_toolbar({
         el: $("#fm-font-toolbar")[0]
       });
@@ -100,8 +99,8 @@
 
 
     toggleMenu: function (enabled) {
-      $('#wizard-steps')
-        .find("a.fm-disable-on-demand")
+      this.wizard_steps
+        .$("a.fm-disable-on-demand")
           .toggleClass("disabled", !enabled);
     },
 
@@ -221,7 +220,7 @@
       this.addEmbeddedFonts(fontomas.embedded_fonts);
 
       // #select (first) tab is fully initialized. Activate it.
-      $("#wizard-steps a:first").tab("show");
+      this.wizard_steps.$("a:first").tab("show");
 
       return this;
     }
