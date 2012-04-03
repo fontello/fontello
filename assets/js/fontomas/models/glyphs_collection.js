@@ -75,7 +75,7 @@
 
       if (!this.unicode_used[unicode_code]) {
         fontomas.logger.error("models.glyphs_collection.remove: unicode_code" +
-                              " not found in unicode_use_map");
+                              " not found in unicode_used map");
         return;
       }
 
@@ -88,19 +88,23 @@
     // swaps glyphs if new code is already taken.
     onChangeGlyphCode: function (model, new_code) {
       var found_glyph,
+          models,
           old_code = model.previous("unicode_code");
 
-      found_glyph = findGlyphByUnicode(this.models, new_code);
+      // select all the models except one has been changed
+      models = _.select(this.models, function (item) {
+        return item !== model;
+      });
+      found_glyph = findGlyphByUnicode(models, new_code);
 
-      if (found_glyph && found_glyph !== model) {
-
-        // swap glyphs
+      if (found_glyph) {
+        // if the model's unicode_code has changed to already used one
+        // then we should swap glyph codes
         found_glyph.set("unicode_code", old_code);
-
       } else {
-
         found_glyph = findGlyphByUnicode(this.models, old_code);
 
+        // if old_code is not used any more, we should free it
         if (this.unicode_used[old_code] && !found_glyph) {
           freeCode(this, old_code);
         }
