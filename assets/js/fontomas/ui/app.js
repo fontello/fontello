@@ -99,9 +99,11 @@
 
 
     toggleMenu: function (enabled) {
-      this.wizard_steps
-        .$("a.fm-disable-on-demand")
-          .toggleClass("disabled", !enabled);
+      if (enabled) {
+        this.wizard_steps.enable('#rearrange');
+      } else {
+        this.wizard_steps.disable('#rearrange');
+      }
     },
 
     
@@ -220,7 +222,7 @@
       this.addEmbeddedFonts(fontomas.embedded_fonts);
 
       // #select (first) tab is fully initialized. Activate it.
-      this.wizard_steps.$("a:first").tab("show");
+      this.wizard_steps.activate('#select');
 
       return this;
     }
