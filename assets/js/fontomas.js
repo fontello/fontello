@@ -16,12 +16,6 @@
   };
 
 
-  // TODO: on release - change fontomas.debug to `false`
-  //       as it's needed for developers only
-
-  // usage: index.html#debug
-  fontomas.debug = '#debug' === window.location.hash;
-
   // debug logger
   fontomas.logger = {};
 
@@ -30,7 +24,8 @@
   fontomas.logger.error  =
   fontomas.logger.debug  = function () {};
 
-  if (fontomas.debug) {
+  // change `false` to `true` to enable logger on development
+  if (false) {
     fontomas.logger.assert = console.assert;
     fontomas.logger.error  = console.error;
     fontomas.logger.debug  = console.debug ? console.debug : console.log;
