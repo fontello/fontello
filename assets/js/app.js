@@ -1,4 +1,4 @@
-/*global fontomas, $, Backbone, Modernizr*/
+/*global fontomas, $, Modernizr*/
 
 ;(function () {
   "use strict";

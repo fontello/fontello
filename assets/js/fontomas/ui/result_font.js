@@ -24,7 +24,7 @@
 
 
     download: function (event) {
-      fontomas.util.notify_alert("Not yet implemented. Stay tuned.", true);
+      fontomas.util.notify_alert("Not yet implemented. Stay tuned.");
       event.preventDefault();
     },
 

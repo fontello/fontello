@@ -4,44 +4,19 @@
   "use strict";
 
 
-  var notify_dup = {};
-
-
-  function notify(text, extra_options, suppress_dup) {
-    var options = {time: 4000};
-
-    if (suppress_dup && (text !== undefined)) {
-      if (notify_dup[text] !== undefined) {
-        return;
-      }
-
-      notify_dup[text] = true;
-
-      $.extend(options, {
-        after_close: function () {
-          delete notify_dup[text];
-        }
-      });
-    }
-
-    // FIXME: title is mandatory, so we've filled it with just a space
-    $.extend(options, {title: " ", text: text}, extra_options);
-    $.gritter.add(options);
-  }
-
-
   fontomas.util = {};
 
 
-  fontomas.util.notify_alert = function (text, suppress_dup) {
-    var options = {"image": "/static/assets/img/alert.png"};
-    notify(text, options, suppress_dup);
+  fontomas.util.notify_alert = function (text) {
+    // FIXME: title is mandatory, so we've filled it with just a space
+    $.gritter.add({
+      time:   4000,
+      image:  "/static/assets/img/alert.png",
+      title:  " ",
+      text:   text
+    });
   };
 
-
-  fontomas.util.notify_info = function (text, suppress_dup) {
-    notify(text, {}, suppress_dup);
-  };
 
   // ===============
   // misc functions
