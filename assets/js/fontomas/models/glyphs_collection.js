@@ -64,7 +64,8 @@
       }
 
       glyph.set("unicode_code", unicode_code);
-      glyph.on("change:unicode_code", this.onChangeUnicodeCode, this);
+      glyph.on("change:unicode_code", this.onChangeGlyphCode, this);
+
       Backbone.Collection.prototype.add.call(this, glyph, options);
     },
 
@@ -83,7 +84,9 @@
     },
 
 
-    onChangeUnicodeCode: function (model, new_code) {
+    // release/overtake new code by glyph
+    // swaps glyphs if new code is already taken.
+    onChangeGlyphCode: function (model, new_code) {
       var found_glyph,
           old_code = model.previous("unicode_code");
 
