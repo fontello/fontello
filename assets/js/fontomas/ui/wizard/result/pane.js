@@ -48,7 +48,7 @@
 
 
     onChangeGlyphCount: function (model, glyph_count) {
-      $('#fm-glyph-count').text(glyph_count);
+      $('#selected-glyphs-count').text(glyph_count);
 
       if (model.previous("glyph_count") === 0 && glyph_count > 0) {
         this.trigger("someGlyphsSelected");
