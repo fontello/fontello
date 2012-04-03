@@ -11,7 +11,7 @@
     myfiles:        [],
     next_font_id:   1,
     fonts:          null,
-    glyph_size:     config.preview_glyph_sizes[config.preview_glyph_sizes.length-1],
+    glyph_size:     _.last(config.preview_glyph_sizes),
 
     font_toolbar:   null,
     fontviews:      {},
@@ -61,8 +61,6 @@
       _.each(this.fontviews, function (view) {
         view.changeGlyphSize(size);
       });
-
-      this.resultfontview.changeGlyphSize(size);
     },
 
 

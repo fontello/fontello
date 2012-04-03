@@ -7,17 +7,18 @@
   fontomas.ui.wizard.result.pane = Backbone.View.extend({
     glyphviews: [],
     events:     {},
-    glyph_size: null,
+    glyph_size: _.first(fontomas.config.preview_glyph_sizes),
 
 
     initialize: function () {
       _.bindAll(this);
-      this.glyph_size = this.options.glyph_size;
 
       this.model.glyphs.each(this.onAddGlyph);
       this.model.glyphs.on("add", this.onAddGlyph, this);
 
       $("#fm-download-font-button").click(this.download);
+
+      this.$el.addClass("glyph-size-" + this.glyph_size);
     },
 
 
@@ -61,15 +62,6 @@
 
       return this;
     },
-
-
-    changeGlyphSize: function (new_size) {
-      this.$el
-        .removeClass("glyph-size-" + this.glyph_size)
-        .addClass("glyph-size-" + new_size);
-
-      this.glyph_size = new_size;
-    }
   });
 
 }());
