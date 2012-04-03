@@ -12,10 +12,7 @@
       return;
     }
 
-    // show loading tab
-    $('#tab').tab("show");
-
-    // main view
+    // Init & render application interface
     (new fontomas.ui.app()).render();
 
     // Attach tooltip handler to matching elements

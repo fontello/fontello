@@ -5,7 +5,7 @@ html {
 body {
   padding-top: 170px; /* 60px to make the container go all the way to the bottom of the topbar */
 }
-#tab {
+#wizard-steps {
   position: fixed;
   top: 40px;
   z-index: 100;
@@ -21,13 +21,7 @@ iframe.twitter-share-button {
   margin-top: 9px;
 }
 
-/*#tab h1 {
-  color: inherit;
-  margin-left: 10px;
-  margin-right: 15px;
-}
-*/
-#tab li a {
+#wizard-steps li a {
   display: block;
   font-size: 30px;
   font-weight: bold;
@@ -36,7 +30,7 @@ iframe.twitter-share-button {
   padding-right: 25px;
 }
 
-#tab li a small {
+#wizard-steps li a small {
   font-size: 18px;
   line-height: 1;
   color: #999999;
@@ -73,7 +67,7 @@ iframe.twitter-share-button {
   cursor: default;
 }
 
-#tab .disabled, #tab .disabled:hover {
+#wizard-steps .disabled, #wizard-steps .disabled:hover {
   /* FIXME */
   opacity: 0.3;
   cursor: default;

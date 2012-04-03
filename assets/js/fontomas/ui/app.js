@@ -1,4 +1,4 @@
-/*global fontomas, _, Backbone, Handlebars*/
+/*global fontomas, _, $, Backbone, Handlebars*/
 
 ;(function () {
   "use strict";
@@ -23,9 +23,13 @@
     initialize: function () {
       _.bindAll(this);
 
+      // Init tabs plugin
+      $('#wizard-steps').tab("show");
+
       this.font_toolbar = new fontomas.ui.font_toolbar({
         el: $("#fm-font-toolbar")[0]
       });
+
       this.font_toolbar.on("changeGlyphSize", this.onChangeGlyphSize, this);
       this.font_toolbar.on("fileUpload",      this.onFileUpload,      this);
       this.font_toolbar.on("useEmbeddedFont", this.onUseEmbeddedFont, this);
@@ -41,6 +45,7 @@
         model:      new fontomas.models.result_font,
         glyph_size: this.glyph_size
       });
+
       this.resultfontview.on("someGlyphsSelected", function () {
         this.toggleMenu(true);
       },  this);
@@ -95,7 +100,7 @@
 
 
     toggleMenu: function (enabled) {
-      $('#tab')
+      $('#wizard-steps')
         .find("a.fm-disable-on-demand")
           .toggleClass("disabled", !enabled);
     },
@@ -215,8 +220,8 @@
       // auto load embedded fonts
       this.addEmbeddedFonts(fontomas.embedded_fonts);
 
-      // first tab is fully initialized so show it
-      $("#tab a:first").tab("show");
+      // #select (first) tab is fully initialized. Activate it.
+      $("#wizard-steps a:first").tab("show");
 
       return this;
     }
