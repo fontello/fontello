@@ -4,113 +4,104 @@
   "use strict";
 
 
+  var takeCode = function (obj, code) {
+    obj.unicode_used[code] = true;
+
+    if (32 <= code && code <= 126) {
+      obj.unicode_free = _.without(obj.unicode_free, code);
+      // _.without() seems to maintain the sort order
+      //obj.unicode_free = _.sortBy(obj.unicode_free, function (v) { return v; });
+    }
+  };
+
+
+  var freeCode = function (obj, code) {
+    delete obj.unicode_used[code];
+
+    if (32 <= code && code <= 126) {
+      obj.unicode_free.unshift(code);
+      obj.unicode_free = _.sortBy(obj.unicode_free, function (v) { return v; });
+    }
+  };
+
+
+  var findGlyphByUnicode = function (collection, unicode_code) {
+    return _.find(collection, function (item) {
+      return item.get("unicode_code") === unicode_code;
+    });
+  };
+
+
   fontomas.models.glyphs_collection = Backbone.Collection.extend({
-    unicode_use_map: [],
+    unicode_used: {},
+    unicode_free: [],
 
 
     initialize: function () {
       var code;
 
       for (code = 32; code <= 126; code++) {
-        this.unicode_use_map.push({code: code, is_used: false});
+        this.unicode_free.push(code);
       }
     },
 
 
     add: function (glyph, options) {
-      var found_code,
+      var unicode_code,
           orig_unicode = glyph.get("source_glyph").unicode_code;
 
-      found_code = _.find(this.unicode_use_map, function (item) {
-        return item.code === orig_unicode;
-      });
+      if (!this.unicode_used[orig_unicode]) {
+        this.unicode_used[orig_unicode] = true;
+        unicode_code = orig_unicode;
+      } else {
+        if (!this.unicode_free.length) {
+          fontomas.logger.debug("models.glyphs_collection.add: no room to add glyph");
+          return;
+        }
 
-      if (!found_code) {
-        this.unicode_use_map.push({code: orig_unicode, is_used: false});
+        unicode_code = this.unicode_free.shift();
       }
 
-      found_code = _.find(this.unicode_use_map, function (item) {
-        return item.code === orig_unicode && item.is_used === false;
-      });
-
-      if (!found_code) {
-        found_code = _.find(this.unicode_use_map, function (item) {
-          return item.is_used === false;
-        });
-      }
-
-      if (!found_code) {
-        fontomas.logger.debug("models.glyphs_collection.add: no room to add glyph");
-        return;
-      }
-
-      glyph.set("unicode_code", found_code.code);
-      found_code.is_used  = true;
-
+      glyph.set("unicode_code", unicode_code);
       glyph.on("change:unicode_code", this.onChangeUnicodeCode, this);
-
       Backbone.Collection.prototype.add.call(this, glyph, options);
     },
 
 
     remove: function (model, options) {
-      var found_code,
-          code = model.get("unicode_code");
+      var unicode_code = model.get("unicode_code");
 
-      if (code) {
-        found_code = _.find(this.unicode_use_map, function (item) {
-          return item.code === code && item.is_used === true;
-        });
-
-        if (!found_code) {
-          fontomas.logger.error("models.glyphs_collection.remove: unicode_code not found in unicode_use_map");
-          return;
-        }
-
-        found_code.is_used = false;
+      if (!this.unicode_used[unicode_code]) {
+        fontomas.logger.error("models.glyphs_collection.remove: unicode_code" +
+                              " not found in unicode_use_map");
+        return;
       }
 
       Backbone.Collection.prototype.remove.call(this, model, options);
+      freeCode(this, unicode_code);
     },
 
 
     onChangeUnicodeCode: function (model, new_code) {
-      var found_code,
-          found_glyph,
+      var found_glyph,
           old_code = model.previous("unicode_code");
 
-      found_glyph = _.find(this.models, function (item) {
-        return item !== model && item.get("unicode_code") === new_code;
-      });
+      found_glyph = findGlyphByUnicode(this.models, new_code);
 
-      if (found_glyph) {
+      if (found_glyph && found_glyph !== model) {
 
         // swap glyphs
         found_glyph.set("unicode_code", old_code);
 
       } else {
 
-        found_code = _.find(this.unicode_use_map, function (item) {
-          return item.code === old_code;
-        });
+        found_glyph = findGlyphByUnicode(this.models, old_code);
 
-        found_glyph = _.find(this.models, function (item) {
-          return item.get("unicode_code") === old_code;
-        });
-
-        if (found_code && !found_glyph) {
-          found_code.is_used = false;
+        if (this.unicode_used[old_code] && !found_glyph) {
+          freeCode(this, old_code);
         }
 
-        found_code = _.find(this.unicode_use_map, function (item) {
-          return item.code === new_code;
-        });
-
-        if (found_code) {
-          found_code.is_used = true;
-        } else {
-          this.unicode_use_map.push({code: new_code, is_used: true});
-        }
+        takeCode(this, new_code);
       }
     }
 
