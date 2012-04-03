@@ -16,13 +16,6 @@
   };
 
 
-  // environment
-  fontomas.env = {
-    is_file_proto:  (window.location.protocol === "file:"),
-    filereader:     null,
-    fontface:       null
-  };
-
   // TODO: on release - change fontomas.debug to `false`
   //       as it's needed for developers only
 
