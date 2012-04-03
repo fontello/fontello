@@ -7,7 +7,7 @@
   var config = fontomas.config;
 
 
-  fontomas.ui.font_toolbar = Backbone.View.extend({
+  fontomas.ui.wizard.selector.toolbar = Backbone.View.extend({
     tagName:  "form",
 
 

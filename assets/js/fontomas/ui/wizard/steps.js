@@ -4,7 +4,7 @@
   "use strict";
 
 
-  fontomas.ui.wizard_steps = Backbone.View.extend({
+  fontomas.ui.wizard.steps = Backbone.View.extend({
     el: '#wizard-steps',
 
     initialize: function () {

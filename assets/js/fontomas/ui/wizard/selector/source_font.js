@@ -4,7 +4,7 @@
   "use strict";
 
 
-  fontomas.ui.source_font = Backbone.View.extend({
+  fontomas.ui.wizard.selector.source_font = Backbone.View.extend({
     tagName:    "li",
 
     glyph_size: null,

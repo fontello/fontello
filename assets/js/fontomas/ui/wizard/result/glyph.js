@@ -4,7 +4,7 @@
   "use strict";
 
 
-  fontomas.ui.glyph = Backbone.View.extend({
+  fontomas.ui.wizard.result.glyph = Backbone.View.extend({
     tagName:    "div",
     className:  "fm-result-glyph",
 

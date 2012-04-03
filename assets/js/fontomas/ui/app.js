@@ -24,8 +24,8 @@
     initialize: function () {
       _.bindAll(this);
 
-      this.wizard_steps = new fontomas.ui.wizard_steps();
-      this.font_toolbar = new fontomas.ui.font_toolbar({
+      this.wizard_steps = new fontomas.ui.wizard.steps();
+      this.font_toolbar = new fontomas.ui.wizard.selector.toolbar({
         el: $("#fm-font-toolbar")[0]
       });
 
@@ -39,7 +39,7 @@
         this.fonts.each(this.onAddFont);
       }, this);
 
-      this.resultfontview = new fontomas.ui.result_font({
+      this.resultfontview = new fontomas.ui.wizard.result.pane({
         el:         $("#fm-result-font")[0],
         model:      new fontomas.models.result_font,
         glyph_size: this.glyph_size
@@ -79,7 +79,7 @@
 
     // a model has been added, so we create a corresponding view for it
     onAddFont: function (font) {
-      var view = new fontomas.ui.source_font({
+      var view = new fontomas.ui.wizard.selector.source_font({
         model:      font,
         glyph_size: this.glyph_size
       });

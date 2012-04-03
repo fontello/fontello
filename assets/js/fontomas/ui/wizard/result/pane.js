@@ -4,7 +4,7 @@
   "use strict";
 
 
-  fontomas.ui.result_font = Backbone.View.extend({
+  fontomas.ui.wizard.result.pane = Backbone.View.extend({
     glyphviews: [],
     events:     {},
     glyph_size: null,
@@ -31,7 +31,7 @@
 
     // a model has been added, so we create a corresponding view for it
     onAddGlyph: function (glyph) {
-      var view = new fontomas.ui.glyph({
+      var view = new fontomas.ui.wizard.result.glyph({
         model:      glyph,
         glyph_size: this.glyph_size
       });
