@@ -18,9 +18,7 @@
   };
 
 
-  // ===============
-  // misc functions
-  // ===============
+  // Int to char, with fix for big numbers
   // see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String/fromCharCode
   fontomas.util.fixedFromCharCode = function (code) {
     /*jshint bitwise: false*/
@@ -35,6 +33,7 @@
   };
 
 
+  // Char to Int, with fix for big numbers
   fontomas.util.fixedCharCodeAt = function (char) {
     /*jshint bitwise: false*/
     var char1 = char.charCodeAt(0),
