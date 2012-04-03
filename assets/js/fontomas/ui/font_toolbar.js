@@ -38,7 +38,7 @@
     fileBrowse: function (event) {
       event.preventDefault();
 
-      if (fontomas.env.filereader) {
+      if (!!window.FileReader) {
         $('#fm-file').click();
       } else {
         fontomas.util.notify_alert(

@@ -5,13 +5,8 @@
 
 
   $(function () {
-    // FF3.6+ Chrome6+ Opera11.1+
-    fontomas.env.filereader = !!window.FileReader;
-
-    fontomas.env.fontface = Modernizr.fontface;
-
     // check browser's capabilities
-    if (!fontomas.env.fontface) {
+    if (!Modernizr.fontface) {
       fontomas.logger.error("bad browser");
       $('#fm-bad-browser').modal({keyboard: false});
       return;
@@ -24,6 +19,7 @@
     var view = new fontomas.ui.app;
     view.render();
 
+    // Attach tooltip handler to matching elements
     $('.tooltip-test').tooltip();
   });
 

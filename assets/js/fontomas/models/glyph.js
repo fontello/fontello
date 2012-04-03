@@ -16,6 +16,8 @@
         fontomas.logger.debug("models.glyph.validate: bad unicode code point:", c);
         return "Bad unicode code point " + c;
       }
+
+      return null;
     },
 
 
