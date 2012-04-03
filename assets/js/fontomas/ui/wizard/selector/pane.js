@@ -39,17 +39,16 @@
         this.fonts.each(this.onAddFont);
       }, this);
 
+      var result_font = new fontomas.models.result_font();
+
       this.resultfontview = new fontomas.ui.wizard.result.pane({
         el:         $("#fm-result-font")[0],
-        model:      new fontomas.models.result_font,
+        model:      result_font,
         glyph_size: this.glyph_size
       });
 
-      this.resultfontview.on("someGlyphsSelected", function () {
-        this.toggleMenu(true);
-      },  this);
-      this.resultfontview.on("noGlyphsSelected", function () {
-        this.toggleMenu(false);
+      result_font.on('change:glyph_count', function (model, count) {
+        this.wizard_steps.setGlyphsCount(count);
       }, this);
 
       this.on("fileLoaded", this.onLoadFont, this);
@@ -97,16 +96,6 @@
       delete this.fontviews[id];
     },
 
-
-    toggleMenu: function (enabled) {
-      if (enabled) {
-        this.wizard_steps.enable('#result');
-      } else {
-        this.wizard_steps.disable('#result');
-      }
-    },
-
-    
     doUploadFonts: function (files) {
       var self = this;
 

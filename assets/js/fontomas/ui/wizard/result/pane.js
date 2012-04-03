@@ -17,8 +17,6 @@
       this.model.glyphs.each(this.onAddGlyph);
       this.model.glyphs.on("add", this.onAddGlyph, this);
 
-      this.model.on("change:glyph_count", this.onChangeGlyphCount, this);
-
       $("#fm-download-font-button").click(this.download);
     },
 
@@ -44,17 +42,6 @@
 
     onRemoveGlyph: function (view) {
       this.glyphviews = _.without(this.glyphviews, view);
-    },
-
-
-    onChangeGlyphCount: function (model, glyph_count) {
-      $('#selected-glyphs-count').text(glyph_count);
-
-      if (model.previous("glyph_count") === 0 && glyph_count > 0) {
-        this.trigger("someGlyphsSelected");
-      } else if (model.previous("glyph_count") > 0 && glyph_count === 0) {
-        this.trigger("noGlyphsSelected");
-      }
     },
 
 
