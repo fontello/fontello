@@ -41,13 +41,13 @@ iframe.twitter-share-button {
   color: #fff;
 }
 
-#select h2 {
+#selector h2 {
   margin-top: 20px;
   font-size: 36px;
   line-height: 54px;
 }
 
-#select .btn-toolbar, #rearrange .btn-toolbar {
+#selector .btn-toolbar, #result .btn-toolbar {
   margin-top: 0;
   margin-bottom: 0;
 }

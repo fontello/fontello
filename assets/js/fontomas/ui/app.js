@@ -100,9 +100,9 @@
 
     toggleMenu: function (enabled) {
       if (enabled) {
-        this.wizard_steps.enable('#rearrange');
+        this.wizard_steps.enable('#result');
       } else {
-        this.wizard_steps.disable('#rearrange');
+        this.wizard_steps.disable('#result');
       }
     },
 
@@ -220,10 +220,7 @@
     render: function () {
       // auto load embedded fonts
       this.addEmbeddedFonts(fontomas.embedded_fonts);
-
-      // #select (first) tab is fully initialized. Activate it.
-      this.wizard_steps.activate('#select');
-
+      this.wizard_steps.activate('#selector');
       return this;
     }
   });
