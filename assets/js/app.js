@@ -8,7 +8,7 @@
     // check browser's capabilities
     if (!Modernizr.fontface) {
       fontomas.logger.error("bad browser");
-      $('#fm-bad-browser').modal({keyboard: false});
+      $('#err-bad-browser').modal({backdrop: 'static', keyboard: false});
       return;
     }
 
@@ -16,8 +16,7 @@
     $('#tab').tab("show");
 
     // main view
-    var view = new fontomas.ui.app;
-    view.render();
+    (new fontomas.ui.app()).render();
 
     // Attach tooltip handler to matching elements
     $('.tooltip-test').tooltip();
