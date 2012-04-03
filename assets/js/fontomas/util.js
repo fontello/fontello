@@ -31,7 +31,7 @@
 
 
   exports.notify_alert = function (text, suppress_dup) {
-    var options = {"image": "/static/assets/vendor/jquery.gritter/alert.png"};
+    var options = {"image": "/static/assets/img/alert.png"};
     notify(text, options, suppress_dup);
   };
 
