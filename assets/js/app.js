@@ -26,6 +26,18 @@
       steps_view.setGlyphsCount(count);
     });
 
+
+    selector_view.on('glyph-click', function (data) {
+      var glyph = result_font.getGlyph(data.font_id, data.glyph_id);
+
+      if (glyph) {
+        glyph.destroy();
+        return;
+      }
+
+      result_font.addGlyph(data);
+    });
+
     // handle font close
     selector_view.on('font-close', function (font_id) {
       result_font.removeGlyphsByFont(font_id);

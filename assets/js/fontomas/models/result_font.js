@@ -23,6 +23,19 @@
     },
 
 
+    getGlyph: function (font_id, glyph_id) {
+      return this.glyphs.find(function (glyph) {
+        var src = glyph.get('source_glyph');
+        return font_id === src.font_id && glyph_id === src.glyph_id;
+      });
+    },
+
+
+    addGlyph: function (data) {
+      this.glyphs.add(new fontomas.models.glyph({source_glyph: data}));
+    },
+
+
     removeGlyphsByFont: function (font_id) {
       var glyphs = this.glyphs.filter(function (glyph) {
         return font_id === glyph.get('source_glyph').font_id;

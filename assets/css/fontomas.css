@@ -124,7 +124,7 @@ iframe.twitter-share-button {
   display: inline-block;
 }
 
-.fm-glyph {
+.glyph {
   position: relative;
   float: left;
   border: 1px #ccc solid;
@@ -137,20 +137,20 @@ iframe.twitter-share-button {
   margin: 0 8px 8px 0;
 }
 
-.fm-glyph:hover {
+.glyph:hover {
   background: #f0f0f0;
   opacity: .8;
 }
 
-.fm-glyph.selected {
+.glyph.selected {
   background-color: #fee;
 }
 
-.glyph-size-24 .fm-glyph {
+.glyph-size-24 .glyph {
   font-size: 24px;
 }
 
-.glyph-size-16 .fm-glyph {
+.glyph-size-16 .glyph {
   font-size: 16px;
 }
 

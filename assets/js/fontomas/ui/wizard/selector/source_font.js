@@ -11,7 +11,7 @@
 
     events: {
       "click .fm-font-close": "close",
-      "click .fm-glyph":      "toggleGlyph"
+      "click .glyph":         "toggleGlyph"
     },
 
 
@@ -94,6 +94,16 @@
       $target.toggleClass("selected", !selected);
 
       this.trigger("toggleGlyph", data);
+    },
+
+
+    activateGlyph: function (id) {
+      this.$('.glyph[data-glyph-id=' + id + ']').addClass('selected');
+    },
+
+
+    deactivateGlyph: function (id) {
+      this.$('.glyph[data-glyph-id=' + id + ']').deactivateClass('selected');
     }
   });
 

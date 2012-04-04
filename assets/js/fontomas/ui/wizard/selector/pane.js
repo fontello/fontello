@@ -14,7 +14,6 @@
     glyph_size:     _.last(config.preview_glyph_sizes),
 
     font_toolbar:   null,
-    resultfontview: null,
     fontviews:      {},
 
     events:         {},
@@ -26,9 +25,6 @@
       this.font_toolbar = new fontomas.ui.wizard.selector.toolbar({
         el: $("#fm-font-toolbar")[0]
       });
-
-      // TO BE REMOVED
-      this.resultfontview = attributes.resultfontview;
 
       this.font_toolbar.on("changeGlyphSize", this.onChangeGlyphSize, this);
       this.font_toolbar.on("fileUpload",      this.onFileUpload,      this);
@@ -147,21 +143,7 @@
 
 
     onToggleGlyph: function (data) {
-      var glyph, found_glyph;
-
-      found_glyph = this.resultfontview.model.glyphs.find(function (item) {
-        var glyph = item.get("source_glyph");
-
-        return  glyph.font_id === data.font_id &&
-                glyph.glyph_id === data.glyph_id;
-      });
-
-      if (found_glyph) {
-        found_glyph.destroy();
-      } else {
-        glyph = new fontomas.models.glyph({source_glyph: data});
-        this.resultfontview.model.glyphs.add(glyph);
-      }
+      this.trigger('glyph-click', data);
     },
 
 
