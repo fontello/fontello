@@ -11,7 +11,7 @@
 
     events: {
       "click .fm-font-close": "close",
-      "click .fm-glyph-id":   "toggleGlyph"
+      "click .fm-glyph":      "toggleGlyph"
     },
 
 
@@ -43,9 +43,6 @@
 
         this.$(".fm-glyph-group").append(glyph);
       }, this);
-
-      // reset checkboxes as a browser sometimes sets them
-      this.$(".fm-glyph-id").attr({checked: false});
 
       return this;
     },
@@ -81,9 +78,10 @@
 
 
     toggleGlyph: function (event) {
-      var $target   = $(event.target),
-          glyph_id  = parseInt($target.val(), 10),
-          data      = this.model.getGlyph(glyph_id);
+      var $target   = $(event.currentTarget),
+          glyph_id  = parseInt($target.attr("data-glyph-id"), 10),
+          data      = this.model.getGlyph(glyph_id),
+          selected;
 
       data = _.extend(data, {
         font_id:      this.model.id,
@@ -92,8 +90,8 @@
         embedded_id:  this.model.get("embedded_id")
       });
 
-      $target.closest(".fm-glyph")
-        .toggleClass("selected", $target.is(":checked"));
+      selected = $target.hasClass("selected");
+      $target.toggleClass("selected", !selected);
 
       this.trigger("toggleGlyph", data);
     }

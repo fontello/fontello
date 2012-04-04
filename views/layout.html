@@ -139,14 +139,13 @@
         <a class="fm-font-anchor" href="#font-{{id}}"></a>
         <a class="fm-font-close" href="#"><small>close</small></a>
       </h2>
-      <div class="fm-glyph-group {{css_class}}">
-      </div>
+      <ul class="unstyled fm-glyph-group {{css_class}}">
+      </ul>
     </script>
     <script data-tpl-id="glyph-item" type="text/x-fm-template">
-      <label class="fm-glyph">
-        <input class="fm-glyph-id" type="checkbox" value="{{glyph_id}}"/>
+      <li class="fm-glyph" data-glyph-id="{{glyph_id}}">
         <span class="fm-icon">{{{unicode}}}</span>
-      </label>
+      </li>
     </script>
     <script data-tpl-id="resultfont-glyph-item" type="text/x-fm-template">
       <!--div class="fm-result-glyph"-->
