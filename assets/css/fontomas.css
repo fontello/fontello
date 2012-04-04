@@ -122,12 +122,14 @@ iframe.twitter-share-button {
 .fm-glyph {
   position: relative;
   float: left;
-  margin: 5px;
-  padding: 8px;
-  border: 2px #aaa solid;
-  border-radius: 8px 8px 8px 8px;
+  border: 1px #ccc solid;
+  border-radius: 6px;
   cursor: pointer;
   text-align: center;
+  width: 48px;
+  height: 48px;
+  line-height: 48px;
+  margin: 0 8px 8px 0;
 }
 
 .fm-glyph:hover {
@@ -136,28 +138,16 @@ iframe.twitter-share-button {
 }
 
 .fm-glyph.selected {
-  border: 2px #800 solid;
+/*  border: 2px #800 solid; */
   background-color: #fee;
-  /*color: #fff;*/
-  box-shadow: 0 0 5px #444 inset;
 }
 
 .glyph-size-24 .fm-glyph {
-  width: 48px;
-  height: 48px;
-  line-height: 48px;
   font-size: 24px;
 }
 
-.glyph-size-16 .fm-glyph,
-.glyph-size-16 .fm-glyph.selected {
-  width: 32px;
-  height: 32px;
-  line-height: 32px;
+.glyph-size-16 .fm-glyph {
   font-size: 16px;
-
-  border-width: 1px;
-  margin: 4px;
 }
 
 .fm-glyph-id {
@@ -171,7 +161,7 @@ iframe.twitter-share-button {
   width: 64px;
   border: 2px #888 solid;
   border-radius: 8px 8px 8px 8px;
-  margin: 5px;
+  margin: 0 10px 10px 0;
   padding-top: 0px;
   padding-bottom: 0px;
   text-align: center;
