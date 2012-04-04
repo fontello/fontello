@@ -143,9 +143,7 @@
       </ul>
     </script>
     <script data-tpl-id="glyph-item" type="text/x-fm-template">
-      <li class="fm-glyph" data-glyph-id="{{glyph_id}}">
-        <span class="fm-icon">{{{unicode}}}</span>
-      </li>
+      <li class="fm-glyph" data-glyph-id="{{glyph_id}}">{{{unicode}}}</li>
     </script>
     <script data-tpl-id="resultfont-glyph-item" type="text/x-fm-template">
       <!--div class="fm-result-glyph"-->
@@ -159,10 +157,8 @@
             </tbody>
           </table>
         </div>
-        <div class="center {{css_class}}">
-          <span class="fm-icon">{{{char}}}</span>
-        </div>
-        <div class="bottom"><span>{{bottom}}</span></div>
+        <div class="center {{css_class}}">{{{char}}}</div>
+        <div class="bottom">{{bottom}}</div>
         <div class="bottom edit">
           <table>
             <tbody>

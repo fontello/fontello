@@ -203,7 +203,7 @@ def generate_css(fonts_data):
 
     flen = len(fonts_data)
     for i, font in enumerate(fonts_data):
-        css += '.fm-embedded-%d .fm-icon { font-family: \'%s\'; }\n' % (i,
+        css += '.fm-embedded-%d { font-family: \'%s\'; }\n' % (i,
             font['font_id'])
 
     for font in fonts_data:
