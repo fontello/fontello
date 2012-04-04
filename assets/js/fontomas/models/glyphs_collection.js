@@ -66,13 +66,8 @@
       glyph.set("unicode_code", unicode_code);
       glyph.on("change:unicode_code", this.onChangeGlyphCode, this);
 
-      Backbone.Collection.prototype.add.call(this, glyph, options);
-    },
-
-
-    remove: function (models, options) {
-      _.each(models, function (model) {
-        var code = model.get("unicode_code");
+      glyph.on('remove', function (glyph) {
+        var code = glyph.get("unicode_code");
 
         if (!this.unicode_used[code]) {
           fontomas.logger.error(
@@ -85,7 +80,7 @@
         freeCode(this, code);
       }, this);
 
-      Backbone.Collection.prototype.remove.call(this, models, options);
+      Backbone.Collection.prototype.add.call(this, glyph, options);
     },
 
 
