@@ -6,15 +6,19 @@
 
   fontomas.models.result_font = Backbone.Model.extend({
     defaults: {
-      glyphs_count:  0
+      glyphs_count: 0
     },
 
 
     initialize: function () {
       this.glyphs = new fontomas.models.glyphs_collection();
 
-      this.glyphs.on("add remove", function (){
-        this.set("glyphs_count", this.glyphs.length);
+      this.glyphs.on('add remove', function (){
+        this.set('glyphs_count', this.glyphs.length);
+      }, this);
+
+      this.glyphs.on('add', function (glyph) {
+        this.trigger('glyph-added', glyph);
       }, this);
     },
 

@@ -14,7 +14,7 @@
       return;
     }
 
-    result_font = new fontomas.models.result_font();
+    result_font   = new fontomas.models.result_font();
 
     result_view   = new fontomas.ui.wizard.result.pane({model: result_font});
     selector_view = new fontomas.ui.wizard.selector.pane({resultfontview: result_view});
