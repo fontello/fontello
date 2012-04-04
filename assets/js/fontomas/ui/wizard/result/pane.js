@@ -5,6 +5,8 @@
 
 
   fontomas.ui.wizard.result.pane = Backbone.View.extend({
+    el: '#result > #result-font',
+
     glyphviews: [],
     events:     {},
     glyph_size: _.first(fontomas.config.preview_glyph_sizes),

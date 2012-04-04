@@ -14,20 +14,21 @@
     glyph_size:     _.last(config.preview_glyph_sizes),
 
     font_toolbar:   null,
-    fontviews:      {},
     resultfontview: null,
-    wizard_steps:   null,
+    fontviews:      {},
 
     events:         {},
 
 
-    initialize: function () {
+    initialize: function (attributes) {
       _.bindAll(this);
 
-      this.wizard_steps = new fontomas.ui.wizard.steps();
       this.font_toolbar = new fontomas.ui.wizard.selector.toolbar({
         el: $("#fm-font-toolbar")[0]
       });
+
+      // TO BE REMOVED
+      this.resultfontview = attributes.resultfontview;
 
       this.font_toolbar.on("changeGlyphSize", this.onChangeGlyphSize, this);
       this.font_toolbar.on("fileUpload",      this.onFileUpload,      this);
@@ -37,18 +38,6 @@
       this.fonts.on("add",   this.onAddFont, this);
       this.fonts.on("reset", function () {
         this.fonts.each(this.onAddFont);
-      }, this);
-
-      var result_font = new fontomas.models.result_font();
-
-      this.resultfontview = new fontomas.ui.wizard.result.pane({
-        el:         $("#fm-result-font")[0],
-        model:      result_font,
-        glyph_size: this.glyph_size
-      });
-
-      result_font.on('change:glyph_count', function (model, count) {
-        this.wizard_steps.setGlyphsCount(count);
       }, this);
 
       this.on("fileLoaded", this.onLoadFont, this);
@@ -207,7 +196,6 @@
     render: function () {
       // auto load embedded fonts
       this.addEmbeddedFonts(fontomas.embedded_fonts);
-      this.wizard_steps.activate('#selector');
       return this;
     }
   });
