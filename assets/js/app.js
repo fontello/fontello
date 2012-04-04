@@ -5,7 +5,7 @@
 
 
   $(function () {
-    var steps_view, result_view, selector_view, result_font;
+    var steps, result, selector, result_font;
 
     // check browser's capabilities
     if (!Modernizr.fontface) {
@@ -16,18 +16,18 @@
 
     result_font   = new fontomas.models.result_font();
 
-    result_view   = new fontomas.ui.wizard.result.pane({model: result_font});
-    selector_view = new fontomas.ui.wizard.selector.pane();
-    steps_view    = new fontomas.ui.wizard.steps();
+    steps     = new fontomas.ui.wizard.steps();
+    selector  = new fontomas.ui.wizard.selector.pane();
+    result    = new fontomas.ui.wizard.result.pane({model: result_font});
 
 
     // update glypsh count on wizard steps tab
     result_font.on('change:glyphs_count', function (model, count) {
-      steps_view.setGlyphsCount(count);
+      steps.setGlyphsCount(count);
     });
 
 
-    selector_view.on('glyph-click', function (data) {
+    selector.on('glyph-click', function (data) {
       var glyph = result_font.getGlyph(data.font_id, data.glyph_id);
 
       if (glyph) {
@@ -39,16 +39,16 @@
     });
 
     // handle font close
-    selector_view.on('font-close', function (font_id) {
+    selector.on('font-close', function (font_id) {
       result_font.removeGlyphsByFont(font_id);
     });
 
 
-    // KLUDGE: this will be removed soon
-    selector_view.render();
+    // KLUDGE: should be replaced with selector.addFont() in future
+    selector.addEmbeddedFonts(fontomas.embedded_fonts);
 
     // show selector tab after load complete
-    steps_view.activate('#selector');
+    steps.activate('#selector');
 
     // Attach tooltip handler to matching elements
     $('.tooltip-enabled').tooltip();

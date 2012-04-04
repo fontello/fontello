@@ -1,4 +1,4 @@
-/*global fontomas, _, $, Backbone, Handlebars*/
+/*global fontomas, _, $, Backbone, Handlebars, FileReader*/
 
 ;(function () {
   "use strict";
@@ -30,7 +30,7 @@
       this.font_toolbar.on("fileUpload",      this.onFileUpload,      this);
       this.font_toolbar.on("useEmbeddedFont", this.onUseEmbeddedFont, this);
 
-      this.fonts = new Backbone.Collection;
+      this.fonts = new Backbone.Collection();
       this.fonts.on("add",   this.onAddFont, this);
       this.fonts.on("reset", function () {
         this.fonts.each(this.onAddFont);
@@ -173,13 +173,6 @@
 
       this.fonts.create(font);
       return attrs.id;
-    },
-
-
-    render: function () {
-      // auto load embedded fonts
-      this.addEmbeddedFonts(fontomas.embedded_fonts);
-      return this;
     }
   });
 
