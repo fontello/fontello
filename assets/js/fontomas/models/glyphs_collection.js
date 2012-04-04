@@ -70,17 +70,22 @@
     },
 
 
-    remove: function (model, options) {
-      var unicode_code = model.get("unicode_code");
+    remove: function (models, options) {
+      _.each(models, function (model) {
+        var code = model.get("unicode_code");
 
-      if (!this.unicode_used[unicode_code]) {
-        fontomas.logger.error("models.glyphs_collection.remove: unicode_code" +
-                              " not found in unicode_used map");
-        return;
-      }
+        if (!this.unicode_used[code]) {
+          fontomas.logger.error(
+            "models.glyphs_collection.remove: code <" + code + "> " +
+            "not found in unicode_used map"
+          );
+          return;
+        }
 
-      freeCode(this, unicode_code);
-      Backbone.Collection.prototype.remove.call(this, model, options);
+        freeCode(this, code);
+      }, this);
+
+      Backbone.Collection.prototype.remove.call(this, models, options);
     },
 
 
