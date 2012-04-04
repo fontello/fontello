@@ -1,8 +1,8 @@
-.fm-embedded-0 .fm-icon { font-family: 'Entypo'; }
-.fm-embedded-1 .fm-icon { font-family: 'FontAwesomeRegular'; }
-.fm-embedded-2 .fm-icon { font-family: 'IconicFill'; }
-.fm-embedded-3 .fm-icon { font-family: 'IconicStroke'; }
-.fm-embedded-4 .fm-icon { font-family: 'WebSymbols-Regular'; }
+.fm-embedded-0 { font-family: 'Entypo'; }
+.fm-embedded-1 { font-family: 'FontAwesomeRegular'; }
+.fm-embedded-2 { font-family: 'IconicFill'; }
+.fm-embedded-3 { font-family: 'IconicStroke'; }
+.fm-embedded-4 { font-family: 'WebSymbols-Regular'; }
 
 @font-face {
   font-family: 'Entypo';
