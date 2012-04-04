@@ -6,16 +6,25 @@
 
   fontomas.models.result_font = Backbone.Model.extend({
     defaults: {
-      glyph_count:  0
+      glyphs_count:  0
     },
 
 
     initialize: function () {
-      this.glyphs = new fontomas.models.glyphs_collection;
+      this.glyphs = new fontomas.models.glyphs_collection();
 
       this.glyphs.on("add remove", function (){
-        this.set("glyph_count", this.glyphs.length);
+        this.set("glyphs_count", this.glyphs.length);
       }, this);
+    },
+
+
+    removeGlyphsByFont: function (font_id) {
+      var glyphs = this.glyphs.filter(function (glyph) {
+        return font_id === glyph.get('source_glyph').font_id;
+      });
+
+      this.glyphs.remove(glyphs);
     },
 
 

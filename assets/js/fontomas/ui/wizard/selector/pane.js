@@ -69,6 +69,7 @@
         model:      font,
         glyph_size: this.glyph_size
       });
+
       view.on("toggleGlyph",        this.onToggleGlyph,       this);
       view.on("closeEmbeddedFont",  this.onCloseEmbeddedFont, this);
       view.on("closeFont",          this.onCloseFont,         this);
@@ -170,7 +171,7 @@
 
 
     onCloseFont: function (font_id) {
-      this.resultfontview.removeGlyphsByFont(font_id);
+      this.trigger('font-close', font_id);
 
       var found_font = _.find(this.myfiles, function (f) {
         return f.font_id === font_id;

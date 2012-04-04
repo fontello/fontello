@@ -16,18 +16,24 @@
 
     result_font = new fontomas.models.result_font();
 
-    result_view = new fontomas.ui.wizard.result.pane({model: result_font});
-    steps_view  = new fontomas.ui.wizard.steps();
+    result_view   = new fontomas.ui.wizard.result.pane({model: result_font});
+    selector_view = new fontomas.ui.wizard.selector.pane({resultfontview: result_view});
+    steps_view    = new fontomas.ui.wizard.steps();
 
-    result_font.on('change:glyph_count', function (model, count) {
+
+    // update glypsh count on wizard steps tab
+    result_font.on('change:glyphs_count', function (model, count) {
       steps_view.setGlyphsCount(count);
-    }, this);
+    });
+
+    // handle font close
+    selector_view.on('font-close', function (font_id) {
+      result_font.removeGlyphsByFont(font_id);
+    });
+
 
     // KLUDGE: this will be removed soon
-    // Init & render application interface
-    (new fontomas.ui.wizard.selector.pane({
-      resultfontview: result_view
-    })).render();
+    selector_view.render();
 
     // show selector tab after load complete
     steps_view.activate('#selector');

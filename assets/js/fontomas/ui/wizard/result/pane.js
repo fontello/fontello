@@ -37,7 +37,9 @@
         glyph_size: this.glyph_size
       });
 
+      glyph.on('destroy', function () { view.remove(); });
       view.on("remove", this.onRemoveGlyph, this);
+
       this.glyphviews.push(view);
       this.$el.append(view.el);
     },
@@ -45,15 +47,6 @@
 
     onRemoveGlyph: function (view) {
       this.glyphviews = _.without(this.glyphviews, view);
-    },
-
-
-    removeGlyphsByFont: function (font_id) {
-      _.each(this.glyphviews, function (view) {
-        if (view.model.get("source_glyph").font_id === font_id) {
-          view.model.destroy();
-        }
-      });
     },
 
 
