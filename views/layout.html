@@ -38,17 +38,19 @@
     <div class="container">
 
       <ul class="nav nav-pills page-header span12" id="wizard-steps">
-        <li><a data-toggle="tab" href="#selector">1. Select Icons</a></li>
-        <li><a class="disabled" data-toggle="tab" href="#result">2. Rearrange <small>(<span id="selected-glyphs-count">0</span>)</small></a></li>
+        <li><a data-toggle="tab" href="#selector">1. Select</a></li>
+        <li><a data-toggle="tab" href="#preview">2. Preview</a></li>
+        <li><a class="disabled" data-toggle="tab" href="#result">3. Download <small>(<span id="selected-glyphs-count">0</span>)</small></a></li>
+        <li><a data-toggle="tab" href="#donate">4. Donate :)</a></li>
       </ul>
 
       <div class="tab-content" id="myTabContent">
-        <!-- tab0 -->
+        <!-- tab0 `Loading`-->
         <div id="loading" class="tab-pane fade active in">
             Loading...
         </div>
 
-        <!-- tab1 -->
+        <!-- tab1 `Select`-->
         <div id="selector" class="tab-pane fade">
 
           <form class="" id="fm-font-toolbar">
@@ -80,7 +82,12 @@
           </ul>
         </div>
 
-        <!-- tab2 -->
+        <!-- tab2 `Preview` -->
+        <div id="preview" class="tab-pane fade">
+          Coming soon...
+        </div>
+
+        <!-- tab3 `Download` -->
         <div id="result" class="tab-pane fade">
           <form>
             <div class="btn-toolbar">
@@ -92,6 +99,14 @@
           <div id="result-font">
           </div>
         </div>
+
+        <!-- tab4 `Donate` -->
+        <div id="donate" class="tab-pane fade">
+          <p>We don't need money. But we encourage you to help <a href="http://www.freetype.org/ttfautohint/" target="_blank">ttfautohint</a> project. It's really significant!</p>
+          <p>Also, we'd like to create `fontello` collection, where designers could share icons under
+          CC licence. I you wish to participate - <a href="mailto:vitaly@rcdesign.ru?subject=Fontello" target="_blank">contact</a> us.</p>
+        </div>
+
       </div> <!-- /tab-content -->
     </div> <!-- /container -->
 
