@@ -111,13 +111,30 @@ nodeca.hooks.init.after('init-complete', function (next) {
 
 // start application
 app.run(function (err) {
-  var server;
+  var server, host, port, attempt = 0;
 
   if (err) {
     console.error(err);
     process.exit(1);
   }
 
-  server = require('http').createServer(nodeca.runtime.fontomas_http);
-  server.listen(nodeca.config.listen.port, nodeca.config.listen.host);
+  host    = nodeca.config.listen.host || 'localhost';
+  port    = nodeca.config.listen.port || 3000;
+  server  = require('http').createServer(nodeca.runtime.fontomas_http);
+
+  server.on('error', function (err) {
+    if (err.code == 'EADDRINUSE') {
+      if (3 <= attempt) {
+        console.error("Maximum amount of attempts reached. Can't continue.");
+        process.exit(1);
+        return;
+      }
+
+      attempt += 1;
+      console.log('Address <' + host + ':' + port + '> in use, retrying... ');
+      setTimeout(function () { server.listen(port, host); }, 1000);
+    }
+  });
+
+  server.listen(port, host);
 });
