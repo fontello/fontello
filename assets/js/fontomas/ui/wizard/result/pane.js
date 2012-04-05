@@ -60,7 +60,7 @@
      *
      *  Download button click handler
      */
-    download: function (event) {
+    onDownload: function (event) {
       event.preventDefault();
       fontomas.util.notify_alert("Not yet implemented. Stay tuned.");
     }
