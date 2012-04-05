@@ -38,6 +38,7 @@
     },
 
 
+    // fired when hidden file input was changed (user selected files)
     onChangeLocalFiles: function (event) {
       event.preventDefault();
       this.trigger("change:local-files", event.target.files);
