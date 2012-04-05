@@ -34,25 +34,19 @@
 
     onChangeGlyphSize: function (event) {
       event.preventDefault();
-      this.trigger("changeGlyphSize", ~~$(event.target).data('glyph-size'));
+      this.trigger("change:glyph-size", ~~$(event.target).data('glyph-size'));
     },
 
 
     onChangeLocalFiles: function (event) {
       event.preventDefault();
-      this.trigger("fileUpload", event.target.files);
+      this.trigger("change:local-files", event.target.files);
     },
 
 
     onActivateEmbeddedFont: function (event) {
-      var id    = $(event.target).data("embedded_id"),
-          font  = fontomas.embedded_fonts[id];
-
       event.preventDefault();
-
-      if (font && !font.is_added) {
-        this.trigger("useEmbeddedFont", font);
-      }
+      this.trigger('click:embedded-font', ~~$(event.target).data("embedded_id"));
     },
 
 

@@ -24,9 +24,9 @@
 
       this.font_toolbar = new fontomas.ui.wizard.selector.toolbar();
 
-      this.font_toolbar.on("changeGlyphSize", this.onChangeGlyphSize, this);
-      this.font_toolbar.on("fileUpload",      this.onLoadFiles,       this);
-      this.font_toolbar.on("useEmbeddedFont", this.onUseEmbeddedFont, this);
+      this.font_toolbar.on("change:glyph-size",   this.onChangeGlyphSize,   this);
+      this.font_toolbar.on("change:local-files",  this.onLoadFiles,         this);
+      this.font_toolbar.on("click:embedded-font", this.onClickEmbeddedFont, this);
 
       this.fonts = new Backbone.Collection();
       this.fonts.on("add", this.onAddFont, this);
@@ -75,8 +75,12 @@
     },
 
 
-    onUseEmbeddedFont: function (font) {
-      this.addEmbeddedFonts([font]);
+    onClickEmbeddedFont: function (font_id) {
+      var font = fontomas.embedded_fonts[font_id];
+
+      if (font && !font.is_added) {
+        this.addEmbeddedFonts([font]);
+      }
     },
 
 
