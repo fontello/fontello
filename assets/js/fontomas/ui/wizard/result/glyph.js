@@ -1,4 +1,4 @@
-/*global fontomas, _, Backbone*/
+/*global fontomas, _, $, Backbone*/
 
 ;(function () {
   "use strict";
@@ -6,11 +6,11 @@
 
   fontomas.ui.wizard.result.glyph = Backbone.View.extend({
     tagName:    "div",
-    className:  "fm-result-glyph",
+    className:  "result-glyph",
 
     events:     {
-      "click .top":     "editTop",
-      "click .bottom":  "editBottom"
+      "click .top":     "onClickTop",
+      "click .bottom":  "onClickBottom"
     },
 
 
@@ -24,7 +24,7 @@
     },
 
 
-    editTop: function () {
+    onClickTop: function (event) {
       var self  = this,
           val   = fontomas.util.fixedFromCharCode(
                   self.model.get("unicode_code"));
@@ -52,7 +52,7 @@
     },
 
 
-    editBottom: function () {
+    onClickBottom: function (event) {
       var self  = this,
           val   = this.model.get("unicode_code").toString(16).toUpperCase();
 
@@ -92,7 +92,7 @@
       this.$el.html(html);
 
       matched = this.model.get("unicode_code") === source_glyph.unicode_code;
-      this.$el.toggleClass("fm-mapping-matched", matched);
+      this.$el.toggleClass("mapping-matched", matched);
 
       return this;
     },

@@ -156,7 +156,7 @@ iframe.twitter-share-button {
 
 /* Rearrange */
 
-.fm-result-glyph {
+.result-glyph {
   float: left;
   width: 64px;
   margin: 0 10px 10px 0;
@@ -167,14 +167,14 @@ iframe.twitter-share-button {
   border-radius: 6px;
 }
 
-.fm-result-glyph .top {
+.result-glyph .top {
   text-align: center;
   height: 20px;
   line-height: 20px;
   font-size: 14px;
 }
 
-.fm-result-glyph .center {
+.result-glyph .center {
   height: 64px;
   line-height: 64px;
   text-align: center;
@@ -182,52 +182,52 @@ iframe.twitter-share-button {
   color: #444;
 }
 
-.fm-result-glyph .bottom {
+.result-glyph .bottom {
   text-align:center;
   height: 20px;
   line-height: 20px;
   font-size: 10px;
 }
 
-.glyph-size-24 .fm-result-glyph .center {
+.glyph-size-24 .result-glyph .center {
   font-size: 24px;
 }
 
-.glyph-size-16 .fm-result-glyph .center {
+.glyph-size-16 .result-glyph .center {
   font-size: 16px;
 }
 
-.fm-result-glyph .top input {
+.result-glyph .top input {
   margin: 0px;
   padding: 0px;
   width: 50%;
 }
 
-.fm-result-glyph .bottom input {
+.result-glyph .bottom input {
   margin: 0px;
   padding: 0px;
   width: 100%;
 }
 
-.fm-result-glyph.editing-top .top,
-.fm-result-glyph .top.edit {
+.result-glyph.editing-top .top,
+.result-glyph .top.edit {
   display: none;
 }
 
-.fm-result-glyph.editing-top .top.edit {
+.result-glyph.editing-top .top.edit {
   display: block;
 }
 
-.fm-result-glyph.editing-bottom .bottom,
-.fm-result-glyph .bottom.edit {
+.result-glyph.editing-bottom .bottom,
+.result-glyph .bottom.edit {
   display: none;
 }
 
-.fm-result-glyph.editing-bottom .bottom.edit {
+.result-glyph.editing-bottom .bottom.edit {
   display: block;
 }
 
-.fm-result-glyph.fm-mapping-matched {
+.result-glyph.mapping-matched {
   border-color: #444;
   background-color: #444;
 }
