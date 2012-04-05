@@ -103,7 +103,7 @@
       // KLUDGE: TO BE REFACTORED
       _.find(fontomas.embedded_fonts, function (f, id) {
         if (id === font.get('embedded_id')) {
-          font.is_added = false;
+          f.is_added = false;
           this.font_toolbar.renderEmbededFontsSelector();
         }
       }, this);
