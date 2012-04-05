@@ -16,22 +16,12 @@
     },
 
 
-    // RPOPERTIES //////////////////////////////////////////////////////////////
-
-
-    glyph_size: _.first(fontomas.config.preview_glyph_sizes),
-
-
-    // METHODS /////////////////////////////////////////////////////////////////
-
-
     /**
      *  new ui.wizard.result.pane()
      *
      *  View constructor.
      */
     initialize: function () {
-      this.$el.addClass("glyph-size-" + this.glyph_size);
       this.model.glyphs.on('add', this.addGlyph, this);
     },
 
@@ -46,11 +36,7 @@
      *  - [[ui.wizard.result.glyph]]
      */
     addGlyph: function (glyph) {
-      var view = new fontomas.ui.wizard.result.glyph({
-        model:      glyph,
-        glyph_size: this.glyph_size
-      });
-
+      var view = new fontomas.ui.wizard.result.glyph({model: glyph});
       this.$el.append(view.el);
     },
 
