@@ -82,7 +82,7 @@
     _getFreeCode: function () {
       var code = fontomas.config.code_autoguess_range[0];
 
-      while (code < fontomas.config.code_autoguess_range[1]) {
+      while (code <= fontomas.config.code_autoguess_range[1]) {
         if (!this.used_codes[code]) {
           // got unused code
           return code;
