@@ -59,22 +59,15 @@
 
     remove: function () {
       this.$el.remove();
-      this.trigger("remove", this.model.id);
+      this.trigger("remove", this.model);
     },
 
 
     onClickClose: function (event) {
       event.preventDefault();
-
-      if (this.model.get("is_embedded")) {
-        var embedded_id = this.model.get("embedded_id");
-        fontomas.embedded_fonts[embedded_id].is_added = false;
-        this.trigger("closeEmbeddedFont");
-      }
-
-      this.trigger("closeFont", this.model.id);
       this.model.destroy();
     },
+
 
     onClickGlyph: function (event) {
       var $target   = $(event.currentTarget),

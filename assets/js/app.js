@@ -38,8 +38,8 @@
     });
 
     // handle font close
-    selector.on('font-close', function (font_id) {
-      result_font.removeGlyphsByFont(font_id);
+    selector.on('remove:font', function (font) {
+      result_font.removeGlyphsByFont(font.id);
     });
 
 

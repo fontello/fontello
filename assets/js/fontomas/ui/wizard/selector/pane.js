@@ -8,7 +8,6 @@
 
 
   fontomas.ui.wizard.selector.pane = Backbone.View.extend({
-    myfiles:        [],
     next_font_id:   1,
     fonts:          null,
     glyph_size:     _.last(config.preview_glyph_sizes),
@@ -41,35 +40,36 @@
 
 
     loadFiles: function (files) {
-      var self = this;
-
-      _.each(files, function (f) {
-        var fileinfo, reader = new FileReader();
-
-        fileinfo = {
-          id:             this.myfiles.length,
-          filename:       f.name,
-          filesize:       f.size,
-          filetype:       f.type,
-          fontname:       "unknown",
-          is_loaded:      false,
-          is_ok:          false,
-          is_added:       false,
-          is_dup:         false,
-          error_msg:      "",
-          content:        null,
-          font_id:        null,
-          embedded_id:    null
-        };
-
-        this.myfiles.push(fileinfo);
-
-        reader.onload = function (event) {
-          fontomas.util.notify_alert("Sorry, but parsing the fonts is temporary disabled.");
-        };
-
-        reader.readAsBinaryString(f);
-      }, this);
+      fontomas.util.notify_alert("Sorry, user-fonts are not supported yet.");
+      //var self = this;
+      //
+      //_.each(files, function (f) {
+      //  var fileinfo, reader = new FileReader();
+      //
+      //  fileinfo = {
+      //    id:             this.myfiles.length,
+      //    filename:       f.name,
+      //    filesize:       f.size,
+      //    filetype:       f.type,
+      //    fontname:       "unknown",
+      //    is_loaded:      false,
+      //    is_ok:          false,
+      //    is_added:       false,
+      //    is_dup:         false,
+      //    error_msg:      "",
+      //    content:        null,
+      //    font_id:        null,
+      //    embedded_id:    null
+      //  };
+      //
+      //  this.myfiles.push(fileinfo);
+      //
+      //  reader.onload = function (event) {
+      //    fontomas.util.notify_alert("Sorry, but parsing the fonts is temporary disabled.");
+      //  };
+      //
+      //  reader.readAsBinaryString(f);
+      //}, this);
     },
 
 
@@ -89,18 +89,26 @@
         glyph_size: this.glyph_size
       });
 
-      view.on("toggleGlyph",        this.onToggleGlyph,       this);
-      view.on("closeEmbeddedFont",  this.onCloseEmbeddedFont, this);
-      view.on("closeFont",          this.onCloseFont,         this);
-      view.on("remove",             this.onRemoveFont,        this);
+      view.on("toggleGlyph",        this.onToggleGlyph, this);
+      view.on("remove",             this.removeFont,    this);
 
       this.fontviews[font.id] = view;
       $("#selector-fonts").append(view.render().el);
     },
 
 
-    onRemoveFont: function (id) {
-      delete this.fontviews[id];
+    removeFont: function (font) {
+      delete this.fontviews[font.id];
+
+      // KLUDGE: TO BE REFACTORED
+      _.find(fontomas.embedded_fonts, function (f, id) {
+        if (id === font.get('embedded_id')) {
+          font.is_added = false;
+          this.font_toolbar.renderEmbededFontsSelector();
+        }
+      }, this);
+
+      this.trigger('remove:font', font);
     },
 
 
@@ -127,25 +135,6 @@
 
     onToggleGlyph: function (data) {
       this.trigger('glyph-click', data);
-    },
-
-
-    onCloseEmbeddedFont: function () {
-      this.font_toolbar.renderEmbededFontsSelector();
-    },
-
-
-    onCloseFont: function (font_id) {
-      this.trigger('font-close', font_id);
-
-      var found_font = _.find(this.myfiles, function (f) {
-        return f.font_id === font_id;
-      }, this);
-
-      if (found_font) {
-        found_font.font_id = null;
-        found_font.is_added = false;
-      }
     }
   });
 
