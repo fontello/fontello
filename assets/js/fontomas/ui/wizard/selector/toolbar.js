@@ -37,14 +37,17 @@
     fileBrowse: function (event) {
       event.preventDefault();
 
-      if (!!window.FileReader) {
-        $('#fm-file').click();
-      } else {
+      if (!window.FileReader) {
         fontomas.util.notify_alert(
           "File upload is not supported by your" +
           " browser, use embedded fonts instead"
         );
+        return;
       }
+
+      //$('#fm-file').click();
+      fontomas.util.notify_alert('File upload is temporarily disabled');
+      return;
     },
 
 
