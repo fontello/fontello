@@ -93,7 +93,7 @@
       view.on("remove",             this.onRemoveFont,        this);
 
       this.fontviews[font.id] = view;
-      $("#fm-font-list").append(view.render().el);
+      $("#selector-fonts").append(view.render().el);
     },
 
 
