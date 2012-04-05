@@ -180,6 +180,7 @@ iframe.twitter-share-button {
   text-align: center;
   background-color: #fff;
   color: #444;
+  font-size: 24px;
 }
 
 .result-glyph .bottom {
@@ -187,14 +188,6 @@ iframe.twitter-share-button {
   height: 20px;
   line-height: 20px;
   font-size: 10px;
-}
-
-.glyph-size-24 .result-glyph .center {
-  font-size: 24px;
-}
-
-.glyph-size-16 .result-glyph .center {
-  font-size: 16px;
 }
 
 .result-glyph .top input {
