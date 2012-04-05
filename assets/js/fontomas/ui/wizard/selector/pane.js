@@ -117,7 +117,7 @@
         f.is_added = true;
       }, this);
 
-      this.font_toolbar.renderUseEmbedded();
+      this.font_toolbar.renderEmbededFontsSelector();
     },
 
 
@@ -127,7 +127,7 @@
 
 
     onCloseEmbeddedFont: function () {
-      this.font_toolbar.renderUseEmbedded();
+      this.font_toolbar.renderEmbededFontsSelector();
     },
 
 

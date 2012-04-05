@@ -108,7 +108,7 @@ iframe.twitter-share-button {
 
 /* Select Icons */
 
-#fm-file {
+#local-files {
   /* chrome/opera doesn't trigger events on "display: none;" elements */
   /* so, do some tricks to safely hide element */
 

@@ -7,51 +7,39 @@
   var config = fontomas.config;
 
 
+  function tranferEvents($a, $b, events) {
+    $a.on(events.join(' '), $b.trigger);
+  }
+
+
   fontomas.ui.wizard.selector.toolbar = Backbone.View.extend({
     el: "#selector-toolbar",
 
     events: {
-      "click .glyph-size-button":     "changeGlyphSize",
-      "click #fm-file-browse-button": "fileBrowse",
-      "change #fm-file":              "fileUpload",
-      "click .fm-font-name":          "onActivateEmbeddedFont"
+      "click .fm-font-name":     "onActivateEmbeddedFont",
+      "click [data-glyph-size]": "onChangeGlyphSize",
+      "change #local-files":     "onChangeLocalFiles"
     },
 
 
     initialize: function () {
       _.bindAll(this);
 
+      // transfer click event to hidden files input
+      this.$('#browse-local-files').on('click', $('#local-files').trigger);
+
       this.render();
     },
 
 
-    changeGlyphSize: function (event) {
-      var size = parseInt($(event.target).val(), 10) ||
-                 _.last(config.preview_glyph_sizes);
-
+    onChangeGlyphSize: function (event) {
       event.preventDefault();
-      this.trigger("changeGlyphSize", size);
+      this.trigger("changeGlyphSize", ~~$(event.target).data('glyph-size'));
     },
 
 
-    fileBrowse: function (event) {
+    onChangeLocalFiles: function (event) {
       event.preventDefault();
-
-      if (!window.FileReader) {
-        fontomas.util.notify_alert(
-          "File upload is not supported by your" +
-          " browser, use embedded fonts instead"
-        );
-        return;
-      }
-
-      //$('#fm-file').click();
-      fontomas.util.notify_alert('File upload is temporarily disabled');
-      return;
-    },
-
-
-    fileUpload: function (event) {
       this.trigger("fileUpload", event.target.files);
     },
 
@@ -69,29 +57,27 @@
 
 
     render: function () {
-      var tpl_vars = {buttons: config.preview_glyph_sizes};
-
       // render icon size buttons
       $('#glyph-size')
-        .html(fontomas.render('icon-size', tpl_vars))
+        .html(fontomas.render('icon-size', {
+          buttons: config.preview_glyph_sizes
+        }))
         .find("button:last")
           .addClass("active");
 
-      this.renderUseEmbedded();
+      this.renderEmbededFontsSelector();
 
       return this;
     },
 
 
-    renderUseEmbedded: function () {
-      var tpl_vars = {
-        options: _.map(fontomas.embedded_fonts, function (item) {
-          return {text: item.fontname, disabled: item.is_added};
-        })
-      };
-
+    renderEmbededFontsSelector: function () {
       $('#fm-use-embedded')
-        .html(fontomas.render('use-embedded', tpl_vars))
+        .html(fontomas.render('use-embedded', {
+          options: _.map(fontomas.embedded_fonts, function (item) {
+            return {text: item.fontname, disabled: item.is_added};
+          })
+        }))
         .find('.fm-font-name')
           .each(function (id) {
             $(this).data("embedded_id", id);

@@ -54,14 +54,14 @@
         <div id="selector" class="tab-pane fade">
 
           <form class="" id="selector-toolbar">
-            <input id="fm-file" type="file" multiple="multiple"/>
+            <input id="local-files" type="file" multiple="multiple"/>
             <div class="btn-toolbar">
 
               <div id="glyph-size" class="btn-group tooltip-enabled" data-toggle="buttons-radio" title="Change symbols preview size" data-placement="bottom">
               </div>
 
               <div class="btn-group tooltip-enabled" title="SVG / Cufon" data-placement="bottom">
-                <button id="fm-file-browse-button" class="btn btn-small" type="submit">Load Font</button>
+                <button id="browse-local-files" class="btn btn-small" type="submit">Load Font</button>
               </div>
 
               <div class="btn-group">
@@ -141,7 +141,7 @@
     ================================================== -->
     <script data-tpl-id="icon-size" type="text/x-fm-template">
       {{#buttons}}
-        <button class="btn btn-small glyph-size-button" value="{{this}}">{{this}}px</button>
+        <button class="btn btn-small" data-glyph-size="{{this}}">{{this}}px</button>
       {{/buttons}}
     </script>
     <script data-tpl-id="use-embedded" type="text/x-fm-template">
