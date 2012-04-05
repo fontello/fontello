@@ -22,9 +22,7 @@
     initialize: function (attributes) {
       _.bindAll(this);
 
-      this.font_toolbar = new fontomas.ui.wizard.selector.toolbar({
-        el: $("#fm-font-toolbar")[0]
-      });
+      this.font_toolbar = new fontomas.ui.wizard.selector.toolbar();
 
       this.font_toolbar.on("changeGlyphSize", this.onChangeGlyphSize, this);
       this.font_toolbar.on("fileUpload",      this.onFileUpload,      this);
