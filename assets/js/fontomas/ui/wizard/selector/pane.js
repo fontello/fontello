@@ -25,16 +25,11 @@
       this.font_toolbar = new fontomas.ui.wizard.selector.toolbar();
 
       this.font_toolbar.on("changeGlyphSize", this.onChangeGlyphSize, this);
-      this.font_toolbar.on("fileUpload",      this.onFileUpload,      this);
+      this.font_toolbar.on("fileUpload",      this.onLoadFiles,       this);
       this.font_toolbar.on("useEmbeddedFont", this.onUseEmbeddedFont, this);
 
       this.fonts = new Backbone.Collection();
-      this.fonts.on("add",   this.onAddFont, this);
-      this.fonts.on("reset", function () {
-        this.fonts.each(this.onAddFont);
-      }, this);
-
-      this.on("fileLoaded", this.onLoadFont, this);
+      this.fonts.on("add", this.onAddFont, this);
     },
 
 
@@ -47,8 +42,36 @@
     },
 
 
-    onFileUpload: function (files) {
-      this.doUploadFonts(files);
+    onLoadFiles: function (files) {
+      var self = this;
+
+      _.each(files, function (f) {
+        var fileinfo, reader = new FileReader();
+
+        fileinfo = {
+          id:             this.myfiles.length,
+          filename:       f.name,
+          filesize:       f.size,
+          filetype:       f.type,
+          fontname:       "unknown",
+          is_loaded:      false,
+          is_ok:          false,
+          is_added:       false,
+          is_dup:         false,
+          error_msg:      "",
+          content:        null,
+          font_id:        null,
+          embedded_id:    null
+        };
+
+        this.myfiles.push(fileinfo);
+
+        reader.onload = function (event) {
+          fontomas.util.notify_alert("Sorry, but parsing the fonts is temporary disabled.");
+        };
+
+        reader.readAsBinaryString(f);
+      }, this);
     },
 
 
@@ -76,48 +99,6 @@
 
     onRemoveFont: function (id) {
       delete this.fontviews[id];
-    },
-
-    doUploadFonts: function (files) {
-      var self = this;
-
-      _.each(files, function (f) {
-        var fileinfo, reader = new FileReader();
-
-        fileinfo = {
-          id:             this.myfiles.length,
-          filename:       f.name,
-          filesize:       f.size,
-          filetype:       f.type,
-          fontname:       "unknown",
-          is_loaded:      false,
-          is_ok:          false,
-          is_added:       false,
-          is_dup:         false,
-          error_msg:      "",
-          content:        null,
-          font_id:        null,
-          embedded_id:    null
-        };
-
-        this.myfiles.push(fileinfo);
-
-        reader.onload = function (event) {
-          // FIXME self?
-          self.trigger("fileLoaded", event, fileinfo);
-        };
-
-        reader.readAsBinaryString(f);
-      }, this);
-    },
-
-
-    onLoadFont: function (event, fileinfo) {
-      // font parsing is disabled
-      fontomas.util.notify_alert(
-        "Sorry, but parsing the fonts is temporary disabled."
-      );
-      return;
     },
 
 
