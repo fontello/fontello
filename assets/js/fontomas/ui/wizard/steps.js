@@ -23,7 +23,7 @@
     },
 
     setGlyphsCount: function (count) {
-      this.$result_tab[!count ? 'addClass' : 'removeClass']('disabled');
+      this.$result_tab.toggleClass('disabled', !count);
       this.$glyphs_count.text(+count);
     }
   });
