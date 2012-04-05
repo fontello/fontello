@@ -25,10 +25,16 @@
     initialize: function () {
       _.bindAll(this);
 
+      // render icon size buttons
+      $('#glyph-size')
+        .html(fontomas.render('icon-size', {
+          buttons: config.preview_glyph_sizes
+        }))
+        .find("button:last")
+          .addClass("active");
+
       // transfer click event to hidden files input
       this.$('#browse-local-files').on('click', $('#local-files').trigger);
-
-      this.render();
     },
 
 
@@ -48,21 +54,6 @@
     onActivateEmbeddedFont: function (event) {
       event.preventDefault();
       this.trigger('click:embedded-font', ~~$(event.target).data("embedded_id"));
-    },
-
-
-    render: function () {
-      // render icon size buttons
-      $('#glyph-size')
-        .html(fontomas.render('icon-size', {
-          buttons: config.preview_glyph_sizes
-        }))
-        .find("button:last")
-          .addClass("active");
-
-      this.renderEmbededFontsSelector();
-
-      return this;
     },
 
 
