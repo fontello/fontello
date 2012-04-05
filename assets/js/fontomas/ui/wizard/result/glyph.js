@@ -17,8 +17,8 @@
     initialize: function () {
       _.bindAll(this);
 
-      this.model.on("change",   this.render, this);
-      this.model.on("destroy",  this.remove, this);
+      this.model.on("change",  this.render, this);
+      this.model.on("destroy", this.remove, this);
 
       this.render();
     },

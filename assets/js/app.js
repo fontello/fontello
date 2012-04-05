@@ -26,7 +26,6 @@
       steps.setGlyphsCount(count);
     });
 
-
     selector.on('glyph-click', function (data) {
       var glyph = result_font.getGlyph(data.font_id, data.glyph_id);
 

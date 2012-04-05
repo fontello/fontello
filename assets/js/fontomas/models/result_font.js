@@ -13,12 +13,8 @@
     initialize: function () {
       this.glyphs = new fontomas.models.glyphs_collection();
 
-      this.glyphs.on('add remove', function (){
+      this.glyphs.on('add remove', function () {
         this.set('glyphs_count', this.glyphs.length);
-      }, this);
-
-      this.glyphs.on('add', function (glyph) {
-        this.trigger('glyph-added', glyph);
       }, this);
     },
 
@@ -32,7 +28,9 @@
 
 
     addGlyph: function (data) {
-      this.glyphs.add(new fontomas.models.glyph({source_glyph: data}));
+      var model = new fontomas.models.glyph({source_glyph: data});
+      this.trigger('add-glyph', model);
+      this.glyphs.add(model);
     },
 
 

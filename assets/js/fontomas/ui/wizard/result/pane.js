@@ -9,13 +9,14 @@
     // Use existing DOM element instead of generating a new one.
     el: '#result > #result-font',
 
+
     // Deleagate some event handlers for some child elements.
     events: {
       'click #result-download': 'onDownload'
     },
 
 
-    // RPOPERRTIES /////////////////////////////////////////////////////////////
+    // RPOPERTIES //////////////////////////////////////////////////////////////
 
 
     glyph_size: _.first(fontomas.config.preview_glyph_sizes),
@@ -31,7 +32,7 @@
      */
     initialize: function () {
       this.$el.addClass("glyph-size-" + this.glyph_size);
-      this.model.on('glyph-added', this.addGlyph);
+      this.model.on('add-glyph', this.addGlyph, this);
     },
 
 
@@ -50,7 +51,6 @@
         glyph_size: this.glyph_size
       });
 
-      glyph.on('destroy', function () { view.remove(); });
       this.$el.append(view.el);
     },
 
