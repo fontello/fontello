@@ -8,7 +8,7 @@
 
 
   fontomas.ui.wizard.selector.toolbar = Backbone.View.extend({
-    el: "#fm-font-toolbar",
+    el: "#selector-toolbar",
 
     events: {
       "click .glyph-size-button":     "changeGlyphSize",
