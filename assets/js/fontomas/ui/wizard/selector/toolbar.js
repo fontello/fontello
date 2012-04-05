@@ -14,7 +14,7 @@
       "click .glyph-size-button":     "changeGlyphSize",
       "click #fm-file-browse-button": "fileBrowse",
       "change #fm-file":              "fileUpload",
-      "click .fm-font-name":          "useEmbedded"
+      "click .fm-font-name":          "onActivateEmbeddedFont"
     },
 
 
@@ -56,7 +56,7 @@
     },
 
 
-    useEmbedded: function (event) {
+    onActivateEmbeddedFont: function (event) {
       var id    = $(event.target).data("embedded_id"),
           font  = fontomas.embedded_fonts[id];
 
