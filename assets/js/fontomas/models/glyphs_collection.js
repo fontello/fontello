@@ -4,29 +4,6 @@
   "use strict";
 
 
-  var takeCode = function (obj, code) {
-    obj.unicode_used[code] = true;
-
-    if (32 <= code && code <= 126) {
-      obj.unicode_free = _.without(obj.unicode_free, code);
-      // _.without() seems to maintain the sort order
-      //obj.unicode_free = _.sortBy(obj.unicode_free, function (v) { return v; });
-    }
-
-    return code;
-  };
-
-
-  var freeCode = function (obj, code) {
-    delete obj.unicode_used[code];
-
-    if (32 <= code && code <= 126) {
-      obj.unicode_free.unshift(code);
-      obj.unicode_free = _.sortBy(obj.unicode_free, function (v) { return v; });
-    }
-  };
-
-
   var findGlyphByUnicode = function (collection, unicode_code) {
     return _.find(collection, function (item) {
       return item.get("unicode_code") === unicode_code;
@@ -35,15 +12,17 @@
 
 
   fontomas.models.glyphs_collection = Backbone.Collection.extend({
-    unicode_used: {},
-    unicode_free: [],
+    used_codes: {},
+    free_codes: [],
 
 
     initialize: function () {
       var code;
 
+      // initial (and reasonable) list of free codes.
+      // list is exapandible on demand. see:  _take/_free
       for (code = 32; code <= 126; code++) {
-        this.unicode_free.push(code);
+        this.free_codes.push(code);
       }
     },
 
@@ -52,15 +31,15 @@
       var unicode_code,
           orig_unicode = glyph.get("source_glyph").unicode_code;
 
-      if (!this.unicode_used[orig_unicode]) {
-        unicode_code = takeCode(this, orig_unicode);
+      if (!this.used_codes[orig_unicode]) {
+        unicode_code = this._take(orig_unicode);
       } else {
-        if (!this.unicode_free.length) {
+        if (!this.free_codes.length) {
           fontomas.logger.debug("models.glyphs_collection.add: no room to add glyph");
           return;
         }
 
-        unicode_code = takeCode(this, this.unicode_free[0]);
+        unicode_code = this._take(this.free_codes[0]);
       }
 
       glyph.set("unicode_code", unicode_code);
@@ -69,15 +48,15 @@
       glyph.on('remove', function (glyph) {
         var code = glyph.get("unicode_code");
 
-        if (!this.unicode_used[code]) {
+        if (!this.used_codes[code]) {
           fontomas.logger.error(
             "models.glyphs_collection.remove: code <" + code + "> " +
-            "not found in unicode_used map"
+            "not found in used_codes map"
           );
           return;
         }
 
-        freeCode(this, code);
+        this._free(code);
       }, this);
 
       Backbone.Collection.prototype.add.call(this, glyph, options);
@@ -105,12 +84,26 @@
         found_glyph = findGlyphByUnicode(this.models, old_code);
 
         // if old_code is not used any more, we should free it
-        if (this.unicode_used[old_code] && !found_glyph) {
-          freeCode(this, old_code);
+        if (this.used_codes[old_code] && !found_glyph) {
+          this._free(old_code);
         }
 
-        takeCode(this, new_code);
+        this._take(new_code);
       }
+    },
+
+
+    _take: function (code) {
+      this.used_codes[code] = true;
+      this.free_codes = _.without(this.free_codes, code);
+      return code;
+    },
+
+
+    _free: function (code) {
+      this.used_codes[code] = false;
+      this.free_codes.unshift(code);
+      this.free_codes = _.sortBy(this.free_codes, function (v) { return v; });
     }
 
   });
