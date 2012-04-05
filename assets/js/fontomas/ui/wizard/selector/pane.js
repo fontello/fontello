@@ -134,7 +134,7 @@
 
 
     onToggleGlyph: function (data) {
-      this.trigger('glyph-click', data);
+      this.trigger('click:glyph', data);
     }
   });
 
