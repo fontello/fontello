@@ -108,15 +108,17 @@
 
     addEmbeddedFonts: function (embedded_fonts) {
       _.each(embedded_fonts, function (f) {
-        var font = {
+        var font = new fontomas.models.source_font({
+          id:           this.next_font_id++,
           fontname:     f.fontname,
           glyphs:       _.map(f.glyphs, function (i) {
                           return {unicode_code: i};
                         }),
           is_embedded:  true,
           embedded_id:  f.id
-        };
-        this.createFont(font);
+        });
+
+        this.fonts.add(font);
 
         f.is_added = true;
       }, this);
@@ -146,16 +148,6 @@
         found_font.font_id = null;
         found_font.is_added = false;
       }
-    },
-
-
-    createFont: function (attrs) {
-      //if (!attrs.id) // FIXME
-      attrs.id = this.next_font_id++;
-      var font = new fontomas.models.source_font(attrs);
-
-      this.fonts.create(font);
-      return attrs.id;
     }
   });
 
