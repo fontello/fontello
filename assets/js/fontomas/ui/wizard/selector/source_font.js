@@ -1,4 +1,4 @@
-/*global fontomas, _, Backbone, Raphael*/
+/*global fontomas, _, $, Backbone, Raphael*/
 
 ;(function () {
   "use strict";
@@ -10,8 +10,8 @@
     glyph_size: null,
 
     events: {
-      "click .fm-font-close": "close",
-      "click .glyph":         "toggleGlyph"
+      "click .font-close":  "onClickClose",
+      "click .glyph":       "onClickGlyph"
     },
 
 
@@ -63,7 +63,7 @@
     },
 
 
-    close: function (event) {
+    onClickClose: function (event) {
       event.preventDefault();
 
       if (this.model.get("is_embedded")) {
@@ -76,8 +76,7 @@
       this.model.destroy();
     },
 
-
-    toggleGlyph: function (event) {
+    onClickGlyph: function (event) {
       var $target   = $(event.currentTarget),
           glyph_id  = parseInt($target.attr("data-glyph-id"), 10),
           data      = this.model.getGlyph(glyph_id),
