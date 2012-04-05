@@ -5,17 +5,8 @@
 
 
   fontomas.models.result_font = Backbone.Model.extend({
-    defaults: {
-      glyphs_count: 0
-    },
-
-
     initialize: function () {
       this.glyphs = new fontomas.models.glyphs_collection();
-
-      this.glyphs.on('add remove', function () {
-        this.set('glyphs_count', this.glyphs.length);
-      }, this);
     },
 
 
@@ -35,11 +26,14 @@
 
 
     removeGlyphsByFont: function (font_id) {
-      var glyphs = this.glyphs.filter(function (glyph) {
+      // get array of matching glyphs and only then destroy every single one.
+      // we can't destroy glyphs while iterating through `glyphs` collection:
+      // as it' length will be changed and it will cause problems
+      this.glyphs.chain().filter(function (glyph) {
         return font_id === glyph.get('source_glyph').font_id;
+      }).each(function (glyph) {
+        glyph.destroy();
       });
-
-      this.glyphs.remove(glyphs);
     },
 
 

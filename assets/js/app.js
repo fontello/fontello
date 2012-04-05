@@ -22,8 +22,8 @@
 
 
     // update glypsh count on wizard steps tab
-    result_font.on('change:glyphs_count', function (model, count) {
-      steps.setGlyphsCount(count);
+    result_font.glyphs.on('add remove', function () {
+      steps.setGlyphsCount(result_font.glyphs.length);
     });
 
     selector.on('glyph-click', function (data) {

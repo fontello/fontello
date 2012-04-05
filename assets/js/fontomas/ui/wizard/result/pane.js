@@ -32,7 +32,7 @@
      */
     initialize: function () {
       this.$el.addClass("glyph-size-" + this.glyph_size);
-      this.model.on('add-glyph', this.addGlyph, this);
+      this.model.glyphs.on('add', this.addGlyph, this);
     },
 
 
