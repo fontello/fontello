@@ -1,0 +1,12 @@
+[submodule "src/iconic-uni.font"]
+	path = src/iconic-uni.font
+	url = git://github.com/fontello/iconic-uni.font.git
+[submodule "src/awesome-uni.font"]
+	path = src/awesome-uni.font
+	url = git://github.com/fontello/awesome-uni.font.git
+[submodule "src/websymbols-uni.font"]
+	path = src/websymbols-uni.font
+	url = git://github.com/fontello/websymbols-uni.font.git
+[submodule "src/entypo"]
+	path = src/entypo
+	url = git://github.com/fontello/entypo.git
