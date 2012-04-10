@@ -6,7 +6,7 @@
   fontomas.embedded_fonts = [
     {
       "fontname": "fontawesome",
-      "descent": 250,
+      "descent": 410,
       "copyright": "None",
       "familyname": "Font Awesome",
       "weight": "Regular",
@@ -574,7 +574,7 @@
           "file": "glyph140"
         }
       ],
-      "ascent": 750,
+      "ascent": 1638,
       "id": 0
     },
     {
