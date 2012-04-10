@@ -52,7 +52,8 @@ if __name__ == '__main__':
 
         fontname = config.get('font', {}).get('fontname', None)
         if not fontname:
-            error('Error: cannot find "font: fontname" in file %s\n' % config_path)
+            error('Error: cannot find "font: fontname" in file %s\n' %
+                config_path)
             sys.exit(1)
 
         css_class.append(tpl_class.format(i=i, fontname=fontname))

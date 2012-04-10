@@ -21,7 +21,7 @@ def get_dups(seq):
     return dups
 
 
-def serialize_font(i, config_path, fonts_dir):
+def get_font(i, config_path, fonts_dir):
     try:
         config = yaml.load(open(config_path, 'r'))
     except IOError as (errno, strerror):
@@ -46,7 +46,7 @@ def serialize_font(i, config_path, fonts_dir):
     # validate config: 'code:' codes
     dups = get_dups([g['code'] for g in glyphs])
     if len(dups) > 0:
-        error("Error in file %s: glyph codes aren't unique:\n" % config)
+        error("Error in file %s: glyph codes aren't unique:\n" % config_path)
         for k in sorted(dups.keys()):
             error("Duplicate 'code:' 0x%04x\n" % k)
         sys.exit(1)
@@ -68,28 +68,14 @@ def serialize_font(i, config_path, fonts_dir):
             error("Warning: no such glyph in the source font (code=0x%04x)\n" %
                 g['code'])
             continue
-        glyphs_list.append(json.dumps(g))
+        glyphs_list.append(g)
 
-    fontname = config.get('font', {}).get('fontname', '')
-    fullname = config.get('font', {}).get('fullname', fontname)
-
-    js = """
-    {{
-      id: {i},
-      fontname: '{fontname}',
-      fullname: '{fullname}',
-      glyphs: [
-        {glyphs}
-      ]
-    }}""".format(
-        i=i,
-        fontname=fontname,
-        fullname=fullname,
-        glyphs=',\n        '.join(glyphs_list))
-    return js
+    font = config.get('font', {})
+    font.update({'id': i, 'glyphs': glyphs_list})
+    return font
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Font copier tool')
+    parser = argparse.ArgumentParser(description='Embedded fonts builder')
     parser.add_argument('config', nargs='+', type=str,
         help='Config example: src/font1/config.yml src/font2/config.yml')
     parser.add_argument('-i', '--fonts_dir', type=str, required=True,
@@ -104,16 +90,16 @@ if __name__ == '__main__':
   "use strict";
 
 
-  fontomas.embedded_fonts = ["""
+  fontomas.embedded_fonts = """
 
     fonts = []
     for i, config in enumerate(args.config):
-        fonts.append(serialize_font(i, config, args.fonts_dir))
+        fonts.append(get_font(i, config, args.fonts_dir))
 
-    js += ",".join(fonts)
+    json_string = json.dumps(fonts, indent=2, separators=(',', ': '))
+    js += json_string.replace('\n', '\n  ') # fixing indent
 
-    js += """
-  ];
+    js += """;
 
 }());
 """
