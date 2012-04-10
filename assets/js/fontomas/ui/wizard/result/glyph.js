@@ -84,14 +84,14 @@
           source_glyph = this.model.get("source_glyph"),
           html = fontomas.render('resultfont-glyph-item', {
             top:  this.model.get("unicode_code") === 32 ? "space" : char,
-            char: fontomas.util.fixedFromCharCode(source_glyph.unicode_code),
+            char: fontomas.util.fixedFromCharCode(source_glyph.code),
             bottom:     this.toUnicode(this.model.get("unicode_code")),
             css_class:  "fm-embedded-" + source_glyph.embedded_id
           });
 
       this.$el.html(html);
 
-      matched = this.model.get("unicode_code") === source_glyph.unicode_code;
+      matched = this.model.get("unicode_code") === source_glyph.code;
       this.$el.toggleClass("mapping-matched", matched);
 
       return this;

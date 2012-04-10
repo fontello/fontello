@@ -28,7 +28,7 @@
     render: function () {
       this.$el.html(fontomas.render('font-item', {
         id:         this.model.id,
-        fontname:   this.model.get("fontname"),
+        fontname:   this.model.get("fullname"),
         css_class:  "fm-embedded-" + this.model.get("embedded_id")
       }));
 
@@ -38,7 +38,7 @@
       _.each(this.model.get("glyphs"), function (item, glyph_id) {
         var glyph = fontomas.render('glyph-item', {
           glyph_id: glyph_id,
-          unicode:  fontomas.util.fixedFromCharCode(item.unicode_code)
+          unicode:  fontomas.util.fixedFromCharCode(item.code)
         });
 
         this.$(".fm-glyph-group").append(glyph);

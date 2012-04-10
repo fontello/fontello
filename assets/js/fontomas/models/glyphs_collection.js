@@ -10,7 +10,7 @@
 
     add: function (models, options) {
       _.each(_.isArray(models) ? models.slice() : [models], function (model) {
-        var code = model.get('source_glyph').unicode_code;
+        var code = model.get('source_glyph').code;
 
         // code is already taken
         if (this.used_codes[code]) {

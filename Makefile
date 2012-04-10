@@ -4,13 +4,23 @@ TMP_PATH    := /tmp/${PROJECT}-$(shell date +%s)
 REMOTE_NAME ?= origin
 REMOTE_REPO ?= $(shell git config --get remote.${REMOTE_NAME}.url)
 
+FONT_COPY        = bin/font_copy_to_assets.py
+BUILD_JS         = bin/build_embedded_fonts_js.py
+BUILD_CSS        = bin/build_embedded_fonts_css.py
+
+FONTS_PATH       = assets/fonts
+FONTS            = awesome-uni.font entypo iconic-uni.font websymbols-uni.font
+SRCFONT_SUBDIRS  = $(addprefix src/,$(FONTS))
+SRCFONT_CONFIGS  = $(addsuffix /config.yml,$(SRCFONT_SUBDIRS))
+EMBEDDEDJS_PATH  = assets/js/fontomas/embedded_fonts.js
+EMBEDDEDCSS_PATH = assets/css/fontface-embedded.css
 
 help:
-	echo "make help			- Print this help"
+	echo "make help		- Print this help"
 	echo "make app-start		- Run Fontomas server"
 	echo "make rebuild-fonts	- Rebuild embedded fonts"
 	echo "make dev-setup		- Install deps for development"
-	echo "make lint			- Lint sources with JSHint"
+	echo "make lint		- Lint sources with JSHint"
 	echo "make gh-pages		- Build and push the project into gh-pages branch"
 
 
@@ -19,8 +29,14 @@ app-start:
 
 
 rebuild-fonts:
-	bin/build_embedded_fonts.py
-
+	for subdir in $(SRCFONT_SUBDIRS); do \
+		$(FONT_COPY) -c "$${subdir}/config.yml" -o "$(FONTS_PATH)"; \
+	done;
+	$(BUILD_JS) -i $(FONTS_PATH) \
+		-o $(EMBEDDEDJS_PATH) \
+		$(SRCFONT_CONFIGS)
+	$(BUILD_CSS) -o $(EMBEDDEDCSS_PATH) \
+		$(SRCFONT_CONFIGS)
 
 dev-setup:
 	rm -rf node_modules

@@ -61,7 +61,7 @@
       $('#fm-use-embedded')
         .html(fontomas.render('use-embedded', {
           options: _.map(fontomas.embedded_fonts, function (item) {
-            return {text: item.fontname, disabled: item.is_added};
+            return {text: item.fullname, disabled: item.is_added};
           })
         }))
         .find('.fm-font-name')

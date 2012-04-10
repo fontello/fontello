@@ -117,13 +117,11 @@
         var font = new fontomas.models.source_font({
           id:           this.next_font_id++,
           fontname:     f.fontname,
-          glyphs:       _.map(f.glyphs, function (i) {
-                          return {unicode_code: i};
-                        }),
+          fullname:     f.fullname,
+          glyphs:       f.glyphs,
           is_embedded:  true,
           embedded_id:  f.id
         });
-
         this.fonts.add(font);
 
         f.is_added = true;
