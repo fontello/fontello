@@ -82,10 +82,15 @@ if __name__ == '__main__':
         help='Input fonts directory')
     parser.add_argument('-o', '--dst_file',  type=str, required=True,
         help='Output js file')
+    parser.add_argument('-j', '--json', action='store_true', required=False,
+        help='Output file in json format instead of js')
 
     args = parser.parse_args()
 
-    js = """/*global fontomas*/
+    js = ''
+
+    if not args.json:
+        js = """/*global fontomas*/
 ;(function () {
   "use strict";
 
@@ -97,9 +102,14 @@ if __name__ == '__main__':
         fonts.append(get_font(i, config, args.fonts_dir))
 
     json_string = json.dumps(fonts, indent=2, separators=(',', ': '))
-    js += json_string.replace('\n', '\n  ') # fixing indent
 
-    js += """;
+    if not args.json:
+        json_string = json_string.replace('\n', '\n  ') # fixing indent
+
+    js += json_string
+
+    if not args.json:
+        js += """;
 
 }());
 """
