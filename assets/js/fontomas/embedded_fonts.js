@@ -2711,11 +2711,11 @@
     },
     {
       "fontname": "websymbols-regular",
-      "descent": 199,
+      "descent": 410,
       "copyright": "Copyright (c) 2011 by Just Be Nice studio. All rights reserved.",
       "familyname": "Web Symbols",
       "weight": "Book",
-      "version": "1.000;PS 001.001;hotconv 1.0.56",
+      "version": "1.0",
       "fullname": "Web Symbols Regular",
       "glyphs": [
         {
@@ -3076,7 +3076,7 @@
           "file": "glyph92"
         }
       ],
-      "ascent": 801,
+      "ascent": 1638,
       "id": 3
     }
   ];
