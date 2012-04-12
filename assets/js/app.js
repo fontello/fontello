@@ -1,4 +1,4 @@
-/*global fontomas, _, $, Modernizr*/
+/*global nodeca, _, $, Modernizr*/
 
 ;(function () {
   "use strict";
@@ -9,16 +9,16 @@
 
     // check browser's capabilities
     if (!Modernizr.fontface) {
-      fontomas.logger.error("bad browser");
+      nodeca.client.fontomas.logger.error("bad browser");
       $('#err-bad-browser').modal({backdrop: 'static', keyboard: false});
       return;
     }
 
-    result_font   = new fontomas.models.result_font();
+    result_font   = new nodeca.client.fontomas.models.result_font();
 
-    steps     = new fontomas.ui.wizard.steps();
-    selector  = new fontomas.ui.wizard.selector.pane();
-    result    = new fontomas.ui.wizard.result.pane({model: result_font});
+    steps     = new nodeca.client.fontomas.ui.wizard.steps();
+    selector  = new nodeca.client.fontomas.ui.wizard.selector.pane();
+    result    = new nodeca.client.fontomas.ui.wizard.result.pane({model: result_font});
 
 
     // update glypsh count on wizard steps tab
@@ -44,9 +44,9 @@
 
 
     // KLUDGE: should be replaced with selector.addFont() in future
-    selector.addEmbeddedFonts(fontomas.embedded_fonts);
-
-    // show selector tab after load complete
+    selector.addEmbeddedFonts(nodeca.client.fontomas.embedded_fonts);
+    //
+    // show selector tab after  load complete
     steps.activate('#selector');
 
     // Attach tooltip handler to matching elements

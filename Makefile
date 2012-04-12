@@ -12,7 +12,7 @@ FONTS_PATH        = assets/fonts
 FONTS             = awesome-uni.font entypo iconic-uni.font websymbols-uni.font
 SRCFONT_SUBDIRS   = $(addprefix src/,$(FONTS))
 SRCFONT_CONFIGS   = $(addsuffix /config.yml,$(SRCFONT_SUBDIRS))
-EMBEDDEDJS_PATH   = assets/js/fontomas/embedded_fonts.js
+EMBEDDEDJS_PATH   = client/fontomas/embedded_fonts.js
 EMBEDDEDJSON_PATH = assets/js/fontomas/embedded_fonts.json
 EMBEDDEDCSS_PATH  = assets/css/fontface-embedded.css
 
@@ -36,7 +36,7 @@ rebuild-fonts:
 	$(BUILD_JS) -i $(FONTS_PATH) \
 		-o $(EMBEDDEDJS_PATH) \
 		$(SRCFONT_CONFIGS)
-	$(BUILD_JS) -i $(FONTS_PATH) \
+	#$(BUILD_JS) -i $(FONTS_PATH) \
 		-o $(EMBEDDEDJSON_PATH) \
 		--json \
 		$(SRCFONT_CONFIGS)

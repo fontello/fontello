@@ -1,4 +1,4 @@
-[
+module.exports = [
   {
     "fontname": "fontawesome",
     "descent": 410,
@@ -3074,4 +3074,4 @@
     "ascent": 1638,
     "id": 3
   }
-]
+];

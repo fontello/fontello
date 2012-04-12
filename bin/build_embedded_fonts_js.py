@@ -90,12 +90,7 @@ if __name__ == '__main__':
     js = ''
 
     if not args.json:
-        js = """/*global fontomas*/
-;(function () {
-  "use strict";
-
-
-  fontomas.embedded_fonts = """
+        js = 'module.exports = ['
 
     fonts = []
     for i, config in enumerate(args.config):
@@ -109,10 +104,7 @@ if __name__ == '__main__':
     js += json_string
 
     if not args.json:
-        js += """;
-
-}());
-"""
+        js += '];'
     try:
         open(args.dst_file, 'w').write(js)
     except:
