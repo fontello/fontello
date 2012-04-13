@@ -35,15 +35,15 @@ iframe.twitter-share-button {
   padding-right: 25px;
 }
 
-#wizard-steps li a small {
+#wizard-steps a small {
   font-size: 18px;
   line-height: 1;
   color: #999999;
   font-weight: normal;
 }
 
-.nav-pills .active > a small {
-  color: #fff;
+#wizard-steps .active a small {
+  color: #fff !important;
 }
 
 #selector h2 {
