@@ -90,7 +90,7 @@ if __name__ == '__main__':
     js = ''
 
     if not args.json:
-        js = 'module.exports = ['
+        js = 'module.exports = '
 
     fonts = []
     for i, config in enumerate(args.config):
@@ -102,13 +102,10 @@ if __name__ == '__main__':
 
     json_string = json.dumps(fonts, indent=2, separators=(',', ': '))
 
-    if not args.json:
-        json_string = json_string.replace('\n', '\n  ') # fixing indent
-
     js += json_string
 
     if not args.json:
-        js += '];'
+        js += ';'
     try:
         open(args.dst_file, 'w').write(js)
     except:
