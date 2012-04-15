@@ -5,7 +5,7 @@
 
 
   $(function () {
-    var steps, result, selector, result_font;
+    var steps, selector, preview, result, result_font;
 
     // check browser's capabilities
     if (!Modernizr.fontface) {
@@ -18,6 +18,7 @@
 
     steps     = new nodeca.client.fontomas.ui.wizard.steps();
     selector  = new nodeca.client.fontomas.ui.wizard.selector.pane();
+    preview   = new nodeca.client.fontomas.ui.wizard.preview.pane({model: result_font});
     result    = new nodeca.client.fontomas.ui.wizard.result.pane({model: result_font});
 
 
