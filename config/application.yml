@@ -4,4 +4,4 @@ locales:
 listen:
   host: localhost
   port: 3000
-  path: /
+  mount: //fontello.local:3000/
