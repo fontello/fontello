@@ -14,10 +14,13 @@ module.exports = Backbone.View.extend({
 
 
   render: function () {
-    var src = this.model.get('source_glyph'), css = 'icon-' + src.css;
+    var src = this.model.get('source_glyph'),
+        css = 'icon-' + src.css,
+        fnt = 'fm-embedded-' + src.embedded_id,
+        chr = nodeca.client.fontomas.util.fixedFromCharCode(src.code);
 
-    this.$el.addClass('fm-embedded-' + src.embedded_id);
-    this.$el.empty().append('<div><i class="' + css + '"></i> ' + css + '</div>');
+    this.$el.empty();
+    this.$el.append('<span class="' + fnt + '">' + chr + '</span> ' + css);
 
     return this;
   },
