@@ -1,20 +1,10 @@
-PROJECT     :=  $(notdir ${PWD})
-TMP_PATH    := /tmp/${PROJECT}-$(shell date +%s)
+PROJECT       :=  $(notdir ${PWD})
+TMP_PATH      := /tmp/${PROJECT}-$(shell date +%s)
 
-REMOTE_NAME ?= origin
-REMOTE_REPO ?= $(shell git config --get remote.${REMOTE_NAME}.url)
+REMOTE_NAME   ?= origin
+REMOTE_REPO   ?= $(shell git config --get remote.${REMOTE_NAME}.url)
 
-FONT_COPY        = bin/font_copy_to_assets.py
-BUILD_JS         = bin/build_embedded_fonts_js.py
-BUILD_CSS        = bin/build_embedded_fonts_css.py
-
-FONTS_PATH        = assets/fonts
-FONTS             = awesome-uni.font entypo iconic-uni.font websymbols-uni.font
-SRCFONT_SUBDIRS   = $(addprefix src/,$(FONTS))
-SRCFONT_CONFIGS   = $(addsuffix /config.yml,$(SRCFONT_SUBDIRS))
-EMBEDDEDJS_PATH   = client/fontomas/embedded_fonts.js
-EMBEDDEDJSON_PATH = assets/js/fontomas/embedded_fonts.json
-EMBEDDEDCSS_PATH  = assets/css/fontface-embedded.css
+FONT_CONFIGS   = $(foreach dir,$(wildcard src/*),${dir}/config.yml)
 
 
 help:
@@ -27,18 +17,11 @@ help:
 
 
 rebuild-fonts:
-	for subdir in $(SRCFONT_SUBDIRS); do \
-		$(FONT_COPY) -c "$${subdir}/config.yml" -o "$(FONTS_PATH)"; \
-	done;
-	$(BUILD_JS) -i $(FONTS_PATH) \
-		-o $(EMBEDDEDJS_PATH) \
-		$(SRCFONT_CONFIGS)
-	#$(BUILD_JS) -i $(FONTS_PATH) \
-		-o $(EMBEDDEDJSON_PATH) \
-		--json \
-		$(SRCFONT_CONFIGS)
-	$(BUILD_CSS) -o $(EMBEDDEDCSS_PATH) \
-		$(SRCFONT_CONFIGS)
+	for config in $(FONT_CONFIGS); do \
+		bin/font_copy_to_assets.py -c "$$config" -o assets/fonts; \
+		done
+	bin/build_embedded_fonts_js.py -i assets/fonts -o client/fontomas/embedded_fonts.js $(FONT_CONFIGS)
+	bin/build_embedded_fonts_css.py -o assets/css/fontface-embedded.css $(FONT_CONFIGS)
 
 dev-setup:
 	rm -rf node_modules
@@ -74,5 +57,5 @@ todo:
 	grep 'TODO' -n -r ./lib 2>/dev/null || test true
 
 
-.PHONY: help app-start rebuild-fonts dev-setup lint gh-pages todo
-.SILENT: help app-start rebuild-fonts dev-setup lint todo
+.PHONY: help rebuild-fonts dev-setup lint gh-pages todo
+.SILENT: help rebuild-fonts dev-setup lint todo
