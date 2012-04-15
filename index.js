@@ -109,10 +109,10 @@ nodeca.hooks.init.after('init-complete', function (next) {
 
 // start application
 app.run(function (err) {
-  var server, host, port;
+  var server, host, port, err_handler;
 
   if (err) {
-    console.error(err);
+    nodeca.logger.error(err);
     process.exit(1);
   }
 
@@ -120,33 +120,39 @@ app.run(function (err) {
   port    = nodeca.config.listen.port || 3000;
   server  = require('http').createServer(nodeca.runtime.fontomas_http);
 
-  server.on('error', function (err) {
+  err_handler = function (err) {
     var err_prefix = "Can't bind to <" + host + "> with port <" + port + ">: ";
 
     if ('EADDRINUSE' === err.code) {
-      console.error(err_prefix + 'Address in use...');
+      nodeca.logger.error(err_prefix + 'Address in use...');
       process.exit(1);
       return;
     }
 
     if ('EADDRNOTAVAIL' === err.code) {
       // system has no such ip address
-      console.error(err_prefix + 'Address is not available...');
+      nodeca.logger.error(err_prefix + 'Address is not available...');
       process.exit(1);
       return;
     }
 
     if ('ENOENT' === err.code) {
       // failed resolve hostname to ip address
-      console.error(err_prefix + "Failed to resolve IP address...");
+      nodeca.logger.error(err_prefix + "Failed to resolve IP address...");
       process.exit(1);
       return;
     }
 
     // unexpected / unknown error
-    console.error(err_prefix + err);
+    nodeca.logger.error(err_prefix + err);
     process.exit(1);
-  });
+  };
 
-  server.listen(port, host);
+  server.on('error', err_handler);
+
+  server.listen(port, host, function () {
+    server.removeListener('error', err_handler);
+    // TODO: replace with logger.info
+    nodeca.logger.warn('HTTP is running on <' + host + ':' + port + '>');
+  });
 });
