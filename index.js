@@ -123,7 +123,8 @@ app.run(function (err) {
   server  = require('http').createServer(nodeca.runtime.fontomas_http);
 
   server.on('error', function (err) {
-    if (err.code == 'EADDRINUSE') {
+    if ('EADDRINUSE' === err.code) {
+      // port is already in use
       if (3 <= attempt) {
         console.error("Maximum amount of attempts reached. Can't continue.");
         process.exit(1);
@@ -133,14 +134,25 @@ app.run(function (err) {
       attempt += 1;
       console.warn('Address <' + host + ':' + port + '> in use, retrying... ');
       setTimeout(function () { server.listen(port, host); }, 1000);
+      return;
     }
 
     if ('EADDRNOTAVAIL' === err.code) {
-      console.error('Address <' + host + ':' + port + '> not available...');
-    } else {
-      console.error(err.stack || err.toString());
+      // system has no such ip address
+      console.error("Address <" + host + ':' + port + '> is not available...');
+      process.exit(1);
+      return;
     }
 
+    if ('ENOENT' === err.code) {
+      // failed resolve hostname to ip address
+      console.error("Can't resolve address of <" + host + ":" + port + ">...");
+      process.exit(1);
+      return;
+    }
+
+    // unknown / unexpected error
+    console.error(err.stack || err.toString());
     process.exit(1);
   });
 
