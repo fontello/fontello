@@ -131,9 +131,17 @@ app.run(function (err) {
       }
 
       attempt += 1;
-      console.log('Address <' + host + ':' + port + '> in use, retrying... ');
+      console.warn('Address <' + host + ':' + port + '> in use, retrying... ');
       setTimeout(function () { server.listen(port, host); }, 1000);
     }
+
+    if ('EADDRNOTAVAIL' === err.code) {
+      console.error('Address <' + host + ':' + port + '> not available...');
+    } else {
+      console.error(err.stack || err.toString());
+    }
+
+    process.exit(1);
   });
 
   server.listen(port, host);
