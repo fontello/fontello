@@ -145,8 +145,8 @@ app.run(function (err) {
       return;
     }
 
-    // unknown / unexpected error
-    console.error(err.stack || err.toString());
+    // unexpected / unknown error
+    console.error(err_prefix + err);
     process.exit(1);
   });
 
