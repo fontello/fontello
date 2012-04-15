@@ -16,17 +16,14 @@ EMBEDDEDJS_PATH   = client/fontomas/embedded_fonts.js
 EMBEDDEDJSON_PATH = assets/js/fontomas/embedded_fonts.json
 EMBEDDEDCSS_PATH  = assets/css/fontface-embedded.css
 
+
 help:
-	echo "make help		- Print this help"
-	echo "make app-start		- Run Fontomas server"
-	echo "make rebuild-fonts	- Rebuild embedded fonts"
-	echo "make dev-setup		- Install deps for development"
-	echo "make lint		- Lint sources with JSHint"
-	echo "make gh-pages		- Build and push the project into gh-pages branch"
-
-
-app-start:
-	node ./index.js
+	echo "make help           - Print this help"
+	echo "make app-start      - Run Fontomas server"
+	echo "make rebuild-fonts  - Rebuild embedded fonts"
+	echo "make dev-setup      - Install deps for development"
+	echo "make lint           - Lint sources with JSHint"
+	echo "make gh-pages       - Build and push the project into gh-pages branch"
 
 
 rebuild-fonts:
