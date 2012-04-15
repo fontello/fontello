@@ -98,7 +98,6 @@ if __name__ == '__main__':
         for glyph in font['glyphs']:
           if not glyph.has_key('css'):
             glyph['css'] = glyph['file']
-          del glyph['file']
         fonts.append(font)
 
     json_string = json.dumps(fonts, indent=2, separators=(',', ': '))
