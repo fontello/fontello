@@ -2,5 +2,5 @@ locales:
   enabled: [en]
   default: en
 listen:
-  host: 0.0.0.0
+  host: localhost
   port: 3000
