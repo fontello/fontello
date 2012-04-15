@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // stdlib
 var Fs = require('fs');
 
