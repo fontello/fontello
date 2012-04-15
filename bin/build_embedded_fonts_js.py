@@ -94,7 +94,12 @@ if __name__ == '__main__':
 
     fonts = []
     for i, config in enumerate(args.config):
-        fonts.append(get_font(i, config, args.fonts_dir))
+        font = get_font(i, config, args.fonts_dir)
+        for glyph in font['glyphs']:
+          if not glyph.has_key('css'):
+            glyph['css'] = glyph['file']
+          del glyph['file']
+        fonts.append(font)
 
     json_string = json.dumps(fonts, indent=2, separators=(',', ': '))
 
