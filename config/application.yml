@@ -2,6 +2,5 @@ locales:
   enabled: [en]
   default: en
 listen:
-  host: localhost
+  host: 0.0.0.0
   port: 3000
-  mount: //fontello.local:3000/

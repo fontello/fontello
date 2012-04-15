@@ -1,5 +1,4 @@
 ^production:
   listen:
-    host: localhost
+    host: fontello.com
     port: 80
-    path: //fontello.com/

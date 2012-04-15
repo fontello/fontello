@@ -111,7 +111,7 @@ nodeca.hooks.init.after('init-complete', function (next) {
 
 // start application
 app.run(function (err) {
-  var server, host, port, attempt = 0;
+  var server, host, port;
 
   if (err) {
     console.error(err);
@@ -123,30 +123,24 @@ app.run(function (err) {
   server  = require('http').createServer(nodeca.runtime.fontomas_http);
 
   server.on('error', function (err) {
-    if ('EADDRINUSE' === err.code) {
-      // port is already in use
-      if (3 <= attempt) {
-        console.error("Maximum amount of attempts reached. Can't continue.");
-        process.exit(1);
-        return;
-      }
+    var err_prefix = "Can't bind to <" + host + "> with port <" + port + ">: ";
 
-      attempt += 1;
-      console.warn('Address <' + host + ':' + port + '> in use, retrying... ');
-      setTimeout(function () { server.listen(port, host); }, 1000);
+    if ('EADDRINUSE' === err.code) {
+      console.error(err_prefix + 'Address in use...');
+      process.exit(1);
       return;
     }
 
     if ('EADDRNOTAVAIL' === err.code) {
       // system has no such ip address
-      console.error("Address <" + host + ':' + port + '> is not available...');
+      console.error(err_prefix + 'Address is not available...');
       process.exit(1);
       return;
     }
 
     if ('ENOENT' === err.code) {
       // failed resolve hostname to ip address
-      console.error("Can't resolve address of <" + host + ":" + port + ">...");
+      console.error(err_prefix + "Failed to resolve IP address...");
       process.exit(1);
       return;
     }
