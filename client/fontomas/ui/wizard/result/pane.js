@@ -1,6 +1,6 @@
 module.exports = Backbone.View.extend({
   // Use existing DOM element instead of generating a new one.
-  el: '#result > #result-font',
+  el: '#result',
 
 
   // Deleagate some event handlers for some child elements.
@@ -15,6 +15,8 @@ module.exports = Backbone.View.extend({
     *  View constructor.
     */
   initialize: function () {
+    this.$glyphs = this.$('#result-font');
+
     this.model.glyphs.on('add', this.addGlyph, this);
   },
 
@@ -30,7 +32,7 @@ module.exports = Backbone.View.extend({
     */
   addGlyph: function (glyph) {
     var view = new nodeca.client.fontomas.ui.wizard.result.glyph({model: glyph});
-    this.$el.append(view.el);
+    this.$glyphs.append(view.el);
   },
 
 
