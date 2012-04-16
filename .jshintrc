@@ -7,7 +7,7 @@
   "forin"         : false,  // Tolerate `for in` loops without `hasOwnPrototype`.
   "immed"         : true,   // Require immediate invocations to be wrapped in parens e.g. `( function(){}() );`
   "latedef"       : true,   // Prohibit hariable use before definition.
-  "newcap"        : false,  // Require capitalization of all constructor functions e.g. `new F()`.
+  "newcap"        : true,   // Require capitalization of all constructor functions e.g. `new F()`.
   "noarg"         : true,   // Prohibit use of `arguments.caller` and `arguments.callee`.
   "noempty"       : true,   // Prohibit use of empty blocks.
   "nonew"         : true,   // Prohibit use of constructors for side-effects.
@@ -46,7 +46,7 @@
 
   // Environments //////////////////////////////////////////////////////////////
 
-  "browser"       : true,   // Defines globals exposed by modern browsers
+  "browser"       : false,  // Defines globals exposed by modern browsers
   "couch"         : false,  // Defines globals exposed by CouchDB
   "devel"         : false,  // Allow developments statements e.g. `console.log();`.
   "dojo"          : false,  // Defines globals exposed by the Dojo Toolkit
