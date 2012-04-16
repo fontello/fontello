@@ -43,6 +43,6 @@ module.exports = Backbone.View.extend({
     */
   onDownload: function (event) {
     event.preventDefault();
-    nodeca.client.fontomas.util.notify_alert("Not yet implemented. Stay tuned.");
+    nodeca.client.fontomas.util.notify_alert("Coming soon... Stay tuned!");
   }
 });
