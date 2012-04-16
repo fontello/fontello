@@ -1,3 +1,7 @@
+/*global window, nodeca, jQuery, Handlebars, Backbone, $, _*/
+
+"use strict";
+
 module.exports = Backbone.View.extend({
   // Use existing DOM element instead of generating a new one.
   el: '#result',

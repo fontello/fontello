@@ -1,3 +1,7 @@
+/*global window, nodeca, jQuery, Handlebars, Backbone, $, _*/
+
+"use strict";
+
 module.exports = Backbone.Collection.extend({
   used_codes: {},
 

@@ -1,3 +1,7 @@
+/*global window, nodeca, jQuery, Handlebars, Backbone, $, _*/
+
+"use strict";
+
 // prevent the event from bubbling to ancestor elements
 function stopPropagation(event) {
   event.stopPropagation();

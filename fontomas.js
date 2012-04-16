@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 
+/*global nodeca*/
+
+"use strict";
+
 // stdlib
 var Fs = require('fs');
 

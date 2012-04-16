@@ -1,3 +1,7 @@
+/*global window, nodeca, jQuery, Handlebars, Backbone, $, _*/
+
+"use strict";
+
 module.exports = Backbone.Model.extend({
   // SEE: http://www.unicode.org/versions/Unicode6.0.0/ch02.pdf
   //

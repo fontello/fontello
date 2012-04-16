@@ -1,3 +1,7 @@
+/*global window, nodeca, jQuery, Handlebars, Backbone, $, _*/
+
+"use strict";
+
 // logger does nothing by default
 module.exports.assert =
 module.exports.error  =

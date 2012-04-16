@@ -1,3 +1,7 @@
+/*global window, nodeca, jQuery, Handlebars, Backbone, $, _*/
+
+"use strict";
+
 module.exports.notify_alert = function (text) {
   // FIXME: title is mandatory, so we've filled it with just a space
   $.gritter.add({

@@ -1,3 +1,7 @@
+/*global window, nodeca, jQuery, Handlebars, Backbone, $, _*/
+
+"use strict";
+
 module.exports = Backbone.View.extend({
   tagName:    "div",
   className:  "preview-glyph span2",

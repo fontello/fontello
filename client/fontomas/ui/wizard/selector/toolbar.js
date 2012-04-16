@@ -1,3 +1,7 @@
+/*global window, nodeca, jQuery, Handlebars, Backbone, $, _*/
+
+"use strict";
+
 function tranferEvents($a, $b, events) {
   $a.on(events.join(' '), $b.trigger);
 }
@@ -30,6 +34,7 @@ module.exports = Backbone.View.extend({
 
 
   onChangeGlyphSize: function (event) {
+    /*jshint bitwise:false*/
     event.preventDefault();
     this.trigger("change:glyph-size", ~~$(event.target).data('glyph-size'));
   },
@@ -43,6 +48,7 @@ module.exports = Backbone.View.extend({
 
 
   onActivateEmbeddedFont: function (event) {
+    /*jshint bitwise:false*/
     event.preventDefault();
     this.trigger('click:embedded-font', ~~$(event.target).data("embedded_id"));
   },

@@ -1,3 +1,7 @@
+/*global window, nodeca, jQuery, Handlebars, Backbone, $, _*/
+
+"use strict";
+
 module.exports = Backbone.Model.extend({
   initialize: function () {
     this.glyphs = new nodeca.client.fontomas.models.glyphs_collection();

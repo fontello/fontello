@@ -1,3 +1,7 @@
+/*global window, nodeca, jQuery, Handlebars, Backbone, $, _*/
+
+"use strict";
+
 var tpl_cache = {};
 
 module.exports = function (id, locals) {
