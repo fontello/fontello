@@ -28,6 +28,7 @@ rebuild-fonts:
 	bin/build_embedded_fonts_js.py -i assets/embedded_fonts -o client/fontomas/embedded_fonts.js $(FONT_CONFIGS)
 	bin/build_embedded_fonts_css.py -o assets/css/fontface-embedded.css $(FONT_CONFIGS)
 
+
 dev-setup:
 	rm -rf node_modules
 	npm install
@@ -40,6 +41,9 @@ lint:
 		exit 128 ; \
 		fi
 	jshint . --show-non-errors
+
+
+test: lint
 
 
 gh-pages:
