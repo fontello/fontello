@@ -4,7 +4,11 @@ TMP_PATH      := /tmp/${PROJECT}-$(shell date +%s)
 REMOTE_NAME   ?= origin
 REMOTE_REPO   ?= $(shell git config --get remote.${REMOTE_NAME}.url)
 
-FONT_CONFIGS   = $(foreach dir,$(wildcard src/*),${dir}/config.yml)
+FONTS         += entypo
+FONTS         += awesome-uni.font
+FONTS         += iconic-uni.font
+FONTS         += websymbols-uni.font
+FONT_CONFIGS   = $(foreach f,$(FONTS),src/${f}/config.yml)
 
 
 help:
@@ -17,10 +21,11 @@ help:
 
 
 rebuild-fonts:
+	mkdir -p assets/embedded_fonts
 	for config in $(FONT_CONFIGS); do \
-		bin/font_copy_to_assets.py -c "$$config" -o assets/fonts; \
+		bin/font_copy_to_assets.py -c "$$config" -o assets/embedded_fonts; \
 		done
-	bin/build_embedded_fonts_js.py -i assets/fonts -o client/fontomas/embedded_fonts.js $(FONT_CONFIGS)
+	bin/build_embedded_fonts_js.py -i assets/embedded_fonts -o client/fontomas/embedded_fonts.js $(FONT_CONFIGS)
 	bin/build_embedded_fonts_css.py -o assets/css/fontface-embedded.css $(FONT_CONFIGS)
 
 dev-setup:

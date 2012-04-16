@@ -1,18 +1,7 @@
-.fm-embedded-0 { font-family: 'fontawesome'; }
-.fm-embedded-1 { font-family: 'entypo'; }
+.fm-embedded-0 { font-family: 'entypo'; }
+.fm-embedded-1 { font-family: 'fontawesome'; }
 .fm-embedded-2 { font-family: 'iconic'; }
 .fm-embedded-3 { font-family: 'websymbols-regular'; }
-
-@font-face {
-  font-family: 'fontawesome';
-  src: url('/static/assets/fonts/fontawesome.eot');
-  src: url('/static/assets/fonts/fontawesome.eot?#iefix') format('embedded-opentype'),
-    url('/static/assets/fonts/fontawesome.woff') format('woff'),
-    url('/static/assets/fonts/fontawesome.ttf') format('truetype'),
-    url('/static/assets/fonts/fontawesome.svg#fontawesome') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
 
 @font-face {
   font-family: 'entypo';
@@ -21,6 +10,17 @@
     url('/static/assets/fonts/entypo.woff') format('woff'),
     url('/static/assets/fonts/entypo.ttf') format('truetype'),
     url('/static/assets/fonts/entypo.svg#entypo') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'fontawesome';
+  src: url('/static/assets/fonts/fontawesome.eot');
+  src: url('/static/assets/fonts/fontawesome.eot?#iefix') format('embedded-opentype'),
+    url('/static/assets/fonts/fontawesome.woff') format('woff'),
+    url('/static/assets/fonts/fontawesome.ttf') format('truetype'),
+    url('/static/assets/fonts/fontawesome.svg#fontawesome') format('svg');
   font-weight: normal;
   font-style: normal;
 }
