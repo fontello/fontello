@@ -23,7 +23,7 @@ if __name__ == '__main__':
     css_class    = []
     css_fontface = []
 
-    tpl_class    = ".fm-embedded-{i} {{ font-family: '{fontname}'; }}"
+    tpl_class    = ".embedded-{i} {{ font-family: '{fontname}'; }}"
     tpl_fontface = """@font-face {{
   font-family: '{fontname}';
   src: url('/static/assets/embedded_fonts/{fontname}.eot');

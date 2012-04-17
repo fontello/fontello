@@ -69,7 +69,7 @@
                   Use Embedded Font
                   <span class="caret">dfg</span>
                 </a>
-                <ul id="fm-use-embedded" class="dropdown-menu">
+                <ul id="use-embedded" class="dropdown-menu">
                 </ul>
               </div>
             </div>
@@ -148,25 +148,25 @@
     </script>
     <script data-tpl-id="use-embedded" type="text/x-template">
       {{#options}}
-        <li><a class="fm-font-name{{#disabled}} disabled{{/disabled}}" href="#">{{this.text}}</a></li>
+        <li><a class="font-name{{#disabled}} disabled{{/disabled}}" href="#">{{this.text}}</a></li>
       {{/options}}
     </script>
     <script data-tpl-id="font-item" type="text/x-template">
-      <h2><span class="fm-font-name">{{fontname}}</span>
-        <a class="fm-font-anchor" href="#font-{{id}}"></a>
+      <h2><span class="font-name">{{fontname}}</span>
+        <a class="font-anchor" href="#font-{{id}}"></a>
         <a class="font-close" href="#"><small>close</small></a>
       </h2>
-      <ul class="unstyled fm-glyph-group {{css_class}}">
+      <ul class="unstyled glyph-group {{css_class}}">
       </ul>
     </script>
     <script data-tpl-id="glyph-item" type="text/x-template">
       <li class="glyph" data-glyph-id="{{glyph_id}}">{{{unicode}}}</li>
     </script>
     <script data-tpl-id="preview:glyph" type="text/x-template">
-      <span class="{{font_id}}">{{chr}}</span> {{css}}
+      <span class="{{fnt}}">{{chr}}</span> {{css}}
     </script>
     <script data-tpl-id="resultfont-glyph-item" type="text/x-template">
-      <!--div class="fm-result-glyph"-->
+      <!--div class="result-glyph"-->
         <div class="top">{{{top}}}</div>
         <div class="top edit">
           <table>
