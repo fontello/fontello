@@ -1,4 +1,4 @@
 router:
   map:
-    app:
+    fontomas.index:
       "/": ~

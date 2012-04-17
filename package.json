@@ -23,7 +23,8 @@
   "dependencies"    : {
                         "nlib"        : "git://github.com/nodeca/nlib.git",
                         "static-lulz" : "git://github.com/nodeca/static-lulz.git",
-                        "connect"     : "git://github.com/senchalabs/connect.git"
+                        "connect"     : "git://github.com/senchalabs/connect.git",
+                        "socket.io"   : "0.9.5"
                       },
   "engines"         : { "node": ">= 0.6.0" }
 }
