@@ -17,7 +17,7 @@ module.exports = Backbone.View.extend({
     _.bindAll(this);
     this.glyph_size = this.options.glyph_size;
 
-    this.$el.attr("id", "font-" + this.model.id);
+    this.$el.attr("id", "fm-font-" + this.model.id);
     this.model.on("change",   this.render,  this);
     this.model.on("destroy",  this.remove,  this);
   },
@@ -27,10 +27,10 @@ module.exports = Backbone.View.extend({
     this.$el.html(nodeca.client.fontomas.render('font-item', {
       id:         this.model.id,
       fontname:   this.model.get("fullname"),
-      css_class:  "embedded-" + this.model.get("embedded_id")
+      css_class:  "fm-embedded-" + this.model.get("embedded_id")
     }));
 
-    this.$(".glyph-group")
+    this.$(".fm-glyph-group")
       .addClass("glyph-size-" + this.glyph_size);
 
     _.each(this.model.get("glyphs"), function (item, glyph_id) {
@@ -39,7 +39,7 @@ module.exports = Backbone.View.extend({
         unicode:  nodeca.client.fontomas.util.fixedFromCharCode(item.code)
       });
 
-      this.$(".glyph-group").append(glyph);
+      this.$(".fm-glyph-group").append(glyph);
     }, this);
 
     return this;
@@ -47,7 +47,7 @@ module.exports = Backbone.View.extend({
 
 
   changeGlyphSize: function (new_size) {
-    this.$(".glyph-group")
+    this.$(".fm-glyph-group")
       .removeClass("glyph-size-" + this.glyph_size)
       .addClass("glyph-size-" + new_size);
 

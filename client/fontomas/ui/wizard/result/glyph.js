@@ -30,16 +30,16 @@ module.exports = Backbone.View.extend({
     this.$el.addClass("editing-top");
     this.$(".top.edit input")
       .focus()
-      .off(".editing")
+      .off(".fm-editing")
       .val(val)
-      .on("blur.editing", function (event) {
+      .on("blur.fm-editing", function (event) {
         var code  = nodeca.client.fontomas.util.fixedCharCodeAt(
                     self.$(".top.edit input").val());
 
         self.model.set("unicode_code", code);
         self.$el.removeClass("editing-top");
       })
-      .on("keyup.editing", function (event) {
+      .on("keyup.fm-editing", function (event) {
         if (event.keyCode === 13) {
           $(event.target).blur();
         } else if (event.keyCode === 27) {
@@ -57,14 +57,14 @@ module.exports = Backbone.View.extend({
     this.$el.addClass("editing-bottom");
     this.$(".bottom.edit input")
       .focus()
-      .off(".editing")
+      .off(".fm-editing")
       .val(val)
-      .on("blur.editing", function (event) {
+      .on("blur.fm-editing", function (event) {
         var code = parseInt(self.$(".bottom.edit input").val(), 16);
         self.model.set("unicode_code", code);
         self.$el.removeClass("editing-bottom");
       })
-      .on("keyup.editing", function (event) {
+      .on("keyup.fm-editing", function (event) {
         if (event.keyCode === 13) {
           $(event.target).blur();
         } else if (event.keyCode === 27) {
@@ -84,7 +84,7 @@ module.exports = Backbone.View.extend({
           top:  this.model.get("unicode_code") === 32 ? "space" : char,
           char: nodeca.client.fontomas.util.fixedFromCharCode(source_glyph.code),
           bottom:     this.toUnicode(this.model.get("unicode_code")),
-          css_class:  "embedded-" + source_glyph.embedded_id
+          css_class:  "fm-embedded-" + source_glyph.embedded_id
         });
 
     this.$el.html(html);
