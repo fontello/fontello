@@ -1,0 +1,65 @@
+html
+  overflow-y scroll /* remove glitch on step 3, when scroller disappears */
+
+body
+  padding-top 170px /* 60px to make the container go all the way to the bottom of the topbar */
+
+
+p
+  font-size 16px
+  line-height 1.5em
+
+iframe.twitter-follow-button,
+iframe.twitter-share-button
+  margin-left 10px
+  margin-top 9px
+
+
+.page-header
+  border-bottom 2px solid #ddd
+
+.navbar-fixed-top
+  box-shadow 0 0 10px #444444
+
+.navbar .brand
+  padding 9px 20px 11px
+
+.dropdown-menu a.disabled,
+.dropdown-menu a.disabled:hover
+  /* FIXME */
+  opacity 0.3
+  cursor default
+
+.ui-notify
+  position fixed
+  width 350px
+  top 55px
+  right 10px
+
+.ui-notify-message-style
+  z-index 99999
+  position relative
+  overflow auto
+
+
+/* warning for disabled JS */
+.js  .jsnotice
+  display none
+
+
+.no-js .jsnotice
+  position absolute
+  left 30%
+  right 30%
+  top 90px
+  z-index 10000
+  font-size 54px
+  line-height 81px
+  font-weight bold
+
+
+@import "entypo"
+@import "wizard/tabs"
+@import "wizard/select-step"
+@import "wizard/preview-step"
+@import "wizard/download-step"
