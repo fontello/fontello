@@ -4,6 +4,14 @@
 
 var tpl_cache = {};
 
+
+Handlebars.registerHelper("each_pair", function (context, options) {
+  return _.map(context, function (val, key) {
+    return options.fn({key: key, val: val});
+  }).join('\n');
+});
+
+
 module.exports = function (id, locals) {
   var $tpl;
 

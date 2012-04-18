@@ -97,7 +97,8 @@ module.exports = Backbone.View.extend({
         fullname:     f.fullname,
         glyphs:       f.glyphs,
         is_embedded:  true,
-        embedded_id:  f.id
+        embedded_id:  f.id,
+        config:       f
       });
       this.fonts.add(font);
 

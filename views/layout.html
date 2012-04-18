@@ -138,19 +138,32 @@
 
     <!-- templates
     ================================================== -->
+    <script data-tpl-id="selector:font-info" type="text/x-template">
+      <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>{{fontname}}</h3>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li><strong>Copyright:</strong> {{copyright}}</li>
+          {{#each_pair info}}
+          <li><strong>{{key}}</strong> {{val}}</li>
+          {{/each_pair}}
+        </ul>
+      </div>
+    </script>
     <script data-tpl-id="icon-size" type="text/x-template">
       {{#buttons}}
         <button class="btn btn-small" data-glyph-size="{{this}}">{{this}}px</button>
       {{/buttons}}
     </script>
     <script data-tpl-id="font-item" type="text/x-template">
-      <h2 class="src-font-head"><a class="font-link tooltip-enabled" title="font info" data-placement="left" href="#"></a>
+      <h2 class="src-font-head"><a class="font-link font-info tooltip-enabled" title="font info" data-placement="left" href="#"></a>
         <a class="src-font-name _collapser" href="#">{{fontname}}</a>
         <a class="fm-font-anchor" href="#font-{{id}}"></a>
         <!-- <a class="font-close" href="#"><small>close</small></a> -->
       </h2>
-      <ul class="unstyled fm-glyph-group {{css_class}}">
-      </ul>
+      <ul class="unstyled fm-glyph-group {{css_class}}"></ul>
     </script>
     <script data-tpl-id="glyph-item" type="text/x-template">
       <li class="glyph" data-glyph-id="{{glyph_id}}">{{{unicode}}}</li>

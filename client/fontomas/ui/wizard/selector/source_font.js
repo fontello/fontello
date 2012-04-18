@@ -18,17 +18,30 @@ module.exports = Backbone.View.extend({
     this.glyph_size = this.options.glyph_size;
 
     this.$el.attr("id", "fm-font-" + this.model.id);
+
     this.model.on("change",   this.render,  this);
     this.model.on("destroy",  this.remove,  this);
   },
 
 
   render: function () {
+    var $info = $('<div class="modal"></div>');
+
     this.$el.html(nodeca.client.fontomas.render('font-item', {
       id:         this.model.id,
       fontname:   this.model.get("fullname"),
       css_class:  "font-embedded-" + this.model.get("embedded_id")
     }));
+
+    // render info html
+    $info.html(nodeca.client.fontomas.render('selector:font-info', this.model.get('config')));
+
+    // assign modal window popup handler
+    this.$('.font-info').click(function () {
+      $info.appendTo(window.document.body).modal();
+      // prevent default browser behavior - jump to the top
+      return false;
+    });
 
     this.$(".fm-glyph-group")
       .addClass("glyph-size-" + this.glyph_size);
