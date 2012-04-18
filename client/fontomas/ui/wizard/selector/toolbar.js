@@ -11,7 +11,7 @@ module.exports = Backbone.View.extend({
   el: "#selector-toolbar",
 
   events: {
-    "click .fm-font-name":     "onActivateEmbeddedFont",
+    "click .src-font-name":     "onActivateEmbeddedFont",
     "click [data-glyph-size]": "onChangeGlyphSize",
     "change #local-files":     "onChangeLocalFiles"
   },
@@ -61,7 +61,7 @@ module.exports = Backbone.View.extend({
           return {text: item.fullname, disabled: item.is_added};
         })
       }))
-      .find('.fm-font-name')
+      .find('.src-font-name')
         .each(function (id) {
           $(this).data("embedded_id", id);
         });
