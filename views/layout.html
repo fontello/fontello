@@ -125,15 +125,46 @@
       <div class="modal">
         <div class="modal-header">
           <a class="close" data-dismiss="modal">×</a>
-          <h3>{{fontname}}</h3>
+          <h3>{{font.fullname}}</h3>
         </div>
         <div class="modal-body">
-          <ul>
-            <li><strong>Copyright:</strong> {{copyright}}</li>
-            {{#each_pair info}}
-            <li><strong>{{key}}</strong> {{val}}</li>
-            {{/each_pair}}
-          </ul>
+          <dl class="dl-horizontal">
+            {{#if meta}}
+              {{#with meta}}
+                {{#if licence}}
+                  <dt>Licence:</dt>
+                  <dd>
+                    {{#if licence_url}}
+                      <a href="{{licence_url}}" target="_blank">{{licence}}</a></dd>
+                    {{else}}
+                      {{licence}}
+                    {{/if}}
+                  </dd>
+                {{/if}}
+                {{#if author}}
+                  <dt>Author:</dt>
+                  <dd>{{author}}</dd>
+                {{/if}}
+                {{#if email}}
+                  <dt>Email:</dt>
+                  <dd><a href="mailto:{{email}}">{{email}}</a></dd>
+                {{/if}}
+                {{#if homepage}}
+                  <dt>Homepage:</dt>
+                  <dd><a href="{{homepage}}" target="_blank">{{homepage}}</a></dd>
+                {{/if}}
+                {{#if twitter}}
+                  <dd><a href="{{twitter}}" target="_blank">Twitter</a></dd>
+                {{/if}}
+                {{#if dribble}}
+                  <dd><a href="{{dribble}}" target="_blank">Dribble</a></dd>
+                {{/if}}
+                {{#if github}}
+                  <dd><a href="{{github}}" target="_blank">Github</a></dd>
+                {{/if}}
+              {{/with}}
+            {{/if}}
+          </dl>
         </div>
       </div>
     </script>
@@ -188,7 +219,7 @@
     <script type="text/javascript" src="/static/assets/vendor/jquery/jquery.js"></script>
 
     <script type="text/javascript" src="/static/assets/vendor/jquery.gritter/jquery.gritter.js"></script>
-    <script type="text/javascript" src="/static/assets/vendor/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/assets/vendor/bootstrap/bootstrap.js"></script>
     <script type="text/javascript" src="/static/assets/vendor/underscore.js"></script>
     <script type="text/javascript" src="/static/assets/vendor/backbone.js"></script>
     <script type="text/javascript" src="/static/assets/vendor/handlebars.js"></script>
