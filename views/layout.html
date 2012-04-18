@@ -134,17 +134,19 @@
     <!-- templates
     ================================================== -->
     <script data-tpl-id="selector:font-info" type="text/x-template">
-      <div class="modal-header">
-        <a class="close" data-dismiss="modal">×</a>
-        <h3>{{fontname}}</h3>
-      </div>
-      <div class="modal-body">
-        <ul>
-          <li><strong>Copyright:</strong> {{copyright}}</li>
-          {{#each_pair info}}
-          <li><strong>{{key}}</strong> {{val}}</li>
-          {{/each_pair}}
-        </ul>
+      <div class="modal">
+        <div class="modal-header">
+          <a class="close" data-dismiss="modal">×</a>
+          <h3>{{fontname}}</h3>
+        </div>
+        <div class="modal-body">
+          <ul>
+            <li><strong>Copyright:</strong> {{copyright}}</li>
+            {{#each_pair info}}
+            <li><strong>{{key}}</strong> {{val}}</li>
+            {{/each_pair}}
+          </ul>
+        </div>
       </div>
     </script>
     <script data-tpl-id="icon-size" type="text/x-template">

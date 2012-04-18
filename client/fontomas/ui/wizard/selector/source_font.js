@@ -25,7 +25,7 @@ module.exports = Backbone.View.extend({
 
 
   render: function () {
-    var $info = $('<div class="modal"></div>');
+    var $info;
 
     this.$el.html(nodeca.client.fontomas.render('font-item', {
       id:         this.model.id,
@@ -34,7 +34,7 @@ module.exports = Backbone.View.extend({
     }));
 
     // render info html
-    $info.html(nodeca.client.fontomas.render('selector:font-info', this.model.get('config')));
+    $info = $(nodeca.client.fontomas.render('selector:font-info', this.model.get('config')));
 
     // assign modal window popup handler
     this.$('.font-info').click(function () {
