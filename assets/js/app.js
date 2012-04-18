@@ -38,8 +38,14 @@
       result_font.addGlyph(data);
     });
 
-    // KLUDGE: should be replaced with selector.addFont() in future
-    selector.addEmbeddedFonts(nodeca.client.fontomas.embedded_fonts);
+    // init embedded fonts
+    _.each(nodeca.client.fontomas.embedded_fonts, function (config) {
+      var model = new nodeca.client.fontomas.models.source_font(_.extend({}, config, {
+        embedded_id: config.id
+      }));
+
+      selector.addFont(model);
+    });
 
     //
     // show selector tab after  load complete

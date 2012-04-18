@@ -29,12 +29,12 @@ module.exports = Backbone.View.extend({
 
     this.$el.html(nodeca.client.fontomas.render('font-item', {
       id:         this.model.id,
-      fontname:   this.model.get("fullname"),
+      fontname:   this.model.get("font").fullname,
       css_class:  "font-embedded-" + this.model.get("embedded_id")
     }));
 
     // render info html
-    $info = $(nodeca.client.fontomas.render('selector:font-info', this.model.get('config')));
+    $info = $(nodeca.client.fontomas.render('selector:font-info', this.model.get('font')));
 
     // assign modal window popup handler
     this.$('.font-info').click(function () {
@@ -89,7 +89,6 @@ module.exports = Backbone.View.extend({
     data = _.extend(data, {
       font_id:      this.model.id,
       glyph_id:     glyph_id,
-      is_embedded:  this.model.get("is_embedded"),
       embedded_id:  this.model.get("embedded_id")
     });
 
