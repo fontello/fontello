@@ -2165,6 +2165,27 @@ module.exports = [
     "id": 1
   },
   {
+    "font": {
+      "fontname": "iconic",
+      "descent": 410,
+      "copyright": "Copyright (C) 2012 by P.J. Onori",
+      "familyname": "Iconic",
+      "weight": "Medium",
+      "version": "1.0",
+      "fullname": "Iconic",
+      "ascent": 1638
+    },
+    "meta": {
+      "github": "https://github.com/somerandomdude/Iconic",
+      "licence_url": "http://scripts.sil.org/OFL",
+      "licence": "SIL",
+      "author": "P.J. Onori",
+      "twitter": "http://twitter.com/somerandomdude",
+      "css_prefix": "icon-",
+      "homepage": "http://somerandomdude.com/work/iconic/",
+      "email": "pj@somerandomdude.com",
+      "columns": 4
+    },
     "glyphs": [
       {
         "code": 35,
@@ -3017,18 +3038,9 @@ module.exports = [
         "file": "paperclip"
       }
     ],
-    "font": {
-      "fontname": "iconic",
-      "descent": 410,
-      "copyright": "Copyright (C) 2012 by Daniel Bruce",
-      "familyname": "Iconic",
-      "weight": "Medium",
-      "version": "1.0",
-      "fullname": "Iconic",
-      "ascent": 1638
-    },
     "transform": {
-      "rescale": 1.3,
+      "rescale": 1.2,
+      "baseline": 0.5,
       "offset": -0.05
     },
     "id": 2
