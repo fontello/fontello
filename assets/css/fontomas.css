@@ -212,6 +212,7 @@ iframe.twitter-share-button {
   height: 20px;
   line-height: 20px;
   font-size: 14px;
+  cursor: pointer;
 }
 
 .result-glyph .center {
@@ -228,6 +229,7 @@ iframe.twitter-share-button {
   height: 20px;
   line-height: 20px;
   font-size: 10px;
+  cursor: pointer;
 }
 
 .result-glyph .top input {
