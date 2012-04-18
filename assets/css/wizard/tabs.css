@@ -1,0 +1,36 @@
+#wizard-steps {
+  position: fixed;
+  top: 40px;
+  z-index: 100;
+  background-color: #fff;
+  margin: 0;
+  padding: 40px 0 20px;
+  opacity: 0.95;
+}
+
+#wizard-steps li a {
+  display: block;
+  font-size: 30px;
+  font-weight: bold;
+  line-height: 1;
+  padding-left: 20px;
+  padding-right: 25px;
+}
+
+#wizard-steps a small {
+  font-size: 18px;
+  line-height: 1;
+  color: #999999;
+  font-weight: normal;
+}
+
+#wizard-steps .active a small {
+  color: #fff !important;
+}
+
+#wizard-steps .disabled, #wizard-steps .disabled:hover {
+  /* FIXME */
+  opacity: 0.3;
+  cursor: default;
+}
+

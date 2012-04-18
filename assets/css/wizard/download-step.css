@@ -1,0 +1,77 @@
+/* Download */
+
+#result-font {
+  margin-top: 20px;
+}
+
+.result-glyph {
+  float: left;
+  width: 64px;
+  margin: 0 10px 10px 0;
+  color: #fff;
+  background-color: #888;
+  border-left: 1px solid #888;
+  border-right: 1px solid #888;
+  border-radius: 6px;
+}
+
+.result-glyph .top {
+  text-align: center;
+  height: 20px;
+  line-height: 20px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.result-glyph .center {
+  height: 64px;
+  line-height: 64px;
+  text-align: center;
+  background-color: #fff;
+  color: #444;
+  font-size: 24px;
+}
+
+.result-glyph .bottom {
+  text-align:center;
+  height: 20px;
+  line-height: 20px;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.result-glyph .top input {
+  margin: 0px;
+  padding: 0px;
+  width: 50%;
+}
+
+.result-glyph .bottom input {
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+}
+
+.result-glyph.editing-top .top,
+.result-glyph .top.edit {
+  display: none;
+}
+
+.result-glyph.editing-top .top.edit {
+  display: block;
+}
+
+.result-glyph.editing-bottom .bottom,
+.result-glyph .bottom.edit {
+  display: none;
+}
+
+.result-glyph.editing-bottom .bottom.edit {
+  display: block;
+}
+
+.result-glyph.mapping-matched {
+  border-color: #444;
+  background-color: #444;
+}
+

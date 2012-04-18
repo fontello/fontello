@@ -1,0 +1,74 @@
+/* Select Icons */
+
+#selector-toolbar {
+  float: right;
+}
+
+#selector {
+  margin-top: -20px;
+}
+
+#selector .btn-toolbar, #result .btn-toolbar {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+#selector h2 {
+  margin-top: 20px;
+  font-size: 36px;
+  line-height: 54px;
+}
+
+#local-files {
+  /* chrome/opera doesn't trigger events on "display: none;" elements */
+  /* so, do some tricks to safely hide element */
+
+  /* display: none; */
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  top: -100px;
+  visibility: hidden;
+}
+
+.fm-glyph-group {
+  display: inline-block;
+
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.glyph {
+  position: relative;
+  float: left;
+  border: 1px #ccc solid;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  width: 48px;
+  height: 48px;
+  line-height: 48px;
+  margin: 0 8px 8px 0;
+}
+
+.glyph:hover {
+  background: #f0f0f0;
+  opacity: .8;
+}
+
+.glyph.selected {
+  background-color: #fee;
+  border-color: #dff;
+  box-shadow: 0 0 3px #d88 inset;
+}
+
+.glyph-size-24 .glyph {
+  font-size: 24px;
+}
+
+.glyph-size-16 .glyph {
+  font-size: 16px;
+}
