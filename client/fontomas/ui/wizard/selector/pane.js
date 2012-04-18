@@ -16,8 +16,7 @@ module.exports = Backbone.View.extend({
     this.glyph_size   = _.last(nodeca.client.fontomas.config.preview_glyph_sizes);
     this.font_toolbar = new nodeca.client.fontomas.ui.wizard.selector.toolbar();
 
-    this.font_toolbar.on("change:glyph-size",   this.changeGlyphSize,   this);
-    this.font_toolbar.on("change:local-files",  this.loadFiles,         this);
+    this.font_toolbar.on("change:glyph-size", this.changeGlyphSize, this);
 
     this.fonts = new Backbone.Collection();
   },
@@ -29,12 +28,6 @@ module.exports = Backbone.View.extend({
     _.each(this.fontviews, function (view) {
       view.changeGlyphSize(size);
     });
-  },
-
-
-  loadFiles: function (files) {
-    // TODO: Remove completely
-    nodeca.client.fontomas.util.notify_alert("Sorry, user-fonts are not supported yet.");
   },
 
 
