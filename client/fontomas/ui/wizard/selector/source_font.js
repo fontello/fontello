@@ -29,7 +29,7 @@ module.exports = Backbone.View.extend({
     }));
 
     // render info html
-    $info = $(nodeca.client.fontomas.render('selector:font-info', this.model.get('font')));
+    $info = $(nodeca.client.fontomas.render('selector:font-info', this.model.toJSON()));
 
     // assign modal window popup handler
     this.$('.font-info').click(function () {
