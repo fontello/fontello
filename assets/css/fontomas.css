@@ -162,6 +162,8 @@ iframe.twitter-share-button {
 
 .glyph.selected {
   background-color: #fee;
+  border-color: #dff;
+  box-shadow: 0 0 3px #d88 inset;
 }
 
 .glyph-size-24 .glyph {
