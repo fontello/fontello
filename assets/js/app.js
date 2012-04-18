@@ -38,14 +38,9 @@
       result_font.addGlyph(data);
     });
 
-    // handle font close
-    selector.on('remove:font', function (font) {
-      result_font.removeGlyphsByFont(font.id);
-    });
-
-
     // KLUDGE: should be replaced with selector.addFont() in future
     selector.addEmbeddedFonts(nodeca.client.fontomas.embedded_fonts);
+
     //
     // show selector tab after  load complete
     steps.activate('#selector');
@@ -55,7 +50,5 @@
 
     // Attach collapse handler to matching elements
     $('._collapser').ndCollapser();
-
   });
-
 }());

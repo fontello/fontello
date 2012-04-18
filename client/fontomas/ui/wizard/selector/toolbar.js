@@ -11,7 +11,6 @@ module.exports = Backbone.View.extend({
   el: "#selector-toolbar",
 
   events: {
-    "click .src-font-name":     "onActivateEmbeddedFont",
     "click [data-glyph-size]": "onChangeGlyphSize",
     "change #local-files":     "onChangeLocalFiles"
   },
@@ -44,28 +43,5 @@ module.exports = Backbone.View.extend({
   onChangeLocalFiles: function (event) {
     event.preventDefault();
     this.trigger("change:local-files", event.target.files);
-  },
-
-
-  onActivateEmbeddedFont: function (event) {
-    /*jshint bitwise:false*/
-    event.preventDefault();
-    this.trigger('click:embedded-font', ~~$(event.target).data("embedded_id"));
-  },
-
-
-  renderEmbededFontsSelector: function () {
-    $('#fm-use-embedded')
-      .html(nodeca.client.fontomas.render('use-embedded', {
-        options: _.map(nodeca.client.fontomas.embedded_fonts, function (item) {
-          return {text: item.fullname, disabled: item.is_added};
-        })
-      }))
-      .find('.src-font-name')
-        .each(function (id) {
-          $(this).data("embedded_id", id);
-        });
-
-    return this;
   }
 });

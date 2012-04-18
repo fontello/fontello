@@ -19,7 +19,6 @@ module.exports = Backbone.View.extend({
 
     this.font_toolbar.on("change:glyph-size",   this.changeGlyphSize,   this);
     this.font_toolbar.on("change:local-files",  this.loadFiles,         this);
-    this.font_toolbar.on("click:embedded-font", this.clickEmbeddedFont, this);
 
     this.fonts = new Backbone.Collection();
     this.fonts.on("add", this.onAddFont, this);
@@ -69,15 +68,6 @@ module.exports = Backbone.View.extend({
   },
 
 
-  clickEmbeddedFont: function (font_id) {
-    var font = nodeca.client.fontomas.embedded_fonts[font_id];
-
-    if (font && !font.is_added) {
-      this.addEmbeddedFonts([font]);
-    }
-  },
-
-
   // a model has been added, so we create a corresponding view for it
   onAddFont: function (font) {
     var view = new nodeca.client.fontomas.ui.wizard.selector.source_font({
@@ -95,15 +85,6 @@ module.exports = Backbone.View.extend({
 
   removeFont: function (font) {
     delete this.fontviews[font.id];
-
-    // KLUDGE: TO BE REFACTORED
-    _.find(nodeca.client.fontomas.embedded_fonts, function (f, id) {
-      if (id === font.get('embedded_id')) {
-        f.is_added = false;
-        this.font_toolbar.renderEmbededFontsSelector();
-      }
-    }, this);
-
     this.trigger('remove:font', font);
   },
 
@@ -122,8 +103,6 @@ module.exports = Backbone.View.extend({
 
       f.is_added = true;
     }, this);
-
-    this.font_toolbar.renderEmbededFontsSelector();
   },
 
 
