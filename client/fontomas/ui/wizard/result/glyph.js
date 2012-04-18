@@ -84,7 +84,7 @@ module.exports = Backbone.View.extend({
           top:  this.model.get("unicode_code") === 32 ? "space" : char,
           char: nodeca.client.fontomas.util.fixedFromCharCode(source_glyph.code),
           bottom:     this.toUnicode(this.model.get("unicode_code")),
-          css_class:  "fm-embedded-" + source_glyph.embedded_id
+          css_class:  "font-embedded-" + source_glyph.embedded_id
         });
 
     this.$el.html(html);

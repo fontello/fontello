@@ -27,7 +27,7 @@ module.exports = Backbone.View.extend({
     this.$el.html(nodeca.client.fontomas.render('font-item', {
       id:         this.model.id,
       fontname:   this.model.get("fullname"),
-      css_class:  "fm-embedded-" + this.model.get("embedded_id")
+      css_class:  "font-embedded-" + this.model.get("embedded_id")
     }));
 
     this.$(".fm-glyph-group")
