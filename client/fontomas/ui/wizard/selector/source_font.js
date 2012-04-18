@@ -4,13 +4,8 @@
 
 module.exports = Backbone.View.extend({
   tagName:    "li",
-
   glyph_size: null,
-
-  events: {
-    "click .font-close":  "onClickClose",
-    "click .glyph":       "onClickGlyph"
-  },
+  events:     {"click .glyph": "onClickGlyph"},
 
 
   initialize: function () {
@@ -71,12 +66,6 @@ module.exports = Backbone.View.extend({
   remove: function () {
     this.$el.remove();
     this.trigger("remove", this.model);
-  },
-
-
-  onClickClose: function (event) {
-    event.preventDefault();
-    this.model.destroy();
   },
 
 
