@@ -10,7 +10,7 @@
   font-weight: normal; font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^="icon-"], [class*=" icon-"], .icon {
   font-family: entypo;
   font-style: normal;
 

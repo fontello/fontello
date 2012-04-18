@@ -12,6 +12,7 @@
     <link href="static/assets/vendor/jquery.gritter/jquery.gritter.css" rel="stylesheet"/>
     <link href="static/assets/embedded_fonts/fontface-embedded.css" rel="stylesheet"/>
     <link href="static/assets/css/fontomas.css" rel="stylesheet"/>
+    <link href="static/assets/css/entypo.css" rel="stylesheet"/>
     <link href="static/assets/css/wizard/tabs.css" rel="stylesheet"/>
     <link href="static/assets/css/wizard/select-step.css" rel="stylesheet"/>
     <link href="static/assets/css/wizard/preview-step.css" rel="stylesheet"/>
@@ -156,9 +157,10 @@
       {{/options}}
     </script>
     <script data-tpl-id="font-item" type="text/x-template">
-      <h2><span class="src-font-name">{{fontname}}</span>
+      <h2 class="src-font-head"><a class="font-link tooltip-enabled" title="font info" data-placement="left" href="#"></a>
+        <a class="src-font-name _collapser" href="#">{{fontname}}</a>
         <a class="fm-font-anchor" href="#font-{{id}}"></a>
-        <a class="font-close" href="#"><small>close</small></a>
+        <!-- <a class="font-close" href="#"><small>close</small></a> -->
       </h2>
       <ul class="unstyled fm-glyph-group {{css_class}}">
       </ul>
@@ -206,6 +208,8 @@
     <script type="text/javascript" src="/static/assets/vendor/underscore.js"></script>
     <script type="text/javascript" src="/static/assets/vendor/backbone.js"></script>
     <script type="text/javascript" src="/static/assets/vendor/handlebars.js"></script>
+
+    <script type="text/javascript" src="/static/assets/js/jquery.collapser.js"></script>
 
     <script type="text/javascript" src="/static/system/fontomas/api.js"></script>
     <script type="text/javascript" src="/static/assets/js/app.js"></script>

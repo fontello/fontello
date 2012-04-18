@@ -52,6 +52,10 @@
 
     // Attach tooltip handler to matching elements
     $('.tooltip-enabled').tooltip();
+
+    // Attach collapse handler to matching elements
+    $('._collapser').ndCollapser();
+
   });
 
 }());
