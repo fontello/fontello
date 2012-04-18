@@ -52,7 +52,7 @@
     steps.activate('#selector');
 
     // Attach tooltip handler to matching elements
-    $('.tooltip-enabled').tooltip();
+    $('._tip').tooltip();
 
     // Attach collapse handler to matching elements
     $('._collapser').ndCollapser();

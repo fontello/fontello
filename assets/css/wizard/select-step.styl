@@ -1,19 +1,20 @@
 /* Select Icons */
 
-#selector-toolbar {
-  float: right;
-}
+#selector
+  margin-top: -20px
+  position: relative
 
-#selector {
-  margin-top: -20px;
-}
+#selector .btn-toolbar
+  margin-top: 0
+  margin-bottom: 0
 
-#selector .btn-toolbar, #result .btn-toolbar {
-  margin-top: 0;
-  margin-bottom: 0;
-}
+#selector-toolbar
+  position: absolute
+  right: 0
+  top: 0
+  z-index: 1
 
-#selector h2 {
+.src-font-head {
   margin-top: 20px;
   font-size: 36px;
   line-height: 54px;
@@ -52,6 +53,8 @@ a.src-font-name {
   -webkit-transition: all 1s ease;
 }
 ._collapsed .src-font-head {
+  font-size: 18px;
+  line-height: 24px;
   opacity: .2;
 }
 ._collapsed .src-font-head:hover {
