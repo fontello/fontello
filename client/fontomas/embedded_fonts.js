@@ -1423,13 +1423,13 @@ module.exports = [
     ],
     "font": {
       "fontname": "entypo",
-      "descent": 410,
+      "descent": 200,
       "copyright": "Copyright (C) 2012 by Daniel Bruce",
       "familyname": "Entypo",
       "weight": "Medium",
       "version": "1.0",
       "fullname": "Entypo",
-      "ascent": 1638
+      "ascent": 800
     },
     "meta": {
       "github": "https://github.com/danielbruce/entypo",
@@ -1446,6 +1446,27 @@ module.exports = [
     "id": 0
   },
   {
+    "font": {
+      "fontname": "fontawesome",
+      "descent": 200,
+      "copyright": "Copyright (C) 2012 by Dave Gandy",
+      "familyname": "Font Awesome",
+      "weight": "Regular",
+      "version": "1.0",
+      "fullname": "Font Awesome",
+      "ascent": 800
+    },
+    "meta": {
+      "github": "https://github.com/FortAwesome/Font-Awesome",
+      "licence_url": "http://creativecommons.org/licenses/by/3.0/",
+      "licence": "CC BY 3.0",
+      "author": "Dave Gandy",
+      "twitter": "http://twitter.com/fortaweso_me/",
+      "css_prefix": "icon-",
+      "homepage": "http://fortawesome.github.com/Font-Awesome/",
+      "email": "dave@davegandy.com",
+      "columns": 4
+    },
     "glyphs": [
       {
         "code": 61440,
@@ -2148,32 +2169,23 @@ module.exports = [
         "file": "glyph140"
       }
     ],
-    "font": {
-      "fontname": "fontawesome",
-      "descent": 410,
-      "copyright": "None",
-      "familyname": "Font Awesome",
-      "weight": "Regular",
-      "version": "1.0",
-      "fullname": "Font Awesome",
-      "ascent": 1638
-    },
     "transform": {
-      "rescale": 2.0,
-      "offset": -0.2
+      "rescale": 1.052631579,
+      "baseline": 0.5,
+      "offset": -0.05
     },
     "id": 1
   },
   {
     "font": {
       "fontname": "iconic",
-      "descent": 410,
+      "descent": 200,
       "copyright": "Copyright (C) 2012 by P.J. Onori",
       "familyname": "Iconic",
       "weight": "Medium",
       "version": "1.0",
       "fullname": "Iconic",
-      "ascent": 1638
+      "ascent": 800
     },
     "meta": {
       "github": "https://github.com/somerandomdude/Iconic",
@@ -3046,6 +3058,25 @@ module.exports = [
     "id": 2
   },
   {
+    "font": {
+      "fontname": "websymbols",
+      "descent": 200,
+      "copyright": "Copyright (c) 2011 by Just Be Nice studio. All rights reserved.",
+      "familyname": "Web Symbols",
+      "weight": "Medium",
+      "version": "1.0",
+      "fullname": "Web Symbols",
+      "ascent": 800
+    },
+    "meta": {
+      "licence_url": "http://scripts.sil.org/OFL",
+      "css_prefix": "icon-",
+      "licence": "SIL",
+      "author": "Just Be Nice studio",
+      "homepage": "http://www.justbenicestudio.com/studio/websymbols/",
+      "email": "yes@justbenice.ru",
+      "columns": 4
+    },
     "glyphs": [
       {
         "code": 35,
@@ -3493,19 +3524,10 @@ module.exports = [
         "file": "glyph92"
       }
     ],
-    "font": {
-      "fontname": "websymbols-regular",
-      "descent": 410,
-      "copyright": "Copyright (c) 2011 by Just Be Nice studio. All rights reserved.",
-      "familyname": "Web Symbols",
-      "weight": "Book",
-      "version": "1.0",
-      "fullname": "Web Symbols Regular",
-      "ascent": 1638
-    },
     "transform": {
-      "rescale": 1.8,
-      "offset": 0
+      "rescale": 0.9,
+      "baseline": 0.5,
+      "offset": 0.05
     },
     "id": 3
   }

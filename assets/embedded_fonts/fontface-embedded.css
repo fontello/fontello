@@ -1,7 +1,7 @@
 .font-embedded-0 { font-family: 'entypo'; }
 .font-embedded-1 { font-family: 'fontawesome'; }
 .font-embedded-2 { font-family: 'iconic'; }
-.font-embedded-3 { font-family: 'websymbols-regular'; }
+.font-embedded-3 { font-family: 'websymbols'; }
 
 @font-face {
   font-family: 'entypo';
@@ -37,12 +37,12 @@
 }
 
 @font-face {
-  font-family: 'websymbols-regular';
-  src: url('/static/assets/embedded_fonts/websymbols-regular.eot');
-  src: url('/static/assets/embedded_fonts/websymbols-regular.eot?#iefix') format('embedded-opentype'),
-    url('/static/assets/embedded_fonts/websymbols-regular.woff') format('woff'),
-    url('/static/assets/embedded_fonts/websymbols-regular.ttf') format('truetype'),
-    url('/static/assets/embedded_fonts/websymbols-regular.svg#websymbols-regular') format('svg');
+  font-family: 'websymbols';
+  src: url('/static/assets/embedded_fonts/websymbols.eot');
+  src: url('/static/assets/embedded_fonts/websymbols.eot?#iefix') format('embedded-opentype'),
+    url('/static/assets/embedded_fonts/websymbols.woff') format('woff'),
+    url('/static/assets/embedded_fonts/websymbols.ttf') format('truetype'),
+    url('/static/assets/embedded_fonts/websymbols.svg#websymbols') format('svg');
   font-weight: normal;
   font-style: normal;
 }
