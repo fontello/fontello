@@ -7,7 +7,7 @@ REMOTE_REPO   ?= $(shell git config --get remote.${REMOTE_NAME}.url)
 FONTS         += entypo
 FONTS         += awesome-uni.font
 FONTS         += iconic-uni.font
-FONTS         += websymbols-uni.font
+#FONTS         += websymbols-uni.font
 FONT_CONFIGS   = $(foreach f,$(FONTS),src/${f}/config.yml)
 
 

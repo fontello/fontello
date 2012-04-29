@@ -4,172 +4,82 @@ module.exports = [
     "glyphs": [
       {
         "search": [
-          "profile",
-          "contact",
-          "user",
-          "add"
+          "music",
+          "note",
+          "song"
         ],
-        "code": 57345,
-        "file": "add-contact-add-user",
-        "css": "user-add"
+        "code": 9834,
+        "file": "music",
+        "css": "music"
       },
       {
         "search": [
-          "address"
+          "song",
+          "music",
+          "sound"
         ],
-        "code": 57346,
-        "file": "address",
-        "css": "address"
+        "code": 127925,
+        "file": "song",
+        "css": "music-alt"
       },
       {
         "search": [
-          "add",
-          "list"
+          "search",
+          "find"
         ],
-        "code": 57347,
-        "file": "add-to-list",
-        "css": "list-add"
+        "code": 128269,
+        "file": "classic-search",
+        "css": "search"
       },
       {
         "search": [
-          "alert",
-          "bell",
-          "jingle"
+          "search",
+          "find"
         ],
-        "code": 128276,
-        "file": "alert",
-        "css": "bell"
+        "code": 128270,
+        "file": "search",
+        "css": "search-alt"
       },
       {
         "search": [
-          "attach",
-          "clip"
+          "mail",
+          "email"
         ],
-        "code": 57348,
-        "file": "attach",
-        "css": "attach"
+        "code": 9993,
+        "file": "email",
+        "css": "mail"
       },
       {
         "search": [
-          "back"
+          "heart"
         ],
-        "code": 57349,
-        "file": "back",
-        "css": "back"
+        "code": 9829,
+        "file": "heart",
+        "css": "heart"
       },
       {
         "search": [
-          "back"
+          "heart"
         ],
-        "code": 57397,
-        "file": "back-alt",
-        "css": "back-alt"
+        "code": 9825,
+        "file": "heart-outlined",
+        "css": "heart-empty"
       },
       {
         "search": [
-          "block",
-          "deny"
+          "star"
         ],
-        "code": 128683,
-        "file": "block",
-        "css": "block"
+        "code": 9733,
+        "file": "star",
+        "css": "star"
       },
       {
         "search": [
-          "broadcast",
-          "wifi"
+          "star"
         ],
-        "code": 57350,
-        "file": "broadcast",
-        "css": "wifi"
-      },
-      {
-        "search": [
-          "calendar"
-        ],
-        "code": 128197,
-        "file": "calendar",
-        "css": "calendar"
-      },
-      {
-        "search": [
-          "camera",
-          "photo"
-        ],
-        "code": 128247,
-        "file": "camera",
-        "css": "camera"
-      },
-      {
-        "search": [
-          "target"
-        ],
-        "code": 127919,
-        "file": "center-crosshair",
-        "css": "target"
-      },
-      {
-        "search": [
-          "chat",
-          "talk"
-        ],
-        "code": 57351,
-        "file": "chat",
-        "css": "chat"
-      },
-      {
-        "search": [
-          "close",
-          "cancel"
-        ],
-        "code": 10005,
-        "file": "check-not-ok",
-        "css": "close"
-      },
-      {
-        "search": [
-          "check",
-          "mark"
-        ],
-        "code": 10003,
-        "file": "check-ok",
-        "css": "check"
-      },
-      {
-        "search": [
-          "cancel",
-          "close"
-        ],
-        "code": 10006,
-        "file": "close-circle",
-        "css": "cancel"
-      },
-      {
-        "search": [
-          "comment",
-          "reply"
-        ],
-        "code": 57352,
-        "file": "comment",
-        "css": "comment"
-      },
-      {
-        "search": [
-          "compass"
-        ],
-        "code": 57353,
-        "file": "compass",
-        "css": "compass"
-      },
-      {
-        "search": [
-          "contact",
-          "card",
-          "vcard"
-        ],
-        "code": 57354,
-        "file": "contact-card",
-        "css": "vcard"
+        "code": 9734,
+        "file": "star-outlined",
+        "css": "star-empty"
       },
       {
         "search": [
@@ -193,92 +103,129 @@ module.exports = [
       },
       {
         "search": [
-          "direction"
+          "profile",
+          "contact",
+          "user",
+          "add"
         ],
-        "code": 57355,
-        "file": "direction",
-        "css": "direction"
+        "code": 59136,
+        "file": "add-contact-add-user",
+        "css": "user-add"
       },
       {
         "search": [
-          "mail",
-          "email"
+          "movie",
+          "video",
+          "film"
         ],
-        "code": 9993,
-        "file": "email",
-        "css": "mail"
+        "code": 127916,
+        "file": "movie",
+        "css": "video"
       },
       {
         "search": [
-          "export"
+          "image",
+          "picture",
+          "photo"
         ],
-        "code": 57356,
-        "file": "export",
-        "css": "export"
+        "code": 127748,
+        "file": "image",
+        "css": "picture"
       },
       {
         "search": [
-          "flag"
+          "camera",
+          "photo"
         ],
-        "code": 9873,
-        "file": "flag",
-        "css": "flag"
+        "code": 128247,
+        "file": "camera",
+        "css": "camera"
       },
       {
         "search": [
-          "flash",
-          "bolt"
+          "image",
+          "list",
+          "thumbnails"
         ],
-        "code": 9889,
-        "file": "flash",
-        "css": "flash"
+        "code": 9871,
+        "file": "image-list",
+        "css": "th"
       },
       {
         "search": [
-          "flight",
-          "plane",
-          "airplane"
+          "list"
         ],
-        "code": 9992,
-        "file": "flight",
-        "css": "flight"
+        "code": 9776,
+        "file": "list",
+        "css": "th-list"
       },
       {
         "search": [
-          "forward"
+          "ok",
+          true,
+          "check",
+          "mark"
         ],
-        "code": 10150,
-        "file": "forward",
-        "css": "forward"
+        "code": 10003,
+        "file": "check-ok",
+        "css": "ok"
       },
       {
         "search": [
-          "google",
-          "circles"
+          "close",
+          "cancel",
+          "reject"
         ],
-        "code": 57357,
-        "file": "google-circles",
-        "css": "google-circles"
+        "code": 10005,
+        "file": "check-not-ok",
+        "css": "cancel"
       },
       {
         "search": [
-          "heart"
+          "close",
+          "cancel",
+          "reject"
         ],
-        "code": 9829,
-        "file": "heart",
-        "css": "heart"
+        "code": 10006,
+        "file": "close-circle",
+        "css": "cancel-circle"
       },
       {
         "search": [
-          "heart"
+          "plus"
         ],
-        "code": 9825,
-        "file": "heart-outlined",
-        "css": "heart-empty"
+        "code": 43,
+        "file": "plus",
+        "css": "plus"
       },
       {
         "search": [
-          "help"
+          "plus"
+        ],
+        "code": 10133,
+        "file": "plus-circle",
+        "css": "plus-circle"
+      },
+      {
+        "search": [
+          "minus"
+        ],
+        "code": 45,
+        "file": "minus",
+        "css": "minus"
+      },
+      {
+        "search": [
+          "minus"
+        ],
+        "code": 10134,
+        "file": "minus-circle",
+        "css": "minus-circle"
+      },
+      {
+        "search": [
+          "help",
+          "question"
         ],
         "code": 10067,
         "file": "help",
@@ -286,20 +233,12 @@ module.exports = [
       },
       {
         "search": [
-          "help"
+          "help",
+          "question"
         ],
-        "code": 57358,
+        "code": 59140,
         "file": "help-circle",
         "css": "help-circle"
-      },
-      {
-        "search": [
-          "image",
-          "list"
-        ],
-        "code": 9871,
-        "file": "image-list",
-        "css": "image-list"
       },
       {
         "search": [
@@ -313,44 +252,35 @@ module.exports = [
         "search": [
           "info"
         ],
-        "code": 57359,
+        "code": 59141,
         "file": "info-circle",
         "css": "info-circle"
       },
       {
         "search": [
-          "leaf"
+          "back",
+          "return"
         ],
-        "code": 127810,
-        "file": "leaf",
-        "css": "leaf"
+        "code": 59142,
+        "file": "back",
+        "css": "back"
       },
       {
         "search": [
-          "down"
+          "back",
+          "return"
         ],
-        "code": 8627,
-        "file": "level-down",
-        "css": "level-down"
+        "code": 59143,
+        "file": "back-alt",
+        "css": "back-alt"
       },
       {
         "search": [
-          "lifebuoy"
+          "home"
         ],
-        "code": 57360,
-        "file": "lifebuoy",
-        "css": "lifebuoy"
-      },
-      {
-        "search": [
-          "thumbs",
-          "up",
-          "like",
-          "vote"
-        ],
-        "code": 128221,
-        "file": "like-thumbs-up",
-        "css": "thumbs-up"
+        "code": 8962,
+        "file": "home",
+        "css": "home"
       },
       {
         "search": [
@@ -363,20 +293,12 @@ module.exports = [
       },
       {
         "search": [
-          "list"
+          "attach",
+          "clip"
         ],
-        "code": 9776,
-        "file": "list",
-        "css": "list"
-      },
-      {
-        "search": [
-          "location",
-          "marker"
-        ],
-        "code": 57361,
-        "file": "location",
-        "css": "location"
+        "code": 128206,
+        "file": "attach",
+        "css": "attach"
       },
       {
         "search": [
@@ -388,71 +310,21 @@ module.exports = [
       },
       {
         "search": [
-          "down"
+          "lock",
+          "unlock"
         ],
-        "code": 57362,
-        "file": "map",
-        "css": "map"
+        "code": 128275,
+        "file": "unlocked",
+        "css": "lock-open"
       },
       {
         "search": [
-          "mic"
+          "eye",
+          "subscribe"
         ],
-        "code": 127908,
-        "file": "mic",
-        "css": "mic"
-      },
-      {
-        "search": [
-          "minus"
-        ],
-        "code": 10134,
-        "file": "minus",
-        "css": "minus"
-      },
-      {
-        "search": [
-          "minus"
-        ],
-        "code": 57363,
-        "file": "minus-circle",
-        "css": "minus-circle"
-      },
-      {
-        "search": [
-          "mobile",
-          "iphone"
-        ],
-        "code": 128241,
-        "file": "mobile",
-        "css": "mobile"
-      },
-      {
-        "search": [
-          "mouse",
-          "website"
-        ],
-        "code": 57364,
-        "file": "mouse-website",
-        "css": "mouse"
-      },
-      {
-        "search": [
-          "movie",
-          "video"
-        ],
-        "code": 127916,
-        "file": "movie",
-        "css": "film"
-      },
-      {
-        "search": [
-          "music",
-          "note"
-        ],
-        "code": 127925,
-        "file": "music",
-        "css": "music"
+        "code": 59146,
+        "file": "view-eye",
+        "css": "eye"
       },
       {
         "search": [
@@ -460,50 +332,85 @@ module.exports = [
           "price",
           "offer"
         ],
-        "code": 57365,
+        "code": 59148,
         "file": "offer-price-tag",
         "css": "tag"
       },
       {
         "search": [
-          "palette"
+          "bookmark"
         ],
-        "code": 127912,
-        "file": "palette",
-        "css": "palette"
+        "code": 128278,
+        "file": "bookmark",
+        "css": "bookmark"
       },
       {
         "search": [
-          "phone",
-          "telephone"
+          "flag"
         ],
-        "code": 128222,
-        "file": "phone",
-        "css": "phone"
+        "code": 9873,
+        "file": "flag",
+        "css": "flag"
       },
       {
         "search": [
-          "plus"
+          "thumbs",
+          "up",
+          "like",
+          "vote"
         ],
-        "code": 10133,
-        "file": "plus",
-        "css": "plus"
+        "code": 128077,
+        "file": "like-thumbs-up",
+        "css": "thumbs-up"
       },
       {
         "search": [
-          "plus"
+          "download"
         ],
-        "code": 57366,
-        "file": "plus-circle",
-        "css": "plus-circle"
+        "code": 128229,
+        "file": "download",
+        "css": "download"
       },
       {
         "search": [
-          "print"
+          "upload"
         ],
-        "code": 57367,
-        "file": "print",
-        "css": "print"
+        "code": 128228,
+        "file": "upload",
+        "css": "upload"
+      },
+      {
+        "search": [
+          "upload",
+          "cloud"
+        ],
+        "code": 59153,
+        "file": "upload-to-cloud",
+        "css": "upload-cloud"
+      },
+      {
+        "search": [
+          "reply"
+        ],
+        "code": 59154,
+        "file": "reply",
+        "css": "reply"
+      },
+      {
+        "search": [
+          "reply"
+        ],
+        "code": 59155,
+        "file": "reply-to-all",
+        "css": "reply-all"
+      },
+      {
+        "search": [
+          "forward"
+        ],
+        "code": 10150,
+        "file": "forward",
+        "css": "forward"
       },
       {
         "search": [
@@ -515,84 +422,264 @@ module.exports = [
       },
       {
         "search": [
-          "reload"
+          "code"
         ],
-        "code": 10226,
-        "file": "reload-CCW",
-        "css": "reload-ccw"
+        "code": 59156,
+        "file": "code",
+        "css": "code"
       },
       {
         "search": [
-          "reload"
+          "export",
+          "share"
         ],
-        "code": 10227,
-        "file": "reload-CW",
-        "css": "reload-cw"
+        "code": 59157,
+        "file": "export",
+        "css": "export"
       },
       {
         "search": [
-          "reply"
+          "pencil",
+          "write",
+          "reply",
+          "edit"
         ],
-        "code": 57368,
-        "file": "reply",
-        "css": "reply"
+        "code": 9998,
+        "file": "write-new",
+        "css": "pencil"
       },
       {
         "search": [
-          "reply"
+          "pen",
+          "write",
+          "reply",
+          "edit",
+          "feather"
         ],
-        "code": 57369,
-        "file": "reply-to-all",
-        "css": "reply-all"
+        "code": 10002,
+        "file": "feather",
+        "css": "feather"
       },
       {
         "search": [
-          "retweet"
+          "print"
         ],
-        "code": 57370,
+        "code": 59158,
+        "file": "print",
+        "css": "print"
+      },
+      {
+        "search": [
+          "retweet",
+          "twitter"
+        ],
+        "code": 59159,
         "file": "retweet",
         "css": "retweet"
       },
       {
         "search": [
+          "keyboard"
+        ],
+        "code": 9000,
+        "file": "keyboard",
+        "css": "keyboard"
+      },
+      {
+        "search": [
+          "comment",
+          "reply",
+          "write"
+        ],
+        "code": 59160,
+        "file": "comment",
+        "css": "comment"
+      },
+      {
+        "search": [
+          "chat",
+          "talk"
+        ],
+        "code": 59168,
+        "file": "chat",
+        "css": "chat"
+      },
+      {
+        "search": [
+          "alert",
+          "bell",
+          "jingle"
+        ],
+        "code": 128276,
+        "file": "alert",
+        "css": "bell"
+      },
+      {
+        "search": [
+          "attention",
+          "warning",
+          "alert"
+        ],
+        "code": 9888,
+        "file": "warning",
+        "css": "attention"
+      },
+      {
+        "search": [
+          "contact",
+          "card",
+          "vcard"
+        ],
+        "code": 59170,
+        "file": "contact-card",
+        "css": "vcard"
+      },
+      {
+        "search": [
+          "address"
+        ],
+        "code": 59171,
+        "file": "address",
+        "css": "address"
+      },
+      {
+        "search": [
+          "location",
+          "mark",
+          "marker"
+        ],
+        "code": 59172,
+        "file": "location",
+        "css": "location"
+      },
+      {
+        "search": [
+          "down"
+        ],
+        "code": 59175,
+        "file": "map",
+        "css": "map"
+      },
+      {
+        "search": [
+          "direction"
+        ],
+        "code": 10146,
+        "file": "direction",
+        "css": "direction"
+      },
+      {
+        "search": [
+          "compass"
+        ],
+        "code": 59176,
+        "file": "compass",
+        "css": "compass"
+      },
+      {
+        "search": [
+          "trash",
+          "delete"
+        ],
+        "code": 59177,
+        "file": "trash",
+        "css": "trash"
+      },
+      {
+        "search": [
+          "doc",
+          "article"
+        ],
+        "code": 59184,
+        "file": "document",
+        "css": "doc"
+      },
+      {
+        "search": [
+          "doc",
+          "article"
+        ],
+        "code": 59190,
+        "file": "documents",
+        "css": "docs"
+      },
+      {
+        "search": [
+          "doc",
+          "article"
+        ],
+        "code": 59191,
+        "file": "landscape-documents",
+        "css": "docs-landscape"
+      },
+      {
+        "search": [
+          "doc",
+          "text",
+          "article"
+        ],
+        "code": 128196,
+        "file": "text-document",
+        "css": "doc-text"
+      },
+      {
+        "search": [
+          "book",
+          "doc"
+        ],
+        "code": 128214,
+        "file": "book",
+        "css": "book-open"
+      },
+      {
+        "search": [
+          "folder"
+        ],
+        "code": 128193,
+        "file": "folder",
+        "css": "folder"
+      },
+      {
+        "search": [
+          "archive"
+        ],
+        "code": 59192,
+        "file": "archive",
+        "css": "archive"
+      },
+      {
+        "search": [
           "rss"
         ],
-        "code": 57371,
+        "code": 59194,
         "file": "rss",
         "css": "rss"
       },
       {
         "search": [
-          "search",
-          "find"
+          "phone",
+          "telephone",
+          "call"
         ],
-        "code": 128269,
-        "file": "classic-search",
-        "css": "search"
-      },
-      {
-        "search": [
-          "search",
-          "find"
-        ],
-        "code": 128270,
-        "file": "search",
-        "css": "search-alt"
+        "code": 128222,
+        "file": "phone",
+        "css": "phone"
       },
       {
         "search": [
           "settings",
-          "cog"
+          "cog",
+          "gear"
         ],
         "code": 9881,
         "file": "settings",
-        "css": "settings"
+        "css": "cog"
       },
       {
         "search": [
           "share"
         ],
-        "code": 57372,
+        "code": 59196,
         "file": "share",
         "css": "share"
       },
@@ -602,42 +689,54 @@ module.exports = [
           "shopping",
           "cart"
         ],
-        "code": 57344,
+        "code": 59197,
         "file": "shopping-bag",
-        "css": "shopping-cart"
+        "css": "basket"
       },
       {
         "search": [
-          "shuffle"
+          "calendar",
+          "date"
         ],
-        "code": 128256,
-        "file": "shuffle",
-        "css": "shuffle"
+        "code": 128197,
+        "file": "calendar",
+        "css": "calendar"
       },
       {
         "search": [
-          "moon",
-          "sleep"
+          "mic"
         ],
-        "code": 9789,
-        "file": "sleep",
-        "css": "moon"
+        "code": 127908,
+        "file": "mic",
+        "css": "mic"
       },
       {
         "search": [
-          "star"
+          "volume",
+          "sound",
+          "mute"
         ],
-        "code": 9733,
-        "file": "star",
-        "css": "star"
+        "code": 128263,
+        "file": "mute",
+        "css": "volume-off"
       },
       {
         "search": [
-          "star"
+          "volume",
+          "sound"
         ],
-        "code": 9734,
-        "file": "star-outlined",
-        "css": "star-empty"
+        "code": 128266,
+        "file": "sound",
+        "css": "volume-up"
+      },
+      {
+        "search": [
+          "volume",
+          "sound"
+        ],
+        "code": 59202,
+        "file": "volume",
+        "css": "volume"
       },
       {
         "search": [
@@ -661,127 +760,168 @@ module.exports = [
       },
       {
         "search": [
-          "top",
-          "trophy"
+          "idea",
+          "lamp",
+          "light"
         ],
-        "code": 127945,
-        "file": "top-list",
-        "css": "top-list"
+        "code": 128161,
+        "file": "light-bulb",
+        "css": "lamp"
       },
       {
         "search": [
-          "lock",
-          "unlock"
+          "light",
+          "dim",
+          "bright"
         ],
-        "code": 128275,
-        "file": "unlocked",
-        "css": "lock-open"
+        "code": 128261,
+        "file": "light-down",
+        "css": "light-down"
       },
       {
         "search": [
-          "eye",
-          "subscribe"
+          "light",
+          "dim",
+          "bright"
         ],
-        "code": 57373,
-        "file": "view-eye",
-        "css": "eye"
+        "code": 128262,
+        "file": "light-up",
+        "css": "light-up"
       },
       {
         "search": [
-          "warning"
+          "block",
+          "deny"
         ],
-        "code": 9888,
-        "file": "warning",
-        "css": "warning"
+        "code": 128683,
+        "file": "block",
+        "css": "block"
       },
       {
         "search": [
-          "pencil",
-          "write"
+          "resize",
+          "fullscreen"
         ],
-        "code": 9987,
-        "file": "write-new",
-        "css": "pencil"
+        "code": 59204,
+        "file": "full-screen",
+        "css": "resize-full"
       },
       {
         "search": [
-          "archive"
+          "resize"
         ],
-        "code": 57374,
-        "file": "archive",
-        "css": "archive"
+        "code": 59206,
+        "file": "small-screen",
+        "css": "resize-small"
+      },
+      {
+        "search": [
+          "popup",
+          "window"
+        ],
+        "code": 59212,
+        "file": "popup",
+        "css": "popup"
+      },
+      {
+        "search": [
+          "publish"
+        ],
+        "code": 59213,
+        "file": "publish",
+        "css": "publish"
+      },
+      {
+        "search": [
+          "window"
+        ],
+        "code": 59214,
+        "file": "browser",
+        "css": "window"
       },
       {
         "search": [
           "arrow",
-          "down"
+          "dropdown",
+          "combobox"
         ],
-        "code": 57376,
+        "code": 59215,
+        "file": "select-box-arrow",
+        "css": "arrow-combo"
+      },
+      {
+        "search": [
+          "arrow",
+          "down",
+          "download"
+        ],
+        "code": 59224,
         "file": "down-circle-arrow",
-        "css": "arrow-down-circle2"
+        "css": "down-circle2"
       },
       {
         "search": [
           "arrow",
           "left"
         ],
-        "code": 57377,
+        "code": 59225,
         "file": "left-circle-arrow",
-        "css": "arrow-left-circle2"
+        "css": "left-circle2"
       },
       {
         "search": [
           "arrow",
           "right"
         ],
-        "code": 57378,
+        "code": 59226,
         "file": "right-circle-arrow",
-        "css": "arrow-right-circle2"
+        "css": "right-circle2"
       },
       {
         "search": [
           "arrow",
-          "up"
+          "up",
+          "upload"
         ],
-        "code": 57379,
+        "code": 59227,
         "file": "up-circle-arrow",
-        "css": "arrow-up-circle2"
+        "css": "up-circle2"
       },
       {
         "search": [
           "arrow",
           "down"
         ],
-        "code": 57380,
+        "code": 59228,
         "file": "open-arrow-down",
-        "css": "arrow-down-open"
+        "css": "down-open"
       },
       {
         "search": [
           "arrow",
           "left"
         ],
-        "code": 57381,
+        "code": 59229,
         "file": "open-arrow-left",
-        "css": "arrow-left-open"
+        "css": "left-open"
       },
       {
         "search": [
           "arrow",
           "right"
         ],
-        "code": 57382,
+        "code": 59230,
         "file": "open-arrow-right",
-        "css": "arrow-right-open"
+        "css": "right-open"
       },
       {
         "search": [
           "arrow",
           "up"
         ],
-        "code": 57383,
+        "code": 59231,
         "file": "open-arrow-up",
-        "css": "arrow-up-open"
+        "css": "up-open"
       },
       {
         "search": [
@@ -790,7 +930,7 @@ module.exports = [
         ],
         "code": 11015,
         "file": "thin-arrow-down",
-        "css": "arrow-down-thin"
+        "css": "down-thin"
       },
       {
         "search": [
@@ -799,7 +939,7 @@ module.exports = [
         ],
         "code": 11013,
         "file": "thin-arrow-left",
-        "css": "arrow-left-thin"
+        "css": "left-thin"
       },
       {
         "search": [
@@ -808,7 +948,7 @@ module.exports = [
         ],
         "code": 10145,
         "file": "thin-arrow-right",
-        "css": "arrow-right-thin"
+        "css": "right-thin"
       },
       {
         "search": [
@@ -817,7 +957,7 @@ module.exports = [
         ],
         "code": 11014,
         "file": "thin-arrow-up",
-        "css": "arrow-up-thin"
+        "css": "up-thin"
       },
       {
         "search": [
@@ -826,7 +966,7 @@ module.exports = [
         ],
         "code": 9662,
         "file": "direction-arrow-down",
-        "css": "arrow-down-dir"
+        "css": "down-dir"
       },
       {
         "search": [
@@ -835,7 +975,7 @@ module.exports = [
         ],
         "code": 9666,
         "file": "direction-arrow-left",
-        "css": "arrow-left-dir"
+        "css": "left-dir"
       },
       {
         "search": [
@@ -844,7 +984,7 @@ module.exports = [
         ],
         "code": 9656,
         "file": "direction-arrow-right",
-        "css": "arrow-right-dir"
+        "css": "right-dir"
       },
       {
         "search": [
@@ -853,7 +993,7 @@ module.exports = [
         ],
         "code": 9652,
         "file": "direction-arrow-up",
-        "css": "arrow-up-dir"
+        "css": "up-dir"
       },
       {
         "search": [
@@ -862,7 +1002,7 @@ module.exports = [
         ],
         "code": 58544,
         "file": "bold-down-arrow",
-        "css": "arrow-down-bold"
+        "css": "down-bold"
       },
       {
         "search": [
@@ -871,7 +1011,7 @@ module.exports = [
         ],
         "code": 58541,
         "file": "bold-left-arrow",
-        "css": "arrow-left-bold"
+        "css": "left-bold"
       },
       {
         "search": [
@@ -880,7 +1020,7 @@ module.exports = [
         ],
         "code": 58542,
         "file": "bold-right-arrow",
-        "css": "arrow-right-bold"
+        "css": "right-bold"
       },
       {
         "search": [
@@ -889,7 +1029,7 @@ module.exports = [
         ],
         "code": 58543,
         "file": "bold-up-arrow",
-        "css": "arrow-up-bold"
+        "css": "up-bold"
       },
       {
         "search": [
@@ -898,7 +1038,7 @@ module.exports = [
         ],
         "code": 8595,
         "file": "down-arrow",
-        "css": "arrow-down"
+        "css": "down"
       },
       {
         "search": [
@@ -907,7 +1047,7 @@ module.exports = [
         ],
         "code": 8592,
         "file": "left-arrow",
-        "css": "arrow-left"
+        "css": "left"
       },
       {
         "search": [
@@ -916,7 +1056,7 @@ module.exports = [
         ],
         "code": 8594,
         "file": "right-arrow",
-        "css": "arrow-right"
+        "css": "right"
       },
       {
         "search": [
@@ -925,43 +1065,43 @@ module.exports = [
         ],
         "code": 8593,
         "file": "up-arrow",
-        "css": "arrow-up"
+        "css": "up"
       },
       {
         "search": [
-          "progress",
-          "charge"
+          "reload",
+          "undo"
         ],
-        "code": 57392,
-        "file": "charge-empty",
-        "css": "progress-0"
+        "code": 10226,
+        "file": "reload-CCW",
+        "css": "ccw"
       },
       {
         "search": [
-          "progress",
-          "charge"
+          "reload",
+          "redo",
+          "repeat"
         ],
-        "code": 57393,
-        "file": "charge-one-third",
-        "css": "progress-1"
+        "code": 10227,
+        "file": "reload-CW",
+        "css": "cw"
       },
       {
         "search": [
-          "progress",
-          "charge"
+          "down"
         ],
-        "code": 57394,
-        "file": "charge-two-thirds",
-        "css": "progress-2"
+        "code": 8627,
+        "file": "level-down",
+        "css": "level-down"
       },
       {
         "search": [
-          "progress",
-          "charge"
+          "shuffle",
+          "random"
         ],
-        "code": 57395,
-        "file": "charge-full",
-        "css": "progress-3"
+        "code": 128256,
+        "file": "shuffle",
+        "css": "shuffle"
       },
       {
         "search": [
@@ -1006,7 +1146,7 @@ module.exports = [
         ],
         "code": 9197,
         "file": "jump-to-end",
-        "css": "right-end"
+        "css": "to-end"
       },
       {
         "search": [
@@ -1015,7 +1155,7 @@ module.exports = [
         ],
         "code": 9198,
         "file": "jump-to-start",
-        "css": "left-start"
+        "css": "to-start"
       },
       {
         "search": [
@@ -1024,7 +1164,7 @@ module.exports = [
         ],
         "code": 9193,
         "file": "fast-forward",
-        "css": "right-ff"
+        "css": "fast-fw"
       },
       {
         "search": [
@@ -1033,23 +1173,87 @@ module.exports = [
         ],
         "code": 9194,
         "file": "fast-backward",
-        "css": "left-fb"
+        "css": "fast-bw"
       },
       {
         "search": [
-          "book"
+          "progress",
+          "charge"
         ],
-        "code": 128214,
-        "file": "book",
-        "css": "book-open"
+        "code": 59240,
+        "file": "charge-empty",
+        "css": "progress-0"
       },
       {
         "search": [
-          "bookmark"
+          "progress",
+          "charge"
         ],
-        "code": 128278,
-        "file": "bookmark",
-        "css": "bookmark"
+        "code": 59241,
+        "file": "charge-one-third",
+        "css": "progress-1"
+      },
+      {
+        "search": [
+          "progress",
+          "charge"
+        ],
+        "code": 59242,
+        "file": "charge-two-thirds",
+        "css": "progress-2"
+      },
+      {
+        "search": [
+          "progress",
+          "charge"
+        ],
+        "code": 59243,
+        "file": "charge-full",
+        "css": "progress-3"
+      },
+      {
+        "search": [
+          "target"
+        ],
+        "code": 127919,
+        "file": "center-crosshair",
+        "css": "target"
+      },
+      {
+        "search": [
+          "palette"
+        ],
+        "code": 127912,
+        "file": "palette",
+        "css": "palette"
+      },
+      {
+        "search": [
+          "add",
+          "list"
+        ],
+        "code": 57347,
+        "file": "add-to-list",
+        "css": "list-add"
+      },
+      {
+        "search": [
+          "broadcast",
+          "wifi",
+          "signal"
+        ],
+        "code": 59248,
+        "file": "broadcast",
+        "css": "signal"
+      },
+      {
+        "search": [
+          "top",
+          "trophy"
+        ],
+        "code": 127942,
+        "file": "top-list",
+        "css": "top-list"
       },
       {
         "search": [
@@ -1064,258 +1268,9 @@ module.exports = [
           "back",
           "time"
         ],
-        "code": 57408,
+        "code": 59249,
         "file": "back-in-time",
         "css": "back-in-time"
-      },
-      {
-        "search": [
-          "home"
-        ],
-        "code": 8962,
-        "file": "home",
-        "css": "home"
-      },
-      {
-        "search": [
-          "dot"
-        ],
-        "code": 57424,
-        "file": "dot",
-        "css": "dot"
-      },
-      {
-        "search": [
-          "dot"
-        ],
-        "code": 57425,
-        "file": "dots-two",
-        "css": "dot-2"
-      },
-      {
-        "search": [
-          "dot"
-        ],
-        "code": 57426,
-        "file": "dots-three",
-        "css": "dot-3"
-      },
-      {
-        "search": [
-          "idea",
-          "lamp",
-          "light"
-        ],
-        "code": 128161,
-        "file": "light-bulb",
-        "css": "lamp"
-      },
-      {
-        "search": [
-          "light",
-          "dim",
-          "bright"
-        ],
-        "code": 128261,
-        "file": "light-down",
-        "css": "light-down"
-      },
-      {
-        "search": [
-          "light",
-          "dim",
-          "bright"
-        ],
-        "code": 128262,
-        "file": "light-up",
-        "css": "light-up"
-      },
-      {
-        "search": [
-          "trash"
-        ],
-        "code": 57562,
-        "file": "trash",
-        "css": "trash"
-      },
-      {
-        "search": [
-          "doc",
-          "article"
-        ],
-        "code": 57416,
-        "file": "document",
-        "css": "doc"
-      },
-      {
-        "search": [
-          "doc",
-          "article"
-        ],
-        "code": 57417,
-        "file": "documents",
-        "css": "docs"
-      },
-      {
-        "search": [
-          "doc",
-          "article"
-        ],
-        "code": 57418,
-        "file": "landscape-documents",
-        "css": "docs-landscape"
-      },
-      {
-        "search": [
-          "doc",
-          "text",
-          "article"
-        ],
-        "code": 128196,
-        "file": "text-document",
-        "css": "doc-text"
-      },
-      {
-        "search": [
-          "volume",
-          "sound",
-          "mute"
-        ],
-        "code": 128263,
-        "file": "mute",
-        "css": "volume-off"
-      },
-      {
-        "search": [
-          "volume",
-          "sound"
-        ],
-        "code": 128266,
-        "file": "sound",
-        "css": "volume-up"
-      },
-      {
-        "search": [
-          "volume",
-          "sound"
-        ],
-        "code": 57431,
-        "file": "volume",
-        "css": "volume"
-      },
-      {
-        "search": [
-          "cloud"
-        ],
-        "code": 9729,
-        "file": "cloud",
-        "css": "cloud"
-      },
-      {
-        "search": [
-          "keyboard"
-        ],
-        "code": 9000,
-        "file": "keyboard",
-        "css": "keyboard"
-      },
-      {
-        "search": [
-          "folder"
-        ],
-        "code": 128193,
-        "file": "folder",
-        "css": "folder"
-      },
-      {
-        "search": [
-          "download"
-        ],
-        "code": 57410,
-        "file": "download",
-        "css": "download"
-      },
-      {
-        "search": [],
-        "code": 57411,
-        "file": "upload",
-        "css": "upload"
-      },
-      {
-        "search": [
-          "upload",
-          "cloud"
-        ],
-        "code": 57413,
-        "file": "upload-to-cloud",
-        "css": "upload-cloud"
-      },
-      {
-        "search": [
-          "code"
-        ],
-        "code": 57439,
-        "file": "code",
-        "css": "code"
-      },
-      {
-        "search": [
-          "popup"
-        ],
-        "code": 57440,
-        "file": "popup",
-        "css": "popup"
-      },
-      {
-        "search": [
-          "publish"
-        ],
-        "code": 57441,
-        "file": "publish",
-        "css": "publish"
-      },
-      {
-        "search": [
-          "pen",
-          "feather"
-        ],
-        "code": 57442,
-        "file": "feather",
-        "css": "feather"
-      },
-      {
-        "search": [
-          "resize",
-          "fullscreen"
-        ],
-        "code": 57443,
-        "file": "full-screen",
-        "css": "resize-full"
-      },
-      {
-        "search": [
-          "resize"
-        ],
-        "code": 57444,
-        "file": "small-screen",
-        "css": "resize-small"
-      },
-      {
-        "search": [
-          "globe"
-        ],
-        "code": 57445,
-        "file": "globe",
-        "css": "globe"
-      },
-      {
-        "search": [
-          "cd",
-          "vinyl"
-        ],
-        "code": 128191,
-        "file": "vinyl-record",
-        "css": "cd"
       },
       {
         "search": [
@@ -1329,43 +1284,35 @@ module.exports = [
       },
       {
         "search": [
-          "image"
+          "mobile",
+          "iphone"
         ],
-        "code": 127748,
-        "file": "image",
-        "css": "image"
+        "code": 128241,
+        "file": "mobile",
+        "css": "mobile"
       },
       {
         "search": [
-          "arrow"
+          "net"
         ],
-        "code": 57432,
-        "file": "select-box-arrow",
-        "css": "arrow-combo"
+        "code": 59254,
+        "file": "network",
+        "css": "net"
       },
       {
         "search": [
-          "window"
+          "cd",
+          "vinyl"
         ],
-        "code": 57433,
-        "file": "browser",
-        "css": "window"
-      },
-      {
-        "search": [
-          "song",
-          "music",
-          "sound"
-        ],
-        "code": 57434,
-        "file": "song",
-        "css": "song"
+        "code": 128191,
+        "file": "vinyl-record",
+        "css": "cd"
       },
       {
         "search": [
           "inbox"
         ],
-        "code": 57435,
+        "code": 59255,
         "file": "inbox",
         "css": "inbox"
       },
@@ -1373,50 +1320,152 @@ module.exports = [
         "search": [
           "install"
         ],
-        "code": 57436,
+        "code": 59256,
         "file": "install",
         "css": "install"
       },
       {
         "search": [
+          "globe"
+        ],
+        "code": 119565,
+        "file": "globe",
+        "css": "globe"
+      },
+      {
+        "search": [
+          "cloud"
+        ],
+        "code": 9729,
+        "file": "cloud",
+        "css": "cloud"
+      },
+      {
+        "search": [
+          "flash",
+          "bolt"
+        ],
+        "code": 9889,
+        "file": "flash",
+        "css": "flash"
+      },
+      {
+        "search": [
+          "moon",
+          "sleep"
+        ],
+        "code": 9789,
+        "file": "sleep",
+        "css": "moon"
+      },
+      {
+        "search": [
+          "flight",
+          "plane",
+          "airplane"
+        ],
+        "code": 9992,
+        "file": "flight",
+        "css": "flight"
+      },
+      {
+        "search": [
+          "leaf"
+        ],
+        "code": 127810,
+        "file": "leaf",
+        "css": "leaf"
+      },
+      {
+        "search": [
+          "lifebuoy"
+        ],
+        "code": 59272,
+        "file": "lifebuoy",
+        "css": "lifebuoy"
+      },
+      {
+        "search": [
+          "mouse",
+          "website"
+        ],
+        "code": 59273,
+        "file": "mouse-website",
+        "css": "mouse"
+      },
+      {
+        "search": [
           "bag"
         ],
-        "code": 57437,
+        "code": 59274,
         "file": "suitecase",
         "css": "bag"
       },
       {
         "search": [
-          "net"
+          "dot"
         ],
-        "code": 57438,
-        "file": "network",
-        "css": "net"
+        "code": 59275,
+        "file": "dot",
+        "css": "dot"
+      },
+      {
+        "search": [
+          "dot",
+          "flickr"
+        ],
+        "code": 59276,
+        "file": "dots-two",
+        "css": "dot-2"
+      },
+      {
+        "search": [
+          "dot"
+        ],
+        "code": 59277,
+        "file": "dots-three",
+        "css": "dot-3"
+      },
+      {
+        "search": [
+          "google",
+          "circles"
+        ],
+        "code": 62224,
+        "file": "google-circles",
+        "css": "google-circles"
       },
       {
         "search": [
           "creative",
           "commons"
         ],
-        "code": 57731,
+        "code": 59301,
         "file": "creative-commons",
         "css": "cc"
       },
       {
-        "search": [],
-        "code": 57728,
+        "search": [
+          "entypo"
+        ],
+        "code": 62976,
         "file": "entypo-square",
         "css": "logo-entypo"
       },
       {
-        "search": [],
-        "code": 57729,
+        "search": [
+          "sweden"
+        ],
+        "code": 62977,
         "file": "sweden",
         "css": "flag-sw"
       },
       {
-        "search": [],
-        "code": 57730,
+        "search": [
+          "daniel",
+          "bruce"
+        ],
+        "code": 62979,
         "file": "db-signature",
         "css": "logo-db"
       }
@@ -1469,704 +1518,1265 @@ module.exports = [
     },
     "glyphs": [
       {
-        "code": 61440,
-        "css": "glyph1",
-        "file": "glyph1"
-      },
-      {
-        "code": 61441,
-        "css": "glyph2",
-        "file": "glyph2"
-      },
-      {
-        "code": 61442,
-        "css": "glyph3",
-        "file": "glyph3"
-      },
-      {
-        "code": 61443,
-        "css": "glyph4",
-        "file": "glyph4"
-      },
-      {
-        "code": 61444,
-        "css": "glyph5",
-        "file": "glyph5"
-      },
-      {
-        "code": 61445,
-        "css": "glyph6",
-        "file": "glyph6"
-      },
-      {
-        "code": 61446,
-        "css": "glyph7",
-        "file": "glyph7"
-      },
-      {
-        "code": 61447,
-        "css": "glyph8",
-        "file": "glyph8"
-      },
-      {
-        "code": 61448,
-        "css": "glyph9",
-        "file": "glyph9"
-      },
-      {
-        "code": 61449,
-        "css": "glyph10",
-        "file": "glyph10"
-      },
-      {
-        "code": 61450,
-        "css": "glyph11",
-        "file": "glyph11"
-      },
-      {
-        "code": 61451,
-        "css": "glyph12",
-        "file": "glyph12"
-      },
-      {
-        "code": 61452,
-        "css": "glyph13",
-        "file": "glyph13"
-      },
-      {
-        "code": 61453,
-        "css": "glyph14",
-        "file": "glyph14"
-      },
-      {
-        "code": 61454,
-        "css": "glyph15",
-        "file": "glyph15"
-      },
-      {
-        "code": 61456,
-        "css": "glyph16",
-        "file": "glyph16"
-      },
-      {
-        "code": 61457,
-        "css": "glyph17",
-        "file": "glyph17"
-      },
-      {
-        "code": 61458,
-        "css": "glyph18",
-        "file": "glyph18"
-      },
-      {
-        "code": 61459,
-        "css": "glyph19",
-        "file": "glyph19"
-      },
-      {
-        "code": 61460,
-        "css": "glyph20",
-        "file": "glyph20"
-      },
-      {
-        "code": 61461,
-        "css": "glyph21",
-        "file": "glyph21"
-      },
-      {
-        "code": 61462,
-        "css": "glyph22",
-        "file": "glyph22"
-      },
-      {
-        "code": 61463,
-        "css": "glyph23",
-        "file": "glyph23"
-      },
-      {
-        "code": 61464,
-        "css": "glyph24",
-        "file": "glyph24"
-      },
-      {
-        "code": 61465,
-        "css": "glyph25",
-        "file": "glyph25"
-      },
-      {
-        "code": 61466,
-        "css": "glyph26",
-        "file": "glyph26"
-      },
-      {
-        "code": 61467,
-        "css": "glyph27",
-        "file": "glyph27"
-      },
-      {
-        "code": 61468,
-        "css": "glyph28",
-        "file": "glyph28"
-      },
-      {
-        "code": 61469,
-        "css": "glyph29",
-        "file": "glyph29"
-      },
-      {
-        "code": 61470,
-        "css": "glyph30",
-        "file": "glyph30"
-      },
-      {
-        "code": 61473,
-        "css": "glyph31",
-        "file": "glyph31"
-      },
-      {
-        "code": 61474,
-        "css": "glyph32",
-        "file": "glyph32"
-      },
-      {
-        "code": 61475,
-        "css": "glyph33",
-        "file": "glyph33"
-      },
-      {
-        "code": 61476,
-        "css": "glyph34",
-        "file": "glyph34"
-      },
-      {
-        "code": 61477,
-        "css": "glyph35",
-        "file": "glyph35"
-      },
-      {
-        "code": 61478,
-        "css": "glyph36",
-        "file": "glyph36"
-      },
-      {
-        "code": 61479,
-        "css": "glyph37",
-        "file": "glyph37"
-      },
-      {
-        "code": 61480,
-        "css": "glyph38",
-        "file": "glyph38"
-      },
-      {
-        "code": 61481,
-        "css": "glyph39",
-        "file": "glyph39"
-      },
-      {
-        "code": 61482,
-        "css": "glyph40",
-        "file": "glyph40"
-      },
-      {
-        "code": 61483,
-        "css": "glyph41",
-        "file": "glyph41"
-      },
-      {
-        "code": 61484,
-        "css": "glyph42",
-        "file": "glyph42"
-      },
-      {
-        "code": 61485,
-        "css": "glyph43",
-        "file": "glyph43"
-      },
-      {
-        "code": 61486,
-        "css": "glyph44",
-        "file": "glyph44"
-      },
-      {
-        "code": 61487,
-        "css": "glyph45",
-        "file": "glyph45"
-      },
-      {
-        "code": 61488,
-        "css": "glyph46",
-        "file": "glyph46"
-      },
-      {
-        "code": 61489,
-        "css": "glyph47",
-        "file": "glyph47"
-      },
-      {
-        "code": 61490,
-        "css": "glyph48",
-        "file": "glyph48"
-      },
-      {
-        "code": 61491,
-        "css": "glyph49",
-        "file": "glyph49"
-      },
-      {
-        "code": 61492,
-        "css": "glyph50",
-        "file": "glyph50"
-      },
-      {
-        "code": 61493,
-        "css": "glyph51",
-        "file": "glyph51"
-      },
-      {
-        "code": 61494,
-        "css": "glyph52",
-        "file": "glyph52"
-      },
-      {
-        "code": 61495,
-        "css": "glyph53",
-        "file": "glyph53"
-      },
-      {
-        "code": 61496,
-        "css": "glyph54",
-        "file": "glyph54"
-      },
-      {
-        "code": 61497,
-        "css": "glyph55",
-        "file": "glyph55"
-      },
-      {
-        "code": 61498,
-        "css": "glyph56",
-        "file": "glyph56"
-      },
-      {
-        "code": 61499,
-        "css": "glyph57",
-        "file": "glyph57"
-      },
-      {
-        "code": 61500,
-        "css": "glyph58",
-        "file": "glyph58"
-      },
-      {
-        "code": 61501,
-        "css": "glyph59",
-        "file": "glyph59"
-      },
-      {
-        "code": 61502,
-        "css": "glyph60",
-        "file": "glyph60"
-      },
-      {
-        "code": 61504,
-        "css": "glyph61",
-        "file": "glyph61"
-      },
-      {
-        "code": 61505,
-        "css": "glyph62",
-        "file": "glyph62"
-      },
-      {
-        "code": 61506,
-        "css": "glyph63",
-        "file": "glyph63"
-      },
-      {
-        "code": 61507,
-        "css": "glyph64",
-        "file": "glyph64"
-      },
-      {
-        "code": 61508,
-        "css": "glyph65",
-        "file": "glyph65"
-      },
-      {
-        "code": 61509,
-        "css": "glyph66",
-        "file": "glyph66"
-      },
-      {
-        "code": 61510,
-        "css": "glyph67",
-        "file": "glyph67"
-      },
-      {
+        "search": [
+          "glass"
+        ],
+        "code": 127864,
+        "from": 61440,
+        "css": "glass"
+      },
+      {
+        "search": [
+          "music",
+          "note",
+          "song",
+          "sound"
+        ],
+        "code": 9835,
+        "from": 61441,
+        "css": "music"
+      },
+      {
+        "search": [
+          "search",
+          "find"
+        ],
+        "code": 128269,
+        "from": 61442,
+        "css": "search"
+      },
+      {
+        "search": [
+          "mail",
+          "email"
+        ],
+        "code": 9993,
+        "from": 61443,
+        "css": "mail"
+      },
+      {
+        "search": [
+          "heart"
+        ],
+        "code": 9829,
+        "from": 61444,
+        "css": "heart"
+      },
+      {
+        "search": [
+          "heart"
+        ],
+        "code": 9825,
+        "from": 61578,
+        "css": "heart-empty"
+      },
+      {
+        "search": [
+          "star"
+        ],
+        "code": 9733,
+        "from": 61445,
+        "css": "star"
+      },
+      {
+        "search": [
+          "star"
+        ],
+        "code": 9734,
+        "from": 61446,
+        "css": "star-empty"
+      },
+      {
+        "search": [
+          "star"
+        ],
+        "code": 59137,
+        "from": 61577,
+        "css": "star-half"
+      },
+      {
+        "search": [
+          "profile",
+          "contact",
+          "user"
+        ],
+        "code": 128100,
+        "from": 61447,
+        "css": "user"
+      },
+      {
+        "search": [
+          "movie",
+          "video",
+          "film"
+        ],
+        "code": 127916,
+        "from": 61448,
+        "css": "video"
+      },
+      {
+        "search": [
+          "facetime",
+          "movie",
+          "video",
+          "film"
+        ],
+        "code": 127909,
+        "from": 61501,
+        "css": "videocam"
+      },
+      {
+        "search": [
+          "camera",
+          "photo"
+        ],
+        "code": 128247,
+        "from": 61488,
+        "css": "camera"
+      },
+      {
+        "search": [
+          "camera",
+          "photo"
+        ],
+        "code": 59151,
+        "from": 61571,
+        "css": "camera-alt"
+      },
+      {
+        "search": [
+          "image",
+          "picture",
+          "photo"
+        ],
+        "code": 127748,
+        "from": 61502,
+        "css": "picture"
+      },
+      {
+        "search": [
+          "image",
+          "list",
+          "thumbnails"
+        ],
+        "code": 59144,
+        "from": 61449,
+        "css": "th-large"
+      },
+      {
+        "search": [
+          "image",
+          "list",
+          "thumbnails"
+        ],
+        "code": 9871,
+        "from": 61450,
+        "css": "th"
+      },
+      {
+        "search": [
+          "list"
+        ],
+        "code": 9776,
+        "from": 61451,
+        "css": "list"
+      },
+      {
+        "search": [
+          "ok",
+          true,
+          "check",
+          "mark"
+        ],
+        "code": 10003,
+        "from": 61452,
+        "css": "ok"
+      },
+      {
+        "search": [
+          "ok",
+          true,
+          "check",
+          "mark"
+        ],
+        "code": 10004,
+        "from": 61528,
+        "css": "ok-circle"
+      },
+      {
+        "search": [
+          "ok",
+          true,
+          "check",
+          "mark"
+        ],
+        "code": 59138,
+        "from": 61533,
+        "css": "ok-circle2"
+      },
+      {
+        "search": [
+          "close",
+          "cancel",
+          "reject"
+        ],
+        "code": 10005,
+        "from": 61453,
+        "css": "cancel"
+      },
+      {
+        "search": [
+          "close",
+          "cancel",
+          "reject"
+        ],
+        "code": 10006,
+        "from": 61527,
+        "css": "cancel-circle"
+      },
+      {
+        "search": [
+          "close",
+          "cancel",
+          "reject"
+        ],
+        "code": 59139,
+        "from": 61532,
+        "css": "cancel-circle2"
+      },
+      {
+        "search": [
+          "plus"
+        ],
+        "code": 43,
+        "from": 61543,
+        "css": "plus"
+      },
+      {
+        "search": [
+          "plus"
+        ],
+        "code": 10133,
+        "from": 61525,
+        "css": "plus-circle"
+      },
+      {
+        "search": [
+          "minus"
+        ],
+        "code": 45,
+        "from": 61544,
+        "css": "minus"
+      },
+      {
+        "search": [
+          "minus"
+        ],
+        "code": 10134,
+        "from": 61526,
+        "css": "minus-circle"
+      },
+      {
+        "search": [
+          "help",
+          "question"
+        ],
+        "code": 59140,
+        "from": 61529,
+        "css": "help-circle"
+      },
+      {
+        "search": [
+          "info"
+        ],
+        "code": 59141,
+        "from": 61530,
+        "css": "info-circle"
+      },
+      {
+        "search": [
+          "home"
+        ],
+        "code": 8962,
+        "from": 61461,
+        "css": "home"
+      },
+      {
+        "search": [
+          "link",
+          "url"
+        ],
+        "code": 128279,
+        "from": 61582,
+        "css": "link"
+      },
+      {
+        "search": [
+          "lock"
+        ],
+        "code": 128274,
+        "from": 61475,
+        "css": "lock"
+      },
+      {
+        "search": [
+          "pin",
+          "pushpin"
+        ],
+        "code": 128204,
+        "from": 61581,
+        "css": "pin"
+      },
+      {
+        "search": [
+          "eye",
+          "subscribe"
+        ],
+        "code": 59146,
+        "from": 61550,
+        "css": "eye"
+      },
+      {
+        "search": [
+          "eye",
+          "unsubscribe"
+        ],
+        "code": 59147,
+        "from": 61552,
+        "css": "eye-off"
+      },
+      {
+        "search": [
+          "tag",
+          "category",
+          "price",
+          "offer"
+        ],
+        "code": 59148,
+        "from": 61483,
+        "css": "tag"
+      },
+      {
+        "search": [
+          "tag",
+          "category",
+          "price",
+          "offer"
+        ],
+        "code": 59149,
+        "from": 61484,
+        "css": "tags"
+      },
+      {
+        "search": [
+          "bookmark"
+        ],
+        "code": 128278,
+        "from": 61486,
+        "css": "bookmark"
+      },
+      {
+        "search": [
+          "flag"
+        ],
+        "code": 9873,
+        "from": 61476,
+        "css": "flag"
+      },
+      {
+        "search": [
+          "thumbs",
+          "up",
+          "like",
+          "vote"
+        ],
+        "code": 128077,
+        "from": 61575,
+        "css": "thumbs-up"
+      },
+      {
+        "search": [
+          "thumbs",
+          "down",
+          "unlike",
+          "vote"
+        ],
+        "code": 128078,
+        "from": 61576,
+        "css": "thumbs-down"
+      },
+      {
+        "search": [
+          "download"
+        ],
+        "code": 128229,
+        "from": 61465,
+        "css": "download"
+      },
+      {
+        "search": [
+          "upload"
+        ],
+        "code": 128228,
+        "from": 61587,
+        "css": "upload"
+      },
+      {
+        "search": [
+          "forward"
+        ],
+        "code": 10150,
+        "from": 61540,
+        "css": "forward"
+      },
+      {
+        "search": [
+          "export",
+          "share"
+        ],
+        "code": 59157,
+        "from": 61509,
+        "css": "export"
+      },
+      {
+        "search": [
+          "pencil",
+          "write",
+          "reply",
+          "edit"
+        ],
+        "code": 9998,
+        "from": 61504,
+        "css": "pencil"
+      },
+      {
+        "search": [
+          "pencil",
+          "write",
+          "reply",
+          "edit"
+        ],
+        "code": 9997,
+        "from": 61508,
+        "css": "edit"
+      },
+      {
+        "search": [
+          "print"
+        ],
+        "code": 59158,
+        "from": 61487,
+        "css": "print"
+      },
+      {
+        "search": [
+          "retweet",
+          "twitter"
+        ],
+        "code": 59159,
+        "from": 61561,
+        "css": "retweet"
+      },
+      {
+        "search": [
+          "comment",
+          "reply",
+          "write"
+        ],
+        "code": 59160,
+        "from": 61557,
+        "css": "comment"
+      },
+      {
+        "search": [
+          "chat",
+          "talk"
+        ],
+        "code": 59168,
+        "from": 61574,
+        "css": "chat"
+      },
+      {
+        "search": [
+          "attention",
+          "warning",
+          "alert"
+        ],
+        "code": 9888,
+        "from": 61553,
+        "css": "attention"
+      },
+      {
+        "search": [
+          "attention",
+          "warning",
+          "alert"
+        ],
+        "code": 10071,
+        "from": 61546,
+        "css": "attention-circle"
+      },
+      {
+        "search": [
+          "location",
+          "mark",
+          "marker"
+        ],
+        "code": 59172,
+        "from": 61505,
+        "css": "location"
+      },
+      {
+        "search": [
+          "trash",
+          "delete"
+        ],
+        "code": 59177,
+        "from": 61460,
+        "css": "trash"
+      },
+      {
+        "search": [
+          "doc",
+          "article"
+        ],
+        "code": 128196,
+        "from": 61462,
+        "css": "doc"
+      },
+      {
+        "search": [
+          "folder"
+        ],
+        "code": 128193,
+        "from": 61563,
+        "css": "folder"
+      },
+      {
+        "search": [
+          "folder"
+        ],
+        "code": 128194,
+        "from": 61564,
+        "css": "folder-open"
+      },
+      {
+        "search": [
+          "settings",
+          "cog",
+          "gear"
+        ],
+        "code": 9881,
+        "from": 61459,
+        "css": "cog"
+      },
+      {
+        "search": [
+          "settings",
+          "cog",
+          "gear"
+        ],
+        "code": 9967,
+        "from": 61573,
+        "css": "cog-alt"
+      },
+      {
+        "search": [
+          "basket",
+          "shopping",
+          "cart"
+        ],
+        "code": 59197,
+        "from": 61562,
+        "css": "basket"
+      },
+      {
+        "search": [
+          "calendar",
+          "date"
+        ],
+        "code": 128197,
+        "from": 61555,
+        "css": "calendar"
+      },
+      {
+        "search": [
+          "login",
+          "signin",
+          "enter"
+        ],
+        "code": 59200,
+        "from": 61584,
+        "css": "login"
+      },
+      {
+        "search": [
+          "logout",
+          "signout",
+          "exit"
+        ],
+        "code": 59201,
+        "from": 61579,
+        "css": "logout"
+      },
+      {
+        "search": [
+          "volume",
+          "sound",
+          "mute"
+        ],
+        "code": 128263,
+        "from": 61478,
+        "css": "volume-off"
+      },
+      {
+        "search": [
+          "volume",
+          "sound"
+        ],
+        "code": 128265,
+        "from": 61479,
+        "css": "volume-down"
+      },
+      {
+        "search": [
+          "volume",
+          "sound"
+        ],
+        "code": 128266,
+        "from": 61480,
+        "css": "volume-up"
+      },
+      {
+        "search": [
+          "sound",
+          "music",
+          "headphones"
+        ],
+        "code": 127911,
+        "from": 61477,
+        "css": "headphones"
+      },
+      {
+        "search": [
+          "clock",
+          "time"
+        ],
+        "code": 128340,
+        "from": 61463,
+        "css": "clock"
+      },
+      {
+        "search": [
+          "block",
+          "deny"
+        ],
+        "code": 128683,
+        "from": 61534,
+        "css": "block"
+      },
+      {
+        "search": [
+          "resize",
+          "fullscreen"
+        ],
+        "code": 59204,
+        "from": 61541,
+        "css": "resize-full"
+      },
+      {
+        "search": [
+          "resize"
+        ],
+        "code": 59206,
+        "from": 61542,
+        "css": "resize-small"
+      },
+      {
+        "search": [
+          "resize"
+        ],
+        "code": 11020,
+        "from": 61565,
+        "css": "resize-vertical"
+      },
+      {
+        "search": [
+          "resize"
+        ],
+        "code": 11021,
+        "from": 61566,
+        "css": "resize-horizontal"
+      },
+      {
+        "search": [
+          "move"
+        ],
         "code": 61511,
-        "css": "glyph68",
-        "file": "glyph68"
-      },
-      {
-        "code": 61512,
-        "css": "glyph69",
-        "file": "glyph69"
-      },
-      {
-        "code": 61513,
-        "css": "glyph70",
-        "file": "glyph70"
-      },
-      {
-        "code": 61514,
-        "css": "glyph71",
-        "file": "glyph71"
-      },
-      {
-        "code": 61515,
-        "css": "glyph72",
-        "file": "glyph72"
-      },
-      {
-        "code": 61516,
-        "css": "glyph73",
-        "file": "glyph73"
-      },
-      {
-        "code": 61517,
-        "css": "glyph74",
-        "file": "glyph74"
-      },
-      {
-        "code": 61518,
-        "css": "glyph75",
-        "file": "glyph75"
-      },
-      {
-        "code": 61520,
-        "css": "glyph76",
-        "file": "glyph76"
-      },
-      {
-        "code": 61521,
-        "css": "glyph77",
-        "file": "glyph77"
-      },
-      {
-        "code": 61522,
-        "css": "glyph78",
-        "file": "glyph78"
-      },
-      {
-        "code": 61523,
-        "css": "glyph79",
-        "file": "glyph79"
-      },
-      {
-        "code": 61524,
-        "css": "glyph80",
-        "file": "glyph80"
-      },
-      {
-        "code": 61525,
-        "css": "glyph81",
-        "file": "glyph81"
-      },
-      {
-        "code": 61526,
-        "css": "glyph82",
-        "file": "glyph82"
-      },
-      {
-        "code": 61527,
-        "css": "glyph83",
-        "file": "glyph83"
-      },
-      {
-        "code": 61528,
-        "css": "glyph84",
-        "file": "glyph84"
-      },
-      {
-        "code": 61529,
-        "css": "glyph85",
-        "file": "glyph85"
-      },
-      {
-        "code": 61530,
-        "css": "glyph86",
-        "file": "glyph86"
-      },
-      {
-        "code": 61531,
-        "css": "glyph87",
-        "file": "glyph87"
-      },
-      {
-        "code": 61532,
-        "css": "glyph88",
-        "file": "glyph88"
-      },
-      {
-        "code": 61533,
-        "css": "glyph89",
-        "file": "glyph89"
-      },
-      {
-        "code": 61534,
-        "css": "glyph90",
-        "file": "glyph90"
-      },
-      {
-        "code": 61536,
-        "css": "glyph91",
-        "file": "glyph91"
-      },
-      {
-        "code": 61537,
-        "css": "glyph92",
-        "file": "glyph92"
-      },
-      {
-        "code": 61538,
-        "css": "glyph93",
-        "file": "glyph93"
-      },
-      {
-        "code": 61539,
-        "css": "glyph94",
-        "file": "glyph94"
-      },
-      {
-        "code": 61540,
-        "css": "glyph95",
-        "file": "glyph95"
-      },
-      {
-        "code": 61541,
-        "css": "glyph96",
-        "file": "glyph96"
-      },
-      {
-        "code": 61542,
-        "css": "glyph97",
-        "file": "glyph97"
-      },
-      {
-        "code": 61543,
-        "css": "glyph98",
-        "file": "glyph98"
-      },
-      {
-        "code": 61544,
-        "css": "glyph99",
-        "file": "glyph99"
-      },
-      {
-        "code": 61545,
-        "css": "glyph100",
-        "file": "glyph100"
-      },
-      {
-        "code": 61546,
-        "css": "glyph101",
-        "file": "glyph101"
-      },
-      {
-        "code": 61547,
-        "css": "glyph102",
-        "file": "glyph102"
-      },
-      {
-        "code": 61548,
-        "css": "glyph103",
-        "file": "glyph103"
-      },
-      {
-        "code": 61549,
-        "css": "glyph104",
-        "file": "glyph104"
-      },
-      {
-        "code": 61550,
-        "css": "glyph105",
-        "file": "glyph105"
-      },
-      {
-        "code": 61552,
-        "css": "glyph106",
-        "file": "glyph106"
-      },
-      {
-        "code": 61553,
-        "css": "glyph107",
-        "file": "glyph107"
-      },
-      {
-        "code": 61554,
-        "css": "glyph108",
-        "file": "glyph108"
-      },
-      {
-        "code": 61555,
-        "css": "glyph109",
-        "file": "glyph109"
-      },
-      {
-        "code": 61556,
-        "css": "glyph110",
-        "file": "glyph110"
-      },
-      {
-        "code": 61557,
-        "css": "glyph111",
-        "file": "glyph111"
-      },
-      {
-        "code": 61558,
-        "css": "glyph112",
-        "file": "glyph112"
-      },
-      {
-        "code": 61559,
-        "css": "glyph113",
-        "file": "glyph113"
-      },
-      {
-        "code": 61560,
-        "css": "glyph114",
-        "file": "glyph114"
-      },
-      {
-        "code": 61561,
-        "css": "glyph115",
-        "file": "glyph115"
-      },
-      {
-        "code": 61562,
-        "css": "glyph116",
-        "file": "glyph116"
-      },
-      {
-        "code": 61563,
-        "css": "glyph117",
-        "file": "glyph117"
-      },
-      {
-        "code": 61564,
-        "css": "glyph118",
-        "file": "glyph118"
-      },
-      {
-        "code": 61565,
-        "css": "glyph119",
-        "file": "glyph119"
-      },
-      {
-        "code": 61566,
-        "css": "glyph120",
-        "file": "glyph120"
-      },
-      {
-        "code": 61568,
-        "css": "glyph121",
-        "file": "glyph121"
-      },
-      {
-        "code": 61569,
-        "css": "glyph122",
-        "file": "glyph122"
-      },
-      {
-        "code": 61570,
-        "css": "glyph123",
-        "file": "glyph123"
-      },
-      {
-        "code": 61571,
-        "css": "glyph124",
-        "file": "glyph124"
-      },
-      {
-        "code": 61572,
-        "css": "glyph125",
-        "file": "glyph125"
-      },
-      {
-        "code": 61573,
-        "css": "glyph126",
-        "file": "glyph126"
-      },
-      {
-        "code": 61574,
-        "css": "glyph127",
-        "file": "glyph127"
-      },
-      {
-        "code": 61575,
-        "css": "glyph128",
-        "file": "glyph128"
-      },
-      {
-        "code": 61576,
-        "css": "glyph129",
-        "file": "glyph129"
-      },
-      {
-        "code": 61577,
-        "css": "glyph130",
-        "file": "glyph130"
-      },
-      {
-        "code": 61578,
-        "css": "glyph131",
-        "file": "glyph131"
-      },
-      {
-        "code": 61579,
-        "css": "glyph132",
-        "file": "glyph132"
-      },
-      {
-        "code": 61580,
-        "css": "glyph133",
-        "file": "glyph133"
-      },
-      {
-        "code": 61581,
-        "css": "glyph134",
-        "file": "glyph134"
-      },
-      {
-        "code": 61582,
-        "css": "glyph135",
-        "file": "glyph135"
-      },
-      {
-        "code": 61584,
-        "css": "glyph136",
-        "file": "glyph136"
-      },
-      {
-        "code": 61585,
-        "css": "glyph137",
-        "file": "glyph137"
-      },
-      {
-        "code": 61586,
-        "css": "glyph138",
-        "file": "glyph138"
-      },
-      {
-        "code": 61587,
-        "css": "glyph139",
-        "file": "glyph139"
-      },
-      {
-        "code": 61588,
-        "css": "glyph140",
-        "file": "glyph140"
+        "css": "move"
+      },
+      {
+        "search": [
+          "zoom. scale",
+          "in"
+        ],
+        "code": 59216,
+        "from": 61454,
+        "css": "zoom-in"
+      },
+      {
+        "search": [
+          "zoom. scale",
+          "out"
+        ],
+        "code": 59217,
+        "from": 61456,
+        "css": "zoom-out"
+      },
+      {
+        "search": [
+          "arrow",
+          "down",
+          "download"
+        ],
+        "code": 59224,
+        "from": 61466,
+        "css": "down-circle2"
+      },
+      {
+        "search": [
+          "arrow",
+          "up",
+          "upload"
+        ],
+        "code": 59227,
+        "from": 61467,
+        "css": "up-circle2"
+      },
+      {
+        "search": [
+          "arrow",
+          "down"
+        ],
+        "code": 59228,
+        "from": 61560,
+        "css": "down-open"
+      },
+      {
+        "search": [
+          "arrow",
+          "left"
+        ],
+        "code": 59229,
+        "from": 61523,
+        "css": "left-open"
+      },
+      {
+        "search": [
+          "arrow",
+          "right"
+        ],
+        "code": 59230,
+        "from": 61524,
+        "css": "right-open"
+      },
+      {
+        "search": [
+          "arrow",
+          "up"
+        ],
+        "code": 59231,
+        "from": 61559,
+        "css": "up-open"
+      },
+      {
+        "search": [
+          "arrow",
+          "down"
+        ],
+        "code": 8595,
+        "from": 61539,
+        "css": "down"
+      },
+      {
+        "search": [
+          "arrow",
+          "left"
+        ],
+        "code": 8592,
+        "from": 61536,
+        "css": "left"
+      },
+      {
+        "search": [
+          "arrow",
+          "right"
+        ],
+        "code": 8594,
+        "from": 61537,
+        "css": "right"
+      },
+      {
+        "search": [
+          "arrow",
+          "up"
+        ],
+        "code": 8593,
+        "from": 61538,
+        "css": "up"
+      },
+      {
+        "search": [
+          "reload",
+          "redo",
+          "repeat"
+        ],
+        "code": 10227,
+        "from": 61470,
+        "css": "cw"
+      },
+      {
+        "search": [
+          "reload",
+          "refresh",
+          "update"
+        ],
+        "code": 59232,
+        "from": 61473,
+        "css": "arrows-cw"
+      },
+      {
+        "search": [
+          "shuffle"
+        ],
+        "code": 128256,
+        "from": 61556,
+        "css": "shuffle"
+      },
+      {
+        "search": [
+          "play",
+          "player"
+        ],
+        "code": 9654,
+        "from": 61515,
+        "css": "play"
+      },
+      {
+        "search": [
+          "play",
+          "player"
+        ],
+        "code": 59233,
+        "from": 61469,
+        "css": "play-circle2"
+      },
+      {
+        "search": [
+          "stop",
+          "player"
+        ],
+        "code": 9642,
+        "from": 61517,
+        "css": "stop"
+      },
+      {
+        "search": [
+          "pause",
+          "player"
+        ],
+        "code": 9097,
+        "from": 61516,
+        "css": "pause"
+      },
+      {
+        "search": [
+          "right",
+          "player"
+        ],
+        "code": 9197,
+        "from": 61521,
+        "css": "to-end"
+      },
+      {
+        "search": [
+          "right",
+          "player"
+        ],
+        "code": 59234,
+        "from": 61520,
+        "css": "to-end-alt"
+      },
+      {
+        "search": [
+          "left",
+          "player"
+        ],
+        "code": 9198,
+        "from": 61512,
+        "css": "to-start"
+      },
+      {
+        "search": [
+          "left",
+          "player"
+        ],
+        "code": 59235,
+        "from": 61513,
+        "css": "to-start-alt"
+      },
+      {
+        "search": [
+          "right",
+          "player"
+        ],
+        "code": 9193,
+        "from": 61518,
+        "css": "fast-fw"
+      },
+      {
+        "search": [
+          "left",
+          "player"
+        ],
+        "code": 9194,
+        "from": 61514,
+        "css": "fast-bw"
+      },
+      {
+        "search": [
+          "eject",
+          "player"
+        ],
+        "code": 11983,
+        "from": 61522,
+        "css": "eject"
+      },
+      {
+        "search": [
+          "target"
+        ],
+        "code": 127919,
+        "from": 61531,
+        "css": "target"
+      },
+      {
+        "search": [
+          "broadcast",
+          "wifi",
+          "signal"
+        ],
+        "code": 128246,
+        "from": 61458,
+        "css": "signal"
+      },
+      {
+        "search": [
+          "top",
+          "trophy",
+          "prize",
+          "award"
+        ],
+        "code": 127945,
+        "from": 61585,
+        "css": "award"
+      },
+      {
+        "search": [
+          "inbox"
+        ],
+        "code": 59255,
+        "from": 61468,
+        "css": "inbox"
+      },
+      {
+        "search": [
+          "flight",
+          "plane",
+          "airplane"
+        ],
+        "code": 9992,
+        "from": 61554,
+        "css": "flight"
+      },
+      {
+        "search": [
+          "leaf"
+        ],
+        "code": 127810,
+        "from": 61548,
+        "css": "leaf"
+      },
+      {
+        "search": [
+          "editor",
+          "font"
+        ],
+        "code": 59257,
+        "from": 61489,
+        "css": "font"
+      },
+      {
+        "search": [
+          "editor",
+          "bold"
+        ],
+        "code": 59258,
+        "from": 61490,
+        "css": "bold"
+      },
+      {
+        "search": [
+          "editor",
+          "italic"
+        ],
+        "code": 59259,
+        "from": 61491,
+        "css": "italic"
+      },
+      {
+        "search": [
+          "editor",
+          "height"
+        ],
+        "code": 59260,
+        "from": 61492,
+        "css": "text-height"
+      },
+      {
+        "search": [
+          "editor",
+          "width"
+        ],
+        "code": 59261,
+        "from": 61493,
+        "css": "text-width"
+      },
+      {
+        "search": [
+          "editor",
+          "align",
+          "left"
+        ],
+        "code": 59262,
+        "from": 61494,
+        "css": "align-left"
+      },
+      {
+        "search": [
+          "editor",
+          "align",
+          "center"
+        ],
+        "code": 59263,
+        "from": 61495,
+        "css": "align-center"
+      },
+      {
+        "search": [
+          "editor",
+          "align",
+          "right"
+        ],
+        "code": 59264,
+        "from": 61496,
+        "css": "align-right"
+      },
+      {
+        "search": [
+          "editor",
+          "align",
+          "justify"
+        ],
+        "code": 59265,
+        "from": 61497,
+        "css": "align-justify"
+      },
+      {
+        "search": [
+          "editor",
+          "list"
+        ],
+        "code": 59266,
+        "from": 61498,
+        "css": "list"
+      },
+      {
+        "search": [
+          "editor",
+          "indent"
+        ],
+        "code": 59267,
+        "from": 61499,
+        "css": "indent-left"
+      },
+      {
+        "search": [
+          "editor",
+          "indent"
+        ],
+        "code": 59268,
+        "from": 61500,
+        "css": "indent-right"
+      },
+      {
+        "search": [
+          "off"
+        ],
+        "code": 59278,
+        "from": 61457,
+        "css": "off"
+      },
+      {
+        "search": [
+          "road"
+        ],
+        "code": 59279,
+        "from": 61464,
+        "css": "road"
+      },
+      {
+        "search": [
+          "list"
+        ],
+        "code": 59280,
+        "from": 61474,
+        "css": "list-alt"
+      },
+      {
+        "search": [
+          "qrcode"
+        ],
+        "code": 59281,
+        "from": 61481,
+        "css": "qrcode"
+      },
+      {
+        "search": [
+          "barcode"
+        ],
+        "code": 59282,
+        "from": 61482,
+        "css": "barcode"
+      },
+      {
+        "search": [
+          "book"
+        ],
+        "code": 128213,
+        "from": 61485,
+        "css": "book"
+      },
+      {
+        "search": [
+          "ajust"
+        ],
+        "code": 59283,
+        "from": 61506,
+        "css": "ajust"
+      },
+      {
+        "search": [
+          "tint"
+        ],
+        "code": 59284,
+        "from": 61507,
+        "css": "tint"
+      },
+      {
+        "search": [
+          "check"
+        ],
+        "code": 9745,
+        "from": 61510,
+        "css": "check"
+      },
+      {
+        "search": [
+          "asterisk"
+        ],
+        "code": 10033,
+        "from": 61545,
+        "css": "asterisk"
+      },
+      {
+        "search": [
+          "gift",
+          "present",
+          "package",
+          "box"
+        ],
+        "code": 127873,
+        "from": 61547,
+        "css": "gift"
+      },
+      {
+        "search": [
+          "fire"
+        ],
+        "code": 128293,
+        "from": 61549,
+        "css": "fire"
+      },
+      {
+        "search": [
+          "magnet"
+        ],
+        "code": 59297,
+        "from": 61558,
+        "css": "magnet"
+      },
+      {
+        "search": [
+          "chart",
+          "bar",
+          "diagram"
+        ],
+        "code": 128202,
+        "from": 61568,
+        "css": "chart-bar"
+      },
+      {
+        "search": [
+          "key"
+        ],
+        "code": 128273,
+        "from": 61572,
+        "css": "key"
+      },
+      {
+        "search": [
+          "github"
+        ],
+        "code": 62208,
+        "from": 61586,
+        "css": "github"
+      },
+      {
+        "search": [
+          "twitter"
+        ],
+        "code": 62212,
+        "from": 61569,
+        "css": "twitter"
+      },
+      {
+        "search": [
+          "facebook"
+        ],
+        "code": 62216,
+        "from": 61570,
+        "css": "facebook"
+      },
+      {
+        "code": 62220,
+        "from": 61580,
+        "css": "linkedin"
+      },
+      {
+        "code": 127819,
+        "from": 61588,
+        "css": "lemon"
       }
     ],
     "transform": {
@@ -2200,854 +2810,1371 @@ module.exports = [
     },
     "glyphs": [
       {
-        "code": 35,
-        "css": "hash",
-        "file": "hash"
+        "search": [
+          "search",
+          "find"
+        ],
+        "code": 128270,
+        "file": "magnifying_glass",
+        "css": "search"
       },
       {
-        "code": 63,
-        "css": "question_mark",
-        "file": "question_mark"
-      },
-      {
-        "code": 64,
-        "css": "at",
-        "file": "at"
-      },
-      {
-        "code": 182,
-        "css": "pilcrow",
-        "file": "pilcrow"
-      },
-      {
-        "code": 8505,
-        "css": "info",
-        "file": "info"
-      },
-      {
-        "code": 8592,
-        "css": "arrow_left",
-        "file": "arrow_left"
-      },
-      {
-        "code": 8593,
-        "css": "arrow_up",
-        "file": "arrow_up"
-      },
-      {
-        "code": 8594,
-        "css": "arrow_right",
-        "file": "arrow_right"
-      },
-      {
-        "code": 8595,
-        "css": "arrow_down",
-        "file": "arrow_down"
-      },
-      {
-        "code": 8962,
-        "css": "home",
-        "file": "home"
-      },
-      {
-        "code": 9788,
-        "css": "sun_stroke",
-        "file": "sun_stroke"
-      },
-      {
-        "code": 9728,
-        "css": "sun_fill",
-        "file": "sun_fill"
-      },
-      {
-        "code": 9729,
-        "css": "cloud",
-        "file": "cloud"
-      },
-      {
-        "code": 9730,
-        "css": "umbrella",
-        "file": "umbrella"
-      },
-      {
-        "code": 9733,
-        "css": "star",
-        "file": "star"
-      },
-      {
-        "code": 9790,
-        "css": "moon_stroke",
-        "file": "moon_stroke"
-      },
-      {
-        "code": 57466,
-        "css": "moon_fill",
-        "file": "moon_fill"
-      },
-      {
-        "code": 9825,
-        "css": "heart_stroke",
-        "file": "heart_stroke"
-      },
-      {
-        "code": 9829,
-        "css": "heart_fill",
-        "file": "heart_fill"
-      },
-      {
-        "code": 9881,
-        "css": "cog",
-        "file": "cog"
-      },
-      {
-        "code": 9889,
-        "css": "bolt",
-        "file": "bolt"
-      },
-      {
-        "code": 9919,
-        "css": "key_stroke",
-        "file": "key_stroke"
-      },
-      {
-        "code": 128273,
-        "css": "key_fill",
-        "file": "key_fill"
-      },
-      {
-        "code": 9926,
-        "css": "rain",
-        "file": "rain"
-      },
-      {
-        "code": 128683,
-        "css": "denied",
-        "file": "denied"
-      },
-      {
+        "search": [
+          "mail",
+          "email"
+        ],
         "code": 9993,
-        "css": "mail",
-        "file": "mail"
-      },
-      {
-        "code": 9998,
-        "css": "pen",
-        "file": "pen"
-      },
-      {
-        "code": 10003,
-        "css": "check",
-        "file": "check"
-      },
-      {
-        "code": 10004,
-        "css": "check_alt",
-        "file": "check_alt"
-      },
-      {
-        "code": 10007,
-        "css": "x",
-        "file": "x"
-      },
-      {
-        "code": 10008,
-        "css": "x_alt",
-        "file": "x_alt"
-      },
-      {
-        "code": 10077,
-        "css": "left_quote",
-        "file": "left_quote"
-      },
-      {
-        "code": 10078,
-        "css": "right_quote",
-        "file": "right_quote"
-      },
-      {
-        "code": 10133,
-        "css": "plus",
-        "file": "plus"
-      },
-      {
-        "code": 10134,
-        "css": "minus",
-        "file": "minus"
-      },
-      {
-        "code": 10549,
-        "css": "curved_arrow",
-        "file": "curved_arrow"
-      },
-      {
-        "code": 128196,
-        "css": "document_alt_stroke",
-        "file": "document_alt_stroke"
-      },
-      {
-        "code": 57472,
-        "css": "document_alt_fill",
-        "file": "document_alt_fill"
-      },
-      {
-        "code": 128197,
-        "css": "calendar",
-        "file": "calendar"
-      },
-      {
-        "code": 57346,
-        "css": "map_pin_alt",
-        "file": "map_pin_alt"
-      },
-      {
-        "code": 57347,
-        "css": "comment_alt1_stroke",
-        "file": "comment_alt1_stroke"
-      },
-      {
-        "code": 57475,
-        "css": "comment_alt1_fill",
-        "file": "comment_alt1_fill"
-      },
-      {
-        "code": 57348,
-        "css": "comment_alt2_stroke",
-        "file": "comment_alt2_stroke"
-      },
-      {
-        "code": 57476,
-        "css": "comment_alt2_fill",
-        "file": "comment_alt2_fill"
-      },
-      {
-        "code": 57349,
-        "css": "pen_alt_stroke",
-        "file": "pen_alt_stroke"
-      },
-      {
-        "code": 57477,
-        "css": "pen_alt_fill",
-        "file": "pen_alt_fill"
-      },
-      {
-        "code": 57350,
-        "css": "pen_alt2",
-        "file": "pen_alt2"
-      },
-      {
-        "code": 57351,
-        "css": "chat_alt_stroke",
-        "file": "chat_alt_stroke"
-      },
-      {
-        "code": 57479,
-        "css": "chat_alt_fill",
-        "file": "chat_alt_fill"
-      },
-      {
-        "code": 57352,
-        "css": "plus_alt",
-        "file": "plus_alt"
-      },
-      {
-        "code": 57353,
-        "css": "minus_alt",
-        "file": "minus_alt"
-      },
-      {
-        "code": 57354,
-        "css": "bars_alt",
-        "file": "bars_alt"
-      },
-      {
-        "code": 128212,
-        "css": "book_alt",
-        "file": "book_alt"
-      },
-      {
-        "code": 57356,
-        "css": "aperture_alt",
-        "file": "aperture_alt"
-      },
-      {
-        "code": 57360,
-        "css": "beaker_alt",
-        "file": "beaker_alt"
-      },
-      {
-        "code": 57361,
-        "css": "left_quote_alt",
-        "file": "left_quote_alt"
-      },
-      {
-        "code": 57362,
-        "css": "right_quote_alt",
-        "file": "right_quote_alt"
-      },
-      {
-        "code": 57363,
-        "css": "arrow_left_alt1",
-        "file": "arrow_left_alt1"
-      },
-      {
-        "code": 57364,
-        "css": "arrow_up_alt1",
-        "file": "arrow_up_alt1"
-      },
-      {
-        "code": 57365,
-        "css": "arrow_right_alt1",
-        "file": "arrow_right_alt1"
-      },
-      {
-        "code": 57366,
-        "css": "arrow_down_alt1",
-        "file": "arrow_down_alt1"
-      },
-      {
-        "code": 57367,
-        "css": "arrow_left_alt2",
-        "file": "arrow_left_alt2"
-      },
-      {
-        "code": 57368,
-        "css": "arrow_up_alt2",
-        "file": "arrow_up_alt2"
-      },
-      {
-        "code": 57369,
-        "css": "arrow_right_alt2",
-        "file": "arrow_right_alt2"
-      },
-      {
-        "code": 57370,
-        "css": "arrow_down_alt2",
-        "file": "arrow_down_alt2"
-      },
-      {
-        "code": 57371,
-        "css": "brush",
-        "file": "brush"
-      },
-      {
-        "code": 57372,
-        "css": "brush_alt",
-        "file": "brush_alt"
-      },
-      {
-        "code": 57374,
-        "css": "eyedropper",
-        "file": "eyedropper"
-      },
-      {
-        "code": 57375,
-        "css": "layers",
-        "file": "layers"
-      },
-      {
-        "code": 57376,
-        "css": "layers_alt",
-        "file": "layers_alt"
-      },
-      {
-        "code": 57377,
-        "css": "compass",
-        "file": "compass"
-      },
-      {
-        "code": 57378,
-        "css": "award_stroke",
-        "file": "award_stroke"
-      },
-      {
-        "code": 57506,
-        "css": "award_fill",
-        "file": "award_fill"
-      },
-      {
-        "code": 57379,
-        "css": "beaker",
-        "file": "beaker"
-      },
-      {
-        "code": 57380,
-        "css": "steering_wheel",
-        "file": "steering_wheel"
-      },
-      {
-        "code": 57381,
-        "css": "eye",
-        "file": "eye"
-      },
-      {
-        "code": 57382,
-        "css": "aperture",
-        "file": "aperture"
-      },
-      {
-        "code": 57383,
-        "css": "image",
-        "file": "image"
-      },
-      {
-        "code": 57384,
-        "css": "chart",
-        "file": "chart"
-      },
-      {
-        "code": 57385,
-        "css": "chart_alt",
-        "file": "chart_alt"
-      },
-      {
-        "code": 127919,
-        "css": "target",
-        "file": "target"
-      },
-      {
-        "code": 57387,
-        "css": "tag_stroke",
-        "file": "tag_stroke"
-      },
-      {
-        "code": 57515,
-        "css": "tag_fill",
-        "file": "tag_fill"
-      },
-      {
-        "code": 57388,
-        "css": "rss",
-        "file": "rss"
-      },
-      {
-        "code": 57389,
-        "css": "rss_alt",
-        "file": "rss_alt"
-      },
-      {
-        "code": 57390,
-        "css": "share",
-        "file": "share"
-      },
-      {
-        "code": 8630,
-        "css": "undo",
-        "file": "undo"
-      },
-      {
-        "code": 8635,
-        "css": "reload",
-        "file": "reload"
-      },
-      {
-        "code": 57393,
-        "css": "reload_alt",
-        "file": "reload_alt"
-      },
-      {
-        "code": 57394,
-        "css": "loop_alt1",
-        "file": "loop_alt1"
-      },
-      {
-        "code": 57395,
-        "css": "loop_alt2",
-        "file": "loop_alt2"
-      },
-      {
-        "code": 57396,
-        "css": "loop_alt3",
-        "file": "loop_alt3"
-      },
-      {
-        "code": 57397,
-        "css": "loop_alt4",
-        "file": "loop_alt4"
-      },
-      {
-        "code": 57398,
-        "css": "spin",
-        "file": "spin"
-      },
-      {
-        "code": 57399,
-        "css": "spin_alt",
-        "file": "spin_alt"
-      },
-      {
-        "code": 57400,
-        "css": "move_horizontal",
-        "file": "move_horizontal"
-      },
-      {
-        "code": 57401,
-        "css": "move_horizontal_alt1",
-        "file": "move_horizontal_alt1"
-      },
-      {
-        "code": 57402,
-        "css": "move_horizontal_alt2",
-        "file": "move_horizontal_alt2"
-      },
-      {
-        "code": 57403,
-        "css": "move_vertical",
-        "file": "move_vertical"
-      },
-      {
-        "code": 57404,
-        "css": "move_vertical_alt1",
-        "file": "move_vertical_alt1"
-      },
-      {
-        "code": 57405,
-        "css": "move_vertical_alt2",
-        "file": "move_vertical_alt2"
-      },
-      {
-        "code": 57406,
-        "css": "move",
-        "file": "move"
-      },
-      {
-        "code": 57407,
-        "css": "move_alt1",
-        "file": "move_alt1"
-      },
-      {
-        "code": 57408,
-        "css": "move_alt2",
-        "file": "move_alt2"
-      },
-      {
-        "code": 57409,
-        "css": "transfer",
-        "file": "transfer"
-      },
-      {
-        "code": 57410,
-        "css": "download",
-        "file": "download"
-      },
-      {
-        "code": 57411,
-        "css": "upload",
-        "file": "upload"
-      },
-      {
-        "code": 57412,
-        "css": "cloud_download",
-        "file": "cloud_download"
-      },
-      {
-        "code": 57413,
-        "css": "cloud_upload",
-        "file": "cloud_upload"
-      },
-      {
-        "code": 9095,
-        "css": "fork",
-        "file": "fork"
-      },
-      {
-        "code": 9659,
-        "css": "play",
-        "file": "play"
-      },
-      {
-        "code": 57416,
-        "css": "play_alt",
-        "file": "play_alt"
-      },
-      {
-        "code": 9097,
-        "css": "pause",
-        "file": "pause"
-      },
-      {
-        "code": 9642,
-        "css": "stop",
-        "file": "stop"
-      },
-      {
-        "code": 9167,
-        "css": "eject",
-        "file": "eject"
-      },
-      {
-        "code": 9198,
-        "css": "first",
-        "file": "first"
-      },
-      {
-        "code": 9197,
-        "css": "last",
-        "file": "last"
-      },
-      {
-        "code": 57422,
-        "css": "fullscreen",
-        "file": "fullscreen"
-      },
-      {
-        "code": 57423,
-        "css": "fullscreen_alt",
-        "file": "fullscreen_alt"
-      },
-      {
-        "code": 57424,
-        "css": "fullscreen_exit",
-        "file": "fullscreen_exit"
-      },
-      {
-        "code": 57425,
-        "css": "fullscreen_exit_alt",
-        "file": "fullscreen_exit_alt"
-      },
-      {
-        "code": 57426,
-        "css": "equalizer",
-        "file": "equalizer"
-      },
-      {
-        "code": 57427,
-        "css": "article",
-        "file": "article"
-      },
-      {
-        "code": 57428,
-        "css": "read_more",
-        "file": "read_more"
-      },
-      {
-        "code": 57429,
-        "css": "list",
-        "file": "list"
-      },
-      {
-        "code": 57430,
-        "css": "list_nested",
-        "file": "list_nested"
-      },
-      {
-        "code": 57431,
-        "css": "cursor",
-        "file": "cursor"
-      },
-      {
-        "code": 57432,
-        "css": "dial",
-        "file": "dial"
-      },
-      {
-        "code": 57433,
-        "css": "new_window",
-        "file": "new_window"
-      },
-      {
-        "code": 57434,
-        "css": "trash_stroke",
-        "file": "trash_stroke"
-      },
-      {
-        "code": 57562,
-        "css": "trash_fill",
-        "file": "trash_fill"
-      },
-      {
-        "code": 57435,
-        "css": "battery_half",
-        "file": "battery_half"
-      },
-      {
-        "code": 57436,
-        "css": "battery_empty",
-        "file": "battery_empty"
-      },
-      {
-        "code": 57437,
-        "css": "battery_charging",
-        "file": "battery_charging"
-      },
-      {
-        "code": 57438,
-        "css": "chat",
-        "file": "chat"
-      },
-      {
-        "code": 127908,
-        "css": "mic",
-        "file": "mic"
-      },
-      {
-        "code": 127916,
-        "css": "movie",
-        "file": "movie"
-      },
-      {
-        "code": 127911,
-        "css": "headphones",
-        "file": "headphones"
-      },
-      {
+        "file": "mail",
+        "css": "mail"
+      },
+      {
+        "search": [
+          "heart"
+        ],
+        "code": 9829,
+        "file": "heart_fill",
+        "css": "heart"
+      },
+      {
+        "search": [
+          "heart"
+        ],
+        "code": 9825,
+        "file": "heart_stroke",
+        "css": "heart-empty"
+      },
+      {
+        "search": [
+          "star"
+        ],
+        "code": 9733,
+        "file": "star",
+        "css": "star"
+      },
+      {
+        "search": [
+          "profile",
+          "contact",
+          "user"
+        ],
         "code": 128100,
-        "css": "user",
-        "file": "user"
+        "file": "user",
+        "css": "user"
       },
       {
-        "code": 128161,
-        "css": "lightbulb",
-        "file": "lightbulb"
+        "search": [
+          "movie",
+          "video",
+          "film"
+        ],
+        "code": 127916,
+        "file": "movie",
+        "css": "video"
       },
       {
-        "code": 128191,
-        "css": "cd",
-        "file": "cd"
+        "search": [
+          "image",
+          "picture",
+          "photo"
+        ],
+        "code": 127748,
+        "file": "image",
+        "css": "picture"
       },
       {
-        "code": 57445,
-        "css": "folder_stroke",
-        "file": "folder_stroke"
+        "search": [
+          "camera",
+          "photo"
+        ],
+        "code": 128247,
+        "file": "camera",
+        "css": "camera"
       },
       {
-        "code": 57573,
-        "css": "folder_fill",
-        "file": "folder_fill"
+        "search": [
+          "ok",
+          true,
+          "check",
+          "mark"
+        ],
+        "code": 10003,
+        "file": "check",
+        "css": "ok"
       },
       {
-        "code": 128195,
-        "css": "document_stroke",
-        "file": "document_stroke"
+        "search": [
+          "ok",
+          true,
+          "check",
+          "mark"
+        ],
+        "code": 10004,
+        "file": "check_alt",
+        "css": "ok-circle"
       },
       {
-        "code": 57574,
-        "css": "document_fill",
-        "file": "document_fill"
+        "search": [
+          "close",
+          "cancel",
+          "reject"
+        ],
+        "code": 10005,
+        "file": "x",
+        "css": "cancel"
       },
       {
+        "search": [
+          "close",
+          "cancel",
+          "reject"
+        ],
+        "code": 10006,
+        "file": "x_alt",
+        "css": "cancel-circle"
+      },
+      {
+        "search": [
+          "plus"
+        ],
+        "code": 43,
+        "file": "plus",
+        "css": "plus"
+      },
+      {
+        "search": [
+          "plus"
+        ],
+        "code": 10133,
+        "file": "plus_alt",
+        "css": "plus-circle"
+      },
+      {
+        "search": [
+          "minus"
+        ],
+        "code": 45,
+        "file": "minus",
+        "css": "minus"
+      },
+      {
+        "search": [
+          "minus"
+        ],
+        "code": 10134,
+        "file": "minus_alt",
+        "css": "minus-circle"
+      },
+      {
+        "search": [
+          "help",
+          "question"
+        ],
+        "code": 10067,
+        "file": "question_mark",
+        "css": "help"
+      },
+      {
+        "search": [
+          "info"
+        ],
+        "code": 8505,
+        "file": "info",
+        "css": "info"
+      },
+      {
+        "search": [
+          "home"
+        ],
+        "code": 8962,
+        "file": "home",
+        "css": "home"
+      },
+      {
+        "search": [
+          "link",
+          "url",
+          "address"
+        ],
+        "code": 128279,
+        "file": "link",
+        "css": "link"
+      },
+      {
+        "search": [
+          "attach",
+          "clip",
+          "paperclip"
+        ],
+        "code": 128206,
+        "file": "paperclip",
+        "css": "attach"
+      },
+      {
+        "search": [
+          "lock"
+        ],
+        "code": 128274,
+        "file": "lock_fill",
+        "css": "lock"
+      },
+      {
+        "search": [
+          "lock"
+        ],
+        "code": 59144,
+        "file": "lock_stroke",
+        "css": "lock-empty"
+      },
+      {
+        "search": [
+          "lock",
+          "unlock"
+        ],
+        "code": 128275,
+        "file": "unlock_fill",
+        "css": "lock-open"
+      },
+      {
+        "search": [
+          "lock",
+          "unlock"
+        ],
+        "code": 59145,
+        "file": "unlock_stroke",
+        "css": "lock-open-empty"
+      },
+      {
+        "search": [
+          "pin",
+          "pushpin"
+        ],
         "code": 128204,
+        "from": 61581,
         "css": "pin",
         "file": "pin"
       },
       {
-        "code": 57448,
-        "css": "map_pin_stroke",
-        "file": "map_pin_stroke"
+        "search": [
+          "eye",
+          "subscribe"
+        ],
+        "code": 59146,
+        "file": "eye",
+        "css": "eye"
       },
       {
-        "code": 57576,
-        "css": "map_pin_fill",
-        "file": "map_pin_fill"
+        "search": [
+          "tag",
+          "price",
+          "offer"
+        ],
+        "code": 59148,
+        "file": "tag_fill",
+        "css": "tag"
       },
       {
-        "code": 128213,
-        "css": "book",
-        "file": "book"
+        "search": [
+          "tag",
+          "price",
+          "offer"
+        ],
+        "code": 59150,
+        "file": "tag_stroke",
+        "css": "tag-empty"
       },
       {
+        "search": [
+          "download"
+        ],
+        "code": 128229,
+        "file": "download",
+        "css": "download"
+      },
+      {
+        "search": [
+          "upload"
+        ],
+        "code": 128228,
+        "file": "upload",
+        "css": "upload"
+      },
+      {
+        "search": [
+          "download",
+          "cloud"
+        ],
+        "code": 59152,
+        "file": "cloud_download",
+        "css": "download-cloud"
+      },
+      {
+        "search": [
+          "upload",
+          "cloud"
+        ],
+        "code": 59153,
+        "file": "cloud_upload",
+        "css": "upload-cloud"
+      },
+      {
+        "search": [
+          "quote"
+        ],
+        "code": 10077,
+        "file": "left_quote",
+        "css": "quote-left"
+      },
+      {
+        "search": [
+          "quote"
+        ],
+        "code": 10078,
+        "file": "right_quote",
+        "css": "quote-right"
+      },
+      {
+        "search": [
+          "quote"
+        ],
+        "code": 10075,
+        "file": "left_quote_alt",
+        "css": "quote-left-alt"
+      },
+      {
+        "search": [
+          "quote"
+        ],
+        "code": 10076,
+        "file": "right_quote_alt",
+        "css": "quote-right-alt"
+      },
+      {
+        "search": [
+          "pencil",
+          "write",
+          "reply",
+          "edit"
+        ],
+        "code": 9998,
+        "file": "pen_alt_stroke",
+        "css": "pencil"
+      },
+      {
+        "search": [
+          "pencil",
+          "write",
+          "reply",
+          "edit"
+        ],
+        "code": 9999,
+        "file": "pen_alt_fill",
+        "css": "pencil-neg"
+      },
+      {
+        "search": [
+          "pencil",
+          "write",
+          "reply",
+          "edit"
+        ],
+        "code": 10000,
+        "file": "pen_alt2",
+        "css": "pencil-alt"
+      },
+      {
+        "search": [
+          "undo",
+          "return",
+          "back"
+        ],
+        "code": 8630,
+        "file": "undo",
+        "css": "undo"
+      },
+      {
+        "search": [
+          "comment",
+          "reply",
+          "write"
+        ],
+        "code": 59160,
+        "file": "comment_stroke",
+        "css": "comment"
+      },
+      {
+        "search": [
+          "comment",
+          "reply",
+          "write"
+        ],
+        "code": 59161,
+        "file": "comment_fill",
+        "css": "comment-inv"
+      },
+      {
+        "search": [
+          "comment",
+          "reply",
+          "write"
+        ],
+        "code": 59162,
+        "file": "comment_alt1_stroke",
+        "css": "comment-alt"
+      },
+      {
+        "search": [
+          "comment",
+          "reply",
+          "write"
+        ],
+        "code": 59163,
+        "file": "comment_alt1_fill",
+        "css": "comment-inv-alt"
+      },
+      {
+        "search": [
+          "comment",
+          "reply",
+          "write"
+        ],
+        "code": 59164,
+        "file": "comment_alt2_stroke",
+        "css": "comment-alt2"
+      },
+      {
+        "search": [
+          "comment",
+          "reply",
+          "write"
+        ],
+        "code": 59165,
+        "file": "comment_alt2_fill",
+        "css": "comment-inv-alt2"
+      },
+      {
+        "search": [
+          "chat",
+          "talk"
+        ],
+        "code": 59168,
+        "file": "chat_alt_stroke",
+        "css": "chat"
+      },
+      {
+        "search": [
+          "chat",
+          "talk"
+        ],
+        "code": 59169,
+        "file": "chat_alt_fill",
+        "css": "chat-inv"
+      },
+      {
+        "search": [
+          "location",
+          "mark",
+          "marker"
+        ],
+        "code": 59172,
+        "file": "map_pin_fill",
+        "css": "location"
+      },
+      {
+        "search": [
+          "location",
+          "mark",
+          "marker"
+        ],
+        "code": 59173,
+        "file": "map_pin_stroke",
+        "css": "location-inv"
+      },
+      {
+        "search": [
+          "location",
+          "mark",
+          "marker"
+        ],
+        "code": 59174,
+        "file": "map_pin_alt",
+        "css": "location-alt"
+      },
+      {
+        "search": [
+          "compass"
+        ],
+        "code": 59176,
+        "file": "compass",
+        "css": "compass"
+      },
+      {
+        "search": [
+          "trash",
+          "delete"
+        ],
+        "code": 59177,
+        "file": "trash_fill",
+        "css": "trash"
+      },
+      {
+        "search": [
+          "trash",
+          "delete"
+        ],
+        "code": 59178,
+        "file": "trash_stroke",
+        "css": "trash-empty"
+      },
+      {
+        "search": [
+          "doc",
+          "article"
+        ],
+        "code": 59184,
+        "file": "document_alt_stroke",
+        "css": "doc"
+      },
+      {
+        "search": [
+          "doc",
+          "article"
+        ],
+        "code": 59185,
+        "file": "document_alt_fill",
+        "css": "doc-inv"
+      },
+      {
+        "search": [
+          "doc",
+          "article"
+        ],
+        "code": 59186,
+        "file": "document_stroke",
+        "css": "doc-alt"
+      },
+      {
+        "search": [
+          "doc",
+          "article"
+        ],
+        "code": 59187,
+        "file": "document_fill",
+        "css": "doc-inv-alt"
+      },
+      {
+        "search": [
+          "document",
+          "article"
+        ],
+        "code": 59188,
+        "file": "article",
+        "css": "article"
+      },
+      {
+        "search": [
+          "document",
+          "article",
+          "more"
+        ],
+        "code": 59189,
+        "file": "read_more",
+        "css": "article-alt"
+      },
+      {
+        "search": [
+          "book",
+          "doc"
+        ],
         "code": 128214,
-        "css": "book_alt2",
-        "file": "book_alt2"
+        "file": "book_alt2",
+        "css": "book-open"
       },
       {
-        "code": 57451,
-        "css": "box",
-        "file": "box"
+        "search": [
+          "folder"
+        ],
+        "code": 128193,
+        "file": "folder_fill",
+        "css": "folder"
       },
       {
-        "code": 128198,
-        "css": "calendar_alt_stroke",
-        "file": "calendar_alt_stroke"
+        "search": [
+          "folder"
+        ],
+        "code": 128194,
+        "file": "folder_stroke",
+        "css": "folder-empty"
       },
       {
-        "code": 57580,
-        "css": "calendar_alt_fill",
-        "file": "calendar_alt_fill"
+        "search": [
+          "box",
+          "archive",
+          "package"
+        ],
+        "code": 128230,
+        "file": "box",
+        "css": "box"
       },
       {
-        "code": 57453,
-        "css": "comment_stroke",
-        "file": "comment_stroke"
+        "search": [
+          "rss"
+        ],
+        "code": 59194,
+        "file": "rss_alt",
+        "css": "rss"
       },
       {
-        "code": 57581,
-        "css": "comment_fill",
-        "file": "comment_fill"
+        "search": [
+          "rss"
+        ],
+        "code": 59195,
+        "file": "rss",
+        "css": "rss-alt"
       },
       {
-        "code": 57454,
-        "css": "iphone",
-        "file": "iphone"
+        "search": [
+          "settings",
+          "cog",
+          "gear"
+        ],
+        "code": 9881,
+        "file": "cog",
+        "css": "cog"
       },
       {
-        "code": 57455,
-        "css": "bars",
-        "file": "bars"
-      },
-      {
-        "code": 128247,
-        "css": "camera",
-        "file": "camera"
-      },
-      {
-        "code": 128263,
-        "css": "volume_mute",
-        "file": "volume_mute"
-      },
-      {
-        "code": 128266,
-        "css": "volume",
-        "file": "volume"
-      },
-      {
-        "code": 57459,
-        "css": "battery_full",
-        "file": "battery_full"
-      },
-      {
-        "code": 128270,
-        "css": "magnifying_glass",
-        "file": "magnifying_glass"
-      },
-      {
-        "code": 57461,
-        "css": "lock_stroke",
-        "file": "lock_stroke"
-      },
-      {
-        "code": 128274,
-        "css": "lock_fill",
-        "file": "lock_fill"
-      },
-      {
-        "code": 57462,
-        "css": "unlock_stroke",
-        "file": "unlock_stroke"
-      },
-      {
-        "code": 128275,
-        "css": "unlock_fill",
-        "file": "unlock_fill"
-      },
-      {
-        "code": 128279,
-        "css": "link",
-        "file": "link"
-      },
-      {
+        "search": [
+          "settings",
+          "wrench"
+        ],
         "code": 128295,
-        "css": "wrench",
-        "file": "wrench"
+        "file": "wrench",
+        "css": "wrench"
       },
       {
+        "search": [
+          "share"
+        ],
+        "code": 59196,
+        "file": "share",
+        "css": "share"
+      },
+      {
+        "search": [
+          "calendar",
+          "date"
+        ],
+        "code": 128197,
+        "file": "calendar_alt_stroke",
+        "css": "calendar"
+      },
+      {
+        "search": [
+          "calendar",
+          "date"
+        ],
+        "code": 59198,
+        "file": "calendar_alt_fill",
+        "css": "calendar-inv"
+      },
+      {
+        "search": [
+          "calendar",
+          "date"
+        ],
+        "code": 128198,
+        "file": "calendar",
+        "css": "calendar-alt"
+      },
+      {
+        "search": [
+          "mic"
+        ],
+        "code": 127908,
+        "file": "mic",
+        "css": "mic"
+      },
+      {
+        "search": [
+          "volume",
+          "sound",
+          "mute"
+        ],
+        "code": 128263,
+        "file": "volume_mute",
+        "css": "volume-off"
+      },
+      {
+        "search": [
+          "volume",
+          "sound"
+        ],
+        "code": 128266,
+        "file": "volume",
+        "css": "volume-up"
+      },
+      {
+        "search": [
+          "sound",
+          "music",
+          "headphones"
+        ],
+        "code": 127911,
+        "file": "headphones",
+        "css": "headphones"
+      },
+      {
+        "search": [
+          "clock",
+          "time"
+        ],
         "code": 128340,
-        "css": "clock",
-        "file": "clock"
+        "file": "clock",
+        "css": "clock"
       },
       {
-        "code": 57482,
-        "css": "paperclip",
-        "file": "paperclip"
+        "search": [
+          "idea",
+          "lamp",
+          "light"
+        ],
+        "code": 128161,
+        "file": "lightbulb",
+        "css": "lamp"
+      },
+      {
+        "search": [
+          "block",
+          "deny"
+        ],
+        "code": 128683,
+        "file": "denied",
+        "css": "block"
+      },
+      {
+        "search": [
+          "resize",
+          "fullscreen"
+        ],
+        "code": 59204,
+        "file": "fullscreen",
+        "css": "resize-full"
+      },
+      {
+        "search": [
+          "resize",
+          "fullscreen"
+        ],
+        "code": 59205,
+        "file": "fullscreen_alt",
+        "css": "resize-full-alt"
+      },
+      {
+        "search": [
+          "resize"
+        ],
+        "code": 59206,
+        "file": "fullscreen_exit",
+        "css": "resize-small"
+      },
+      {
+        "search": [
+          "resize"
+        ],
+        "code": 59207,
+        "file": "fullscreen_exit_alt",
+        "css": "resize-small-alt"
+      },
+      {
+        "search": [
+          "resize"
+        ],
+        "code": 11020,
+        "file": "move_vertical",
+        "css": "resize-vertical"
+      },
+      {
+        "search": [
+          "resize"
+        ],
+        "code": 11021,
+        "file": "move_horizontal",
+        "css": "resize-horizontal"
+      },
+      {
+        "search": [
+          "move"
+        ],
+        "code": 59210,
+        "file": "move",
+        "css": "move"
+      },
+      {
+        "search": [
+          "popup",
+          "window"
+        ],
+        "code": 59212,
+        "file": "new_window",
+        "css": "popup"
+      },
+      {
+        "search": [
+          "arrow",
+          "down"
+        ],
+        "code": 8595,
+        "file": "arrow_down",
+        "css": "down"
+      },
+      {
+        "search": [
+          "arrow",
+          "left"
+        ],
+        "code": 8592,
+        "file": "arrow_left",
+        "css": "left"
+      },
+      {
+        "search": [
+          "arrow",
+          "right"
+        ],
+        "code": 8594,
+        "file": "arrow_right",
+        "css": "right"
+      },
+      {
+        "search": [
+          "arrow",
+          "up"
+        ],
+        "code": 8593,
+        "file": "arrow_up",
+        "css": "up"
+      },
+      {
+        "search": [
+          "arrow",
+          "down"
+        ],
+        "code": 58532,
+        "file": "arrow_down_alt1",
+        "css": "down-circle"
+      },
+      {
+        "search": [
+          "arrow",
+          "left"
+        ],
+        "code": 58529,
+        "file": "arrow_left_alt1",
+        "css": "left-circle"
+      },
+      {
+        "search": [
+          "arrow",
+          "right"
+        ],
+        "code": 58530,
+        "file": "arrow_right_alt1",
+        "css": "right-circle"
+      },
+      {
+        "search": [
+          "arrow",
+          "up"
+        ],
+        "code": 58531,
+        "file": "arrow_up_alt1",
+        "css": "up-circle"
+      },
+      {
+        "search": [
+          "arrow",
+          "reload",
+          "redo",
+          "repeat"
+        ],
+        "code": 10227,
+        "file": "reload",
+        "css": "cw"
+      },
+      {
+        "search": [
+          "arrow",
+          "loop",
+          "reload",
+          "refresh"
+        ],
+        "code": 128260,
+        "file": "loop_alt2",
+        "css": "loop"
+      },
+      {
+        "search": [
+          "arrow",
+          "loop",
+          "reload",
+          "refresh"
+        ],
+        "code": 128257,
+        "file": "loop_alt3",
+        "css": "loop-alt"
+      },
+      {
+        "search": [
+          "arrow",
+          "exchange",
+          "transfer"
+        ],
+        "code": 8644,
+        "file": "transfer",
+        "css": "exchange"
+      },
+      {
+        "search": [
+          "arrow",
+          "split",
+          "fork"
+        ],
+        "code": 9095,
+        "file": "fork",
+        "css": "split"
+      },
+      {
+        "search": [
+          "arrow"
+        ],
+        "code": 10549,
+        "file": "curved_arrow",
+        "css": "arrow-curved"
+      },
+      {
+        "search": [
+          "play",
+          "player"
+        ],
+        "code": 9654,
+        "file": "play",
+        "css": "play"
+      },
+      {
+        "search": [
+          "play",
+          "player"
+        ],
+        "code": 57416,
+        "file": "play_alt",
+        "css": "play-circle2"
+      },
+      {
+        "search": [
+          "stop",
+          "player"
+        ],
+        "code": 9642,
+        "file": "stop",
+        "css": "stop"
+      },
+      {
+        "search": [
+          "pause",
+          "player"
+        ],
+        "code": 9097,
+        "file": "pause",
+        "css": "pause"
+      },
+      {
+        "search": [
+          "left",
+          "player"
+        ],
+        "code": 9198,
+        "file": "first",
+        "css": "to-start"
+      },
+      {
+        "search": [
+          "right",
+          "player"
+        ],
+        "code": 9197,
+        "file": "last",
+        "css": "to-end"
+      },
+      {
+        "search": [
+          "eject",
+          "player"
+        ],
+        "code": 9167,
+        "file": "eject",
+        "css": "eject"
+      },
+      {
+        "search": [
+          "target"
+        ],
+        "code": 127919,
+        "file": "target",
+        "css": "target"
+      },
+      {
+        "search": [
+          "chart",
+          "bar",
+          "diagram",
+          "signal",
+          "wifi"
+        ],
+        "code": 128246,
+        "file": "bars_alt",
+        "css": "signal"
+      },
+      {
+        "search": [
+          "top",
+          "trophy",
+          "prize",
+          "award"
+        ],
+        "code": 127945,
+        "file": "award_fill",
+        "css": "award"
+      },
+      {
+        "search": [
+          "top",
+          "trophy",
+          "prize",
+          "award"
+        ],
+        "code": 59236,
+        "file": "award_stroke",
+        "css": "award-empty"
+      },
+      {
+        "search": [
+          "list"
+        ],
+        "code": 59237,
+        "file": "list",
+        "css": "list"
+      },
+      {
+        "search": [
+          "list"
+        ],
+        "code": 59238,
+        "file": "list_nested",
+        "css": "list-nested"
+      },
+      {
+        "search": [
+          "battery"
+        ],
+        "code": 59250,
+        "file": "battery_empty",
+        "css": "bat-empty"
+      },
+      {
+        "search": [
+          "battery"
+        ],
+        "code": 59251,
+        "file": "battery_half",
+        "css": "bat-half"
+      },
+      {
+        "search": [
+          "battery"
+        ],
+        "code": 59252,
+        "file": "battery_full",
+        "css": "bat-full"
+      },
+      {
+        "search": [
+          "battery",
+          "charge"
+        ],
+        "code": 59253,
+        "file": "battery_charging",
+        "css": "bat-charge"
+      },
+      {
+        "search": [
+          "mobile",
+          "iphone"
+        ],
+        "code": 128241,
+        "file": "iphone",
+        "css": "mobile"
+      },
+      {
+        "search": [
+          "cd",
+          "vinyl"
+        ],
+        "code": 128191,
+        "file": "cd",
+        "css": "cd"
+      },
+      {
+        "search": [
+          "equalizer"
+        ],
+        "code": 59285,
+        "file": "equalizer",
+        "css": "equalizer"
+      },
+      {
+        "search": [
+          "cursor",
+          "arrow"
+        ],
+        "code": 59286,
+        "file": "cursor",
+        "css": "cursor"
+      },
+      {
+        "search": [
+          "aperture"
+        ],
+        "code": 59287,
+        "file": "aperture",
+        "css": "aperture"
+      },
+      {
+        "search": [
+          "aperture"
+        ],
+        "code": 59288,
+        "file": "aperture_alt",
+        "css": "aperture-alt"
+      },
+      {
+        "search": [
+          "steering",
+          "wheel"
+        ],
+        "code": 59289,
+        "file": "steering_wheel",
+        "css": "steering-wheel"
+      },
+      {
+        "search": [
+          "book"
+        ],
+        "code": 128213,
+        "file": "book",
+        "css": "book"
+      },
+      {
+        "search": [
+          "book"
+        ],
+        "code": 128212,
+        "file": "book_alt",
+        "css": "book-alt"
+      },
+      {
+        "search": [
+          "paint",
+          "brush"
+        ],
+        "code": 59290,
+        "file": "brush",
+        "css": "brush"
+      },
+      {
+        "search": [
+          "paint",
+          "brush"
+        ],
+        "code": 59291,
+        "file": "brush_alt",
+        "css": "brush-alt"
+      },
+      {
+        "search": [
+          "paint",
+          "eyedropper"
+        ],
+        "code": 59292,
+        "file": "eyedropper",
+        "css": "eyedropper"
+      },
+      {
+        "search": [
+          "paint",
+          "layers"
+        ],
+        "code": 59293,
+        "file": "layers",
+        "css": "layers"
+      },
+      {
+        "search": [
+          "paint",
+          "layers"
+        ],
+        "code": 59294,
+        "file": "layers_alt",
+        "css": "layers-alt"
+      },
+      {
+        "search": [
+          "weather",
+          "sun"
+        ],
+        "code": 9788,
+        "file": "sun_stroke",
+        "css": "sun"
+      },
+      {
+        "search": [
+          "weather",
+          "sun"
+        ],
+        "code": 9728,
+        "file": "sun_fill",
+        "css": "sun-inv"
+      },
+      {
+        "search": [
+          "weather",
+          "cloud"
+        ],
+        "code": 9729,
+        "file": "cloud",
+        "css": "cloud"
+      },
+      {
+        "search": [
+          "weather",
+          "rain"
+        ],
+        "code": 9926,
+        "file": "rain",
+        "css": "rain"
+      },
+      {
+        "search": [
+          "flash",
+          "bolt"
+        ],
+        "code": 9889,
+        "file": "bolt",
+        "css": "flash"
+      },
+      {
+        "search": [
+          "moon",
+          "sleep"
+        ],
+        "code": 9790,
+        "file": "moon_stroke",
+        "css": "moon"
+      },
+      {
+        "search": [
+          "moon",
+          "sleep"
+        ],
+        "code": 59296,
+        "file": "moon_fill",
+        "css": "moon-inv"
+      },
+      {
+        "search": [
+          "weather",
+          "umbrella"
+        ],
+        "code": 9730,
+        "file": "umbrella",
+        "css": "umbrella"
+      },
+      {
+        "search": [
+          "chart",
+          "bar",
+          "diagram"
+        ],
+        "code": 128202,
+        "file": "bars",
+        "css": "chart-bar"
+      },
+      {
+        "search": [
+          "chart",
+          "pie",
+          "diagram"
+        ],
+        "code": 59298,
+        "file": "chart",
+        "css": "chart-pie"
+      },
+      {
+        "search": [
+          "chart",
+          "pie",
+          "diagram"
+        ],
+        "code": 59299,
+        "file": "chart_alt",
+        "css": "chart-pie-alt"
+      },
+      {
+        "search": [
+          "key"
+        ],
+        "code": 9919,
+        "file": "key_stroke",
+        "css": "key"
+      },
+      {
+        "search": [
+          "key"
+        ],
+        "code": 128273,
+        "file": "key_fill",
+        "css": "key-inv"
+      },
+      {
+        "search": [
+          "hash"
+        ],
+        "code": 35,
+        "file": "hash",
+        "css": "hash"
+      },
+      {
+        "search": [
+          "@",
+          "at"
+        ],
+        "code": 64,
+        "file": "at",
+        "css": "at"
+      },
+      {
+        "search": [
+          "pilcrow"
+        ],
+        "code": 182,
+        "file": "pilcrow",
+        "css": "pilcrow"
+      },
+      {
+        "search": [
+          "dial"
+        ],
+        "code": 59300,
+        "file": "dial",
+        "css": "dial"
       }
     ],
     "transform": {
@@ -3056,479 +4183,5 @@ module.exports = [
       "offset": -0.05
     },
     "id": 2
-  },
-  {
-    "font": {
-      "fontname": "websymbols",
-      "descent": 200,
-      "copyright": "Copyright (c) 2011 by Just Be Nice studio. All rights reserved.",
-      "familyname": "Web Symbols",
-      "weight": "Medium",
-      "version": "1.0",
-      "fullname": "Web Symbols",
-      "ascent": 800
-    },
-    "meta": {
-      "licence_url": "http://scripts.sil.org/OFL",
-      "css_prefix": "icon-",
-      "licence": "SIL",
-      "author": "Just Be Nice studio",
-      "homepage": "http://www.justbenicestudio.com/studio/websymbols/",
-      "email": "yes@justbenice.ru",
-      "columns": 4
-    },
-    "glyphs": [
-      {
-        "code": 35,
-        "css": "glyph5",
-        "file": "glyph5"
-      },
-      {
-        "code": 37,
-        "css": "glyph6",
-        "file": "glyph6"
-      },
-      {
-        "code": 57345,
-        "from": 38,
-        "css": "glyph7",
-        "file": "glyph7"
-      },
-      {
-        "code": 57346,
-        "from": 39,
-        "css": "glyph8",
-        "file": "glyph8"
-      },
-      {
-        "code": 40,
-        "css": "glyph9",
-        "file": "glyph9"
-      },
-      {
-        "code": 41,
-        "css": "glyph10",
-        "file": "glyph10"
-      },
-      {
-        "code": 42,
-        "css": "glyph11",
-        "file": "glyph11"
-      },
-      {
-        "code": 43,
-        "css": "glyph12",
-        "file": "glyph12"
-      },
-      {
-        "code": 44,
-        "css": "glyph13",
-        "file": "glyph13"
-      },
-      {
-        "code": 45,
-        "css": "glyph14",
-        "file": "glyph14"
-      },
-      {
-        "code": 46,
-        "css": "glyph15",
-        "file": "glyph15"
-      },
-      {
-        "code": 47,
-        "css": "glyph16",
-        "file": "glyph16"
-      },
-      {
-        "code": 48,
-        "css": "glyph17",
-        "file": "glyph17"
-      },
-      {
-        "code": 49,
-        "css": "glyph18",
-        "file": "glyph18"
-      },
-      {
-        "code": 50,
-        "css": "glyph19",
-        "file": "glyph19"
-      },
-      {
-        "code": 51,
-        "css": "glyph20",
-        "file": "glyph20"
-      },
-      {
-        "code": 52,
-        "css": "glyph21",
-        "file": "glyph21"
-      },
-      {
-        "code": 53,
-        "css": "glyph22",
-        "file": "glyph22"
-      },
-      {
-        "code": 54,
-        "css": "glyph23",
-        "file": "glyph23"
-      },
-      {
-        "code": 55,
-        "css": "glyph24",
-        "file": "glyph24"
-      },
-      {
-        "code": 58,
-        "css": "glyph25",
-        "file": "glyph25"
-      },
-      {
-        "code": 59,
-        "css": "glyph26",
-        "file": "glyph26"
-      },
-      {
-        "code": 57347,
-        "from": 60,
-        "css": "glyph27",
-        "file": "glyph27"
-      },
-      {
-        "code": 57348,
-        "from": 62,
-        "css": "glyph28",
-        "file": "glyph28"
-      },
-      {
-        "code": 63,
-        "css": "glyph29",
-        "file": "glyph29"
-      },
-      {
-        "code": 64,
-        "css": "glyph30",
-        "file": "glyph30"
-      },
-      {
-        "code": 65,
-        "css": "glyph31",
-        "file": "glyph31"
-      },
-      {
-        "code": 66,
-        "css": "glyph32",
-        "file": "glyph32"
-      },
-      {
-        "code": 67,
-        "css": "glyph33",
-        "file": "glyph33"
-      },
-      {
-        "code": 68,
-        "css": "glyph34",
-        "file": "glyph34"
-      },
-      {
-        "code": 70,
-        "css": "glyph35",
-        "file": "glyph35"
-      },
-      {
-        "code": 72,
-        "css": "glyph36",
-        "file": "glyph36"
-      },
-      {
-        "code": 73,
-        "css": "glyph37",
-        "file": "glyph37"
-      },
-      {
-        "code": 74,
-        "css": "glyph38",
-        "file": "glyph38"
-      },
-      {
-        "code": 75,
-        "css": "glyph39",
-        "file": "glyph39"
-      },
-      {
-        "code": 76,
-        "css": "glyph40",
-        "file": "glyph40"
-      },
-      {
-        "code": 77,
-        "css": "glyph41",
-        "file": "glyph41"
-      },
-      {
-        "code": 78,
-        "css": "glyph42",
-        "file": "glyph42"
-      },
-      {
-        "code": 79,
-        "css": "glyph43",
-        "file": "glyph43"
-      },
-      {
-        "code": 80,
-        "css": "glyph44",
-        "file": "glyph44"
-      },
-      {
-        "code": 81,
-        "css": "glyph45",
-        "file": "glyph45"
-      },
-      {
-        "code": 82,
-        "css": "glyph46",
-        "file": "glyph46"
-      },
-      {
-        "code": 83,
-        "css": "glyph47",
-        "file": "glyph47"
-      },
-      {
-        "code": 84,
-        "css": "glyph48",
-        "file": "glyph48"
-      },
-      {
-        "code": 85,
-        "css": "glyph49",
-        "file": "glyph49"
-      },
-      {
-        "code": 86,
-        "css": "glyph50",
-        "file": "glyph50"
-      },
-      {
-        "code": 87,
-        "css": "glyph51",
-        "file": "glyph51"
-      },
-      {
-        "code": 88,
-        "css": "glyph52",
-        "file": "glyph52"
-      },
-      {
-        "code": 90,
-        "css": "glyph53",
-        "file": "glyph53"
-      },
-      {
-        "code": 91,
-        "css": "glyph54",
-        "file": "glyph54"
-      },
-      {
-        "code": 57349,
-        "from": 92,
-        "css": "glyph55",
-        "file": "glyph55"
-      },
-      {
-        "code": 93,
-        "css": "glyph56",
-        "file": "glyph56"
-      },
-      {
-        "code": 95,
-        "css": "glyph57",
-        "file": "glyph57"
-      },
-      {
-        "code": 96,
-        "css": "glyph58",
-        "file": "glyph58"
-      },
-      {
-        "code": 97,
-        "css": "glyph59",
-        "file": "glyph59"
-      },
-      {
-        "code": 98,
-        "css": "glyph60",
-        "file": "glyph60"
-      },
-      {
-        "code": 99,
-        "css": "glyph61",
-        "file": "glyph61"
-      },
-      {
-        "code": 100,
-        "css": "glyph62",
-        "file": "glyph62"
-      },
-      {
-        "code": 101,
-        "css": "glyph63",
-        "file": "glyph63"
-      },
-      {
-        "code": 102,
-        "css": "glyph64",
-        "file": "glyph64"
-      },
-      {
-        "code": 103,
-        "css": "glyph65",
-        "file": "glyph65"
-      },
-      {
-        "code": 104,
-        "css": "glyph66",
-        "file": "glyph66"
-      },
-      {
-        "code": 105,
-        "css": "glyph67",
-        "file": "glyph67"
-      },
-      {
-        "code": 106,
-        "css": "glyph68",
-        "file": "glyph68"
-      },
-      {
-        "code": 107,
-        "css": "glyph69",
-        "file": "glyph69"
-      },
-      {
-        "code": 108,
-        "css": "glyph70",
-        "file": "glyph70"
-      },
-      {
-        "code": 109,
-        "css": "glyph71",
-        "file": "glyph71"
-      },
-      {
-        "code": 110,
-        "css": "glyph72",
-        "file": "glyph72"
-      },
-      {
-        "code": 111,
-        "css": "glyph73",
-        "file": "glyph73"
-      },
-      {
-        "code": 112,
-        "css": "glyph74",
-        "file": "glyph74"
-      },
-      {
-        "code": 113,
-        "css": "glyph75",
-        "file": "glyph75"
-      },
-      {
-        "code": 114,
-        "css": "glyph76",
-        "file": "glyph76"
-      },
-      {
-        "code": 115,
-        "css": "glyph77",
-        "file": "glyph77"
-      },
-      {
-        "code": 116,
-        "css": "glyph78",
-        "file": "glyph78"
-      },
-      {
-        "code": 117,
-        "css": "glyph79",
-        "file": "glyph79"
-      },
-      {
-        "code": 118,
-        "css": "glyph80",
-        "file": "glyph80"
-      },
-      {
-        "code": 119,
-        "css": "glyph81",
-        "file": "glyph81"
-      },
-      {
-        "code": 120,
-        "css": "glyph82",
-        "file": "glyph82"
-      },
-      {
-        "code": 121,
-        "css": "glyph83",
-        "file": "glyph83"
-      },
-      {
-        "code": 122,
-        "css": "glyph84",
-        "file": "glyph84"
-      },
-      {
-        "code": 123,
-        "css": "glyph85",
-        "file": "glyph85"
-      },
-      {
-        "code": 125,
-        "css": "glyph86",
-        "file": "glyph86"
-      },
-      {
-        "code": 126,
-        "css": "glyph87",
-        "file": "glyph87"
-      },
-      {
-        "code": 178,
-        "css": "glyph88",
-        "file": "glyph88"
-      },
-      {
-        "code": 179,
-        "css": "glyph89",
-        "file": "glyph89"
-      },
-      {
-        "code": 185,
-        "css": "glyph90",
-        "file": "glyph90"
-      },
-      {
-        "code": 215,
-        "css": "glyph91",
-        "file": "glyph91"
-      },
-      {
-        "code": 57344,
-        "css": "glyph92",
-        "file": "glyph92"
-      }
-    ],
-    "transform": {
-      "rescale": 0.9,
-      "baseline": 0.5,
-      "offset": 0.05
-    },
-    "id": 3
   }
 ];
