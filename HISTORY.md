@@ -6,6 +6,8 @@
   - Embedded fonts realligned to middleline of small letters.
   - Integrated ttfautohint, to significantly improve hinting.
 * Added `Font Awesome`
+* Added `Brandico`
+* Removed `WebSymbols`
 * Editable glyph codes.
 * Auto-generated CSS for bootstrap.
 * Nice preview tab & auto-generated demo-page.
