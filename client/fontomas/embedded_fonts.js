@@ -4264,6 +4264,65 @@ module.exports = [
       },
       {
         "search": [
+          "google"
+        ],
+        "code": 62217,
+        "meta": {
+          "homepage": "http://www.google.com/+/business/brand-guidelines.html",
+          "author": "Google"
+        },
+        "file": "googleplus-rect",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "googleplus-rect"
+      },
+      {
+        "search": [
+          "github"
+        ],
+        "code": 62215,
+        "meta": {
+          "author": "Vitaly Puzrin"
+        },
+        "file": "github-text",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "github-text"
+      },
+      {
+        "search": [
+          "github"
+        ],
+        "code": 62216,
+        "meta": {
+          "author": "Vitaly Puzrin"
+        },
+        "file": "github",
+        "transform": {
+          "rescale": 0.9,
+          "offset": 0.05
+        },
+        "css": "github"
+      },
+      {
+        "search": [
+          "skype"
+        ],
+        "code": 62219,
+        "meta": {
+          "homepage": "http://www.alexpeattie.com/projects/justvector_icons/",
+          "author": "Alex Peattie"
+        },
+        "file": "skype",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "skype"
+      },
+      {
+        "search": [
           "icq"
         ],
         "code": 62212,
@@ -4306,50 +4365,6 @@ module.exports = [
       },
       {
         "search": [
-          "github"
-        ],
-        "code": 62215,
-        "meta": {
-          "author": "Vitaly Puzrin"
-        },
-        "file": "github-text",
-        "transform": {
-          "offset": 0.05
-        },
-        "css": "github-text"
-      },
-      {
-        "search": [
-          "github"
-        ],
-        "code": 62216,
-        "meta": {
-          "author": "Vitaly Puzrin"
-        },
-        "file": "github",
-        "transform": {
-          "rescale": 0.9,
-          "offset": 0.05
-        },
-        "css": "github"
-      },
-      {
-        "search": [
-          "google"
-        ],
-        "code": 62217,
-        "meta": {
-          "homepage": "http://www.google.com/+/business/brand-guidelines.html",
-          "author": "Google"
-        },
-        "file": "googleplus-rect",
-        "transform": {
-          "offset": 0.05
-        },
-        "css": "googleplus-rect"
-      },
-      {
-        "search": [
           "google"
         ],
         "code": 62218,
@@ -4365,18 +4380,33 @@ module.exports = [
       },
       {
         "search": [
-          "facebook"
+          "odnoklassniki"
         ],
-        "code": 62219,
+        "code": 62220,
         "meta": {
-          "homepage": "http://www.alexpeattie.com/projects/justvector_icons/",
-          "author": "Alex Peattie"
+          "homepage": "http://corp.mail.ru/communications/odnoklassniki",
+          "author": "MailRu Group"
         },
-        "file": "skype",
+        "file": "odnoklassniki",
         "transform": {
           "offset": 0.05
         },
-        "css": "skype"
+        "css": "odnoklassniki"
+      },
+      {
+        "search": [
+          "odnoklassniki"
+        ],
+        "code": 62221,
+        "meta": {
+          "homepage": "http://corp.mail.ru/communications/odnoklassniki",
+          "author": "MailRu Group"
+        },
+        "file": "odnoklassniki-rect",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "odnoklassniki-rect"
       }
     ],
     "transform": {
