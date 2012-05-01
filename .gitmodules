@@ -10,3 +10,6 @@
 [submodule "src/entypo"]
 	path = src/entypo
 	url = git://github.com/fontello/entypo.git
+[submodule "src/brandico.font"]
+	path = src/brandico.font
+	url = git@github.com:fontello/brandico.font.git
