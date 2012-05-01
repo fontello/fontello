@@ -4183,5 +4183,205 @@ module.exports = [
       "offset": -0.05
     },
     "id": 2
+  },
+  {
+    "font": {
+      "fontname": "brandico",
+      "version": "1.0",
+      "descent": 200,
+      "copyright": "(C) 2012 by Vitaly Puzrin",
+      "fullname": "Brandico",
+      "familyname": "Brandico",
+      "ascent": 800
+    },
+    "meta": {
+      "github": "https://github.com/fontello/brandico.font",
+      "licence_url": "http://scripts.sil.org/OFL",
+      "css_prefix": "icon-",
+      "licence": "SIL",
+      "author": "Crowdsourced, for Fontello project",
+      "columns": 4
+    },
+    "glyphs": [
+      {
+        "search": [
+          "facebook"
+        ],
+        "code": 62208,
+        "meta": {
+          "homepage": "http://www.alexpeattie.com/projects/justvector_icons/",
+          "author": "Alex Peattie"
+        },
+        "file": "facebook",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "facebook"
+      },
+      {
+        "search": [
+          "facebook"
+        ],
+        "code": 62209,
+        "meta": {
+          "homepage": "http://www.alexpeattie.com/projects/justvector_icons/",
+          "author": "Alex Peattie"
+        },
+        "file": "facebook-rect",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "facebook-rect"
+      },
+      {
+        "search": [
+          "twitter"
+        ],
+        "code": 62210,
+        "meta": {
+          "author": "Vitaly Puzrin"
+        },
+        "file": "twitter",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "twitter"
+      },
+      {
+        "search": [
+          "twitter"
+        ],
+        "code": 62211,
+        "meta": {
+          "author": "Vitaly Puzrin"
+        },
+        "file": "twitter-bird",
+        "transform": {
+          "rescale": 0.9,
+          "offset": 0.05
+        },
+        "css": "twitter-bird"
+      },
+      {
+        "search": [
+          "icq"
+        ],
+        "code": 62212,
+        "meta": {
+          "author": "Vitaly Puzrin"
+        },
+        "file": "icq",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "icq"
+      },
+      {
+        "search": [
+          "yandex"
+        ],
+        "code": 62213,
+        "meta": {
+          "author": "Vitaly Puzrin"
+        },
+        "file": "yandex",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "yandex"
+      },
+      {
+        "search": [
+          "yandex"
+        ],
+        "code": 62214,
+        "meta": {
+          "author": "Vitaly Puzrin"
+        },
+        "file": "yandex-rect",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "yandex-rect"
+      },
+      {
+        "search": [
+          "github"
+        ],
+        "code": 62215,
+        "meta": {
+          "author": "Vitaly Puzrin"
+        },
+        "file": "github-text",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "github-text"
+      },
+      {
+        "search": [
+          "github"
+        ],
+        "code": 62216,
+        "meta": {
+          "author": "Vitaly Puzrin"
+        },
+        "file": "github",
+        "transform": {
+          "rescale": 0.9,
+          "offset": 0.05
+        },
+        "css": "github"
+      },
+      {
+        "search": [
+          "google"
+        ],
+        "code": 62217,
+        "meta": {
+          "homepage": "http://www.google.com/+/business/brand-guidelines.html",
+          "author": "Google"
+        },
+        "file": "googleplus-rect",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "googleplus-rect"
+      },
+      {
+        "search": [
+          "google"
+        ],
+        "code": 62218,
+        "meta": {
+          "homepage": "http://vk.com/help.php?page=about",
+          "author": "Vkontakte"
+        },
+        "file": "vkontakte-rect",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "vkontakte-rect"
+      },
+      {
+        "search": [
+          "facebook"
+        ],
+        "code": 62219,
+        "meta": {
+          "homepage": "http://www.alexpeattie.com/projects/justvector_icons/",
+          "author": "Alex Peattie"
+        },
+        "file": "skype",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "skype"
+      }
+    ],
+    "transform": {
+      "baseline": 0.5
+    },
+    "id": 3
   }
 ];

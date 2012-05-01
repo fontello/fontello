@@ -1,6 +1,7 @@
 .font-embedded-0 { font-family: 'entypo'; }
 .font-embedded-1 { font-family: 'fontawesome'; }
 .font-embedded-2 { font-family: 'iconic'; }
+.font-embedded-3 { font-family: 'brandico'; }
 
 @font-face {
   font-family: 'entypo';
@@ -31,6 +32,17 @@
     url('/static/assets/embedded_fonts/iconic.woff') format('woff'),
     url('/static/assets/embedded_fonts/iconic.ttf') format('truetype'),
     url('/static/assets/embedded_fonts/iconic.svg#iconic') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'brandico';
+  src: url('/static/assets/embedded_fonts/brandico.eot');
+  src: url('/static/assets/embedded_fonts/brandico.eot?#iefix') format('embedded-opentype'),
+    url('/static/assets/embedded_fonts/brandico.woff') format('woff'),
+    url('/static/assets/embedded_fonts/brandico.ttf') format('truetype'),
+    url('/static/assets/embedded_fonts/brandico.svg#brandico') format('svg');
   font-weight: normal;
   font-style: normal;
 }
