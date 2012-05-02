@@ -4209,8 +4209,8 @@ module.exports = [
         ],
         "code": 62208,
         "meta": {
-          "homepage": "http://www.alexpeattie.com/projects/justvector_icons/",
-          "author": "Alex Peattie"
+          "homepage": "http://www.facebook.com/brandpermissions/logos.php",
+          "author": "Facebook"
         },
         "file": "facebook",
         "transform": {
@@ -4224,8 +4224,9 @@ module.exports = [
         ],
         "code": 62209,
         "meta": {
-          "homepage": "http://www.alexpeattie.com/projects/justvector_icons/",
-          "author": "Alex Peattie"
+          "twitter": "https://twitter.com/puzrin",
+          "github": "https://github.com/puzrin",
+          "author": "Vitaly Puzrin"
         },
         "file": "facebook-rect",
         "transform": {
@@ -4239,6 +4240,8 @@ module.exports = [
         ],
         "code": 62210,
         "meta": {
+          "twitter": "https://twitter.com/puzrin",
+          "github": "https://github.com/puzrin",
           "author": "Vitaly Puzrin"
         },
         "file": "twitter",
@@ -4253,7 +4256,8 @@ module.exports = [
         ],
         "code": 62211,
         "meta": {
-          "author": "Vitaly Puzrin"
+          "homepage": "https://twitter.com/about/resources/logos",
+          "author": "Twitter"
         },
         "file": "twitter-bird",
         "transform": {
@@ -4261,6 +4265,71 @@ module.exports = [
           "offset": 0.05
         },
         "css": "twitter-bird"
+      },
+      {
+        "search": [
+          "vimeo"
+        ],
+        "code": 62223,
+        "meta": {
+          "twitter": "https://twitter.com/puzrin",
+          "github": "https://github.com/puzrin",
+          "author": "Vitaly Puzrin"
+        },
+        "file": "vimeo",
+        "transform": {
+          "rescale": 0.8,
+          "offset": 0.05
+        },
+        "css": "vimeo"
+      },
+      {
+        "search": [
+          "vimeo"
+        ],
+        "code": 62222,
+        "meta": {
+          "twitter": "https://twitter.com/puzrin",
+          "github": "https://github.com/puzrin",
+          "author": "Vitaly Puzrin"
+        },
+        "file": "vimeo-rect",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "vimeo-rect"
+      },
+      {
+        "search": [
+          "tumblr"
+        ],
+        "code": 62225,
+        "meta": {
+          "twitter": "https://twitter.com/puzrin",
+          "github": "https://github.com/puzrin",
+          "author": "Vitaly Puzrin"
+        },
+        "file": "tumblr",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "tumblr"
+      },
+      {
+        "search": [
+          "tumblr"
+        ],
+        "code": 62224,
+        "meta": {
+          "twitter": "https://twitter.com/puzrin",
+          "github": "https://github.com/puzrin",
+          "author": "Vitaly Puzrin"
+        },
+        "file": "tumblr-rect",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "tumblr-rect"
       },
       {
         "search": [
@@ -4283,6 +4352,8 @@ module.exports = [
         ],
         "code": 62215,
         "meta": {
+          "twitter": "https://twitter.com/puzrin",
+          "github": "https://github.com/puzrin",
           "author": "Vitaly Puzrin"
         },
         "file": "github-text",
@@ -4297,6 +4368,8 @@ module.exports = [
         ],
         "code": 62216,
         "meta": {
+          "twitter": "https://twitter.com/puzrin",
+          "github": "https://github.com/puzrin",
           "author": "Vitaly Puzrin"
         },
         "file": "github",
@@ -4327,6 +4400,8 @@ module.exports = [
         ],
         "code": 62212,
         "meta": {
+          "twitter": "https://twitter.com/puzrin",
+          "github": "https://github.com/puzrin",
           "author": "Vitaly Puzrin"
         },
         "file": "icq",
@@ -4341,6 +4416,8 @@ module.exports = [
         ],
         "code": 62213,
         "meta": {
+          "twitter": "https://twitter.com/puzrin",
+          "github": "https://github.com/puzrin",
           "author": "Vitaly Puzrin"
         },
         "file": "yandex",
@@ -4355,6 +4432,8 @@ module.exports = [
         ],
         "code": 62214,
         "meta": {
+          "twitter": "https://twitter.com/puzrin",
+          "github": "https://github.com/puzrin",
           "author": "Vitaly Puzrin"
         },
         "file": "yandex-rect",
