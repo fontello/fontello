@@ -22,8 +22,10 @@
 
   "dependencies"    : {
                         "nlib"        : "git://github.com/nodeca/nlib.git",
-                        "static-lulz" : "git://github.com/nodeca/static-lulz.git",
                         "connect"     : "git://github.com/senchalabs/connect.git",
+                        "mincer"      : "git://github.com/nodeca/mincer.git",
+                        "stylus"      : "0.26.0",
+                        "less"        : "1.3.0",
                         "socket.io"   : "0.9.6"
                       },
   "engines"         : { "node": ">= 0.6.0" }
