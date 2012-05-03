@@ -1,5 +1,6 @@
 /config/*.local.yml
 /node_modules/
 /doc/
+/tmp/
 *.log
 *.swp
