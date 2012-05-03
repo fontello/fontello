@@ -26,11 +26,11 @@ if __name__ == '__main__':
     tpl_class    = ".font-embedded-{i} {{ font-family: '{fontname}'; }}"
     tpl_fontface = """@font-face {{
   font-family: '{fontname}';
-  src: url('/static/assets/embedded_fonts/{fontname}.eot');
-  src: url('/static/assets/embedded_fonts/{fontname}.eot?#iefix') format('embedded-opentype'),
-    url('/static/assets/embedded_fonts/{fontname}.woff') format('woff'),
-    url('/static/assets/embedded_fonts/{fontname}.ttf') format('truetype'),
-    url('/static/assets/embedded_fonts/{fontname}.svg#{fontname}') format('svg');
+  src: url('<%= asset_path("{fontname}.eot") %>');
+  src: url('<%= asset_path("{fontname}.eot") %>?#iefix') format('embedded-opentype'),
+       url('<%= asset_path("{fontname}.woff") %>') format('woff'),
+       url('<%= asset_path("{fontname}.ttf") %>') format('truetype'),
+       url('<%= asset_path("{fontname}.svg") %>#{fontname}') format('svg');
   font-weight: normal;
   font-style: normal;
 }}"""

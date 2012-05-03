@@ -27,7 +27,7 @@ rebuild-fonts:
 		bin/font_copy_to_assets.py -c "$$config" -o assets/embedded_fonts; \
 		done
 	bin/build_embedded_fonts_js.py -i assets/embedded_fonts -o client/fontomas/embedded_fonts.js $(FONT_CONFIGS)
-	bin/build_embedded_fonts_css.py -o assets/embedded_fonts/fontface-embedded.css $(FONT_CONFIGS)
+	bin/build_embedded_fonts_css.py -o assets/embedded_fonts/fontface-embedded.css.ejs $(FONT_CONFIGS)
 
 
 dev-setup:
