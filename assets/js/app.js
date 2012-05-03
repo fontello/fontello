@@ -1,5 +1,12 @@
 /*global nodeca, _, $, Modernizr*/
 
+//= require jquery/jquery
+//= require jquery.gritter/jquery.gritter
+//= require bootstrap/bootstrap
+//= require underscore
+//= require backbone
+//= require handlebars
+//= require jquery.collapser
 //= require fontomas/api
 
 ;(function () {

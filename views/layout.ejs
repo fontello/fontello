@@ -7,15 +7,11 @@
     <meta name="author" content=""/>
 
     <!-- styles -->
-    <link href="static/assets/vendor/bootstrap/bootstrap.css" rel="stylesheet"/>
-    <link href="static/assets/vendor/bootstrap/bootstrap-responsive.min.css" rel="stylesheet"/>
-    <link href="static/assets/vendor/jquery.gritter/jquery.gritter.css" rel="stylesheet"/>
-    <link href="static/assets/embedded_fonts/fontface-embedded.css" rel="stylesheet"/>
-    <link href="static/assets/css/fontomas.css" rel="stylesheet"/>
+    <link href="<%= asset_path('app.css') %>" rel="stylesheet"/>
 
     <!-- the fav and touch icons -->
     <link rel="shortcut icon" href="static/assets/img/favicon.ico"/>
-    <script src="static/assets/vendor/modernizr.custom.js"></script>
+    <script type="text/javascript" src="<%= asset_path('modernizr.custom.js') %>"></script>
   </head>
 
   <body>
@@ -211,16 +207,6 @@
     <!-- javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script type="text/javascript" src="/static/assets/vendor/jquery/jquery.js"></script>
-
-    <script type="text/javascript" src="/static/assets/vendor/jquery.gritter/jquery.gritter.js"></script>
-    <script type="text/javascript" src="/static/assets/vendor/bootstrap/bootstrap.js"></script>
-    <script type="text/javascript" src="/static/assets/vendor/underscore.js"></script>
-    <script type="text/javascript" src="/static/assets/vendor/backbone.js"></script>
-    <script type="text/javascript" src="/static/assets/vendor/handlebars.js"></script>
-
-    <script type="text/javascript" src="/static/assets/js/jquery.collapser.js"></script>
-
     <script type="text/javascript" src="<%= asset_path('app.js') %>"></script>
 
 <!-- Google Analytics -->
