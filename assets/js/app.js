@@ -1,8 +1,9 @@
 /*global nodeca, _, $, Modernizr*/
 
+//= require fontomas/api
+
 ;(function () {
   "use strict";
-
 
   $(function () {
     var steps, selector, preview, result, result_font;
