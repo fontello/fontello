@@ -15,7 +15,7 @@ var app = NLib.Application.create({
 });
 
 
-// preset nodeca version
+// preset version
 nodeca.hooks.init.before('bundles', function (next) {
   nodeca.runtime.version = require('./package.json').version;
   next();
