@@ -1,0 +1,144 @@
+
+/* CORE STYLES*/
+
+	/* noty bar */
+	.noty_bar.noty_theme_facebook {
+    line-height: 14px;
+    font-family: "lucida grande",tahoma,verdana,arial,sans-serif;
+    font-size: 11px;
+	}
+	
+	/* custom container */
+	.noty_custom_container.noty_theme_facebook.noty_layout_inline {
+		position: relative;
+	}
+	
+	/* custom growl container */
+	.noty_custom_container.noty_theme_facebook.noty_layout_inline .noty_cont.noty_layout_inline {
+		position: static;
+	}
+		/* custom noty bar */
+		.noty_custom_container.noty_theme_facebook.noty_layout_inline .noty_bar {
+			position: static;
+			-webkit-border-radius: 4px;
+			-moz-border-radius: 4px;
+			border-radius: 4px;
+		}
+			.noty_custom_container.noty_theme_facebook.noty_layout_inline .noty_bar .noty_message {
+				font-size: 13px;
+				padding: 4px;
+			}
+				.noty_custom_container.noty_theme_facebook.noty_layout_inline .noty_bar .noty_message .noty_buttons {
+					margin-top: -3px;
+				}
+	
+	/* noty_message */
+	.noty_bar.noty_theme_facebook .noty_message {
+		padding: 8px 14px;
+	}
+	/* noty_has_close_button */
+	.noty_bar.noty_theme_facebook.noty_closable .noty_message {
+		padding: 8px 35px 8px 14px;
+	}
+	
+	/* noty_buttons */
+	.noty_bar.noty_theme_facebook .noty_message .noty_buttons {
+		float: right;
+		margin-top: -5px;
+		margin-left: 4px;
+	}
+	
+	/* noty_button */
+	.noty_bar.noty_theme_facebook .noty_message .noty_buttons button {
+		margin-left: 5px;
+	}
+	
+	/* noty close button */
+	.noty_bar.noty_theme_facebook .noty_close {
+		position: absolute;
+		top: 7px;
+		right: 7px;
+		width: 13px;
+		height: 14px;
+		background-image: url(data:image/gif;base64,R0lGODlhDQAOAIABAG2EtAAAACH5BAEAAAEALAAAAAANAA4AAAIYjI+pywv3FJhhxmQps61ql4EPJ0HdiXYFADs=);
+	}
+	
+	/* noty close button hover */
+	.noty_bar.noty_theme_facebook .noty_close:hover {
+		background-image: url(data:image/gif;base64,R0lGODlhDQAOAIAAAP///ztZmCH5BAAAAAAALAAAAAANAA4AAAIYjI+pywv3FJhhxmQps61ql4EPJ0HdiXYFADs=);
+	}
+	
+	/* noty modal */
+	.noty_modal.noty_theme_facebook {
+		opacity: 0.7;
+	}
+	
+/* LAYOUTS */
+
+	/* noty_layout_topLeft & noty_layout_topRight */
+	.noty_bar.noty_theme_facebook.noty_layout_center,
+	.noty_bar.noty_theme_facebook.noty_layout_topCenter,
+	.noty_bar.noty_theme_facebook.noty_layout_topLeft,
+	.noty_bar.noty_theme_facebook.noty_layout_topRight,
+	.noty_bar.noty_theme_facebook.noty_layout_bottomLeft,
+	.noty_bar.noty_theme_facebook.noty_layout_bottomRight {
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 4px;
+		border-radius: 4px;
+	}
+	.noty_bar.noty_theme_facebook.noty_layout_topLeft .noty_message .noty_buttons,
+	.noty_bar.noty_theme_facebook.noty_layout_topRight .noty_message .noty_buttons,
+	.noty_bar.noty_theme_facebook.noty_layout_bottomLeft .noty_message .noty_buttons,
+	.noty_bar.noty_theme_facebook.noty_layout_bottomRight .noty_message .noty_buttons {
+		float: none;
+		border-top: 1px solid #FBEED5;
+	  margin-left: 0;
+	  margin-top: 10px;
+	  padding-top: 10px;
+	  text-align: right;
+	}
+	
+	.noty_bar.noty_theme_facebook.noty_layout_center .noty_message .noty_buttons,
+	.noty_bar.noty_theme_facebook.noty_layout_topCenter .noty_message .noty_buttons {
+		margin-left: 15px;
+		margin-top: -2px
+	}
+	
+/* NOTIFICATION TYPES */
+
+	/* noty_alert */
+	.noty_bar.noty_theme_facebook.noty_alert {
+		background-color: #E1E6EE;
+		border: 1px solid #99A8C7;
+		color: #3B5998;
+	}
+	.noty_bar.noty_theme_facebook.noty_alert:hover {
+		background-color: #CAD1DE;
+	}
+	/* noty_error */
+	.noty_bar.noty_theme_facebook.noty_error {
+		background-color: #E1E6EE;
+		border: 1px solid #99A8C7;
+		color: #3B5998;
+	}
+	.noty_bar.noty_theme_facebook.noty_error:hover {
+		background-color: #CAD1DE;
+	}
+	/* noty_success */
+	.noty_bar.noty_theme_facebook.noty_success {
+		background-color: #E1E6EE;
+		border: 1px solid #99A8C7;
+		color: #3B5998;
+	}
+	.noty_bar.noty_theme_facebook.noty_success:hover {
+		background-color: #CAD1DE;
+	}
+	/* noty_information */
+	.noty_bar.noty_theme_facebook.noty_information {
+		background-color: #E1E6EE;
+		border: 1px solid #99A8C7;
+		color: #3B5998;
+	}
+	.noty_bar.noty_theme_facebook.noty_information:hover {
+		background-color: #CAD1DE;
+	}
