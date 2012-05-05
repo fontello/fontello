@@ -1,7 +1,7 @@
 /*global nodeca, _, $, Modernizr*/
 
 //= require jquery/jquery
-//= require jquery.gritter/jquery.gritter
+//= require jquery.noty/js/jquery.noty
 //= require bootstrap/bootstrap
 //= require underscore
 //= require backbone

@@ -1,7 +1,10 @@
 /**
  *= require bootstrap/bootstrap
  *= require bootstrap/bootstrap-responsive
- *= require jquery.gritter/jquery.gritter
+
+ *= require jquery.noty/css/jquery.noty
+ *= require jquery.noty/css/noty_theme_twitter
+
  *= require fontface-embedded
  *= require fontomas
  *= require entypo

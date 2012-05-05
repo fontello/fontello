@@ -2,13 +2,12 @@
 
 "use strict";
 
-module.exports.notify_alert = function (text) {
-  // FIXME: title is mandatory, so we've filled it with just a space
-  $.gritter.add({
-    time:   4000,
-    image:  "/static/assets/img/alert.png",
-    title:  " ",
-    text:   text
+module.exports.notify_alert = function (txt) {
+  $.noty({
+    text: txt,
+    theme: 'noty_theme_twitter',
+    layout: 'topRight',
+    type: 'error'
   });
 };
 
