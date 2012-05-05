@@ -1,4 +1,5 @@
 /**
+
  *= require bootstrap/bootstrap
  *= require bootstrap/bootstrap-responsive
 
@@ -8,4 +9,6 @@
  *= require fontface-embedded
  *= require fontomas
  *= require entypo
+ *= require gh-ribbon
+
  **/
