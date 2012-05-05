@@ -25,6 +25,7 @@
                         "connect"     : "git://github.com/senchalabs/connect.git",
                         "mincer"      : "git://github.com/nodeca/mincer.git",
                         "stylus"      : "0.26.0",
+                        "nib"         : "0.4.1",
                         "less"        : "1.3.0",
                         "ejs"         : "0.7.1",
                         "uglify-js"   : "1.2.6",
