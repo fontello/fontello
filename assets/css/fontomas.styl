@@ -9,11 +9,33 @@ p
   font-size 16px
   line-height 1.5em
 
-iframe.twitter-follow-button,
+//======== Social buttons ========
+iframe.twitter-follow-button
 iframe.twitter-share-button
   margin-left 10px
   margin-top 9px
 
+.gplus > div
+  top 9px
+  position relative
+
+.nav
+  .twitter-follow-button
+  .twitter-share-button
+  .gplus
+    transition: opacity .5s ease;
+    -moz-transition: opacity .5s ease;
+    -webkit-transition: opacity .5s ease;
+    opacity: .6
+
+.nav:hover
+  .twitter-follow-button
+  .twitter-share-button
+  .gplus
+    opacity: 1
+
+
+//=================================
 
 .page-header
   border-bottom 2px solid #ddd
