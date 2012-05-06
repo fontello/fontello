@@ -30,7 +30,8 @@
                         "ejs"         : "0.7.1",
                         "uglify-js"   : "1.2.6",
                         "csso"        : "1.2.12",
-                        "socket.io"   : "0.9.6"
+                        "socket.io"   : "0.9.6",
+                        "neuron"      : "0.4.5"
                       },
   "engines"         : { "node": ">= 0.6.0" }
 }
