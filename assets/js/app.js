@@ -47,7 +47,7 @@
     });
 
     // init embedded fonts
-    _.each(nodeca.client.fontomas.embedded_fonts, function (config) {
+    _.each(nodeca.shared.fontomas.embedded_fonts, function (config) {
       var model = new nodeca.client.fontomas.models.source_font(_.extend({}, config, {
         embedded_id: config.id
       }));
