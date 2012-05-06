@@ -4,3 +4,6 @@
 /tmp/
 *.log
 *.swp
+*.sublime-project
+*.sublime-workspace
+
