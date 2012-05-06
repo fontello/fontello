@@ -1,7 +1,13 @@
+/*global jQuery*/
+
+
 /**
-* ndCollapser : jQuery plugin
-*/
+ * ndCollapser : jQuery plugin
+ */
 ;(function ($, undefined) {
+  'use strict';
+
+
   // internal
   // finds element given by data-`name` selector or n-th parent
   var get_related_el = function get_related_el($this, name) {
@@ -9,7 +15,7 @@
 
     // using lossy comparison as empty values
     // should be treaten as 0 for us
-    if (value != +value) {
+    if (value !== +value) {
       return $(value);
     }
 
@@ -83,18 +89,16 @@
     return this.each(function () {
       var $this = $(this),
           $togglers = $this, // by default bind click on toggler only
-          $notify = (undefined === $this.data('notify'))
-                    ? $this.parent().parent()
+          $notify = (undefined === $this.data('notify')) ? $this.parent().parent()
                     : get_related_el($this, 'notify'),
-          $slave = $this.data('toggle')
-                    ? $($this.data('toggle'))
+          $slave  = $this.data('toggle') ? $($this.data('toggle'))
                     : $this.parent().next();
 
       if (undefined !== $this.data('extra-toggler')) {
         (function ($extra_toggler) {
           $extra_toggler.css('cursor', 'pointer');
           $togglers = $this.add($extra_toggler);
-        })(get_related_el($this, 'extra-toggler'));
+        }(get_related_el($this, 'extra-toggler')));
       }
 
       $togglers.click(function (evt) {
@@ -108,18 +112,16 @@
     return this.each(function () {
       var $this = $(this),
           $togglers = $this, // by default bind click on toggler only
-          $notify = (undefined === $this.data('notify'))
-                    ? $this.parent().parent()
+          $notify = (undefined === $this.data('notify')) ? $this.parent().parent()
                     : get_related_el($this, 'notify'),
-          $slave = $this.data('toggle')
-                    ? $($this.data('toggle'))
+          $slave = $this.data('toggle') ? $($this.data('toggle'))
                     : $this.parent().next();
 
       if (undefined !== $this.data('extra-toggler')) {
         (function ($extra_toggler) {
           $extra_toggler.css('cursor', 'pointer');
           $togglers = $this.add($extra_toggler);
-        })(get_related_el($this, 'extra-toggler'));
+        }(get_related_el($this, 'extra-toggler')));
       }
 
       $togglers.click(function (evt) {
@@ -130,5 +132,4 @@
     });
   };
 
-})(jQuery);
-
+}(jQuery));
