@@ -1,15 +1,15 @@
-//= require ./js/bootstrap-alert
-//= require ./js/bootstrap-button
-//= //require ./js/bootstrap-carousel
-//= require ./js/bootstrap-collapse
-//= require ./js/bootstrap-dropdown
-//= require ./js/bootstrap-modal
-//= //require ./js/bootstrap-scrollspy
-//= require ./js/bootstrap-tab
-//= require ./js/bootstrap-tooltip
-//= require ./js/bootstrap-transition
-//= require ./js/bootstrap-typeahead
+//= require ./src/js/bootstrap-alert
+//= require ./src/js/bootstrap-button
+//= //require ./src/js/bootstrap-carousel
+//= require ./src/js/bootstrap-collapse
+//= require ./src/js/bootstrap-dropdown
+//= require ./src/js/bootstrap-modal
+//= //require ./src/js/bootstrap-scrollspy
+//= require ./src/js/bootstrap-tab
+//= require ./src/js/bootstrap-tooltip
+//= require ./src/js/bootstrap-transition
+//= require ./src/js/bootstrap-typeahead
 
 // Popover must go AFTER tooltip
-//= require ./js/bootstrap-popover
+//= require ./src/js/bootstrap-popover
 
