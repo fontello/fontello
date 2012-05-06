@@ -3,8 +3,7 @@
  *= require bootstrap/bootstrap
  *= require bootstrap/bootstrap-responsive
 
- *= require jquery.noty/css/jquery.noty
- *= require jquery.noty/css/noty_theme_twitter
+ *= require jquery.noty/noty
 
  *= require fontface-embedded
  *= require fontomas
