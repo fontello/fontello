@@ -139,7 +139,6 @@ job_mgr.addJob('generate-font', {
 });
 
 
-
 // request font generation status
 module.exports.status = function (params, callback) {
   get_job(params.id, function (job) {
@@ -150,7 +149,7 @@ module.exports.status = function (params, callback) {
       return;
     }
 
-    response = {status: job.status};
+    response = {id: params.id, status: job.status};
 
     if ('enqueued' === job.status) {
       response.position = job_mgr.getPosition('generate-font', job.worker_id);
@@ -167,16 +166,14 @@ module.exports.status = function (params, callback) {
 
 // request font generation
 module.exports.generate = function (params, callback) {
-  var glyphs = get_glyphs_config(params),
-      font_id, font_url, response;
+  var glyphs = get_glyphs_config(params), font_id;
 
   if (!glyphs) {
     callback("Invalid request");
     return;
   }
 
-  font_id  = get_download_id(glyphs);
-  font_url = get_download_url(font_id);
+  font_id = get_download_id(glyphs);
 
   // enqueue new unique job
   if (!jobs[font_id]) {
@@ -184,7 +181,11 @@ module.exports.generate = function (params, callback) {
       status:     'enqueued',
       worker_id:  job_mgr.enqueue('generate-font', font_id, glyphs)
     };
+
+    callback(null, {id: font_id, status: 'enqueued'});
+    return;
   }
 
+  // otherwise forward request to status getter
   module.exports.status({id:  font_id}, callback);
 };
