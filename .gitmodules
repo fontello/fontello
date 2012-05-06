@@ -13,3 +13,6 @@
 [submodule "src/brandico.font"]
 	path = src/brandico.font
 	url = git@github.com:fontello/brandico.font.git
+[submodule "support/font-builder"]
+	path = support/font-builder
+	url = git://github.com/fontello/font-builder.git
