@@ -4,6 +4,7 @@
 
 // prevent the event from bubbling to ancestor elements
 function stopPropagation(event) {
+  event.preventDefault();
   event.stopPropagation();
 }
 
