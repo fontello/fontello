@@ -141,25 +141,26 @@ job_mgr.addJob('generate-font', {
 
 // request font generation status
 module.exports.status = function (params, callback) {
-  get_job(params.id, function (job) {
-    var response;
+  var data = this.response.data;
 
+  get_job(params.id, function (job) {
     if (!job) {
       callback("Unknown job id.");
       return;
     }
 
-    response = {id: params.id, status: job.status};
+    data.id     = params.id;
+    data.status = job.status;
 
     if ('enqueued' === job.status) {
-      response.position = job_mgr.getPosition('generate-font', job.worker_id);
+      data.position = job_mgr.getPosition('generate-font', job.worker_id);
     }
 
     if ('ready' === job.status) {
-      response.url = job.url;
+      data.url = job.url;
     }
 
-    callback(job.error, response);
+    callback(job.error);
   });
 };
 
@@ -182,10 +183,11 @@ module.exports.generate = function (params, callback) {
       worker_id:  job_mgr.enqueue('generate-font', font_id, glyphs)
     };
 
-    callback(null, {id: font_id, status: 'enqueued'});
+    this.response.data = {id: font_id, status: 'enqueued'};
+    callback();
     return;
   }
 
   // otherwise forward request to status getter
-  module.exports.status({id:  font_id}, callback);
+  module.exports.status.call(this, {id:  font_id}, callback);
 };
