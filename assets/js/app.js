@@ -7,6 +7,7 @@
 //= require backbone
 //= require handlebars
 //= require jquery.collapser
+//= require nodeca
 //= require fontomas/api
 
 ;(function () {
