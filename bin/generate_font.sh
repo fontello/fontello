@@ -71,6 +71,8 @@ fontdemo.py -c "$CONFIG" "$DEMO_CSS_TPL" "$TMPDIR/$FONTNAME.css"
 ## BUILD ZIPBALL ###############################################################
 
 
+FIXDIR=$(echo -n $TMPDIR | cut -c-$(expr $(echo -n $TMPDIR | wc -c) - 24))
 rm $CONFIG && rm -rf $ZIPBALL && mkdir -p $(dirname $ZIPBALL)
-cd $(dirname $TMPDIR) && zip $ZIPBALL -r ./$(basename $TMPDIR)
+cd $(dirname $TMPDIR) && cp -r "$TMPDIR" "$FIXDIR"
+zip $ZIPBALL -r ./$(basename $FIXDIR) && rm -rf $FIXDIR
 exit 0
