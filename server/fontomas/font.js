@@ -5,17 +5,29 @@
 
 
 // stdlib
-var crypto  = require('crypto');
-var path    = require('path');
-var exec    = require('child_process').exec;
+var crypto    = require('crypto');
+var fs        = require('fs');
+var path      = require('path');
+var execFile  = require('child_process').execFile;
 
 
 // 3rd-party
-var neuron = require('neuron');
+var neuron  = require('neuron');
+var async   = require('nlib').Vendor.Async;
+var fstools = require('nlib').Vendor.FsTools;
 
 
 // directory where to put results
-var RESULTS_DIR = path.resolve(__dirname, '../../public');
+var TMP_DIR             = '/tmp/fontomas';
+var APP_ROOT            = _.first(nodeca.runtime.apps).root;
+var DOWNLOAD_DIR        = path.join(APP_ROOT, 'public/download/');
+var DOWNLOAD_URL_PREFIX = "http://www.fontello.com/download/";
+
+var ZIP_BIN             = '/usr/bin/zip';
+var FONT_MERGE_BIN      = path.join(APP_ROOT, 'support/font-builder/bin/font_merge.py');
+var FONT_CONVERT_BIN    = path.join(APP_ROOT, 'support/font-builder/bin/fontconvert.py');
+var FONT_CONFIG_BIN     = path.join(APP_ROOT, 'support/font-builder/bin/font_mkconfig.py');
+var FONT_DEMO_BIN       = path.join(APP_ROOT, 'support/font-builder/bin/fontdemo.py');
 
 
 // internal cache used by get_font()
@@ -31,7 +43,7 @@ function get_font(name) {
     });
   }
 
-  return font_configs[name];
+  return name ? font_configs[name] : font_configs;
 }
 
 
@@ -90,12 +102,12 @@ function get_download_path(font_id) {
   a = font_id.substr(0, 2);
   b = font_id.substr(2, 2);
 
-  return "download/" + [a, b, font_id].join("/") + ".zip";
+  return [a, b, font_id].join("/") + ".zip";
 }
 
 
 function get_download_url(font_id) {
-  return "http://www.fontello.com/" + get_download_path(font_id);
+  return DOWNLOAD_URL_PREFIX + get_download_path(font_id);
 }
 
 
@@ -112,10 +124,10 @@ function get_job(font_id, callback) {
     return;
   }
 
-  file = path.join(RESULTS_DIR, get_download_path(font_id));
+  file = path.join(DOWNLOAD_DIR, get_download_path(font_id));
   path.exists(file, function (result) {
     if (!result) {
-      callback(/* undefined */);
+      callback(/* undefined - job not found */);
       return;
     }
 
@@ -124,15 +136,88 @@ function get_job(font_id, callback) {
 }
 
 
+var source_fonts;
+function get_source_fonts() {
+  var fonts_dir;
+
+  if (!source_fonts) {
+    source_fonts  = {};
+    fonts_dir     = path.join(APP_ROOT, 'assets/embedded_fonts');
+
+    _.each(get_font(), function (config, name) {
+      source_fonts[name] = path.join(fonts_dir, name + '.ttf');
+    });
+  }
+
+  return source_fonts;
+}
+
+
 // define queue and jobs
 var job_mgr = new (neuron.JobManager)();
 job_mgr.addJob('generate-font', {
   dirname: '/tmp',
   concurrency: 4,
-  work: function (config) {
-    var self = this;
-    exec('date', function (err, stdout, stderr) {
-      // TODO: job logic here
+  work: function (font_id, glyphs) {
+    var self        = this,
+        fontname    = "fontello-" + font_id,
+        tmp         = path.join(TMP_DIR, fontname),
+        zipball     = path.join(DOWNLOAD_DIR, get_download_path(font_id));
+
+    async.series([
+      async.apply(fstools.mkdir, tmp),
+      // write config
+      async.apply(fs.writeFile, path.join(tmp, 'config.yml'), JSON.stringify({
+        font: {
+          version:    "1.0-" + font_id.substr(0, 8),
+          fontname:   fontname,
+          fullname:   "Fontello " + font_id,
+          familyname: "Fontello",
+          copyright:  "Copyright (C) 2012 by fontello.com",
+          ascent:     800,
+          descent:    200,
+          weight:     "Normal"
+        },
+        glyphs:     glyphs,
+        src_fonts:  get_source_fonts()
+      }), 'utf8'),
+      // merge font
+      async.apply(execFile, FONT_MERGE_BIN, [
+        '--config',   path.join(tmp, 'config.yml'),
+        '--dst_font', path.join(tmp, fontname + '.ttf')
+      ]),
+      // convert font
+      async.apply(execFile, FONT_CONVERT_BIN, [
+        '--src_font',   path.join(tmp, fontname + '.ttf'),
+        '--fonts_dir',  tmp
+      ]),
+      // make font config
+      async.apply(execFile, FONT_CONFIG_BIN, [
+        '--src_font',   path.join(tmp, fontname + '.ttf'),
+        '--config',   path.join(tmp, 'config.yml')
+      ]),
+      // build font demo
+      //async.apply(execFile, FONT_DEMO_BIN, [
+      //  '--config',   path.join(tmp, 'config.yml')
+      //])
+      // prepare destination folder
+      async.apply(fstools.mkdir, path.dirname(zipball)),
+      // prepare zipball
+      async.apply(execFile, ZIP_BIN, ['-r', tmp, zipball]),
+      // cleanup tmp dir
+      async.apply(fstools.remove, tmp)
+    ], function (err) {
+      if (err) {
+        jobs[font_id].status  = 'error';
+        jobs[font_id].error   = err;
+      } else {
+        jobs[font_id].status  = 'finished';
+        jobs[font_id].url     = get_download_url(font_id);
+
+        // untight worker id
+        delete jobs[font_id].worker_id;
+      }
+
       self.finished = true;
     });
   }
