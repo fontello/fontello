@@ -6,9 +6,29 @@
 
   var nodeca = window.nodeca = {
     runtime: {
+      env:     "<%= env() %>",
       version: "<%= version() %>"
     }
   };
+
+  <% if ('development' === env()) { %>
+    nodeca.logger = console;
+    nodeca.logger = {
+      assert : console.assert || console.debug || console.log,
+      error  : console.error || console.log,
+      info   : console.info || console.log,
+      notice : console.notice || console.info || console.log,
+      debug  : console.debug || console.log
+    };
+  <% } else { %>
+    nodeca.logger = {
+      assert : $.noop,
+      error  : $.noop,
+      info   : $.noop,
+      notice : $.noop,
+      debug  : $.noop
+    };
+  <% } %>
 
   (function (sio) {
     nodeca.runtime.rpc = function (name, params, callback) {

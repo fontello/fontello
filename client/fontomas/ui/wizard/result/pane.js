@@ -2,6 +2,18 @@
 
 "use strict";
 
+
+function start_download(id, url) {
+  if ($('iframe#' + id).length) {
+    // duplicate
+    return;
+  }
+
+  $('<iframe></iframe>').attr({id: id, src: url}).css('display', 'none')
+    .appendTo(window.document.body);
+}
+
+
 module.exports = Backbone.View.extend({
   // Use existing DOM element instead of generating a new one.
   el: '#result',
@@ -50,25 +62,50 @@ module.exports = Backbone.View.extend({
     nodeca.server.fontomas.font.generate(this.model.getFontConfig(), function (err, msg) {
       var font_id = msg.data.id;
 
+      if (err) {
+        // TODO: notification about error
+        nodeca.logger.error(err);
+        return;
+      }
+
       function poll_status() {
         nodeca.server.fontomas.font.status({id: font_id}, function (err, msg) {
-          if ('error' === msg.data.status) {
-            console.alert('shit happens');
+          if (err) {
+            // TODO: notification about error
+            nodeca.logger.error(err);
             return;
           }
 
-          if ('enqueued' === msg.data.status) {
-            setTimeout(poll_status, 5000);
+          if ('error' === msg.data.status) {
+            // TODO: notification about error
+            nodeca.logger.error(msg.data.error || "Unexpected error.");
             return;
           }
 
           if ('finished' === msg.data.status) {
-            var $ifr = $('<iframe></iframe>');
-
-            $ifr.attr('src', msg.data.url);
-            $ifr.css('display', 'none');
-            $ifr.appendTo(document.body);
+            // TODO: normal notification about success
+            nodeca.logger.info("Font successfully generated. " +
+                               "Your download link: " + msg.data.url);
+            start_download(font_id, msg.data.url);
+            return;
           }
+
+          if ('enqueued' === msg.data.status) {
+            // TODO: notification about queue
+            if (-1 === msg.data.position) {
+              nodeca.logger.info("Your request is in progress nd will be available soon.");
+            } else {
+              nodeca.logger.info("Your request is in queue. " +
+                                "Your turn number is " + msg.data.position);
+            }
+
+            // try in next 5 seconds
+            setTimeout(poll_status, 5000);
+            return;
+          }
+
+          // Unexpected behavior
+          nodeca.logger.error("Unexpected behavior");
         });
       }
 

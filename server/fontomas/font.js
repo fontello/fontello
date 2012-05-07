@@ -97,7 +97,7 @@ function get_download_path(font_id) {
   a = font_id.substr(0, 2);
   b = font_id.substr(2, 2);
 
-  return [a, b, font_id].join("/") + ".zip";
+  return [a, b, 'fontello-' + font_id].join("/") + ".zip";
 }
 
 
@@ -158,9 +158,14 @@ job_mgr.addJob('generate-font', {
         fontname    = "fontello-" + font_id,
         zipball     = path.join(DOWNLOAD_DIR, get_download_path(font_id));
 
+    // push timer checkpoint
+    jobs[font_id].timer.push(Date.now());
+
     async.series([
       async.apply(execFile, GENERATOR_BIN, ['', '', zipball])
     ], function (err) {
+      var timer = jobs[font_id].timer;
+
       if (err) {
         jobs[font_id].status  = 'error';
         jobs[font_id].error   = err;
@@ -171,6 +176,13 @@ job_mgr.addJob('generate-font', {
         // untight worker id
         delete jobs[font_id].worker_id;
       }
+
+      // push final checkpoint
+      timer.push(Date.now());
+
+      nodeca.logger.notice("Generated font '" + font_id + "' in " +
+                           ((timer[2] - timer[0]) / 1000) + "ms " +
+                           "(real: " + ((timer[1] - timer[0]) / 1000) + "ms)");
 
       self.finished = true;
     });
@@ -222,15 +234,12 @@ module.exports.generate = function (params, callback) {
   // enqueue new unique job
   if (!jobs[font_id]) {
     jobs[font_id] = {
+      timer:      [Date.now()], // [enqueued_at, started_at, finished_at]
       status:     'enqueued',
       worker_id:  job_mgr.enqueue('generate-font', font_id, glyphs)
     };
-
-    this.response.data = {id: font_id, status: 'enqueued'};
-    callback();
-    return;
   }
 
-  // otherwise forward request to status getter
+  // forward request to status getter
   module.exports.status.call(this, {id:  font_id}, callback);
 };
