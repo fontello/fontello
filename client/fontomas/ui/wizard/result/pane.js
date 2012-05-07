@@ -4,11 +4,7 @@
 
 
 function start_download(id, url) {
-  if ($('iframe#' + id).length) {
-    // duplicate
-    return;
-  }
-
+  $('iframe#' + id).remove();
   $('<iframe></iframe>').attr({id: id, src: url}).css('display', 'none')
     .appendTo(window.document.body);
 }
