@@ -7,3 +7,5 @@
 *.sublime-project
 *.sublime-workspace
 
+/public/assets/
+/public/download/
