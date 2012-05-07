@@ -45,23 +45,23 @@ a.src-font-name
 .src-font-head
   transition all .5s ease
 
-._collapsed .src-font-head {
+._collapsed .src-font-head
   font-size 18px
   line-height 24px
   opacity .2
-}
-._collapsed .src-font-head:hover {
-  opacity .7
-}
-._collapsed .src-font-name:after {
-  content "\e75c"
-}
-._collapsed a.font-info {
-  font-size 8px
-  margin-top 2px
-}
 
-#local-files {
+._collapsed .src-font-head:hover
+  opacity .7
+
+._collapsed .src-font-name:after
+  content "\e75c"
+
+._collapsed a.font-info
+  margin-top 2px
+
+
+
+#local-files
   /* chrome/opera doesn't trigger events on "display: none;" elements */
   /* so, do some tricks to safely hide element */
 
@@ -71,14 +71,12 @@ a.src-font-name
   position absolute
   top -100px
   visibility hidden
-}
 
-.fm-glyph-group {
+.fm-glyph-group
   display inline-block
   user-select none
-}
 
-.glyph {
+.glyph
   position relative
   float left
   border 1px #ccc solid
@@ -89,23 +87,18 @@ a.src-font-name
   height 48px
   line-height 48px
   margin 0 8px 8px 0
-}
 
-.glyph:hover {
+.glyph:hover
   background #f0f0f0
   opacity .8
-}
 
-.glyph.selected {
+.glyph.selected
   background-color #fee
   border-color #dff
   box-shadow 0 0 3px #d88 inset
-}
 
-.glyph-size-24 .glyph {
+.glyph-size-24 .glyph
   font-size 24px
-}
 
-.glyph-size-16 .glyph {
+.glyph-size-16 .glyph
   font-size 16px
-}
