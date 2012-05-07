@@ -179,6 +179,10 @@ job_mgr.addJob('generate-font', {
         descent:    200,
         weight:     "Medium"
       },
+      meta: {
+        columns: 4,
+        css_prefix: 'icon-',
+      },
       glyphs: glyphs,
       src_fonts: get_source_fonts()
     });
@@ -190,8 +194,10 @@ job_mgr.addJob('generate-font', {
       async.apply(fstools.remove, tmp_dir)
     ], function (err) {
       if (err) {
+        nodeca.logger.error(err.stack || err.message || err.toString());
+
         jobs[font_id].status  = 'error';
-        jobs[font_id].error   = err;
+        jobs[font_id].error   = (err.message || err.toString());
       } else {
         // remove job from the cache as we check filesystem
         // to decide whenever job is done or not
