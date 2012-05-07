@@ -23,6 +23,27 @@ module.exports = Backbone.Model.extend({
   },
 
 
+  getFontConfig: function () {
+    var config = {glyphs: []};
+
+    this.glyphs.forEach(function (g) {
+      var src = g.get('source_glyph'), fontname;
+
+      fontname = _.find(nodeca.shared.fontomas.embedded_fonts, function (cfg) {
+        return cfg.id === src.embedded_id;
+      }).font.fontname;
+
+      config.glyphs.push({
+        code: g.get('unicode_code'),
+        from: src.code,
+        src:  fontname
+      });
+    });
+
+    return config;
+  },
+
+
   // Stub to prevent Backbone from reading or saving the model to the server.
   // Backbone calls `Backbone.sync()` function (on fetch/save/destroy)
   // if model doesn't have own `sync()` method.
