@@ -33,9 +33,15 @@ a.src-font-name
 
 .src-font-name:after
   transition all .5s ease
-
-  font-family entypo
-  content "\e75f"
+  border-left 6px solid transparent
+  border-right 6px solid transparent
+  border-bottom 6px solid #333
+  content ""
+  display inline-block
+  height 0
+  width 0
+  margin-left 10px
+  vertical-align middle
   margin-left 8px
   opacity 0
 
@@ -54,7 +60,11 @@ a.src-font-name
   opacity .7
 
 ._collapsed .src-font-name:after
-  content "\e75c"
+  border-bottom 0 none
+  border-top 3px solid #333
+  border-left 3px solid transparent
+  border-right 3px solid transparent
+  margin-left 5px
 
 ._collapsed a.font-info
   margin-top 2px
