@@ -114,7 +114,8 @@ var jobs = {};
 function get_job(font_id, callback) {
   var job = jobs[font_id], file;
 
-  if (job) {
+  // return not-finished jobs as they are
+  if (job && 'finished' !== job.status) {
     callback(job);
     return;
   }
@@ -122,11 +123,13 @@ function get_job(font_id, callback) {
   file = path.join(DOWNLOAD_DIR, get_download_path(font_id));
   path.exists(file, function (result) {
     if (!result) {
+      // remove cached status if any to avoid memory bloat
+      delete jobs[font_id];
       callback(/* undefined - job not found */);
       return;
     }
 
-    callback({status: 'ready', url: get_download_url(font_id)});
+    callback({status: 'finished', url: get_download_url(font_id)});
   });
 }
 
