@@ -44,8 +44,10 @@ dev-server:
 		echo "   npm install supervisor" >&2 ; \
 		exit 128 ; \
 		fi
-	supervisor --extensions "js|css|styl|less|ejs|jade" \
+	supervisor \
 		--watch "assets,client,server,shared,src,views" \
+		--extensions "js|css|styl|less|ejs|jade" \
+		--no-restart-on error \
 		fontomas.js
 
 
