@@ -36,6 +36,15 @@ dev-setup:
 	npm install -g jshint
 
 
+dev-server:
+	if test ! `which nodemon` ; then \
+		echo "You need 'nodemon' installed in order to run lint." >&2 ; \
+		echo "   npm install nodemon" >&2 ; \
+		exit 128 ; \
+		fi
+	nodemon $(foreach d,assets client server shared src views,--watch ${d}) fontomas.js
+
+
 lint:
 	if test ! `which jshint` ; then \
 		echo "You need 'jshint' installed in order to run lint." >&2 ; \
