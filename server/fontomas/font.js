@@ -87,7 +87,7 @@ function get_glyphs_config(params) {
 
 // returns unique ID for requested list of glyphs
 function get_download_id(glyphs) {
-  return crypto.createHash('sha1').update(JSON.stringify(glyphs)).digest('hex');
+  return crypto.createHash('md5').update(JSON.stringify(glyphs)).digest('hex');
 }
 
 
@@ -159,14 +159,35 @@ job_mgr.addJob('generate-font', {
   work: function (font_id, glyphs) {
     var self        = this,
         fontname    = "fontello-" + font_id,
+        tmp_dir     = path.join(TMP_DIR, fontname),
         zipball     = path.join(DOWNLOAD_DIR, get_download_path(font_id)),
-        times       = [jobs[font_id].start];
+        times       = [jobs[font_id].start],
+        config;
 
     // push timer checkpoint
     times.push(Date.now());
 
+    // generate font config
+    config = JSON.stringify({
+      font: {
+        version:    "1.0-" + font_id,
+        fontname:   fontname,
+        fullname:   "Fontello " + font_id,
+        familyname: "Fontello",
+        copyright:  "Copyright (C) 2012 by original authors @ fontello.com",
+        ascent:     800,
+        descent:    200,
+        weight:     "Medium"
+      },
+      glyphs: glyphs,
+      src_fonts: get_source_fonts()
+    });
+
     async.series([
-      async.apply(execFile, GENERATOR_BIN, ['', '', zipball])
+      async.apply(fstools.mkdir, tmp_dir),
+      async.apply(fs.writeFile, path.join(tmp_dir, 'config.json'), config, 'utf8'),
+      async.apply(execFile, GENERATOR_BIN, {cwd: APP_ROOT}, [fontname, tmp_dir, zipball]),
+      async.apply(fstools.remove, tmp_dir)
     ], function (err) {
       if (err) {
         jobs[font_id].status  = 'error';
