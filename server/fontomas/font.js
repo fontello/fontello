@@ -186,7 +186,7 @@ job_mgr.addJob('generate-font', {
     async.series([
       async.apply(fstools.mkdir, tmp_dir),
       async.apply(fs.writeFile, path.join(tmp_dir, 'config.json'), config, 'utf8'),
-      async.apply(execFile, GENERATOR_BIN, [fontname, tmp_dir, zipball]),
+      async.apply(execFile, GENERATOR_BIN, [fontname, tmp_dir, zipball], {cwd: APP_ROOT}),
       async.apply(fstools.remove, tmp_dir)
     ], function (err) {
       if (err) {
