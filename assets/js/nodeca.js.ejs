@@ -1,0 +1,32 @@
+/*global window*/
+
+(function () {
+  'use strict';
+
+
+  var nodeca = window.nodeca = {
+    runtime: {
+      version: "<%= version() %>"
+    }
+  };
+
+  (function (sio) {
+    nodeca.runtime.rpc = function (name, params, callback) {
+      var msg = {
+        version:  nodeca.runtime.version,
+        method:   name,
+        params:   params
+      };
+
+      sio.emit('server', msg, function (res) {
+        if (res.version !== nodeca.runtime.version) {
+          // TODO: implement software upgrade here
+          console.alert('nodeca server version mismatch');
+          return;
+        }
+
+        (callback || $.noop)(res.err, res.result);
+      });
+    };
+  }(io.connect()));
+}());
