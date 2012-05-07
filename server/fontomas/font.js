@@ -158,8 +158,8 @@ job_mgr.addJob('generate-font', {
   concurrency: 4,
   work: function (font_id, glyphs) {
     var self        = this,
-        fontname    = "fontello-" + font_id,
-        tmp_dir     = path.join(TMP_DIR, fontname),
+        fontname    = "fontello-" + font_id.substr(0, 8),
+        tmp_dir     = path.join(TMP_DIR, "fontello-" + font_id),
         zipball     = path.join(DOWNLOAD_DIR, get_download_path(font_id)),
         times       = [jobs[font_id].start],
         config;
@@ -172,7 +172,7 @@ job_mgr.addJob('generate-font', {
       font: {
         version:    "1.0-" + font_id,
         fontname:   fontname,
-        fullname:   "Fontello " + font_id,
+        fullname:   "Fontello " + font_id.substr(0, 8),
         familyname: "Fontello",
         copyright:  "Copyright (C) 2012 by original authors @ fontello.com",
         ascent:     800,
