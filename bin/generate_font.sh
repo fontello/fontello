@@ -64,8 +64,8 @@ ttf2eot < "$TMPDIR/$FONTNAME.ttf" > "$TMPDIR/$FONTNAME.eot"
 
 
 cp -r "$DEMO_TEMPLATE" "$TMPDIR/demo"
-jade --pretty --obj "$JSON_CONFIG" --out "$TMPDIR/demo" "$DEMO_HTML_TPL"
-fontdemo.py -c "$CONFIG" "$DEMO_CSS_TPL" "$TMPDIR/demo/$FONTNAME.css"
+jade --pretty --obj "$JSON_CONFIG" --out "$TMPDIR" "$DEMO_HTML_TPL"
+fontdemo.py -c "$CONFIG" "$DEMO_CSS_TPL" "$TMPDIR/$FONTNAME.css"
 
 
 ## BUILD ZIPBALL ###############################################################
