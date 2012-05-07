@@ -18,16 +18,11 @@ var fstools = require('nlib').Vendor.FsTools;
 
 
 // directory where to put results
-var TMP_DIR             = '/tmp/fontomas';
+var TMP_DIR             = '/tmp/fontello';
 var APP_ROOT            = _.first(nodeca.runtime.apps).root;
 var DOWNLOAD_DIR        = path.join(APP_ROOT, 'public/download/');
-var DOWNLOAD_URL_PREFIX = "http://www.fontello.com/download/";
-
-var ZIP_BIN             = '/usr/bin/zip';
-var FONT_MERGE_BIN      = path.join(APP_ROOT, 'support/font-builder/bin/font_merge.py');
-var FONT_CONVERT_BIN    = path.join(APP_ROOT, 'support/font-builder/bin/fontconvert.py');
-var FONT_CONFIG_BIN     = path.join(APP_ROOT, 'support/font-builder/bin/font_mkconfig.py');
-var FONT_DEMO_BIN       = path.join(APP_ROOT, 'support/font-builder/bin/fontdemo.py');
+var DOWNLOAD_URL_PREFIX = "/download/";
+var GENERATOR_BIN       = path.join(APP_ROOT, 'bin/generate_font.sh');
 
 
 // internal cache used by get_font()
@@ -161,51 +156,10 @@ job_mgr.addJob('generate-font', {
   work: function (font_id, glyphs) {
     var self        = this,
         fontname    = "fontello-" + font_id,
-        tmp         = path.join(TMP_DIR, fontname),
         zipball     = path.join(DOWNLOAD_DIR, get_download_path(font_id));
 
     async.series([
-      async.apply(fstools.mkdir, tmp),
-      // write config
-      async.apply(fs.writeFile, path.join(tmp, 'config.yml'), JSON.stringify({
-        font: {
-          version:    "1.0-" + font_id.substr(0, 8),
-          fontname:   fontname,
-          fullname:   "Fontello " + font_id,
-          familyname: "Fontello",
-          copyright:  "Copyright (C) 2012 by fontello.com",
-          ascent:     800,
-          descent:    200,
-          weight:     "Normal"
-        },
-        glyphs:     glyphs,
-        src_fonts:  get_source_fonts()
-      }), 'utf8'),
-      // merge font
-      async.apply(execFile, FONT_MERGE_BIN, [
-        '--config',   path.join(tmp, 'config.yml'),
-        '--dst_font', path.join(tmp, fontname + '.ttf')
-      ]),
-      // convert font
-      async.apply(execFile, FONT_CONVERT_BIN, [
-        '--src_font',   path.join(tmp, fontname + '.ttf'),
-        '--fonts_dir',  tmp
-      ]),
-      // make font config
-      async.apply(execFile, FONT_CONFIG_BIN, [
-        '--src_font',   path.join(tmp, fontname + '.ttf'),
-        '--config',   path.join(tmp, 'config.yml')
-      ]),
-      // build font demo
-      //async.apply(execFile, FONT_DEMO_BIN, [
-      //  '--config',   path.join(tmp, 'config.yml')
-      //])
-      // prepare destination folder
-      async.apply(fstools.mkdir, path.dirname(zipball)),
-      // prepare zipball
-      async.apply(execFile, ZIP_BIN, ['-r', tmp, zipball]),
-      // cleanup tmp dir
-      async.apply(fstools.remove, tmp)
+      async.apply(execFile, GENERATOR_BIN, ['', '', zipball])
     ], function (err) {
       if (err) {
         jobs[font_id].status  = 'error';
@@ -241,11 +195,15 @@ module.exports.status = function (params, callback) {
       data.position = job_mgr.getPosition('generate-font', job.worker_id);
     }
 
-    if ('ready' === job.status) {
+    if ('finished' === job.status) {
       data.url = job.url;
     }
 
-    callback(job.error);
+    if ('error' === job.status) {
+      data.error = job.error;
+    }
+
+    callback();
   });
 };
 

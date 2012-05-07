@@ -47,6 +47,32 @@ module.exports = Backbone.View.extend({
     */
   onDownload: function (event) {
     event.preventDefault();
-    nodeca.client.fontomas.util.notify_alert("Coming soon... Stay tuned!");
+    nodeca.server.fontomas.font.generate(this.model.getFontConfig(), function (err, msg) {
+      var font_id = msg.data.id;
+
+      function poll_status() {
+        nodeca.server.fontomas.font.status({id: font_id}, function (err, msg) {
+          if ('error' === msg.data.status) {
+            console.alert('shit happens');
+            return;
+          }
+
+          if ('enqueued' === msg.data.status) {
+            setTimeout(poll_status, 5000);
+            return;
+          }
+
+          if ('finished' === msg.data.status) {
+            var $ifr = $('<iframe></iframe>');
+
+            $ifr.attr('src', msg.data.url);
+            $ifr.css('display', 'none');
+            $ifr.appendTo(document.body);
+          }
+        });
+      }
+
+      poll_status();
+    });
   }
 });
