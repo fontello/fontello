@@ -1,64 +1,64 @@
 /* Select Icons */
 
 #selector
-  margin-top: -20px
-  position: relative
+  margin-top -20px
+  position relative
 
 #selector .btn-toolbar
-  margin-top: 0
-  margin-bottom: 0
+  margin-top 0
+  margin-bottom 0
 
 #selector-toolbar
-  position: absolute
-  right: 0
-  top: 0
-  z-index: 1
+  position absolute
+  right 0
+  top 0
+  z-index 1
 
-.src-font-head {
-  margin-top: 20px;
-  font-size: 36px;
-  line-height: 54px;
-}
+.src-font-head
+  margin-top 20px
+  font-size 36px
+  line-height 54px
 
-a.font-link {
-  color: #aaa;
-  text-decoration: none;
-}
-.font-link:before {
-  font-family: entypo;
-  content: "\e705";
-}
+a.font-info
+  transition all .5s ease
+  vertical-align top
+  display inline-block
+  margin-top 10px
 
 /* Collapser & animations */
-a.src-font-name {
+a.src-font-name
   color inherit
   text-decoration none
   outline 0 none
-}
-.src-font-name:after {
-  transition: all .5s ease;
 
-  font-family: entypo;
-  content: "\e75f";
-  margin-left: 8px;
-  opacity: 0;
-}
-.src-font-head:hover .src-font-name:after {
-  opacity: 1;
-}
-.src-font-head {
-  transition: all .5s ease;
-}
+.src-font-name:after
+  transition all .5s ease
+
+  font-family entypo
+  content "\e75f"
+  margin-left 8px
+  opacity 0
+
+.src-font-head:hover .src-font-name:after
+  opacity 1
+
+.src-font-head
+  transition all .5s ease
+
 ._collapsed .src-font-head {
-  font-size: 18px;
-  line-height: 24px;
-  opacity: .2;
+  font-size 18px
+  line-height 24px
+  opacity .2
 }
 ._collapsed .src-font-head:hover {
-  opacity: .7;
+  opacity .7
 }
 ._collapsed .src-font-name:after {
-  content: "\e75c";
+  content "\e75c"
+}
+._collapsed a.font-info {
+  font-size 8px
+  margin-top 2px
 }
 
 #local-files {
@@ -66,46 +66,46 @@ a.src-font-name {
   /* so, do some tricks to safely hide element */
 
   /* display: none; */
-  width: 0px;
-  height: 0px;
-  position: absolute;
-  top: -100px;
-  visibility: hidden;
+  width 0px
+  height 0px
+  position absolute
+  top -100px
+  visibility hidden
 }
 
 .fm-glyph-group {
-  display: inline-block;
-  user-select: none;
+  display inline-block
+  user-select none
 }
 
 .glyph {
-  position: relative;
-  float: left;
-  border: 1px #ccc solid;
-  border-radius: 6px;
-  cursor: pointer;
-  text-align: center;
-  width: 48px;
-  height: 48px;
-  line-height: 48px;
-  margin: 0 8px 8px 0;
+  position relative
+  float left
+  border 1px #ccc solid
+  border-radius 6px
+  cursor pointer
+  text-align center
+  width 48px
+  height 48px
+  line-height 48px
+  margin 0 8px 8px 0
 }
 
 .glyph:hover {
-  background: #f0f0f0;
-  opacity: .8;
+  background #f0f0f0
+  opacity .8
 }
 
 .glyph.selected {
-  background-color: #fee;
-  border-color: #dff;
-  box-shadow: 0 0 3px #d88 inset;
+  background-color #fee
+  border-color #dff
+  box-shadow 0 0 3px #d88 inset
 }
 
 .glyph-size-24 .glyph {
-  font-size: 24px;
+  font-size 24px
 }
 
 .glyph-size-16 .glyph {
-  font-size: 16px;
+  font-size 16px
 }
