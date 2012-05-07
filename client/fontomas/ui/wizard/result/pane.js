@@ -86,17 +86,17 @@ module.exports = Backbone.View.extend({
             return;
           }
 
+          if ('processing' === msg.data.status) {
+            // TODO: notification about queue
+            nodeca.logger.info("Your request is in progress and will be available soon.");
+            setTimeout(poll_status, 500);
+            return;
+          }
+
           if ('enqueued' === msg.data.status) {
             // TODO: notification about queue
-            if (-1 === msg.data.position) {
-              nodeca.logger.info("Your request is in progress nd will be available soon.");
-            } else {
-              nodeca.logger.info("Your request is in queue. " +
-                                "Your turn number is " + msg.data.position);
-            }
-
-            // try in next 5 seconds
-            setTimeout(poll_status, 5000);
+            nodeca.logger.info("Your request is in queue #" + msg.data.position);
+            setTimeout(poll_status, 3000);
             return;
           }
 

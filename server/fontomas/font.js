@@ -115,7 +115,7 @@ function get_job(font_id, callback) {
   var job = jobs[font_id], file;
 
   // return not-finished jobs as they are
-  if (job && 'finished' !== job.status) {
+  if (job) {
     callback(job);
     return;
   }
@@ -159,33 +159,31 @@ job_mgr.addJob('generate-font', {
   work: function (font_id, glyphs) {
     var self        = this,
         fontname    = "fontello-" + font_id,
-        zipball     = path.join(DOWNLOAD_DIR, get_download_path(font_id));
+        zipball     = path.join(DOWNLOAD_DIR, get_download_path(font_id)),
+        times       = [jobs[font_id].start];
 
     // push timer checkpoint
-    jobs[font_id].timer.push(Date.now());
+    times.push(Date.now());
 
     async.series([
       async.apply(execFile, GENERATOR_BIN, ['', '', zipball])
     ], function (err) {
-      var timer = jobs[font_id].timer;
-
       if (err) {
         jobs[font_id].status  = 'error';
         jobs[font_id].error   = err;
       } else {
-        jobs[font_id].status  = 'finished';
-        jobs[font_id].url     = get_download_url(font_id);
-
-        // untight worker id
-        delete jobs[font_id].worker_id;
+        // remove job from the cache as we check filesystem
+        // to decide whenever job is done or not
+        delete jobs[font_id];
       }
 
       // push final checkpoint
-      timer.push(Date.now());
+      times.push(Date.now());
 
+      // log some statistical info
       nodeca.logger.notice("Generated font '" + font_id + "' in " +
-                           ((timer[2] - timer[0]) / 1000) + "ms " +
-                           "(real: " + ((timer[1] - timer[0]) / 1000) + "ms)");
+                           ((times[2] - times[0]) / 1000) + "ms " +
+                           "(real: " + ((times[1] - times[0]) / 1000) + "ms)");
 
       self.finished = true;
     });
@@ -193,9 +191,37 @@ job_mgr.addJob('generate-font', {
 });
 
 
+
+function get_job_data(id, job) {
+  var data = {id: id, status: job.status};
+
+  if ('error' === job.status) {
+    data.error = job.error;
+    // as long as user got info about error
+    // remove the job from the cache
+    delete jobs[id];
+  }
+
+  if ('enqueued' === job.status) {
+    data.position = job_mgr.getPosition('generate-font', job.worker_id);
+
+    if (-1 === data.position) {
+      data.status = 'processing';
+      delete data.position;
+    }
+  }
+
+  if ('finished' === job.status) {
+    data.url = job.url;
+  }
+
+  return data;
+}
+
+
 // request font generation status
 module.exports.status = function (params, callback) {
-  var data = this.response.data;
+  var self = this;
 
   get_job(params.id, function (job) {
     if (!job) {
@@ -203,21 +229,7 @@ module.exports.status = function (params, callback) {
       return;
     }
 
-    data.id     = params.id;
-    data.status = job.status;
-
-    if ('enqueued' === job.status) {
-      data.position = job_mgr.getPosition('generate-font', job.worker_id);
-    }
-
-    if ('finished' === job.status) {
-      data.url = job.url;
-    }
-
-    if ('error' === job.status) {
-      data.error = job.error;
-    }
-
+    self.response.data = get_job_data(params.id, job);
     callback();
   });
 };
@@ -225,7 +237,7 @@ module.exports.status = function (params, callback) {
 
 // request font generation
 module.exports.generate = function (params, callback) {
-  var glyphs = get_glyphs_config(params), font_id;
+  var self = this, glyphs = get_glyphs_config(params), font_id;
 
   if (!glyphs) {
     callback("Invalid request");
@@ -233,16 +245,17 @@ module.exports.generate = function (params, callback) {
   }
 
   font_id = get_download_id(glyphs);
+  get_job(font_id, function (job) {
+    // enqueue new unique job
+    if (!job) {
+      job = jobs[font_id] = {
+        start:      Date.now(),
+        status:     'enqueued',
+        worker_id:  job_mgr.enqueue('generate-font', font_id, glyphs)
+      };
+    }
 
-  // enqueue new unique job
-  if (!jobs[font_id]) {
-    jobs[font_id] = {
-      timer:      [Date.now()], // [enqueued_at, started_at, finished_at]
-      status:     'enqueued',
-      worker_id:  job_mgr.enqueue('generate-font', font_id, glyphs)
-    };
-  }
-
-  // forward request to status getter
-  module.exports.status.call(this, {id:  font_id}, callback);
+    self.response.data = get_job_data(font_id, job);
+    callback();
+  });
 };
