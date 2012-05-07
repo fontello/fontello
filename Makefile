@@ -39,12 +39,14 @@ dev-setup:
 
 
 dev-server:
-	if test ! `which nodemon` ; then \
-		echo "You need 'nodemon' installed in order to run lint." >&2 ; \
-		echo "   npm install nodemon" >&2 ; \
+	if test ! `which supervisor` ; then \
+		echo "You need 'supervisor' installed in order to run lint." >&2 ; \
+		echo "   npm install supervisor" >&2 ; \
 		exit 128 ; \
 		fi
-	nodemon $(foreach d,assets client server shared src views,--watch ${d}) fontomas.js
+	supervisor --extensions "js|css|styl|less|ejs|jade" \
+		--watch "assets,client,server,shared,src,views" \
+		fontomas.js
 
 
 lint:
