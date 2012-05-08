@@ -44,7 +44,7 @@ export PATH="$PWD/support/font-builder/support/ttfautohint/frontend:$PATH"
 ## CHECK DEPENDENCIES ##########################################################
 
 
-for dep in font_merge.py fontconvert.py fontdemo.py ttfautohint ttf2eot jade; do
+for dep in font_merge.py fontconvert.py fontdemo.py ttfautohint ttf2eot jade zip; do
   require $dep
 done
 
@@ -71,8 +71,14 @@ fontdemo.py -c "$CONFIG" "$DEMO_CSS_TPL" "$TMPDIR/$FONTNAME.css"
 ## BUILD ZIPBALL ###############################################################
 
 
-FIXDIR=$(echo -n $TMPDIR | cut -c-$(expr $(echo -n $TMPDIR | wc -c) - 24))
+MAXLEN=$(expr $(echo -n $TMPDIR | wc -c) - 24)
+FIXDIR=$(echo -n $TMPDIR | cut -c-$MAXLEN)
+
 rm $CONFIG && rm -rf $ZIPBALL && mkdir -p $(dirname $ZIPBALL)
-cd $(dirname $TMPDIR) && cp -r "$TMPDIR" "$FIXDIR"
-zip $ZIPBALL -r ./$(basename $FIXDIR) && rm -rf $FIXDIR
+cd $(dirname $TMPDIR)
+
+cp -r "$TMPDIR" "$FIXDIR"
+zip $ZIPBALL -r ./$(basename $FIXDIR)
+rm -rf $FIXDIR
+
 exit 0
