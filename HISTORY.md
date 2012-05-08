@@ -1,4 +1,5 @@
-2.0.0 / Coming soon
+2.0.0 / 2012-05-08
+------------------
 
 * Uses new [Font Builder](https://github.com/fontello/font-builder) system
   - All your files in single archive - no needs to use fontsquirrel generator.
