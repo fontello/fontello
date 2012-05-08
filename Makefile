@@ -45,7 +45,7 @@ dev-server:
 		exit 128 ; \
 		fi
 	supervisor \
-		--watch "assets,client,server,shared,src,views" \
+		--watch "assets,client,lib,server,shared,src,views" \
 		--extensions "js|css|styl|less|ejs|jade" \
 		--no-restart-on error \
 		fontomas.js
