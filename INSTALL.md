@@ -5,7 +5,7 @@ installation instruction
 Install build dependencies of node:
 
     sudo apt-get install build-essential libssl-dev
-    sudo apt-get install git curl zip
+    sudo apt-get install git curl
     git clone git://github.com/creationix/nvm.git ~/.nvm
 
 Add following code into the end of your shell startup script (`.bashrc` for BASH):
@@ -21,6 +21,7 @@ Reopen terminal. Install node (long), and set default version:
 
 ## Install Fontomas
 
+    sudo apt-get install zip
     git clone git://github.com/nodeca/fontomas.git fontomas
     cd fontomas
     git submodule init
