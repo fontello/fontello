@@ -6,8 +6,9 @@
 
   var nodeca = window.nodeca = {
     runtime: {
-      env:     "<%= env() %>",
-      version: "<%= version() %>"
+      sio:      io.connect(),
+      env:      "<%= env() %>",
+      version:  "<%= version() %>",
     }
   };
 
@@ -30,23 +31,21 @@
     };
   <% } %>
 
-  (function (sio) {
-    nodeca.runtime.rpc = function (name, params, callback) {
-      var msg = {
-        version:  nodeca.runtime.version,
-        method:   name,
-        params:   params
-      };
-
-      sio.emit('server', msg, function (res) {
-        if (res.version !== nodeca.runtime.version) {
-          // TODO: implement software upgrade here
-          console.alert('nodeca server version mismatch');
-          return;
-        }
-
-        (callback || $.noop)(res.err, res.result);
-      });
+  nodeca.runtime.rpc = function (name, params, callback) {
+    var msg = {
+      version:  nodeca.runtime.version,
+      method:   name,
+      params:   params
     };
-  }(io.connect()));
+
+    nodeca.runtime.sio.emit('server', msg, function (res) {
+      if (res.version !== nodeca.runtime.version) {
+        // TODO: implement software upgrade here
+        console.alert('nodeca server version mismatch');
+        return;
+      }
+
+      (callback || $.noop)(res.err, res.result);
+    });
+  };
 }());

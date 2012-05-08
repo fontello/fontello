@@ -65,5 +65,11 @@
 
     // Attach collapse handler to matching elements
     $('._collapser').ndCollapser();
+
+    // live update of amount of online clients
+    var $users_count = $('#stats-online');
+    nodeca.runtime.sio.on('users_online', function (count) {
+      $users_count.text(count);
+    });
   });
 }());
