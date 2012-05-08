@@ -155,21 +155,6 @@ function get_source_fonts() {
 }
 
 
-function get_glyphs_stats(glyphs) {
-  var stats = {};
-
-  _.each(glyphs, function (g) {
-    if (!stats[g.src]) {
-      stats[g.src] = 0;
-    }
-
-    stats[g.src] += 1;
-  });
-
-  return stats;
-}
-
-
 // define queue and jobs
 var job_mgr = new (neuron.JobManager)();
 job_mgr.addJob('generate-font', {
@@ -233,11 +218,9 @@ job_mgr.addJob('generate-font', {
                            "(real: " + ((times[1] - times[0]) / 1000) + "ms)");
 
       stats.push({
-        glyphs:       get_glyphs_stats(glyphs),
-        total_glyphs: glyphs.length,
-        time_total:   (times[2] - times[0]) / 1000,
-        time_real:    (times[1] - times[1]) / 1000,
-        ip:           user
+        glyphs: glyphs.length,
+        time:   (times[2] - times[0]) / 1000,
+        user:   user
       });
 
       self.finished = true;
