@@ -16,7 +16,7 @@ module.exports = Backbone.Collection.extend({
 
         // no more free codes
         if (null === code) {
-          nodeca.client.fontomas.util.notify_alert("No more space for glyphs.");
+          nodeca.client.fontomas.util.notify('alert', 'No more space for glyphs.');
           return;
         }
       }

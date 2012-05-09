@@ -2,12 +2,13 @@
 
 "use strict";
 
-module.exports.notify_alert = function (txt) {
+
+module.exports.notify = function (type, message) {
   $.noty({
-    text: txt,
-    theme: 'noty_theme_twitter',
+    type:   type,
+    text:   message,
+    theme:  'noty_theme_twitter',
     layout: 'topRight',
-    type: 'error'
   });
 };
 

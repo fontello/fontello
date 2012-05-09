@@ -298,6 +298,17 @@ module.exports.generate = function (params, callback) {
     return;
   }
 
+  if (nodeca.config.fontomas.max_glyphs < glyphs.length) {
+    this.response.error = {
+      code:     'MAX_GLYPHS_LIMIT',
+      message:  'Too much glyphs requested.'
+    };
+
+    nodeca.logger.warn("Too much glyphs requested: " + glyphs.length);
+    callback();
+    return;
+  }
+
   font_id = get_download_id(glyphs);
   user    = this.__raw__.socket.handshake.address.address;
 

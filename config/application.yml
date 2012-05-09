@@ -1,3 +1,5 @@
+fontomas:
+  max_glyphs: 100
 locales:
   enabled: [en]
   default: en

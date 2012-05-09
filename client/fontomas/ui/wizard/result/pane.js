@@ -55,6 +55,11 @@ module.exports = Backbone.View.extend({
     */
   onDownload: function (event) {
     event.preventDefault();
+
+    if (!this.model.validate()) {
+      return;
+    }
+
     nodeca.server.fontomas.font.generate(this.model.getFontConfig(), function (err, msg) {
       var font_id = msg.data.id;
 

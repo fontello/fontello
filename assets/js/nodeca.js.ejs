@@ -5,6 +5,9 @@
 
 
   var nodeca = window.nodeca = {
+    config: {
+      fontomas: <%- JSON.stringify(config('fontomas')) %>
+    },
     runtime: {
       sio:      io.connect(null, {'max reconnection attempts': 1024}),
       env:      "<%= env() %>",
@@ -36,7 +39,8 @@
     nodeca.runtime.sio.emit('server', msg, function (res) {
       if (res.version !== nodeca.runtime.version) {
         // TODO: implement software upgrade here
-        console.alert('nodeca server version mismatch');
+        nodeca.client.fontomas.util.notify('error',
+          'Application server/client version mismatch. Please reload.');
         return;
       }
 

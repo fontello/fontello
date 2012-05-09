@@ -2,6 +2,14 @@
 
 "use strict";
 
+var raise_max_glyphs_reached = _.throttle(function () {
+  nodeca.client.fontomas.util.notify('alert',
+    'You have reached maximum allowed glyphs limit. Maximum ' +
+    nodeca.config.fontomas.max_glyphs +
+    ' glyphs per font allowed.');
+}, 1000);
+
+
 module.exports = Backbone.Model.extend({
   initialize: function () {
     this.glyphs = new nodeca.client.fontomas.models.glyphs_collection();
@@ -20,6 +28,17 @@ module.exports = Backbone.Model.extend({
     var model = new nodeca.client.fontomas.models.glyph({source_glyph: data});
     this.trigger('add-glyph', model);
     this.glyphs.add(model);
+    this.validate();
+  },
+
+
+  validate: function () {
+    if (this.glyphs.length <= nodeca.config.fontomas.max_glyphs) {
+      return true;
+    }
+
+    raise_max_glyphs_reached();
+    return false;
   },
 
 
