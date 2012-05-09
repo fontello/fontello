@@ -32,6 +32,19 @@
   <% } %>
 
 
+  function execRpcCall(msg, callback) {
+    nodeca.runtime.sio.emit('server', msg, function (res) {
+      if (res.version !== nodeca.runtime.version) {
+        // TODO: implement software upgrade here
+        console.alert('nodeca server version mismatch');
+        return;
+      }
+
+      (callback || $.noop)(res.err, res.result);
+    });
+  }
+
+
   nodeca.runtime.rpc = function (name, params, callback) {
     var msg = {
       version:  nodeca.runtime.version,
@@ -39,23 +52,15 @@
       params:   params
     };
 
-    function execRpcCall() {
-      nodeca.runtime.sio.emit('server', msg, function (res) {
-        if (res.version !== nodeca.runtime.version) {
-          // TODO: implement software upgrade here
-          console.alert('nodeca server version mismatch');
-          return;
-        }
-
-        (callback || $.noop)(res.err, res.result);
-      });
-    }
-
+    // conected. call immediately
     if (nodeca.runtime.sio.socket.connected) {
-      execRpcCall();
+      execRpcCall(msg, callback);
       return;
     }
 
-    nodeca.runtime.sio.socket.connect(execRpcCall);
+    // disconnected. connet and once connected - call rpc
+    nodeca.runtime.sio.socket.connect(function () {
+      execRpcCall(msg, callback);
+    });
   };
 }());
