@@ -72,7 +72,7 @@ function get_glyphs_config(params) {
     }
 
     glyphs.push({
-      css:  glyph.css,
+      css:  g.css || glyph.css,
       src:  g.src,
       from: g.from,
       code: g.code || g.from

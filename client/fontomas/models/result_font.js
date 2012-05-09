@@ -54,6 +54,7 @@ module.exports = Backbone.Model.extend({
 
       config.glyphs.push({
         code: g.get('unicode_code'),
+        css:  g.get('css'),
         from: src.code,
         src:  fontname
       });

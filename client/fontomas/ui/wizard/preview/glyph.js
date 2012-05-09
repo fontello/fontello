@@ -21,7 +21,7 @@ module.exports = Backbone.View.extend({
     var src = this.model.get('source_glyph');
 
     this.$el.html(nodeca.client.fontomas.render('preview:glyph', {
-      css: 'icon-' + src.css,
+      css: 'icon-' + this.model.get('css'),
       fnt: 'font-embedded-' + src.embedded_id,
       chr: nodeca.client.fontomas.util.fixedFromCharCode(src.code)
     }));

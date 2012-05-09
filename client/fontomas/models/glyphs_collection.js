@@ -4,11 +4,18 @@
 
 module.exports = Backbone.Collection.extend({
   used_codes: {},
+  used_css:   {},
 
 
   add: function (models, options) {
     _.each(_.isArray(models) ? models.slice() : [models], function (model) {
-      var code = model.get('source_glyph').code;
+      var code = model.get('source_glyph').code,
+          css  = model.get('source_glyph').css || 'unknown';
+
+      // css already taken
+      if (this.used_css[css]) {
+        css = this._getFreeCss(css);
+      }
 
       // code is already taken
       if (this.used_codes[code]) {
@@ -21,9 +28,11 @@ module.exports = Backbone.Collection.extend({
         }
       }
 
-      // lock the code
+      // lock the css & code
+      this.used_css[css]    = true;
       this.used_codes[code] = true;
 
+      model.set('css', css);
       model.set('unicode_code', code);
       model.on('change:unicode_code', this.onChangeGlyphCode, this);
     }, this);
@@ -34,7 +43,7 @@ module.exports = Backbone.Collection.extend({
 
   remove: function (models, options) {
     _.each(_.isArray(models) ? models.slice() : [models], function (model) {
-      var code = model.get('unicode_code');
+      var code = model.get('unicode_code'), css = model.get('css');
 
       if (!this.used_codes[code]) {
         nodeca.client.fontomas.logger.error(
@@ -44,7 +53,8 @@ module.exports = Backbone.Collection.extend({
         return;
       }
 
-      // unlock the code
+      // unlock the css & code
+      this.used_css[css]    = false;
       this.used_codes[code] = false;
     }, this);
 
@@ -93,5 +103,16 @@ module.exports = Backbone.Collection.extend({
     // can't find empty code.
     // should never happen in real life.
     return null;
+  },
+
+  _getFreeCss: function (css) {
+    var i = 1, tmp;
+
+    do {
+      tmp = css + '-' + i;
+      i++;
+    } while (!!this.used_css[tmp]);
+
+    return tmp;
   }
 });

@@ -3,6 +3,14 @@
 "use strict";
 
 module.exports = Backbone.Model.extend({
+  defaults: function () {
+    return {
+      unicode_code:   null,
+      css:            'unknown',
+    };
+  },
+
+
   // SEE: http://www.unicode.org/versions/Unicode6.0.0/ch02.pdf
   //
   // In the Unicode Standard, the codespace consists of the integers
