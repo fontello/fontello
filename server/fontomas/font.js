@@ -127,12 +127,11 @@ function get_job(font_id, callback) {
   file = path.join(DOWNLOAD_DIR, get_download_path(font_id));
   path.exists(file, function (result) {
     if (!result) {
-      // remove cached status if any to avoid memory bloat
-      delete jobs[font_id];
       callback(/* undefined - job not found */);
       return;
     }
 
+    delete jobs[font_id]; // make sure finished tasks are not in the cache
     callback({status: 'finished', url: get_download_url(font_id)});
   });
 }
@@ -167,6 +166,23 @@ job_mgr.addJob('generate-font', {
         zipball     = path.join(DOWNLOAD_DIR, get_download_path(font_id)),
         times       = [jobs[font_id].start],
         config;
+
+    // FIXME: after server restart this might become "undefined"
+    //
+    //        I'm still unsure WHAT might cause such behavior, as after restart
+    //        manager should have empty stack.
+    //
+    //        Possible reason is that job removed by get_job_data().
+    if (!jobs[font_id]) {
+      jobs[font_id] = {start: Date.now(), status: 'enqueued'};
+      times         = [jobs[font_id].start];
+
+      nodeca.logger.error("Unexpected absence of job.\n" + JSON.stringify({
+        font_id:  font_id,
+        glyphs:   glyphs,
+        user:     user
+      }));
+    }
 
     // push timer checkpoint
     times.push(Date.now());
