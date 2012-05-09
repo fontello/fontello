@@ -6,7 +6,7 @@
 
   var nodeca = window.nodeca = {
     runtime: {
-      sio:      io.connect(),
+      sio:      io.connect(null, {'max reconnection attempts': 1024}),
       env:      "<%= env() %>",
       version:  "<%= version() %>",
     }
@@ -31,6 +31,7 @@
     };
   <% } %>
 
+
   nodeca.runtime.rpc = function (name, params, callback) {
     var msg = {
       version:  nodeca.runtime.version,
@@ -38,14 +39,23 @@
       params:   params
     };
 
-    nodeca.runtime.sio.emit('server', msg, function (res) {
-      if (res.version !== nodeca.runtime.version) {
-        // TODO: implement software upgrade here
-        console.alert('nodeca server version mismatch');
-        return;
-      }
+    function execRpcCall() {
+      nodeca.runtime.sio.emit('server', msg, function (res) {
+        if (res.version !== nodeca.runtime.version) {
+          // TODO: implement software upgrade here
+          console.alert('nodeca server version mismatch');
+          return;
+        }
 
-      (callback || $.noop)(res.err, res.result);
-    });
+        (callback || $.noop)(res.err, res.result);
+      });
+    }
+
+    if (nodeca.runtime.sio.socket.connected) {
+      execRpcCall();
+      return;
+    }
+
+    nodeca.runtime.sio.socket.connect(execRpcCall);
   };
 }());
