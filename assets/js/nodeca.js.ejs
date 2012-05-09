@@ -21,7 +21,6 @@
       assert : console.assert || console.debug || console.log,
       error  : console.error || console.log,
       info   : console.info || console.log,
-      notice : console.notice || console.info || console.log,
       debug  : console.debug || console.log
     };
   <% } else { %>
@@ -29,7 +28,6 @@
       assert : $.noop,
       error  : $.noop,
       info   : $.noop,
-      notice : $.noop,
       debug  : $.noop
     };
   <% } %>
