@@ -5,3 +5,7 @@ tmp/
 bin/
 fonts/
 assets/vendor/
+assets/embedded_fonts/
+public/
+src/
+support/

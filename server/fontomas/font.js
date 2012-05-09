@@ -291,7 +291,7 @@ module.exports.status = function (params, callback) {
 
 // request font generation
 module.exports.generate = function (params, callback) {
-  var self = this, glyphs = get_glyphs_config(params), font_id, user;
+  var self = this, glyphs = get_glyphs_config(params), font_id, user, errmsg;
 
   if (!glyphs) {
     callback("Invalid request");
@@ -299,12 +299,15 @@ module.exports.generate = function (params, callback) {
   }
 
   if (nodeca.config.fontomas.max_glyphs < glyphs.length) {
+    errmsg = 'Too many icons requested: ' + glyphs.length +
+             ' of ' + nodeca.config.fontomas.max_glyphs + ' allowed.';
+
     this.response.error = {
       code:     'MAX_GLYPHS_LIMIT',
-      message:  'Too much glyphs requested.'
+      message:  errmsg
     };
 
-    nodeca.logger.warn("Too much glyphs requested: " + glyphs.length);
+    nodeca.logger.warn(errmsg);
     callback();
     return;
   }

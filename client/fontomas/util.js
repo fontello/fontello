@@ -3,13 +3,17 @@
 "use strict";
 
 
-module.exports.notify = function (type, message) {
-  $.noty({
+module.exports.notify = function (type, options, message) {
+  if (!message) {
+    message = options;
+    options = {};
+  }
+
+  $.noty(_.extend({layout: 'topRight'}, options, {
     type:   type,
     text:   message,
     theme:  'noty_theme_twitter',
-    layout: 'topRight',
-  });
+  }));
 };
 
 

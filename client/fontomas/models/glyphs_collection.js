@@ -8,6 +8,9 @@ module.exports = Backbone.Collection.extend({
 
 
   add: function (models, options) {
+    // FIXME: this seems to be buggy - we need to leave only "valid" glyphs
+    //        to pass to the original add function of Backbone. _.filter
+    //        should be used instead.
     _.each(_.isArray(models) ? models.slice() : [models], function (model) {
       var code = model.get('source_glyph').code,
           css  = model.get('source_glyph').css || 'unknown';
@@ -23,7 +26,9 @@ module.exports = Backbone.Collection.extend({
 
         // no more free codes
         if (null === code) {
-          nodeca.client.fontomas.util.notify('alert', 'No more space for glyphs.');
+          // this should never happen in real life.
+          nodeca.client.fontomas.util.notify('error',
+            "Internal Error. Can't allocate code for glyph.");
           return;
         }
       }
@@ -46,6 +51,7 @@ module.exports = Backbone.Collection.extend({
       var code = model.get('unicode_code'), css = model.get('css');
 
       if (!this.used_codes[code]) {
+        // this should never happen in real life.
         nodeca.client.fontomas.logger.error(
           "models.glyphs_collection.remove: code <" + code + "> " +
           "not found in used_codes map"

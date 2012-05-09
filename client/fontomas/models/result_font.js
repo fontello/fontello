@@ -3,10 +3,11 @@
 "use strict";
 
 var raise_max_glyphs_reached = _.throttle(function () {
-  nodeca.client.fontomas.util.notify('alert',
-    'You have reached maximum allowed glyphs limit. Maximum ' +
+  nodeca.client.fontomas.util.notify('error',
+    "You can't select more than " +
     nodeca.config.fontomas.max_glyphs +
-    ' glyphs per font allowed.');
+    " icons at once. If you have a real use-case," +
+    " please, create ticket in issue tracker.");
 }, 1000);
 
 

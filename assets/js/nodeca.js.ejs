@@ -39,8 +39,10 @@
     nodeca.runtime.sio.emit('server', msg, function (res) {
       if (res.version !== nodeca.runtime.version) {
         // TODO: implement software upgrade here
-        nodeca.client.fontomas.util.notify('error',
-          'Application server/client version mismatch. Please reload.');
+        nodeca.client.fontomas.util.notify('error', {layout: 'bottom'},
+          '<strong>Application is outdated. Please ' +
+          '<a href="/" style="text-decoration:underline">reload</a>' +
+          ' page.</strong>');
         return;
       }
 
