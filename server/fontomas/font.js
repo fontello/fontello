@@ -229,9 +229,9 @@ job_mgr.addJob('generate-font', {
       times.push(Date.now());
 
       // log some statistical info
-      nodeca.logger.notice("Generated font '" + font_id + "' in " +
-                           ((times[2] - times[0]) / 1000) + "ms " +
-                           "(real: " + ((times[1] - times[0]) / 1000) + "ms)");
+      nodeca.logger.info("Generated font '" + font_id + "' in " +
+                         ((times[2] - times[0]) / 1000) + "ms " +
+                         "(real: " + ((times[1] - times[0]) / 1000) + "ms)");
 
       stats.push({
         glyphs: glyphs.length,
