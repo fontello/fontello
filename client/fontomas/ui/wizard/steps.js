@@ -20,6 +20,15 @@ module.exports = Backbone.View.extend({
     // init tabs plugin
     this.$el.tab('show');
 
+    // add submenu activation
+    this.$('a[data-toggle="tab"]').on('shown', function (event) {
+      var $prev = $(event.target),
+          $curr = $(event.relatedTarget);
+
+      $($prev.data('submenu')).hide();
+      $($curr.data('submenu')).show();
+    });
+
     this.$preview_tab  = this.$('a[href="#preview"]');
     this.$result_tab   = this.$('a[href="#result"]');
     this.$glyphs_count = this.$('#selected-glyphs-count');
