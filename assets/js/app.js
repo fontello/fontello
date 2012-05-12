@@ -11,5 +11,9 @@
 //= require fontomas/api
 
 ;(function () {
-  nodeca.client.fontomas.init();
+  "use strict";
+  
+  $(function () {
+    nodeca.client.fontomas.init();
+  });
 }());
