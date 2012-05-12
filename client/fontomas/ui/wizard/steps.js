@@ -22,11 +22,11 @@ module.exports = Backbone.View.extend({
 
     // add submenu activation
     this.$('a[data-toggle="tab"]').on('shown', function (event) {
-      var $prev = $(event.target),
-          $curr = $(event.relatedTarget);
+      var $curr = $(event.target),
+          $prev = $(event.relatedTarget);
 
-      $($prev.data('submenu')).hide();
-      $($curr.data('submenu')).show();
+      $($prev.data('submenu')).removeClass('active');
+      $($curr.data('submenu')).addClass('active');
     });
 
     this.$preview_tab  = this.$('a[href="#preview"]');

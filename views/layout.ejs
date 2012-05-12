@@ -42,12 +42,32 @@
 
     <div class="container">
 
-      <ul class="nav nav-pills page-header span12" id="wizard-steps">
-        <li><a data-toggle="tab" href="#selector">1. Select <small>(<span id="selected-glyphs-count">0</span>)</small></a></li>
-        <li><a class="disabled" data-toggle="tab" href="#preview">2. Preview</a></li>
-        <li><a class="disabled" data-toggle="tab" href="#result">3. Download</a></li>
-        <li><a data-toggle="tab" href="#donate">4. Donate :)</a></li>
-      </ul>
+      <div id="wizard-steps" class="span12">
+        <ul class="nav nav-pills">
+          <li><a data-toggle="tab" data-submenu="#selector-menu" href="#selector">1. Select <small>(<span id="selected-glyphs-count">0</span>)</small></a></li>
+          <li><a class="disabled" data-toggle="tab" data-submenu="#preview-menu" href="#preview">2. Preview</a></li>
+          <li><a class="disabled" data-toggle="tab" data-submenu="#result-menu" href="#result">3. Download</a></li>
+          <li><a data-toggle="tab" href="#donate">4. Donate :)</a></li>
+        </ul>
+        <div class="wizard-submenu">
+          <div id="selector-menu" class="submenu">
+            <form class="" id="selector-toolbar">
+              <div class="btn-toolbar">
+                <!--<div class="btn-group">
+                  <input class="input-medium search-query" type="text">
+                </div>-->
+                <div id="glyph-size" class="btn-group _tip" data-toggle="buttons-radio" title="Change symbols preview size" data-placement="bottom">
+                </div>
+                <!--<div class="btn-group">
+                  <a class="btn">test</a>
+                </div>-->
+              </div>
+            </form>
+          </div>
+          <!--<div id="preview-menu" class="submenu">456</div>
+          <div id="result-menu" class="submenu">789</div>-->
+        </div>
+      </div>
 
       <div class="tab-content" id="myTabContent">
         <!-- tab0 `Loading`-->
@@ -57,13 +77,6 @@
 
         <!-- tab1 `Select`-->
         <div id="selector" class="tab-pane fade">
-          <form class="" id="selector-toolbar">
-            <div class="btn-toolbar">
-              <div id="glyph-size" class="btn-group _tip" data-toggle="buttons-radio" title="Change symbols preview size" data-placement="bottom">
-              </div>
-            </div>
-          </form>
-
           <ul id="selector-fonts" class="unstyled"></ul>
         </div>
 
