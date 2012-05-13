@@ -31,7 +31,7 @@ module.exports = Backbone.View.extend({
 
     this.$preview_tab  = this.$('a[href="#preview"]');
     this.$result_tab   = this.$('a[href="#result"]');
-    this.$glyphs_count = this.$('#selected-glyphs-count');
+    this.$glyphs_count = $('#selected-glyphs-count');
 
     // disable click handler of tabs plugin on preview and result tabs
     this.$result_tab.add(this.$preview_tab).on('click', stopPropagation);
