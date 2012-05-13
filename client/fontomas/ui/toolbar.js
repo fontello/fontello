@@ -11,7 +11,6 @@ function stopPropagation(event) {
 }
 
 
-// nodeca.client.fontomas.ui.toolbar
 module.exports = Backbone.View.extend({
   el: '#toolbar',
 

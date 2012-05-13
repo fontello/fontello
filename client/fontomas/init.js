@@ -19,11 +19,17 @@ module.exports = function () {
 
   selector  = new nodeca.client.fontomas.ui.panes.selector();
   preview   = new nodeca.client.fontomas.ui.panes.preview({model: result_font});
-  editor    = new nodeca.client.fontomas.ui.panes.editor({model: result_font});
+  editor    = new nodeca.client.fontomas.ui.panes.codes_editor({model: result_font});
 
 
-  toolbar.on('click:download',    function () { result_font.startDownload(); });
-  toolbar.on('change:glyph-size', function () { selector.changeGlyphSize(); });
+  toolbar.on('click:download', function () {
+    result_font.startDownload();
+  });
+
+
+  toolbar.on('change:glyph-size', function (size) {
+    selector.changeGlyphSize(size);
+  });
 
 
   // update glypsh count on wizard steps tab

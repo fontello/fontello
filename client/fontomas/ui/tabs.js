@@ -31,7 +31,7 @@ module.exports = Backbone.View.extend({
     });
 
     this.$preview_tab = this.$('a[href="#preview"]');
-    this.$editor_tab  = this.$('a[href="#editor"]');
+    this.$editor_tab  = this.$('a[href="#codes-editor"]');
 
     // disable click handler of tabs plugin on preview and result tabs
     this.$preview_tab.add(this.$editor_tab).on('click', stopPropagation);

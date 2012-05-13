@@ -5,7 +5,7 @@
 
 module.exports = Backbone.View.extend({
   // Use existing DOM element instead of generating a new one.
-  el: '#editor',
+  el: '#codes-editor',
 
 
   initialize: function () {
@@ -16,7 +16,7 @@ module.exports = Backbone.View.extend({
 
 
   addGlyph: function (glyph) {
-    var view = new nodeca.client.fontomas.ui.panes.editor_glyph({model: glyph});
+    var view = new nodeca.client.fontomas.ui.panes.codes_editor_glyph({model: glyph});
     this.$glyphs.append(view.el);
   }
 });
