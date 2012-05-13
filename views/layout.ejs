@@ -22,52 +22,58 @@
 
   <body>
 
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <h1 class="brand">Fontello - iconic fonts scissors</h1>
-          <ul class="nav">
-            <li><a href="https://groups.google.com/group/fontello" target="_blank">Discuss</a></li>
-            <li><a href="https://github.com/fontello/fontello/issues" target="_blank">Bug reports</a></li>
-            <li><a href="https://github.com/fontello/fontello#readme" target="_blank">About</a></li>
-            <li><a href="https://twitter.com/puzrin" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow</a></li>
-            <li><a href="https://twitter.com/share" class="twitter-share-button"
-             data-url="http://fontello.com"
-             data-text="Fontello.com - scissors for iconic webfonts.">Tweet</a></li>
-            <li class="gplus"><div class="g-plusone" data-size="medium"></div></li>
-          </ul>
+    <div class="navbar-fixed-top">
+
+      <!-- top menu -->
+      <div class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <h1 class="brand">Fontello - iconic fonts scissors</h1>
+            <ul class="nav">
+              <li><a href="https://groups.google.com/group/fontello" target="_blank">Discuss</a></li>
+              <li><a href="https://github.com/fontello/fontello/issues" target="_blank">Bug reports</a></li>
+              <li><a href="https://github.com/fontello/fontello#readme" target="_blank">About</a></li>
+              <li><a href="https://twitter.com/puzrin" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow</a></li>
+              <li><a href="https://twitter.com/share" class="twitter-share-button"
+               data-url="http://fontello.com"
+               data-text="Fontello.com - scissors for iconic webfonts.">Tweet</a></li>
+              <li class="gplus"><div class="g-plusone" data-size="medium"></div></li>
+            </ul>
+          </div>
         </div>
+      </div>
+
+      <!-- top toolbar/tabs -->
+      <div class="container toolbar">
+        <div class="btn-toolbar">
+          <div id="glyph-size" class="btn-group _tip" data-toggle="buttons-radio" title="Change symbols preview size" data-placement="bottom">
+          </div>
+
+          <div class="btn-group">
+            <input class="input-medium search-query" type="text" placeholder="Search">
+          </div>
+
+          <div class="btn-group pull-right">
+            <a id="result-download" class="btn btn-info">
+              Download your font pack (<span id="selected-glyphs-count">0</span>)
+            </a>
+          </div>
+        </div>
+
+        <ul id="wizard-steps" class="nav nav-tabs">
+          <li><a data-toggle="tab" data-submenu="#selector-menu" href="#selector">Select Icons</a></li>
+          <li><a class="disabled" data-toggle="tab" data-submenu="#preview-menu" href="#preview">Preview / Change names</a></li>
+          <li><a class="disabled" data-toggle="tab" data-submenu="#result-menu" href="#result">Edit codes</a></li>
+          <!--<li><a data-toggle="tab" href="#donate">4. Donate :)</a></li>-->
+        </ul>
+
+        <div class="stats">online users: <span id="stats-online"><%= count_online_users() %></span></div>
+
       </div>
     </div>
 
     <div class="container">
 
-      <div id="wizard-steps" class="span12">
-        <ul class="nav nav-pills">
-          <li><a data-toggle="tab" data-submenu="#selector-menu" href="#selector">1. Select <small>(<span id="selected-glyphs-count">0</span>)</small></a></li>
-          <li><a class="disabled" data-toggle="tab" data-submenu="#preview-menu" href="#preview">2. Preview</a></li>
-          <li><a class="disabled" data-toggle="tab" data-submenu="#result-menu" href="#result">3. Download</a></li>
-          <!--<li><a data-toggle="tab" href="#donate">4. Donate :)</a></li>-->
-        </ul>
-        <div class="wizard-submenu">
-          <div id="selector-menu" class="submenu">
-            <form class="" id="selector-toolbar">
-              <div class="btn-toolbar">
-                <!--<div class="btn-group">
-                  <input class="input-medium search-query" type="text">
-                </div>-->
-                <div id="glyph-size" class="btn-group _tip" data-toggle="buttons-radio" title="Change symbols preview size" data-placement="bottom">
-                </div>
-                <!--<div class="btn-group">
-                  <a class="btn">test</a>
-                </div>-->
-              </div>
-            </form>
-          </div>
-          <!--<div id="preview-menu" class="submenu">456</div>
-          <div id="result-menu" class="submenu">789</div>-->
-        </div>
-      </div>
 
       <div class="tab-content" id="myTabContent">
         <!-- tab0 `Loading`-->
@@ -88,7 +94,6 @@
 
         <!-- tab3 `Download` -->
         <div id="result" class="tab-pane fade">
-          <a id="result-download" class="btn btn-large btn-info">Download font pack</a>
           <!--<form>
             <div class="btn-toolbar">
               <div class="btn-group" data-placement="bottom">
@@ -110,8 +115,6 @@
         </div>-->
 
       </div> <!-- /tab-content -->
-
-      <div class="stats">online: <span id="stats-online"><%= count_online_users() %></span></div>
 
     </div> <!-- /container -->
 
