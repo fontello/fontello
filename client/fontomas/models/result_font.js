@@ -1,6 +1,8 @@
 /*global window, nodeca, jQuery, Handlebars, Backbone, $, _*/
 
+
 "use strict";
+
 
 var raise_max_glyphs_reached = _.throttle(function () {
   nodeca.client.fontomas.util.notify('error',
@@ -9,6 +11,14 @@ var raise_max_glyphs_reached = _.throttle(function () {
     " icons at once. If you have a real use-case," +
     " please, create ticket in issue tracker.");
 }, 1000);
+
+
+// starts download of the result font
+function start_download(id, url) {
+  $('iframe#' + id).remove();
+  $('<iframe></iframe>').attr({id: id, src: url}).css('display', 'none')
+    .appendTo(window.document.body);
+}
 
 
 module.exports = Backbone.Model.extend({
@@ -45,7 +55,7 @@ module.exports = Backbone.Model.extend({
   },
 
 
-  getFontConfig: function () {
+  getConfig: function () {
     var config = {glyphs: []};
 
     this.glyphs.forEach(function (g) {
@@ -64,6 +74,66 @@ module.exports = Backbone.Model.extend({
     });
 
     return config;
+  },
+
+
+  startDownload: function () {
+    if (!this.validate()) {
+      return;
+    }
+
+    nodeca.server.fontomas.font.generate(this.getConfig(), function (err, msg) {
+      var font_id = msg.data.id;
+
+      if (err) {
+        // TODO: notification about error
+        nodeca.logger.error(err);
+        return;
+      }
+
+      function poll_status() {
+        nodeca.server.fontomas.font.status({id: font_id}, function (err, msg) {
+          if (err) {
+            // TODO: notification about error
+            nodeca.logger.error(err);
+            return;
+          }
+
+          if ('error' === msg.data.status) {
+            // TODO: notification about error
+            nodeca.logger.error(msg.data.error || "Unexpected error.");
+            return;
+          }
+
+          if ('finished' === msg.data.status) {
+            // TODO: normal notification about success
+            nodeca.logger.info("Font successfully generated. " +
+                               "Your download link: " + msg.data.url);
+            start_download(font_id, msg.data.url);
+            return;
+          }
+
+          if ('processing' === msg.data.status) {
+            // TODO: notification about queue
+            nodeca.logger.info("Your request is in progress and will be available soon.");
+            setTimeout(poll_status, 500);
+            return;
+          }
+
+          if ('enqueued' === msg.data.status) {
+            // TODO: notification about queue
+            nodeca.logger.info("Your request is in queue #" + msg.data.position);
+            setTimeout(poll_status, 3000);
+            return;
+          }
+
+          // Unexpected behavior
+          nodeca.logger.error("Unexpected behavior");
+        });
+      }
+
+      poll_status();
+    });
   },
 
 

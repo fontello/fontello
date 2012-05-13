@@ -14,7 +14,6 @@ module.exports = Backbone.View.extend({
 
   $preview_tab:   null,
   $result_tab:    null,
-  $glyphs_count:  null,
 
   initialize: function () {
     // init tabs plugin
@@ -31,7 +30,6 @@ module.exports = Backbone.View.extend({
 
     this.$preview_tab  = this.$('a[href="#preview"]');
     this.$result_tab   = this.$('a[href="#result"]');
-    this.$glyphs_count = $('#selected-glyphs-count');
 
     // disable click handler of tabs plugin on preview and result tabs
     this.$result_tab.add(this.$preview_tab).on('click', stopPropagation);
@@ -42,11 +40,9 @@ module.exports = Backbone.View.extend({
   },
 
   setGlyphsCount: function (count) {
-    var $tabs = this.$result_tab.add(this.$preview_tab).add('#result-download');
+    var $tabs = this.$result_tab.add(this.$preview_tab);
 
     $tabs.toggleClass('disabled', !count);
     $tabs[!count ? 'on' : 'off']('click', stopPropagation);
-
-    this.$glyphs_count.text(+count);
   }
 });

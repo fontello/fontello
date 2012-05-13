@@ -3,7 +3,7 @@
 "use strict";
 
 module.exports = function () {
-  var steps, selector, preview, result, result_font;
+  var toolbar, steps, selector, preview, result, result_font;
 
   // check browser's capabilities
   if (!Modernizr.fontface) {
@@ -14,6 +14,9 @@ module.exports = function () {
 
   result_font   = new nodeca.client.fontomas.models.result_font();
 
+  toolbar = new nodeca.client.fontomas.ui.toolbar();
+  toolbar.on('click:download', function () { result_font.startDownload(); });
+
   steps     = new nodeca.client.fontomas.ui.wizard.steps();
   selector  = new nodeca.client.fontomas.ui.wizard.selector.pane();
   preview   = new nodeca.client.fontomas.ui.wizard.preview.pane({model: result_font});
@@ -22,7 +25,10 @@ module.exports = function () {
 
   // update glypsh count on wizard steps tab
   result_font.glyphs.on('add remove', function () {
-    steps.setGlyphsCount(result_font.glyphs.length);
+    var count = result_font.glyphs.length;
+
+    toolbar.setGlyphsCount(count);
+    steps.setGlyphsCount(count);
   });
 
   selector.on('click:glyph', function (data) {
