@@ -1,6 +1,7 @@
 /*global nodeca, _, $, Modernizr*/
 
 //= require jquery/jquery
+//= require jquery-ui/jquery-ui
 //= require jquery.noty/src/js/jquery.noty
 //= require bootstrap/bootstrap
 //= require underscore
@@ -12,7 +13,7 @@
 
 ;(function () {
   "use strict";
-  
+
   $(function () {
     nodeca.client.fontomas.init();
   });
