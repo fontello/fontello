@@ -3,7 +3,7 @@
 "use strict";
 
 module.exports = function () {
-  var toolbar, steps, selector, preview, result, result_font;
+  var toolbar, tabs, selector, preview, result, result_font;
 
   // check browser's capabilities
   if (!Modernizr.fontface) {
@@ -15,8 +15,8 @@ module.exports = function () {
   result_font   = new nodeca.client.fontomas.models.result_font();
 
   toolbar = new nodeca.client.fontomas.ui.toolbar();
+  tabs    = new nodeca.client.fontomas.ui.tabs();
 
-  steps     = new nodeca.client.fontomas.ui.wizard.steps();
   selector  = new nodeca.client.fontomas.ui.wizard.selector.pane();
   preview   = new nodeca.client.fontomas.ui.wizard.preview.pane({model: result_font});
   result    = new nodeca.client.fontomas.ui.wizard.result.pane({model: result_font});
@@ -31,7 +31,7 @@ module.exports = function () {
     var count = result_font.glyphs.length;
 
     toolbar.setGlyphsCount(count);
-    steps.setGlyphsCount(count);
+    tabs.setGlyphsCount(count);
   });
 
   selector.on('click:glyph', function (data) {
@@ -56,7 +56,7 @@ module.exports = function () {
 
   //
   // show selector tab after  load complete
-  steps.activate('#selector');
+  tabs.activate('#selector');
 
   // Attach tooltip handler to matching elements
   $('._tip').tooltip();

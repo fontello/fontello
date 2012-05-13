@@ -5,7 +5,7 @@
 
 module.exports = Backbone.View.extend({
   // Use existing DOM element instead of generating a new one.
-  el: '#result',
+  el: '#editor',
 
 
   /**
