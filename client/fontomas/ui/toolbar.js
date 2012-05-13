@@ -38,10 +38,6 @@ module.exports = Backbone.View.extend({
         /*jshint bitwise:false*/
         var val = ~~ui.value;
         $glyph_size_value.text(val + 'px');
-      },
-      change:       function (event, ui) {
-        /*jshint bitwise:false*/
-        var val = ~~ui.value;
         self.trigger("change:glyph-size", val);
       }
     });
