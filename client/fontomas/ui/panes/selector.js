@@ -12,7 +12,7 @@ module.exports = Backbone.View.extend({
   initialize: function (attributes) {
     _.bindAll(this);
 
-    this.glyph_size = _.last(nodeca.client.fontomas.config.preview_glyph_sizes);
+    this.glyph_size = nodeca.config.fontomas.glyph_size.min;
     this.fonts      = new Backbone.Collection();
   },
 

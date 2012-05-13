@@ -31,7 +31,10 @@ module.exports = Backbone.View.extend({
     // initialize glyph-size buttons
     // FIXME: should be donw in application layout directly
     this.$glyphs_size.html(nodeca.client.fontomas.render('icon-size', {
-      buttons: nodeca.client.fontomas.config.preview_glyph_sizes
+      buttons: [
+        nodeca.config.fontomas.glyph_size.min,
+        nodeca.config.fontomas.glyph_size.max
+      ]
     })).find("button:last").addClass("active");
 
     // bind download button click event

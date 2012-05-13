@@ -1,5 +1,8 @@
 fontomas:
   max_glyphs: 100
+  glyph_size:
+    min: 16
+    max: 24
 locales:
   enabled: [en]
   default: en
