@@ -15,12 +15,15 @@ module.exports = function () {
   result_font   = new nodeca.client.fontomas.models.result_font();
 
   toolbar = new nodeca.client.fontomas.ui.toolbar();
-  toolbar.on('click:download', function () { result_font.startDownload(); });
 
   steps     = new nodeca.client.fontomas.ui.wizard.steps();
   selector  = new nodeca.client.fontomas.ui.wizard.selector.pane();
   preview   = new nodeca.client.fontomas.ui.wizard.preview.pane({model: result_font});
   result    = new nodeca.client.fontomas.ui.wizard.result.pane({model: result_font});
+
+
+  toolbar.on('click:download',    result_font.startDownload);
+  toolbar.on('change:glyph-size', selector.changeGlyphSize);
 
 
   // update glypsh count on wizard steps tab

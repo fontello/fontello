@@ -6,19 +6,14 @@ module.exports = Backbone.View.extend({
   fonts:          null,
   glyph_size:     null,
 
-  font_toolbar:   null,
   fontviews:      {},
 
 
   initialize: function (attributes) {
     _.bindAll(this);
 
-    this.glyph_size   = _.last(nodeca.client.fontomas.config.preview_glyph_sizes);
-    this.font_toolbar = new nodeca.client.fontomas.ui.wizard.selector.toolbar();
-
-    this.font_toolbar.on("change:glyph-size", this.changeGlyphSize, this);
-
-    this.fonts = new Backbone.Collection();
+    this.glyph_size = _.last(nodeca.client.fontomas.config.preview_glyph_sizes);
+    this.fonts      = new Backbone.Collection();
   },
 
 
