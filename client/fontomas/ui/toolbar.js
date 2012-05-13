@@ -15,30 +15,34 @@ module.exports = Backbone.View.extend({
   el: '#toolbar',
 
 
-  $glyphs_size:   null,
   $download_btn:  null,
   $glyphs_count:  null,
 
 
   initialize: function () {
-    var self = this;
+    var self = this, $glyph_size_value;
 
     // cache some inner elements
-    this.$glyphs_size  = this.$('#glyph-size');
     this.$download_btn = this.$('#result-download');
     this.$glyphs_count = this.$('#selected-glyphs-count');
 
     // initialize glyph-size slider
-    this.$glyphs_size.slider({
+    $glyph_size_value = $('#glyph-size-value');
+    $('#glyph-size-slider').slider({
       orientation:  'horizontal',
       range:        'min',
       value:        nodeca.config.fontomas.glyph_size.val,
       min:          nodeca.config.fontomas.glyph_size.min,
       max:          nodeca.config.fontomas.glyph_size.max,
-      animate:      true,
       slide:        function (event, ui) {
         /*jshint bitwise:false*/
-        self.trigger("change:glyph-size", ~~ui.value);
+        var val = ~~ui.value;
+        $glyph_size_value.text(val + 'px');
+      },
+      change:       function (event, ui) {
+        /*jshint bitwise:false*/
+        var val = ~~ui.value;
+        self.trigger("change:glyph-size", val);
       }
     });
 

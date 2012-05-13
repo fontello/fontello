@@ -1,9 +1,9 @@
 fontomas:
   max_glyphs: 100
   glyph_size:
-    min: 8    # minimal size
+    min: 12   # minimal size
     val: 16   # default size
-    max: 32   # miximum size
+    max: 30   # miximum size
 locales:
   enabled: [en]
   default: en
