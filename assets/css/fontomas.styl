@@ -7,15 +7,31 @@ body
   padding-top 180px // make the container go all the way to the bottom of the topbar
 
 
+//======== Github ribbon ========
 .gh-ribbon
-  display block
   position fixed
-  right 0
-  top 0
+  right -60px
+  top 44px
   z-index 10000
-  width 149px
-  height 149px
-  background-image url(asset_data_uri("gh-ribbon.png"))
+  background-color #686868
+  padding 1px 0
+  transform rotate(45deg)
+  width 230px
+  box-shadow 0 0 2px #6666
+  display none
+  a
+    display: block;
+    color #fff
+    border 1px solid #aaa
+    font-size 13px
+    font-weight bold
+    padding 4px 50px 2px
+    text-align center
+
+// use moderniser to show only fo browsers,
+// wich supports rotation
+.csstransforms .gh-ribbon
+  display block
 
 //======== Social buttons ========
 iframe
