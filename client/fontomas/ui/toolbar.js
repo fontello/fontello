@@ -32,7 +32,7 @@ module.exports = Backbone.View.extend({
     this.$glyphs_size.slider({
       orientation:  'horizontal',
       range:        'min',
-      value:        nodeca.config.fontomas.glyph_size.min,
+      value:        nodeca.config.fontomas.glyph_size.val,
       min:          nodeca.config.fontomas.glyph_size.min,
       max:          nodeca.config.fontomas.glyph_size.max,
       animate:      true,
