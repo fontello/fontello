@@ -91,7 +91,7 @@ function get_glyphs_config(params) {
 
 // returns unique ID for requested list of glyphs
 function get_download_id(glyphs) {
-  return crypto.createHash('md5').update(JSON.stringify(glyphs)).digest('hex');
+  return crypto.createHash('md5').update('fontello').update(JSON.stringify(glyphs)).digest('hex');
 }
 
 
@@ -293,7 +293,7 @@ module.exports.status = function (params, callback) {
 module.exports.generate = function (params, callback) {
   var self = this, glyphs = get_glyphs_config(params), font_id, user, errmsg;
 
-  if (!glyphs) {
+  if (!glyphs || 0 >= glyphs.length) {
     callback("Invalid request");
     return;
   }
