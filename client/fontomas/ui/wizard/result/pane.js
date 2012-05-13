@@ -15,12 +15,6 @@ module.exports = Backbone.View.extend({
   el: '#result',
 
 
-  // Deleagate some event handlers for some child elements.
-  events: {
-    'click #result-download': 'onDownload'
-  },
-
-
   /**
     *  new ui.wizard.result.pane()
     *
@@ -30,6 +24,8 @@ module.exports = Backbone.View.extend({
     this.$glyphs = this.$('#result-font');
 
     this.model.glyphs.on('add', this.addGlyph, this);
+
+    $('#result-download').click(_.bind(this.onDownload, this));
   },
 
 
