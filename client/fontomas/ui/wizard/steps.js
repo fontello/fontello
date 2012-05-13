@@ -42,7 +42,7 @@ module.exports = Backbone.View.extend({
   },
 
   setGlyphsCount: function (count) {
-    var $tabs = this.$result_tab.add(this.$preview_tab);
+    var $tabs = this.$result_tab.add(this.$preview_tab).add('#result-download');
 
     $tabs.toggleClass('disabled', !count);
     $tabs[!count ? 'on' : 'off']('click', stopPropagation);

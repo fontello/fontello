@@ -35,7 +35,9 @@ module.exports = Backbone.Model.extend({
 
   validate: function () {
     if (this.glyphs.length <= nodeca.config.fontomas.max_glyphs) {
-      return true;
+      // max glyphs limit is not reached.
+      // config is valid if it has at least one glyph selected.
+      return (0 < this.glyphs.length);
     }
 
     raise_max_glyphs_reached();
