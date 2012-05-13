@@ -3,7 +3,7 @@
 "use strict";
 
 module.exports = function () {
-  var toolbar, tabs, selector, preview, result, result_font;
+  var toolbar, tabs, selector, preview, editor, result_font;
 
   // check browser's capabilities
   if (!Modernizr.fontface) {
@@ -14,16 +14,16 @@ module.exports = function () {
 
   result_font   = new nodeca.client.fontomas.models.result_font();
 
-  toolbar = new nodeca.client.fontomas.ui.toolbar();
-  tabs    = new nodeca.client.fontomas.ui.tabs();
+  toolbar   = new nodeca.client.fontomas.ui.toolbar();
+  tabs      = new nodeca.client.fontomas.ui.tabs();
 
-  selector  = new nodeca.client.fontomas.ui.wizard.selector.pane();
-  preview   = new nodeca.client.fontomas.ui.wizard.preview.pane({model: result_font});
-  result    = new nodeca.client.fontomas.ui.wizard.result.pane({model: result_font});
+  selector  = new nodeca.client.fontomas.ui.panes.selector();
+  preview   = new nodeca.client.fontomas.ui.panes.preview({model: result_font});
+  editor    = new nodeca.client.fontomas.ui.panes.editor({model: result_font});
 
 
-  toolbar.on('click:download',    result_font.startDownload);
-  toolbar.on('change:glyph-size', selector.changeGlyphSize);
+  toolbar.on('click:download',    function () { result_font.startDownload(); });
+  toolbar.on('change:glyph-size', function () { selector.changeGlyphSize(); });
 
 
   // update glypsh count on wizard steps tab
