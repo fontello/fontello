@@ -1,3 +1,12 @@
+2.0.1 / 
+------------------
+
+* Reworked interface logic & look
+* Added search
+* Number of small fixes
+* Internal refactoring (continue switching to new nodeca libraries)
+
+
 2.0.0 / 2012-05-08
 ------------------
 
