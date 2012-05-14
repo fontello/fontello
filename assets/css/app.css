@@ -3,7 +3,7 @@
  *= require bootstrap/bootstrap
  *= require bootstrap/bootstrap-responsive
 
- *= require jquery-ui/jquery-ui
+ *= -require jquery-ui/jquery-ui
  *= require jquery.noty/noty
 
  *= require fontface-embedded

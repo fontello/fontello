@@ -13,7 +13,96 @@
   float left
 
 #glyph-size-slider
-  width: 128px
+  width: 150px
+  display inline-block
+  float: left
+  margin-top 11px
 
 #glyph-size-value
-  font-weight bold
+  display inline-block
+  float  left
+  //height 29px
+  line-height 30px
+  margin 0 1em
+  color #888
+  font-size 11px
+
+
+/*
+ * jQuery UI Slider 1.8.16
+ *
+ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Slider#theming
+ */
+.ui-slider
+  position relative
+  text-align left
+
+  border 1px solid
+  border-color #bbb #bbb #ddd #ddd
+  border-radius 1em
+  background #ddd
+  background-image: linear-gradient(top, #bbb 0%, #fff 80%, #ddd 100%);
+
+.ui-slider .ui-slider-handle
+  position absolute
+  z-index 2
+  width 1.2em
+  height 1.2em
+  cursor default
+
+  border-radius 2em
+  border 1px solid #aaa
+  background #aaa
+  background-image: linear-gradient(top, #fff 0%, #eee 50%, #aaa 100%);
+  //box-shadow 0 0 2px #888;
+
+  outline none
+
+  &:after
+    position absolute
+    content ""
+    width .5em
+    height .5em
+    top .35em
+    left .35em
+    // background-color #000
+    border-radius 1em
+    box-shadow 0 0.2em 0.15em #888888 inset
+
+
+
+.ui-slider .ui-slider-range
+  display none;
+/*
+  position: absolute;
+  z-index: 1;
+  font-size: .7em;
+  display: block;
+  border: 0;
+  background-position: 0 0
+  color: #ffffff;
+  background-color: #0064cd;
+  background-repeat: repeat-x;
+  background-image: linear-gradient(top, #049cdb, #0064cd);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  border-color: #0064cd #0064cd #003f81;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+*/
+
+.ui-slider-horizontal
+  height .4em
+
+  .ui-slider-handle
+    top -.45em
+    margin-left -.6em
+  .ui-slider-range
+    top 0
+    height 100%
+  .ui-slider-range-min
+    left 0
+  .ui-slider-range-max
+    right 0
