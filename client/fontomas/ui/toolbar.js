@@ -20,7 +20,7 @@ module.exports = Backbone.View.extend({
 
 
   initialize: function () {
-    var self = this, $glyph_size_value;
+    var self = this, $glyph_size_value, $search;
 
     // cache some inner elements
     this.$download_btn = this.$('#result-download');
@@ -41,6 +41,11 @@ module.exports = Backbone.View.extend({
         self.trigger("change:glyph-size", val);
       }
     });
+
+    // init search input
+    $search = $('#search').on('keyup', _.throttle(function (event) {
+      self.trigger('change:search', $search.val());
+    }, 1000));
 
     // bind download button click event
     this.$download_btn.click(function (event) {

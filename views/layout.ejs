@@ -53,9 +53,9 @@
             </div>
           </div>
 
-          <!--<div class="btn-group">
-            <input class="input-medium search-query" type="text" placeholder="Search">
-          </div>-->
+          <div class="btn-group">
+            <input id="search" class="input-medium search-query" type="text" placeholder="Search">
+          </div>
 
           <div class="btn-group pull-right">
             <a id="result-download" class="btn btn-info disabled">
@@ -196,7 +196,7 @@
       <ul class="unstyled fm-glyph-group {{css_class}}"></ul>
     </script>
     <script data-tpl-id="glyph-item" type="text/x-template">
-      <li class="glyph" data-glyph-id="{{glyph_id}}">{{{unicode}}}</li>
+      <li class="glyph" data-glyph-id="{{glyph_id}}" data-tags="{{tags}}">{{{unicode}}}</li>
     </script>
     <script data-tpl-id="preview:glyph" type="text/x-template">
       <span class="{{fnt}}">{{chr}}</span> {{css}}
