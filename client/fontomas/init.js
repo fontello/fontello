@@ -3,7 +3,7 @@
 "use strict";
 
 module.exports = function () {
-  var toolbar, tabs, selector, preview, editor, result_font;
+  var toolbar, tabs, selector, preview, editor, result_font, $glyphs;
 
   // check browser's capabilities
   if (!Modernizr.fontface) {
@@ -29,6 +29,27 @@ module.exports = function () {
 
   toolbar.on('change:glyph-size', function (size) {
     selector.changeGlyphSize(size);
+  });
+
+
+  toolbar.on('change:search', function (query) {
+    var re = new RegExp('(?:' + (query || '').split('|') + ')', 'i'),
+        hide = [], show = [];
+
+    if (!$glyphs) {
+      $glyphs = $('li.glyph');
+    }
+
+    $glyphs.stop().each(function () {
+      if (re.test($(this).data('tags'))) {
+        show.push(this);
+      } else {
+        hide.push(this);
+      }
+    });
+
+    $(hide).fadeOut();
+    $(show).fadeIn();
   });
 
 

@@ -38,12 +38,13 @@ module.exports = Backbone.View.extend({
       return false;
     });
 
-    this.$(".fm-glyph-group")
-      .addClass("glyph-size-" + this.glyph_size);
+    this.$(".fm-glyph-group").addClass("glyph-size-" + this.glyph_size);
 
+    // process each glyph
     _.each(this.model.get("glyphs"), function (item, glyph_id) {
       var glyph = nodeca.client.fontomas.render('glyph-item', {
         glyph_id: glyph_id,
+        tags:     (item.search || []).join(' '),
         unicode:  nodeca.client.fontomas.util.fixedFromCharCode(item.code)
       });
 

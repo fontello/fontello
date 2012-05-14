@@ -1,6 +1,8 @@
 /*global window, nodeca, jQuery, Handlebars, Backbone, $, _*/
 
+
 "use strict";
+
 
 module.exports = Backbone.View.extend({
   fonts:          null,
