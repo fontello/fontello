@@ -41,8 +41,21 @@ nodeca.hooks.init.before('bundles', function (next) {
 });
 
 
-nodeca.hooks.init.after('bundles',        require('./lib/init/http_assets'));
+// Prepare mincer
+nodeca.hooks.init.after('bundles', require('./lib/init/http_assets'));
+
+
+// Remove old downloads
+nodeca.hooks.init.before('init-complete', function (next) {
+  var downloads_path = require('path').resolve(__dirname, 'public/download');
+  nodeca.logger.warn("Cleaning obsolet downloads. Removing: " + downloads_path);
+  NLib.Vendor.FsTools.remove(downloads_path, next);
+});
+
+
+// Start socket.io and http servers
 nodeca.hooks.init.after('init-complete',  require('./lib/init/http_server'));
 
 
+// run application
 app.run();
