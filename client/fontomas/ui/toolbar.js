@@ -43,9 +43,9 @@ module.exports = Backbone.View.extend({
     });
 
     // init search input
-    $search = $('#search').on('keyup', _.throttle(function (event) {
+    $search = $('#search').on('keyup', _.debounce(function (event) {
       self.trigger('change:search', $search.val());
-    }, 1000));
+    }, 500));
 
     // bind download button click event
     this.$download_btn.click(function (event) {

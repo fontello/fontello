@@ -5,6 +5,8 @@
 
 
 module.exports = Backbone.View.extend({
+  el:             '#selector',
+
   fonts:          null,
   glyph_size:     null,
 

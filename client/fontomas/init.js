@@ -33,23 +33,20 @@ module.exports = function () {
 
 
   toolbar.on('change:search', function (query) {
-    var re = new RegExp('(?:' + (query || '').split('|') + ')', 'i'),
-        hide = [], show = [];
+    var re = new RegExp('(?:' + (query || '').split('|') + ')', 'i');
 
     if (!$glyphs) {
       $glyphs = $('li.glyph');
     }
 
-    $glyphs.stop().each(function () {
-      if (re.test($(this).data('tags'))) {
-        show.push(this);
-      } else {
-        hide.push(this);
-      }
-    });
+    selector.$el.stop(true).fadeOut('fast', function () {
+      $glyphs.each(function () {
+        var $this = $(this);
+        $this.toggle(re.test($this.data('tags')));
+      });
 
-    $(hide).fadeOut();
-    $(show).fadeIn();
+      selector.$el.fadeIn('fast');
+    });
   });
 
 
