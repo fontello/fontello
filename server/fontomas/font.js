@@ -91,7 +91,12 @@ function get_glyphs_config(params) {
 
 // returns unique ID for requested list of glyphs
 function get_download_id(glyphs) {
-  return crypto.createHash('md5').update('fontello').update(JSON.stringify(glyphs)).digest('hex');
+  var hash = crypto.createHash('md5');
+
+  hash.update('fontello' + nodeca.runtime.version);
+  hash.update(JSON.stringify(glyphs));
+
+  return hash.digest('hex');
 }
 
 
