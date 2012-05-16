@@ -90,8 +90,10 @@ module.exports = Backbone.Model.extend({
         return;
       }
 
-      nodeca.client.fontomas.util.notify('success', {layout: 'bottom'},
-        nodeca.client.fontomas.render('selector:download-banner'));
+      nodeca.client.fontomas.util.notify('success', {
+          layout:   'bottom',
+          timeout:  20000 // 20 secs
+        }, nodeca.client.fontomas.render('selector:download-banner'));
 
       function poll_status() {
         nodeca.server.fontomas.font.status({id: font_id}, function (err, msg) {
