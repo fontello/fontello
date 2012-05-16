@@ -10,9 +10,6 @@ module.exports = Backbone.View.extend({
   fonts:          null,
   glyph_size:     null,
 
-  fontviews:      {},
-
-
   initialize: function (attributes) {
     this.fonts = new Backbone.Collection();
     this.changeGlyphSize(nodeca.config.fontomas.glyph_size.val);
@@ -36,13 +33,11 @@ module.exports = Backbone.View.extend({
     view.on("toggleGlyph",        this.onToggleGlyph, this);
     view.on("remove",             this.removeFont,    this);
 
-    this.fontviews[font.id] = view;
     $("#selector-fonts").append(view.render().el);
   },
 
 
   removeFont: function (font) {
-    delete this.fontviews[font.id];
     this.trigger('remove:font', font);
   },
 
