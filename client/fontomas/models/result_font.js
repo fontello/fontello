@@ -6,10 +6,9 @@
 
 var raise_max_glyphs_reached = _.throttle(function () {
   nodeca.client.fontomas.util.notify('error',
-    "You can't select more than " +
-    nodeca.config.fontomas.max_glyphs +
-    " icons at once. If you have a real use-case," +
-    " please, create ticket in issue tracker.");
+    nodeca.client.fontomas.render('selector:max-glyphs-error', {
+      max: nodeca.config.fontomas.max_glyphs
+    }));
 }, 1000);
 
 
@@ -90,6 +89,9 @@ module.exports = Backbone.Model.extend({
         nodeca.logger.error(err);
         return;
       }
+
+      nodeca.client.fontomas.util.notify('success', {layout: 'bottom'},
+        nodeca.client.fontomas.render('selector:download-banner'));
 
       function poll_status() {
         nodeca.server.fontomas.font.status({id: font_id}, function (err, msg) {
