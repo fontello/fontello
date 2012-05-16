@@ -72,15 +72,5 @@ module.exports = Backbone.View.extend({
     $target.toggleClass("selected", !selected);
 
     this.trigger("toggleGlyph", data);
-  },
-
-
-  activateGlyph: function (id) {
-    this.$('.glyph[data-glyph-id=' + id + ']').addClass('selected');
-  },
-
-
-  deactivateGlyph: function (id) {
-    this.$('.glyph[data-glyph-id=' + id + ']').deactivateClass('selected');
   }
 });
