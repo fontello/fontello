@@ -32,22 +32,22 @@ module.exports = function () {
   });
 
 
-  toolbar.on('change:search', function (query) {
+  toolbar.on('change:search', _.debounce(function (query) {
     var re = new RegExp('(?:' + (query || '').split('|') + ')', 'i');
 
     if (!$glyphs) {
       $glyphs = $('li.glyph');
     }
 
-    selector.$el.stop(true).fadeOut('fast', function () {
+    selector.$el.stop(true).fadeOut(function () {
       $glyphs.each(function () {
         var $this = $(this);
         $this.toggle(re.test($this.data('tags')));
       });
 
-      selector.$el.fadeIn('fast');
+      selector.$el.fadeIn();
     });
-  });
+  }, 250));
 
 
   // update glypsh count on wizard steps tab
