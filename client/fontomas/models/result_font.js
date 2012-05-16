@@ -90,8 +90,9 @@ module.exports = Backbone.Model.extend({
         return;
       }
 
-      nodeca.client.fontomas.util.notify('success', {
+      nodeca.client.fontomas.util.notify('information', {
           layout:   'bottom',
+          closeOnSelfClick: false,
           timeout:  20000 // 20 secs
         }, nodeca.client.fontomas.render('selector:download-banner'));
 
