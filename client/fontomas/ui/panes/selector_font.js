@@ -4,14 +4,11 @@
 
 module.exports = Backbone.View.extend({
   tagName:    "li",
-  glyph_size: null,
   events:     {"click .glyph": "onClickGlyph"},
 
 
   initialize: function () {
     _.bindAll(this);
-    this.glyph_size = this.options.glyph_size;
-
     this.$el.attr("id", "fm-font-" + this.model.id);
 
     this.model.on("change",   this.render,  this);
@@ -38,8 +35,6 @@ module.exports = Backbone.View.extend({
       return false;
     });
 
-    this.$(".fm-glyph-group").addClass("glyph-size-" + this.glyph_size);
-
     // process each glyph
     _.each(this.model.get("glyphs"), function (item, glyph_id) {
       var glyph = nodeca.client.fontomas.render('glyph-item', {
@@ -52,15 +47,6 @@ module.exports = Backbone.View.extend({
     }, this);
 
     return this;
-  },
-
-
-  changeGlyphSize: function (new_size) {
-    this.$(".fm-glyph-group")
-      .removeClass("glyph-size-" + this.glyph_size)
-      .addClass("glyph-size-" + new_size);
-
-    this.glyph_size = new_size;
   },
 
 

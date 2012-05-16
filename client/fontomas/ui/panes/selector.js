@@ -14,17 +14,16 @@ module.exports = Backbone.View.extend({
 
 
   initialize: function (attributes) {
-    this.glyph_size = nodeca.config.fontomas.glyph_size.val;
-    this.fonts      = new Backbone.Collection();
+    this.fonts = new Backbone.Collection();
+    this.changeGlyphSize(nodeca.config.fontomas.glyph_size.val);
   },
 
 
   changeGlyphSize: function (size) {
-    this.glyph_size = size;
-
-    _.each(this.fontviews, function (view) {
-      view.changeGlyphSize(size);
-    });
+    if (size !== this.size) {
+      this.$el.addClass('glyph-size-' + size).removeClass('glyph-size-' + this.glyph_size);
+      this.glyph_size = size;
+    }
   },
 
 
