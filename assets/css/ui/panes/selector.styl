@@ -94,10 +94,3 @@ a.src-font-name
   background-color #fffdfd
   border-color #d88
   box-shadow 0 0 3px #daa inset
-
-min = config('fontomas.glyph_size.min')
-max = config('fontomas.glyph_size.max')
-
-for s in min..max
-  .glyph-size-{s} .glyph
-    font-size 1px * s

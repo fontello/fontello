@@ -17,18 +17,12 @@ module.exports = Backbone.View.extend({
 
 
   changeGlyphSize: function (size) {
-    if (size !== this.size) {
-      this.$el.addClass('glyph-size-' + size).removeClass('glyph-size-' + this.glyph_size);
-      this.glyph_size = size;
-    }
+    this.$el.css('font-size', size);
   },
 
 
   addFont: function (font) {
-    var view = new nodeca.client.fontomas.ui.panes.selector_font({
-      model:      font,
-      glyph_size: this.glyph_size
-    });
+    var view = new nodeca.client.fontomas.ui.panes.selector_font({model: font});
 
     view.on("toggleGlyph",        this.onToggleGlyph, this);
     view.on("remove",             this.removeFont,    this);
