@@ -27,9 +27,9 @@ module.exports = function () {
   });
 
 
-  toolbar.on('change:glyph-size', function (size) {
+  toolbar.on('change:glyph-size', _.debounce(function (size) {
     selector.changeGlyphSize(size);
-  });
+  }, 250));
 
 
   toolbar.on('change:search', _.debounce(function (query) {
