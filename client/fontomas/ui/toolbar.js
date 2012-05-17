@@ -52,6 +52,9 @@ module.exports = Backbone.View.extend({
     $search = $('#search')
       .on('change', on_search_change)
       .on('keyup', _.debounce(on_search_change, 250))
+      .on('focus keyup', _.debounce(function () {
+        $search.typeahead('hide');
+      }, 5000))
       .typeahead({source: this.keywords});
 
     // bind download button click event
