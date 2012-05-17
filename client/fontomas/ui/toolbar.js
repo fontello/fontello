@@ -17,10 +17,11 @@ module.exports = Backbone.View.extend({
 
   $download_btn:  null,
   $glyphs_count:  null,
+  keywords:       [],
 
 
   initialize: function () {
-    var self = this, $glyph_size_value, $search;
+    var self = this, $glyph_size_value, $search, on_search_change;
 
     // cache some inner elements
     this.$download_btn = this.$('#result-download');
@@ -42,10 +43,16 @@ module.exports = Backbone.View.extend({
       }
     });
 
-    // init search input
-    $search = $('#search').on('keyup', function (event) {
+    // search query change event listener
+    on_search_change = function (event) {
       self.trigger('change:search', $search.val());
-    });
+    };
+
+    // init search input
+    $search = $('#search')
+      .on('change', on_search_change)
+      .on('keyup', _.debounce(on_search_change, 250))
+      .typeahead({source: this.keywords});
 
     // bind download button click event
     this.$download_btn.click(function (event) {
@@ -63,5 +70,13 @@ module.exports = Backbone.View.extend({
     this.$download_btn[!count ? 'on' : 'off']('click', stopPropagation);
 
     this.$glyphs_count.text(+count);
+  },
+
+  addKeywords: function (tags) {
+    _.each(tags, function (tag) {
+      if (_.isString(tag) && !_.include(this.keywords, tag)) {
+        this.keywords.push(tag);
+      }
+    }, this);
   }
 });

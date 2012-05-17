@@ -32,7 +32,7 @@ module.exports = function () {
   }, 250));
 
 
-  toolbar.on('change:search', _.debounce(function (query) {
+  toolbar.on('change:search', function (query) {
     if (!$glyphs) {
       $glyphs = $('li.glyph');
     }
@@ -47,7 +47,7 @@ module.exports = function () {
 
       selector.$el.fadeTo('fast', 1);
     });
-  }, 250));
+  });
 
 
   // update glypsh count on wizard steps tab
@@ -74,6 +74,13 @@ module.exports = function () {
     var model = new nodeca.client.fontomas.models.source_font(_.extend({}, config, {
       embedded_id: config.id
     }));
+
+    // fill in tolbr with keywords
+    _.each(config.glyphs, function (g) {
+      if (_.isArray(g.search)) {
+        toolbar.addKeywords(g.search);
+      }
+    });
 
     selector.addFont(model);
   });
