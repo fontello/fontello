@@ -36,13 +36,10 @@ var CONFIG              = nodeca.config.fontomas;
 ////////////////////////////////////////////////////////////////////////////////
 
 
-// internal cache used by get_font()
-var font_configs;
-
-
 // return font configuration
+var font_configs = null;
 function get_font(name) {
-  if (!font_configs) {
+  if (null === font_configs) {
     font_configs = {};
     nodeca.shared.fontomas.embedded_fonts.forEach(function (config) {
       font_configs[config.font.fontname] = config;
