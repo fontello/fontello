@@ -1,9 +1,10 @@
 fontomas:
-  max_glyphs: 100
+  builder_concurrency: 1  # Default: amount of CPUs
+  max_glyphs: ~           # Max allowed glyphs per download. Unlimited if null.
   glyph_size:
-    min: 12   # minimal size
-    val: 16   # default size
-    max: 30   # miximum size
+    min: 12               # minimal size
+    val: 16               # default size
+    max: 30               # miximum size
 locales:
   enabled: [en]
   default: en

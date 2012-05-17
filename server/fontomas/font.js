@@ -6,6 +6,7 @@
 
 // stdlib
 var crypto    = require('crypto');
+var os        = require('os');
 var fs        = require('fs');
 var path      = require('path');
 var execFile  = require('child_process').execFile;
@@ -21,12 +22,18 @@ var fstools = require('nlib').Vendor.FsTools;
 var stats   = require('../../lib/stats');
 
 
-// directory where to put results
+////////////////////////////////////////////////////////////////////////////////
+
+
 var TMP_DIR             = '/tmp/fontello';
 var APP_ROOT            = _.first(nodeca.runtime.apps).root;
 var DOWNLOAD_DIR        = path.join(APP_ROOT, 'public/download/');
 var DOWNLOAD_URL_PREFIX = "/download/";
 var GENERATOR_BIN       = path.join(APP_ROOT, 'bin/generate_font.sh');
+var CONFIG              = nodeca.config.fontomas;
+
+
+////////////////////////////////////////////////////////////////////////////////
 
 
 // internal cache used by get_font()
@@ -163,7 +170,7 @@ function get_source_fonts() {
 var job_mgr = new (neuron.JobManager)();
 job_mgr.addJob('generate-font', {
   dirname: '/tmp',
-  concurrency: 4,
+  concurrency: (CONFIG.builder_concurrency || os.cpus().length),
   work: function (font_id, glyphs, user) {
     var self        = this,
         fontname    = "fontello-" + font_id.substr(0, 8),
@@ -303,9 +310,9 @@ module.exports.generate = function (params, callback) {
     return;
   }
 
-  if (nodeca.config.fontomas.max_glyphs < glyphs.length) {
+  if (CONFIG.max_glyphs && CONFIG.max_glyphs < glyphs.length) {
     errmsg = 'Too many icons requested: ' + glyphs.length +
-             ' of ' + nodeca.config.fontomas.max_glyphs + ' allowed.';
+             ' of ' + CONFIG.max_glyphs + ' allowed.';
 
     this.response.error = {
       code:     'MAX_GLYPHS_LIMIT',
