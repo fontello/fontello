@@ -3,6 +3,7 @@
 
 * Reworked interface logic & look
 * Added search
+* Added multiselect (click+drag)
 * Number of small fixes
 * Internal refactoring (continue switching to new nodeca libraries)
 
