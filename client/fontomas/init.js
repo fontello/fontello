@@ -33,19 +33,14 @@ module.exports = function () {
 
 
   toolbar.on('change:search', function (query) {
+    var re = new RegExp(query || '', 'i');
     if (!$glyphs) {
       $glyphs = $('li.glyph');
     }
 
-    selector.$el.stop(true).fadeTo('fast', 0, function () {
-      var re = new RegExp(query || '', 'i');
-
-      $glyphs.each(function () {
-        var $this = $(this);
-        $this.toggle(re.test($this.data('tags')));
-      });
-
-      selector.$el.fadeTo('fast', 1);
+    $glyphs.each(function () {
+      var $this = $(this);
+      $this.toggle(re.test($this.data('tags')));
     });
   });
 
