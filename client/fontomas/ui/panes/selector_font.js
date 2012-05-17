@@ -8,11 +8,22 @@ module.exports = Backbone.View.extend({
 
 
   initialize: function () {
-    _.bindAll(this);
+    var self = this;
+
     this.$el.attr("id", "fm-font-" + this.model.id);
 
     this.model.on("change",   this.render,  this);
     this.model.on("destroy",  this.remove,  this);
+
+    this.$el.selectable({
+      stop: function () {
+        self.$('.glyph.ui-selected').each(function () {
+          if (!$(this).hasClass('selected')) {
+            self.onClickGlyph({currentTarget: this});
+          }
+        });
+      }
+    });
   },
 
 
