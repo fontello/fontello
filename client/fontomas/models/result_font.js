@@ -23,6 +23,7 @@ function start_download(id, url) {
 module.exports = Backbone.Model.extend({
   initialize: function () {
     this.glyphs = new nodeca.client.fontomas.models.glyphs_collection();
+    this.max_glyphs = nodeca.config.fontomas.max_glyphs || null;
   },
 
 
@@ -43,7 +44,7 @@ module.exports = Backbone.Model.extend({
 
 
   validate: function () {
-    if (this.glyphs.length <= nodeca.config.fontomas.max_glyphs) {
+    if (null === this.max_glyphs || this.glyphs.length <= this.max_glyphs) {
       // max glyphs limit is not reached.
       // config is valid if it has at least one glyph selected.
       return (0 < this.glyphs.length);
