@@ -18,9 +18,7 @@ module.exports = Backbone.View.extend({
     this.$el.selectable({
       stop: function () {
         self.$('.glyph.ui-selected').each(function () {
-          if (!$(this).hasClass('selected')) {
-            self.onClickGlyph({currentTarget: this});
-          }
+          self.onClickGlyph({currentTarget: this});
         });
       }
     });
