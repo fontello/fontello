@@ -50,12 +50,17 @@ module.exports = Backbone.View.extend({
 
     // init search input
     $search = $('#search')
-      .on('change', on_search_change)
+      //.on('change', on_search_change)
       .on('keyup', _.debounce(on_search_change, 250))
-      .on('focus keyup', _.debounce(function () {
-        $search.typeahead('hide');
-      }, 5000))
-      .typeahead({source: this.keywords});
+      // FIXME: TypeAhead makes intarface laggy
+      //.on('focus keyup', _.debounce(function () {
+      //  $search.typeahead('hide');
+      //}, 5000))
+      //.typeahead({
+      //  source: this.keywords,
+      //  sorter: function (items) { return items; }
+      //})
+      ;
 
     // bind download button click event
     this.$download_btn.click(function (event) {
