@@ -80,6 +80,10 @@ module.exports = Backbone.View.extend({
     selected = $target.hasClass("selected");
     $target.toggleClass("selected", !selected);
 
+    if (event.stopPropagation) {
+      event.stopPropagation();
+    }
+
     this.trigger("toggleGlyph", data);
   }
 });
