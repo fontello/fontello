@@ -18,6 +18,7 @@ module.exports = Backbone.View.extend({
     // activate selectable plugin
     this.$el.selectable({
       filter: 'li.glyph:visible',
+      distance: 5,
       stop: function () {
         var $els = self.$('.glyph.ui-selected');
 
