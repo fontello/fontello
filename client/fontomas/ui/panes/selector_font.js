@@ -8,22 +8,39 @@ module.exports = Backbone.View.extend({
 
 
   initialize: function () {
-    var self = this;
-
     this.$el.attr("id", "fm-font-" + this.model.id);
 
     this.model.on("change",   this.render,  this);
     this.model.on("destroy",  this.remove,  this);
 
+    this.activateSelectable();
+  },
+
+  activateSelectable: function () {
+    var self = this;
+
+    this.deactivateSelectable();
+
     this.$el.selectable({
       stop: function () {
-        self.$('.glyph.ui-selected').each(function () {
+        var $els = self.$('.glyph.ui-selected');
+
+        // prevent from double-triggering event,
+        // otherwise click event will be fired as well
+        if (1 === $els.length) {
+          return;
+        }
+
+        $els.each(function () {
           self.onClickGlyph({currentTarget: this});
         });
       }
     });
   },
 
+  deactivateSelectable: function () {
+    this.$el.selectable('destroy');
+  },
 
   render: function () {
     var $info;
@@ -79,10 +96,6 @@ module.exports = Backbone.View.extend({
 
     selected = $target.hasClass("selected");
     $target.toggleClass("selected", !selected);
-
-    if (event.stopPropagation) {
-      event.stopPropagation();
-    }
 
     this.trigger("toggleGlyph", data);
   }
