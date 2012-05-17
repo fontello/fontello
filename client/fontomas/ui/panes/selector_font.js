@@ -8,20 +8,16 @@ module.exports = Backbone.View.extend({
 
 
   initialize: function () {
+    var self = this;
+
     this.$el.attr("id", "fm-font-" + this.model.id);
 
     this.model.on("change",   this.render,  this);
     this.model.on("destroy",  this.remove,  this);
 
-    this.activateSelectable();
-  },
-
-  activateSelectable: function () {
-    var self = this;
-
-    this.deactivateSelectable();
-
+    // activate selectable plugin
     this.$el.selectable({
+      filter: ':not(:hidden)',
       stop: function () {
         var $els = self.$('.glyph.ui-selected');
 
@@ -36,10 +32,6 @@ module.exports = Backbone.View.extend({
         });
       }
     });
-  },
-
-  deactivateSelectable: function () {
-    this.$el.selectable('destroy');
   },
 
   render: function () {
