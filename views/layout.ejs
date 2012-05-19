@@ -198,9 +198,8 @@
     <script data-tpl-id="font-item" type="text/x-template">
       <h2 class="src-font-head"><a class="label label-important font-info" href="#">info</a>
         <a class="src-font-name _collapser" href="#">{{fontname}}</a>
-        <a class="fm-font-anchor" href="#font-{{id}}"></a>
       </h2>
-      <ul class="unstyled fm-glyph-group {{css_class}}"></ul>
+      <ul class="unstyled font-glyphs {{css_class}}"></ul>
     </script>
     <script data-tpl-id="glyph-item" type="text/x-template">
       <li class="glyph" data-glyph-id="{{glyph_id}}" data-tags="{{tags}}">{{{unicode}}}</li>
@@ -209,30 +208,28 @@
       <span class="{{fnt}}">{{chr}}</span> {{css}}
     </script>
     <script data-tpl-id="resultfont-glyph-item" type="text/x-template">
-      <!--div class="fm-result-glyph"-->
-        <div class="top">{{{top}}}</div>
-        <div class="top edit">
-          <table>
-            <tbody>
-              <tr>
-                <td><input type="text"/></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="center {{css_class}}">{{{char}}}</div>
-        <div class="bottom">{{bottom}}</div>
-        <div class="bottom edit">
-          <table>
-            <tbody>
-              <tr>
-                <td>U+</td>
-                <td><input type="text"/></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      <!--/div-->
+      <div class="top">{{{top}}}</div>
+      <div class="top edit">
+        <table>
+          <tbody>
+            <tr>
+              <td><input type="text"/></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="center {{css_class}}">{{{char}}}</div>
+      <div class="bottom">{{bottom}}</div>
+      <div class="bottom edit">
+        <table>
+          <tbody>
+            <tr>
+              <td>U+</td>
+              <td><input type="text"/></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </script>
 
     <!-- javascript

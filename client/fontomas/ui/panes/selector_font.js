@@ -10,7 +10,7 @@ module.exports = Backbone.View.extend({
   initialize: function () {
     var self = this;
 
-    this.$el.attr("id", "fm-font-" + this.model.id);
+    this.$el.attr("id", "font-id-" + this.model.id);
 
     this.model.on("change",   this.render,  this);
     this.model.on("destroy",  this.remove,  this);
@@ -62,7 +62,7 @@ module.exports = Backbone.View.extend({
         unicode:  nodeca.client.fontomas.util.fixedFromCharCode(item.code)
       });
 
-      this.$(".fm-glyph-group").append(glyph);
+      this.$(".font-glyphs").append(glyph);
     }, this);
 
     return this;
