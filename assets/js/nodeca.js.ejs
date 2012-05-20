@@ -1,5 +1,8 @@
 /*global window*/
 
+//  vim:syntax=javascript
+//= require faye-browser
+
 (function () {
   'use strict';
 
@@ -9,7 +12,7 @@
       fontomas: <%- JSON.stringify(config('fontomas')) %>
     },
     runtime: {
-      sio:      io.connect(null, {'max reconnection attempts': 1024}),
+      faye:     new Faye.Client('/faye'),
       env:      "<%= env() %>",
       version:  "<%= version() %>",
     }
@@ -49,22 +52,35 @@
   }
 
 
+  var rpc_msg_idx   = 0;
+
   nodeca.runtime.rpc = function (name, params, callback) {
-    var msg = {
+    var id = rpc_msg_idx++, handler, msg, channel;
+
+    msg = {
       version:  nodeca.runtime.version,
       method:   name,
       params:   params
     };
 
-    // conected. call immediately
-    if (nodeca.runtime.sio.socket.connected) {
-      execRpcCall(msg, callback);
-      return;
-    }
+    channel = '/rpc_' + nodeca.runtime.faye.getClientId();
+    handler = function (data) {
+      if (id === data.id) {
+        if (data.msg.version !== nodeca.runtime.version) {
+          // TODO: implement software upgrade here
+          nodeca.client.fontomas.util.notify('error', {layout: 'bottom'},
+            '<strong>Application is outdated. Please ' +
+            '<a href="/" style="text-decoration:underline">reload</a>' +
+            ' page.</strong>');
+          return;
+        }
 
-    // disconnected. connet and once connected - call rpc
-    nodeca.runtime.sio.socket.connect(function () {
-      execRpcCall(msg, callback);
-    });
+        (callback || $.noop)(data.msg.err, data.msg.result);
+        nodeca.runtime.faye.unsubscribe(channel, handler);
+      }
+    };
+
+    nodeca.runtime.faye.subscribe(channel, handler);
+    nodeca.runtime.faye.publish(channel, {id: id, msg: msg});
   };
 }());

@@ -168,7 +168,7 @@ var job_mgr = new (neuron.JobManager)();
 job_mgr.addJob('generate-font', {
   dirname: '/tmp',
   concurrency: (CONFIG.builder_concurrency || os.cpus().length),
-  work: function (font_id, glyphs, user) {
+  work: function (font_id, glyphs) {
     var self        = this,
         fontname    = "fontello-" + font_id.substr(0, 8),
         tmp_dir     = path.join(TMP_DIR, "fontello-" + font_id),
@@ -188,8 +188,7 @@ job_mgr.addJob('generate-font', {
 
       nodeca.logger.error("Unexpected absence of job.\n" + JSON.stringify({
         font_id:  font_id,
-        glyphs:   glyphs,
-        user:     user
+        glyphs:   glyphs
       }));
     }
 
@@ -244,8 +243,7 @@ job_mgr.addJob('generate-font', {
 
       stats.push({
         glyphs: glyphs.length,
-        time:   (times[2] - times[0]) / 1000,
-        user:   user
+        time:   (times[2] - times[0]) / 1000
       });
 
       self.finished = true;
@@ -300,7 +298,7 @@ module.exports.status = function (params, callback) {
 
 // request font generation
 module.exports.generate = function (params, callback) {
-  var self = this, glyphs = get_glyphs_config(params), font_id, user, errmsg;
+  var self = this, glyphs = get_glyphs_config(params), font_id, errmsg;
 
   if (!glyphs || 0 >= glyphs.length) {
     callback("Invalid request");
@@ -322,7 +320,6 @@ module.exports.generate = function (params, callback) {
   }
 
   font_id = get_download_id(glyphs);
-  user    = this.__raw__.socket.handshake.address.address;
 
   get_job(font_id, function (job) {
     // enqueue new unique job
@@ -330,7 +327,7 @@ module.exports.generate = function (params, callback) {
       job = jobs[font_id] = {
         start:      Date.now(),
         status:     'enqueued',
-        worker_id:  job_mgr.enqueue('generate-font', font_id, glyphs, user)
+        worker_id:  job_mgr.enqueue('generate-font', font_id, glyphs)
       };
     }
 
