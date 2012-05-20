@@ -14,7 +14,7 @@
     runtime: {
       faye:     new Faye.Client('/faye'),
       env:      "<%= env() %>",
-      version:  "<%= version() %>",
+      version:  "<%= version() %>"
     }
   };
 
@@ -52,10 +52,11 @@
   }
 
 
-  var rpc_msg_idx   = 0;
+  var rpc_request_id = 0;
+  var rpc_callbacks  = {};
 
   nodeca.runtime.rpc = function (name, params, callback) {
-    var id = rpc_msg_idx++, handler, msg, channel;
+    var id = rpc_request_id++, handler, msg, channel;
 
     msg = {
       version:  nodeca.runtime.version,
@@ -63,7 +64,7 @@
       params:   params
     };
 
-    channel = '/rpc_' + nodeca.runtime.faye.getClientId();
+    channel = '/rpc-' + nodeca.runtime.faye.getClientId();
     handler = function (data) {
       if (id === data.id) {
         if (data.msg.version !== nodeca.runtime.version) {
@@ -80,7 +81,7 @@
       }
     };
 
-    nodeca.runtime.faye.subscribe(channel, handler);
-    nodeca.runtime.faye.publish(channel, {id: id, msg: msg});
+    nodeca.runtime.faye.subscribe(channel,        handler);
+    nodeca.runtime.faye.publish(channel + '-req', {id: id, msg: msg});
   };
 }());
