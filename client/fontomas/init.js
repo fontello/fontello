@@ -58,10 +58,12 @@ module.exports = function () {
     var glyph = result_font.getGlyph(data.font_id, data.glyph_id);
 
     if (glyph) {
+      presets.toggleGlyph(data, false);
       glyph.destroy();
       return;
     }
 
+    presets.toggleGlyph(data, true);
     result_font.addGlyph(data);
   });
 
@@ -97,6 +99,18 @@ module.exports = function () {
     $users_count.text(count);
   });
 
+
+  function load_preset(preset) {
+    // drop all selected glyphs
+    result_font.glyphs.remove(result_font.glyphs.toArray());
+
+    // preselect glyphs
+    _.each(preset.get('selected_glyphs'), function (data) {
+      result_font.addGlyph(data);
+      selector.highlightGlyph(data);
+    });
+  }
+
   // Activate last changes
-  presets.at(0).load();
+  load_preset(presets.at(0));
 };

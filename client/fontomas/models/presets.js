@@ -13,11 +13,6 @@ var Preset = Backbone.Model.extend({
       glyph_changes:    [],
       user_fonts:       []
     };
-  },
-
-
-  load: function () {
-    console.log('Not implemented yet');
   }
 });
 
@@ -30,13 +25,28 @@ module.exports = Backbone.Collection.extend({
   initialize: function () {
     this.fetch();
 
-    // get special case preset
+    // make sure "special" preset exists
     if (0 === this.length) {
       this.create({name: '$current$'});
     }
 
     // cache special preset
     this.$current = this.at(0);
+  },
+
+
+  toggleGlyph: function (data, state) {
+    var glyphs = this.$current.get('selected_glyphs');
+
+    if (state) {
+      glyphs = _.union(glyphs, [data]);
+    } else {
+      glyphs = _.filter(glyphs, function (glyph) {
+        return !_.isEqual(glyph, data);
+      });
+    }
+    this.$current.set('selected_glyphs', glyphs);
+    this.$current.save();
   },
 
 
@@ -47,7 +57,6 @@ module.exports = Backbone.Collection.extend({
     });
 
     delete attribs.id;
-
     this.create(attribs);
   }
 });

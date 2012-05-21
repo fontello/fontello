@@ -75,6 +75,12 @@ module.exports = Backbone.View.extend({
   },
 
 
+
+  highlightGlyph: function (glyphId) {
+    this.$('[data-glyph-id="' + glyphId + '"]').addClass('selected');
+  },
+
+
   onClickGlyph: function (event) {
     var $target   = $(event.currentTarget),
         glyph_id  = parseInt($target.attr("data-glyph-id"), 10),
