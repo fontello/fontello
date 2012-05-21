@@ -94,9 +94,9 @@ module.exports = Backbone.Collection.extend({
 
 
   _getFreeCode: function () {
-    var code = nodeca.client.fontomas.config.code_autoguess_range[0];
+    var code = nodeca.config.fontomas.autoguess_charcode.min;
 
-    while (code <= nodeca.client.fontomas.config.code_autoguess_range[1]) {
+    while (code <= nodeca.config.fontomas.autoguess_charcode.max) {
       if (!this.used_codes[code]) {
         // got unused code
         return code;
