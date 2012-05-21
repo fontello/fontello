@@ -3,7 +3,7 @@
 "use strict";
 
 module.exports = function () {
-  var toolbar, tabs, selector, preview, editor, result_font, $glyphs;
+  var toolbar, tabs, selector, preview, editor, result_font, presets, $glyphs;
 
   // check browser's capabilities
   if (!Modernizr.fontface) {
@@ -12,7 +12,8 @@ module.exports = function () {
     return;
   }
 
-  result_font   = new nodeca.client.fontomas.models.result_font();
+  result_font = new nodeca.client.fontomas.models.result_font();
+  presets     = new nodeca.client.fontomas.models.presets();
 
   toolbar   = new nodeca.client.fontomas.ui.toolbar();
   tabs      = new nodeca.client.fontomas.ui.tabs();
@@ -95,4 +96,7 @@ module.exports = function () {
   nodeca.runtime.sio.on('users_online', function (count) {
     $users_count.text(count);
   });
+
+  // Activate last changes
+  presets.at(0).load();
 };

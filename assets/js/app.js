@@ -6,6 +6,7 @@
 //= require bootstrap/bootstrap
 //= require underscore
 //= require backbone
+//= require backbone.localStorage
 //= require handlebars
 //= require jquery.collapser
 //= require nodeca
