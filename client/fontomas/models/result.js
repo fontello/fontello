@@ -20,34 +20,24 @@ function start_download(id, url) {
 }
 
 
-module.exports = Backbone.Model.extend({
+module.exports = Backbone.Collection.extend({
   initialize: function () {
-    this.glyphs = new nodeca.client.fontomas.models.glyphs_collection();
-    this.max_glyphs = nodeca.config.fontomas.max_glyphs || null;
+    this.maxGlyphs = nodeca.config.fontomas.max_glyphs || null;
   },
 
 
-  getGlyph: function (font_id, glyph_id) {
-    return this.glyphs.find(function (glyph) {
-      var src = glyph.get('source_glyph');
-      return font_id === src.font_id && glyph_id === src.glyph_id;
-    });
-  },
-
-
-  addGlyph: function (data) {
-    var model = new nodeca.client.fontomas.models.glyph({source_glyph: data});
-    this.trigger('add-glyph', model);
-    this.glyphs.add(model);
+  add: function () {
+    Backbone.Collection.prototype.add.apply(this, arguments);
     this.validate();
+    return this;
   },
 
 
   validate: function () {
-    if (null === this.max_glyphs || this.glyphs.length <= this.max_glyphs) {
+    if (null === this.maxGlyphs || this.length <= this.maxGlyphs) {
       // max glyphs limit is not reached.
       // config is valid if it has at least one glyph selected.
-      return (0 < this.glyphs.length);
+      return (0 < this.length);
     }
 
     raise_max_glyphs_reached();
@@ -58,18 +48,12 @@ module.exports = Backbone.Model.extend({
   getConfig: function () {
     var config = {glyphs: []};
 
-    this.glyphs.forEach(function (g) {
-      var src = g.get('source_glyph'), fontname;
-
-      fontname = _.find(nodeca.shared.fontomas.embedded_fonts, function (cfg) {
-        return cfg.id === src.embedded_id;
-      }).font.fontname;
-
+    this.each(function (glyph) {
       config.glyphs.push({
-        code: g.get('code'),
-        css:  g.get('css'),
-        from: src.code,
-        src:  fontname
+        code: glyph.get('code'),
+        css:  glyph.get('css'),
+        from: glyph.get('source').code,
+        src:  glyph.get('font').get('font').fontname
       });
     });
 

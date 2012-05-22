@@ -4,19 +4,24 @@
 
 
 module.exports = Backbone.View.extend({
-  // Use existing DOM element instead of generating a new one.
   el: '#codes-editor',
 
 
   initialize: function () {
-    this.$glyphs = this.$('#result-font');
+    var $glyphs = this.$('#result-font'), views = {};
 
-    this.model.glyphs.on('add', this.addGlyph, this);
-  },
+    function add(glyph) {
+      var v = new nodeca.client.fontomas.ui.panes.codes_editor_glyph({model: glyph});
+      views[glyph.cid] = v;
+      $glyphs.append(v.render().el);
+    }
 
+    this.model.each(add);
+    this.model.on('add', add);
 
-  addGlyph: function (glyph) {
-    var view = new nodeca.client.fontomas.ui.panes.codes_editor_glyph({model: glyph});
-    this.$glyphs.append(view.el);
+    this.model.on('remove', function (glyph) {
+      views[glyph.cid].remove();
+      delete views[glyph.cid];
+    });
   }
 });

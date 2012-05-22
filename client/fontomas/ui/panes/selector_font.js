@@ -4,7 +4,6 @@
 
 module.exports = Backbone.View.extend({
   tagName:    "li",
-  events:     {"click .glyph": "onClickGlyph"},
 
 
   initialize: function () {
@@ -29,7 +28,7 @@ module.exports = Backbone.View.extend({
         }
 
         $els.each(function () {
-          self.onClickGlyph({currentTarget: this});
+          $(this).data('model').toggle('selected');
         });
       }
     });
@@ -41,7 +40,7 @@ module.exports = Backbone.View.extend({
     this.$el.html(nodeca.client.fontomas.render('font-item', {
       id:         this.model.id,
       fontname:   this.model.get("font").fullname,
-      css_class:  "font-embedded-" + this.model.get("embedded_id")
+      css_class:  "font-embedded-" + this.model.get("id")
     }));
 
     // render info html
@@ -55,14 +54,9 @@ module.exports = Backbone.View.extend({
     });
 
     // process each glyph
-    _.each(this.model.get("glyphs"), function (item, glyph_id) {
-      var glyph = nodeca.client.fontomas.render('glyph-item', {
-        glyph_id: glyph_id,
-        tags:     (item.search || []).join(' '),
-        unicode:  nodeca.client.fontomas.util.fixedFromCharCode(item.code)
-      });
-
-      this.$(".font-glyphs").append(glyph);
+    this.model.eachGlyph(function (glyph) {
+      var view = new nodeca.client.fontomas.ui.panes.selector_glyph({model: glyph});
+      this.$(".font-glyphs").append(view.render().el);
     }, this);
 
     return this;
@@ -72,30 +66,5 @@ module.exports = Backbone.View.extend({
   remove: function () {
     this.$el.remove();
     this.trigger("remove", this.model);
-  },
-
-
-
-  highlightGlyph: function (glyphId) {
-    this.$('[data-glyph-id="' + glyphId + '"]').addClass('selected');
-  },
-
-
-  onClickGlyph: function (event) {
-    var $target   = $(event.currentTarget),
-        glyph_id  = parseInt($target.attr("data-glyph-id"), 10),
-        data      = this.model.getGlyph(glyph_id),
-        selected;
-
-    data = _.extend(data, {
-      font_id:      this.model.id,
-      glyph_id:     glyph_id,
-      embedded_id:  this.model.get("embedded_id")
-    });
-
-    selected = $target.hasClass("selected");
-    $target.toggleClass("selected", !selected);
-
-    this.trigger("toggleGlyph", data);
   }
 });

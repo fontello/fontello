@@ -1,9 +1,10 @@
-/*global nodeca, _, $, Modernizr*/
+/*global nodeca, _, $, Modernizr, Backbone*/
 
 "use strict";
 
 module.exports = function () {
-  var toolbar, tabs, selector, preview, editor, result_font, presets, $glyphs;
+  var fonts, result, toolbar, tabs, selector, preview, editor;
+
 
   // check browser's capabilities
   if (!Modernizr.fontface) {
@@ -12,19 +13,52 @@ module.exports = function () {
     return;
   }
 
-  result_font = new nodeca.client.fontomas.models.result_font();
-  presets     = new nodeca.client.fontomas.models.presets();
 
-  toolbar   = new nodeca.client.fontomas.ui.toolbar();
-  tabs      = new nodeca.client.fontomas.ui.tabs();
+  //
+  // Models
+  //
 
-  selector  = new nodeca.client.fontomas.ui.panes.selector();
-  preview   = new nodeca.client.fontomas.ui.panes.preview({model: result_font});
-  editor    = new nodeca.client.fontomas.ui.panes.codes_editor({model: result_font});
+
+  // list of all fonts
+  fonts = new (Backbone.Collection.extend({
+    model: nodeca.client.fontomas.models.font
+  }))(nodeca.shared.fontomas.embedded_fonts);
+
+  // special collection of selected glyphs (cache) with
+  // extra model logic (validate, config creation and
+  // download requesting), but which can still be used
+  // as a normal collection for the views
+  result = new nodeca.client.fontomas.models.result;
+
+
+  //
+  // Views (UI)
+  //
+
+
+  toolbar   = new nodeca.client.fontomas.ui.toolbar;
+  tabs      = new nodeca.client.fontomas.ui.tabs;
+  selector  = new nodeca.client.fontomas.ui.panes.selector({model: fonts});
+  preview   = new nodeca.client.fontomas.ui.panes.preview({model: result});
+  editor    = new nodeca.client.fontomas.ui.panes.codes_editor({model: result});
+
+
+  //
+  // Initialization
+  //
+
+
+  fonts.each(function (font) {
+    font.eachGlyph(function (glyph) {
+      glyph.on('change:selected', function (glyph, val) {
+        result[val ? 'add' : 'remove'](glyph);
+      });
+    });
+  });
 
 
   toolbar.on('click:download', function () {
-    result_font.startDownload();
+    result.startDownload();
   });
 
 
@@ -33,56 +67,24 @@ module.exports = function () {
   }, 250));
 
 
+  // perform glyphs search
   toolbar.on('change:search', function (query) {
     var re = new RegExp(query || '', 'i');
-    if (!$glyphs) {
-      $glyphs = $('li.glyph');
-    }
 
-    $glyphs.each(function () {
-      var $this = $(this);
-      $this.toggle(re.test($this.data('tags')));
+    fonts.each(function (font) {
+      font.eachGlyph(function (glyph) {
+        glyph.toggle('hidden', re.test(glyph.keywords));
+      });
     });
   });
 
 
-  // update glypsh count on wizard steps tab
-  result_font.glyphs.on('add remove', function () {
-    var count = result_font.glyphs.length;
+  // update selected glyphs count
+  result.on('add remove', function () {
+    var count = result.length;
 
     toolbar.setGlyphsCount(count);
     tabs.setGlyphsCount(count);
-  });
-
-
-  selector.on('click:glyph', function (data) {
-    var glyph = result_font.getGlyph(data.font_id, data.glyph_id);
-
-    if (glyph) {
-      presets.toggleGlyph(data, false);
-      glyph.destroy();
-      return;
-    }
-
-    presets.toggleGlyph(data, true);
-    result_font.addGlyph(data);
-  });
-
-
-  // init embedded fonts
-  _.each(nodeca.shared.fontomas.embedded_fonts, function (config) {
-    var model = new nodeca.client.fontomas.models.source_font(_.extend({}, config, {
-      embedded_id: config.id
-    }));
-
-    // fill in tolbr with keywords
-    _.each(config.glyphs, function (g) {
-      if (_.isArray(g.search)) {
-        toolbar.addKeywords(g.search);
-      }
-    });
-
-    selector.addFont(model);
   });
 
 
@@ -103,19 +105,4 @@ module.exports = function () {
   nodeca.runtime.sio.on('users_online', function (count) {
     $users_count.text(count);
   });
-
-
-  function load_preset(preset) {
-    // drop all selected glyphs
-    result_font.glyphs.remove(result_font.glyphs.toArray());
-
-    // preselect glyphs
-    _.each(preset.get('selected_glyphs'), function (data) {
-      result_font.addGlyph(data);
-      selector.highlightGlyph(data);
-    });
-  }
-
-  // Activate last changes
-  load_preset(presets.at(0));
 };

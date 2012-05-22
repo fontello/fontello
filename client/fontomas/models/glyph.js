@@ -26,13 +26,14 @@ function is_valid_code(code) {
 
 
 // resets (from source) `name` attribute, if it was provided as null
-function preprocess_attribute(self, attrs, name, options) {
+function preprocess_attribute(source, attrs, name, options) {
   if (null === attrs[name]) {
-    attrs[name] = self.get('source')[name];
+    attrs[name] = source[name];
     // `options = {unset: true}` when `#unset()`
     delete options.unset;
   }
 }
+
 
 module.exports = Backbone.Model.extend({
   defaults: function () {
@@ -41,13 +42,20 @@ module.exports = Backbone.Model.extend({
       source    : null,
       code      : null,
       css       : null,
-      selected  : false
+      selected  : false,
+      hidden    : false
     };
   },
 
 
+  initialize: function (attributes) {
+    var source = attributes.source || {};
+    this.keywords = (source.search || attributes.search || []).join(',');
+  },
+
+
   set: function(key, value, options) {
-    var attrs, attr, val;
+    var attrs, attr, val, source;
 
     if (_.isObject(key) || null === key) {
       attrs = key;
@@ -61,8 +69,9 @@ module.exports = Backbone.Model.extend({
     options = options || {};
 
     // reset code and css to source values if unset
-    //preprocess_attribute(this, attrs, 'code', options);
-    //preprocess_attribute(this, attrs, 'css', options);
+    source = this.get('source') || attrs.source || {};
+    preprocess_attribute(source, attrs, 'code', options);
+    preprocess_attribute(source, attrs, 'css', options);
 
     return Backbone.Model.prototype.set.call(this, attrs, options);
   },
@@ -87,6 +96,15 @@ module.exports = Backbone.Model.extend({
     }
 
     return null;
+  },
+
+
+  toggle: function (key, val) {
+    if (undefined === val) {
+      val = !this.get(key);
+    }
+
+    this.set(key, !!val);
   },
 
 

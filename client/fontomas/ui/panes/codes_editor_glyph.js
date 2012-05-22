@@ -13,12 +13,8 @@ module.exports = Backbone.View.extend({
 
 
   initialize: function () {
-    _.bindAll(this);
-
     this.model.on("change",  this.render, this);
     this.model.on("destroy", this.remove, this);
-
-    this.render();
   },
 
 
@@ -76,20 +72,19 @@ module.exports = Backbone.View.extend({
 
 
   render: function () {
-    var matched,
-        char  = nodeca.client.fontomas.util.fixedFromCharCode(
-                this.model.get("code")),
-        source_glyph = this.model.get("source_glyph"),
-        html = nodeca.client.fontomas.render('resultfont-glyph-item', {
-          top:  this.model.get("code") === 32 ? "space" : char,
-          char: nodeca.client.fontomas.util.fixedFromCharCode(source_glyph.code),
-          bottom:     this.toUnicode(this.model.get("code")),
-          css_class:  "font-embedded-" + source_glyph.embedded_id
-        });
+    var matched, char, source;
 
-    this.$el.html(html);
+    source  = this.model.get('source');
+    char    = nodeca.client.fontomas.util.fixedFromCharCode(this.model.get("code"));
 
-    matched = this.model.get("code") === source_glyph.code;
+    this.$el.html(nodeca.client.fontomas.render('resultfont-glyph-item', {
+      top:        this.model.get("code") === 32 ? "space" : char,
+      char:       nodeca.client.fontomas.util.fixedFromCharCode(source.code),
+      bottom:     this.toUnicode(this.model.get("code")),
+      css_class:  "font-embedded-" + this.model.get('font').get('id')
+    }));
+
+    matched = this.model.get("code") === source.code;
     this.$el.toggleClass("mapping-matched", matched);
 
     return this;
@@ -106,11 +101,5 @@ module.exports = Backbone.View.extend({
   toUnicode: function (code) {
     var c = code.toString(16).toUpperCase();
     return "U+" + "0000".substr(0, Math.max(4 - c.length, 0)) + c;
-  },
-
-
-  remove: function () {
-    this.$el.remove();
-    this.trigger("remove", this);
   }
 });
