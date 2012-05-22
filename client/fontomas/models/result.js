@@ -23,13 +23,72 @@ function start_download(id, url) {
 module.exports = Backbone.Collection.extend({
   initialize: function () {
     this.maxGlyphs = nodeca.config.fontomas.max_glyphs || null;
+    this.usedCodes = {};
+    this.usedCss   = {};
   },
 
 
-  add: function () {
+  add: function (models, options) {
+    models = _.filter(_.isArray(models) ? models.slice() : [models], function (model) {
+      var code = model.get('code'),
+          css  = model.get('css');
+
+      // css already taken
+      if (this.usedCss[css]) {
+        css = this._getFreeCss(css);
+      }
+
+      // code is already taken
+      if (this.usedCodes[code]) {
+        code = this._getFreeCode();
+
+        // no more free codes
+        if (null === code) {
+          // this should never happen in real life.
+          nodeca.client.fontomas.util.notify('error',
+            "Internal Error. Can't allocate code for glyph.");
+          return;
+        }
+      }
+
+      // lock the css & code
+      this.usedCss[css]    = true;
+      this.usedCodes[code] = true;
+
+      model.set('css',  css);
+      model.set('code', code);
+
+      model.on('change:code', this.onChangeGlyphCode, this);
+    }, this);
+
     Backbone.Collection.prototype.add.apply(this, arguments);
     this.validate();
+
     return this;
+  },
+
+
+  remove: function (models, options) {
+    _.each(_.isArray(models) ? models.slice() : [models], function (model) {
+      var code = model.get('code'), css = model.get('css');
+
+      if (!this.usedCodes[code]) {
+        // this should never happen in real life.
+        nodeca.client.fontomas.logger.error(
+          "models.glyphs_collection.remove: code <" + code + "> " +
+          "not found in used_codes map"
+        );
+        return;
+      }
+
+      // unlock the css & code
+      this.usedCss[css]    = false;
+      this.usedCodes[code] = false;
+
+      model.off('change:code', this.onChangeGlyphCode, this);
+    }, this);
+
+    return Backbone.Collection.prototype.remove.apply(this, arguments);
   },
 
 
@@ -124,6 +183,62 @@ module.exports = Backbone.Collection.extend({
 
       poll_status();
     });
+  },
+
+
+  // release/overtake new code by glyph
+  // swaps glyphs if new code is already taken.
+  onChangeGlyphCode: function (model, new_code) {
+    var conflict, old_code = model.previous('code');
+
+    // conflicting glyph
+    conflict = this.find(function (m) {
+      return m !== model && m.get('code') === new_code;
+    });
+
+    if (conflict) {
+      // this will never run an infinitive loop, because other model
+      // is already updated, so there will be no conflict glyph for
+      // this one.
+      conflict.set('code', old_code);
+      return;
+    }
+
+    this.usedCodes[new_code] = true;
+    this.usedCodes[old_code] = !!this.find(function (model) {
+      return old_code === model.get('code');
+    });
+  },
+
+
+  _getFreeCode: function () {
+    var code = nodeca.config.fontomas.autoguess_charcode.min;
+
+    while (code <= nodeca.config.fontomas.autoguess_charcode.max) {
+      if (!this.usedCodes[code]) {
+        // got unused code
+        return code;
+      }
+
+      // try next code
+      code += 1;
+    }
+
+    // can't find empty code.
+    // should never happen in real life.
+    return null;
+  },
+
+
+  _getFreeCss: function (css) {
+    var i = 1, tmp;
+
+    do {
+      tmp = css + '-' + i;
+      i++;
+    } while (!!this.usedCss[tmp]);
+
+    return tmp;
   },
 
 
