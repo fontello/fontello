@@ -25,7 +25,7 @@ module.exports = Backbone.View.extend({
   onClickTop: function (event) {
     var self  = this,
         val   = nodeca.client.fontomas.util.fixedFromCharCode(
-                self.model.get("unicode_code"));
+                self.model.get("code"));
 
     this.$el.addClass("editing-top");
     this.$(".top.edit input")
@@ -36,7 +36,7 @@ module.exports = Backbone.View.extend({
         var code  = nodeca.client.fontomas.util.fixedCharCodeAt(
                     self.$(".top.edit input").val());
 
-        self.model.set("unicode_code", code);
+        self.model.set("code", code);
         self.$el.removeClass("editing-top");
       })
       .on("keyup.fm-editing", function (event) {
@@ -52,7 +52,7 @@ module.exports = Backbone.View.extend({
 
   onClickBottom: function (event) {
     var self  = this,
-        val   = this.model.get("unicode_code").toString(16).toUpperCase();
+        val   = this.model.get("code").toString(16).toUpperCase();
 
     this.$el.addClass("editing-bottom");
     this.$(".bottom.edit input")
@@ -61,7 +61,7 @@ module.exports = Backbone.View.extend({
       .val(val)
       .on("blur.fm-editing", function (event) {
         var code = parseInt(self.$(".bottom.edit input").val(), 16);
-        self.model.set("unicode_code", code);
+        self.model.set("code", code);
         self.$el.removeClass("editing-bottom");
       })
       .on("keyup.fm-editing", function (event) {
@@ -78,18 +78,18 @@ module.exports = Backbone.View.extend({
   render: function () {
     var matched,
         char  = nodeca.client.fontomas.util.fixedFromCharCode(
-                this.model.get("unicode_code")),
+                this.model.get("code")),
         source_glyph = this.model.get("source_glyph"),
         html = nodeca.client.fontomas.render('resultfont-glyph-item', {
-          top:  this.model.get("unicode_code") === 32 ? "space" : char,
+          top:  this.model.get("code") === 32 ? "space" : char,
           char: nodeca.client.fontomas.util.fixedFromCharCode(source_glyph.code),
-          bottom:     this.toUnicode(this.model.get("unicode_code")),
+          bottom:     this.toUnicode(this.model.get("code")),
           css_class:  "font-embedded-" + source_glyph.embedded_id
         });
 
     this.$el.html(html);
 
-    matched = this.model.get("unicode_code") === source_glyph.code;
+    matched = this.model.get("code") === source_glyph.code;
     this.$el.toggleClass("mapping-matched", matched);
 
     return this;
