@@ -45,7 +45,8 @@ on [github](https://github.com/fontello/).
 - Roman Shmelev ([shmelev](https://github.com/shmelev))
 - Vitaly Puzrin ([puzrin](https://github.com/puzrin)).
   [Follow](https://twitter.com/puzrin) on twitter.
-- Alexey Zapparov ([ixti](https://github.com/ixti))
+- Aleksey Zapparov ([ixti](https://github.com/ixti)).
+  Follow [@zapparov](https://twitter.com/zapparov) on twitter.
 
 
 ## License

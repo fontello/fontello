@@ -54,6 +54,7 @@ module.exports = function () {
     tabs.setGlyphsCount(count);
   });
 
+
   selector.on('click:glyph', function (data) {
     var glyph = result_font.getGlyph(data.font_id, data.glyph_id);
 
@@ -66,6 +67,7 @@ module.exports = function () {
     presets.toggleGlyph(data, true);
     result_font.addGlyph(data);
   });
+
 
   // init embedded fonts
   _.each(nodeca.shared.fontomas.embedded_fonts, function (config) {
@@ -83,15 +85,18 @@ module.exports = function () {
     selector.addFont(model);
   });
 
-  //
+
   // show selector tab after  load complete
   tabs.activate('#selector');
+
 
   // Attach tooltip handler to matching elements
   $('._tip').tooltip();
 
+
   // Attach collapse handler to matching elements
   $('._collapser').ndCollapser();
+
 
   // live update of amount of online clients
   var $users_count = $('#stats-online');
