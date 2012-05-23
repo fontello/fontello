@@ -1,4 +1,4 @@
-/*global nodeca, _, $, Modernizr, Backbone*/
+/*global nodeca, _, $, Modernizr, Backbone, window*/
 
 "use strict";
 
@@ -135,23 +135,29 @@ module.exports = function () {
 
 
   function load_preset(preset) {
-    var data = preset.get('data') || {};
+    var data = preset.get('data');
 
-    fonts.each(function (f) {
-      f.eachGlyph(function (g) {
-        _.each(data.selected, function (s) {
-          if (s.font_id === f.get('id') && s.glyph_id === g.cid) {
-            g.toggle('selected');
-          }
-        });
+    if (!data) {
+      return;
+    }
 
-        _.each(data.changes, function (c) {
-          if (c.font_id === f.get('id') && c.glyph_id === g.cid) {
-            g.set({
-              code: c.code,
-              css:  c.css
-            });
-          }
+    if (data.version !== nodeca.runtime.version) {
+      preset.destroy();
+      nodeca.client.fontomas.util.notify('alert',
+        'Presets were saved in an older version of fontello.');
+      return;
+    }
+
+    $('#result-fontname').val(data.name);
+
+    _.each(data.fonts, function (font_data, font_id) {
+      var f = fonts.get(font_id);
+
+      _.each(font_data.glyphs, function (glyph_data) {
+        f.getGlyph(glyph_data).set({
+          selected: glyph_data.selected,
+          code:     glyph_data.code,
+          css:      glyph_data.css,
         });
       });
     });
@@ -159,26 +165,25 @@ module.exports = function () {
 
   function save_preset(preset) {
     var data = {
-      collapsed: [], // not implemented yet
-      selected:  [],
-      changes:   []
+      version:  nodeca.runtime.version,
+      name:     $('#result-fontname').val(),
+      fonts:    {}
     };
 
     fonts.each(function (f) {
-      f.eachGlyph(function (g) {
-        if (g.get('selected')) {
-          data.selected.push({
-            font_id: f.get('id'),
-            glyph_id: g.cid
-          });
-        }
+      var font_data = data.fonts[f.get('id')] = {
+        collapsed:  f.get('collapsed'),
+        glyphs:     []
+      };
 
-        if (g.isModified()) {
-          data.changes.push({
-            font_id: f.get('id'),
-            glyph_id: g.cid,
-            code: g.get('code'),
-            css: g.get('css')
+      f.eachGlyph(function (g) {
+        if (g.get('selected') || g.isModified()) {
+          font_data.glyphs.push({
+            uid:      g.get('uid'),
+            cid:      g.cid,
+            selected: g.get('selected'),
+            code:     g.get('code'),
+            css:      g.get('css')
           });
         }
       });
@@ -193,6 +198,11 @@ module.exports = function () {
   }, 1000);
 
 
+  // save current state upon fontname change
+  $('#result-fontname').change(save_current_state);
+
+
+  // change current state when some of glyph properties were changed
   fonts.each(function (f) {
     f.eachGlyph(function (g) {
       g.on('change:selected change:code change:css', save_current_state);
@@ -201,4 +211,11 @@ module.exports = function () {
 
 
   load_preset(presets.at(0));
+
+
+  if ('development' === nodeca.runtime.env) {
+    // export some internal collections for debugging
+    window.fontello_fonts   = fonts;
+    window.fontello_result  = result;
+  }
 };
