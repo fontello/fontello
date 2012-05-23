@@ -47,9 +47,12 @@ module.exports = Backbone.Model.extend({
   },
 
 
+  idAttribute: 'uid',
+
+
   initialize: function (attributes) {
-    var source = attributes.source || {};
-    this.keywords = (source.search || attributes.search || []).join(' ');
+    var tags = (attributes.source || {}).search || attributes.search || [];
+    this.keywords = tags.join(' ');
   },
 
 

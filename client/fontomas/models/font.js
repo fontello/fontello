@@ -41,6 +41,21 @@ module.exports = Backbone.Model.extend({
   },
 
 
+  getGlyph: function (criteria) {
+    var g;
+
+    if (criteria.uid) {
+      g = this._glyphs.get(criteria.uid);
+    }
+
+    if (!g && criteria.cid) {
+      g = this._glyphs.getByCid(criteria.cid);
+    }
+
+    return g;
+  },
+
+
   // Stub to prevent Backbone from reading or saving the model to the server.
   // Backbone calls `Backbone.sync()` function (on fetch/save/destroy)
   // if model doesn't have own `sync()` method.
