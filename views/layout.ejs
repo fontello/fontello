@@ -46,9 +46,27 @@
       <!-- top toolbar/tabs -->
       <div class="container toolbar">
         <div id="toolbar" class="btn-toolbar">
+          <div class="btn-group search-form">
+            <input id="search" class="input-medium search-query" type="text" placeholder="search" autocomplete="off">
+          </div>
           <div class="btn-group">
+            <div id="glyph-size-slider"></div>
+            <div id="glyph-size-value"><%= config('fontomas.glyph_size.val') %>px</div>
+          </div>
+
+          <div class="btn-group pull-right">
+            <a id="result-download" class="btn btn-info disabled">
+              Download your font pack (<span id="selected-glyphs-count">0</span>)
+            </a>
+          </div>
+
+          <div class="btn-group pull-right">
+            <input class="input-medium" type="text" placeholder="file name" autocomplete="off">
+          </div>
+
+          <div class="btn-group pull-right">
             <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-              Clear
+              clear
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
@@ -58,20 +76,6 @@
             </ul>
           </div>
 
-          <div class="btn-group">
-            <div id="glyph-size-slider"></div>
-            <div id="glyph-size-value"><%= config('fontomas.glyph_size.val') %>px</div>
-          </div>
-
-          <div class="btn-group search-form">
-            <input id="search" class="input-medium search-query" type="text" placeholder="Search" autocomplete="off">
-          </div>
-
-          <div class="btn-group pull-right">
-            <a id="result-download" class="btn btn-info disabled">
-              Download your font pack (<span id="selected-glyphs-count">0</span>)
-            </a>
-          </div>
         </div>
 
         <ul id="tabs" class="nav nav-tabs">
