@@ -3,7 +3,7 @@
 "use strict";
 
 module.exports = function () {
-  var fonts, result, toolbar, tabs, selector, preview, editor;
+  var fonts, result, presets, toolbar, tabs, selector, preview, editor;
 
 
   // check browser's capabilities
@@ -29,6 +29,9 @@ module.exports = function () {
   // download requesting), but which can still be used
   // as a normal collection for the views
   result = new nodeca.client.fontomas.models.result;
+
+  // Dummy colection that saves itself into localStorage
+  presets = new nodeca.client.fontomas.models.presets;
 
 
   //
@@ -123,4 +126,73 @@ module.exports = function () {
   nodeca.runtime.sio.on('users_online', function (count) {
     $users_count.text(count);
   });
+
+
+  function load_preset(preset) {
+    var data = preset.get('data') || {};
+
+    fonts.each(function (f) {
+      f.eachGlyph(function (g) {
+        _.each(data.selected, function (s) {
+          if (s.font_id === f.get('id') && s.glyph_id === g.cid) {
+            g.toggle('selected');
+          }
+        });
+
+        _.each(data.changes, function (c) {
+          if (c.font_id === f.get('id') && c.glyph_id === g.cid) {
+            g.set({
+              code: c.code,
+              css:  c.css
+            });
+          }
+        });
+      });
+    });
+  }
+
+  function save_preset(preset) {
+    var data = {
+      collapsed: [], // not implemented yet
+      selected:  [],
+      changes:   []
+    };
+
+    fonts.each(function (f) {
+      f.eachGlyph(function (g) {
+        if (g.get('selected')) {
+          data.selected.push({
+            font_id: f.get('id'),
+            glyph_id: g.cid
+          });
+        }
+
+        if (g.isModified()) {
+          data.changes.push({
+            font_id: f.get('id'),
+            glyph_id: g.cid,
+            code: g.get('code'),
+            css: g.get('css')
+          });
+        }
+      });
+    });
+
+    preset.set('data', data).save();
+  }
+
+
+  var save_current_state = _.throttle(function () {
+    save_preset(presets.at(0));
+  }, 1000);
+
+
+  fonts.each(function (f) {
+    f.eachGlyph(function (g) {
+      g.on('change:selected change:code change:css', save_current_state);
+    });
+  });
+
+
+  load_preset(presets.at(0));
 };

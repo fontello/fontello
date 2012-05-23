@@ -7,11 +7,8 @@
 var Preset = Backbone.Model.extend({
   defaults: function () {
     return {
-      name:             'Untitled',
-      collapsed:        [],
-      selected_glyphs:  [],
-      glyph_changes:    [],
-      user_fonts:       []
+      name: 'Untitled',
+      data: null
     };
   }
 });
@@ -35,28 +32,7 @@ module.exports = Backbone.Collection.extend({
   },
 
 
-  toggleGlyph: function (data, state) {
-    var glyphs = this.$current.get('selected_glyphs');
-
-    if (state) {
-      glyphs = _.union(glyphs, [data]);
-    } else {
-      glyphs = _.filter(glyphs, function (glyph) {
-        return !_.isEqual(glyph, data);
-      });
-    }
-    this.$current.set('selected_glyphs', glyphs);
-    this.$current.save();
-  },
-
-
   save: function (name) {
-    var attribs = _.extend(this.$current.toJSON(), {
-      id:     null,
-      name:   name
-    });
-
-    delete attribs.id;
-    this.create(attribs);
+    return this.create({name: name, data: this.get('data')});
   }
 });

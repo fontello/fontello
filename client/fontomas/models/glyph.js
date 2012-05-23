@@ -78,7 +78,7 @@ module.exports = Backbone.Model.extend({
 
   isModified: function isModified() {
     var source    = this.get('source'),
-        modified  = this.get('selected');
+        modified  = false;
 
     modified = modified || this.get('code') !== source.code;
     modified = modified || this.get('css') !== source.css;
