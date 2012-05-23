@@ -3,7 +3,7 @@
 "use strict";
 
 module.exports = function () {
-  var fonts, result, presets, toolbar, tabs, selector, preview, editor;
+  var fonts, result, toolbar, tabs, selector, preview, editor;
 
 
   // check browser's capabilities
@@ -29,9 +29,6 @@ module.exports = function () {
   // download requesting), but which can still be used
   // as a normal collection for the views
   result = new nodeca.client.fontomas.models.result;
-
-  // Dummy colection that saves itself into localStorage
-  presets = new nodeca.client.fontomas.models.presets;
 
 
   //
@@ -134,6 +131,29 @@ module.exports = function () {
   });
 
 
+  //
+  // Presets
+  //
+
+
+  // Dummy colection that saves itself into localStorage
+  var presets = new nodeca.client.fontomas.models.presets;
+
+
+
+  // data of each preset is:
+  //
+  //  version:      (String)  version of fontello, created preset
+  //  name:         (String)  fontname of the preset
+  //  fonts:        (Object)  configuration of fonts
+  //    collapsed:  (Boolean) whenever font is collapsed or not
+  //    glyphs:     (Array)   list of modified glyphs
+  //      - uid:    (String)
+  //      - cid:    (String)
+  //      - code:   (Number)
+  //      - css:    (String)
+
+
   function load_preset(preset) {
     var data = preset.get('data');
 
@@ -150,15 +170,29 @@ module.exports = function () {
 
     $('#result-fontname').val(data.name);
 
-    _.each(data.fonts, function (font_data, font_id) {
-      var f = fonts.get(font_id);
+    fonts.each(function (font) {
+      var font_data = data.fonts[font.get('id')];
 
-      _.each(font_data.glyphs, function (glyph_data) {
-        f.getGlyph(glyph_data).set({
-          selected: glyph_data.selected,
-          code:     glyph_data.code,
-          css:      glyph_data.css,
+      // reset glyphs
+      font.eachGlyph(function (glyph) {
+        glyph.set({
+          selected: false,
+          code:     null,
+          css:      null
         });
+      });
+
+      // update modified glyphs
+      _.each(font_data.glyphs, function (glyph_data) {
+        var glyph = font.getGlyph(glyph_data);
+
+        if (glyph) {
+          glyph.set({
+            selected: glyph_data.selected,
+            code:     glyph_data.code,
+            css:      glyph_data.css,
+          });
+        }
       });
     });
   }
