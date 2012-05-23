@@ -6,15 +6,13 @@
 //= require bootstrap/bootstrap
 //= require underscore
 //= require backbone
+//= require backbone.localStorage
 //= require handlebars
 //= require jquery.collapser
 //= require nodeca
 //= require fontomas/api
 
-;(function () {
+$(function () {
   "use strict";
-
-  $(function () {
-    nodeca.client.fontomas.init();
-  });
-}());
+  nodeca.client.fontomas.init();
+});

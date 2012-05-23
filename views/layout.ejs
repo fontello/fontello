@@ -46,13 +46,12 @@
       <!-- top toolbar/tabs -->
       <div class="container toolbar">
         <div id="toolbar" class="btn-toolbar">
+          <div class="btn-group search-form">
+            <input id="search" class="input-medium search-query" type="text" placeholder="search" autocomplete="off">
+          </div>
           <div class="btn-group">
             <div id="glyph-size-slider"></div>
             <div id="glyph-size-value"><%= config('fontomas.glyph_size.val') %>px</div>
-          </div>
-
-          <div class="btn-group search-form">
-            <input id="search" class="input-medium search-query" type="text" placeholder="Search" autocomplete="off">
           </div>
 
           <div class="btn-group pull-right">
@@ -60,6 +59,23 @@
               Download your font pack (<span id="selected-glyphs-count">0</span>)
             </a>
           </div>
+
+          <div class="btn-group pull-right">
+            <input id="result-fontname" class="input-medium _tip" type="text" placeholder="file name" autocomplete="off"
+             title="Font file swill have this name. Use only small 'a'-'z' letters, '-' and '_'" data-placement="bottom">
+          </div>
+
+          <div class="btn-group pull-right">
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+              clear
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a data-fontello-reset="glyphs" href="#">Unselect glyphs</a></li>
+              <li><a data-fontello-reset="all" href="#">Reset all changes</a></li>
+            </ul>
+          </div>
+
         </div>
 
         <ul id="tabs" class="nav nav-tabs">
@@ -200,9 +216,6 @@
         <a class="src-font-name _collapser" href="#">{{fontname}}</a>
       </h2>
       <ul class="unstyled font-glyphs {{css_class}}"></ul>
-    </script>
-    <script data-tpl-id="glyph-item" type="text/x-template">
-      <li class="glyph" data-glyph-id="{{glyph_id}}" data-tags="{{tags}}">{{{unicode}}}</li>
     </script>
     <script data-tpl-id="preview:glyph" type="text/x-template">
       <span class="{{fnt}}">{{chr}}</span> {{css}}

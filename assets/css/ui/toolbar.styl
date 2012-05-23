@@ -9,18 +9,21 @@
   background-color #fff
 
 //== Fix search vertical offset
-.btn-group .search-query
+.btn-group input
   float left
+  margin-bottom 0
 
-//== Dirty fix typeahead z-index, to be over static container
+//== Dirty fix typeahead & tooltip z-index, to be over static container
 .typeahead.dropdown-menu
+.tooltip
   z-index 1050
 
 #glyph-size-slider
-  width: 150px
+  width: 100px
   display inline-block
   float: left
   margin-top 11px
+  margin-left .5em
 
 #glyph-size-value
   display inline-block
