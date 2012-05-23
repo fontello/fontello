@@ -101,6 +101,23 @@ module.exports = function () {
   $('._collapser').ndCollapser();
 
 
+  // Initialize clear button
+  $('[data-fontello-reset]').click(function () {
+    var scope = $(this).data('fontello-reset');
+
+    fonts.each(function (f) {
+      f.eachGlyph(function (g) {
+        g.toggle('selected', false);
+
+        if ('all' === scope) {
+          g.unset('code');
+          g.unset('css');
+        }
+      });
+    });
+  });
+
+
   // live update of amount of online clients
   var $users_count = $('#stats-online');
   nodeca.runtime.sio.on('users_online', function (count) {
