@@ -38,7 +38,7 @@ var CONFIG              = nodeca.config.fontomas;
 
 // return font configuration
 var font_configs = null;
-function get_font(name) {
+function get_embedded_font(name) {
   if (null === font_configs) {
     font_configs = {};
     nodeca.shared.fontomas.embedded_fonts.forEach(function (config) {
@@ -50,16 +50,33 @@ function get_font(name) {
 }
 
 
+var source_fonts;
+function get_source_fonts() {
+  var fonts_dir;
+
+  if (!source_fonts) {
+    source_fonts  = {};
+    fonts_dir     = path.join(APP_ROOT, 'assets/embedded_fonts');
+
+    _.each(get_embedded_font(), function (config, name) {
+      source_fonts[name] = path.join(fonts_dir, name + '.ttf');
+    });
+  }
+
+  return source_fonts;
+}
+
+
 // return valid glyphs configuration
 function get_glyphs_config(params) {
   var glyphs = [];
 
-  if (!_.isObject(params) || !_.isArray(params.glyphs)) {
-    return null;
+  if (!_.isArray(params.glyphs)) {
+    return glyphs;
   }
 
   _.each(params.glyphs, function (g) {
-    var font = get_font(g.src), glyph;
+    var font = get_embedded_font(g.src), glyph;
 
     if (!font) {
       // unknown glyph source font
@@ -93,12 +110,73 @@ function get_glyphs_config(params) {
 }
 
 
+function format_timestring(d) {
+  function pad(n) {
+    return n < 10 ? ('0' + n) : n;
+  }
+
+  return  d.getUTCFullYear() + pad(d.getUTCMonth()+1) + pad(d.getUTCDate()) +
+          pad(d.getUTCHours()) + pad(d.getUTCMinutes()) + pad(d.getUTCSeconds());
+}
+
+
+function format_font_fullname(name) {
+  var parts = [];
+
+  name.toLowerCase().split(/[\-_]/).forEach(function (p) {
+    if (p) {
+      parts.push(p.substr(0, 1).toUpperCase() + p.substr(1));
+    }
+  });
+
+  return parts.join(' ');
+}
+
+
+function filter_fontname(str) {
+  str = _.isString(str) ? str : '';
+  return str.replace(/[^a-z0-9\-_]+/g, '-').trimLeft().trimRight();
+}
+
+
+function get_font_config(params) {
+  var glyphs_config, timestamp, fontname;
+
+  if (!_.isObject(params)) {
+    return null;
+  }
+
+  glyphs_config = get_glyphs_config(params);
+  timestamp     = format_timestring(new Date);
+  fontname      = filter_fontname(params.name) || ('fontello-' + timestamp);
+
+  return {
+    font: {
+      version:    timestamp,
+      fontname:   fontname.toLowerCase(),
+      fullname:   format_font_fullname(fontname),
+      familyname: format_font_fullname(fontname).split(' ').shift(),
+      copyright:  "Copyright (C) 2012 by original authors @ fontello.com",
+      ascent:     800,
+      descent:    200,
+      weight:     "Medium"
+    },
+    meta: {
+      columns: 4,
+      css_prefix: 'icon-',
+    },
+    glyphs:     glyphs_config,
+    src_fonts:  get_source_fonts()
+  };
+}
+
+
 // returns unique ID for requested list of glyphs
-function get_download_id(glyphs) {
+function get_download_id(font) {
   var hash = crypto.createHash('md5');
 
   hash.update('fontello' + nodeca.runtime.version);
-  hash.update(JSON.stringify(glyphs));
+  hash.update(JSON.stringify(font));
 
   return hash.digest('hex');
 }
@@ -146,35 +224,16 @@ function get_job(font_id, callback) {
 }
 
 
-var source_fonts;
-function get_source_fonts() {
-  var fonts_dir;
-
-  if (!source_fonts) {
-    source_fonts  = {};
-    fonts_dir     = path.join(APP_ROOT, 'assets/embedded_fonts');
-
-    _.each(get_font(), function (config, name) {
-      source_fonts[name] = path.join(fonts_dir, name + '.ttf');
-    });
-  }
-
-  return source_fonts;
-}
-
-
 // define queue and jobs
 var job_mgr = new (neuron.JobManager)();
 job_mgr.addJob('generate-font', {
   dirname: '/tmp',
   concurrency: (CONFIG.builder_concurrency || os.cpus().length),
-  work: function (font_id, glyphs, user) {
+  work: function (font_id, config, user) {
     var self        = this,
-        fontname    = "fontello-" + font_id.substr(0, 8),
         tmp_dir     = path.join(TMP_DIR, "fontello-" + font_id),
         zipball     = path.join(DOWNLOAD_DIR, get_download_path(font_id)),
-        times       = [jobs[font_id].start],
-        config;
+        times       = [jobs[font_id].start];
 
     // FIXME: after server restart this might become "undefined"
     //
@@ -188,7 +247,8 @@ job_mgr.addJob('generate-font', {
 
       nodeca.logger.error("Unexpected absence of job.\n" + JSON.stringify({
         font_id:  font_id,
-        glyphs:   glyphs,
+        fontname: config.font.fontname,
+        glyphs:   config.glyphs,
         user:     user
       }));
     }
@@ -196,31 +256,11 @@ job_mgr.addJob('generate-font', {
     // push timer checkpoint
     times.push(Date.now());
 
-    // generate font config
-    config = JSON.stringify({
-      font: {
-        version:    "1.0-" + font_id,
-        fontname:   fontname,
-        fullname:   "Fontello " + font_id.substr(0, 8),
-        familyname: "Fontello",
-        copyright:  "Copyright (C) 2012 by original authors @ fontello.com",
-        ascent:     800,
-        descent:    200,
-        weight:     "Medium"
-      },
-      meta: {
-        columns: 4,
-        css_prefix: 'icon-',
-      },
-      glyphs: glyphs,
-      src_fonts: get_source_fonts()
-    });
-
     async.series([
       async.apply(fstools.remove, tmp_dir),
       async.apply(fstools.mkdir, tmp_dir),
-      async.apply(fs.writeFile, path.join(tmp_dir, 'config.json'), config, 'utf8'),
-      async.apply(execFile, GENERATOR_BIN, [fontname, tmp_dir, zipball], {cwd: APP_ROOT}),
+      async.apply(fs.writeFile, path.join(tmp_dir, 'config.json'), JSON.stringify(config), 'utf8'),
+      async.apply(execFile, GENERATOR_BIN, [config.font.fontname, tmp_dir, zipball], {cwd: APP_ROOT}),
       async.apply(fstools.remove, tmp_dir)
     ], function (err) {
       if (err) {
@@ -243,7 +283,7 @@ job_mgr.addJob('generate-font', {
                          "(real: " + ((times[1] - times[0]) / 1000) + "ms)");
 
       stats.push({
-        glyphs: glyphs.length,
+        glyphs: config.glyphs.length,
         time:   (times[2] - times[0]) / 1000,
         user:   user
       });
@@ -300,15 +340,15 @@ module.exports.status = function (params, callback) {
 
 // request font generation
 module.exports.generate = function (params, callback) {
-  var self = this, glyphs = get_glyphs_config(params), font_id, user, errmsg;
+  var self = this, font = get_font_config(params), font_id, user, errmsg;
 
-  if (!glyphs || 0 >= glyphs.length) {
+  if (!font || 0 >= font.glyphs.length) {
     callback("Invalid request");
     return;
   }
 
-  if (CONFIG.max_glyphs && CONFIG.max_glyphs < glyphs.length) {
-    errmsg = 'Too many icons requested: ' + glyphs.length +
+  if (CONFIG.max_glyphs && CONFIG.max_glyphs < font.glyphs.length) {
+    errmsg = 'Too many icons requested: ' + font.glyphs.length +
              ' of ' + CONFIG.max_glyphs + ' allowed.';
 
     this.response.error = {
@@ -321,7 +361,7 @@ module.exports.generate = function (params, callback) {
     return;
   }
 
-  font_id = get_download_id(glyphs);
+  font_id = get_download_id(font);
   user    = this.__raw__.socket.handshake.address.address;
 
   get_job(font_id, function (job) {
@@ -330,7 +370,7 @@ module.exports.generate = function (params, callback) {
       job = jobs[font_id] = {
         start:      Date.now(),
         status:     'enqueued',
-        worker_id:  job_mgr.enqueue('generate-font', font_id, glyphs, user)
+        worker_id:  job_mgr.enqueue('generate-font', font_id, font, user)
       };
     }
 

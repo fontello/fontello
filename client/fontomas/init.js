@@ -59,7 +59,7 @@ module.exports = function () {
 
 
   toolbar.on('click:download', function () {
-    result.startDownload();
+    result.startDownload($('#result-fontname').val());
   });
 
 

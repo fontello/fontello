@@ -104,8 +104,8 @@ module.exports = Backbone.Collection.extend({
   },
 
 
-  getConfig: function () {
-    var config = {glyphs: []};
+  getConfig: function (name) {
+    var config = {name: $.trim(name), glyphs: []};
 
     this.each(function (glyph) {
       config.glyphs.push({
@@ -120,12 +120,12 @@ module.exports = Backbone.Collection.extend({
   },
 
 
-  startDownload: function () {
+  startDownload: function (name) {
     if (!this.validate()) {
       return;
     }
 
-    nodeca.server.fontomas.font.generate(this.getConfig(), function (err, msg) {
+    nodeca.server.fontomas.font.generate(this.getConfig(name), function (err, msg) {
       var font_id = msg.data.id;
 
       if (err) {
