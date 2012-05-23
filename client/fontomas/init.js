@@ -105,7 +105,7 @@ module.exports = function () {
 
 
   // Initialize clear button
-  $('[data-fontello-reset]').click(function () {
+  $('[data-fontello-reset]').click(function (event) {
     var scope = $(this).data('fontello-reset');
 
     fonts.each(function (f) {
@@ -118,6 +118,12 @@ module.exports = function () {
         }
       });
     });
+
+    // switch to selctor pane
+    tabs.activate('#selector');
+
+    // do not change location
+    event.preventDefault();
   });
 
 
