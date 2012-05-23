@@ -101,10 +101,12 @@ module.exports = function () {
   $('._collapser').ndCollapser();
 
 
+  //
   // Initialize clear button
-  $('[data-fontello-reset]').click(function (event) {
-    var scope = $(this).data('fontello-reset');
+  //
 
+
+  function reset_app(scope) {
     fonts.each(function (f) {
       f.eachGlyph(function (g) {
         g.toggle('selected', false);
@@ -118,13 +120,28 @@ module.exports = function () {
 
     // switch to selctor pane
     tabs.activate('#selector');
+  }
 
+
+  $('#reset-app-selections').click(function (event) {
     // do not change location
     event.preventDefault();
+    reset_app('selections');
   });
 
 
+  $('#reset-app-all').click(function (event) {
+    // do not change location
+    event.preventDefault();
+    reset_app('all');
+  });
+
+
+  //
   // live update of amount of online clients
+  //
+
+
   var $users_count = $('#stats-online');
   nodeca.runtime.sio.on('users_online', function (count) {
     $users_count.text(count);
