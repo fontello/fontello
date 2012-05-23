@@ -171,9 +171,10 @@ module.exports = function () {
   //    glyphs:     (Array)   list of modified and/or selected glyphs
   //      - uid:        (String) Glyph unique id
   //      - orig_code:  (Number) Glyph original (from the font source) code
+  //      - orig_css:   (Number) Glyph original (from the font source) css
   //      - code:       (Number) User defined code
   //      - css:        (String) User defined css name
-  //      - svg:        (String)
+  //      - svg:        *RESERVED FOR FUTURE USE*
 
 
   function load_session(session) {
