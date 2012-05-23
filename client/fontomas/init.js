@@ -50,6 +50,7 @@ module.exports = function () {
 
   fonts.each(function (font) {
     font.eachGlyph(function (glyph) {
+      toolbar.addKeywords(glyph.get('source').search || []);
       glyph.on('change:selected', function (glyph, val) {
         result[val ? 'add' : 'remove'](glyph);
       });
@@ -68,14 +69,14 @@ module.exports = function () {
 
 
   // perform glyphs search
-  toolbar.on('change:search', function (query) {
-    var re = new RegExp(query || '', 'i');
+  var $glyphs = $('.glyph');
+  toolbar.on('change:search', function (q) {
+    q = String(q);
 
-    fonts.each(function (font) {
-      font.eachGlyph(function (glyph) {
-        glyph.toggle('hidden', re.test(glyph.keywords));
-      });
-    });
+    $glyphs.hide().filter(function () {
+      var model = $(this).data('model');
+      return model && 0 <= model.keywords.indexOf(q);
+    }).show();
   });
 
 

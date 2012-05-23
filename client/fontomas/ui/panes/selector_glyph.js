@@ -28,10 +28,6 @@ module.exports = Backbone.View.extend({
     // Listen to the model changes
     //
 
-    this.model.on('change:hidden', function (g, v) {
-      self.$el.toggle(v);
-    });
-
     this.model.on('change:selected', function (g, v) {
       self.$el.toggleClass('selected', v);
     });
