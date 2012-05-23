@@ -20,10 +20,10 @@
 
   <% if ('development' === env()) { %>
     nodeca.logger = {
-      assert : _.bind(console.assert || console.debug || console.log, console),
-      error  : _.bind(console.error || console.log, console),
-      info   : _.bind(console.info || console.log, console),
-      debug  : _.bind(console.debug || console.log, console)
+      assert : _.bind(console.assert || console.debug || console.log || $.noop, console),
+      error  : _.bind(console.error || console.log || $.noop, console),
+      info   : _.bind(console.info || console.log || $.noop, console),
+      debug  : _.bind(console.debug || console.log || $.noop, console)
     };
   <% } else { %>
     nodeca.logger = {

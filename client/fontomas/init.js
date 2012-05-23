@@ -122,13 +122,11 @@ module.exports = function () {
     tabs.activate('#selector');
   }
 
-
   $('#reset-app-selections').click(function (event) {
     // do not change location
     event.preventDefault();
     reset_app('selections');
   });
-
 
   $('#reset-app-all').click(function (event) {
     // do not change location
@@ -149,39 +147,45 @@ module.exports = function () {
 
 
   //
-  // Presets
+  // Sessions
   //
 
 
   // Dummy colection that saves itself into localStorage
-  var presets = new nodeca.client.fontomas.models.presets;
+  var sessions = new nodeca.client.fontomas.models.sessions;
+
+
+  // Serialization spec version
+  var SERIALIZER_VERSION = 1;
 
 
 
-  // data of each preset is:
+  // data of each session is:
   //
-  //  version:      (String)  version of fontello, created preset
+  //  version:      (Number)  version of serilalization
   //  name:         (String)  fontname of the preset
   //  fonts:        (Object)  configuration of fonts
   //    collapsed:  (Boolean) whenever font is collapsed or not
-  //    glyphs:     (Array)   list of modified glyphs
-  //      - uid:    (String)
-  //      - cid:    (String)
-  //      - code:   (Number)
-  //      - css:    (String)
+  //    glyphs:     (Array)   list of modified and/or selected glyphs
+  //      - uid:        (String) Glyph unique id
+  //      - orig_code:  (Number) Glyph original (from the font source) code
+  //      - orig_css:   (Number) Glyph original (from the font source) css
+  //      - code:       (Number) User defined code
+  //      - css:        (String) User defined css name
+  //      - svg:        *RESERVED FOR FUTURE USE*
 
 
-  function load_preset(preset) {
-    var data = preset.get('data');
+  function load_session(session) {
+    var data = session.get('data');
 
     if (!data) {
       return;
     }
 
-    if (data.version !== nodeca.runtime.version) {
-      preset.destroy();
+    if (data.version !== SERIALIZER_VERSION) {
+      session.destroy();
       nodeca.client.fontomas.util.notify('alert',
-        'Presets were saved in an older version of fontello.');
+        'Session was saved with an older version, so it cannot be loaded.');
       return;
     }
 
@@ -201,7 +205,11 @@ module.exports = function () {
 
       // update modified glyphs
       _.each(font_data.glyphs, function (glyph_data) {
-        var glyph = font.getGlyph(glyph_data);
+        var glyph = font.getGlyph({
+          uid:  glyph_data.uid,
+          code: glyph_data.orig_code,
+          css:  glyph_data.orig_css
+        });
 
         if (glyph) {
           glyph.set({
@@ -214,9 +222,9 @@ module.exports = function () {
     });
   }
 
-  function save_preset(preset) {
+  function save_session(session) {
     var data = {
-      version:  nodeca.runtime.version,
+      version:  SERIALIZER_VERSION,
       name:     $('#result-fontname').val(),
       fonts:    {}
     };
@@ -228,24 +236,27 @@ module.exports = function () {
       };
 
       f.eachGlyph(function (g) {
+        // save only selected and/or modified glyphs to
+        // reduce amount of used space in the storage
         if (g.get('selected') || g.isModified()) {
           font_data.glyphs.push({
-            uid:      g.get('uid'),
-            cid:      g.cid,
-            selected: g.get('selected'),
-            code:     g.get('code'),
-            css:      g.get('css')
+            uid:        g.get('uid'),
+            orig_code:  g.get('source').code,
+            orig_css:   g.get('source').css,
+            selected:   g.get('selected'),
+            code:       g.get('code'),
+            css:        g.get('css')
           });
         }
       });
     });
 
-    preset.set('data', data).save();
+    session.set('data', data).save();
   }
 
 
   var save_current_state = _.throttle(function () {
-    save_preset(presets.at(0));
+    save_session(sessions.at(0));
   }, 1000);
 
 
@@ -261,7 +272,7 @@ module.exports = function () {
   });
 
 
-  load_preset(presets.at(0));
+  load_session(sessions.at(0));
 
 
   if ('development' === nodeca.runtime.env) {
