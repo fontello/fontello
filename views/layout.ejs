@@ -47,6 +47,18 @@
       <div class="container toolbar">
         <div id="toolbar" class="btn-toolbar">
           <div class="btn-group">
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+              Clear
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Unselect glyphs</a></li>
+              <!--<li class="divider"></li>-->
+              <li><a href="#">Reset all changes</a></li>
+            </ul>
+          </div>
+
+          <div class="btn-group">
             <div id="glyph-size-slider"></div>
             <div id="glyph-size-value"><%= config('fontomas.glyph_size.val') %>px</div>
           </div>
