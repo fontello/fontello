@@ -74,7 +74,7 @@ module.exports = Backbone.Collection.extend({
 
       if (!this.usedCodes[code]) {
         // this should never happen in real life.
-        nodeca.client.fontomas.logger.error(
+        nodeca.logger.error(
           "models.glyphs_collection.remove: code <" + code + "> " +
           "not found in used_codes map"
         );

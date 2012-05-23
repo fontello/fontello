@@ -16,12 +16,11 @@
   };
 
   <% if ('development' === env()) { %>
-    nodeca.logger = console;
     nodeca.logger = {
-      assert : console.assert || console.debug || console.log,
-      error  : console.error || console.log,
-      info   : console.info || console.log,
-      debug  : console.debug || console.log
+      assert : _.bind(console.assert || console.debug || console.log, console),
+      error  : _.bind(console.error || console.log, console),
+      info   : _.bind(console.info || console.log, console),
+      debug  : _.bind(console.debug || console.log, console)
     };
   <% } else { %>
     nodeca.logger = {

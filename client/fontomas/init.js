@@ -8,7 +8,7 @@ module.exports = function () {
 
   // check browser's capabilities
   if (!Modernizr.fontface) {
-    nodeca.client.fontomas.logger.error("bad browser");
+    nodeca.logger.error("bad browser");
     $('#err-bad-browser').modal({backdrop: 'static', keyboard: false});
     return;
   }
