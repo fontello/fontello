@@ -1,23 +1,29 @@
 #!/usr/bin/env node
 
+
 /*global nodeca*/
+
 
 "use strict";
 
 
-
-// 3rd-party
-var cron = require('cron');
-
-
-// nodeca
-var NLib = require('nlib');
-
-
-var app = NLib.Application.create({
+var app = require('nlib').Application.create({
   name: 'fontomas',
   root: __dirname
 });
+
+
+//
+// Preset application version
+//
+
+
+nodeca.runtime.version = require('./package.json').version;
+
+
+//
+// Catch unexpected exceptions
+//
 
 
 process.on('uncaughtException', function (err) {
@@ -26,86 +32,20 @@ process.on('uncaughtException', function (err) {
 });
 
 
-// temporary fix for logger
-nodeca.hooks.init.before('bundles', function (next) {
-  var log4js  = require('log4js');
-
-  log4js.addAppender(log4js.fileAppender(require('path').join(
-    nodeca.runtime.apps[0].root, 'log', nodeca.runtime.env + '.log'
-  )));
-
-  nodeca.logger = log4js.getLogger();
-  next();
-});
+//
+// Inject some features
+//
 
 
-// preset version
-nodeca.hooks.init.before('bundles', function (next) {
-  nodeca.runtime.version = require('./package.json').version;
-  next();
-});
+nodeca.hooks.init.before('init-start',    require('./lib/init/logger'));
+nodeca.hooks.init.after('bundles',        require('./lib/init/assets'));
+nodeca.hooks.init.after('init-complete',  require('./lib/init/cronjob'));
+nodeca.hooks.init.after('init-complete',  require('./lib/init/server'));
 
 
-// Prepare mincer
-nodeca.hooks.init.after('bundles', require('./lib/init/http_assets'));
+//
+// Run application
+//
 
 
-// Remove old downloads
-nodeca.hooks.init.before('init-complete', function (next) {
-  var downloads_path  = require('path').resolve(__dirname, 'public/download');
-
-  nodeca.logger.warn("Purging obsolet downloads. Removing: " + downloads_path);
-  NLib.Vendor.FsTools.remove(downloads_path, function (err) {
-    var job;
-
-    if (err) {
-      next(err);
-      return;
-    }
-
-    try {
-      job = new cron.CronJob({
-        // run every day at 00:00:00
-        cronTime: '0 0 0 * * *',
-        onTick: function () {
-          var now = Date.now(), // current timestamp in ms
-              max_age = 60 * 60 * 24 * 1000; // 1 day in ms
-
-          nodeca.logger.warn("Cleaning downloads...");
-          NLib.Vendor.FsTools.walk(downloads_path, function (file, stat, next) {
-            if (max_age > now - Date.parse(stat.mtime)) {
-              // file is fresh - no need to cleanup
-              nodeca.logger.debug("Skipping file: " + file);
-              next();
-              return;
-            }
-
-            nodeca.logger.warn("Removing file: " + file);
-            NLib.Vendor.FsTools.remove(file, next);
-          }, function (err) {
-            if (err) {
-              nodeca.logger.warn("Failed cleanup downloads");
-              nodeca.logger.error(err);
-            }
-          });
-        },
-        // do not start immediately
-        start: false
-      });
-    } catch (err) {
-      next(err);
-      return;
-    }
-
-    job.start();
-    next();
-  });
-});
-
-
-// Start socket.io and http servers
-nodeca.hooks.init.after('init-complete',  require('./lib/init/http_server'));
-
-
-// run application
 app.run();
