@@ -48,8 +48,16 @@ module.exports = Backbone.Model.extend({
       g = this._glyphs.get(criteria.uid);
     }
 
-    if (!g && criteria.cid) {
-      g = this._glyphs.getByCid(criteria.cid);
+    if (!g && criteria.code) {
+      g = this._glyphs.find(function (g) {
+        return criteria.code === g.get('source').code;
+      });
+    }
+
+    if (!g && criteria.css) {
+      g = this._glyphs.find(function (g) {
+        return criteria.css === g.get('source').css;
+      });
     }
 
     return g;

@@ -4,7 +4,7 @@
 "use strict";
 
 
-var Preset = Backbone.Model.extend({
+var Session = Backbone.Model.extend({
   defaults: function () {
     return {
       name: 'Untitled',
@@ -15,20 +15,17 @@ var Preset = Backbone.Model.extend({
 
 
 module.exports = Backbone.Collection.extend({
-  localStorage: new Backbone.LocalStorage("Fontello:Presets"),
-  model:        Preset,
+  localStorage: new Backbone.LocalStorage("Fontello:Sessions"),
+  model:        Session,
 
 
   initialize: function () {
     this.fetch();
 
-    // make sure "special" preset exists
+    // make sure "special" session exists
     if (0 === this.length) {
       this.create({name: '$current$'});
     }
-
-    // cache special preset
-    this.$current = this.at(0);
   },
 
 
