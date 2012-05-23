@@ -12,10 +12,7 @@
 //= require nodeca
 //= require fontomas/api
 
-;(function () {
+$(function () {
   "use strict";
-
-  $(function () {
-    nodeca.client.fontomas.init();
-  });
-}());
+  nodeca.client.fontomas.init();
+});
