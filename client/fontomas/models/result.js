@@ -47,7 +47,9 @@ module.exports = Backbone.Collection.extend({
           // this should never happen in real life.
           nodeca.client.fontomas.util.notify('error',
             "Internal Error. Can't allocate code for glyph.");
-          return;
+
+          // model cannot be added to the collection
+          return false;
         }
       }
 
@@ -59,6 +61,9 @@ module.exports = Backbone.Collection.extend({
       model.set('code', code);
 
       model.on('change:code', this.onChangeGlyphCode, this);
+
+      // model is correct and got bindings
+      return true;
     }, this);
 
     Backbone.Collection.prototype.add.call(this, models, options);
