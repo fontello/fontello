@@ -57,7 +57,9 @@
 
 
   nodeca.runtime.rpc = function (name, params, callback) {
-    var data = {id: RPC.last_msg_id++};
+    var data      = {id: RPC.last_msg_id++},
+        attempts  = 0,
+        try_send;
 
     // prepare message
     data.msg = {
@@ -81,6 +83,9 @@
     };
 
     // send request
-    nodeca.runtime.faye.publish(RPC.req_channel, data);
+    nodeca.runtime.faye.publish(RPC.req_channel, data).errback(function (err) {
+      delete RPC.callbacks[data.id];
+      callback(err);
+    });
   };
 }());
