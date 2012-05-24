@@ -35,9 +35,40 @@
   <% } %>
 
 
-  function execRpcCall(msg, callback) {
-    nodeca.runtime.sio.emit('server', msg, function (res) {
-      if (res.version !== nodeca.runtime.version) {
+  var RPC = {
+    req_channel:  '/x/' + window.APP_SECRET + '/rpc-req',
+    res_channel:  '/x/' + window.APP_SECRET + '/rpc-res',
+    callbacks:    {},
+    last_msg_id:  0
+  };
+
+
+  nodeca.runtime.faye.subscribe(RPC.res_channel, function (data) {
+    var callback = RPC.callbacks[data.id];
+
+    if (!callback) {
+      // unknown response id
+      return;
+    }
+
+    delete RPC.callbacks[data.id];
+    callback(data.msg);
+  });
+
+
+  nodeca.runtime.rpc = function (name, params, callback) {
+    var data = {id: RPC.last_msg_id++};
+
+    // prepare message
+    data.msg = {
+      version:  nodeca.runtime.version,
+      method:   name,
+      params:   params
+    };
+
+    // store callback for the response
+    RPC.callbacks[data.id] = function (msg) {
+      if (msg.version !== nodeca.runtime.version) {
         // TODO: implement software upgrade here
         nodeca.client.fontomas.util.notify('error', {layout: 'bottom'},
           '<strong>Application is outdated. Please ' +
@@ -46,41 +77,10 @@
         return;
       }
 
-      (callback || $.noop)(res.err, res.result);
-    });
-  }
-
-
-  var rpc_request_id = 0;
-  var rpc_callbacks  = {};
-
-  nodeca.runtime.rpc = function (name, params, callback) {
-    var id = rpc_request_id++, handler, msg, channel;
-
-    msg = {
-      version:  nodeca.runtime.version,
-      method:   name,
-      params:   params
+      (callback || $.noop)(msg.err, msg.result);
     };
 
-    channel = '/rpc-' + nodeca.runtime.faye.getClientId();
-    handler = function (data) {
-      if (id === data.id) {
-        if (data.msg.version !== nodeca.runtime.version) {
-          // TODO: implement software upgrade here
-          nodeca.client.fontomas.util.notify('error', {layout: 'bottom'},
-            '<strong>Application is outdated. Please ' +
-            '<a href="/" style="text-decoration:underline">reload</a>' +
-            ' page.</strong>');
-          return;
-        }
-
-        (callback || $.noop)(data.msg.err, data.msg.result);
-        nodeca.runtime.faye.unsubscribe(channel, handler);
-      }
-    };
-
-    nodeca.runtime.faye.subscribe(channel,        handler);
-    nodeca.runtime.faye.publish(channel + '-req', {id: id, msg: msg});
+    // send request
+    nodeca.runtime.faye.publish(RPC.req_channel, data);
   };
 }());
