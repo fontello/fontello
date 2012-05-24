@@ -7,7 +7,7 @@ module.exports = function () {
 
 
   // check browser's capabilities
-  if (!Modernizr.fontface) {
+  if (!Modernizr.fontface || !Modernizr.localstorage) {
     nodeca.logger.error("bad browser");
     $('#err-bad-browser').modal({backdrop: 'static', keyboard: false});
     return;
@@ -261,7 +261,10 @@ module.exports = function () {
 
 
   // save current state upon fontname change
-  $('#result-fontname').change(save_current_state);
+  $('#result-fontname').on('keyup change', function () {
+    var $el = $(this);
+    $el.val($el.val().replace(/[^a-z0-9\-_]+/g, ''));
+  }).change(save_current_state);
 
 
   // change current state when some of glyph properties were changed
