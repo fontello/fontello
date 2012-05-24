@@ -4,6 +4,8 @@
 * Reworked interface logic & look
 * Added search
 * Added multiselect (click+drag)
+* Added field to select file name
+* Autosave for all changes
 * Number of small fixes
 * Internal refactoring (continue switching to new nodeca libraries)
 
