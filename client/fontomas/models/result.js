@@ -61,7 +61,7 @@ module.exports = Backbone.Collection.extend({
       model.on('change:code', this.onChangeGlyphCode, this);
     }, this);
 
-    Backbone.Collection.prototype.add.apply(this, arguments);
+    Backbone.Collection.prototype.add.call(this, models, options);
     this.validate();
 
     return this;
