@@ -85,7 +85,7 @@
     // send request
     nodeca.runtime.faye.publish(RPC.req_channel, data).errback(function (err) {
       delete RPC.callbacks[data.id];
-      callback(err);
+      (callback || $.noop)(err);
     });
   };
 }());

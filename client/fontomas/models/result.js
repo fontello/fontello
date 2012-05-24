@@ -131,13 +131,17 @@ module.exports = Backbone.Collection.extend({
     }
 
     nodeca.server.fontomas.font.generate(this.getConfig(name), function (err, msg) {
-      var font_id = msg.data.id;
+      var font_id;
 
       if (err) {
-        // TODO: notification about error
-        nodeca.logger.error(err);
+        nodeca.client.fontomas.util.notify('error',
+          nodeca.client.fontomas.render('rpc-error', {
+            error: (err.message || String(err))
+          }));
         return;
       }
+
+      font_id = msg.data.id;
 
       nodeca.client.fontomas.util.notify('information', {
           layout:   'bottom',
