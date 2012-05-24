@@ -17,8 +17,8 @@
     <!-- the fav and touch icons -->
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 
-    <script type="text/javascript" src="<%= asset_inline('modernizr.js') %>"></script>
-    <script type="text/javascript"><%= app_secret() %></script>
+    <script type="text/javascript"><%- asset_inline('modernizr.js') %></script>
+    <script type="text/javascript"><%- app_secret() %></script>
   </head>
 
   <body>
