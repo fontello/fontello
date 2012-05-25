@@ -353,10 +353,14 @@ module.exports.generate = function (params, callback) {
   font_id = get_download_id(font);
 
   get_job(font_id, function (job) {
-    if (job) {
+    if (job && jobs[font_id]) {
       nodeca.logger.info("Job already in queue: " + JSON.stringify({
         font_id     : font_id,
         queue_length: _.keys(jobs).length
+      }));
+    } else if (job) {
+      nodeca.logger.info("Font already exists: " + JSON.stringify({
+        font_id: font_id
       }));
     } else {
       // enqueue new unique job
