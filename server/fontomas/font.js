@@ -172,11 +172,14 @@ function get_font_config(params) {
 
 
 // returns unique ID for requested list of glyphs
-function get_download_id(font) {
+function get_download_id(config) {
   var hash = crypto.createHash('md5');
 
   hash.update('fontello' + nodeca.runtime.version);
-  hash.update(JSON.stringify(font));
+  hash.update(JSON.stringify({
+    fontname: config.font.fontname,
+    glyphs:   config.glyphs
+  }));
 
   return hash.digest('hex');
 }
