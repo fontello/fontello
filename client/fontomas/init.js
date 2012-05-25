@@ -154,10 +154,11 @@ module.exports = function () {
   // Dummy colection that saves itself into localStorage
   var sessions = new nodeca.client.fontomas.models.sessions;
 
-
   // Serialization spec version
   var SERIALIZER_VERSION = 1;
 
+  // Whenever load_session is in progress
+  var loading_session = false;
 
 
   // data of each session is:
@@ -188,6 +189,9 @@ module.exports = function () {
         'Session was saved with an older version, so it cannot be loaded.');
       return;
     }
+
+    // mark that session is in loading stage
+    loading_session = true;
 
     $('#result-fontname').val(data.name);
 
@@ -220,6 +224,9 @@ module.exports = function () {
         }
       });
     });
+
+    // finished loading
+    loading_session = false;
   }
 
   function save_session(session) {
@@ -228,6 +235,11 @@ module.exports = function () {
       name:     $('#result-fontname').val(),
       fonts:    {}
     };
+
+    if (loading_session) {
+      // do not allow to save while loading in progress
+      return;
+    }
 
     fonts.each(function (f) {
       var font_data = data.fonts[f.get('id')] = {
