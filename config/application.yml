@@ -1,5 +1,5 @@
 fontomas:
-  builder_concurrency: 1  # Default: amount of CPUs
+  builder_concurrency: 4  # Default: amount of CPUs
   max_glyphs: ~           # Max allowed glyphs per download. Unlimited if null.
   glyph_size:
     min: 12               # minimal size
