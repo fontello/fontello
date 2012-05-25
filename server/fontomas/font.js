@@ -236,62 +236,59 @@ job_mgr.addJob('generate-font', {
   work: function (font_id, config) {
     var self        = this,
         log_prefix  = '[font::' + font_id + '] ',
-        tmp_dir     = path.join(TMP_DIR, "fontello-" + font_id),
-        zipball     = path.join(DOWNLOAD_DIR, get_download_path(font_id)),
-        times       = [jobs[font_id].start];
+        tmp_dir, zipball, times;
 
-    nodeca.logger.info(log_prefix + 'Start generation: ' + JSON.stringify(config));
+    try {
+      tmp_dir = path.join(TMP_DIR, "fontello-" + font_id);
+      zipball = path.join(DOWNLOAD_DIR, get_download_path(font_id));
+      times   = [jobs[font_id].start];
 
-    // FIXME: after server restart this might become "undefined"
-    //
-    //        I'm still unsure WHAT might cause such behavior, as after restart
-    //        manager should have empty stack.
-    //
-    //        Possible reason is that job removed by get_job_data().
-    if (!jobs[font_id]) {
-      jobs[font_id] = {start: Date.now(), status: 'enqueued'};
-      times         = [jobs[font_id].start];
+      nodeca.logger.info(log_prefix + 'Start generation: ' + JSON.stringify(config));
 
-      nodeca.logger.error(log_prefix + "Unexpected absence of job.");
-    }
-
-    // push timer checkpoint
-    times.push(Date.now());
-
-    async.series([
-      async.apply(fstools.remove, tmp_dir),
-      async.apply(fstools.mkdir, tmp_dir),
-      async.apply(fs.writeFile, path.join(tmp_dir, 'config.json'), JSON.stringify(config), 'utf8'),
-      async.apply(execFile, GENERATOR_BIN, [config.font.fontname, tmp_dir, zipball], {cwd: APP_ROOT}),
-      async.apply(fstools.remove, tmp_dir)
-    ], function (err) {
-      if (err) {
-        nodeca.logger.error(log_prefix + (err.stack || err.message || err.toString()));
-
-        jobs[font_id].status  = 'error';
-        jobs[font_id].error   = (err.message || err.toString());
-      } else {
-        // remove job from the cache as we check filesystem
-        // to decide whenever job is done or not
-        delete jobs[font_id];
-      }
-
-
-      // push final checkpoint
+      // push timer checkpoint
       times.push(Date.now());
 
-      // log some statistical info
-      nodeca.logger.info(log_prefix + "Generated in " +
-                         ((times[2] - times[0]) / 1000) + "ms " +
-                         "(real: " + ((times[1] - times[0]) / 1000) + "ms)");
+      async.series([
+        async.apply(fstools.remove, tmp_dir),
+        async.apply(fstools.mkdir, tmp_dir),
+        async.apply(fs.writeFile, path.join(tmp_dir, 'config.json'), JSON.stringify(config), 'utf8'),
+        async.apply(execFile, GENERATOR_BIN, [config.font.fontname, tmp_dir, zipball], {cwd: APP_ROOT}),
+        async.apply(fstools.remove, tmp_dir)
+      ], function (err) {
+        if (err) {
+          nodeca.logger.error(log_prefix + (err.stack || err.message || err.toString()));
 
-      stats.push({
-        glyphs: config.glyphs.length,
-        time:   (times[2] - times[0]) / 1000,
+          jobs[font_id].status  = 'error';
+          jobs[font_id].error   = (err.message || err.toString());
+        } else {
+          // remove job from the cache as we check filesystem
+          // to decide whenever job is done or not
+          delete jobs[font_id];
+        }
+
+
+        // push final checkpoint
+        times.push(Date.now());
+
+        // log some statistical info
+        nodeca.logger.info(log_prefix + "Generated in " +
+                          ((times[2] - times[0]) / 1000) + "ms " +
+                          "(real: " + ((times[1] - times[0]) / 1000) + "ms)");
+
+        stats.push({
+          glyphs: config.glyphs.length,
+          time:   (times[2] - times[0]) / 1000,
+        });
+
+        self.finished = true;
       });
+    } catch (err) {
+      nodeca.logger.error(log_prefix + 'Unexpected error happened: ' +
+                          (err.stack || err.message || err.toString()));
 
-      self.finished = true;
-    });
+      delete jobs[font_id];
+      this.finished = true;
+    }
   }
 });
 
