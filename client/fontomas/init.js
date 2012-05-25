@@ -267,7 +267,7 @@ module.exports = function () {
   }
 
 
-  var save_current_state = _.throttle(function () {
+  var save_current_state = _.debounce(function () {
     save_session(sessions.at(0));
   }, 1000);
 
@@ -276,13 +276,25 @@ module.exports = function () {
   $('#result-fontname').on('keyup change', function () {
     var $el = $(this);
     $el.val($el.val().replace(/[^a-z0-9\-_]+/g, ''));
-  }).change(save_current_state);
+  }).change(function () {
+    if (loading_session) {
+      return;
+    }
+
+    save_current_state();
+  });
 
 
   // change current state when some of glyph properties were changed
   fonts.each(function (f) {
     f.eachGlyph(function (g) {
-      g.on('change:selected change:code change:css', save_current_state);
+      g.on('change:selected change:code change:css', function () {
+        if (loading_session) {
+          return;
+        }
+
+        save_current_state();
+      });
     });
   });
 
