@@ -110,22 +110,9 @@ function get_glyphs_config(params) {
 }
 
 
-function format_font_fullname(name) {
-  var parts = [];
-
-  name.toLowerCase().split(/[\-_]/).forEach(function (p) {
-    if (p) {
-      parts.push(p.substr(0, 1).toUpperCase() + p.substr(1));
-    }
-  });
-
-  return parts.join(' ');
-}
-
-
 function filter_fontname(str) {
   str = _.isString(str) ? str : '';
-  return str.replace(/[^a-z0-9\-_]+/g, '-').trimLeft().trimRight();
+  return str.replace(/[^a-z0-9\-_]+/g, '-');
 }
 
 
@@ -141,9 +128,9 @@ function get_font_config(params) {
 
   return {
     font: {
-      fontname:   fontname.toLowerCase(),
-      fullname:   format_font_fullname(fontname),
-      familyname: format_font_fullname(fontname).split(' ').shift(),
+      fontname:   fontname,
+      fullname:   fontname,
+      familyname: 'fontello',
       copyright:  'Copyright (C) 2012 by original authors @ fontello.com',
       ascent:     800,
       descent:    200,
