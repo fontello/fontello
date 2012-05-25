@@ -156,9 +156,13 @@
 
     <!-- templates
     ================================================== -->
-    <script data-tpl-id="rpc-error" type="text/x-template">
+    <script data-tpl-id="error:rpc" type="text/x-template">
       Internal error happened during processing your request:
       <em>"{{error}}"</em>. Please, try again later.
+    </script>
+    <script data-tpl-id="error:font-generate" type="text/x-template">
+      Internal error happened when tryed to build your font.
+      We are going to retry in next few seconds. Please wait...
     </script>
     <script data-tpl-id="selector:download-banner" type="text/x-template">
       Are you designer? <a href="https://github.com/fontello/fontello/wiki/How-to-help" target="_blank">You can help</a> to improve fontello!

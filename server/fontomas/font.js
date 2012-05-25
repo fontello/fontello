@@ -330,7 +330,12 @@ module.exports.status = function (params, callback) {
 
   get_job(params.id, function (job) {
     if (!job) {
-      callback("Unknown job id.");
+      this.response.error = {
+        code:     'UNKNOWN_FONT_ID',
+        message:  "Unknown font id."
+      };
+
+      callback();
       return;
     }
 

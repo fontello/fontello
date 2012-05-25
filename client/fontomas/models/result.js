@@ -126,6 +126,8 @@ module.exports = Backbone.Collection.extend({
 
 
   startDownload: function (name) {
+    var self = this;
+
     if (!this.validate()) {
       return;
     }
@@ -135,7 +137,7 @@ module.exports = Backbone.Collection.extend({
 
       if (err) {
         nodeca.client.fontomas.util.notify('error',
-          nodeca.client.fontomas.render('rpc-error', {
+          nodeca.client.fontomas.render('error:rpc', {
             error: (err.message || String(err))
           }));
         return;
@@ -152,14 +154,27 @@ module.exports = Backbone.Collection.extend({
       function poll_status() {
         nodeca.server.fontomas.font.status({id: font_id}, function (err, msg) {
           if (err) {
-            // TODO: notification about error
-            nodeca.logger.error(err);
+            nodeca.client.fontomas.util.notify('error',
+              nodeca.client.fontomas.render('error:rpc', {
+                error: (err.message || String(err))
+              }));
             return;
           }
 
-          if ('error' === msg.data.status) {
-            // TODO: notification about error
-            nodeca.logger.error(msg.data.error || "Unexpected error.");
+          if ('error' === msg.data.status && 'UNKNOWN_FONT_ID' === msg.data.error.code) {
+            nodeca.client.fontomas.util.notify('error',
+              nodeca.client.fontomas.render('error:font-generate'));
+
+            // resend build request
+            self.startDownload(name);
+            return;
+          }
+
+          if ('error' === msg.data.status){
+            nodeca.client.fontomas.util.notify('error',
+              nodeca.client.fontomas.render('error:rpc', {
+                error: (msg.data.error || "Unexpected error.")
+              }));
             return;
           }
 
