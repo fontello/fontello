@@ -203,10 +203,13 @@ var jobs = {};
 
 // returns instance of job (searches on FS if needed)
 function get_job(font_id, callback) {
-  var job = jobs[font_id], file;
+  var job = jobs[font_id],
+      log_prefix = '[font::' + font_id + '] ',
+      file;
 
   // return not-finished jobs as they are
   if (job) {
+    nodeca.logger.debug(log_prefix + 'Job found in the cache: ' + JSON.stringify(job));
     callback(job);
     return;
   }
@@ -214,11 +217,12 @@ function get_job(font_id, callback) {
   file = path.join(DOWNLOAD_DIR, get_download_path(font_id));
   path.exists(file, function (result) {
     if (!result) {
+      nodeca.logger.debug(log_prefix + 'Job not found and file not exists.');
       callback(/* undefined - job not found */);
       return;
     }
 
-    delete jobs[font_id]; // make sure finished tasks are not in the cache
+    nodeca.logger.debug(log_prefix + 'Job not found but download file exists.');
     callback({status: 'finished', url: get_download_url(font_id)});
   });
 }
@@ -231,9 +235,12 @@ job_mgr.addJob('generate-font', {
   concurrency: (CONFIG.builder_concurrency || os.cpus().length),
   work: function (font_id, config) {
     var self        = this,
+        log_prefix  = '[font::' + font_id + '] ',
         tmp_dir     = path.join(TMP_DIR, "fontello-" + font_id),
         zipball     = path.join(DOWNLOAD_DIR, get_download_path(font_id)),
         times       = [jobs[font_id].start];
+
+    nodeca.logger.info(log_prefix + 'Start generation: ' + JSON.stringify(config));
 
     // FIXME: after server restart this might become "undefined"
     //
@@ -245,11 +252,7 @@ job_mgr.addJob('generate-font', {
       jobs[font_id] = {start: Date.now(), status: 'enqueued'};
       times         = [jobs[font_id].start];
 
-      nodeca.logger.error("Unexpected absence of job.\n" + JSON.stringify({
-        font_id:  font_id,
-        fontname: config.font.fontname,
-        glyphs:   config.glyphs,
-      }));
+      nodeca.logger.error(log_prefix + "Unexpected absence of job.");
     }
 
     // push timer checkpoint
@@ -263,7 +266,7 @@ job_mgr.addJob('generate-font', {
       async.apply(fstools.remove, tmp_dir)
     ], function (err) {
       if (err) {
-        nodeca.logger.error(err.stack || err.message || err.toString());
+        nodeca.logger.error(log_prefix + (err.stack || err.message || err.toString()));
 
         jobs[font_id].status  = 'error';
         jobs[font_id].error   = (err.message || err.toString());
@@ -273,11 +276,12 @@ job_mgr.addJob('generate-font', {
         delete jobs[font_id];
       }
 
+
       // push final checkpoint
       times.push(Date.now());
 
       // log some statistical info
-      nodeca.logger.info("Generated font '" + font_id + "' in " +
+      nodeca.logger.info(log_prefix + "Generated in " +
                          ((times[2] - times[0]) / 1000) + "ms " +
                          "(real: " + ((times[1] - times[0]) / 1000) + "ms)");
 
@@ -369,6 +373,8 @@ module.exports.generate = function (params, callback) {
         status:     'enqueued',
         worker_id:  job_mgr.enqueue('generate-font', font_id, font)
       };
+
+      nodeca.logger.info("New 'generat-font' job created: " + font_id);
     }
 
     self.response.data = get_job_data(font_id, job);
