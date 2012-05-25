@@ -203,13 +203,10 @@ var jobs = {};
 
 // returns instance of job (searches on FS if needed)
 function get_job(font_id, callback) {
-  var job = jobs[font_id],
-      log_prefix = '[font::' + font_id + '] ',
-      file;
+  var job = jobs[font_id], file;
 
   // return not-finished jobs as they are
   if (job) {
-    nodeca.logger.debug(log_prefix + 'Job found in the cache: ' + JSON.stringify(job));
     callback(job);
     return;
   }
@@ -217,12 +214,10 @@ function get_job(font_id, callback) {
   file = path.join(DOWNLOAD_DIR, get_download_path(font_id));
   path.exists(file, function (result) {
     if (!result) {
-      nodeca.logger.debug(log_prefix + 'Job not found and file not exists.');
       callback(/* undefined - job not found */);
       return;
     }
 
-    nodeca.logger.debug(log_prefix + 'Job not found but download file exists.');
     callback({status: 'finished', url: get_download_url(font_id)});
   });
 }
@@ -368,17 +363,22 @@ module.exports.generate = function (params, callback) {
   font_id = get_download_id(font);
 
   get_job(font_id, function (job) {
-    // enqueue new unique job
-    if (!job) {
+    if (job) {
+      nodeca.logger.info("Job already in queue: " + JSON.stringify({
+        font_id     : font_id,
+        queue_length: _.keys(jobs).length
+      }));
+    } else {
+      // enqueue new unique job
       job = jobs[font_id] = {
         start:      Date.now(),
         status:     'enqueued',
         worker_id:  job_mgr.enqueue('generate-font', font_id, font)
       };
 
-      nodeca.logger.info("New 'generate-font' job created: " + JSON.stringify({
-        font_id:      font_id,
-        jobs_length:  _.keys(jobs).length
+      nodeca.logger.info("New job created: " + JSON.stringify({
+        font_id     : font_id,
+        queue_length: _.keys(jobs).length
       }));
     }
 
