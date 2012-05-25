@@ -110,16 +110,6 @@ function get_glyphs_config(params) {
 }
 
 
-function format_timestring(d) {
-  function pad(n) {
-    return n < 10 ? ('0' + n) : n;
-  }
-
-  return  d.getUTCFullYear() + pad(d.getUTCMonth()+1) + pad(d.getUTCDate()) +
-          pad(d.getUTCHours()) + pad(d.getUTCMinutes()) + pad(d.getUTCSeconds());
-}
-
-
 function format_font_fullname(name) {
   var parts = [];
 
@@ -140,26 +130,24 @@ function filter_fontname(str) {
 
 
 function get_font_config(params) {
-  var glyphs_config, timestamp, fontname;
+  var glyphs_config, fontname;
 
   if (!_.isObject(params)) {
     return null;
   }
 
   glyphs_config = get_glyphs_config(params);
-  timestamp     = format_timestring(new Date);
-  fontname      = filter_fontname(params.name) || ('fontello-' + timestamp);
+  fontname      = filter_fontname(params.name) || 'fontello';
 
   return {
     font: {
-      version:    timestamp,
       fontname:   fontname.toLowerCase(),
       fullname:   format_font_fullname(fontname),
       familyname: format_font_fullname(fontname).split(' ').shift(),
-      copyright:  "Copyright (C) 2012 by original authors @ fontello.com",
+      copyright:  'Copyright (C) 2012 by original authors @ fontello.com',
       ascent:     800,
       descent:    200,
-      weight:     "Medium"
+      weight:     'Medium'
     },
     meta: {
       columns: 4,
@@ -263,7 +251,6 @@ job_mgr.addJob('generate-font', {
           // to decide whenever job is done or not
           delete jobs[font_id];
         }
-
 
         // push final checkpoint
         times.push(Date.now());
