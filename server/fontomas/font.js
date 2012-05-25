@@ -374,7 +374,7 @@ module.exports.generate = function (params, callback) {
         worker_id:  job_mgr.enqueue('generate-font', font_id, font)
       };
 
-      nodeca.logger.info("New 'generat-font' job created: " + font_id);
+      nodeca.logger.info("New 'generate-font' job created: " + font_id);
     }
 
     self.response.data = get_job_data(font_id, job);
