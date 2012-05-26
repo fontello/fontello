@@ -235,5 +235,10 @@ module.exports = Backbone.Model.extend({
     session.readFrom(this.fonts);
 
     session.save();
-  }
+  },
+
+  // Stub to prevent Backbone from reading or saving the model to the server.
+  // Backbone calls `Backbone.sync()` function (on fetch/save/destroy)
+  // if model doesn't have own `sync()` method.
+  sync: function () {}
 });
