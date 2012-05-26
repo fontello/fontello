@@ -3,7 +3,13 @@
 "use strict";
 
 module.exports = function () {
-  var fonts, result, toolbar, tabs, selector, preview, editor;
+  var
+    // jQuery $elements
+    $fontname, $users_count, $glyphs,
+    // models
+    fonts, result, session,
+    // ui views
+    toolbar, tabs, selector, preview, editor;
 
 
   // check browser's capabilities
@@ -48,11 +54,11 @@ module.exports = function () {
   //
 
 
-  fonts.each(function (font) {
-    font.eachGlyph(function (glyph) {
-      toolbar.addKeywords(glyph.get('source').search || []);
-      glyph.on('change:selected', function (glyph, val) {
-        result[val ? 'add' : 'remove'](glyph);
+  fonts.each(function (f) {
+    f.eachGlyph(function (g) {
+      toolbar.addKeywords(g.get('source').search || []);
+      g.on('change:selected', function (g, val) {
+        result[val ? 'add' : 'remove'](g);
       });
     });
   });
@@ -69,7 +75,6 @@ module.exports = function () {
 
 
   // perform glyphs search
-  var $glyphs = $('.glyph');
   toolbar.on('change:search', function (q) {
     q = String(q);
 
@@ -102,36 +107,38 @@ module.exports = function () {
 
 
   //
-  // Initialize clear button
+  // Initialize clear (selections) button
   //
 
-
-  function reset_app(scope) {
-    fonts.each(function (f) {
-      f.eachGlyph(function (g) {
-        g.toggle('selected', false);
-
-        if ('all' === scope) {
-          g.unset('code');
-          g.unset('css');
-        }
-      });
-    });
-
-    // switch to selctor pane
-    tabs.activate('#selector');
-  }
 
   $('#reset-app-selections').click(function (event) {
     // do not change location
     event.preventDefault();
-    reset_app('selections');
+
+    fonts.each(function (f) {
+      f.eachGlyph(function (g) {
+        g.toggle('selected', false);
+      });
+    });
   });
+
+
+  //
+  // Initialize reset everything button
+  //
+
 
   $('#reset-app-all').click(function (event) {
     // do not change location
     event.preventDefault();
-    reset_app('all');
+
+    fonts.each(function (f) {
+      f.eachGlyph(function (g) {
+        g.toggle('selected', false);
+        g.unset('code');
+        g.unset('css');
+      });
+    });
   });
 
 
@@ -140,7 +147,7 @@ module.exports = function () {
   //
 
 
-  var $users_count = $('#stats-online');
+  $users_count = $('#stats-online');
   nodeca.runtime.faye.subscribe('/stats/users_online', function (count) {
     $users_count.text(count);
   });
@@ -151,9 +158,7 @@ module.exports = function () {
   //
 
 
-  var $fontname = $('#result-fontname');
-
-
+  $fontname = $('#result-fontname');
   $fontname.on('keyup change', function () {
     var $el = $(this);
     $el.val($el.val().replace(/[^a-z0-9\-_]+/g, ''));
@@ -165,56 +170,40 @@ module.exports = function () {
   //
 
 
-  var skip_session_save = false;
+  // Session manager instance
+  session = new nodeca.client.fontomas.sessions({
+    fontnameElement:  $fontname,
+    fontsList:        fonts
+  });
 
 
-  function save_session(session) {
-    session.set('fontname', $fontname.val());
-    session.readFrom(fonts);
+  var save_session = _.debounce(function () {
     session.save();
-  }
-
-  function load_session(session) {
-    skip_session_save = true;
-
-    $fontname.val(session.get('fontname'));
-    session.seedInto(fonts);
-
-    skip_session_save = false;
-  }
-
-
-  var save_current_state = _.debounce(function () {
-    if (skip_session_save) {
-      return;
-    }
-
-    save_session(nodeca.client.fontomas.sessions.at(0));
   }, 5000);
 
 
   // save current state upon fontname change
-  $fontname.change(save_current_state);
+  $fontname.change(save_session);
 
 
   // change current state when some of glyph properties were changed
   fonts.each(function (f) {
     f.on('before:batch-select', function () {
-      skip_session_save = true;
+      nodeca.client.fontomas.sessions.disable();
     });
 
     f.on('after:batch-select', function () {
-      skip_session_save = false;
-      save_current_state();
+      nodeca.client.fontomas.sessions.enable();
+      save_session();
     });
 
     f.eachGlyph(function (g) {
-      g.on('change:selected change:code change:css', save_current_state);
+      g.on('change:selected change:code change:css', save_session);
     });
   });
 
 
-  load_session(nodeca.client.fontomas.sessions.at(0));
+  session.load();
 
 
   if ('development' === nodeca.runtime.env) {

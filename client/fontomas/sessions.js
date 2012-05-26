@@ -5,6 +5,7 @@
 
 
 var SERIALIZER_VERSION  = 2;
+var STORAGE_KEY         = 'fontello:sessions';
 
 
 // MIGRATIONS //////////////////////////////////////////////////////////////////
@@ -47,29 +48,10 @@ if (!store.disabled) {
 }
 
 
-// INTERNAL HELPERS ////////////////////////////////////////////////////////////
-
-
-function read(self) {
-  var data = store.get('fontello:sessions');
-
-  self.version = data.version;
-  self.reset(data.sessions);
-}
-
-
-function write(self) {
-  store.set('fontello:sessions', {
-    version:  2,
-    sessions: self
-  });
-}
-
-
 ////////////////////////////////////////////////////////////////////////////////
 
 
-//  "fontello:sessions":
+//  {STORAGE_KEY}:
 //    version:      (Number)  version of serilalizer
 //    sessions:
 //      name:
@@ -90,6 +72,8 @@ function write(self) {
 
 
 var Session = Backbone.Model.extend({
+  idAttribute: 'name',
+
   defaults: function () {
     return {
       name:     'Untitled',
@@ -97,7 +81,6 @@ var Session = Backbone.Model.extend({
       fonts:    {}
     };
   },
-
 
   readFrom: function (fonts) {
     fonts.each(function (f) {
@@ -158,7 +141,7 @@ var Session = Backbone.Model.extend({
 
 
   save: function () {
-    write(this.collection);
+    this.collection.fetch().remove(this).add(this).save();
     return this;
   },
 
@@ -169,16 +152,37 @@ var Session = Backbone.Model.extend({
 });
 
 
-var SessionCollection = Backbone.Collection.extend({
+var SessionsCollection = Backbone.Collection.extend({
   model: Session,
 
   initialize: function () {
-    read(this);
+    this.fetch();
 
     // make sure "special" session exists
     if (0 === this.length) {
       this.create({name: '$current$', fontname: ''});
     }
+
+    // get reference to current (default) session
+    this.current = this.get('$current$');
+  },
+
+  fetch: function () {
+    var data = store.get(STORAGE_KEY);
+
+    this.version = data.version;
+    this.reset(data.sessions);
+
+    return this;
+  },
+
+  save: function () {
+    store.set(STORAGE_KEY, {
+      version:  2,
+      sessions: this
+    });
+
+    return this;
   },
 
   // Stub to prevent Backbone from reading or saving the model to the server.
@@ -188,5 +192,48 @@ var SessionCollection = Backbone.Collection.extend({
 });
 
 
-// Singleton
-module.exports = new SessionCollection();
+module.exports = Backbone.Model.extend({
+  initialize: function (attributes) {
+    this.$fontname  = $(attributes.fontnameElement);
+    this.fonts      = attributes.fontsList;
+    this.sessions   = new SessionsCollection();
+
+    this._disabled  = false;
+  },
+
+  enable: function () {
+    this._disabled = false;
+  },
+
+  disable: function () {
+    this._disabled = true;
+  },
+
+  load: function (name) {
+    var session = !name ? this.sessions.current : this.sessions.get(name);
+
+    this.disable();
+
+    // seed models and ui elements
+    this.$fontname.val(session.get('fontname'));
+    session.seedInto(this.fonts);
+
+    this.enable();
+  },
+
+  save: function (name) {
+    var session;
+
+    if (this._disabled) {
+      return;
+    }
+
+    session = !name ? this.sessions.current
+      : this.session.get(name) || this.sessions.create({name: name});
+
+    session.set('fontname', this.$fontname.val());
+    session.readFrom(this.fonts);
+
+    session.save();
+  }
+});
