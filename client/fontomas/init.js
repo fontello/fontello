@@ -147,159 +147,74 @@ module.exports = function () {
 
 
   //
+  // Fontname
+  //
+
+
+  var $fontname = $('#result-fontname');
+
+
+  $fontname.on('keyup change', function () {
+    var $el = $(this);
+    $el.val($el.val().replace(/[^a-z0-9\-_]+/g, ''));
+  });
+
+
+  //
   // Sessions
   //
 
 
-  // Dummy colection that saves itself into localStorage
-  var sessions = new nodeca.client.fontomas.models.sessions;
+  var skip_session_save = false;
 
-  // Serialization spec version
-  var SERIALIZER_VERSION = 1;
-
-  // Whenever load_session is in progress
-  var loading_session = false;
-
-
-  // data of each session is:
-  //
-  //  version:      (Number)  version of serilalization
-  //  name:         (String)  fontname of the preset
-  //  fonts:        (Object)  configuration of fonts
-  //    collapsed:  (Boolean) whenever font is collapsed or not
-  //    glyphs:     (Array)   list of modified and/or selected glyphs
-  //      - uid:        (String) Glyph unique id
-  //      - orig_code:  (Number) Glyph original (from the font source) code
-  //      - orig_css:   (Number) Glyph original (from the font source) css
-  //      - code:       (Number) User defined code
-  //      - css:        (String) User defined css name
-  //      - svg:        *RESERVED FOR FUTURE USE*
-
-
-  function load_session(session) {
-    var data = session.get('data');
-
-    if (!data) {
-      return;
-    }
-
-    if (data.version !== SERIALIZER_VERSION) {
-      session.destroy();
-      nodeca.client.fontomas.util.notify('alert',
-        'Session was saved with an older version, so it cannot be loaded.');
-      return;
-    }
-
-    // mark that session is in loading stage
-    loading_session = true;
-
-    $('#result-fontname').val(data.name);
-
-    fonts.each(function (font) {
-      var font_data = data.fonts[font.get('id')];
-
-      // reset glyphs
-      font.eachGlyph(function (glyph) {
-        glyph.set({
-          selected: false,
-          code:     null,
-          css:      null
-        });
-      });
-
-      // update modified glyphs
-      _.each(font_data.glyphs, function (glyph_data) {
-        var glyph = font.getGlyph({
-          uid:  glyph_data.uid,
-          code: glyph_data.orig_code,
-          css:  glyph_data.orig_css
-        });
-
-        if (glyph) {
-          glyph.set({
-            selected: glyph_data.selected,
-            code:     glyph_data.code,
-            css:      glyph_data.css,
-          });
-        }
-      });
-    });
-
-    // finished loading
-    loading_session = false;
-  }
 
   function save_session(session) {
-    var data = {
-      version:  SERIALIZER_VERSION,
-      name:     $('#result-fontname').val(),
-      fonts:    {}
-    };
+    session.set('fontname', $fontname.val());
+    session.readFrom(fonts);
+    session.save();
+  }
 
-    if (loading_session) {
-      // do not allow to save while loading in progress
-      return;
-    }
+  function load_session(session) {
+    skip_session_save = true;
 
-    fonts.each(function (f) {
-      var font_data = data.fonts[f.get('id')] = {
-        collapsed:  f.get('collapsed'),
-        glyphs:     []
-      };
+    $fontname.val(session.get('fontname'));
+    session.seedInto(fonts);
 
-      f.eachGlyph(function (g) {
-        // save only selected and/or modified glyphs to
-        // reduce amount of used space in the storage
-        if (g.get('selected') || g.isModified()) {
-          font_data.glyphs.push({
-            uid:        g.get('uid'),
-            orig_code:  g.get('source').code,
-            orig_css:   g.get('source').css,
-            selected:   g.get('selected'),
-            code:       g.get('code'),
-            css:        g.get('css')
-          });
-        }
-      });
-    });
-
-    session.set('data', data).save();
+    skip_session_save = false;
   }
 
 
   var save_current_state = _.debounce(function () {
-    save_session(sessions.at(0));
-  }, 1000);
-
-
-  // save current state upon fontname change
-  $('#result-fontname').on('keyup change', function () {
-    var $el = $(this);
-    $el.val($el.val().replace(/[^a-z0-9\-_]+/g, ''));
-  }).change(function () {
-    if (loading_session) {
+    if (skip_session_save) {
       return;
     }
 
-    save_current_state();
-  });
+    save_session(nodeca.client.fontomas.sessions.at(0));
+  }, 5000);
+
+
+  // save current state upon fontname change
+  $fontname.change(save_current_state);
 
 
   // change current state when some of glyph properties were changed
   fonts.each(function (f) {
-    f.eachGlyph(function (g) {
-      g.on('change:selected change:code change:css', function () {
-        if (loading_session) {
-          return;
-        }
+    f.on('before:batch-select', function () {
+      skip_session_save = true;
+    });
 
-        save_current_state();
-      });
+    f.on('after:batch-select', function () {
+      skip_session_save = false;
+      save_current_state();
+    });
+
+    f.eachGlyph(function (g) {
+      g.on('change:selected change:code change:css', save_current_state);
     });
   });
 
 
-  load_session(sessions.at(0));
+  load_session(nodeca.client.fontomas.sessions.at(0));
 
 
   if ('development' === nodeca.runtime.env) {

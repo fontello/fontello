@@ -1,5 +1,7 @@
 /*global nodeca, _, $, Modernizr*/
 
+//= require json
+//= require store
 //= require jquery/jquery
 //= require jquery-ui/jquery-ui
 //= require jquery.noty/src/js/jquery.noty

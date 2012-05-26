@@ -27,9 +27,11 @@ module.exports = Backbone.View.extend({
           return;
         }
 
+        self.trigger('before:batch-select');
         $els.each(function () {
           $(this).data('model').toggle('selected');
         });
+        self.trigger('after:batch-select');
       }
     });
   },
