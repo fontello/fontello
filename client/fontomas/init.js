@@ -7,7 +7,7 @@ module.exports = function () {
 
 
   // check browser's capabilities
-  if (!Modernizr.fontface || !Modernizr.localstorage) {
+  if (!Modernizr.fontface) {
     nodeca.logger.error("bad browser");
     $('#err-bad-browser').modal({backdrop: 'static', keyboard: false});
     return;
