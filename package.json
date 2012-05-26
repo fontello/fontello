@@ -7,7 +7,7 @@
 
   "authors"         : [
                         "Roman I Shmelev (https://github.com/shmelev)",
-                        "Alexey Zapparov (https://github.com/ixti)",
+                        "Aleksey Zapparov (https://github.com/ixti)",
                         "Vitaly Puzrin (https://github.com/puzrin)"
                       ],
 
@@ -20,7 +20,7 @@
   "dependencies"    : {
                         "nlib"        : "git://github.com/nodeca/nlib.git",
                         "connect"     : "2.2.2",
-                        "mincer"      : "0.1.2",
+                        "mincer"      : "0.1.3",
                         "stylus"      : "0.26.0",
                         "nib"         : "0.4.1",
                         "less"        : "1.3.0",
