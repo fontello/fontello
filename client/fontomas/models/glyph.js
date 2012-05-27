@@ -92,8 +92,8 @@ module.exports = Backbone.Model.extend({
 
   validate: function validate(attributes) {
     if (!is_valid_code(attributes.code)) {
-      nodeca.client.fontomas.logger.debug(
-        "models.glyph.validate: bad char code:", attributes.code);
+      nodeca.logger.debug("models.glyph.validate: bad char code:",
+                          attributes.code);
       return "Bad char code: " + attributes.code;
     }
 
