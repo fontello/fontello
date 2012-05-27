@@ -112,17 +112,34 @@ var Session = Backbone.Model.extend({
       };
 
       f.eachGlyph(function (g) {
+        var is_selected = g.get('selected'),
+            is_modified = g.isModified();
+
         // save only selected and/or modified glyphs to
         // reduce amount of used space in the storage
-        if (g.get('selected') || g.isModified()) {
-          font_data.glyphs.push({
+        if (is_selected || is_modified) {
+          var data = {
             uid:        g.get('uid'),
             orig_code:  g.get('source').code,
-            orig_css:   g.get('source').css,
-            selected:   g.get('selected'),
-            code:       g.get('code'),
-            css:        g.get('css')
-          });
+            orig_css:   g.get('source').css
+          };
+
+          // dramatically reduce amount of stored data by
+          // storing really changed values ONLY.
+
+          if (is_selected) {
+            data.selected = g.get('selected');
+          }
+
+          if (is_modified && g.get('code') !== data.orig_code) {
+            data.code = g.get('code');
+          }
+
+          if (is_modified && g.get('css') !== data.orig_css) {
+            data.css = g.get('css');
+          }
+
+          font_data.glyphs.push(data);
         }
       });
     }, this);
