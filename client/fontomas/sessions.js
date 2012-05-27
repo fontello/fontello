@@ -93,6 +93,22 @@ if (SERIALIZER_VERSION !== (store.get(STORAGE_KEY) || {}).version) {
 ////////////////////////////////////////////////////////////////////////////////
 
 
+function filter_obj_keys(obj, keys) {
+  var ret = {};
+
+  _.each(keys, function (key) {
+    if (undefined !== obj[key]) {
+      ret[key] = obj[key];
+    }
+  });
+
+  return ret;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+
 var Session = Backbone.Model.extend({
   idAttribute: 'name',
 
@@ -161,18 +177,15 @@ var Session = Backbone.Model.extend({
 
       // update modified glyphs
       _.each(font_data.glyphs, function (glyph_data) {
-        var glyph = font.getGlyph({
-          uid:  glyph_data.uid,
-          code: glyph_data.orig_code,
-          css:  glyph_data.orig_css
-        });
+        var data  = {},
+            glyph = font.getGlyph({
+              uid:  glyph_data.uid,
+              code: glyph_data.orig_code,
+              css:  glyph_data.orig_css
+            });
 
         if (glyph) {
-          glyph.set({
-            selected: glyph_data.selected,
-            code:     glyph_data.code,
-            css:      glyph_data.css,
-          });
+          glyph.set(filter_obj_keys(glyph_data, ['selected', 'code', 'css']));
         }
       });
     }, this);
