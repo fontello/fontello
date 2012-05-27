@@ -38,6 +38,3 @@ process.on('uncaughtException', function (err) {
 
 
 app.run();
-
-
-// vim:syntax=javascript

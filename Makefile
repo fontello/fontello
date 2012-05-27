@@ -48,7 +48,7 @@ dev-server:
 		--watch "assets,client,lib,server,shared,src,views" \
 		--extensions "js|css|styl|less|ejs|jade" \
 		--no-restart-on error -- \
-		./fontello server --no-assets-compression
+		./fontello.js server
 
 
 lint:
