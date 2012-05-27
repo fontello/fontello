@@ -6,45 +6,67 @@
 
 var SERIALIZER_VERSION  = 2;
 var STORAGE_KEY         = 'fontello:sessions';
+var MIGRATIONS          = [];
 
 
 // MIGRATIONS //////////////////////////////////////////////////////////////////
 
 
-if (!store.disabled) {
-  _.each([
-    function () {
-      var data = {version: 2, sessions: []}, collection, session;
+//
+// Migrate from v1 (Backbone.localStorage based) to v2
+//
 
-      // get storage singleton
-      collection = new (Backbone.Collection.extend({
-        localStorage: new Backbone.LocalStorage("Fontello:Sessions"),
-        model: Backbone.Model.extend({
-          defaults: function () {
-            return {name: 'Untitled', data: null};
-          }
-        }),
-        initialize: function () { this.fetch(); }
-      }));
 
-      // we had only one session on version 1
-      session = collection.at(0);
+MIGRATIONS.push(function () {
+  var data, ids;
 
-      // if it's a new user - he has no old crap
-      if (session) {
+  if (!window.localStorage || store.disabled) {
+    // Backbone.localStorage used LocalStorage directly, so we will
+    // need to "access" it directly as well to get the list of models
+    return;
+  }
+
+  /*global localStorage*/
+
+  data  = {version: 2, sessions: []};
+  ids   = localStorage.getItem('Fontello:Sessions');
+
+  // found old session
+  if (/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}/.test(ids)) {
+    store.remove('Fontello:Sessions');
+    _.each(ids.split(','), function (id) {
+      var session;
+
+      id = 'Fontello:Sessions-' + id;
+
+      session = JSON.parse(localStorage.getItem(id));
+
+      if (session && '$current$' === session.name) {
         data.sessions.push({
-          name:     session.get('name'),
-          fontname: (session.get('data') || {}).name,
-          fonts:    (session.get('data') || {}).fonts
+          name:     '$current$',
+          fontname: (session.data || {}).name,
+          fonts:    (session.data || {}).fonts
         });
-
-        // remove session
-        session.destroy();
-
-        store.set('fontello:sessions', data);
       }
-    }
-  ], function (migrate) { migrate(); });
+
+      store.remove(id);
+    });
+  }
+
+  // we need to migrate ONLY if there's no new storage
+  if (!store.get('fontello:sessions')) {
+    store.set('fontello:sessions', data);
+  }
+});
+
+
+//
+// Run migrations ONLY if there's no new version of session storage found
+//
+
+
+if (SERIALIZER_VERSION !== (store.get(STORAGE_KEY) || {}).version) {
+  _.each(MIGRATIONS, function (migrate) { migrate(); });
 }
 
 
@@ -76,8 +98,8 @@ var Session = Backbone.Model.extend({
 
   defaults: function () {
     return {
-      name:     'Untitled',
-      fontname: 'Untitled',
+      name:     null,
+      fontname: null,
       fonts:    {}
     };
   },
@@ -168,9 +190,8 @@ var SessionsCollection = Backbone.Collection.extend({
   },
 
   fetch: function () {
-    var data = store.get(STORAGE_KEY);
+    var data = store.get(STORAGE_KEY) || {sessions: []};
 
-    this.version = data.version;
     this.reset(data.sessions);
 
     return this;
@@ -178,7 +199,7 @@ var SessionsCollection = Backbone.Collection.extend({
 
   save: function () {
     store.set(STORAGE_KEY, {
-      version:  2,
+      version:  SERIALIZER_VERSION,
       sessions: this
     });
 
@@ -211,6 +232,13 @@ module.exports = Backbone.Model.extend({
 
   load: function (name) {
     var session = !name ? this.sessions.current : this.sessions.get(name);
+
+    if (!session) {
+      // this should never happen!!! and can happen ONLY if somebody
+      // will remove named session
+      nodeca.logger.error("Cannot load session named '" + name +"'.");
+      session = this.sessions.current;
+    }
 
     this.disable();
 
