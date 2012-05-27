@@ -33,19 +33,11 @@ process.on('uncaughtException', function (err) {
 
 
 //
-// Inject some features
-//
-
-
-nodeca.hooks.init.before('init-start',    require('./lib/init/logger'));
-nodeca.hooks.init.after('bundles',        require('./lib/init/assets'));
-nodeca.hooks.init.after('init-complete',  require('./lib/init/cronjob'));
-nodeca.hooks.init.after('init-complete',  require('./lib/init/server'));
-
-
-//
 // Run application
 //
 
 
 app.run();
+
+
+// vim:syntax=javascript
