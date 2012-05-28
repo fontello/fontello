@@ -10,7 +10,7 @@ FONTS         += entypo
 FONTS         += awesome-uni.font
 FONTS         += iconic-uni.font
 FONTS         += brandico.font
-#FONTS         += websymbols-uni.font
+FONTS         += websymbols-uni.font
 FONT_CONFIGS   = $(foreach f,$(FONTS),src/${f}/config.yml)
 
 

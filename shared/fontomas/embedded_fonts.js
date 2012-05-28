@@ -9,6 +9,7 @@ module.exports = [
           "song"
         ],
         "code": 9834,
+        "uid": "39e2e6682c28e1e3b5f49825a19717c4",
         "file": "music",
         "css": "music"
       },
@@ -19,6 +20,7 @@ module.exports = [
           "sound"
         ],
         "code": 127925,
+        "uid": "f2a036a85c0a6a46b0c9709a70e1bb70",
         "file": "song",
         "css": "music-alt"
       },
@@ -28,6 +30,7 @@ module.exports = [
           "find"
         ],
         "code": 128269,
+        "uid": "7222571caa5c15f83dcfd447c58d68d9",
         "file": "classic-search",
         "css": "search"
       },
@@ -37,6 +40,7 @@ module.exports = [
           "find"
         ],
         "code": 128270,
+        "uid": "c9b928dc82d7d77033644fcf59dca3b3",
         "file": "search",
         "css": "search-alt"
       },
@@ -46,6 +50,7 @@ module.exports = [
           "email"
         ],
         "code": 9993,
+        "uid": "e335adbc2d898c7d85d40c507796e7b4",
         "file": "email",
         "css": "mail"
       },
@@ -54,6 +59,7 @@ module.exports = [
           "heart"
         ],
         "code": 9829,
+        "uid": "0eabe5f8d71cc838484ff39436426d2d",
         "file": "heart",
         "css": "heart"
       },
@@ -62,6 +68,7 @@ module.exports = [
           "heart"
         ],
         "code": 9825,
+        "uid": "d18071bbf8f0a8cec8d1f556c91c6af0",
         "file": "heart-outlined",
         "css": "heart-empty"
       },
@@ -70,6 +77,7 @@ module.exports = [
           "star"
         ],
         "code": 9733,
+        "uid": "25b34dea4784f72c710454f32ff8fa2b",
         "file": "star",
         "css": "star"
       },
@@ -78,6 +86,7 @@ module.exports = [
           "star"
         ],
         "code": 9734,
+        "uid": "0e3f1335f83cca67329b2c4bcb3aaec5",
         "file": "star-outlined",
         "css": "star-empty"
       },
@@ -88,6 +97,7 @@ module.exports = [
           "user"
         ],
         "code": 128100,
+        "uid": "bbd66ef66bb8fa9edde54d9a90b89150",
         "file": "contact-user",
         "css": "user"
       },
@@ -98,6 +108,7 @@ module.exports = [
           "friends"
         ],
         "code": 128101,
+        "uid": "ecf8edb95c3f45eb433b4cce7ba9f740",
         "file": "contacts-users",
         "css": "users"
       },
@@ -109,6 +120,7 @@ module.exports = [
           "add"
         ],
         "code": 59136,
+        "uid": "6274e0601f2feef7eced89146e708de0",
         "file": "add-contact-add-user",
         "css": "user-add"
       },
@@ -119,6 +131,7 @@ module.exports = [
           "film"
         ],
         "code": 127916,
+        "uid": "6341ebcbe1ed1f6777c1b9527ead368e",
         "file": "movie",
         "css": "video"
       },
@@ -129,6 +142,7 @@ module.exports = [
           "photo"
         ],
         "code": 127748,
+        "uid": "3def559c3c39b8500882e02892b7daa8",
         "file": "image",
         "css": "picture"
       },
@@ -138,6 +152,7 @@ module.exports = [
           "photo"
         ],
         "code": 128247,
+        "uid": "85017ab6ca074831a8de771b40e9640c",
         "file": "camera",
         "css": "camera"
       },
@@ -148,6 +163,7 @@ module.exports = [
           "thumbnails"
         ],
         "code": 9871,
+        "uid": "5e9f01871d44e56b45ecbfd00f4dbc3a",
         "file": "image-list",
         "css": "th"
       },
@@ -156,6 +172,7 @@ module.exports = [
           "list"
         ],
         "code": 9776,
+        "uid": "2cfb3f2b46b34a1790aec0aa846297b6",
         "file": "list",
         "css": "th-list"
       },
@@ -167,6 +184,7 @@ module.exports = [
           "mark"
         ],
         "code": 10003,
+        "uid": "14017aae737730faeda4a6fd8fb3a5f0",
         "file": "check-ok",
         "css": "ok"
       },
@@ -177,6 +195,7 @@ module.exports = [
           "reject"
         ],
         "code": 10005,
+        "uid": "c709da589c923ba3c2ad48d9fc563e93",
         "file": "check-not-ok",
         "css": "cancel"
       },
@@ -187,6 +206,7 @@ module.exports = [
           "reject"
         ],
         "code": 10006,
+        "uid": "c759418c008e9562944080fee617fc76",
         "file": "close-circle",
         "css": "cancel-circle"
       },
@@ -195,6 +215,7 @@ module.exports = [
           "plus"
         ],
         "code": 43,
+        "uid": "70370693ada58ef0a60fa0984fe8d52a",
         "file": "plus",
         "css": "plus"
       },
@@ -203,6 +224,7 @@ module.exports = [
           "plus"
         ],
         "code": 10133,
+        "uid": "a66cdc7278e6b33b8bd44a141f5e1a8d",
         "file": "plus-circle",
         "css": "plus-circle"
       },
@@ -211,6 +233,7 @@ module.exports = [
           "minus"
         ],
         "code": 45,
+        "uid": "1256e3054823e304d7e452a589cf8bb8",
         "file": "minus",
         "css": "minus"
       },
@@ -219,6 +242,7 @@ module.exports = [
           "minus"
         ],
         "code": 10134,
+        "uid": "3eb93689881ad0804f87052a53edc2b6",
         "file": "minus-circle",
         "css": "minus-circle"
       },
@@ -228,6 +252,7 @@ module.exports = [
           "question"
         ],
         "code": 10067,
+        "uid": "3a230e539a4f3b904debd04c6c155034",
         "file": "help",
         "css": "help"
       },
@@ -237,6 +262,7 @@ module.exports = [
           "question"
         ],
         "code": 59140,
+        "uid": "de9a631a7d18106aea1c89ba51b1990a",
         "file": "help-circle",
         "css": "help-circle"
       },
@@ -245,6 +271,7 @@ module.exports = [
           "info"
         ],
         "code": 8505,
+        "uid": "63b86fedd4ee9ad2105f54f4888e7088",
         "file": "info",
         "css": "info"
       },
@@ -253,6 +280,7 @@ module.exports = [
           "info"
         ],
         "code": 59141,
+        "uid": "7e4164950ffa4990961958b2d6318658",
         "file": "info-circle",
         "css": "info-circle"
       },
@@ -262,6 +290,7 @@ module.exports = [
           "return"
         ],
         "code": 59142,
+        "uid": "3ba4275937db277075fc47d6b5a69a2e",
         "file": "back",
         "css": "back"
       },
@@ -271,6 +300,7 @@ module.exports = [
           "return"
         ],
         "code": 59143,
+        "uid": "5308d824454af8ec7835786e272361a9",
         "file": "back-alt",
         "css": "back-alt"
       },
@@ -279,6 +309,7 @@ module.exports = [
           "home"
         ],
         "code": 8962,
+        "uid": "513ac180ff85bd275f2b736720cbbf5e",
         "file": "home",
         "css": "home"
       },
@@ -288,6 +319,7 @@ module.exports = [
           "url"
         ],
         "code": 128279,
+        "uid": "815503841e980c848f55e0271deacead",
         "file": "link",
         "css": "link"
       },
@@ -297,6 +329,7 @@ module.exports = [
           "clip"
         ],
         "code": 128206,
+        "uid": "44b9e75612c5fad5505edd70d071651f",
         "file": "attach",
         "css": "attach"
       },
@@ -305,6 +338,7 @@ module.exports = [
           "lock"
         ],
         "code": 128274,
+        "uid": "1a7104205ea96e6f40ac716d0ca72f21",
         "file": "lock",
         "css": "lock"
       },
@@ -314,6 +348,7 @@ module.exports = [
           "unlock"
         ],
         "code": 128275,
+        "uid": "e81fc3a0d39ace6ee735d7b24eedd56d",
         "file": "unlocked",
         "css": "lock-open"
       },
@@ -323,6 +358,7 @@ module.exports = [
           "subscribe"
         ],
         "code": 59146,
+        "uid": "25fc99a30fecc4021fdcae5fff5ba9ac",
         "file": "view-eye",
         "css": "eye"
       },
@@ -333,6 +369,7 @@ module.exports = [
           "offer"
         ],
         "code": 59148,
+        "uid": "875ab0f6d417223f6ec76ff7f0a4baed",
         "file": "offer-price-tag",
         "css": "tag"
       },
@@ -341,6 +378,7 @@ module.exports = [
           "bookmark"
         ],
         "code": 128278,
+        "uid": "23912d5623126e14b7b137c3ba557168",
         "file": "bookmark",
         "css": "bookmark"
       },
@@ -349,6 +387,7 @@ module.exports = [
           "flag"
         ],
         "code": 9873,
+        "uid": "1d2a6c3d9236b88b0f185c7c4530fa52",
         "file": "flag",
         "css": "flag"
       },
@@ -360,6 +399,7 @@ module.exports = [
           "vote"
         ],
         "code": 128077,
+        "uid": "7ad4d2306ebda8452e5e3eff3cd8241c",
         "file": "like-thumbs-up",
         "css": "thumbs-up"
       },
@@ -368,6 +408,7 @@ module.exports = [
           "download"
         ],
         "code": 128229,
+        "uid": "b08cfe8039de2ce815686aced2caef06",
         "file": "download",
         "css": "download"
       },
@@ -376,6 +417,7 @@ module.exports = [
           "upload"
         ],
         "code": 128228,
+        "uid": "44199a54057e6e264fde61a49b034171",
         "file": "upload",
         "css": "upload"
       },
@@ -385,6 +427,7 @@ module.exports = [
           "cloud"
         ],
         "code": 59153,
+        "uid": "5d595124cecf472869d1cdc020da0ccc",
         "file": "upload-to-cloud",
         "css": "upload-cloud"
       },
@@ -393,6 +436,7 @@ module.exports = [
           "reply"
         ],
         "code": 59154,
+        "uid": "b6fc2f656ef87275889422e19550680a",
         "file": "reply",
         "css": "reply"
       },
@@ -401,6 +445,7 @@ module.exports = [
           "reply"
         ],
         "code": 59155,
+        "uid": "1a4b54ba5618e5364fc47a3d26c1cf59",
         "file": "reply-to-all",
         "css": "reply-all"
       },
@@ -409,6 +454,7 @@ module.exports = [
           "forward"
         ],
         "code": 10150,
+        "uid": "ec347024a3640deebeeab53fd0d5ad03",
         "file": "forward",
         "css": "forward"
       },
@@ -417,6 +463,7 @@ module.exports = [
           "quote"
         ],
         "code": 10078,
+        "uid": "c3e5dafba1739ef33cc574c7484febf7",
         "file": "quote",
         "css": "quote-right"
       },
@@ -425,6 +472,7 @@ module.exports = [
           "code"
         ],
         "code": 59156,
+        "uid": "b6f32db98a3de777f5ae3005191b1831",
         "file": "code",
         "css": "code"
       },
@@ -434,6 +482,7 @@ module.exports = [
           "share"
         ],
         "code": 59157,
+        "uid": "390d6d13398cbf8c8c3c5493f7d34088",
         "file": "export",
         "css": "export"
       },
@@ -445,6 +494,7 @@ module.exports = [
           "edit"
         ],
         "code": 9998,
+        "uid": "c77fd2fd065b5fe16d6f2b41e190b266",
         "file": "write-new",
         "css": "pencil"
       },
@@ -457,6 +507,7 @@ module.exports = [
           "feather"
         ],
         "code": 10002,
+        "uid": "bcb868184ff9c35f8aef564f50c0d649",
         "file": "feather",
         "css": "feather"
       },
@@ -465,6 +516,7 @@ module.exports = [
           "print"
         ],
         "code": 59158,
+        "uid": "28f124a10127a47b9d9472699193d75a",
         "file": "print",
         "css": "print"
       },
@@ -474,6 +526,7 @@ module.exports = [
           "twitter"
         ],
         "code": 59159,
+        "uid": "216891b0093d4dbef19877d5b00d1b16",
         "file": "retweet",
         "css": "retweet"
       },
@@ -482,6 +535,7 @@ module.exports = [
           "keyboard"
         ],
         "code": 9000,
+        "uid": "005a38f6af74b31aeb817fedb09d2175",
         "file": "keyboard",
         "css": "keyboard"
       },
@@ -492,6 +546,7 @@ module.exports = [
           "write"
         ],
         "code": 59160,
+        "uid": "16890362e811b4cb8de36282b071fe30",
         "file": "comment",
         "css": "comment"
       },
@@ -501,6 +556,7 @@ module.exports = [
           "talk"
         ],
         "code": 59168,
+        "uid": "2c0b53280f82068f6bab4e2200025d9f",
         "file": "chat",
         "css": "chat"
       },
@@ -511,6 +567,7 @@ module.exports = [
           "jingle"
         ],
         "code": 128276,
+        "uid": "2c5335c6e56b876139d7a58ab2f4b2fe",
         "file": "alert",
         "css": "bell"
       },
@@ -521,6 +578,7 @@ module.exports = [
           "alert"
         ],
         "code": 9888,
+        "uid": "97902f87200ce74d181044df02a0458d",
         "file": "warning",
         "css": "attention"
       },
@@ -531,6 +589,7 @@ module.exports = [
           "vcard"
         ],
         "code": 59170,
+        "uid": "457c8e2b305e7af74c1be4f07a01ca92",
         "file": "contact-card",
         "css": "vcard"
       },
@@ -539,6 +598,7 @@ module.exports = [
           "address"
         ],
         "code": 59171,
+        "uid": "540b6a4262be769515c79700618b4aea",
         "file": "address",
         "css": "address"
       },
@@ -549,6 +609,7 @@ module.exports = [
           "marker"
         ],
         "code": 59172,
+        "uid": "a42b598e4298f3319b25a2702a02e7ff",
         "file": "location",
         "css": "location"
       },
@@ -557,6 +618,7 @@ module.exports = [
           "down"
         ],
         "code": 59175,
+        "uid": "64f5a50cf7ac972a56a9a511acb5d28e",
         "file": "map",
         "css": "map"
       },
@@ -565,6 +627,7 @@ module.exports = [
           "direction"
         ],
         "code": 10146,
+        "uid": "f8513213799b244e66b2836aeee88531",
         "file": "direction",
         "css": "direction"
       },
@@ -573,6 +636,7 @@ module.exports = [
           "compass"
         ],
         "code": 59176,
+        "uid": "c117f17c0316ef71fb2a658c4c273002",
         "file": "compass",
         "css": "compass"
       },
@@ -582,6 +646,7 @@ module.exports = [
           "delete"
         ],
         "code": 59177,
+        "uid": "9bdc80f58999873c5a8079ad2d7f4143",
         "file": "trash",
         "css": "trash"
       },
@@ -591,6 +656,7 @@ module.exports = [
           "article"
         ],
         "code": 59184,
+        "uid": "49bd3e825b8267f976f6d1ad391e2f4d",
         "file": "document",
         "css": "doc"
       },
@@ -600,6 +666,7 @@ module.exports = [
           "article"
         ],
         "code": 59190,
+        "uid": "922ab2cb66943a83de969990289ef1dc",
         "file": "documents",
         "css": "docs"
       },
@@ -609,6 +676,7 @@ module.exports = [
           "article"
         ],
         "code": 59191,
+        "uid": "8782cc70184b33096ae927590d1fadc4",
         "file": "landscape-documents",
         "css": "docs-landscape"
       },
@@ -619,6 +687,7 @@ module.exports = [
           "article"
         ],
         "code": 128196,
+        "uid": "1189604bf305b6b03a74685ce60e6632",
         "file": "text-document",
         "css": "doc-text"
       },
@@ -628,6 +697,7 @@ module.exports = [
           "doc"
         ],
         "code": 128214,
+        "uid": "51727ca007aa35ceabcaffc28934faee",
         "file": "book",
         "css": "book-open"
       },
@@ -636,6 +706,7 @@ module.exports = [
           "folder"
         ],
         "code": 128193,
+        "uid": "0ccb084ddeeae372673793ed0b45bb4a",
         "file": "folder",
         "css": "folder"
       },
@@ -644,6 +715,7 @@ module.exports = [
           "archive"
         ],
         "code": 59192,
+        "uid": "96ea1be71f597a5bdfc8f791ada4f651",
         "file": "archive",
         "css": "archive"
       },
@@ -652,6 +724,7 @@ module.exports = [
           "rss"
         ],
         "code": 59194,
+        "uid": "3e617d8049807e128c80d0344ba09e37",
         "file": "rss",
         "css": "rss"
       },
@@ -662,6 +735,7 @@ module.exports = [
           "call"
         ],
         "code": 128222,
+        "uid": "5854855e963044f93b15738a5bb27a29",
         "file": "phone",
         "css": "phone"
       },
@@ -672,6 +746,7 @@ module.exports = [
           "gear"
         ],
         "code": 9881,
+        "uid": "bc64550dd022ce21604f97309b346cea",
         "file": "settings",
         "css": "cog"
       },
@@ -680,6 +755,7 @@ module.exports = [
           "share"
         ],
         "code": 59196,
+        "uid": "91426c82d94428a33353e495418435e3",
         "file": "share",
         "css": "share"
       },
@@ -690,6 +766,7 @@ module.exports = [
           "cart"
         ],
         "code": 59197,
+        "uid": "2c71ee1c65e1992ba32d5ffc5ee7f337",
         "file": "shopping-bag",
         "css": "basket"
       },
@@ -699,6 +776,7 @@ module.exports = [
           "date"
         ],
         "code": 128197,
+        "uid": "413717f5ea649e8d8b93938be277264a",
         "file": "calendar",
         "css": "calendar"
       },
@@ -707,6 +785,7 @@ module.exports = [
           "mic"
         ],
         "code": 127908,
+        "uid": "1e099a876c8a6a83f10c9bafa9886614",
         "file": "mic",
         "css": "mic"
       },
@@ -717,6 +796,7 @@ module.exports = [
           "mute"
         ],
         "code": 128263,
+        "uid": "2f750a9be253e8e451209574336e7020",
         "file": "mute",
         "css": "volume-off"
       },
@@ -726,6 +806,7 @@ module.exports = [
           "sound"
         ],
         "code": 128266,
+        "uid": "ef51920c7a9bed4d87f53709db115e34",
         "file": "sound",
         "css": "volume-up"
       },
@@ -735,6 +816,7 @@ module.exports = [
           "sound"
         ],
         "code": 59202,
+        "uid": "edd88296295d95d6510e66d9a6bbd6c3",
         "file": "volume",
         "css": "volume"
       },
@@ -744,6 +826,7 @@ module.exports = [
           "time"
         ],
         "code": 128340,
+        "uid": "8663320a860b00f26e94d3d15c9ba99a",
         "file": "time-clock",
         "css": "clock"
       },
@@ -755,6 +838,7 @@ module.exports = [
           "wait"
         ],
         "code": 9203,
+        "uid": "7f6916533c0842b6cec699fd773693d3",
         "file": "time-glass",
         "css": "hourglass"
       },
@@ -765,6 +849,7 @@ module.exports = [
           "light"
         ],
         "code": 128161,
+        "uid": "4b20e1deee87faf4c3fab735fbd4bc1a",
         "file": "light-bulb",
         "css": "lamp"
       },
@@ -775,6 +860,7 @@ module.exports = [
           "bright"
         ],
         "code": 128261,
+        "uid": "2d14369ed7f129e779eaa30195368218",
         "file": "light-down",
         "css": "light-down"
       },
@@ -785,6 +871,7 @@ module.exports = [
           "bright"
         ],
         "code": 128262,
+        "uid": "f8e120c48c070f8afd2d072651b4fb9f",
         "file": "light-up",
         "css": "light-up"
       },
@@ -794,6 +881,7 @@ module.exports = [
           "deny"
         ],
         "code": 128683,
+        "uid": "29e7f6072d5935d7818204d9b088508b",
         "file": "block",
         "css": "block"
       },
@@ -803,6 +891,7 @@ module.exports = [
           "fullscreen"
         ],
         "code": 59204,
+        "uid": "3a3f65b92c9b2fcbb3a8dcd0d42ee806",
         "file": "full-screen",
         "css": "resize-full"
       },
@@ -811,6 +900,7 @@ module.exports = [
           "resize"
         ],
         "code": 59206,
+        "uid": "108c8ac13badc00ce66da014436e6eb1",
         "file": "small-screen",
         "css": "resize-small"
       },
@@ -820,6 +910,7 @@ module.exports = [
           "window"
         ],
         "code": 59212,
+        "uid": "9248ce8062fb4707a6919bfe9ac1af8e",
         "file": "popup",
         "css": "popup"
       },
@@ -828,6 +919,7 @@ module.exports = [
           "publish"
         ],
         "code": 59213,
+        "uid": "77bcf90f0c68635bab5abfb4ed736696",
         "file": "publish",
         "css": "publish"
       },
@@ -836,6 +928,7 @@ module.exports = [
           "window"
         ],
         "code": 59214,
+        "uid": "744a71fe4b5ab7c4f4b7cd598e9bf75a",
         "file": "browser",
         "css": "window"
       },
@@ -846,6 +939,7 @@ module.exports = [
           "combobox"
         ],
         "code": 59215,
+        "uid": "0a3192de65a73ca1501b073ad601f87d",
         "file": "select-box-arrow",
         "css": "arrow-combo"
       },
@@ -856,6 +950,7 @@ module.exports = [
           "download"
         ],
         "code": 59224,
+        "uid": "40ef3542646bed70cb63f1290c9d98c9",
         "file": "down-circle-arrow",
         "css": "down-circle2"
       },
@@ -865,6 +960,7 @@ module.exports = [
           "left"
         ],
         "code": 59225,
+        "uid": "0db0310883e0bdacfd1bb2d394238e8a",
         "file": "left-circle-arrow",
         "css": "left-circle2"
       },
@@ -874,6 +970,7 @@ module.exports = [
           "right"
         ],
         "code": 59226,
+        "uid": "52725ff4d4042964bd3a60609bf3695b",
         "file": "right-circle-arrow",
         "css": "right-circle2"
       },
@@ -884,6 +981,7 @@ module.exports = [
           "upload"
         ],
         "code": 59227,
+        "uid": "64691230b90991883f94c6dfb2afc90a",
         "file": "up-circle-arrow",
         "css": "up-circle2"
       },
@@ -893,6 +991,7 @@ module.exports = [
           "down"
         ],
         "code": 59228,
+        "uid": "8704cd847a47b64265b8bb110c8b4d62",
         "file": "open-arrow-down",
         "css": "down-open"
       },
@@ -902,6 +1001,7 @@ module.exports = [
           "left"
         ],
         "code": 59229,
+        "uid": "c311c48d79488965b0fab7f9cd12b6b5",
         "file": "open-arrow-left",
         "css": "left-open"
       },
@@ -911,6 +1011,7 @@ module.exports = [
           "right"
         ],
         "code": 59230,
+        "uid": "749e7d90a9182938180f1d2d8c33584e",
         "file": "open-arrow-right",
         "css": "right-open"
       },
@@ -920,6 +1021,7 @@ module.exports = [
           "up"
         ],
         "code": 59231,
+        "uid": "9c7ff134960bb5a82404e4aeaab366d9",
         "file": "open-arrow-up",
         "css": "up-open"
       },
@@ -929,6 +1031,7 @@ module.exports = [
           "down"
         ],
         "code": 11015,
+        "uid": "d5098cb09be5827a2911dbab5af49ad2",
         "file": "thin-arrow-down",
         "css": "down-thin"
       },
@@ -938,6 +1041,7 @@ module.exports = [
           "left"
         ],
         "code": 11013,
+        "uid": "6acd5cf005d48f96787350e72bd45688",
         "file": "thin-arrow-left",
         "css": "left-thin"
       },
@@ -947,6 +1051,7 @@ module.exports = [
           "right"
         ],
         "code": 10145,
+        "uid": "9e67bfab0143d9511f8eef6897caeb88",
         "file": "thin-arrow-right",
         "css": "right-thin"
       },
@@ -956,6 +1061,7 @@ module.exports = [
           "up"
         ],
         "code": 11014,
+        "uid": "43c4064ec1260d0e55c37e0467c75cbb",
         "file": "thin-arrow-up",
         "css": "up-thin"
       },
@@ -965,6 +1071,7 @@ module.exports = [
           "down"
         ],
         "code": 9662,
+        "uid": "7e89c12b577c31bc91bfb61bb597f01f",
         "file": "direction-arrow-down",
         "css": "down-dir"
       },
@@ -974,6 +1081,7 @@ module.exports = [
           "left"
         ],
         "code": 9666,
+        "uid": "9aeaf29161eb005a308bbd624d6e066a",
         "file": "direction-arrow-left",
         "css": "left-dir"
       },
@@ -983,6 +1091,7 @@ module.exports = [
           "right"
         ],
         "code": 9656,
+        "uid": "ff9a85aa20950dcc0615a2707a2b3f8e",
         "file": "direction-arrow-right",
         "css": "right-dir"
       },
@@ -992,6 +1101,7 @@ module.exports = [
           "up"
         ],
         "code": 9652,
+        "uid": "401b644723fb2f20b0df30cce7745c18",
         "file": "direction-arrow-up",
         "css": "up-dir"
       },
@@ -1001,6 +1111,7 @@ module.exports = [
           "down"
         ],
         "code": 58544,
+        "uid": "78944e4652d6f9b8b506eaef331308cd",
         "file": "bold-down-arrow",
         "css": "down-bold"
       },
@@ -1010,6 +1121,7 @@ module.exports = [
           "left"
         ],
         "code": 58541,
+        "uid": "0222089fb4194cc714dcc1ffd2525c11",
         "file": "bold-left-arrow",
         "css": "left-bold"
       },
@@ -1019,6 +1131,7 @@ module.exports = [
           "right"
         ],
         "code": 58542,
+        "uid": "1a90b06af8614b12d8c8a5b90cc19ab3",
         "file": "bold-right-arrow",
         "css": "right-bold"
       },
@@ -1028,6 +1141,7 @@ module.exports = [
           "up"
         ],
         "code": 58543,
+        "uid": "8c8f768607b8fc4c92c0f85b488e87e8",
         "file": "bold-up-arrow",
         "css": "up-bold"
       },
@@ -1037,6 +1151,7 @@ module.exports = [
           "down"
         ],
         "code": 8595,
+        "uid": "a30a32d49f80bb534c062ae1743ef433",
         "file": "down-arrow",
         "css": "down"
       },
@@ -1046,6 +1161,7 @@ module.exports = [
           "left"
         ],
         "code": 8592,
+        "uid": "8d8f4722d16e95290858eaf294d9d830",
         "file": "left-arrow",
         "css": "left"
       },
@@ -1055,6 +1171,7 @@ module.exports = [
           "right"
         ],
         "code": 8594,
+        "uid": "ef3eda51383ce050517892df3fc05ffc",
         "file": "right-arrow",
         "css": "right"
       },
@@ -1064,6 +1181,7 @@ module.exports = [
           "up"
         ],
         "code": 8593,
+        "uid": "dbc97808cba7d0c135c7054e7a85fb86",
         "file": "up-arrow",
         "css": "up"
       },
@@ -1073,6 +1191,7 @@ module.exports = [
           "undo"
         ],
         "code": 10226,
+        "uid": "465bb89b6f204234e5787c326b4ae54c",
         "file": "reload-CCW",
         "css": "ccw"
       },
@@ -1083,6 +1202,7 @@ module.exports = [
           "repeat"
         ],
         "code": 10227,
+        "uid": "bb46b15cb78cc4cc05d3d715d522ac4d",
         "file": "reload-CW",
         "css": "cw"
       },
@@ -1091,6 +1211,7 @@ module.exports = [
           "down"
         ],
         "code": 8627,
+        "uid": "fa0118a65fc8dee739469f6901bbd189",
         "file": "level-down",
         "css": "level-down"
       },
@@ -1100,6 +1221,7 @@ module.exports = [
           "random"
         ],
         "code": 128256,
+        "uid": "3d349daaea304032a7669b4f24931b6c",
         "file": "shuffle",
         "css": "shuffle"
       },
@@ -1109,6 +1231,7 @@ module.exports = [
           "player"
         ],
         "code": 9654,
+        "uid": "cb13afd4722a849d48056540bb74c47e",
         "file": "play",
         "css": "play"
       },
@@ -1118,6 +1241,7 @@ module.exports = [
           "player"
         ],
         "code": 9642,
+        "uid": "48f2e18872fe74d4579a4c8a1527fc1e",
         "file": "stop",
         "css": "stop"
       },
@@ -1127,6 +1251,7 @@ module.exports = [
           "player"
         ],
         "code": 9097,
+        "uid": "d8d378d0ce413f231dfa37592e39c227",
         "file": "paus",
         "css": "pause"
       },
@@ -1136,6 +1261,7 @@ module.exports = [
           "player"
         ],
         "code": 9899,
+        "uid": "e188c02f740feff7e2d2bce1950b75fa",
         "file": "record",
         "css": "record"
       },
@@ -1145,6 +1271,7 @@ module.exports = [
           "player"
         ],
         "code": 9197,
+        "uid": "0afbb00323696f49e9c47f4d9fe6390b",
         "file": "jump-to-end",
         "css": "to-end"
       },
@@ -1154,6 +1281,7 @@ module.exports = [
           "player"
         ],
         "code": 9198,
+        "uid": "ceefe7653a4f6edaacce9e7f196cec5a",
         "file": "jump-to-start",
         "css": "to-start"
       },
@@ -1163,6 +1291,7 @@ module.exports = [
           "player"
         ],
         "code": 9193,
+        "uid": "18f7c393e3532e40edd45607c9d99988",
         "file": "fast-forward",
         "css": "fast-fw"
       },
@@ -1172,6 +1301,7 @@ module.exports = [
           "player"
         ],
         "code": 9194,
+        "uid": "85806fd8ab907f45d34f976354a0df23",
         "file": "fast-backward",
         "css": "fast-bw"
       },
@@ -1181,6 +1311,7 @@ module.exports = [
           "charge"
         ],
         "code": 59240,
+        "uid": "be998d5ee625a58912ae630f34cc8419",
         "file": "charge-empty",
         "css": "progress-0"
       },
@@ -1190,6 +1321,7 @@ module.exports = [
           "charge"
         ],
         "code": 59241,
+        "uid": "054519608bca087aa306252471dda9c4",
         "file": "charge-one-third",
         "css": "progress-1"
       },
@@ -1199,6 +1331,7 @@ module.exports = [
           "charge"
         ],
         "code": 59242,
+        "uid": "3e49435dd1950a0b7543e13256c89e52",
         "file": "charge-two-thirds",
         "css": "progress-2"
       },
@@ -1208,6 +1341,7 @@ module.exports = [
           "charge"
         ],
         "code": 59243,
+        "uid": "d924bc68683f68ecf5e09e49731fd59a",
         "file": "charge-full",
         "css": "progress-3"
       },
@@ -1216,6 +1350,7 @@ module.exports = [
           "target"
         ],
         "code": 127919,
+        "uid": "3eadc3e443cf1c7e17f1b44d21254c00",
         "file": "center-crosshair",
         "css": "target"
       },
@@ -1224,6 +1359,7 @@ module.exports = [
           "palette"
         ],
         "code": 127912,
+        "uid": "80451d627470ea7f977a263fdb771d7b",
         "file": "palette",
         "css": "palette"
       },
@@ -1233,6 +1369,7 @@ module.exports = [
           "list"
         ],
         "code": 57347,
+        "uid": "97bd5542ed3e143d2ee9b60e14487615",
         "file": "add-to-list",
         "css": "list-add"
       },
@@ -1243,6 +1380,7 @@ module.exports = [
           "signal"
         ],
         "code": 59248,
+        "uid": "84a7262985600b683bbab0da9298776d",
         "file": "broadcast",
         "css": "signal"
       },
@@ -1252,6 +1390,7 @@ module.exports = [
           "trophy"
         ],
         "code": 127942,
+        "uid": "978aa8facd816df874039e139cb0cdde",
         "file": "top-list",
         "css": "top-list"
       },
@@ -1260,6 +1399,7 @@ module.exports = [
           "battery"
         ],
         "code": 128267,
+        "uid": "a51290161c48d96d7f2e2151a4cbcde1",
         "file": "battery",
         "css": "battery"
       },
@@ -1269,6 +1409,7 @@ module.exports = [
           "time"
         ],
         "code": 59249,
+        "uid": "89eb512cb82a1c3fe83cb16134f9876c",
         "file": "back-in-time",
         "css": "back-in-time"
       },
@@ -1279,6 +1420,7 @@ module.exports = [
           "monitor"
         ],
         "code": 128187,
+        "uid": "b7a336095aa4535c3689cb557edf23db",
         "file": "tv-screen",
         "css": "monitor"
       },
@@ -1288,6 +1430,7 @@ module.exports = [
           "iphone"
         ],
         "code": 128241,
+        "uid": "767fede84586366cd7d6c835be745454",
         "file": "mobile",
         "css": "mobile"
       },
@@ -1296,6 +1439,7 @@ module.exports = [
           "net"
         ],
         "code": 59254,
+        "uid": "414fe97e4af5215a06d29be0f2cecdf5",
         "file": "network",
         "css": "net"
       },
@@ -1305,6 +1449,7 @@ module.exports = [
           "vinyl"
         ],
         "code": 128191,
+        "uid": "16f88519423df34fc5c48be7ded81b8f",
         "file": "vinyl-record",
         "css": "cd"
       },
@@ -1313,6 +1458,7 @@ module.exports = [
           "inbox"
         ],
         "code": 59255,
+        "uid": "b32d88adf7cd6bfa8d0e177dfa642a4d",
         "file": "inbox",
         "css": "inbox"
       },
@@ -1321,6 +1467,7 @@ module.exports = [
           "install"
         ],
         "code": 59256,
+        "uid": "d83b7429002f7b0b206c8d550034212b",
         "file": "install",
         "css": "install"
       },
@@ -1329,6 +1476,7 @@ module.exports = [
           "globe"
         ],
         "code": 119565,
+        "uid": "6a12c2b74456ea21cc984e11dec227a1",
         "file": "globe",
         "css": "globe"
       },
@@ -1337,6 +1485,7 @@ module.exports = [
           "cloud"
         ],
         "code": 9729,
+        "uid": "114fed43140e2b5ce42c48b95c19375b",
         "file": "cloud",
         "css": "cloud"
       },
@@ -1346,6 +1495,7 @@ module.exports = [
           "bolt"
         ],
         "code": 9889,
+        "uid": "98c63f6b98c543b52d4c43bcd486d28f",
         "file": "flash",
         "css": "flash"
       },
@@ -1355,6 +1505,7 @@ module.exports = [
           "sleep"
         ],
         "code": 9789,
+        "uid": "0d03db7afd4857accf1821efdc8ea72b",
         "file": "sleep",
         "css": "moon"
       },
@@ -1365,6 +1516,7 @@ module.exports = [
           "airplane"
         ],
         "code": 9992,
+        "uid": "6e8aea8fff9525dfc5149f0c03669091",
         "file": "flight",
         "css": "flight"
       },
@@ -1373,6 +1525,7 @@ module.exports = [
           "leaf"
         ],
         "code": 127810,
+        "uid": "41d534223ef447a01af3e2f629ec70eb",
         "file": "leaf",
         "css": "leaf"
       },
@@ -1381,6 +1534,7 @@ module.exports = [
           "lifebuoy"
         ],
         "code": 59272,
+        "uid": "2f9f67ee4354feef8c1f51e03bac6ef3",
         "file": "lifebuoy",
         "css": "lifebuoy"
       },
@@ -1390,6 +1544,7 @@ module.exports = [
           "website"
         ],
         "code": 59273,
+        "uid": "97c6901d8db077614e77b089d4eedac8",
         "file": "mouse-website",
         "css": "mouse"
       },
@@ -1398,6 +1553,7 @@ module.exports = [
           "bag"
         ],
         "code": 59274,
+        "uid": "9ea7cce5e08e5ac2c225fabf2e6dc353",
         "file": "suitecase",
         "css": "bag"
       },
@@ -1406,6 +1562,7 @@ module.exports = [
           "dot"
         ],
         "code": 59275,
+        "uid": "d2c6b59d9a239140cb76be0627480855",
         "file": "dot",
         "css": "dot"
       },
@@ -1415,6 +1572,7 @@ module.exports = [
           "flickr"
         ],
         "code": 59276,
+        "uid": "13b11ab72c6ae9c97ee12428e17f3a4e",
         "file": "dots-two",
         "css": "dot-2"
       },
@@ -1423,6 +1581,7 @@ module.exports = [
           "dot"
         ],
         "code": 59277,
+        "uid": "d10920db2e79c997c5e783279291970c",
         "file": "dots-three",
         "css": "dot-3"
       },
@@ -1432,6 +1591,7 @@ module.exports = [
           "circles"
         ],
         "code": 62224,
+        "uid": "ea1225fead573e185817d60729569b44",
         "file": "google-circles",
         "css": "google-circles"
       },
@@ -1441,6 +1601,7 @@ module.exports = [
           "commons"
         ],
         "code": 59301,
+        "uid": "4a413ef43c364dafa42766e74c31bbca",
         "file": "creative-commons",
         "css": "cc"
       },
@@ -1449,6 +1610,7 @@ module.exports = [
           "entypo"
         ],
         "code": 62976,
+        "uid": "e9ede58f5f90bbc3e52bf4bf53da71c0",
         "file": "entypo-square",
         "css": "logo-entypo"
       },
@@ -1457,6 +1619,7 @@ module.exports = [
           "sweden"
         ],
         "code": 62977,
+        "uid": "c22c5fa36d200793ad39b984fb5c8610",
         "file": "sweden",
         "css": "flag-sw"
       },
@@ -1466,6 +1629,7 @@ module.exports = [
           "bruce"
         ],
         "code": 62979,
+        "uid": "ea16996158db7b9fedf060a4f44b27ee",
         "file": "db-signature",
         "css": "logo-db"
       }
@@ -1523,6 +1687,7 @@ module.exports = [
         ],
         "code": 127864,
         "from": 61440,
+        "uid": "cfaa8fbbdcc7bb8d636cb974aad1f9b9",
         "css": "glass"
       },
       {
@@ -1534,6 +1699,7 @@ module.exports = [
         ],
         "code": 9835,
         "from": 61441,
+        "uid": "9ea0a737ccc45d6c510dcbae56058849",
         "css": "music"
       },
       {
@@ -1543,6 +1709,7 @@ module.exports = [
         ],
         "code": 128269,
         "from": 61442,
+        "uid": "9dd9e835aebe1060ba7190ad2b2ed951",
         "css": "search"
       },
       {
@@ -1552,6 +1719,7 @@ module.exports = [
         ],
         "code": 9993,
         "from": 61443,
+        "uid": "bf882b30900da12fca090d9796bc3030",
         "css": "mail"
       },
       {
@@ -1560,6 +1728,7 @@ module.exports = [
         ],
         "code": 9829,
         "from": 61444,
+        "uid": "d73eceadda1f594cec0536087539afbf",
         "css": "heart"
       },
       {
@@ -1568,6 +1737,7 @@ module.exports = [
         ],
         "code": 9825,
         "from": 61578,
+        "uid": "f3dc2d6d8fe9cf9ebff84dc260888cdf",
         "css": "heart-empty"
       },
       {
@@ -1576,6 +1746,7 @@ module.exports = [
         ],
         "code": 9733,
         "from": 61445,
+        "uid": "474656633f79ea2f1dad59ff63f6bf07",
         "css": "star"
       },
       {
@@ -1584,6 +1755,7 @@ module.exports = [
         ],
         "code": 9734,
         "from": 61446,
+        "uid": "d17030afaecc1e1c22349b99f3c4992a",
         "css": "star-empty"
       },
       {
@@ -1592,6 +1764,7 @@ module.exports = [
         ],
         "code": 59137,
         "from": 61577,
+        "uid": "8f8278fbe5a2a0ea836be3c408b005d2",
         "css": "star-half"
       },
       {
@@ -1602,6 +1775,7 @@ module.exports = [
         ],
         "code": 128100,
         "from": 61447,
+        "uid": "8b80d36d4ef43889db10bc1f0dc9a862",
         "css": "user"
       },
       {
@@ -1612,6 +1786,7 @@ module.exports = [
         ],
         "code": 127916,
         "from": 61448,
+        "uid": "872d9516df93eb6b776cc4d94bd97dac",
         "css": "video"
       },
       {
@@ -1623,6 +1798,7 @@ module.exports = [
         ],
         "code": 127909,
         "from": 61501,
+        "uid": "0f99ab40ab0b4d64a74f2d0deeb03e42",
         "css": "videocam"
       },
       {
@@ -1632,6 +1808,7 @@ module.exports = [
         ],
         "code": 128247,
         "from": 61488,
+        "uid": "dc3f1d5b1d006f7f7b3b6295eccab9da",
         "css": "camera"
       },
       {
@@ -1641,6 +1818,7 @@ module.exports = [
         ],
         "code": 59151,
         "from": 61571,
+        "uid": "9d3d9d6ce1ec63eaa26281e6162853c9",
         "css": "camera-alt"
       },
       {
@@ -1651,6 +1829,7 @@ module.exports = [
         ],
         "code": 127748,
         "from": 61502,
+        "uid": "381da2c2f7fd51f8de877c044d7f439d",
         "css": "picture"
       },
       {
@@ -1661,6 +1840,7 @@ module.exports = [
         ],
         "code": 59144,
         "from": 61449,
+        "uid": "dd492243d64e21dfe16a92452f7861cb",
         "css": "th-large"
       },
       {
@@ -1671,6 +1851,7 @@ module.exports = [
         ],
         "code": 9871,
         "from": 61450,
+        "uid": "b1887b423d2fd15c345e090320c91ca0",
         "css": "th"
       },
       {
@@ -1679,7 +1860,8 @@ module.exports = [
         ],
         "code": 9776,
         "from": 61451,
-        "css": "list"
+        "uid": "f805bb95d40c7ef2bc51b3d50d4f2e5c",
+        "css": "th-list"
       },
       {
         "search": [
@@ -1690,6 +1872,7 @@ module.exports = [
         ],
         "code": 10003,
         "from": 61452,
+        "uid": "12f4ece88e46abd864e40b35e05b11cd",
         "css": "ok"
       },
       {
@@ -1701,6 +1884,7 @@ module.exports = [
         ],
         "code": 10004,
         "from": 61528,
+        "uid": "43ab845088317bd348dee1d975700c48",
         "css": "ok-circle"
       },
       {
@@ -1712,6 +1896,7 @@ module.exports = [
         ],
         "code": 59138,
         "from": 61533,
+        "uid": "ad33e708f4d2e25c5056c931da1528d6",
         "css": "ok-circle2"
       },
       {
@@ -1722,6 +1907,7 @@ module.exports = [
         ],
         "code": 10005,
         "from": 61453,
+        "uid": "5211af474d3a9848f67f945e2ccaf143",
         "css": "cancel"
       },
       {
@@ -1732,6 +1918,7 @@ module.exports = [
         ],
         "code": 10006,
         "from": 61527,
+        "uid": "0f4cae16f34ae243a6144c18a003f2d8",
         "css": "cancel-circle"
       },
       {
@@ -1742,6 +1929,7 @@ module.exports = [
         ],
         "code": 59139,
         "from": 61532,
+        "uid": "2e2dba0307a502a8507c1729084c7ab5",
         "css": "cancel-circle2"
       },
       {
@@ -1750,6 +1938,7 @@ module.exports = [
         ],
         "code": 43,
         "from": 61543,
+        "uid": "44e04715aecbca7f266a17d5a7863c68",
         "css": "plus"
       },
       {
@@ -1758,6 +1947,7 @@ module.exports = [
         ],
         "code": 10133,
         "from": 61525,
+        "uid": "4ba33d2607902cf690dd45df09774cb0",
         "css": "plus-circle"
       },
       {
@@ -1766,6 +1956,7 @@ module.exports = [
         ],
         "code": 45,
         "from": 61544,
+        "uid": "861ab06e455e2de3232ebef67d60d708",
         "css": "minus"
       },
       {
@@ -1774,6 +1965,7 @@ module.exports = [
         ],
         "code": 10134,
         "from": 61526,
+        "uid": "eeadb020bb75d089b25d8424aabe19e0",
         "css": "minus-circle"
       },
       {
@@ -1783,6 +1975,7 @@ module.exports = [
         ],
         "code": 59140,
         "from": 61529,
+        "uid": "17ebadd1e3f274ff0205601eef7b9cc4",
         "css": "help-circle"
       },
       {
@@ -1791,6 +1984,7 @@ module.exports = [
         ],
         "code": 59141,
         "from": 61530,
+        "uid": "e82cedfa1d5f15b00c5a81c9bd731ea2",
         "css": "info-circle"
       },
       {
@@ -1799,6 +1993,7 @@ module.exports = [
         ],
         "code": 8962,
         "from": 61461,
+        "uid": "d7271d490b71df4311e32cdacae8b331",
         "css": "home"
       },
       {
@@ -1808,6 +2003,7 @@ module.exports = [
         ],
         "code": 128279,
         "from": 61582,
+        "uid": "e15f0d620a7897e2035c18c80142f6d9",
         "css": "link"
       },
       {
@@ -1816,6 +2012,7 @@ module.exports = [
         ],
         "code": 128274,
         "from": 61475,
+        "uid": "c1f1975c885aa9f3dad7810c53b82074",
         "css": "lock"
       },
       {
@@ -1825,6 +2022,7 @@ module.exports = [
         ],
         "code": 128204,
         "from": 61581,
+        "uid": "5b0772e9484a1a11646793a82edd622a",
         "css": "pin"
       },
       {
@@ -1834,6 +2032,7 @@ module.exports = [
         ],
         "code": 59146,
         "from": 61550,
+        "uid": "c5fd349cbd3d23e4ade333789c29c729",
         "css": "eye"
       },
       {
@@ -1843,6 +2042,7 @@ module.exports = [
         ],
         "code": 59147,
         "from": 61552,
+        "uid": "7fd683b2c518ceb9e5fa6757f2276faa",
         "css": "eye-off"
       },
       {
@@ -1854,6 +2054,7 @@ module.exports = [
         ],
         "code": 59148,
         "from": 61483,
+        "uid": "3db5347bd219f3bce6025780f5d9ef45",
         "css": "tag"
       },
       {
@@ -1865,6 +2066,7 @@ module.exports = [
         ],
         "code": 59149,
         "from": 61484,
+        "uid": "a3f89e106175a5c5c4e9738870b12e55",
         "css": "tags"
       },
       {
@@ -1873,6 +2075,7 @@ module.exports = [
         ],
         "code": 128278,
         "from": 61486,
+        "uid": "f04a5d24e9e659145b966739c4fde82a",
         "css": "bookmark"
       },
       {
@@ -1881,6 +2084,7 @@ module.exports = [
         ],
         "code": 9873,
         "from": 61476,
+        "uid": "57a0ac800df728aad61a7cf9e12f5fef",
         "css": "flag"
       },
       {
@@ -1892,6 +2096,7 @@ module.exports = [
         ],
         "code": 128077,
         "from": 61575,
+        "uid": "acf41aa4018e58d49525665469e35665",
         "css": "thumbs-up"
       },
       {
@@ -1903,6 +2108,7 @@ module.exports = [
         ],
         "code": 128078,
         "from": 61576,
+        "uid": "7533e68038fc6d520ede7a7ffa0a2f64",
         "css": "thumbs-down"
       },
       {
@@ -1911,6 +2117,7 @@ module.exports = [
         ],
         "code": 128229,
         "from": 61465,
+        "uid": "9a76bc135eac17d2c8b8ad4a5774fc87",
         "css": "download"
       },
       {
@@ -1919,6 +2126,7 @@ module.exports = [
         ],
         "code": 128228,
         "from": 61587,
+        "uid": "eeec3208c90b7b48e804919d0d2d4a41",
         "css": "upload"
       },
       {
@@ -1927,6 +2135,7 @@ module.exports = [
         ],
         "code": 10150,
         "from": 61540,
+        "uid": "3d39c828009c04ddb6764c0b04cd2439",
         "css": "forward"
       },
       {
@@ -1936,6 +2145,7 @@ module.exports = [
         ],
         "code": 59157,
         "from": 61509,
+        "uid": "895405dfac8a3b7b2f23b183c6608ee6",
         "css": "export"
       },
       {
@@ -1947,6 +2157,7 @@ module.exports = [
         ],
         "code": 9998,
         "from": 61504,
+        "uid": "d35a1d35efeb784d1dc9ac18b9b6c2b6",
         "css": "pencil"
       },
       {
@@ -1958,6 +2169,7 @@ module.exports = [
         ],
         "code": 9997,
         "from": 61508,
+        "uid": "41087bc74d4b20b55059c60a33bf4008",
         "css": "edit"
       },
       {
@@ -1966,6 +2178,7 @@ module.exports = [
         ],
         "code": 59158,
         "from": 61487,
+        "uid": "7277ded7695b2a307a5f9d50097bb64c",
         "css": "print"
       },
       {
@@ -1975,6 +2188,7 @@ module.exports = [
         ],
         "code": 59159,
         "from": 61561,
+        "uid": "09feb4465d9bd1364f4e301c9ddbaa92",
         "css": "retweet"
       },
       {
@@ -1985,6 +2199,7 @@ module.exports = [
         ],
         "code": 59160,
         "from": 61557,
+        "uid": "85528017f1e6053b2253785c31047f44",
         "css": "comment"
       },
       {
@@ -1994,6 +2209,7 @@ module.exports = [
         ],
         "code": 59168,
         "from": 61574,
+        "uid": "dcedf50ab1ede3283d7a6c70e2fe32f3",
         "css": "chat"
       },
       {
@@ -2004,6 +2220,7 @@ module.exports = [
         ],
         "code": 9888,
         "from": 61553,
+        "uid": "c76b7947c957c9b78b11741173c8349b",
         "css": "attention"
       },
       {
@@ -2014,6 +2231,7 @@ module.exports = [
         ],
         "code": 10071,
         "from": 61546,
+        "uid": "b035c28eba2b35c6ffe92aee8b0df507",
         "css": "attention-circle"
       },
       {
@@ -2024,6 +2242,7 @@ module.exports = [
         ],
         "code": 59172,
         "from": 61505,
+        "uid": "0d08dbb1dd648a43bdea81b7e6c9e036",
         "css": "location"
       },
       {
@@ -2033,6 +2252,7 @@ module.exports = [
         ],
         "code": 59177,
         "from": 61460,
+        "uid": "f48ae54adfb27d8ada53d0fd9e34ee10",
         "css": "trash"
       },
       {
@@ -2042,6 +2262,7 @@ module.exports = [
         ],
         "code": 128196,
         "from": 61462,
+        "uid": "1b5a5d7b7e3c71437f5a26befdd045ed",
         "css": "doc"
       },
       {
@@ -2050,6 +2271,7 @@ module.exports = [
         ],
         "code": 128193,
         "from": 61563,
+        "uid": "f8aa663c489bcbd6e68ec8147dca841e",
         "css": "folder"
       },
       {
@@ -2058,6 +2280,7 @@ module.exports = [
         ],
         "code": 128194,
         "from": 61564,
+        "uid": "c95735c17a10af81448c7fed98a04546",
         "css": "folder-open"
       },
       {
@@ -2068,6 +2291,7 @@ module.exports = [
         ],
         "code": 9881,
         "from": 61459,
+        "uid": "e99461abfef3923546da8d745372c995",
         "css": "cog"
       },
       {
@@ -2078,6 +2302,7 @@ module.exports = [
         ],
         "code": 9967,
         "from": 61573,
+        "uid": "98687378abd1faf8f6af97c254eb6cd6",
         "css": "cog-alt"
       },
       {
@@ -2088,6 +2313,7 @@ module.exports = [
         ],
         "code": 59197,
         "from": 61562,
+        "uid": "9affc98d652b86628d650ee58dbf0357",
         "css": "basket"
       },
       {
@@ -2097,6 +2323,7 @@ module.exports = [
         ],
         "code": 128197,
         "from": 61555,
+        "uid": "531bc468eecbb8867d822f1c11f1e039",
         "css": "calendar"
       },
       {
@@ -2107,6 +2334,7 @@ module.exports = [
         ],
         "code": 59200,
         "from": 61584,
+        "uid": "3a00327e61b997b58518bd43ed83c3df",
         "css": "login"
       },
       {
@@ -2117,6 +2345,7 @@ module.exports = [
         ],
         "code": 59201,
         "from": 61579,
+        "uid": "0d20938846444af8deb1920dc85a29fb",
         "css": "logout"
       },
       {
@@ -2127,6 +2356,7 @@ module.exports = [
         ],
         "code": 128263,
         "from": 61478,
+        "uid": "e44601720c64e6bb6a2d5cba6b0c588c",
         "css": "volume-off"
       },
       {
@@ -2136,6 +2366,7 @@ module.exports = [
         ],
         "code": 128265,
         "from": 61479,
+        "uid": "fee6e00f36e8ca8ef3e4a62caa213bf6",
         "css": "volume-down"
       },
       {
@@ -2145,6 +2376,7 @@ module.exports = [
         ],
         "code": 128266,
         "from": 61480,
+        "uid": "76857a03fbaa6857fe063b6c25aa98ed",
         "css": "volume-up"
       },
       {
@@ -2155,6 +2387,7 @@ module.exports = [
         ],
         "code": 127911,
         "from": 61477,
+        "uid": "f27bba41a700af51a4dd23cf4edea61d",
         "css": "headphones"
       },
       {
@@ -2164,6 +2397,7 @@ module.exports = [
         ],
         "code": 128340,
         "from": 61463,
+        "uid": "598a5f2bcf3521d1615de8e1881ccd17",
         "css": "clock"
       },
       {
@@ -2173,6 +2407,7 @@ module.exports = [
         ],
         "code": 128683,
         "from": 61534,
+        "uid": "98d9c83c1ee7c2c25af784b518c522c5",
         "css": "block"
       },
       {
@@ -2182,6 +2417,7 @@ module.exports = [
         ],
         "code": 59204,
         "from": 61541,
+        "uid": "e594fc6e5870b4ab7e49f52571d52577",
         "css": "resize-full"
       },
       {
@@ -2190,6 +2426,7 @@ module.exports = [
         ],
         "code": 59206,
         "from": 61542,
+        "uid": "3c24ee33c9487bbf18796ca6dffa1905",
         "css": "resize-small"
       },
       {
@@ -2198,6 +2435,7 @@ module.exports = [
         ],
         "code": 11020,
         "from": 61565,
+        "uid": "d3b3f17bc3eb7cd809a07bbd4d178bee",
         "css": "resize-vertical"
       },
       {
@@ -2206,6 +2444,7 @@ module.exports = [
         ],
         "code": 11021,
         "from": 61566,
+        "uid": "3c73d058e4589b65a8d959c0fc8f153d",
         "css": "resize-horizontal"
       },
       {
@@ -2213,6 +2452,7 @@ module.exports = [
           "move"
         ],
         "code": 61511,
+        "uid": "6605ee6441bf499ffa3c63d3c7409471",
         "css": "move"
       },
       {
@@ -2222,6 +2462,7 @@ module.exports = [
         ],
         "code": 59216,
         "from": 61454,
+        "uid": "0b2b66e526028a6972d51a6f10281b4b",
         "css": "zoom-in"
       },
       {
@@ -2231,6 +2472,7 @@ module.exports = [
         ],
         "code": 59217,
         "from": 61456,
+        "uid": "d25d10efa900f529ad1d275657cfd30e",
         "css": "zoom-out"
       },
       {
@@ -2241,6 +2483,7 @@ module.exports = [
         ],
         "code": 59224,
         "from": 61466,
+        "uid": "c53068fe21c8410b0a098b4c52c3d37e",
         "css": "down-circle2"
       },
       {
@@ -2251,6 +2494,7 @@ module.exports = [
         ],
         "code": 59227,
         "from": 61467,
+        "uid": "128d63150a41800e0beff55235269542",
         "css": "up-circle2"
       },
       {
@@ -2260,6 +2504,7 @@ module.exports = [
         ],
         "code": 59228,
         "from": 61560,
+        "uid": "ccddff8e8670dcd130e3cb55fdfc2fd0",
         "css": "down-open"
       },
       {
@@ -2269,6 +2514,7 @@ module.exports = [
         ],
         "code": 59229,
         "from": 61523,
+        "uid": "d870630ff8f81e6de3958ecaeac532f2",
         "css": "left-open"
       },
       {
@@ -2278,6 +2524,7 @@ module.exports = [
         ],
         "code": 59230,
         "from": 61524,
+        "uid": "399ef63b1e23ab1b761dfbb5591fa4da",
         "css": "right-open"
       },
       {
@@ -2287,6 +2534,7 @@ module.exports = [
         ],
         "code": 59231,
         "from": 61559,
+        "uid": "fe6697b391355dec12f3d86d6d490397",
         "css": "up-open"
       },
       {
@@ -2296,6 +2544,7 @@ module.exports = [
         ],
         "code": 8595,
         "from": 61539,
+        "uid": "1c4068ed75209e21af36017df8871802",
         "css": "down"
       },
       {
@@ -2305,6 +2554,7 @@ module.exports = [
         ],
         "code": 8592,
         "from": 61536,
+        "uid": "555ef8c86832e686fef85f7af2eb7cde",
         "css": "left"
       },
       {
@@ -2314,6 +2564,7 @@ module.exports = [
         ],
         "code": 8594,
         "from": 61537,
+        "uid": "ad6b3fbb5324abe71a9c0b6609cbb9f1",
         "css": "right"
       },
       {
@@ -2323,6 +2574,7 @@ module.exports = [
         ],
         "code": 8593,
         "from": 61538,
+        "uid": "95376bf082bfec6ce06ea1cda7bd7ead",
         "css": "up"
       },
       {
@@ -2333,16 +2585,19 @@ module.exports = [
         ],
         "code": 10227,
         "from": 61470,
+        "uid": "bc71f4c6e53394d5ba46b063040014f1",
         "css": "cw"
       },
       {
         "search": [
           "reload",
           "refresh",
-          "update"
+          "update",
+          "sync"
         ],
         "code": 59232,
         "from": 61473,
+        "uid": "a73c5deb486c8d66249811642e5d719a",
         "css": "arrows-cw"
       },
       {
@@ -2351,6 +2606,7 @@ module.exports = [
         ],
         "code": 128256,
         "from": 61556,
+        "uid": "37c5ab63f10d7ad0b84d0978dcd0c7a8",
         "css": "shuffle"
       },
       {
@@ -2360,6 +2616,7 @@ module.exports = [
         ],
         "code": 9654,
         "from": 61515,
+        "uid": "ce06b5805120d0c2f8d60cd3f1a4fdb5",
         "css": "play"
       },
       {
@@ -2369,6 +2626,7 @@ module.exports = [
         ],
         "code": 59233,
         "from": 61469,
+        "uid": "e835d9d0f2ee39ae01b01cc6a6fa24ab",
         "css": "play-circle2"
       },
       {
@@ -2378,6 +2636,7 @@ module.exports = [
         ],
         "code": 9642,
         "from": 61517,
+        "uid": "b624a1e512819d410ddbee84e6918b9d",
         "css": "stop"
       },
       {
@@ -2387,6 +2646,7 @@ module.exports = [
         ],
         "code": 9097,
         "from": 61516,
+        "uid": "0b28050bac9d3facf2f0226db643ece0",
         "css": "pause"
       },
       {
@@ -2396,6 +2656,7 @@ module.exports = [
         ],
         "code": 9197,
         "from": 61521,
+        "uid": "c47efa0e3e74f6ba4c2562c1258fff1f",
         "css": "to-end"
       },
       {
@@ -2405,6 +2666,7 @@ module.exports = [
         ],
         "code": 59234,
         "from": 61520,
+        "uid": "7ea35a8fc7e676c78e99cab2d4bc8653",
         "css": "to-end-alt"
       },
       {
@@ -2414,6 +2676,7 @@ module.exports = [
         ],
         "code": 9198,
         "from": 61512,
+        "uid": "12052b30d23a1a70d6b32962d5464cae",
         "css": "to-start"
       },
       {
@@ -2423,6 +2686,7 @@ module.exports = [
         ],
         "code": 59235,
         "from": 61513,
+        "uid": "6b5450145d620234f07ffcbfbb671074",
         "css": "to-start-alt"
       },
       {
@@ -2432,6 +2696,7 @@ module.exports = [
         ],
         "code": 9193,
         "from": 61518,
+        "uid": "4e511190b60f329d08301eb6869c5130",
         "css": "fast-fw"
       },
       {
@@ -2441,6 +2706,7 @@ module.exports = [
         ],
         "code": 9194,
         "from": 61514,
+        "uid": "b3d902fcead809e3a64c7ddcda497a6c",
         "css": "fast-bw"
       },
       {
@@ -2450,6 +2716,7 @@ module.exports = [
         ],
         "code": 11983,
         "from": 61522,
+        "uid": "91b141af48402743aa3503d0a7007132",
         "css": "eject"
       },
       {
@@ -2458,6 +2725,7 @@ module.exports = [
         ],
         "code": 127919,
         "from": 61531,
+        "uid": "e75c54c282c0bf22186c5c7ec4b03eac",
         "css": "target"
       },
       {
@@ -2468,6 +2736,7 @@ module.exports = [
         ],
         "code": 128246,
         "from": 61458,
+        "uid": "d407a4707f719b042ed2ad28d2619d7e",
         "css": "signal"
       },
       {
@@ -2479,6 +2748,7 @@ module.exports = [
         ],
         "code": 127945,
         "from": 61585,
+        "uid": "ab656e280958018a7859eba9a1eabbc7",
         "css": "award"
       },
       {
@@ -2487,6 +2757,7 @@ module.exports = [
         ],
         "code": 59255,
         "from": 61468,
+        "uid": "c7a75a25880928fe76981a53eca4f926",
         "css": "inbox"
       },
       {
@@ -2497,6 +2768,7 @@ module.exports = [
         ],
         "code": 9992,
         "from": 61554,
+        "uid": "297fe6c2ef08198b03d706ba52f51b7f",
         "css": "flight"
       },
       {
@@ -2505,6 +2777,7 @@ module.exports = [
         ],
         "code": 127810,
         "from": 61548,
+        "uid": "19e7b342a5e6bd0cd86de6d6208486a4",
         "css": "leaf"
       },
       {
@@ -2514,6 +2787,7 @@ module.exports = [
         ],
         "code": 59257,
         "from": 61489,
+        "uid": "f9cbf7508cd04145ade2800169959eef",
         "css": "font"
       },
       {
@@ -2523,6 +2797,7 @@ module.exports = [
         ],
         "code": 59258,
         "from": 61490,
+        "uid": "02cca871bb69da75e8ee286b7055832c",
         "css": "bold"
       },
       {
@@ -2532,6 +2807,7 @@ module.exports = [
         ],
         "code": 59259,
         "from": 61491,
+        "uid": "a8cb1c217f02b073db3670c061cc54d2",
         "css": "italic"
       },
       {
@@ -2541,6 +2817,7 @@ module.exports = [
         ],
         "code": 59260,
         "from": 61492,
+        "uid": "c009d417f87d6a27bb5a1cefd30b6cbd",
         "css": "text-height"
       },
       {
@@ -2550,6 +2827,7 @@ module.exports = [
         ],
         "code": 59261,
         "from": 61493,
+        "uid": "13a971bcccd2dda26d4d4eccd8593f8a",
         "css": "text-width"
       },
       {
@@ -2560,6 +2838,7 @@ module.exports = [
         ],
         "code": 59262,
         "from": 61494,
+        "uid": "f4f0e849b805be1f6d76b65581cb3b8b",
         "css": "align-left"
       },
       {
@@ -2570,6 +2849,7 @@ module.exports = [
         ],
         "code": 59263,
         "from": 61495,
+        "uid": "ae6336c46d73af999fe7460c089abb4d",
         "css": "align-center"
       },
       {
@@ -2580,6 +2860,7 @@ module.exports = [
         ],
         "code": 59264,
         "from": 61496,
+        "uid": "e1e7306b47c3c5e6faecce9d32571381",
         "css": "align-right"
       },
       {
@@ -2590,6 +2871,7 @@ module.exports = [
         ],
         "code": 59265,
         "from": 61497,
+        "uid": "25a81737628d1e654a30ad412d7d6dd7",
         "css": "align-justify"
       },
       {
@@ -2599,6 +2881,7 @@ module.exports = [
         ],
         "code": 59266,
         "from": 61498,
+        "uid": "48b87105bd38c20315f1b705b8c7b38c",
         "css": "list"
       },
       {
@@ -2608,6 +2891,7 @@ module.exports = [
         ],
         "code": 59267,
         "from": 61499,
+        "uid": "594e9271c08ff732c04b3bf3117b9040",
         "css": "indent-left"
       },
       {
@@ -2617,6 +2901,7 @@ module.exports = [
         ],
         "code": 59268,
         "from": 61500,
+        "uid": "4d2dfc45d8176b1f26aed973fa84a91e",
         "css": "indent-right"
       },
       {
@@ -2625,6 +2910,7 @@ module.exports = [
         ],
         "code": 59278,
         "from": 61457,
+        "uid": "8b9e6a8dd8f67f7c003ed8e7e5ee0857",
         "css": "off"
       },
       {
@@ -2633,6 +2919,7 @@ module.exports = [
         ],
         "code": 59279,
         "from": 61464,
+        "uid": "ecede48deb16179e5ef9a3f8ffae62f4",
         "css": "road"
       },
       {
@@ -2641,6 +2928,7 @@ module.exports = [
         ],
         "code": 59280,
         "from": 61474,
+        "uid": "c819c6225685bae2eed1b8da13e629fa",
         "css": "list-alt"
       },
       {
@@ -2649,6 +2937,7 @@ module.exports = [
         ],
         "code": 59281,
         "from": 61481,
+        "uid": "fd45bb961d08f9f2092f0df3fba29fe9",
         "css": "qrcode"
       },
       {
@@ -2657,6 +2946,7 @@ module.exports = [
         ],
         "code": 59282,
         "from": 61482,
+        "uid": "aa991e8e66ac54b33f0a4b0555597b08",
         "css": "barcode"
       },
       {
@@ -2665,6 +2955,7 @@ module.exports = [
         ],
         "code": 128213,
         "from": 61485,
+        "uid": "9755f76110ae4d12ac5f9466c9152031",
         "css": "book"
       },
       {
@@ -2673,6 +2964,7 @@ module.exports = [
         ],
         "code": 59283,
         "from": 61506,
+        "uid": "ca90da02d2c6a3183f2458e4dc416285",
         "css": "ajust"
       },
       {
@@ -2681,6 +2973,7 @@ module.exports = [
         ],
         "code": 59284,
         "from": 61507,
+        "uid": "83458acd9f38d03ec0226ce82a83c0f4",
         "css": "tint"
       },
       {
@@ -2689,6 +2982,7 @@ module.exports = [
         ],
         "code": 9745,
         "from": 61510,
+        "uid": "dd6c6b221a1088ff8a9b9cd32d0b3dd5",
         "css": "check"
       },
       {
@@ -2697,6 +2991,7 @@ module.exports = [
         ],
         "code": 10033,
         "from": 61545,
+        "uid": "823a9e02e643318116fea40a00190e4e",
         "css": "asterisk"
       },
       {
@@ -2708,6 +3003,7 @@ module.exports = [
         ],
         "code": 127873,
         "from": 61547,
+        "uid": "28f308aa0a07a67433f54c089c400d82",
         "css": "gift"
       },
       {
@@ -2716,6 +3012,7 @@ module.exports = [
         ],
         "code": 128293,
         "from": 61549,
+        "uid": "254077e7c0a9e6d303b32f9c35b96a40",
         "css": "fire"
       },
       {
@@ -2724,6 +3021,7 @@ module.exports = [
         ],
         "code": 59297,
         "from": 61558,
+        "uid": "d20912c814d0ff9a7fd27ed1f54813cc",
         "css": "magnet"
       },
       {
@@ -2734,6 +3032,7 @@ module.exports = [
         ],
         "code": 128202,
         "from": 61568,
+        "uid": "266d5d9adf15a61800477a5acf9a4462",
         "css": "chart-bar"
       },
       {
@@ -2742,6 +3041,7 @@ module.exports = [
         ],
         "code": 128273,
         "from": 61572,
+        "uid": "f2aa28a2548ed3d2be718d087b65ee21",
         "css": "key"
       },
       {
@@ -2750,6 +3050,7 @@ module.exports = [
         ],
         "code": 62208,
         "from": 61586,
+        "uid": "0ece9a12de796b8411f868d582bee678",
         "css": "github"
       },
       {
@@ -2758,6 +3059,7 @@ module.exports = [
         ],
         "code": 62212,
         "from": 61569,
+        "uid": "906348dc798a0d42715cc97c875e3ac6",
         "css": "twitter"
       },
       {
@@ -2766,16 +3068,19 @@ module.exports = [
         ],
         "code": 62216,
         "from": 61570,
+        "uid": "4743b088aa95d6f3b6b990e770d3b647",
         "css": "facebook"
       },
       {
         "code": 62220,
         "from": 61580,
+        "uid": "1145676a91138011729fa2909997af66",
         "css": "linkedin"
       },
       {
         "code": 127819,
         "from": 61588,
+        "uid": "5e0191587645a9f5d514ed4b0a0e008a",
         "css": "lemon"
       }
     ],
@@ -2815,6 +3120,7 @@ module.exports = [
           "find"
         ],
         "code": 128270,
+        "uid": "c6344a6ed148da12354cc90705287696",
         "file": "magnifying_glass",
         "css": "search"
       },
@@ -2824,6 +3130,7 @@ module.exports = [
           "email"
         ],
         "code": 9993,
+        "uid": "937f4db8b6ff3348a1d9fcd5e12fd2fe",
         "file": "mail",
         "css": "mail"
       },
@@ -2832,6 +3139,7 @@ module.exports = [
           "heart"
         ],
         "code": 9829,
+        "uid": "ff933ecda3a1da53071ee6ec224ef8c9",
         "file": "heart_fill",
         "css": "heart"
       },
@@ -2840,6 +3148,7 @@ module.exports = [
           "heart"
         ],
         "code": 9825,
+        "uid": "acae2d2db2ebe97429c6eddc2f7b0cd2",
         "file": "heart_stroke",
         "css": "heart-empty"
       },
@@ -2848,6 +3157,7 @@ module.exports = [
           "star"
         ],
         "code": 9733,
+        "uid": "5daac230ad1cfdf4782697dfbda679dd",
         "file": "star",
         "css": "star"
       },
@@ -2858,6 +3168,7 @@ module.exports = [
           "user"
         ],
         "code": 128100,
+        "uid": "86ee1fc7ff57e9c9c60d8a5e57183776",
         "file": "user",
         "css": "user"
       },
@@ -2868,6 +3179,7 @@ module.exports = [
           "film"
         ],
         "code": 127916,
+        "uid": "2d2f83f97ba029f32db3ca963dd0beea",
         "file": "movie",
         "css": "video"
       },
@@ -2878,6 +3190,7 @@ module.exports = [
           "photo"
         ],
         "code": 127748,
+        "uid": "9bf421d05c985b569e86fa7c502bd879",
         "file": "image",
         "css": "picture"
       },
@@ -2887,6 +3200,7 @@ module.exports = [
           "photo"
         ],
         "code": 128247,
+        "uid": "69253046b55214b42caada5c226801f2",
         "file": "camera",
         "css": "camera"
       },
@@ -2898,6 +3212,7 @@ module.exports = [
           "mark"
         ],
         "code": 10003,
+        "uid": "b90d80c250a9bbdd6cd3fe00e6351710",
         "file": "check",
         "css": "ok"
       },
@@ -2909,6 +3224,7 @@ module.exports = [
           "mark"
         ],
         "code": 10004,
+        "uid": "b4cc17a45ed7d179a2cc815e2da7a383",
         "file": "check_alt",
         "css": "ok-circle"
       },
@@ -2919,6 +3235,7 @@ module.exports = [
           "reject"
         ],
         "code": 10005,
+        "uid": "11e664deed5b2587456a4f9c01d720b6",
         "file": "x",
         "css": "cancel"
       },
@@ -2929,6 +3246,7 @@ module.exports = [
           "reject"
         ],
         "code": 10006,
+        "uid": "188e881b2e2f2b1eb350eb7697aabafd",
         "file": "x_alt",
         "css": "cancel-circle"
       },
@@ -2937,6 +3255,7 @@ module.exports = [
           "plus"
         ],
         "code": 43,
+        "uid": "dbd39eb5a1d67beb54cfcb535e840e0f",
         "file": "plus",
         "css": "plus"
       },
@@ -2945,6 +3264,7 @@ module.exports = [
           "plus"
         ],
         "code": 10133,
+        "uid": "59ba4f90d2ca2a843f4f930b03270362",
         "file": "plus_alt",
         "css": "plus-circle"
       },
@@ -2953,6 +3273,7 @@ module.exports = [
           "minus"
         ],
         "code": 45,
+        "uid": "9559f17a471856ef50ed266e726cfa25",
         "file": "minus",
         "css": "minus"
       },
@@ -2961,6 +3282,7 @@ module.exports = [
           "minus"
         ],
         "code": 10134,
+        "uid": "4062c0e99a3540f6c261bd08ef0fb63f",
         "file": "minus_alt",
         "css": "minus-circle"
       },
@@ -2970,6 +3292,7 @@ module.exports = [
           "question"
         ],
         "code": 10067,
+        "uid": "f3eb666ee77d5120ac33c710aa3fd28e",
         "file": "question_mark",
         "css": "help"
       },
@@ -2978,6 +3301,7 @@ module.exports = [
           "info"
         ],
         "code": 8505,
+        "uid": "ccd52a22af21fbaa98a9c85fb50fca6b",
         "file": "info",
         "css": "info"
       },
@@ -2986,6 +3310,7 @@ module.exports = [
           "home"
         ],
         "code": 8962,
+        "uid": "d6944e1d9af302093d43b299bbecbbbe02",
         "file": "home",
         "css": "home"
       },
@@ -2996,6 +3321,7 @@ module.exports = [
           "address"
         ],
         "code": 128279,
+        "uid": "754557fa790629b8df53349af508af41",
         "file": "link",
         "css": "link"
       },
@@ -3006,6 +3332,7 @@ module.exports = [
           "paperclip"
         ],
         "code": 128206,
+        "uid": "1df601d49c98cef45ef993db54bd966d",
         "file": "paperclip",
         "css": "attach"
       },
@@ -3014,6 +3341,7 @@ module.exports = [
           "lock"
         ],
         "code": 128274,
+        "uid": "9682f692dd55ada1d1741a3a56420232",
         "file": "lock_fill",
         "css": "lock"
       },
@@ -3022,6 +3350,7 @@ module.exports = [
           "lock"
         ],
         "code": 59144,
+        "uid": "2648c9967bbf1c714670b9f79d7d43d7",
         "file": "lock_stroke",
         "css": "lock-empty"
       },
@@ -3031,6 +3360,7 @@ module.exports = [
           "unlock"
         ],
         "code": 128275,
+        "uid": "51fe10dcd3f6669d6a1ea52fc94d5173",
         "file": "unlock_fill",
         "css": "lock-open"
       },
@@ -3040,6 +3370,7 @@ module.exports = [
           "unlock"
         ],
         "code": 59145,
+        "uid": "7f374d3b7333829adfc2dc54a08f25f6",
         "file": "unlock_stroke",
         "css": "lock-open-empty"
       },
@@ -3050,8 +3381,9 @@ module.exports = [
         ],
         "code": 128204,
         "from": 61581,
-        "css": "pin",
-        "file": "pin"
+        "uid": "794d73c3a5fcf710265679700e470578",
+        "file": "pin",
+        "css": "pin"
       },
       {
         "search": [
@@ -3059,6 +3391,7 @@ module.exports = [
           "subscribe"
         ],
         "code": 59146,
+        "uid": "fbb01025c73ffb726bf28b98619df36d",
         "file": "eye",
         "css": "eye"
       },
@@ -3069,6 +3402,7 @@ module.exports = [
           "offer"
         ],
         "code": 59148,
+        "uid": "d3d5f318c8e9a58245c2e48c7ce0f57d",
         "file": "tag_fill",
         "css": "tag"
       },
@@ -3079,6 +3413,7 @@ module.exports = [
           "offer"
         ],
         "code": 59150,
+        "uid": "e713848e7db2b6593236d147dd4e81ad",
         "file": "tag_stroke",
         "css": "tag-empty"
       },
@@ -3087,6 +3422,7 @@ module.exports = [
           "download"
         ],
         "code": 128229,
+        "uid": "815576dccc008afcfd83a38378a4fdde",
         "file": "download",
         "css": "download"
       },
@@ -3095,6 +3431,7 @@ module.exports = [
           "upload"
         ],
         "code": 128228,
+        "uid": "2dabd0ee753bedbc9c1c52990d204403",
         "file": "upload",
         "css": "upload"
       },
@@ -3104,6 +3441,7 @@ module.exports = [
           "cloud"
         ],
         "code": 59152,
+        "uid": "acba01b26400b5e898ef20aabb2ff84d",
         "file": "cloud_download",
         "css": "download-cloud"
       },
@@ -3113,6 +3451,7 @@ module.exports = [
           "cloud"
         ],
         "code": 59153,
+        "uid": "efca324e399b7ce0e33c94090bb8784b",
         "file": "cloud_upload",
         "css": "upload-cloud"
       },
@@ -3121,6 +3460,7 @@ module.exports = [
           "quote"
         ],
         "code": 10077,
+        "uid": "661bd5ba1dad15ad9acbfcd8b8af76f3",
         "file": "left_quote",
         "css": "quote-left"
       },
@@ -3129,6 +3469,7 @@ module.exports = [
           "quote"
         ],
         "code": 10078,
+        "uid": "bc0af4824c8eedcad7bc0d35911dac2a",
         "file": "right_quote",
         "css": "quote-right"
       },
@@ -3137,6 +3478,7 @@ module.exports = [
           "quote"
         ],
         "code": 10075,
+        "uid": "96a3aff31cec6cfbe6177151b3a44d20",
         "file": "left_quote_alt",
         "css": "quote-left-alt"
       },
@@ -3145,6 +3487,7 @@ module.exports = [
           "quote"
         ],
         "code": 10076,
+        "uid": "6d0d103e180c68aa77bd26a595b5aa5f",
         "file": "right_quote_alt",
         "css": "quote-right-alt"
       },
@@ -3156,6 +3499,7 @@ module.exports = [
           "edit"
         ],
         "code": 9998,
+        "uid": "667b873c8422e4cab006df8422cb51c5",
         "file": "pen_alt_stroke",
         "css": "pencil"
       },
@@ -3167,6 +3511,7 @@ module.exports = [
           "edit"
         ],
         "code": 9999,
+        "uid": "e3e12be877eab92e593ca185223e7a5b",
         "file": "pen_alt_fill",
         "css": "pencil-neg"
       },
@@ -3178,6 +3523,7 @@ module.exports = [
           "edit"
         ],
         "code": 10000,
+        "uid": "eedb189bc6326c685d83627f78e1c9de",
         "file": "pen_alt2",
         "css": "pencil-alt"
       },
@@ -3188,6 +3534,7 @@ module.exports = [
           "back"
         ],
         "code": 8630,
+        "uid": "ce5e29aa5208417700e7f7012a236c00",
         "file": "undo",
         "css": "undo"
       },
@@ -3198,6 +3545,7 @@ module.exports = [
           "write"
         ],
         "code": 59160,
+        "uid": "679d36f8485f05180a2719c91b3f621e",
         "file": "comment_stroke",
         "css": "comment"
       },
@@ -3208,6 +3556,7 @@ module.exports = [
           "write"
         ],
         "code": 59161,
+        "uid": "1bea05ec4430cc1cd93622249d6b92e9",
         "file": "comment_fill",
         "css": "comment-inv"
       },
@@ -3218,6 +3567,7 @@ module.exports = [
           "write"
         ],
         "code": 59162,
+        "uid": "acb5a542eef1c187078a9af1ede3db01",
         "file": "comment_alt1_stroke",
         "css": "comment-alt"
       },
@@ -3228,6 +3578,7 @@ module.exports = [
           "write"
         ],
         "code": 59163,
+        "uid": "7636185c02f509cf3b305508532a5c05",
         "file": "comment_alt1_fill",
         "css": "comment-inv-alt"
       },
@@ -3238,6 +3589,7 @@ module.exports = [
           "write"
         ],
         "code": 59164,
+        "uid": "2ae040a98998e1497aa0c5ddbacaf3c0",
         "file": "comment_alt2_stroke",
         "css": "comment-alt2"
       },
@@ -3248,6 +3600,7 @@ module.exports = [
           "write"
         ],
         "code": 59165,
+        "uid": "e34c1d65ed4ecd53aec3687f0e5b1cf0",
         "file": "comment_alt2_fill",
         "css": "comment-inv-alt2"
       },
@@ -3257,6 +3610,7 @@ module.exports = [
           "talk"
         ],
         "code": 59168,
+        "uid": "7e2642b7a42728c7d9ce5558c3f8461b",
         "file": "chat_alt_stroke",
         "css": "chat"
       },
@@ -3266,6 +3620,7 @@ module.exports = [
           "talk"
         ],
         "code": 59169,
+        "uid": "cc8beaf58a46ee4186e7aa51209a9b53",
         "file": "chat_alt_fill",
         "css": "chat-inv"
       },
@@ -3276,6 +3631,7 @@ module.exports = [
           "marker"
         ],
         "code": 59172,
+        "uid": "08a23ea96a596b1b5f12f6abbbc8f5f9",
         "file": "map_pin_fill",
         "css": "location"
       },
@@ -3286,6 +3642,7 @@ module.exports = [
           "marker"
         ],
         "code": 59173,
+        "uid": "d061c177f823e3ab1eb38085f84efaf2",
         "file": "map_pin_stroke",
         "css": "location-inv"
       },
@@ -3296,6 +3653,7 @@ module.exports = [
           "marker"
         ],
         "code": 59174,
+        "uid": "cfcd1785b56a93cbac7662294861173e",
         "file": "map_pin_alt",
         "css": "location-alt"
       },
@@ -3304,6 +3662,7 @@ module.exports = [
           "compass"
         ],
         "code": 59176,
+        "uid": "47ad68217678b39090ac757b873da2e6",
         "file": "compass",
         "css": "compass"
       },
@@ -3313,6 +3672,7 @@ module.exports = [
           "delete"
         ],
         "code": 59177,
+        "uid": "d41b15fca9100375790a920f2deda3ff",
         "file": "trash_fill",
         "css": "trash"
       },
@@ -3322,6 +3682,7 @@ module.exports = [
           "delete"
         ],
         "code": 59178,
+        "uid": "ef0c0495599c1e1d733359546ae3a48a",
         "file": "trash_stroke",
         "css": "trash-empty"
       },
@@ -3331,6 +3692,7 @@ module.exports = [
           "article"
         ],
         "code": 59184,
+        "uid": "9ebd01466c6cb73106d26dbacef5f84a",
         "file": "document_alt_stroke",
         "css": "doc"
       },
@@ -3340,6 +3702,7 @@ module.exports = [
           "article"
         ],
         "code": 59185,
+        "uid": "cb35902d643e9e6ba8ba1cf739edef9a",
         "file": "document_alt_fill",
         "css": "doc-inv"
       },
@@ -3349,6 +3712,7 @@ module.exports = [
           "article"
         ],
         "code": 59186,
+        "uid": "d52e2eb2073c96a2a33487779090f899",
         "file": "document_stroke",
         "css": "doc-alt"
       },
@@ -3358,6 +3722,7 @@ module.exports = [
           "article"
         ],
         "code": 59187,
+        "uid": "c93d6731f7cc8c218754e005306bad54",
         "file": "document_fill",
         "css": "doc-inv-alt"
       },
@@ -3367,6 +3732,7 @@ module.exports = [
           "article"
         ],
         "code": 59188,
+        "uid": "8e22728e15b02b170033259b208e43e1",
         "file": "article",
         "css": "article"
       },
@@ -3377,6 +3743,7 @@ module.exports = [
           "more"
         ],
         "code": 59189,
+        "uid": "f886d2d6cc8cb1b1117e26819a7bc282",
         "file": "read_more",
         "css": "article-alt"
       },
@@ -3386,6 +3753,7 @@ module.exports = [
           "doc"
         ],
         "code": 128214,
+        "uid": "8fc56819afcd07e2786e34f18d39b71b",
         "file": "book_alt2",
         "css": "book-open"
       },
@@ -3394,6 +3762,7 @@ module.exports = [
           "folder"
         ],
         "code": 128193,
+        "uid": "b13a27d19dd739e29cbc7926085386d9",
         "file": "folder_fill",
         "css": "folder"
       },
@@ -3402,6 +3771,7 @@ module.exports = [
           "folder"
         ],
         "code": 128194,
+        "uid": "13ea1e82d38c7ed614d9ee85e9c42053",
         "file": "folder_stroke",
         "css": "folder-empty"
       },
@@ -3412,6 +3782,7 @@ module.exports = [
           "package"
         ],
         "code": 128230,
+        "uid": "dd6df3b754e8d0dbf09d9b24088f0442",
         "file": "box",
         "css": "box"
       },
@@ -3420,6 +3791,7 @@ module.exports = [
           "rss"
         ],
         "code": 59194,
+        "uid": "cbfc8f7ba004d60f5134b30a27e87829",
         "file": "rss_alt",
         "css": "rss"
       },
@@ -3428,6 +3800,7 @@ module.exports = [
           "rss"
         ],
         "code": 59195,
+        "uid": "d6a9fe8ceb1a852d925452694691a41d",
         "file": "rss",
         "css": "rss-alt"
       },
@@ -3438,6 +3811,7 @@ module.exports = [
           "gear"
         ],
         "code": 9881,
+        "uid": "fc94b92194752796654c96c7b7dccebb",
         "file": "cog",
         "css": "cog"
       },
@@ -3447,6 +3821,7 @@ module.exports = [
           "wrench"
         ],
         "code": 128295,
+        "uid": "f185a7454f33a8fbcdd943db8a998cfd",
         "file": "wrench",
         "css": "wrench"
       },
@@ -3455,6 +3830,7 @@ module.exports = [
           "share"
         ],
         "code": 59196,
+        "uid": "afdef1656447e2558662b393d6b4bb75",
         "file": "share",
         "css": "share"
       },
@@ -3464,6 +3840,7 @@ module.exports = [
           "date"
         ],
         "code": 128197,
+        "uid": "c833c98d78cfebed5780cfaaa302a12b",
         "file": "calendar_alt_stroke",
         "css": "calendar"
       },
@@ -3473,6 +3850,7 @@ module.exports = [
           "date"
         ],
         "code": 59198,
+        "uid": "e2d4382fb8eb0e89e8990f4c44753342",
         "file": "calendar_alt_fill",
         "css": "calendar-inv"
       },
@@ -3482,6 +3860,7 @@ module.exports = [
           "date"
         ],
         "code": 128198,
+        "uid": "4dcad05669d06805ebe58675e14408ad",
         "file": "calendar",
         "css": "calendar-alt"
       },
@@ -3490,6 +3869,7 @@ module.exports = [
           "mic"
         ],
         "code": 127908,
+        "uid": "659d9389a0f9630c7d6dca5a83544901",
         "file": "mic",
         "css": "mic"
       },
@@ -3500,6 +3880,7 @@ module.exports = [
           "mute"
         ],
         "code": 128263,
+        "uid": "fcf5b3c96534af57ea0e201d4500ed8b",
         "file": "volume_mute",
         "css": "volume-off"
       },
@@ -3509,6 +3890,7 @@ module.exports = [
           "sound"
         ],
         "code": 128266,
+        "uid": "03a0e5d43971354eb6af8fdc46e33ab6",
         "file": "volume",
         "css": "volume-up"
       },
@@ -3519,6 +3901,7 @@ module.exports = [
           "headphones"
         ],
         "code": 127911,
+        "uid": "52177c3387cdac48d6ed18bebe84c34a",
         "file": "headphones",
         "css": "headphones"
       },
@@ -3528,6 +3911,7 @@ module.exports = [
           "time"
         ],
         "code": 128340,
+        "uid": "b99d736cef489a3150ba8aac7c4e8403",
         "file": "clock",
         "css": "clock"
       },
@@ -3538,6 +3922,7 @@ module.exports = [
           "light"
         ],
         "code": 128161,
+        "uid": "831e70448a066d4403a0bbd8ff0b8973",
         "file": "lightbulb",
         "css": "lamp"
       },
@@ -3547,6 +3932,7 @@ module.exports = [
           "deny"
         ],
         "code": 128683,
+        "uid": "7cf0c6fefa5327473dec91427434ae26",
         "file": "denied",
         "css": "block"
       },
@@ -3556,6 +3942,7 @@ module.exports = [
           "fullscreen"
         ],
         "code": 59204,
+        "uid": "4815ddddea76d90e367a9694a93b7e24",
         "file": "fullscreen",
         "css": "resize-full"
       },
@@ -3565,6 +3952,7 @@ module.exports = [
           "fullscreen"
         ],
         "code": 59205,
+        "uid": "776687efbdb973ebc67e049cc4c41b13",
         "file": "fullscreen_alt",
         "css": "resize-full-alt"
       },
@@ -3573,6 +3961,7 @@ module.exports = [
           "resize"
         ],
         "code": 59206,
+        "uid": "b05c5a209b56e7ea6632a31e4bd0b41d",
         "file": "fullscreen_exit",
         "css": "resize-small"
       },
@@ -3581,6 +3970,7 @@ module.exports = [
           "resize"
         ],
         "code": 59207,
+        "uid": "8596dc69a5e7e0297e8926b6e2563509",
         "file": "fullscreen_exit_alt",
         "css": "resize-small-alt"
       },
@@ -3589,6 +3979,7 @@ module.exports = [
           "resize"
         ],
         "code": 11020,
+        "uid": "7dde84b4f180e3c07523faecda81caa6",
         "file": "move_vertical",
         "css": "resize-vertical"
       },
@@ -3597,6 +3988,7 @@ module.exports = [
           "resize"
         ],
         "code": 11021,
+        "uid": "63493102fc6b827e4a7be30b13cbf3b4",
         "file": "move_horizontal",
         "css": "resize-horizontal"
       },
@@ -3605,6 +3997,7 @@ module.exports = [
           "move"
         ],
         "code": 59210,
+        "uid": "be25d23b15c3294588947a6b959811ec",
         "file": "move",
         "css": "move"
       },
@@ -3614,6 +4007,7 @@ module.exports = [
           "window"
         ],
         "code": 59212,
+        "uid": "971be54c1452e2558926d36786e6b1d7",
         "file": "new_window",
         "css": "popup"
       },
@@ -3623,6 +4017,7 @@ module.exports = [
           "down"
         ],
         "code": 8595,
+        "uid": "41d90aea465750c2a5dc6cb0bdef9617",
         "file": "arrow_down",
         "css": "down"
       },
@@ -3632,6 +4027,7 @@ module.exports = [
           "left"
         ],
         "code": 8592,
+        "uid": "a76545bb6ea4e684505da08d26e58467",
         "file": "arrow_left",
         "css": "left"
       },
@@ -3641,6 +4037,7 @@ module.exports = [
           "right"
         ],
         "code": 8594,
+        "uid": "7686897ce7ec808ff19aec948b5aaf43",
         "file": "arrow_right",
         "css": "right"
       },
@@ -3650,6 +4047,7 @@ module.exports = [
           "up"
         ],
         "code": 8593,
+        "uid": "98edd99a41fbdc5633151cd21b7e56f8",
         "file": "arrow_up",
         "css": "up"
       },
@@ -3659,6 +4057,7 @@ module.exports = [
           "down"
         ],
         "code": 58532,
+        "uid": "524f670504958d3e32ef887b99d8aca2",
         "file": "arrow_down_alt1",
         "css": "down-circle"
       },
@@ -3668,6 +4067,7 @@ module.exports = [
           "left"
         ],
         "code": 58529,
+        "uid": "a263473d2d406881ea08f991c1b38694",
         "file": "arrow_left_alt1",
         "css": "left-circle"
       },
@@ -3677,6 +4077,7 @@ module.exports = [
           "right"
         ],
         "code": 58530,
+        "uid": "ccee648b9e12a533f6957967e29ebdef",
         "file": "arrow_right_alt1",
         "css": "right-circle"
       },
@@ -3686,6 +4087,7 @@ module.exports = [
           "up"
         ],
         "code": 58531,
+        "uid": "55ba7d8f711ce265df7de4ab7f148e65",
         "file": "arrow_up_alt1",
         "css": "up-circle"
       },
@@ -3697,6 +4099,7 @@ module.exports = [
           "repeat"
         ],
         "code": 10227,
+        "uid": "5889f24614ead600acce1af6a861b97c",
         "file": "reload",
         "css": "cw"
       },
@@ -3708,6 +4111,7 @@ module.exports = [
           "refresh"
         ],
         "code": 128260,
+        "uid": "5d3ef4b7c90d2931e641b840ee42f694",
         "file": "loop_alt2",
         "css": "loop"
       },
@@ -3719,6 +4123,7 @@ module.exports = [
           "refresh"
         ],
         "code": 128257,
+        "uid": "5386cf333c67332c278b798c9fded7e5",
         "file": "loop_alt3",
         "css": "loop-alt"
       },
@@ -3729,6 +4134,7 @@ module.exports = [
           "transfer"
         ],
         "code": 8644,
+        "uid": "e07df3e5b9ae72836b7804f38f0644a9",
         "file": "transfer",
         "css": "exchange"
       },
@@ -3739,6 +4145,7 @@ module.exports = [
           "fork"
         ],
         "code": 9095,
+        "uid": "09b87624e9d9a79109429ea81ed0d02d",
         "file": "fork",
         "css": "split"
       },
@@ -3747,6 +4154,7 @@ module.exports = [
           "arrow"
         ],
         "code": 10549,
+        "uid": "f3ebd6751c15a280af5cc5f4a764187d",
         "file": "curved_arrow",
         "css": "arrow-curved"
       },
@@ -3756,6 +4164,7 @@ module.exports = [
           "player"
         ],
         "code": 9654,
+        "uid": "929ff290f0be577d2a2d587d5a53eec1",
         "file": "play",
         "css": "play"
       },
@@ -3765,6 +4174,7 @@ module.exports = [
           "player"
         ],
         "code": 57416,
+        "uid": "8a6c569e59c69e9de113978b11c057b8",
         "file": "play_alt",
         "css": "play-circle2"
       },
@@ -3774,6 +4184,7 @@ module.exports = [
           "player"
         ],
         "code": 9642,
+        "uid": "e25c28400dafedf82c27c46ccd6a49a7",
         "file": "stop",
         "css": "stop"
       },
@@ -3783,6 +4194,7 @@ module.exports = [
           "player"
         ],
         "code": 9097,
+        "uid": "b660aec4a0c2cdec04a3cd708e00fa07",
         "file": "pause",
         "css": "pause"
       },
@@ -3792,6 +4204,7 @@ module.exports = [
           "player"
         ],
         "code": 9198,
+        "uid": "6afd0c334e4d1dd182d44e9e63257174",
         "file": "first",
         "css": "to-start"
       },
@@ -3801,6 +4214,7 @@ module.exports = [
           "player"
         ],
         "code": 9197,
+        "uid": "f0d8d7ccb0adb92a41c058d7fd9f11b2",
         "file": "last",
         "css": "to-end"
       },
@@ -3810,6 +4224,7 @@ module.exports = [
           "player"
         ],
         "code": 9167,
+        "uid": "e5a569724908d47c2afc964d9b78a477",
         "file": "eject",
         "css": "eject"
       },
@@ -3818,6 +4233,7 @@ module.exports = [
           "target"
         ],
         "code": 127919,
+        "uid": "74ae46b1527f71bad40a91762f4190ef",
         "file": "target",
         "css": "target"
       },
@@ -3830,6 +4246,7 @@ module.exports = [
           "wifi"
         ],
         "code": 128246,
+        "uid": "c30b64ea0091fb65b8e084b9a4c4088a",
         "file": "bars_alt",
         "css": "signal"
       },
@@ -3841,6 +4258,7 @@ module.exports = [
           "award"
         ],
         "code": 127945,
+        "uid": "96f70b04affa57b79d70f5874815a912",
         "file": "award_fill",
         "css": "award"
       },
@@ -3852,6 +4270,7 @@ module.exports = [
           "award"
         ],
         "code": 59236,
+        "uid": "01879adc8814a7cb4a5f6d3301558b2f",
         "file": "award_stroke",
         "css": "award-empty"
       },
@@ -3860,6 +4279,7 @@ module.exports = [
           "list"
         ],
         "code": 59237,
+        "uid": "ef47651da3866460f27baf85ae234e5c",
         "file": "list",
         "css": "list"
       },
@@ -3868,6 +4288,7 @@ module.exports = [
           "list"
         ],
         "code": 59238,
+        "uid": "96418ab910c40c3bf61a9ba7b718c49d",
         "file": "list_nested",
         "css": "list-nested"
       },
@@ -3876,6 +4297,7 @@ module.exports = [
           "battery"
         ],
         "code": 59250,
+        "uid": "dd28d0426ce746ebaf9a0100a774a6fa",
         "file": "battery_empty",
         "css": "bat-empty"
       },
@@ -3884,6 +4306,7 @@ module.exports = [
           "battery"
         ],
         "code": 59251,
+        "uid": "a77d168a49c592c0766e9e04bde3a061",
         "file": "battery_half",
         "css": "bat-half"
       },
@@ -3892,6 +4315,7 @@ module.exports = [
           "battery"
         ],
         "code": 59252,
+        "uid": "24a284baa85ebcdcaff1249a6f5c6e1d",
         "file": "battery_full",
         "css": "bat-full"
       },
@@ -3901,6 +4325,7 @@ module.exports = [
           "charge"
         ],
         "code": 59253,
+        "uid": "49ea09357725720daebc1596f007af57",
         "file": "battery_charging",
         "css": "bat-charge"
       },
@@ -3910,6 +4335,7 @@ module.exports = [
           "iphone"
         ],
         "code": 128241,
+        "uid": "2adb5fa922bd92ebeef498ec7dbcae6d",
         "file": "iphone",
         "css": "mobile"
       },
@@ -3919,6 +4345,7 @@ module.exports = [
           "vinyl"
         ],
         "code": 128191,
+        "uid": "991360fdaaad39ce2e91cae81cdc244c",
         "file": "cd",
         "css": "cd"
       },
@@ -3927,6 +4354,7 @@ module.exports = [
           "equalizer"
         ],
         "code": 59285,
+        "uid": "e3699d145bd628d2a35d4a508b616f0c",
         "file": "equalizer",
         "css": "equalizer"
       },
@@ -3936,6 +4364,7 @@ module.exports = [
           "arrow"
         ],
         "code": 59286,
+        "uid": "e2aba9565be51ca70224c07282afbba6",
         "file": "cursor",
         "css": "cursor"
       },
@@ -3944,6 +4373,7 @@ module.exports = [
           "aperture"
         ],
         "code": 59287,
+        "uid": "a264b521b6d3e15699d306afcb57a5cf",
         "file": "aperture",
         "css": "aperture"
       },
@@ -3952,6 +4382,7 @@ module.exports = [
           "aperture"
         ],
         "code": 59288,
+        "uid": "30c680680eee267dcf67edf14418494d",
         "file": "aperture_alt",
         "css": "aperture-alt"
       },
@@ -3961,6 +4392,7 @@ module.exports = [
           "wheel"
         ],
         "code": 59289,
+        "uid": "4338ab07af9a5bd3a7bd8984047cb018",
         "file": "steering_wheel",
         "css": "steering-wheel"
       },
@@ -3969,6 +4401,7 @@ module.exports = [
           "book"
         ],
         "code": 128213,
+        "uid": "9597c5a31b6bdd94f4936fcc71d30613",
         "file": "book",
         "css": "book"
       },
@@ -3977,6 +4410,7 @@ module.exports = [
           "book"
         ],
         "code": 128212,
+        "uid": "d7059fc5329e1a7fcab80ba87831c957",
         "file": "book_alt",
         "css": "book-alt"
       },
@@ -3986,6 +4420,7 @@ module.exports = [
           "brush"
         ],
         "code": 59290,
+        "uid": "b3a9e2dab4d19ea3b2f628242c926bfe",
         "file": "brush",
         "css": "brush"
       },
@@ -3995,6 +4430,7 @@ module.exports = [
           "brush"
         ],
         "code": 59291,
+        "uid": "5ad5e617d3c6eb7da3df417a47b27dba",
         "file": "brush_alt",
         "css": "brush-alt"
       },
@@ -4004,6 +4440,7 @@ module.exports = [
           "eyedropper"
         ],
         "code": 59292,
+        "uid": "b9be509237c9abea9c258d677777b713",
         "file": "eyedropper",
         "css": "eyedropper"
       },
@@ -4013,6 +4450,7 @@ module.exports = [
           "layers"
         ],
         "code": 59293,
+        "uid": "d2c499942f8a7c037d5a94f123eeb478",
         "file": "layers",
         "css": "layers"
       },
@@ -4022,6 +4460,7 @@ module.exports = [
           "layers"
         ],
         "code": 59294,
+        "uid": "de456a594a2a4e68413f60d7e2910596",
         "file": "layers_alt",
         "css": "layers-alt"
       },
@@ -4031,6 +4470,7 @@ module.exports = [
           "sun"
         ],
         "code": 9788,
+        "uid": "9f41cbda67dafb38926a4201a01691c9",
         "file": "sun_stroke",
         "css": "sun"
       },
@@ -4040,6 +4480,7 @@ module.exports = [
           "sun"
         ],
         "code": 9728,
+        "uid": "48050e07077b01021f7fbdbbec8f7de7",
         "file": "sun_fill",
         "css": "sun-inv"
       },
@@ -4049,6 +4490,7 @@ module.exports = [
           "cloud"
         ],
         "code": 9729,
+        "uid": "432dbf40f2e51008b92829d2c46dfcb8",
         "file": "cloud",
         "css": "cloud"
       },
@@ -4058,6 +4500,7 @@ module.exports = [
           "rain"
         ],
         "code": 9926,
+        "uid": "e399a5bdcbb20744e3a18168a47f918f",
         "file": "rain",
         "css": "rain"
       },
@@ -4067,6 +4510,7 @@ module.exports = [
           "bolt"
         ],
         "code": 9889,
+        "uid": "606054f1c67f8193d59d9c12e3f4d3e1",
         "file": "bolt",
         "css": "flash"
       },
@@ -4076,6 +4520,7 @@ module.exports = [
           "sleep"
         ],
         "code": 9790,
+        "uid": "3dbc94f3878ecb524fd61d9de3aeabd5",
         "file": "moon_stroke",
         "css": "moon"
       },
@@ -4085,6 +4530,7 @@ module.exports = [
           "sleep"
         ],
         "code": 59296,
+        "uid": "c2152732d525871cf35345955854f711",
         "file": "moon_fill",
         "css": "moon-inv"
       },
@@ -4094,6 +4540,7 @@ module.exports = [
           "umbrella"
         ],
         "code": 9730,
+        "uid": "fd8e75dc94d9b3ff9ac959fd8f7e83e6",
         "file": "umbrella",
         "css": "umbrella"
       },
@@ -4104,6 +4551,7 @@ module.exports = [
           "diagram"
         ],
         "code": 128202,
+        "uid": "f1ecd8633b0ec659877c02cd796df1fd",
         "file": "bars",
         "css": "chart-bar"
       },
@@ -4114,6 +4562,7 @@ module.exports = [
           "diagram"
         ],
         "code": 59298,
+        "uid": "ff1cd67dfb30d12965d950e8a609c31f",
         "file": "chart",
         "css": "chart-pie"
       },
@@ -4124,6 +4573,7 @@ module.exports = [
           "diagram"
         ],
         "code": 59299,
+        "uid": "8aa58289df2cc42b260897d7e61aa2c2",
         "file": "chart_alt",
         "css": "chart-pie-alt"
       },
@@ -4132,6 +4582,7 @@ module.exports = [
           "key"
         ],
         "code": 9919,
+        "uid": "76fa76eb3472394c9937f7c7734f77b2",
         "file": "key_stroke",
         "css": "key"
       },
@@ -4140,6 +4591,7 @@ module.exports = [
           "key"
         ],
         "code": 128273,
+        "uid": "c6ecc52b6db2a649a08ff54e5ea62886",
         "file": "key_fill",
         "css": "key-inv"
       },
@@ -4148,6 +4600,7 @@ module.exports = [
           "hash"
         ],
         "code": 35,
+        "uid": "d6944e1d9af302093d43b299bbecbbbe",
         "file": "hash",
         "css": "hash"
       },
@@ -4157,6 +4610,7 @@ module.exports = [
           "at"
         ],
         "code": 64,
+        "uid": "6db15bda083b09a04bd27dcc1d00744d",
         "file": "at",
         "css": "at"
       },
@@ -4165,6 +4619,7 @@ module.exports = [
           "pilcrow"
         ],
         "code": 182,
+        "uid": "0e43f93967e6db58cc44dfbc1fe7f516",
         "file": "pilcrow",
         "css": "pilcrow"
       },
@@ -4173,6 +4628,7 @@ module.exports = [
           "dial"
         ],
         "code": 59300,
+        "uid": "3a5f357ad2f283dbe0ec52eb4d177eb7",
         "file": "dial",
         "css": "dial"
       }
@@ -4212,6 +4668,7 @@ module.exports = [
           "homepage": "http://www.facebook.com/brandpermissions/logos.php",
           "author": "Facebook"
         },
+        "uid": "240979dd9fcf2e46250e66792edb8092",
         "file": "facebook",
         "transform": {
           "offset": 0.05
@@ -4228,6 +4685,7 @@ module.exports = [
           "github": "https://github.com/puzrin",
           "author": "Vitaly Puzrin"
         },
+        "uid": "8045477f6a7ef0bd7caff130ad25b88d",
         "file": "facebook-rect",
         "transform": {
           "offset": 0.05
@@ -4244,6 +4702,7 @@ module.exports = [
           "github": "https://github.com/puzrin",
           "author": "Vitaly Puzrin"
         },
+        "uid": "d611dd319d8c13b4551dc5bd85c1bdfd",
         "file": "twitter",
         "transform": {
           "offset": 0.05
@@ -4259,6 +4718,7 @@ module.exports = [
           "homepage": "https://twitter.com/about/resources/logos",
           "author": "Twitter"
         },
+        "uid": "4c01f5d3ba5fbf029bca8630cce41e6a",
         "file": "twitter-bird",
         "transform": {
           "rescale": 0.9,
@@ -4276,6 +4736,7 @@ module.exports = [
           "github": "https://github.com/puzrin",
           "author": "Vitaly Puzrin"
         },
+        "uid": "70cdf244c51630e09038659d1dcbee87",
         "file": "vimeo",
         "transform": {
           "rescale": 0.8,
@@ -4293,6 +4754,7 @@ module.exports = [
           "github": "https://github.com/puzrin",
           "author": "Vitaly Puzrin"
         },
+        "uid": "31483d870b3f14ac12bdfe7331a6af99",
         "file": "vimeo-rect",
         "transform": {
           "offset": 0.05
@@ -4309,6 +4771,7 @@ module.exports = [
           "github": "https://github.com/puzrin",
           "author": "Vitaly Puzrin"
         },
+        "uid": "076f25da90f45dd112e006f2cd7ea76b",
         "file": "tumblr",
         "transform": {
           "offset": 0.05
@@ -4325,6 +4788,7 @@ module.exports = [
           "github": "https://github.com/puzrin",
           "author": "Vitaly Puzrin"
         },
+        "uid": "9e6a3483242474b6a1f77739ae3fdfdc",
         "file": "tumblr-rect",
         "transform": {
           "offset": 0.05
@@ -4340,6 +4804,7 @@ module.exports = [
           "homepage": "http://www.google.com/+/business/brand-guidelines.html",
           "author": "Google"
         },
+        "uid": "626fb97a7c0c0db53a1853fb9e96e223",
         "file": "googleplus-rect",
         "transform": {
           "offset": 0.05
@@ -4356,6 +4821,7 @@ module.exports = [
           "github": "https://github.com/puzrin",
           "author": "Vitaly Puzrin"
         },
+        "uid": "24d1008bf15b6c02a5e7a6af026987dd",
         "file": "github-text",
         "transform": {
           "offset": 0.05
@@ -4372,6 +4838,7 @@ module.exports = [
           "github": "https://github.com/puzrin",
           "author": "Vitaly Puzrin"
         },
+        "uid": "4a0bb1ac004980bb3837560d4c9e8cee",
         "file": "github",
         "transform": {
           "rescale": 0.9,
@@ -4388,6 +4855,7 @@ module.exports = [
           "homepage": "http://www.alexpeattie.com/projects/justvector_icons/",
           "author": "Alex Peattie"
         },
+        "uid": "5a00c877da3f63d37cdc021815e3f5a9",
         "file": "skype",
         "transform": {
           "offset": 0.05
@@ -4404,6 +4872,7 @@ module.exports = [
           "github": "https://github.com/puzrin",
           "author": "Vitaly Puzrin"
         },
+        "uid": "01f67de2dc0137389f1c3aced6273acd",
         "file": "icq",
         "transform": {
           "offset": 0.05
@@ -4420,6 +4889,7 @@ module.exports = [
           "github": "https://github.com/puzrin",
           "author": "Vitaly Puzrin"
         },
+        "uid": "b2417d1ce399577d53fff70d54976fea",
         "file": "yandex",
         "transform": {
           "offset": 0.05
@@ -4436,6 +4906,7 @@ module.exports = [
           "github": "https://github.com/puzrin",
           "author": "Vitaly Puzrin"
         },
+        "uid": "ea0cb6bedac64ae7933b03dad3130ef6",
         "file": "yandex-rect",
         "transform": {
           "offset": 0.05
@@ -4444,13 +4915,14 @@ module.exports = [
       },
       {
         "search": [
-          "google"
+          "vkontakte"
         ],
         "code": 62218,
         "meta": {
           "homepage": "http://vk.com/help.php?page=about",
           "author": "Vkontakte"
         },
+        "uid": "5b16ceef1c8638bd5389c9302ea04098",
         "file": "vkontakte-rect",
         "transform": {
           "offset": 0.05
@@ -4466,6 +4938,7 @@ module.exports = [
           "homepage": "http://corp.mail.ru/communications/odnoklassniki",
           "author": "MailRu Group"
         },
+        "uid": "229e50061df526f24f1ae884fab52101",
         "file": "odnoklassniki",
         "transform": {
           "offset": 0.05
@@ -4481,6 +4954,7 @@ module.exports = [
           "homepage": "http://corp.mail.ru/communications/odnoklassniki",
           "author": "MailRu Group"
         },
+        "uid": "4a02cc611ae9fb342d6026b2ed6cc44e",
         "file": "odnoklassniki-rect",
         "transform": {
           "offset": 0.05
@@ -4492,5 +4966,813 @@ module.exports = [
       "baseline": 0.5
     },
     "id": 3
+  },
+  {
+    "font": {
+      "fontname": "websymbols",
+      "descent": 200,
+      "copyright": "Copyright (c) 2011 by Just Be Nice studio. All rights reserved.",
+      "familyname": "Web Symbols",
+      "weight": "Medium",
+      "version": "1.0",
+      "fullname": "Web Symbols",
+      "ascent": 800
+    },
+    "meta": {
+      "licence_url": "http://scripts.sil.org/OFL",
+      "css_prefix": "icon-",
+      "licence": "SIL",
+      "author": "Just Be Nice studio",
+      "homepage": "http://www.justbenicestudio.com/studio/websymbols/",
+      "email": "yes@justbenice.ru",
+      "columns": 4
+    },
+    "glyphs": [
+      {
+        "search": [
+          "search",
+          "find"
+        ],
+        "code": 128269,
+        "from": 76,
+        "uid": "221947bea81f49a11b863c686a7bd235",
+        "css": "search"
+      },
+      {
+        "search": [
+          "mail",
+          "email"
+        ],
+        "code": 9993,
+        "from": 64,
+        "uid": "cba6018f5de17c76f70b7d2c06037e5a",
+        "css": "mail"
+      },
+      {
+        "search": [
+          "heart"
+        ],
+        "code": 9829,
+        "from": 78,
+        "uid": "2a3cd95de2621bd87479396f236fd2a4",
+        "css": "heart"
+      },
+      {
+        "search": [
+          "heart"
+        ],
+        "code": 9825,
+        "from": 79,
+        "uid": "1bcc6c6369c3d475fa27115f806ff2ad",
+        "css": "heart-empty"
+      },
+      {
+        "search": [
+          "star"
+        ],
+        "code": 9733,
+        "from": 82,
+        "uid": "1526e1ee08023c1542cbf65d3a9afa93",
+        "css": "star"
+      },
+      {
+        "search": [
+          "profile",
+          "contact",
+          "user"
+        ],
+        "code": 128100,
+        "from": 85,
+        "uid": "fd3128bf109153952b1b775ea574504b",
+        "css": "user"
+      },
+      {
+        "search": [
+          "movie",
+          "video",
+          "film"
+        ],
+        "code": 127916,
+        "from": 77,
+        "uid": "c23a66951b34ed7d449688d559afb213",
+        "css": "video"
+      },
+      {
+        "search": [
+          "image",
+          "picture",
+          "photo"
+        ],
+        "code": 127748,
+        "from": 73,
+        "uid": "baa375529925294ea0a2bc889c93ba2d",
+        "css": "picture"
+      },
+      {
+        "search": [
+          "image",
+          "list",
+          "thumbnails"
+        ],
+        "code": 59144,
+        "from": 185,
+        "uid": "46cacfc5030a225f338323a3538a18e8",
+        "css": "th-large"
+      },
+      {
+        "search": [
+          "image",
+          "list",
+          "thumbnails"
+        ],
+        "code": 9871,
+        "from": 179,
+        "uid": "9e22a8a67fe3b88cdd5e4253c85debdb",
+        "css": "th"
+      },
+      {
+        "search": [
+          "list"
+        ],
+        "code": 9776,
+        "from": 178,
+        "uid": "84d19120538dd143b9cf5433f2417f48",
+        "css": "th-list"
+      },
+      {
+        "search": [
+          "ok",
+          true,
+          "check",
+          "mark"
+        ],
+        "code": 10003,
+        "from": 46,
+        "uid": "7b16b22168e762c88333f465da862098",
+        "css": "ok"
+      },
+      {
+        "search": [
+          "ok",
+          true,
+          "check",
+          "mark"
+        ],
+        "code": 10004,
+        "from": 47,
+        "uid": "157f2382d2c608c41d984c693174c83b",
+        "css": "ok-circle"
+      },
+      {
+        "search": [
+          "close",
+          "cancel",
+          "reject"
+        ],
+        "code": 10005,
+        "from": 39,
+        "uid": "8da3ac534210aae9c0f0e13804c1df97",
+        "css": "cancel"
+      },
+      {
+        "search": [
+          "close",
+          "cancel",
+          "reject"
+        ],
+        "code": 10006,
+        "from": 215,
+        "uid": "15739f3032c2aa3df67efc96b3ffef56",
+        "css": "cancel-circle"
+      },
+      {
+        "search": [
+          "plus"
+        ],
+        "code": 10133,
+        "from": 43,
+        "uid": "a66e72da83c98248ae3ef43808efc452",
+        "css": "plus-circle"
+      },
+      {
+        "search": [
+          "minus"
+        ],
+        "code": 10134,
+        "from": 45,
+        "uid": "994eaa764b3f30721f3839c64c390ce3",
+        "css": "minus-circle"
+      },
+      {
+        "search": [
+          "link",
+          "url",
+          "address"
+        ],
+        "code": 128279,
+        "from": 75,
+        "uid": "3c4a596e8ee3584c4c9e7002371db19f",
+        "css": "link"
+      },
+      {
+        "search": [
+          "attach",
+          "clip",
+          "paperclip"
+        ],
+        "code": 128206,
+        "from": 65,
+        "uid": "21115bb09fa242341cb91ed34710aa13",
+        "css": "attach"
+      },
+      {
+        "search": [
+          "lock"
+        ],
+        "code": 128274,
+        "from": 120,
+        "uid": "95c84da411a955a12baff8b0859c9276",
+        "css": "lock"
+      },
+      {
+        "search": [
+          "lock"
+        ],
+        "code": 128275,
+        "from": 119,
+        "uid": "5184430eda6a2b9c989990e4bca70746",
+        "css": "lock-open"
+      },
+      {
+        "search": [
+          "tag",
+          "price",
+          "offer"
+        ],
+        "code": 59148,
+        "from": 44,
+        "uid": "e6ad31134a018fdeb64efe72d39edd65",
+        "css": "tag"
+      },
+      {
+        "search": [
+          "reply"
+        ],
+        "code": 59154,
+        "from": 104,
+        "uid": "77dc6351a75ce82023a99696c9dd1ed3",
+        "css": "reply"
+      },
+      {
+        "search": [
+          "reply"
+        ],
+        "code": 59155,
+        "from": 105,
+        "uid": "0f9d6be0e0fe72ddcfd75c8a6401d1aa",
+        "css": "reply-all"
+      },
+      {
+        "search": [
+          "forward"
+        ],
+        "code": 10150,
+        "from": 106,
+        "uid": "32eebd7bef491a0cbf9bc839e40d271c",
+        "css": "forward"
+      },
+      {
+        "search": [
+          "code"
+        ],
+        "code": 59156,
+        "from": 72,
+        "uid": "838db85de51df09e2d0c34a17dc30ff6",
+        "css": "code"
+      },
+      {
+        "search": [
+          "retweet",
+          "twitter"
+        ],
+        "code": 59159,
+        "from": 74,
+        "uid": "63e2a597d744c3093e09fdd6108ee44f",
+        "css": "retweet"
+      },
+      {
+        "search": [
+          "comment",
+          "reply",
+          "write"
+        ],
+        "code": 59160,
+        "from": 99,
+        "uid": "889a8bd0b481e3523ede8a7d75164cd1",
+        "css": "comment"
+      },
+      {
+        "search": [
+          "comment",
+          "reply",
+          "write"
+        ],
+        "code": 59162,
+        "from": 100,
+        "uid": "b52aa05c9c55c41f1768cdaa940401a8",
+        "css": "comment-alt"
+      },
+      {
+        "search": [
+          "chat",
+          "talk"
+        ],
+        "code": 59168,
+        "from": 101,
+        "uid": "21f6a88daf13c62e5a70f5ef6ad9e23f",
+        "css": "chat"
+      },
+      {
+        "search": [
+          "attention",
+          "warning",
+          "alert"
+        ],
+        "code": 9888,
+        "from": 87,
+        "uid": "97ac1a82370ae58f02e4ff1bdc58ee86",
+        "css": "attention"
+      },
+      {
+        "search": [
+          "location",
+          "mark",
+          "marker"
+        ],
+        "code": 59172,
+        "from": 63,
+        "uid": "69f76f7134f721d16c28ab23f84d4882",
+        "css": "location"
+      },
+      {
+        "search": [
+          "doc",
+          "article"
+        ],
+        "code": 59184,
+        "from": 97,
+        "uid": "22baa2ff73747e588f6c066010654d6d",
+        "css": "doc"
+      },
+      {
+        "search": [
+          "doc",
+          "article"
+        ],
+        "code": 59191,
+        "from": 98,
+        "uid": "eb1d9ac1cfa79d55aaf290c5a4ff266b",
+        "css": "docs-landscape"
+      },
+      {
+        "search": [
+          "folder"
+        ],
+        "code": 128193,
+        "from": 70,
+        "uid": "f242fed2af708c938523b0e14d9c6b07",
+        "css": "folder"
+      },
+      {
+        "search": [
+          "archive"
+        ],
+        "code": 59192,
+        "from": 90,
+        "uid": "bb1090404a4d33340a9ad7302ef8b6e8",
+        "css": "archive"
+      },
+      {
+        "search": [
+          "rss"
+        ],
+        "code": 59194,
+        "from": 66,
+        "uid": "26f5aa38f3889213334b3990b4ad483b",
+        "css": "rss"
+      },
+      {
+        "search": [
+          "rss"
+        ],
+        "code": 59195,
+        "from": 114,
+        "uid": "7645346d5ab8b17f69a9c765c180aca3",
+        "css": "rss-alt"
+      },
+      {
+        "search": [
+          "settings",
+          "cog",
+          "gear"
+        ],
+        "code": 9881,
+        "from": 83,
+        "uid": "26aba7edd46944209b4961670675a813",
+        "css": "cog"
+      },
+      {
+        "search": [
+          "logout",
+          "signout",
+          "exit"
+        ],
+        "code": 59201,
+        "from": 88,
+        "uid": "74b2f1d1ee541715b3f389f7cdf63d1c",
+        "css": "logout"
+      },
+      {
+        "search": [
+          "clock",
+          "time"
+        ],
+        "code": 128340,
+        "from": 80,
+        "uid": "501f33ed61da407feb057a7699ef93f7",
+        "css": "clock"
+      },
+      {
+        "search": [
+          "block",
+          "deny"
+        ],
+        "code": 128683,
+        "from": 92,
+        "uid": "2d070116ca776192ee8e8c7e00c4d5a6",
+        "css": "block"
+      },
+      {
+        "search": [
+          "resize",
+          "fullscreen"
+        ],
+        "code": 59204,
+        "from": 37,
+        "uid": "8667827e81897cf8b8d19dc492920f8d",
+        "css": "resize-full"
+      },
+      {
+        "search": [
+          "resize",
+          "fullscreen"
+        ],
+        "code": 59302,
+        "from": 38,
+        "uid": "9990c2588fd50406f36987e80e1e905b",
+        "css": "resize-full-circle"
+      },
+      {
+        "search": [
+          "popup",
+          "window"
+        ],
+        "code": 59212,
+        "from": 68,
+        "uid": "c9d395b295ad7d9c28298dcea916c6df",
+        "css": "popup"
+      },
+      {
+        "search": [
+          "arrow",
+          "left"
+        ],
+        "code": 59229,
+        "from": 60,
+        "uid": "04960bf02134620e6c61bac8d6569502",
+        "css": "left-open"
+      },
+      {
+        "search": [
+          "arrow",
+          "right"
+        ],
+        "code": 59230,
+        "from": 62,
+        "uid": "715e1003368da5e5c41ae35190af68a1",
+        "css": "right-open"
+      },
+      {
+        "search": [
+          "arrow",
+          "down"
+        ],
+        "code": 58532,
+        "from": 59,
+        "uid": "e160a7e42e4e818463fd5a8607b9f608",
+        "css": "down-circle"
+      },
+      {
+        "search": [
+          "arrow",
+          "left"
+        ],
+        "code": 58529,
+        "from": 40,
+        "uid": "7e092c82e9a758b6e95297007969aac1",
+        "css": "left-circle"
+      },
+      {
+        "search": [
+          "arrow",
+          "right"
+        ],
+        "code": 58530,
+        "from": 41,
+        "uid": "d30928620bda0d5eaa85d3b65bf19963",
+        "css": "right-circle"
+      },
+      {
+        "search": [
+          "arrow",
+          "up"
+        ],
+        "code": 58531,
+        "from": 58,
+        "uid": "a7e3ce91275bb77c0f4ec44a548b325c",
+        "css": "up-circle"
+      },
+      {
+        "search": [
+          "arrow",
+          "down"
+        ],
+        "code": 9662,
+        "from": 91,
+        "uid": "1821ddf00a08cef133824b1a4fd4790e",
+        "css": "down-dir"
+      },
+      {
+        "search": [
+          "arrow",
+          "right"
+        ],
+        "code": 9656,
+        "from": 93,
+        "uid": "9c5557d93ab810b192b13adcf77e8c84",
+        "css": "right-dir"
+      },
+      {
+        "search": [
+          "arrow",
+          "down"
+        ],
+        "code": 59303,
+        "from": 123,
+        "uid": "35674c31693db324f2fd6a48f1079263",
+        "css": "down-micro"
+      },
+      {
+        "search": [
+          "arrow",
+          "right"
+        ],
+        "code": 59304,
+        "from": 125,
+        "uid": "fbed8311a5af2a8e5599246d9939a475",
+        "css": "up-micro"
+      },
+      {
+        "search": [
+          "reload",
+          "redo",
+          "repeat"
+        ],
+        "code": 59305,
+        "from": 42,
+        "uid": "141d5c2168c8b09979b75ecfab004e71",
+        "css": "cw-circle"
+      },
+      {
+        "search": [
+          "reload",
+          "refresh",
+          "update",
+          "sync"
+        ],
+        "code": 59232,
+        "from": 86,
+        "uid": "41eeea14413f2539da21b4d1754bf4be",
+        "css": "arrows-cw"
+      },
+      {
+        "search": [
+          "arrow",
+          "move"
+        ],
+        "code": 59306,
+        "from": 126,
+        "uid": "50ae91f6ed0e10a5e9eec6c63afedfb5",
+        "css": "updown-circle"
+      },
+      {
+        "search": [
+          "target"
+        ],
+        "code": 127919,
+        "from": 96,
+        "uid": "006ab50770cd7183b27004f856b989e4",
+        "css": "target"
+      },
+      {
+        "search": [
+          "chart",
+          "bar",
+          "diagram",
+          "signal",
+          "wifi"
+        ],
+        "code": 128246,
+        "from": 117,
+        "uid": "af3a08c6f521a065252ee35392864e15",
+        "css": "signal"
+      },
+      {
+        "search": [
+          "progress",
+          "wait"
+        ],
+        "code": 59307,
+        "from": 48,
+        "uid": "c87205006317fa2c4baa78a8f010336e",
+        "css": "progress"
+      },
+      {
+        "search": [
+          "editor",
+          "font"
+        ],
+        "code": 59257,
+        "from": 84,
+        "uid": "9ecf5170254e332a2c92cbbe85df94a8",
+        "css": "font"
+      },
+      {
+        "search": [
+          "editor",
+          "list"
+        ],
+        "code": 59266,
+        "from": 112,
+        "uid": "cf1d7ee3d5c367a5c5a3cc9e77acec68",
+        "css": "list"
+      },
+      {
+        "search": [
+          "editor",
+          "list"
+        ],
+        "code": 59309,
+        "from": 113,
+        "uid": "00d6d0f4cda0621ae03893dcfeb9bb1d",
+        "file": "list-numbered",
+        "css": "list-numbered"
+      },
+      {
+        "search": [
+          "editor",
+          "indent"
+        ],
+        "code": 59267,
+        "from": 111,
+        "uid": "beb54ffa9c4b49c62af6fa72354d1740",
+        "css": "indent-left"
+      },
+      {
+        "search": [
+          "editor",
+          "indent"
+        ],
+        "code": 59268,
+        "from": 110,
+        "uid": "a3f13abf118d3c6abe3e99a6c296a9a5",
+        "css": "indent-right"
+      },
+      {
+        "search": [
+          "cloud"
+        ],
+        "code": 9729,
+        "from": 67,
+        "uid": "7e25a96981e6bd6b1592c409da293c45",
+        "css": "cloud"
+      },
+      {
+        "search": [
+          "terminal",
+          "prompt"
+        ],
+        "code": 59308,
+        "from": 95,
+        "uid": "e92e6cad2da0ee4bc374a1ef4c6ab12b",
+        "css": "terminal"
+      },
+      {
+        "search": [
+          "facebook"
+        ],
+        "code": 62209,
+        "from": 102,
+        "uid": "ebbe0cc0600cb69375abc20af545967f",
+        "css": "facebook-rect"
+      },
+      {
+        "search": [
+          "twitter"
+        ],
+        "code": 62211,
+        "from": 116,
+        "uid": "a4765de460cc6485b1ca5b36222f41d5",
+        "css": "twitter-bird"
+      },
+      {
+        "search": [
+          "vimeo"
+        ],
+        "code": 62222,
+        "from": 109,
+        "uid": "335bfd225407f1205eddd3d47744e6be",
+        "css": "vimeo-rect"
+      },
+      {
+        "search": [
+          "tumblr"
+        ],
+        "code": 62224,
+        "from": 107,
+        "uid": "9829cb345a4512f5aece933ba836ff1f",
+        "css": "tumblr-rect"
+      },
+      {
+        "search": [
+          "google"
+        ],
+        "code": 62217,
+        "from": 103,
+        "uid": "0e5740f288f6f5cb04eef63f7f0a1506",
+        "css": "googleplus-rect"
+      },
+      {
+        "search": [
+          "linkedin"
+        ],
+        "code": 62226,
+        "from": 108,
+        "uid": "8870252f5da59a63564fb6790a347c8e",
+        "css": "linkedin-rect"
+      },
+      {
+        "search": [
+          "skype"
+        ],
+        "code": 62219,
+        "from": 115,
+        "uid": "a25ef3626c7bd7031709a8264f280bfe",
+        "css": "skype"
+      },
+      {
+        "search": [
+          "vkontakte"
+        ],
+        "code": 62218,
+        "from": 118,
+        "uid": "f6dfd6896053ff75262b8ad4baec251e",
+        "css": "vkontakte-rect"
+      },
+      {
+        "searcj": [
+          "youtube"
+        ],
+        "code": 62227,
+        "from": 121,
+        "uid": "2d3ce9463ed5525c6faa01f84c957843",
+        "css": "youtube"
+      },
+      {
+        "search": [
+          "odnoklassniki"
+        ],
+        "code": 62221,
+        "from": 81,
+        "uid": "5fb90c2cd2cc4ceb3fb6e787aae73fd3",
+        "css": "odnoklassniki-rect"
+      }
+    ],
+    "transform": {
+      "rescale": 0.9,
+      "baseline": 0.5,
+      "offset": 0.05
+    },
+    "id": 4
   }
 ];

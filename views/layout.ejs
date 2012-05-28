@@ -19,6 +19,8 @@
 
     <script type="text/javascript"><%- asset_include('modernizr.js') %></script>
 
+    <script type="text/javascript"><%- app_secret() %></script>
+
     <!-- Google Analytics -->
     <script type="text/javascript">
       var _gaq = _gaq || [];
@@ -31,8 +33,6 @@
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
     </script>
-
-    <script type="text/javascript"><%- app_secret() %></script>
 
     <!-- Defered loading -->
     <script type="text/javascript" src="<%= asset_path('app.js') %>" defer></script>

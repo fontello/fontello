@@ -2,6 +2,7 @@
 .font-embedded-1 { font-family: 'fontawesome'; }
 .font-embedded-2 { font-family: 'iconic'; }
 .font-embedded-3 { font-family: 'brandico'; }
+.font-embedded-4 { font-family: 'websymbols'; }
 
 @font-face {
   font-family: 'entypo';
@@ -43,6 +44,17 @@
        url('<%= asset_path("brandico.woff") %>') format('woff'),
        url('<%= asset_path("brandico.ttf") %>') format('truetype'),
        url('<%= asset_path("brandico.svg") %>#brandico') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'websymbols';
+  src: url('<%= asset_path("websymbols.eot") %>');
+  src: url('<%= asset_path("websymbols.eot") %>?#iefix') format('embedded-opentype'),
+       url('<%= asset_path("websymbols.woff") %>') format('woff'),
+       url('<%= asset_path("websymbols.ttf") %>') format('truetype'),
+       url('<%= asset_path("websymbols.svg") %>#websymbols') format('svg');
   font-weight: normal;
   font-style: normal;
 }

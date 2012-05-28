@@ -1,5 +1,5 @@
-2.0.1 / 
-------------------
+2.0.1 / Rolling on website
+--------------------------
 
 * Reworked interface logic & look
 * Added search
@@ -8,7 +8,7 @@
 * Autosave for all changes
 * Number of small fixes
 * Internal refactoring (continue switching to new nodeca libraries)
-
+* Returned back WebSymbols font
 
 2.0.0 / 2012-05-08
 ------------------
