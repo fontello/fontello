@@ -27,12 +27,6 @@
   });
 
 
-  // provide backward compatibility
-  nodeca.runtime.rpc = function () {
-    return nodeca.io.rpc.apply(null, arguments);
-  };
-
-
   nodeca.io.init = function () {
     var // bayeux client
         bayeux = new Faye.Client('/faye'),
