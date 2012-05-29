@@ -1,6 +1,8 @@
-/*global nodeca, _, $, Modernizr, Backbone, window*/
+/*global nodeca, _, $, Modernizr, Backbone, window, Faye*/
+
 
 "use strict";
+
 
 module.exports = function () {
   var
@@ -149,17 +151,6 @@ module.exports = function () {
 
 
   //
-  // live update of amount of online clients
-  //
-
-
-  $users_count = $('#stats-online');
-  nodeca.runtime.faye.subscribe('/stats/users_online', function (count) {
-    $users_count.text(count);
-  });
-
-
-  //
   // Fontname
   //
 
@@ -217,4 +208,23 @@ module.exports = function () {
     window.fontello_fonts   = fonts;
     window.fontello_result  = result;
   }
+
+
+  //
+  // Initialize Faye
+  //
+
+
+  Faye.nodecaInit();
+
+
+  //
+  // live update of amount of online clients
+  //
+
+
+  $users_count = $('#stats-online');
+  nodeca.runtime.faye.subscribe('/stats/users_online', function (count) {
+    $users_count.text(count);
+  });
 };
