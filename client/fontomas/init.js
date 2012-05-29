@@ -75,8 +75,14 @@ module.exports = function () {
 
 
   // perform glyphs search
+  $glyphs = $('.glyph');
   toolbar.on('change:search', function (q) {
-    q = String(q);
+    q = $.trim(q);
+
+    if (0 === q.length) {
+      $glyphs.show();
+      return;
+    }
 
     $glyphs.hide().filter(function () {
       var model = $(this).data('model');
