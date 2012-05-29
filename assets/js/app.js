@@ -11,7 +11,7 @@
 //= require handlebars
 //= require jquery.collapser
 //= require nodeca
-//= require nodeca-faye
+//= require nodeca-io
 //= require fontomas/api
 
 $(function () {

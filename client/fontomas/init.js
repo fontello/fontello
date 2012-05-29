@@ -215,7 +215,7 @@ module.exports = function () {
   //
 
 
-  Faye.nodecaInit();
+  nodeca.io.init();
 
 
   //
@@ -224,7 +224,7 @@ module.exports = function () {
 
 
   $users_count = $('#stats-online');
-  nodeca.runtime.faye.subscribe('/stats/users_online', function (count) {
+  nodeca.io.on('/stats/users_online', function (count) {
     $users_count.text(count);
   });
 

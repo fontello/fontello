@@ -18,7 +18,7 @@
   "main"            : "./index.js",
 
   "dependencies"    : {
-                        "nlib"        : "https://github.com/nodeca/nlib/tarball/fa6a8ebaf58979ee5231bcca0b9d7440f6bfa5b0",
+                        "nlib"        : "https://github.com/nodeca/nlib/tarball/c9fa10299ac608168a439a07afca1dbad148da7e",
                         "connect"     : "2.2.2",
                         "mincer"      : "0.1.3",
                         "stylus"      : "0.26.0",
