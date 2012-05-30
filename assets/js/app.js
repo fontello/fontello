@@ -1,4 +1,4 @@
-/*global nodeca, _, $, Modernizr*/
+/*global nodeca, _, $, Modernizr, window, document*/
 
 //= require json
 //= require store
@@ -23,43 +23,47 @@ $(function () {
 // Social buttons defered load - after all
 //
 
-$(window).load(setTimeout(function() {
+$(window).load(function() {
+  'use strict';
 
-  // Twitter buttons
+  setTimeout(function () {
 
-  !function(d,s,id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
+    // Twitter buttons
 
-    if (!d.getElementById(id)) {
-      js = d.createElement(s);
-      js.id = id;
-      js.src = "//platform.twitter.com/widgets.js";
+    (function(d,s,id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
 
-      fjs.parentNode.insertBefore(js,fjs);
-    }
-  }(document,"script","twitter-wjs");
+      if (!d.getElementById(id)) {
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//platform.twitter.com/widgets.js";
 
-  // Google +1
+        fjs.parentNode.insertBefore(js,fjs);
+      }
+    }(document, "script", "twitter-wjs"));
 
-  (function() {
-    var po = document.createElement('script');
+    // Google +1
 
-    po.type = 'text/javascript';
-    po.async = true;
-    po.src = 'https://apis.google.com/js/plusone.js';
+    (function() {
+      var po = document.createElement('script');
 
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(po, s);
-  })();
+      po.type = 'text/javascript';
+      po.async = true;
+      po.src = 'https://apis.google.com/js/plusone.js';
 
-  // Flattr
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(po, s);
+    }());
 
-  (function() {
-    var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
-    s.type = 'text/javascript';
-    s.async = true;
-    s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
-    t.parentNode.insertBefore(s, t);
-  })();
+    // Flattr
 
-}, 1000));
+    (function() {
+      var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+      s.type = 'text/javascript';
+      s.async = true;
+      s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+      t.parentNode.insertBefore(s, t);
+    }());
+
+  }, 1000);
+});
