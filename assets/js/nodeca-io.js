@@ -32,8 +32,8 @@
         bayeux = new Faye.Client('/faye'),
         // internal cache
         RPC = {
-          req_channel:  '/x/rpc-req/' + window.APP_SECRET,
-          res_channel:  '/x/rpc-res/' + window.APP_SECRET,
+          req_channel:  '/x/rpc-req/' + window.REALTIME_ID,
+          res_channel:  '/x/rpc-res/' + window.REALTIME_ID,
           callbacks:    {},
           last_msg_id:  0
         };

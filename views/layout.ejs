@@ -19,7 +19,7 @@
 
     <script type="text/javascript"><%- asset_include('modernizr.js') %></script>
 
-    <script type="text/javascript"><%- app_secret() %></script>
+    <script type="text/javascript">window.REALTIME_ID = '<%- random() %>';</script>
 
     <!-- Google Analytics -->
     <script type="text/javascript">
