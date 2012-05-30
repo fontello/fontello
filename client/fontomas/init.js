@@ -218,14 +218,22 @@ module.exports = function () {
   nodeca.io.init();
 
 
+  nodeca.io.on('rpc:version-mismatch', function (/* versions */) {
+    nodeca.client.fontomas.util.notify('error', {layout: 'bottom'},
+      nodeca.client.fontomas.render('error:rpc:server-mismatch'));
+  });
+
+
   //
   // live update of amount of online clients
   //
 
 
   $users_count = $('#stats-online');
-  nodeca.io.on('/stats/users_online', function (count) {
+  nodeca.io.subscribe('/stats/users_online', function (count) {
     $users_count.text(count);
+  }).fail(function (err) {
+    nodeca.logger.error('Failed subscribe for stats updates: ' + err);
   });
 
 };
