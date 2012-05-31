@@ -21,6 +21,7 @@
       events = {},
       // underlying bayeux client
       bayeux = null,
+      connected = false,
       // api3 related (used by apiTree() send/receive calls) properies
       api3 = {
         req_channel: '/x/api3-req/' + window.REALTIME_ID,
@@ -149,7 +150,19 @@
   io.apiTree = function apiTree(name, params, options, callback) {
     var timeout, id = api3.last_msg_id++, data = {id: id};
 
-    if ('DISCONNECTED' === bayeux.getState() || 'UNCONNECTED' === bayeux.getState()) {
+    // Scenario: rpc(name, params, callback);
+    if (_.isFunction(options)) {
+      callback = options;
+      options = {};
+    }
+
+    // fill in defaults
+    options   = _.extend({timeout: 30}, options);
+    callback  = callback || $.noop;
+
+    // check if there active connection
+    if (!connected) {
+      clearTimeout(timeout); // make sure no postponed timeout error will happen
       callback(ioerr(io.ENOCONN, 'No active realtime connection.'));
       return;
     }
@@ -160,16 +173,6 @@
       method:   name,
       params:   params
     };
-
-    // Scenario: rpc(name, params, callback);
-    if (_.isFunction(options)) {
-      callback = options;
-      options = {};
-    }
-
-    // fill in defaults
-    options   = _.extend({timeout: 30}, options);
-    callback  = callback || $.noop;
 
     // store callback for the response
     api3.callbacks[id] = function (msg) {
@@ -182,7 +185,7 @@
           client: nodeca.runtime.version,
           server: msg.version
         });
-        callback(io.EWRONGVER, 'Client version does not match server.');
+        callback(ioerr(io.EWRONGVER, 'Client version does not match server.'));
         return;
       }
 
@@ -202,7 +205,7 @@
       .done(function () {
         // schedule timeout error
         timeout = setTimeout(function () {
-          handle_error(ioerr(io.ETIMEOUT, 'Timeoute ' + name + ' execution.'));
+          handle_error(ioerr(io.ETIMEOUT, 'Timeout ' + name + ' execution.'));
         }, (options.timeout || 30) * 1000);
       });
   };
@@ -228,6 +231,9 @@
   io.init = function () {
     bayeux = new Faye.Client('/faye');
 
+    bayeux.bind('transport:up', function () { connected = true; });
+    bayeux.bind('transport:down', function () { connected = false; });
+
     bayeux.subscribe(api3.res_channel, function (data) {
       var callback = api3.callbacks[data.id];
 
@@ -240,4 +246,10 @@
       callback(data.msg);
     });
   };
+
+
+  if ('development' === nodeca.runtime.env) {
+    // export some internals for debugging
+    window.fontello_bayeux = bayeux;
+  }
 }());
