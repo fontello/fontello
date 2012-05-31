@@ -21,6 +21,7 @@
       events = {},
       // underlying bayeux client
       bayeux = null,
+      // api3 related (used by apiTree() send/receive calls) properies
       api3 = {
         req_channel: '/x/api3-req/' + window.REALTIME_ID,
         res_channel: '/x/api3-res/' + window.REALTIME_ID,
@@ -30,7 +31,25 @@
 
 
   // exported IO object
-  nodeca.io = {};
+  var io = nodeca.io = {};
+
+
+  //
+  // Errors
+  //
+
+
+  io.ENOCONN    = 'IO_ENOCONN';
+  io.ETIMEOUT   = 'IO_ETIMEOUT';
+  io.EWRONGVER  = 'IO_EWRONGVER';
+
+
+  // error constructor
+  function ioerr(code, message) {
+    var err = new Error(message);
+    err.code = code;
+    return err;
+  }
 
 
   //
@@ -58,7 +77,7 @@
    *
    *  - `api3:version-mismatch(versions)`
    **/
-  nodeca.io.on = function on(event, handler) {
+  io.on = function on(event, handler) {
     if (!events[event]) {
       events[event] = [];
     }
@@ -79,7 +98,7 @@
    *
    *  - [nodeca.io.on]
    **/
-  nodeca.io.off = function off(event, handler) {
+  io.off = function off(event, handler) {
     events[event] = (!handler) ? [] : _.without(events[event], handler);
   };
 
@@ -90,20 +109,20 @@
 
 
   function bayeux_call(name, args) {
-    var deferred = $.Deferred();
+    var result = bayeux[name].apply(bayeux, args);
 
-    bayeux[name].apply(bayeux, args)
-      .callback(deferred.resolve)
-      .errback(deferred.reject);
+    // provide jQuery.Defered style methods
+    result.done = _.bind(function (fn) { this.callback(fn); return this; }, result);
+    result.fail = _.bind(function (fn) { this.errback(fn); return this; }, result);
 
-    return {done: deferred.done, fail: deferred.fail};
+    return result;
   }
 
 
   /**
    *  nodeca.io.subscribe(channel, handler) -> Object
    **/
-  nodeca.io.subscribe = function subscribe(channel, handler) {
+  io.subscribe = function subscribe(channel, handler) {
     return bayeux_call('subscribe', [channel, handler]);
   };
 
@@ -111,7 +130,7 @@
   /**
    *  nodeca.io.unsubscribe(channel[, handler]) -> Object
    **/
-  nodeca.io.unsubscribe = function unsubscribe(channel, handler) {
+  io.unsubscribe = function unsubscribe(channel, handler) {
     return bayeux_call('unsubscribe', [channel, handler]);
   };
 
@@ -119,7 +138,7 @@
   /**
    *  nodeca.io.publish(channel, message) -> Object
    **/
-  nodeca.io.publish = function publish(channel, message) {
+  io.publish = function publish(channel, message) {
     return bayeux_call('publish', [channel, message]);
   };
 
@@ -127,8 +146,13 @@
   /**
    *  nodeca.io.apiTree(name, params[, options][, callback]) -> Void
    **/
-  nodeca.io.apiTree = function apiTree(name, params, options, callback) {
+  io.apiTree = function apiTree(name, params, options, callback) {
     var timeout, id = api3.last_msg_id++, data = {id: id};
+
+    if ('DISCONNECTED' === bayeux.getState() || 'UNCONNECTED' === bayeux.getState()) {
+      callback(ioerr(io.ENOCONN, 'No active realtime connection.'));
+      return;
+    }
 
     // fill in message
     data.msg = {
@@ -158,6 +182,7 @@
           client: nodeca.runtime.version,
           server: msg.version
         });
+        callback(io.EWRONGVER, 'Client version does not match server.');
         return;
       }
 
@@ -172,18 +197,12 @@
     }
 
     // send request
-    bayeux.publish(api3.req_channel, data)
-      .errback(handle_error)
-      .callback(function () {
-        if (undefined !== timeout) {
-          // response fired before we received
-          // confirmation of request delivery
-          return;
-        }
-
+    bayeux_call('publish', [api3.req_channel, data])
+      .fail(handle_error)
+      .done(function () {
         // schedule timeout error
         timeout = setTimeout(function () {
-          handle_error(new Error("Timeout."));
+          handle_error(ioerr(io.ETIMEOUT, 'Timeoute ' + name + ' execution.'));
         }, (options.timeout || 30) * 1000);
       });
   };
@@ -197,7 +216,7 @@
   /**
    *  nodeca.io.auth(callback) -> Void
    **/
-  nodeca.io.auth = function (callback) {
+  io.auth = function (callback) {
     // Not implemented yet
     callback(null);
   };
@@ -206,8 +225,9 @@
   /**
    *  nodeca.io.init() -> Void
    **/
-  nodeca.io.init = function () {
+  io.init = function () {
     bayeux = new Faye.Client('/faye');
+
     bayeux.subscribe(api3.res_channel, function (data) {
       var callback = api3.callbacks[data.id];
 
