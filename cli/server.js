@@ -9,7 +9,8 @@ var NLib = require('nlib');
 
 
 // 3rd-party
-var Async = NLib.Vendor.Async;
+var Async   = NLib.Vendor.Async;
+var FsTools = NLib.Vendor.FsTools;
 
 
 module.exports.parserParameters= {
@@ -20,7 +21,15 @@ module.exports.parserParameters= {
 };
 
 
-module.exports.commandLineArguments = [];
+module.exports.commandLineArguments = [
+  {
+    args: ['--repl'],
+    options: {
+      help:   'start REPL server',
+      action: 'storeTrue'
+    }
+  }
+];
 
 
 module.exports.run = function (args, callback) {
@@ -38,6 +47,9 @@ module.exports.run = function (args, callback) {
     NLib.init.initRouter,
 
     require('../lib/init/cronjob'),
-    require('../lib/init/server')
+    require('../lib/init/server'),
+
+    // init repl only if it was required by `--repl` key
+    (args.repl ? require('../lib/init/repl') : function skip(next) { next(); })
   ], callback);
 };

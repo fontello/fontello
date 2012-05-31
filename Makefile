@@ -51,6 +51,20 @@ dev-server:
 		./fontello.js server
 
 
+repl:
+	if test ! `which socat` ; then \
+		echo "You need `socat` installed in order to run repl." >&2 ; \
+		echo "   sudo apt-get install socat" >&2 ; \
+		exit 128 ; \
+		fi
+	if test ! -e ./tmp/fontello-repl.sock ; then \
+		echo "You need to start fontello server with --repl." >&2 ; \
+		echo "   ./fontello server --repl" >&2 ; \
+		exit 128 ; \
+		fi
+	socat - UNIX:./tmp/fontello-repl.sock
+
+
 lint:
 	if test ! `which jshint` ; then \
 		echo "You need 'jshint' installed in order to run lint." >&2 ; \
@@ -82,5 +96,5 @@ todo:
 	grep 'TODO' -n -r ./lib 2>/dev/null || test true
 
 
-.PHONY: help rebuild-fonts dev-setup lint gh-pages todo
+.PHONY: help rebuild-fonts dev-setup lint gh-pages todo dev-server repl
 .SILENT: help rebuild-fonts dev-setup lint todo
