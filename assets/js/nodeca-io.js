@@ -84,7 +84,8 @@
    *
    *  ##### Known events
    *
-   *  - `api3:version-mismatch`
+   *  - `api3:version-mismatch(versions)`
+   *  - `init:auth-error(err)`
    **/
   nodeca.io.on = function on(event, handler) {
     if (!events[event]) {
@@ -267,7 +268,7 @@
   nodeca.io.init = function () {
     nodeca.io.auth(function (err) {
       if (err) {
-        emit('auth-error', err);
+        emit('init:auth-error', err);
         return;
       }
 
