@@ -3,11 +3,6 @@
  *
  *  This module provides realtime communication methods for nodeca/nlib based
  *  applications.
- *
- *  ##### IOReponse
- *
- *  `IOResponse` is a`jQuery.Deferred` compatible object, that exposes only
- *  _subscription_ methods: `then`, `done`, `fail`.
  **/
 
 
@@ -24,27 +19,59 @@
 
   var // cache of scheduled calls, that will be
       // run once `nodeca.io.init()` called
-      scheduled = {},
+      scheduled = [],
       // registered events
-      events = {};
+      events = {},
+      // underlying bayeux client
+      bayeux = null,
+      api3 = {
+        req_channel:  null,
+        res_channel:  null,
+        callbacks:    {},
+        last_msg_id:  0
+      };
 
 
   // exported IO object
   nodeca.io = {};
 
 
-  // provide stubbed version of io by default
-  _.each(['subscribe', 'unsubscribe', 'publish', 'rpc'], function (name) {
-    scheduled[name] = [];
-    nodeca.io[name] = function () {
-      scheduled[name].push(arguments);
-    };
-  });
+  //
+  // Delayed calls scheduler
+  //
 
 
+  function schedule_call(func, args, deferred) {
+    scheduled.push(func, args, deferred);
+  }
+
+
+  function run_scheduled_calls() {
+    var parts, result;
+
+    while (scheduled.length) {
+      parts  = scheduled.shift();
+      result = parts[0].apply(null, parts[1]);
+
+      // proxy-pass deferred
+      if (parts[2]) {
+        result.done(parts[2].resolve);
+        result.fail(parts[2].reject);
+      }
+    }
+  }
+
   //
-  // Event related parts
+  // Events
   //
+
+
+  // executes all handlers registered for given `event`
+  function emit(event, args) {
+    _.each(events[event] || [], function (handler) {
+      handler.apply(null, args);
+    });
+  }
 
 
   /**
@@ -57,7 +84,7 @@
    *
    *  ##### Known events
    *
-   *  - `rpc:version-mismatch`
+   *  - `api3:version-mismatch`
    **/
   nodeca.io.on = function on(event, handler) {
     if (!events[event]) {
@@ -85,100 +112,164 @@
   };
 
 
-  // executes all handlers registered for given `event`
-  function emit(event, args) {
-    _.each(events[event] || [], function (handler) {
-      handler.apply(null, args);
-    });
+  //
+  // Internal handlers
+  //
+
+
+  function api3_response_handler(data) {
+    var callback = api3.callbacks[data.id];
+
+    if (!callback) {
+      // unknown response id
+      return;
+    }
+
+    delete api3.callbacks[data.id];
+    callback(data.msg);
   }
 
+  function api3_send_request(name, params, options, callback) {
+    var timeout, id = api3.last_msg_id++, data = {id: id};
 
-  nodeca.io.init = function () {
-    var // bayeux client
-        bayeux = new Faye.Client('/faye'),
-        // internal cache
-        RPC = {
-          req_channel:  '/x/rpc-req/' + window.REALTIME_ID,
-          res_channel:  '/x/rpc-res/' + window.REALTIME_ID,
-          callbacks:    {},
-          last_msg_id:  0
-        };
+    // fill in message
+    data.msg = {
+      version:  nodeca.runtime.version,
+      method:   name,
+      params:   params
+    };
 
-    // provide real methods
-    nodeca.io.subscribe   = _.bind(bayeux.subscribe, bayeux);
-    nodeca.io.unsubscribe = _.bind(bayeux.unsubscribe, bayeux);
-    nodeca.io.publish     = _.bind(bayeux.publish, bayeux);
+    // Scenario: rpc(name, params, callback);
+    if (_.isFunction(options)) {
+      callback = options;
+      options = {};
+    }
 
-    // subscribe for RPC responses
-    bayeux.subscribe(RPC.res_channel, function (data) {
-      var callback = RPC.callbacks[data.id];
+    // fill in defaults
+    options   = _.extend({timeout: 30}, options);
+    callback  = callback || $.noop;
 
-      if (!callback) {
-        // unknown response id
+    // store callback for the response
+    api3.callbacks[id] = function (msg) {
+      clearTimeout(timeout); // stop timeout counter
+      timeout = null; // mark timeout as "removed"
+
+      if (msg.version !== nodeca.runtime.version) {
+        // emit version mismatch error
+        emit('api3:version-mismatch', {
+          client: nodeca.runtime.version,
+          server: msg.version
+        });
         return;
       }
 
-      delete RPC.callbacks[data.id];
-      callback(data.msg);
-    });
+      // run actual callback
+      callback(msg.err, msg.result);
+    };
 
-    // provide nodeca.runtime.rpc method
-    nodeca.io.rpc = function (name, params, options, callback) {
-      var timeout, data = {id: RPC.last_msg_id++};
+    // simple error handler
+    function handle_error(err) {
+      delete api3.callbacks[id];
+      callback(err);
+    }
 
-      // prepare message
-      data.msg = {
-        version:  nodeca.runtime.version,
-        method:   name,
-        params:   params
-      };
-
-      // Scenario: rpc(name, params, callback);
-      if (_.isFunction(options)) {
-        callback = options;
-        options = {};
-      }
-
-      // store callback for the response
-      RPC.callbacks[data.id] = function (msg) {
-        clearTimeout(timeout);
-
-        if (msg.version !== nodeca.runtime.version) {
-          emit('rpc:version-mismatch', {
-            client: nodeca.runtime.version,
-            server: msg.version
-          });
+    // send request
+    bayeux.publish(api3.req_channel, data)
+      .errback(handle_error)
+      .callback(function () {
+        if (undefined !== timeout) {
+          // response fired before we received
+          // confirmation of request delivery
           return;
         }
 
-        (callback || $.noop)(msg.err, msg.result);
-      };
+        // schedule timeout error
+        timeout = setTimeout(function () {
+          handle_error(new Error("Timeout."));
+        }, (options.timeout || 30) * 1000);
+      });
+  }
 
-      // simple error handler
-      function handle_error(err) {
-        delete RPC.callbacks[data.id];
-        (callback || $.noop)(err);
-      }
 
-      // send request
-      bayeux.publish(RPC.req_channel, data)
-        .errback(handle_error)
-        .callback(function () {
-          // set timeout to unbind callback
-          timeout = setTimeout(function () {
-            handle_error(new Error("Timeout."));
-          }, ((options || {}).timeout || 30) * 1000);
-        });
-    };
+  //
+  // Initialization API
+  //
 
-    // once init complete, run scheduled methods
-    _.each(['subscribe', 'unsubscribe', 'publish', 'rpc'], function (name) {
-      var args;
 
-      while (scheduled[name].length) {
-        args = scheduled[name].shift();
-        nodeca.io[name].apply(null, args);
-      }
-    });
+  /**
+   *  nodeca.io.auth() -> Void
+   **/
+  nodeca.io.auth = function auth() {
+    // TODO: implement real ajax based authentication
+    api3.req_channel = '/x/api3-req/' + window.REALTIME_ID;
+    api3.res_channel = '/x/api3-res/' + window.REALTIME_ID;
+
+    bayeux.subscribe(api3.res_channel, api3_response_handler);
+  };
+
+
+  /**
+   *  nodeca.io.init() -> Void
+   **/
+  nodeca.io.init = function init() {
+    bayeux = new Faye.Client('/faye');
+    nodeca.io.auth();
+    run_scheduled_calls();
+  };
+
+
+  //
+  // Main API
+  //
+
+
+  function bayeux_call(name, args) {
+    var deferred = $.Deferred();
+
+    if (bayeux) {
+      bayeux[name].apply(bayeux, args)
+        .callback(deferred.resolve)
+        .errback(deferred.reject);
+    } else {
+      schedule_call(bayeux_call, arguments, deferred);
+    }
+
+    return {done: deferred.done, fail: deferred.fail};
+  }
+
+
+  /**
+   *  nodeca.io.subscribe(channel, handler) -> Object
+   **/
+  nodeca.io.subscribe = function subscribe(channel, handler) {
+    return bayeux_call('subscribe', [channel, handler]);
+  };
+
+
+  /**
+   *  nodeca.io.unsubscribe(channel[, handler]) -> Object
+   **/
+  nodeca.io.unsubscribe = function unsubscribe(channel, handler) {
+    return bayeux_call('unsubscribe', [channel, handler]);
+  };
+
+
+  /**
+   *  nodeca.io.publish(channel, message) -> Object
+   **/
+  nodeca.io.publish = function publish(channel, message) {
+    return bayeux_call('publish', [channel, message]);
+  };
+
+
+  /**
+   *  nodeca.io.apiTree(name, params[, options][, callback]) -> Void
+   **/
+  nodeca.io.apiTree = function apiTree(name, params, options, callback) {
+    if (bayeux) {
+      api3_send_request.apply(null, arguments);
+    } else {
+      schedule_call(api3_send_request, arguments);
+    }
   };
 }());
