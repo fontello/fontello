@@ -157,13 +157,12 @@
     }
 
     // fill in defaults
-    options   = _.extend({timeout: 30}, options);
+    options   = options || {};
     callback  = callback || $.noop;
 
     // check if there active connection
     if (!connected) {
-      clearTimeout(timeout); // make sure no postponed timeout error will happen
-      callback(ioerr(io.ENOCONN, 'No active realtime connection.'));
+      callback(ioerr(io.ENOCONN, 'Cannot connect to server (RT).'));
       return;
     }
 
@@ -206,7 +205,7 @@
         // schedule timeout error
         timeout = setTimeout(function () {
           handle_error(ioerr(io.ETIMEOUT, 'Timeout ' + name + ' execution.'));
-        }, (options.timeout || 30) * 1000);
+        }, (options.timeout || 120) * 1000);
       });
   };
 
