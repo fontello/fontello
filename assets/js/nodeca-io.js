@@ -25,8 +25,8 @@
       // underlying bayeux client
       bayeux = null,
       api3 = {
-        req_channel:  null,
-        res_channel:  null,
+        req_channel: '/x/api3-req/' + window.REALTIME_ID,
+        res_channel: '/x/api3-res/' + window.REALTIME_ID,
         callbacks:    {},
         last_msg_id:  0
       };
@@ -192,33 +192,6 @@
 
 
   //
-  // Initialization API
-  //
-
-
-  /**
-   *  nodeca.io.auth() -> Void
-   **/
-  nodeca.io.auth = function auth() {
-    // TODO: implement real ajax based authentication
-    api3.req_channel = '/x/api3-req/' + window.REALTIME_ID;
-    api3.res_channel = '/x/api3-res/' + window.REALTIME_ID;
-
-    bayeux.subscribe(api3.res_channel, api3_response_handler);
-  };
-
-
-  /**
-   *  nodeca.io.init() -> Void
-   **/
-  nodeca.io.init = function init() {
-    bayeux = new Faye.Client('/faye');
-    nodeca.io.auth();
-    run_scheduled_calls();
-  };
-
-
-  //
   // Main API
   //
 
@@ -271,5 +244,36 @@
     } else {
       schedule_call(api3_send_request, arguments);
     }
+  };
+
+
+  //
+  // Initialization API
+  //
+
+
+  /**
+   *  nodeca.io.auth(callback) -> Void
+   **/
+  nodeca.io.auth = function (callback) {
+    // Not implemented yet
+    callback(null);
+  };
+
+
+  /**
+   *  nodeca.io.init() -> Void
+   **/
+  nodeca.io.init = function () {
+    nodeca.io.auth(function (err) {
+      if (err) {
+        emit('auth-error', err);
+        return;
+      }
+
+      bayeux = new Faye.Client('/faye');
+      bayeux.subscribe(api3.res_channel, api3_response_handler);
+      run_scheduled_calls();
+    });
   };
 }());
