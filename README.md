@@ -58,6 +58,6 @@ Embedded fonts are distributed under their primary licences (SIL OFL / CC BY / C
 See section [Embedded Fonts](#embedded) above for credits & links to fonts homepages.
 
 Generated fonts are intended for web usage, and should not be
-considered/distributed as independed artwork. Treat fontello as a
-`fonts archiver`, and credit original font creators, according to their licences.
+considered/distributed as independed artwork. Consider fontello as a
+fonts archiver, and credit original font creators, according to their licences.
 Credit to fontello is not required :)
