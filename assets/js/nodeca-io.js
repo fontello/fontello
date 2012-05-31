@@ -112,8 +112,21 @@
   function bayeux_call(name, args) {
     var result = bayeux[name].apply(bayeux, args);
 
+    //
     // provide jQuery.Defered style methods
+    //
+
+    // FAYE DOCUMENTATION:
+    //
+    //  Bear in mind that ‘success’ here just means the server received and
+    //  routed the message successfully, not that it has been received by all
+    //  other clients.
     result.done = _.bind(function (fn) { this.callback(fn); return this; }, result);
+
+    // FAYE DOCUMENTATION:
+    //
+    //  An error means the server found a problem processing the message.
+    //  Network errors are not covered by this.
     result.fail = _.bind(function (fn) { this.errback(fn); return this; }, result);
 
     return result;
@@ -160,6 +173,17 @@
     options   = options || {};
     callback  = callback || $.noop;
 
+    //
+    // ERROR HANDLING
+    //
+    // - when there's no connection (or client is `connecting`), we execute
+    //   callback with `ENOCONN` error imediately
+    // - when connection lost during waiting for server to send a message into
+    //   response channel, we execute calback with `ECONNGONE` error
+    // - when server didn't received published request message within 30 seconds
+    //   we execute callback with `ETIMEOUT` error
+    //
+
     // check if there active connection
     if (!connected) {
       callback(ioerr(io.ENOCONN, 'Cannot connect to server (RT).'));
@@ -173,10 +197,31 @@
       params:   params
     };
 
-    // store callback for the response
-    api3.callbacks[id] = function (msg) {
+    // stop timer
+    function stop_timer() {
       clearTimeout(timeout); // stop timeout counter
       timeout = null; // mark timeout as "removed"
+    }
+
+    // simple error handler
+    function handle_error(err) {
+      stop_timer();
+      delete api3.callbacks[id];
+      callback(err);
+    }
+
+    // handle transport down during request error
+    function handle_transport_down() {
+      handle_error(ioerr(io.ECONNGONE, 'Server gone. (RT)'));
+    }
+
+    bayeux.bind('transport:down', handle_transport_down);
+
+    // store callback for the response
+    api3.callbacks[id] = function (msg) {
+      stop_timer();
+
+      bayeux.unbind('transport:down', handle_transport_down);
 
       if (msg.version !== nodeca.runtime.version) {
         // emit version mismatch error
@@ -192,21 +237,17 @@
       callback(msg.err, msg.result);
     };
 
-    // simple error handler
-    function handle_error(err) {
-      delete api3.callbacks[id];
-      callback(err);
-    }
+    // wait for successfull message delivery 30 seconds
+    timeout = setTimeout(function () {
+      handle_error(ioerr(io.ETIMEOUT, 'Timeout ' + name + ' execution.'));
+    }, 30000);
+
 
     // send request
     bayeux_call('publish', [api3.req_channel, data])
+      // see bayeux_call info for details on fail/done
       .fail(handle_error)
-      .done(function () {
-        // schedule timeout error
-        timeout = setTimeout(function () {
-          handle_error(ioerr(io.ETIMEOUT, 'Timeout ' + name + ' execution.'));
-        }, (options.timeout || 120) * 1000);
-      });
+      .done(stop_timer);
   };
 
 
