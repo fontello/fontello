@@ -4650,7 +4650,7 @@ module.exports = [
       "familyname": "Typicons",
       "weight": "Book",
       "version": "1.0",
-      "fullname": "Typicons Regular",
+      "fullname": "Typicons",
       "ascent": 800
     },
     "meta": {
