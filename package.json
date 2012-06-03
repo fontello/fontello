@@ -30,7 +30,7 @@
                         "faye"        : "0.8.2",
                         "jade"        : "0.26.0",
                         "neuron"      : "0.4.5",
-                        "log4js"      : "0.4.3",
+                        "log4js"      : "0.5.0",
                         "cron"        : "0.3.0"
                       },
   "devDependencies" : {
