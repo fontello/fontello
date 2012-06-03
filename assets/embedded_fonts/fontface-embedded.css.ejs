@@ -1,8 +1,10 @@
 .font-embedded-0 { font-family: 'entypo'; }
 .font-embedded-1 { font-family: 'fontawesome'; }
 .font-embedded-2 { font-family: 'iconic'; }
-.font-embedded-3 { font-family: 'brandico'; }
-.font-embedded-4 { font-family: 'websymbols'; }
+.font-embedded-3 { font-family: 'typicons'; }
+.font-embedded-4 { font-family: 'modernpics'; }
+.font-embedded-5 { font-family: 'websymbols'; }
+.font-embedded-6 { font-family: 'brandico'; }
 
 @font-face {
   font-family: 'entypo';
@@ -38,12 +40,23 @@
 }
 
 @font-face {
-  font-family: 'brandico';
-  src: url('<%= asset_path("brandico.eot") %>');
-  src: url('<%= asset_path("brandico.eot") %>?#iefix') format('embedded-opentype'),
-       url('<%= asset_path("brandico.woff") %>') format('woff'),
-       url('<%= asset_path("brandico.ttf") %>') format('truetype'),
-       url('<%= asset_path("brandico.svg") %>#brandico') format('svg');
+  font-family: 'typicons';
+  src: url('<%= asset_path("typicons.eot") %>');
+  src: url('<%= asset_path("typicons.eot") %>?#iefix') format('embedded-opentype'),
+       url('<%= asset_path("typicons.woff") %>') format('woff'),
+       url('<%= asset_path("typicons.ttf") %>') format('truetype'),
+       url('<%= asset_path("typicons.svg") %>#typicons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'modernpics';
+  src: url('<%= asset_path("modernpics.eot") %>');
+  src: url('<%= asset_path("modernpics.eot") %>?#iefix') format('embedded-opentype'),
+       url('<%= asset_path("modernpics.woff") %>') format('woff'),
+       url('<%= asset_path("modernpics.ttf") %>') format('truetype'),
+       url('<%= asset_path("modernpics.svg") %>#modernpics') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -55,6 +68,17 @@
        url('<%= asset_path("websymbols.woff") %>') format('woff'),
        url('<%= asset_path("websymbols.ttf") %>') format('truetype'),
        url('<%= asset_path("websymbols.svg") %>#websymbols') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'brandico';
+  src: url('<%= asset_path("brandico.eot") %>');
+  src: url('<%= asset_path("brandico.eot") %>?#iefix') format('embedded-opentype'),
+       url('<%= asset_path("brandico.woff") %>') format('woff'),
+       url('<%= asset_path("brandico.ttf") %>') format('truetype'),
+       url('<%= asset_path("brandico.svg") %>#brandico') format('svg');
   font-weight: normal;
   font-style: normal;
 }

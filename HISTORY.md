@@ -9,6 +9,9 @@
 * Number of small fixes
 * Internal refactoring (continue switching to new nodeca libraries)
 * Returned back WebSymbols font
+* Added Modern Pictograms font
+* Added Typicons font
+
 
 2.0.0 / 2012-05-08
 ------------------

@@ -1803,6 +1803,17 @@ module.exports = [
       },
       {
         "search": [
+          "image",
+          "picture",
+          "photo"
+        ],
+        "code": 127748,
+        "from": 61502,
+        "uid": "381da2c2f7fd51f8de877c044d7f439d",
+        "css": "picture"
+      },
+      {
+        "search": [
           "camera",
           "photo"
         ],
@@ -1820,17 +1831,6 @@ module.exports = [
         "from": 61571,
         "uid": "9d3d9d6ce1ec63eaa26281e6162853c9",
         "css": "camera-alt"
-      },
-      {
-        "search": [
-          "image",
-          "picture",
-          "photo"
-        ],
-        "code": 127748,
-        "from": 61502,
-        "uid": "381da2c2f7fd51f8de877c044d7f439d",
-        "css": "picture"
       },
       {
         "search": [
@@ -2960,7 +2960,8 @@ module.exports = [
       },
       {
         "search": [
-          "ajust"
+          "ajust",
+          "contrast"
         ],
         "code": 59283,
         "from": 61506,
@@ -4467,7 +4468,8 @@ module.exports = [
       {
         "search": [
           "weather",
-          "sun"
+          "sun",
+          "brightness"
         ],
         "code": 9788,
         "uid": "9f41cbda67dafb38926a4201a01691c9",
@@ -4642,37 +4644,1811 @@ module.exports = [
   },
   {
     "font": {
-      "fontname": "brandico",
-      "version": "1.0",
+      "fontname": "typicons",
       "descent": 200,
-      "copyright": "(C) 2012 by Vitaly Puzrin",
-      "fullname": "Brandico",
-      "familyname": "Brandico",
+      "copyright": "(c) Stephen Hutchings 2012",
+      "familyname": "Typicons",
+      "weight": "Book",
+      "version": "1.0",
+      "fullname": "Typicons Regular",
       "ascent": 800
     },
     "meta": {
-      "github": "https://github.com/fontello/brandico.font",
-      "licence_url": "http://scripts.sil.org/OFL",
+      "licence_url": "http://creativecommons.org/licenses/by-sa/3.0/",
       "css_prefix": "icon-",
-      "licence": "SIL",
-      "author": "Crowdsourced, for Fontello project",
+      "licence": "CC BY-SA 3.0",
+      "author": "Stephen Hutchings",
+      "twitter": "https://twitter.com/Typicons/",
+      "homepage": "http://typicons.com/",
       "columns": 4
     },
     "glyphs": [
       {
         "search": [
+          "music",
+          "note",
+          "song",
+          "sound"
+        ],
+        "code": 9835,
+        "from": 42,
+        "uuid": "5rarhtgcreeh8evuaqd8zoekgehkt3mm",
+        "css": "music"
+      },
+      {
+        "search": [
+          "search",
+          "find"
+        ],
+        "code": 128269,
+        "from": 58,
+        "uuid": "t6cy82vd3t5piy0j3uknrlrzpg1ld8y3",
+        "css": "search"
+      },
+      {
+        "search": [
+          "mail",
+          "email"
+        ],
+        "code": 9993,
+        "from": 91,
+        "uuid": "wg849ixsobykxshs6efpc6fk4m0fq8bh",
+        "css": "mail"
+      },
+      {
+        "search": [
+          "heart"
+        ],
+        "code": 9829,
+        "from": 59,
+        "uuid": "hi76m8qggwn5lbl286oeqp64q0n8kusy",
+        "css": "heart"
+      },
+      {
+        "search": [
+          "star"
+        ],
+        "code": 9733,
+        "from": 61,
+        "uuid": "vyuzsm6wijlfwtjo4ifkoblfmsepk6g8",
+        "css": "star"
+      },
+      {
+        "search": [
+          "profile",
+          "contact",
+          "user"
+        ],
+        "code": 128100,
+        "from": 88,
+        "uuid": "bczb7qup4axmc490xmuuv8qdhcnbgeyf",
+        "css": "user"
+      },
+      {
+        "search": [
+          "users",
+          "contacts",
+          "friends"
+        ],
+        "code": 128101,
+        "from": 89,
+        "uuid": "x8m4z7b33cv1h2s784tjlam56uq40wtd",
+        "css": "users"
+      },
+      {
+        "search": [
+          "camera",
+          "photo"
+        ],
+        "code": 128247,
+        "from": 68,
+        "uuid": "aklhk54yg779pgovdsjr9r9w22hej00n",
+        "css": "camera"
+      },
+      {
+        "search": [
+          "image",
+          "list",
+          "thumbnails"
+        ],
+        "code": 9871,
+        "from": 34,
+        "uuid": "9x8p16w516pn1b19chr85japkedporm7",
+        "css": "th"
+      },
+      {
+        "search": [
+          "list"
+        ],
+        "code": 9776,
+        "from": 35,
+        "uuid": "lu2wqmd7v9zp21knhy4eifo41wjp4cnx",
+        "css": "th-list"
+      },
+      {
+        "search": [
+          "ok",
+          true,
+          "check",
+          "mark"
+        ],
+        "code": 10003,
+        "from": 103,
+        "uuid": "43fl9m553j1z5937vfjz0lgolrlspxwl",
+        "css": "ok"
+      },
+      {
+        "search": [
+          "close",
+          "cancel",
+          "reject"
+        ],
+        "code": 10005,
+        "from": 54,
+        "uuid": "1dq4tek4k8ea7zlj4kc3w83itnutaxg5",
+        "css": "cancel"
+      },
+      {
+        "search": [
+          "close",
+          "cancel"
+        ],
+        "code": 59319,
+        "from": 94,
+        "uuid": "l11ixzfrief0chds7elurdm2ot98xp4l",
+        "css": "cancel-alt"
+      },
+      {
+        "search": [
+          "plus"
+        ],
+        "code": 43,
+        "from": 53,
+        "uuid": "1gf923f9wvaezxmfon515dglxa3drf0e",
+        "css": "plus"
+      },
+      {
+        "search": [
+          "minus"
+        ],
+        "code": 45,
+        "from": 120,
+        "uuid": "qab5uvjyoc3uu4d2pvt8soshtgkuvpak",
+        "css": "minus"
+      },
+      {
+        "search": [
+          "equal"
+        ],
+        "code": 61,
+        "from": 121,
+        "uuid": "yb3vdwfxck5hmudxna4fq8fcwo9xari9",
+        "css": "eq"
+      },
+      {
+        "search": [
+          "help",
+          "question"
+        ],
+        "code": 10067,
+        "from": 125,
+        "uuid": "3sl64gd9y68dl54i2g4vo3u57osdabft",
+        "css": "help"
+      },
+      {
+        "search": [
+          "info"
+        ],
+        "code": 8505,
+        "from": 124,
+        "uuid": "85fda3129wk4amvn25wrq843sbj3yzl0",
+        "css": "info"
+      },
+      {
+        "search": [
+          "home"
+        ],
+        "code": 8962,
+        "from": 67,
+        "uuid": "w3nzesrlbezu6f30q7ytyq919p6gdlb6",
+        "css": "home"
+      },
+      {
+        "search": [
+          "link",
+          "url"
+        ],
+        "code": 128279,
+        "from": 40,
+        "uuid": "45g23adv6rwe7nokwek4d471h8y09ayz",
+        "css": "link"
+      },
+      {
+        "search": [
+          "lock"
+        ],
+        "code": 128274,
+        "from": 106,
+        "uuid": "4x5p6fnblkhqsj4ibuc724faotghuiaq",
+        "css": "lock"
+      },
+      {
+        "search": [
+          "lock",
+          "unlock"
+        ],
+        "code": 128275,
+        "from": 105,
+        "uuid": "a33vyvfsje6eklq8loqtzb1jcgo37onm",
+        "css": "lock-open"
+      },
+      {
+        "search": [
+          "pin",
+          "pushpin"
+        ],
+        "code": 128204,
+        "from": 115,
+        "uuid": "p57wgnf4glngbchbucdi029iptu8oxb8",
+        "css": "pin"
+      },
+      {
+        "search": [
+          "eye",
+          "subscribe"
+        ],
+        "code": 59146,
+        "from": 84,
+        "uuid": "k7sao112253txym1egnte7822irbyphe",
+        "css": "eye"
+      },
+      {
+        "search": [
+          "tag",
+          "category",
+          "price",
+          "offer"
+        ],
+        "code": 59148,
+        "from": 100,
+        "uuid": "z2kx6nr3u9112p0e1pfhxdhva9v7kd4k",
+        "css": "tag"
+      },
+      {
+        "search": [
+          "bookmark"
+        ],
+        "code": 128278,
+        "from": 41,
+        "uuid": "gr2i0fsmy50yfjhz6defsqkexnmctv8z",
+        "css": "bookmark"
+      },
+      {
+        "search": [
+          "flag"
+        ],
+        "code": 9873,
+        "from": 123,
+        "uuid": "4i0s2bklai5fywieqm4dqqngfz9ptfab",
+        "css": "flag"
+      },
+      {
+        "search": [
+          "thumbs",
+          "up",
+          "like",
+          "vote"
+        ],
+        "code": 128077,
+        "from": 98,
+        "uuid": "tau7t0t38662eqxrb80ozeiase5em2x9",
+        "css": "thumbs-up"
+      },
+      {
+        "search": [
+          "thumbs",
+          "down",
+          "unlike",
+          "vote"
+        ],
+        "code": 128078,
+        "from": 99,
+        "uuid": "ani12ucvy2plqmykysnk4zd9i24cmxqp",
+        "css": "thumbs-down"
+      },
+      {
+        "search": [
+          "download"
+        ],
+        "code": 128229,
+        "from": 44,
+        "uuid": "7yekfd0qlkgp6emwfbo10sjdmf8pewli",
+        "css": "download"
+      },
+      {
+        "search": [
+          "reply"
+        ],
+        "code": 59154,
+        "from": 63,
+        "uuid": "28r0xthd180mg0wnfh8ek3mtn761hs11",
+        "css": "reply"
+      },
+      {
+        "search": [
+          "forward"
+        ],
+        "code": 10150,
+        "from": 64,
+        "uuid": "7p5gflyid3o4gtesy94a6erq94e4pz7u",
+        "css": "forward"
+      },
+      {
+        "search": [
+          "export",
+          "share"
+        ],
+        "code": 59157,
+        "from": 87,
+        "uuid": "wh8nbtrxjl2f67dpybsww6mri0xcaklm",
+        "css": "export"
+      },
+      {
+        "search": [
+          "pencil",
+          "write",
+          "reply",
+          "edit"
+        ],
+        "code": 9998,
+        "from": 57,
+        "uuid": "1e77a2yvsq3owssduo2lcgsiven57iv5",
+        "css": "pencil"
+      },
+      {
+        "search": [
+          "pencil",
+          "write",
+          "reply",
+          "edit"
+        ],
+        "code": 9997,
+        "from": 119,
+        "uuid": "jqzwo6i8oicjbn049sh2856d8anrqoli",
+        "css": "edit"
+      },
+      {
+        "search": [
+          "comment",
+          "reply",
+          "write"
+        ],
+        "code": 59160,
+        "from": 92,
+        "uuid": "b90868gfogj970a1g0dnot6hm5r4uj55",
+        "css": "comment"
+      },
+      {
+        "search": [
+          "comment",
+          "reply",
+          "chat",
+          "talk"
+        ],
+        "code": 59168,
+        "from": 126,
+        "uuid": "2hqh2lidoqvaujgq29tdkrtiay5s6tyk",
+        "css": "chat"
+      },
+      {
+        "search": [
+          "attention",
+          "warning",
+          "alert"
+        ],
+        "code": 9888,
+        "from": 102,
+        "uuid": "rp4bhvranczqlvvwzerni2uuanp2gvqb",
+        "css": "attention"
+      },
+      {
+        "search": [
+          "address"
+        ],
+        "code": 59171,
+        "from": 114,
+        "uuid": "gruasbs60jlu9us53csv9q7nnwy4d990",
+        "css": "address"
+      },
+      {
+        "search": [
+          "location",
+          "mark",
+          "marker"
+        ],
+        "code": 59172,
+        "from": 65,
+        "uuid": "gjt8ba5q0n3nn8ptw6324sflr8qoaeam",
+        "css": "location"
+      },
+      {
+        "search": [
+          "direction"
+        ],
+        "code": 10146,
+        "from": 112,
+        "uuid": "cka09asalx8otiykquyp5d9tymlan1o3",
+        "css": "direction"
+      },
+      {
+        "search": [
+          "trash",
+          "delete"
+        ],
+        "code": 59177,
+        "from": 93,
+        "uuid": "csuoy0rqoun3unhsgjoy2uumpldzbfmt",
+        "css": "trash"
+      },
+      {
+        "search": [
+          "rss"
+        ],
+        "code": 59194,
+        "from": 78,
+        "uuid": "3o0pu4qbmgvcv8zqb5o3qh8vttzvhpy7",
+        "css": "rss"
+      },
+      {
+        "search": null,
+        "code": 128222,
+        "from": 66,
+        "uuid": "24eiet6l58t0myywueih34b0e5a30bw1",
+        "css": "phone"
+      },
+      {
+        "search": [
+          "settings",
+          "cog",
+          "gear"
+        ],
+        "code": 9881,
+        "from": 79,
+        "uuid": "dpxunrtmigvk6jm0ieo7axfsgzx4awll",
+        "css": "cog"
+      },
+      {
+        "search": [
+          "settings",
+          "wrench"
+        ],
+        "code": 128295,
+        "from": 80,
+        "uuid": "i7r8vgyqewsy2rlx0xhawybpw5uyss3z",
+        "css": "wrench"
+      },
+      {
+        "search": [
+          "mic"
+        ],
+        "code": 127908,
+        "from": 90,
+        "uuid": "b1a40ej6b1xgsxjeh1b1urm8ptglt0hk",
+        "css": "mic"
+      },
+      {
+        "search": [
+          "volume",
+          "sound",
+          "mute"
+        ],
+        "code": 128263,
+        "from": 116,
+        "uuid": "43m0a70tvxqc6q7jxgzhz5lmlt3ce2iy",
+        "css": "volume-off"
+      },
+      {
+        "search": [
+          "volume",
+          "sound"
+        ],
+        "code": 128266,
+        "from": 117,
+        "uuid": "okc52fdxu9uz2wnl0awdtv5373is429s",
+        "css": "volume-up"
+      },
+      {
+        "search": [
+          "clock",
+          "time"
+        ],
+        "code": 128340,
+        "from": 37,
+        "uuid": "eh1m4shhgsndy7pmdzx3ynrakadhozgr",
+        "css": "clock"
+      },
+      {
+        "search": [
+          "block",
+          "deny"
+        ],
+        "code": 128683,
+        "from": 110,
+        "uuid": "j6xzwioffey3gxe90yx3ie56j5dlt902",
+        "css": "block"
+      },
+      {
+        "search": [
+          "resize",
+          "fullscreen"
+        ],
+        "code": 59204,
+        "from": 109,
+        "uuid": "cdfalpadi7huwv9ah4fef2gpfpb4c6qm",
+        "css": "resize-full"
+      },
+      {
+        "search": [
+          "move"
+        ],
+        "code": 61511,
+        "from": 108,
+        "uuid": "fhkechw94uv9ydw6tukba3ka2hhoif4n",
+        "css": "move"
+      },
+      {
+        "search": [
+          "zoom. scale",
+          "in"
+        ],
+        "code": 59216,
+        "from": 86,
+        "uuid": "dfhp68fdlvh9dknvxk4tkf8yy0h7vw3r",
+        "css": "zoom-in"
+      },
+      {
+        "search": [
+          "zoom. scale",
+          "out"
+        ],
+        "code": 59217,
+        "from": 85,
+        "uuid": "1nkxlfe3u6kwarxqy3g4z3c9lrsgdu5h",
+        "css": "zoom-out"
+      },
+      {
+        "search": [
+          "popup",
+          "window"
+        ],
+        "code": 59212,
+        "from": 101,
+        "uuid": "493hui9b6xiqaf04slclmqnwpap3oxjj",
+        "css": "popup"
+      },
+      {
+        "search": [
+          "arrow",
+          "left"
+        ],
+        "code": 59229,
+        "from": 56,
+        "uuid": "wlri7uftq4zbi82q2xuf08ayd8kpijlk",
+        "css": "left-open"
+      },
+      {
+        "search": [
+          "arrow",
+          "right"
+        ],
+        "code": 59230,
+        "from": 55,
+        "uuid": "6zhrgcf3co77hnljttd3b2mrc8z5fiq5",
+        "css": "right-open"
+      },
+      {
+        "search": [
+          "arrow",
+          "down"
+        ],
+        "code": 8595,
+        "from": 72,
+        "uuid": "xq9z5jujkqhrf97s70hjek6otohmhr1y",
+        "css": "down"
+      },
+      {
+        "search": [
+          "arrow",
+          "left"
+        ],
+        "code": 8592,
+        "from": 69,
+        "uuid": "qqsxko9kqxh5g53lz33yonkpc2rpkvkn",
+        "css": "left"
+      },
+      {
+        "search": [
+          "arrow",
+          "right"
+        ],
+        "code": 8594,
+        "from": 70,
+        "uuid": "4oaz56fmzfvx7vry2o540n9l4z79fz8t",
+        "css": "right"
+      },
+      {
+        "search": [
+          "arrow",
+          "up"
+        ],
+        "code": 8593,
+        "from": 71,
+        "uuid": "mj2pxhfj0eumtbzirpdokhtzk00480uo",
+        "css": "up"
+      },
+      {
+        "search": [
+          "reload",
+          "redo",
+          "repeat"
+        ],
+        "code": 10227,
+        "from": 73,
+        "uuid": "5qynhqqaenby227l5kogqj8sdk5s4e7h",
+        "css": "cw"
+      },
+      {
+        "search": [
+          "reload",
+          "refresh",
+          "update",
+          "sync"
+        ],
+        "code": 59232,
+        "from": 74,
+        "uuid": "mqlxga8x57rhlfv44zsvmz1reex8lbqg",
+        "css": "arrows-cw"
+      },
+      {
+        "search": [
+          "arrow",
+          "loop",
+          "reload",
+          "refresh"
+        ],
+        "code": 128257,
+        "from": 76,
+        "uuid": "em9mdmyhjwd003ndercv4r08h0ai31tl",
+        "file": "loop",
+        "css": "loop"
+      },
+      {
+        "search": [
+          "shuffle"
+        ],
+        "code": 128256,
+        "from": 77,
+        "uuid": "36m3wq83tio3uymjbu44su7ior03u9cc",
+        "css": "shuffle"
+      },
+      {
+        "search": [
+          "eject",
+          "player"
+        ],
+        "code": 9167,
+        "from": 107,
+        "uuid": "ygvgohzaooew2l8favz2xu2xi59w1hoo",
+        "css": "eject"
+      },
+      {
+        "search": [
+          "editor",
+          "list"
+        ],
+        "code": 59266,
+        "from": 122,
+        "uuid": "jh3jpcb1t1bcm80gidkadilh080aq79h",
+        "css": "list"
+      },
+      {
+        "search": [
+          "battery"
+        ],
+        "code": 59250,
+        "from": 48,
+        "uuid": "f378encthmyxe8mfi1ute1knv09ggkar",
+        "css": "bat-empty"
+      },
+      {
+        "search": [
+          "battery"
+        ],
+        "code": 59311,
+        "from": 49,
+        "uuid": "jslb32twsd38zgx4v3sm5upu0t6wirtm",
+        "css": "bat-third"
+      },
+      {
+        "search": [
+          "battery"
+        ],
+        "code": 59251,
+        "from": 50,
+        "uuid": "g43j86b0hso37oir42285zjo3nhd7m08",
+        "css": "bat-half"
+      },
+      {
+        "search": [
+          "battery"
+        ],
+        "code": 59252,
+        "from": 51,
+        "uuid": "7wc8mz5d93cbka5pscqjhsej173tqmbs",
+        "css": "bat-full"
+      },
+      {
+        "search": [
+          "battery",
+          "charge"
+        ],
+        "code": 59253,
+        "from": 52,
+        "uuid": "bc1u8zgs4wteyj0u35n943k3jzx5olkm",
+        "css": "bat-charge"
+      },
+      {
+        "search": [
+          "target"
+        ],
+        "code": 127919,
+        "from": 113,
+        "uuid": "xzlln8s96kcutcubtwavdjt80tmhkbkq",
+        "css": "target"
+      },
+      {
+        "search": [
+          "mobile",
+          "iphone"
+        ],
+        "code": 128241,
+        "from": 45,
+        "uuid": "gz5flrq210wzbyafnerm4e0aublo7qwb",
+        "css": "mobile"
+      },
+      {
+        "search": [
+          "weather",
+          "sun",
+          "brightness"
+        ],
+        "code": 9788,
+        "from": 47,
+        "uuid": "ivmsk67zo1yb1tthd3ugi4xnb3get418",
+        "css": "sun"
+      },
+      {
+        "search": [
+          "ajust",
+          "contrast"
+        ],
+        "code": 59283,
+        "from": 46,
+        "uuid": "3fzybskyukolbvmshoyord1b254366gh",
+        "css": "ajust"
+      },
+      {
+        "search": [
+          "globe"
+        ],
+        "code": 119565,
+        "from": 118,
+        "uuid": "igynut9bozd2s1mxnmkeeut1qou984gc",
+        "file": "globe",
+        "css": "globe"
+      },
+      {
+        "search": [
+          "globe"
+        ],
+        "code": 127760,
+        "from": 97,
+        "uuid": "n1ld0w7zazkxq7bsqtksyez86sdufqgd",
+        "css": "globe-alt"
+      },
+      {
+        "search": [
+          "flash",
+          "bolt"
+        ],
+        "code": 9889,
+        "from": 111,
+        "uuid": "pgdm1vsngqxmheo5xkjpbm5o8k81pawd",
+        "file": "flash",
+        "css": "flash"
+      },
+      {
+        "search": [
+          "chart",
+          "pie",
+          "diagram"
+        ],
+        "code": 128200,
+        "from": 83,
+        "uuid": "pdnk53e9ff0ck5q3b16vcm1hh1447j7e",
+        "css": "chart"
+      },
+      {
+        "search": [
+          "chart",
+          "bar",
+          "diagram"
+        ],
+        "code": 128202,
+        "from": 81,
+        "uuid": "5v7h140x5zz1acnzfzo36flbwar5tujm",
+        "css": "chart-bar"
+      },
+      {
+        "search": [
+          "chart",
+          "pie",
+          "diagram"
+        ],
+        "code": 59298,
+        "from": 82,
+        "uuid": "um6h7e9nfp79peah8uphjhismoa8owtu",
+        "css": "chart-pie"
+      },
+      {
+        "search": [
+          "key"
+        ],
+        "code": 128273,
+        "from": 36,
+        "uuid": "upidp9k72x66utj5w89oyq65tp6r2tpe",
+        "css": "key"
+      },
+      {
+        "search": [
+          "scissors"
+        ],
+        "code": 9986,
+        "from": 39,
+        "uuid": "2npqajwqwxy3kbchcht7tyupllg270hb",
+        "css": "scissors"
+      },
+      {
+        "search": [
+          "flask"
+        ],
+        "code": 104,
+        "from": 104,
+        "uuid": "0fg01d4656jzluy9fz6ee4ohdd3nt2pe",
+        "css": "flask"
+      },
+      {
+        "search": [
+          "puzzle",
+          "plugin"
+        ],
+        "code": 59318,
+        "from": 43,
+        "uuid": "xoidjr6q3rzi7tpw6hci1k6srz15g11l",
+        "css": "puzzle"
+      },
+      {
+        "search": null,
+        "code": 8734,
+        "from": 95,
+        "uuid": "2039c86dq3jtfwqmgow2quvuzq3k34bu",
+        "css": "infinity"
+      }
+    ],
+    "transform": {
+      "rescale": 0.6,
+      "baseline": 0.5,
+      "offset": -0.44
+    },
+    "id": 3
+  },
+  {
+    "font": {
+      "fontname": "modernpics",
+      "descent": 200,
+      "copyright": "Copyright (c) 2012 by John Caserta. All rights reserved.",
+      "familyname": "Modern Pictograms",
+      "weight": "Normal",
+      "version": "1.0",
+      "fullname": "Modern Pictograms",
+      "ascent": 800
+    },
+    "meta": {
+      "licence_url": "http://scripts.sil.org/OFL",
+      "licence": "SIL",
+      "author": "John Caserta",
+      "twitter": "https://twitter.com/johncaserta",
+      "css_prefix": "icon-",
+      "homepage": "http://thedesignoffice.org/project/modern-pictograms/",
+      "email": "info@johncaserta.com",
+      "columns": 4
+    },
+    "glyphs": [
+      {
+        "search": [
+          "search",
+          "find"
+        ],
+        "code": 128269,
+        "from": 115,
+        "uuid": "id8wp0cygl9trzbhlbd9o0fygiesi629",
+        "css": "search"
+      },
+      {
+        "search": [
+          "mail",
+          "email"
+        ],
+        "code": 9993,
+        "from": 109,
+        "uuid": "ae3so8q0b0n2h8esv9flua2nmwswa8fd",
+        "css": "mail"
+      },
+      {
+        "search": [
+          "heart"
+        ],
+        "code": 9829,
+        "from": 106,
+        "uuid": "pt5lb2orj9ms0n4yyxjavefdukcv1scl",
+        "css": "heart"
+      },
+      {
+        "search": [
+          "star"
+        ],
+        "code": 9733,
+        "from": 42,
+        "uuid": "kfzodo12ciruwganzy6h1bee2bpyz24d",
+        "css": "star"
+      },
+      {
+        "search": [
+          "profile",
+          "contact",
+          "user"
+        ],
+        "code": 128100,
+        "from": 102,
+        "uuid": "ma9pq3m9ye6f33psotqr8e68yyv7fbz6",
+        "css": "user"
+      },
+      {
+        "search": [
+          "profile",
+          "contact",
+          "user"
+        ],
+        "code": 128105,
+        "from": 107,
+        "uuid": "99qmwsnyl7d1848xayggtcwaysc4e415",
+        "css": "user-woman"
+      },
+      {
+        "search": null,
+        "code": 128107,
+        "from": 103,
+        "uuid": "d1a7ajpi3149rk5q4861jw9f2lzg27d1",
+        "css": "user-pair"
+      },
+      {
+        "search": [
+          "movie",
+          "video",
+          "film"
+        ],
+        "code": 127916,
+        "from": 80,
+        "uuid": "3f0r3y17tle74mzaafsx8frnp2nu36gg",
+        "css": "video"
+      },
+      {
+        "search": [
+          "movie",
+          "video",
+          "film"
+        ],
+        "code": 127910,
+        "from": 95,
+        "uuid": "o3ks7v0pzabyrzijuzxmzyzae06it2eh",
+        "css": "video-alt"
+      },
+      {
+        "search": [
+          "facetime",
+          "movie",
+          "video",
+          "film"
+        ],
+        "code": 127909,
+        "from": 104,
+        "uuid": "ny7ydbn558y0aij4evvc199yt345tks4",
+        "css": "videocam"
+      },
+      {
+        "search": [
+          "movie",
+          "video",
+          "film"
+        ],
+        "code": 127993,
+        "from": 72,
+        "uuid": "vsvgkgr7wqknxe7rsjrusvvs43yekcyr",
+        "css": "videocam-alt"
+      },
+      {
+        "search": [
+          "camera",
+          "photo"
+        ],
+        "code": 128247,
+        "from": 65,
+        "uuid": "1n2jlgp5brxxzpvvrly6jbfutnk2fpra",
+        "css": "camera"
+      },
+      {
+        "search": [
+          "image",
+          "list",
+          "thumbnails"
+        ],
+        "code": 9871,
+        "from": 92,
+        "uuid": "3v2lgx3os8ub377alyqm8mn2o7r4zywg",
+        "css": "th"
+      },
+      {
+        "search": [
+          "list"
+        ],
+        "code": 9776,
+        "from": 52,
+        "uuid": "cy7vw87w1slwyalc4vd8cdhrb50asud3",
+        "css": "th-list"
+      },
+      {
+        "search": [
+          "ok",
+          true,
+          "check",
+          "mark"
+        ],
+        "code": 10003,
+        "from": 37,
+        "uuid": "in76hg99crrkpcbz2rjnmgbiw74s72y0",
+        "css": "ok"
+      },
+      {
+        "search": [
+          "close",
+          "cancel",
+          "reject"
+        ],
+        "code": 10005,
+        "from": 88,
+        "uuid": "rrhco7mfj6ro9yzhe4a1rbln9flw47re",
+        "css": "cancel"
+      },
+      {
+        "search": [
+          "close",
+          "cancel",
+          "reject"
+        ],
+        "code": 10006,
+        "from": 120,
+        "uuid": "wcb87qh0k9smu6zukdhbn5zip98zofkh",
+        "css": "cancel-circle"
+      },
+      {
+        "search": [
+          "plus"
+        ],
+        "code": 43,
+        "from": 43,
+        "uuid": "hbvhbnoivp3qj8xpyqrxa7dvq9ntnci3",
+        "css": "plus"
+      },
+      {
+        "search": [
+          "help",
+          "question"
+        ],
+        "code": 59140,
+        "from": 63,
+        "uuid": "uda7inu4er17zsorrfic7n0l6fvukfqn",
+        "css": "help-circle"
+      },
+      {
+        "search": [
+          "info"
+        ],
+        "code": 59141,
+        "from": 61,
+        "uuid": "769oa3oy9cfucktpbod5cqmth9ioofxd",
+        "css": "info-circle"
+      },
+      {
+        "search": [
+          "home"
+        ],
+        "code": 8962,
+        "from": 112,
+        "uuid": "c1d1ix1r5ldq6yl3xwvh3u3fxqale7sy",
+        "css": "home"
+      },
+      {
+        "search": [
+          "lock"
+        ],
+        "code": 128274,
+        "from": 110,
+        "uuid": "ivdkw88f6me1kxmgrk3qzv6jkgxhbuj7",
+        "css": "lock"
+      },
+      {
+        "search": [
+          "lock",
+          "unlock"
+        ],
+        "code": 128275,
+        "from": 113,
+        "uuid": "8u06eo32zy61toyj78of6mi7inn3xlcl",
+        "css": "lock-open"
+      },
+      {
+        "search": [
+          "eye",
+          "subscribe"
+        ],
+        "code": 59146,
+        "from": 69,
+        "uuid": "frauy9fser6zk9n5ih3rdpz7zzfjbrvu",
+        "css": "eye"
+      },
+      {
+        "search": [
+          "tag",
+          "category",
+          "price",
+          "offer"
+        ],
+        "code": 59148,
+        "from": 74,
+        "uuid": "9vefjlcta42r6tjjmog0mpx7mf63jgag",
+        "css": "tag"
+      },
+      {
+        "search": [
+          "thumbs",
+          "up",
+          "like",
+          "vote"
+        ],
+        "code": 128077,
+        "from": 108,
+        "uuid": "jwebw8rhtovm6adljbdixtj9ltdrzkvb",
+        "css": "thumbs-up"
+      },
+      {
+        "search": [
+          "thumbs",
+          "down",
+          "unlike",
+          "vote"
+        ],
+        "code": 128078,
+        "from": 76,
+        "uuid": "h9yii6q602rt4dxjmy9k9wc3jkwzk8d0",
+        "css": "thumbs-down"
+      },
+      {
+        "search": [
+          "download"
+        ],
+        "code": 128229,
+        "from": 68,
+        "uuid": "kfk635sf697exf2r3jqx06zz54e1rgx4",
+        "css": "download"
+      },
+      {
+        "search": [
+          "export",
+          "share"
+        ],
+        "code": 59157,
+        "from": 111,
+        "uuid": "fojo3y3ju5f4vge0bepcxl1mgmzgit9k",
+        "css": "export"
+      },
+      {
+        "search": [
+          "pencil",
+          "write",
+          "reply",
+          "edit"
+        ],
+        "code": 9998,
+        "from": 114,
+        "uuid": "587bjlxppui6u4japooa2foe58rsvicp",
+        "css": "pencil"
+      },
+      {
+        "search": [
+          "pencil",
+          "write",
+          "reply",
+          "edit"
+        ],
+        "code": 10000,
+        "from": 9998,
+        "uuid": "97var6sq7rzo72ktzg1c6ph46u9pftbr",
+        "css": "pencil-alt"
+      },
+      {
+        "search": [
+          "pencil",
+          "write",
+          "reply",
+          "edit"
+        ],
+        "code": 9997,
+        "from": 86,
+        "uuid": "242giivkgr3e6le7b2xqi2pkdruf85mu",
+        "css": "edit"
+      },
+      {
+        "search": [
+          "chat",
+          "talk"
+        ],
+        "code": 59168,
+        "from": 98,
+        "uuid": "7idv5s1f3qkgmbwbat6xukumwqxkrook",
+        "css": "chat"
+      },
+      {
+        "search": [
+          "print"
+        ],
+        "code": 59158,
+        "from": 100,
+        "uuid": "7ssl5z5jrhu13tb13cd3gb4bdfkzbfzw",
+        "css": "print"
+      },
+      {
+        "search": [
+          "alert",
+          "bell",
+          "jingle"
+        ],
+        "code": 128276,
+        "from": 57,
+        "uuid": "uaps3vfayj05q7h4rvb10m890xvaequb",
+        "css": "bell"
+      },
+      {
+        "search": [
+          "attention",
+          "warning",
+          "alert"
+        ],
+        "code": 9888,
+        "from": 33,
+        "uuid": "f47srtt9pew19q6kg9jniwtzsb8q1rhy",
+        "css": "attention"
+      },
+      {
+        "search": [
+          "location",
+          "mark",
+          "marker"
+        ],
+        "code": 59172,
+        "from": 44,
+        "uuid": "too2rspp5e6z6m0y6lconmv23uw3qlqo",
+        "css": "location"
+      },
+      {
+        "search": [
+          "trash",
+          "delete"
+        ],
+        "code": 59177,
+        "from": 73,
+        "uuid": "z18zsyvbrpsea0f49kd61kkue1ofsafy",
+        "css": "trash"
+      },
+      {
+        "search": [
+          "doc",
+          "article"
+        ],
+        "code": 128196,
+        "from": 75,
+        "uuid": "t7uz7sms69yuckjmkp1zqggwr4jkw0o9",
+        "css": "doc"
+      },
+      {
+        "search": [
+          "document",
+          "article"
+        ],
+        "code": 59188,
+        "from": 90,
+        "uuid": "573lc53801tfc96xt7fubn59tb0o5s4y",
+        "css": "article"
+      },
+      {
+        "search": [
+          "document",
+          "article"
+        ],
+        "code": 59189,
+        "from": 97,
+        "uuid": "pzy4lq1ak4datbxpdfj3ya74vjfhwxg1",
+        "css": "article-alt"
+      },
+      {
+        "search": [
+          "rss"
+        ],
+        "code": 59194,
+        "from": 94,
+        "uuid": "33iuue66u2628uv4kz3vnmh8uee8o7rw",
+        "css": "rss"
+      },
+      {
+        "search": [
+          "settings",
+          "wrench"
+        ],
+        "code": 128295,
+        "from": 40,
+        "uuid": "zc0c8s0nyweeeo9i8a3rucu7alwxt56r",
+        "css": "wrench"
+      },
+      {
+        "search": [
+          "basket",
+          "shopping",
+          "cart"
+        ],
+        "code": 59197,
+        "from": 105,
+        "uuid": "vqyhv5kmwcj9zxq28dhq5npykr2k39co",
+        "css": "basket"
+      },
+      {
+        "search": [
+          "basket",
+          "shopping",
+          "cart"
+        ],
+        "code": 59310,
+        "from": 46,
+        "uuid": "s51at1xi1fkaomxvp6dqaax5jmyhtn4h",
+        "css": "basket-alt"
+      },
+      {
+        "search": [
+          "calendar",
+          "date"
+        ],
+        "code": 128197,
+        "from": 99,
+        "uuid": "3v94fy782j1ddju9fbafpqa1x0li3bt6",
+        "css": "calendar"
+      },
+      {
+        "search": [
+          "calendar",
+          "date"
+        ],
+        "code": 59198,
+        "from": 53,
+        "uuid": "sz7wtylc6qrwcbsj8aowal9y22hu6lka",
+        "css": "calendar-alt"
+      },
+      {
+        "search": [
+          "volume",
+          "sound",
+          "mute"
+        ],
+        "code": 128263,
+        "from": 48,
+        "uuid": "8pcqxtjxtvkqo3dgemy49z7fw1d8xsh9",
+        "css": "volume-off"
+      },
+      {
+        "search": [
+          "volume",
+          "sound"
+        ],
+        "code": 128265,
+        "from": 49,
+        "uuid": "ivjrs8ijaooc3a2dw4790kb2rx4l6kjh",
+        "css": "volume-down"
+      },
+      {
+        "search": [
+          "volume",
+          "sound"
+        ],
+        "code": 128266,
+        "from": 50,
+        "uuid": "rrb2e7qiu68cw7itzq0wzm2hugw1u4lu",
+        "css": "volume-up"
+      },
+      {
+        "search": [
+          "bullhorn",
+          "loudspeaker"
+        ],
+        "code": 128227,
+        "from": 89,
+        "uuid": "uetwmlvm6z9eaot1t74vvsgrte9vwi0n",
+        "css": "bullhorn"
+      },
+      {
+        "search": [
+          "clock",
+          "time"
+        ],
+        "code": 128340,
+        "from": 123,
+        "uuid": "0ohst63cgq1mf1syayvfl8mphms8dbes",
+        "css": "clock"
+      },
+      {
+        "search": [
+          "clock",
+          "time"
+        ],
+        "code": 128339,
+        "from": 125,
+        "uuid": "9avusbdkm7q4vcmevr0x88zxewys65wr",
+        "css": "clock-alt"
+      },
+      {
+        "search": [
+          "stop",
+          "block",
+          "cancel"
+        ],
+        "code": 59315,
+        "from": 39,
+        "uuid": "ip65j4to6y8pionwfd8h22mbl6kp1xya",
+        "css": "stop"
+      },
+      {
+        "search": [
+          "resize",
+          "fullscreen"
+        ],
+        "code": 59204,
+        "from": 118,
+        "uuid": "dsfybb9l0x5fyd7e3o5kyisqppifztfu",
+        "css": "resize-full"
+      },
+      {
+        "search": [
+          "resize"
+        ],
+        "code": 59206,
+        "from": 117,
+        "uuid": "qdhvqjd167ee2byleebhw58j4omhb8pl",
+        "css": "resize-small"
+      },
+      {
+        "search": [
+          "zoom. scale",
+          "in"
+        ],
+        "code": 59216,
+        "from": 121,
+        "uuid": "yc4vm9xepijcjyfdp6mgkvju8engb212",
+        "css": "zoom-in"
+      },
+      {
+        "search": [
+          "zoom. scale",
+          "out"
+        ],
+        "code": 59217,
+        "from": 122,
+        "uuid": "itjusjx5w85jr0udgi40mz7x2kmj1360",
+        "css": "zoom-out"
+      },
+      {
+        "search": [
+          "popup",
+          "window"
+        ],
+        "code": 59212,
+        "from": 87,
+        "uuid": "b2i5x0ka1m6pskm3puj9jppl672knd5c",
+        "css": "popup"
+      },
+      {
+        "search": [
+          "arrow",
+          "down"
+        ],
+        "code": 9662,
+        "from": 47,
+        "uuid": "8ax1xqcbzz1hobyd4i7f0unwib1bztip",
+        "css": "down-dir"
+      },
+      {
+        "search": [
+          "arrow",
+          "left"
+        ],
+        "code": 9666,
+        "from": 60,
+        "uuid": "am79573ydakwiicuct1odx7f2e9zv8lv",
+        "css": "left-dir"
+      },
+      {
+        "search": [
+          "arrow",
+          "right"
+        ],
+        "code": 9656,
+        "from": 62,
+        "uuid": "gypcofts1tkouwkxbv8d33eanqpreyy9",
+        "css": "right-dir"
+      },
+      {
+        "search": [
+          "arrow",
+          "up"
+        ],
+        "code": 9652,
+        "from": 45,
+        "uuid": "6ipws8y9gej6vbloufvhi5qux7rluf64",
+        "css": "glyph78"
+      },
+      {
+        "search": [
+          "arrow",
+          "down"
+        ],
+        "code": 8595,
+        "from": 91,
+        "uuid": "3iwbntpxmp0kvbvzaxrh8h30xw1l6zvn",
+        "css": "down"
+      },
+      {
+        "search": [
+          "arrow",
+          "up"
+        ],
+        "code": 8593,
+        "from": 93,
+        "uuid": "giaskl13npzvuuz2ovy3vw8s0bewik08",
+        "css": "up"
+      },
+      {
+        "search": [
+          "reload",
+          "redo",
+          "repeat"
+        ],
+        "code": 10227,
+        "from": 82,
+        "uuid": "v4mhug5rzlh2qzlo09kfx03e6e2alqql",
+        "css": "cw"
+      },
+      {
+        "search": [
+          "broadcast",
+          "wifi",
+          "signal"
+        ],
+        "code": 59248,
+        "from": 96,
+        "uuid": "e6t4yvmv401e9gpo2anslq4uqy2iz692",
+        "css": "signal"
+      },
+      {
+        "search": [
+          "top",
+          "trophy",
+          "prize",
+          "award"
+        ],
+        "code": 127945,
+        "from": 41,
+        "uuid": "lnyme20kl7kh26it9yrqk7at10k6i0sf",
+        "css": "award"
+      },
+      {
+        "search": [
+          "mobile",
+          "iphone"
+        ],
+        "code": 128241,
+        "from": 79,
+        "uuid": "m3m8301t2xdy30x4lp7txm0vztl67tcl",
+        "css": "mobile"
+      },
+      {
+        "search": [
+          "mobile",
+          "iphone"
+        ],
+        "code": 59312,
+        "from": 78,
+        "uuid": "raxalm7kdj5at9v49bevw6r2cw7fdv9r",
+        "css": "mobile-alt"
+      },
+      {
+        "search": [
+          "tablet"
+        ],
+        "code": 59313,
+        "from": 81,
+        "uuid": "r36ey62e6pi493s139u528739kjr3o8w",
+        "css": "tablet"
+      },
+      {
+        "search": [
+          "player",
+          "ipod"
+        ],
+        "code": 59314,
+        "from": 77,
+        "uuid": "hx5rpl1lxy10jqibjq0jmu0dhruapso4",
+        "css": "ipod"
+      },
+      {
+        "search": [
+          "cd",
+          "vinyl"
+        ],
+        "code": 128191,
+        "from": 67,
+        "uuid": "80fm9zvbe9habbzvsy6w4aymkgz2vu9i",
+        "css": "cd"
+      },
+      {
+        "search": [
+          "grid",
+          "table"
+        ],
+        "code": 59316,
+        "from": 51,
+        "uuid": "o1c30odwfvgcvi5b4jsg95sur8v6ghsp",
+        "css": "grid"
+      },
+      {
+        "search": [
+          "book"
+        ],
+        "code": 128213,
+        "from": 66,
+        "uuid": "dplw5xo88mzzr7b45nvjcamyyhni6drs",
+        "css": "book"
+      },
+      {
+        "search": [
+          "easel",
+          "stand"
+        ],
+        "code": 59317,
+        "from": 83,
+        "uuid": "px45pk7jgwms9zb3zcm44h8al4f3xxkd",
+        "css": "easel"
+      },
+      {
+        "search": [
+          "globe"
+        ],
+        "code": 127760,
+        "from": 119,
+        "uuid": "i6ej1r6t84xouh0dct7g9zyx3ya9s9eg",
+        "css": "globe"
+      },
+      {
+        "search": [
+          "chart",
+          "pie",
+          "diagram"
+        ],
+        "code": 128200,
+        "from": 54,
+        "uuid": "97ylvmgyj79w96iwzdanwmf5o4cvo17w",
+        "css": "chart"
+      },
+      {
+        "search": [
+          "chart",
+          "bar",
+          "diagram"
+        ],
+        "code": 128202,
+        "from": 55,
+        "uuid": "ogmm8kz4f7y6ji50gzajnwed8h6ck2u7",
+        "css": "chart-bar"
+      },
+      {
+        "search": [
+          "chart",
+          "pie",
+          "diagram"
+        ],
+        "code": 59298,
+        "from": 56,
+        "uuid": "crns7fze53tnmwvi0wyfhq8whxfmmroz",
+        "css": "chart-pie"
+      },
+      {
+        "search": [
+          "money"
+        ],
+        "code": 128176,
+        "from": 36,
+        "uuid": "qdrxlsrgibi1n48dmygz3rp6ciczkjfs",
+        "css": "money"
+      },
+      {
+        "search": [
+          "money",
+          "dollar"
+        ],
+        "code": 128181,
+        "from": 35,
+        "uuid": "fhpup8jff2yw9kmuwavhyqxogczcbbhj",
+        "css": "dollar"
+      },
+      {
+        "search": [
+          "@",
+          "at"
+        ],
+        "code": 64,
+        "from": 64,
+        "uuid": "mjbsqg8yglgu0esc6ru2vh111jmh7qng",
+        "css": "at"
+      },
+      {
+        "search": [
+          "colon"
+        ],
+        "code": 58,
+        "from": 58,
+        "uuid": "2qh229aneb95ds2afi7dbdsxz9jrbhcl",
+        "css": "colon"
+      },
+      {
+        "search": [
+          "semicolon"
+        ],
+        "code": 59,
+        "from": 59,
+        "uuid": "snfl88dncpfb384hoi4rv4vqm08h8at8",
+        "css": "semicolon"
+      },
+      {
+        "search": [
           "facebook"
         ],
         "code": 62208,
-        "meta": {
-          "homepage": "http://www.facebook.com/brandpermissions/logos.php",
-          "author": "Facebook"
-        },
-        "uid": "240979dd9fcf2e46250e66792edb8092",
-        "file": "facebook",
-        "transform": {
-          "offset": 0.05
-        },
+        "from": 70,
+        "uuid": "w42gjpwdzqeszptpy1xqp8r77o6gcasj",
         "css": "facebook"
       },
       {
@@ -4680,16 +6456,8 @@ module.exports = [
           "facebook"
         ],
         "code": 62209,
-        "meta": {
-          "twitter": "https://twitter.com/puzrin",
-          "github": "https://github.com/puzrin",
-          "author": "Vitaly Puzrin"
-        },
-        "uid": "8045477f6a7ef0bd7caff130ad25b88d",
-        "file": "facebook-rect",
-        "transform": {
-          "offset": 0.05
-        },
+        "from": 71,
+        "uuid": "03cmb4p7niofd11yos3fpjjuvvpy7mji",
         "css": "facebook-rect"
       },
       {
@@ -4697,16 +6465,8 @@ module.exports = [
           "twitter"
         ],
         "code": 62210,
-        "meta": {
-          "twitter": "https://twitter.com/puzrin",
-          "github": "https://github.com/puzrin",
-          "author": "Vitaly Puzrin"
-        },
-        "uid": "d611dd319d8c13b4551dc5bd85c1bdfd",
-        "file": "twitter",
-        "transform": {
-          "offset": 0.05
-        },
+        "from": 84,
+        "uuid": "uor1aru5x0tewrwsl36amx6hogjv61cs",
         "css": "twitter"
       },
       {
@@ -4714,258 +6474,26 @@ module.exports = [
           "twitter"
         ],
         "code": 62211,
-        "meta": {
-          "homepage": "https://twitter.com/about/resources/logos",
-          "author": "Twitter"
-        },
-        "uid": "4c01f5d3ba5fbf029bca8630cce41e6a",
-        "file": "twitter-bird",
-        "transform": {
-          "rescale": 0.9,
-          "offset": 0.05
-        },
+        "from": 116,
+        "uuid": "h7disbowd4v177zjlsi6anz5nkka08uy",
         "css": "twitter-bird"
       },
       {
         "search": [
-          "vimeo"
+          "twitter"
         ],
-        "code": 62223,
-        "meta": {
-          "twitter": "https://twitter.com/puzrin",
-          "github": "https://github.com/puzrin",
-          "author": "Vitaly Puzrin"
-        },
-        "uid": "70cdf244c51630e09038659d1dcbee87",
-        "file": "vimeo",
-        "transform": {
-          "rescale": 0.8,
-          "offset": 0.05
-        },
-        "css": "vimeo"
-      },
-      {
-        "search": [
-          "vimeo"
-        ],
-        "code": 62222,
-        "meta": {
-          "twitter": "https://twitter.com/puzrin",
-          "github": "https://github.com/puzrin",
-          "author": "Vitaly Puzrin"
-        },
-        "uid": "31483d870b3f14ac12bdfe7331a6af99",
-        "file": "vimeo-rect",
-        "transform": {
-          "offset": 0.05
-        },
-        "css": "vimeo-rect"
-      },
-      {
-        "search": [
-          "tumblr"
-        ],
-        "code": 62225,
-        "meta": {
-          "twitter": "https://twitter.com/puzrin",
-          "github": "https://github.com/puzrin",
-          "author": "Vitaly Puzrin"
-        },
-        "uid": "076f25da90f45dd112e006f2cd7ea76b",
-        "file": "tumblr",
-        "transform": {
-          "offset": 0.05
-        },
-        "css": "tumblr"
-      },
-      {
-        "search": [
-          "tumblr"
-        ],
-        "code": 62224,
-        "meta": {
-          "twitter": "https://twitter.com/puzrin",
-          "github": "https://github.com/puzrin",
-          "author": "Vitaly Puzrin"
-        },
-        "uid": "9e6a3483242474b6a1f77739ae3fdfdc",
-        "file": "tumblr-rect",
-        "transform": {
-          "offset": 0.05
-        },
-        "css": "tumblr-rect"
-      },
-      {
-        "search": [
-          "google"
-        ],
-        "code": 62217,
-        "meta": {
-          "homepage": "http://www.google.com/+/business/brand-guidelines.html",
-          "author": "Google"
-        },
-        "uid": "626fb97a7c0c0db53a1853fb9e96e223",
-        "file": "googleplus-rect",
-        "transform": {
-          "offset": 0.05
-        },
-        "css": "googleplus-rect"
-      },
-      {
-        "search": [
-          "github"
-        ],
-        "code": 62215,
-        "meta": {
-          "twitter": "https://twitter.com/puzrin",
-          "github": "https://github.com/puzrin",
-          "author": "Vitaly Puzrin"
-        },
-        "uid": "24d1008bf15b6c02a5e7a6af026987dd",
-        "file": "github-text",
-        "transform": {
-          "offset": 0.05
-        },
-        "css": "github-text"
-      },
-      {
-        "search": [
-          "github"
-        ],
-        "code": 62216,
-        "meta": {
-          "twitter": "https://twitter.com/puzrin",
-          "github": "https://github.com/puzrin",
-          "author": "Vitaly Puzrin"
-        },
-        "uid": "4a0bb1ac004980bb3837560d4c9e8cee",
-        "file": "github",
-        "transform": {
-          "rescale": 0.9,
-          "offset": 0.05
-        },
-        "css": "github"
-      },
-      {
-        "search": [
-          "skype"
-        ],
-        "code": 62219,
-        "meta": {
-          "homepage": "http://www.alexpeattie.com/projects/justvector_icons/",
-          "author": "Alex Peattie"
-        },
-        "uid": "5a00c877da3f63d37cdc021815e3f5a9",
-        "file": "skype",
-        "transform": {
-          "offset": 0.05
-        },
-        "css": "skype"
-      },
-      {
-        "search": [
-          "icq"
-        ],
-        "code": 62212,
-        "meta": {
-          "twitter": "https://twitter.com/puzrin",
-          "github": "https://github.com/puzrin",
-          "author": "Vitaly Puzrin"
-        },
-        "uid": "01f67de2dc0137389f1c3aced6273acd",
-        "file": "icq",
-        "transform": {
-          "offset": 0.05
-        },
-        "css": "icq"
-      },
-      {
-        "search": [
-          "yandex"
-        ],
-        "code": 62213,
-        "meta": {
-          "twitter": "https://twitter.com/puzrin",
-          "github": "https://github.com/puzrin",
-          "author": "Vitaly Puzrin"
-        },
-        "uid": "b2417d1ce399577d53fff70d54976fea",
-        "file": "yandex",
-        "transform": {
-          "offset": 0.05
-        },
-        "css": "yandex"
-      },
-      {
-        "search": [
-          "yandex"
-        ],
-        "code": 62214,
-        "meta": {
-          "twitter": "https://twitter.com/puzrin",
-          "github": "https://github.com/puzrin",
-          "author": "Vitaly Puzrin"
-        },
-        "uid": "ea0cb6bedac64ae7933b03dad3130ef6",
-        "file": "yandex-rect",
-        "transform": {
-          "offset": 0.05
-        },
-        "css": "yandex-rect"
-      },
-      {
-        "search": [
-          "vkontakte"
-        ],
-        "code": 62218,
-        "meta": {
-          "homepage": "http://vk.com/help.php?page=about",
-          "author": "Vkontakte"
-        },
-        "uid": "5b16ceef1c8638bd5389c9302ea04098",
-        "file": "vkontakte-rect",
-        "transform": {
-          "offset": 0.05
-        },
-        "css": "vkontakte-rect"
-      },
-      {
-        "search": [
-          "odnoklassniki"
-        ],
-        "code": 62220,
-        "meta": {
-          "homepage": "http://corp.mail.ru/communications/odnoklassniki",
-          "author": "MailRu Group"
-        },
-        "uid": "229e50061df526f24f1ae884fab52101",
-        "file": "odnoklassniki",
-        "transform": {
-          "offset": 0.05
-        },
-        "css": "odnoklassniki"
-      },
-      {
-        "search": [
-          "odnoklassniki"
-        ],
-        "code": 62221,
-        "meta": {
-          "homepage": "http://corp.mail.ru/communications/odnoklassniki",
-          "author": "MailRu Group"
-        },
-        "uid": "4a02cc611ae9fb342d6026b2ed6cc44e",
-        "file": "odnoklassniki-rect",
-        "transform": {
-          "offset": 0.05
-        },
-        "css": "odnoklassniki-rect"
+        "code": 62228,
+        "from": 85,
+        "uuid": "gq8m9lqx2hhwxf7rz30adbr37rthzirq",
+        "css": "twitter-rect"
       }
     ],
     "transform": {
-      "baseline": 0.5
+      "rescale": 1.25,
+      "baseline": 0.25,
+      "offset": -0.05
     },
-    "id": 3
+    "id": 4
   },
   {
     "font": {
@@ -5773,6 +7301,333 @@ module.exports = [
       "baseline": 0.5,
       "offset": 0.05
     },
-    "id": 4
+    "id": 5
+  },
+  {
+    "font": {
+      "fontname": "brandico",
+      "version": "1.0",
+      "descent": 200,
+      "copyright": "(C) 2012 by Vitaly Puzrin",
+      "fullname": "Brandico",
+      "familyname": "Brandico",
+      "ascent": 800
+    },
+    "meta": {
+      "github": "https://github.com/fontello/brandico.font",
+      "licence_url": "http://scripts.sil.org/OFL",
+      "css_prefix": "icon-",
+      "licence": "SIL",
+      "author": "Crowdsourced, for Fontello project",
+      "columns": 4
+    },
+    "glyphs": [
+      {
+        "search": [
+          "facebook"
+        ],
+        "code": 62208,
+        "meta": {
+          "homepage": "http://www.facebook.com/brandpermissions/logos.php",
+          "author": "Facebook"
+        },
+        "uid": "240979dd9fcf2e46250e66792edb8092",
+        "file": "facebook",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "facebook"
+      },
+      {
+        "search": [
+          "facebook"
+        ],
+        "code": 62209,
+        "meta": {
+          "twitter": "https://twitter.com/puzrin",
+          "github": "https://github.com/puzrin",
+          "author": "Vitaly Puzrin"
+        },
+        "uid": "8045477f6a7ef0bd7caff130ad25b88d",
+        "file": "facebook-rect",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "facebook-rect"
+      },
+      {
+        "search": [
+          "twitter"
+        ],
+        "code": 62210,
+        "meta": {
+          "twitter": "https://twitter.com/puzrin",
+          "github": "https://github.com/puzrin",
+          "author": "Vitaly Puzrin"
+        },
+        "uid": "d611dd319d8c13b4551dc5bd85c1bdfd",
+        "file": "twitter",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "twitter"
+      },
+      {
+        "search": [
+          "twitter"
+        ],
+        "code": 62211,
+        "meta": {
+          "homepage": "https://twitter.com/about/resources/logos",
+          "author": "Twitter"
+        },
+        "uid": "4c01f5d3ba5fbf029bca8630cce41e6a",
+        "file": "twitter-bird",
+        "transform": {
+          "rescale": 0.9,
+          "offset": 0.05
+        },
+        "css": "twitter-bird"
+      },
+      {
+        "search": [
+          "vimeo"
+        ],
+        "code": 62223,
+        "meta": {
+          "twitter": "https://twitter.com/puzrin",
+          "github": "https://github.com/puzrin",
+          "author": "Vitaly Puzrin"
+        },
+        "uid": "70cdf244c51630e09038659d1dcbee87",
+        "file": "vimeo",
+        "transform": {
+          "rescale": 0.8,
+          "offset": 0.05
+        },
+        "css": "vimeo"
+      },
+      {
+        "search": [
+          "vimeo"
+        ],
+        "code": 62222,
+        "meta": {
+          "twitter": "https://twitter.com/puzrin",
+          "github": "https://github.com/puzrin",
+          "author": "Vitaly Puzrin"
+        },
+        "uid": "31483d870b3f14ac12bdfe7331a6af99",
+        "file": "vimeo-rect",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "vimeo-rect"
+      },
+      {
+        "search": [
+          "tumblr"
+        ],
+        "code": 62225,
+        "meta": {
+          "twitter": "https://twitter.com/puzrin",
+          "github": "https://github.com/puzrin",
+          "author": "Vitaly Puzrin"
+        },
+        "uid": "076f25da90f45dd112e006f2cd7ea76b",
+        "file": "tumblr",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "tumblr"
+      },
+      {
+        "search": [
+          "tumblr"
+        ],
+        "code": 62224,
+        "meta": {
+          "twitter": "https://twitter.com/puzrin",
+          "github": "https://github.com/puzrin",
+          "author": "Vitaly Puzrin"
+        },
+        "uid": "9e6a3483242474b6a1f77739ae3fdfdc",
+        "file": "tumblr-rect",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "tumblr-rect"
+      },
+      {
+        "search": [
+          "google"
+        ],
+        "code": 62217,
+        "meta": {
+          "homepage": "http://www.google.com/+/business/brand-guidelines.html",
+          "author": "Google"
+        },
+        "uid": "626fb97a7c0c0db53a1853fb9e96e223",
+        "file": "googleplus-rect",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "googleplus-rect"
+      },
+      {
+        "search": [
+          "github"
+        ],
+        "code": 62215,
+        "meta": {
+          "twitter": "https://twitter.com/puzrin",
+          "github": "https://github.com/puzrin",
+          "author": "Vitaly Puzrin"
+        },
+        "uid": "24d1008bf15b6c02a5e7a6af026987dd",
+        "file": "github-text",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "github-text"
+      },
+      {
+        "search": [
+          "github"
+        ],
+        "code": 62216,
+        "meta": {
+          "twitter": "https://twitter.com/puzrin",
+          "github": "https://github.com/puzrin",
+          "author": "Vitaly Puzrin"
+        },
+        "uid": "4a0bb1ac004980bb3837560d4c9e8cee",
+        "file": "github",
+        "transform": {
+          "rescale": 0.9,
+          "offset": 0.05
+        },
+        "css": "github"
+      },
+      {
+        "search": [
+          "skype"
+        ],
+        "code": 62219,
+        "meta": {
+          "homepage": "http://www.alexpeattie.com/projects/justvector_icons/",
+          "author": "Alex Peattie"
+        },
+        "uid": "5a00c877da3f63d37cdc021815e3f5a9",
+        "file": "skype",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "skype"
+      },
+      {
+        "search": [
+          "icq"
+        ],
+        "code": 62212,
+        "meta": {
+          "twitter": "https://twitter.com/puzrin",
+          "github": "https://github.com/puzrin",
+          "author": "Vitaly Puzrin"
+        },
+        "uid": "01f67de2dc0137389f1c3aced6273acd",
+        "file": "icq",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "icq"
+      },
+      {
+        "search": [
+          "yandex"
+        ],
+        "code": 62213,
+        "meta": {
+          "twitter": "https://twitter.com/puzrin",
+          "github": "https://github.com/puzrin",
+          "author": "Vitaly Puzrin"
+        },
+        "uid": "b2417d1ce399577d53fff70d54976fea",
+        "file": "yandex",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "yandex"
+      },
+      {
+        "search": [
+          "yandex"
+        ],
+        "code": 62214,
+        "meta": {
+          "twitter": "https://twitter.com/puzrin",
+          "github": "https://github.com/puzrin",
+          "author": "Vitaly Puzrin"
+        },
+        "uid": "ea0cb6bedac64ae7933b03dad3130ef6",
+        "file": "yandex-rect",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "yandex-rect"
+      },
+      {
+        "search": [
+          "vkontakte"
+        ],
+        "code": 62218,
+        "meta": {
+          "homepage": "http://vk.com/help.php?page=about",
+          "author": "Vkontakte"
+        },
+        "uid": "5b16ceef1c8638bd5389c9302ea04098",
+        "file": "vkontakte-rect",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "vkontakte-rect"
+      },
+      {
+        "search": [
+          "odnoklassniki"
+        ],
+        "code": 62220,
+        "meta": {
+          "homepage": "http://corp.mail.ru/communications/odnoklassniki",
+          "author": "MailRu Group"
+        },
+        "uid": "229e50061df526f24f1ae884fab52101",
+        "file": "odnoklassniki",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "odnoklassniki"
+      },
+      {
+        "search": [
+          "odnoklassniki"
+        ],
+        "code": 62221,
+        "meta": {
+          "homepage": "http://corp.mail.ru/communications/odnoklassniki",
+          "author": "MailRu Group"
+        },
+        "uid": "4a02cc611ae9fb342d6026b2ed6cc44e",
+        "file": "odnoklassniki-rect",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "odnoklassniki-rect"
+      }
+    ],
+    "transform": {
+      "baseline": 0.5
+    },
+    "id": 6
   }
 ];
