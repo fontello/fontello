@@ -16,3 +16,9 @@
 [submodule "support/font-builder"]
 	path = support/font-builder
 	url = git://github.com/fontello/font-builder.git
+[submodule "src/modernpics.font"]
+	path = src/modernpics.font
+	url = git://github.com/fontello/modernpics.font.git
+[submodule "src/typicons.font"]
+	path = src/typicons.font
+	url = git://github.com/fontello/typicons.font.git
