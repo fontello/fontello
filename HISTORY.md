@@ -1,6 +1,12 @@
 2.0.1 / Rolling on website
 --------------------------
 
+*
+
+
+2.0.1 / 2012-06-03
+--------------------------
+
 * Reworked interface logic & look
 * Added search
 * Added multiselect (click+drag)
