@@ -2,8 +2,14 @@ router:
   map:
     fontomas.index:
       "/": ~
+    fontomas.font.download:
+      "/download/{file}":
+        file: /.+/
     assets:
-      "/assets/({path})":
-        params:
-          path:
-            match: /.+/
+      "/assets/{path}":
+        path: /.+/
+    #static:
+    #  "/{file}":
+    #    params:
+    #      file:
+    #        match: /favicon.ico|robots.txt|snippet.png|fuckup.log/
