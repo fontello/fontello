@@ -2,3 +2,8 @@ router:
   map:
     fontomas.index:
       "/": ~
+    assets:
+      "/assets/({path})":
+        params:
+          path:
+            match: /.+/
