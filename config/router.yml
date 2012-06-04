@@ -8,8 +8,6 @@ router:
     assets:
       "/assets/{path}":
         path: /.+/
-    #static:
-    #  "/{file}":
-    #    params:
-    #      file:
-    #        match: /favicon.ico|robots.txt|snippet.png|fuckup.log/
+    static:
+      "/{file}":
+        file: /favicon.ico|robots.txt|snippet.png|fuckup.log/
