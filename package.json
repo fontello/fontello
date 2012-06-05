@@ -20,6 +20,7 @@
   "dependencies"    : {
                         "nlib"        : "https://github.com/nodeca/nlib/tarball/7e0fd2a73908a805741eb2642ad2f964d493c027",
                         "connect"     : "2.2.2",
+                        "qs"          : "0.5.0",
                         "mincer"      : "0.1.3",
                         "stylus"      : "0.26.0",
                         "nib"         : "0.4.1",
