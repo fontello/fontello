@@ -15,8 +15,9 @@ function hash(str) {
 ////////////////////////////////////////////////////////////////////////////////
 
 
-var started_at  = (new Date).toUTCString();
-var etag        = hash('fontello-layout-' + started_at);
+// FIXME: this works for single-process model only.
+//        switch to shared cache in future.
+var etag = hash('fontello-layout-' + Date.now());
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -29,8 +30,8 @@ module.exports = function app(params, callback) {
   }
 
   // set headers
-  this.response.headers['Last-Modified']  = started_at;
   this.response.headers['ETag']           = etag;
+  this.response.headers['Cache-Control']  = 'private, max-age=0, must-revalidate';
 
   // set view to be rendered
   this.response.view = 'layout';
