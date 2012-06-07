@@ -161,7 +161,7 @@
    *  nodeca.io.apiTree(name, params[, options][, callback]) -> Void
    **/
   io.apiTree = function apiTree(name, params, options, callback) {
-    var timeout, id = api3.last_msg_id++, data = {id: id};
+    var timeout, id = api3.last_msg_id++, data = {id: id}, publication;
 
     // Scenario: rpc(name, params, callback);
     if (_.isFunction(options)) {
@@ -207,6 +207,9 @@
     function handle_error(err) {
       stop_timer();
       delete api3.callbacks[id];
+      if (publication) {
+        publication.cancel();
+      }
       callback(err);
     }
 
@@ -244,8 +247,10 @@
 
 
     // send request
-    bayeux_call('publish', [api3.req_channel, data])
-      // see bayeux_call info for details on fail/done
+    publication = bayeux_call('publish', [api3.req_channel, data]);
+
+    // see bayeux_call info for details on fail/done
+    publication
       .fail(handle_error)
       .done(stop_timer);
   };
