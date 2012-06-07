@@ -240,10 +240,10 @@
       callback(msg.err, msg.result);
     };
 
-    // wait for successfull message delivery 30 seconds
+    // wait for successfull message delivery 10 seconds
     timeout = setTimeout(function () {
       handle_error(ioerr(io.ETIMEOUT, 'Timeout ' + name + ' execution.'));
-    }, 30000);
+    }, 10000);
 
 
     // send request
