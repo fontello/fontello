@@ -3,41 +3,41 @@ Fontello - iconic fonts scissors
 
 Website: [fontello.com](http://fontello.com/)
 
-This tool helps to combine iconic webfonts for your project. With fontello you can:
+This tool lets you combine iconic webfonts for your own project. With fontello you can:
 
-1. shink glyphs collections, minimizing font size
-2. merge symbols from several fonts to single file
+1. shrink glyph collections, minimizing font size
+2. merge symbols from several fonts into a single file
 3. access large sets of professional-grade open source icons
 
-Now it's trivial to make custom iconic webfont, exactly for your needs.
-First, select icons you like. Then update glyph codes (optionally), and
-download webfont bundle. We generate all you need, ready to publish on your
-website!
+Now it's trivial to make a custom iconic webfont, exactly for your needs.
+First, select the icons you like. Then update glyph codes (optional), and
+download your webfont bundle. We generate everything you need, ready for publishing
+on your website!
 
-Don't forget about dontation... of some icons, under open source licence :) .
-It will be the best gratis for our work.
+Don't forget about donations... These are some awesome icons, available with an 
+open source license :) . A donation is the best way to express gratitude for our work.
 
 
 ## Embedded Fonts <a name="embedded"></a>
 
-Fontello comes with embetted set of iconic fonts:
+Fontello comes with the following embedded set of iconic fonts:
 
 - [__Entypo__](http://www.entypo.com/) by Daniel Bruce (CC BY-SA license)
 - [__Font Awesome__](http://fortawesome.github.com/Font-Awesome//) by Dave Gandy (CC BY-SA license)
 - [__Iconic__](https://github.com/somerandomdude/Iconic) by P.J. Onori (SIL OFL)
 - [__Brandico__](https://github.com/fontello/brandico.font) by... all :) (SIL OFL)
 
-Please, note, that embedded fonts differ from originals. We did some
-transformations, to make all characteristics unified (scale, ascent/descent,
-alignement). If you need specific details - look into updated fonts repos
-on [github](https://github.com/fontello/).
+Please, note that these embedded fonts differ from the original files. We did some
+modifications to unify characteristics such as scale, ascent/descent andalignment. 
+If you need specific details on modifications, take a look into the updated fonts repos
+at [github](https://github.com/fontello/).
 
 
 ## Contacts
 
-- User questions: [Google group](https://groups.google.com/group/fontomas-project/)
+- Questions: [Google group](https://groups.google.com/group/fontomas-project/)
 - Bug reports: [Issue tracker](https://github.com/nodeca/fontomas/issues)
-- Suggestions about adding your OFL fonts or another collaborations: vitaly@rcdesign.ru
+- Suggestion for adding your OFL fonts or other collaborations: vitaly@rcdesign.ru
 
 
 ## Authors
@@ -51,13 +51,14 @@ on [github](https://github.com/fontello/).
 
 ## License
 
-Fontello's code (all files, except fonts) is distributed under MIT licence. See
+Fontello's code (all files, except fonts) is distributed under MIT license. See
 [LICENSE](https://github.com/fontello/fontello/blob/master/LICENSE) file for details.
 
-Embedded fonts are distributed under their primary licences (SIL OFL / CC BY / CC BY-SA).
-See section [Embedded Fonts](#embedded) above for credits & links to fonts homepages.
+Embedded fonts are distributed under their primary licenses (SIL OFL / CC BY / CC BY-SA).
+See section [Embedded Fonts](#embedded) above for credits & links to font homepages.
 
 Generated fonts are intended for web usage, and should not be
-considered/distributed as independed artwork. Consider fontello as a
-fonts archiver, and credit original font creators, according to their licences.
-Credit to fontello is not required :)
+considered/distributed as independent artwork. Consider fontello a
+font archiver and credit original font creators according to their respective license.
+
+Crediting fontello is not required :)
