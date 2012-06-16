@@ -296,11 +296,11 @@ function get_job_data(id, job) {
 
 // request font generation status
 module.exports.status = function (params, callback) {
-  var self = this;
+  var response = this.response;
 
   get_job(params.id, function (job) {
     if (!job) {
-      this.response.error = {
+      response.error = {
         code:     'UNKNOWN_FONT_ID',
         message:  "Unknown font id."
       };
@@ -309,7 +309,7 @@ module.exports.status = function (params, callback) {
       return;
     }
 
-    self.response.data = get_job_data(params.id, job);
+    response.data = get_job_data(params.id, job);
     callback();
   });
 };
