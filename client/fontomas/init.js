@@ -215,7 +215,7 @@ module.exports = function () {
   //
 
 
-  $import = $('#import-app-config-btn');
+  $import = $('#import-app-config');
 
   $import.click(function (event) {
     event.preventDefault();
@@ -226,12 +226,12 @@ module.exports = function () {
       return false;
     }
 
-    $('#import-app-config').click();
+    $('#import-app-config-file').click();
     return false;
   });
 
   // handle file upload
-  $('#import-app-config').change(function (event) {
+  $('#import-app-config-file').change(function (event) {
     var file = (event.target.files || [])[0], reader;
 
     nodeca.logger.debug('Import config requested', file);
