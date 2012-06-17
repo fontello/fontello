@@ -85,7 +85,7 @@ function get_glyphs_config(params) {
     }
 
     glyph = _.find(font.glyphs, function (config) {
-      return config.code === g.from;
+      return config.uid === g.uid || config.code === g.orig_code;
     });
 
     if (!glyph) {
@@ -94,10 +94,11 @@ function get_glyphs_config(params) {
     }
 
     glyphs.push({
-      css:  g.css || glyph.css,
       src:  g.src,
-      from: g.from,
-      code: g.code || g.from
+      uid:  g.uid,
+      css:  g.css || glyph.css,
+      from: glyph.code,
+      code: g.code || glyph.code
     });
   });
 
@@ -142,7 +143,8 @@ function get_font_config(params) {
       css_prefix: 'icon-',
     },
     glyphs:     glyphs_config,
-    src_fonts:  get_source_fonts()
+    src_fonts:  get_source_fonts(),
+    session:    params
   };
 }
 
@@ -225,6 +227,7 @@ job_mgr.addJob('generate-font', {
       async.series([
         async.apply(fstools.remove, tmp_dir),
         async.apply(fstools.mkdir, tmp_dir),
+        async.apply(fs.writeFile, path.join(tmp_dir, 'session.json'), JSON.stringify(config.session), 'utf8'),
         async.apply(fs.writeFile, path.join(tmp_dir, 'config.json'), JSON.stringify(config), 'utf8'),
         async.apply(execFile, GENERATOR_BIN, [config.font.fontname, tmp_dir, zipball], {cwd: APP_ROOT}),
         async.apply(fstools.remove, tmp_dir)

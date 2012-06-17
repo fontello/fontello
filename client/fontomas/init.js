@@ -7,7 +7,7 @@
 module.exports = function () {
   var
     // jQuery $elements
-    $fontname, $users_count, $glyphs,
+    $fontname, $users_count, $glyphs, $import,
     // models
     fonts, result, session,
     // ui views
@@ -208,6 +208,58 @@ module.exports = function () {
     window.fontello_fonts   = fonts;
     window.fontello_result  = result;
   }
+
+
+  //
+  // Initialize config reader
+  //
+
+
+  $import = $('#import-app-config-btn');
+
+  $import.click(function (event) {
+    event.preventDefault();
+
+    if (!window.FileReader) {
+      nodeca.client.fontomas.util.notify('error',
+        nodeca.client.fontomas.render('error:no-config-import'));
+      return false;
+    }
+
+    $('#import-app-config').click();
+    return false;
+  });
+
+  // handle file upload
+  $('#import-app-config').change(function (event) {
+    var file = (event.target.files || [])[0], reader;
+
+    if (!file || 'application/json' !== file.type) {
+      nodeca.client.fontomas.util.notify('error',
+        nodeca.client.fontomas.render('error:invalid-config-file'));
+      return;
+    }
+
+    reader = new window.FileReader();
+
+    reader.onload = function (event) {
+      var config;
+
+      try {
+        config = JSON.parse(event.target.result);
+      } catch (err) {
+        nodeca.client.fontomas.util.notify('error',
+          nodeca.client.fontomas.render('error:read-config-failed', {
+            error: (err.message || err.toString())
+          }));
+        return;
+      }
+
+      session.load(config);
+    };
+
+    reader.readAsBinaryString(file);
+  });
 
 
   //
