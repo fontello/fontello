@@ -27,8 +27,14 @@ nodeca.runtime.version = require('./package.json').version;
 
 
 process.on('uncaughtException', function (err) {
-  nodeca.logger.warn('Uncaught exception');
-  nodeca.logger.error(err);
+  try {
+    nodeca.logger.warn('Uncaught exception');
+    nodeca.logger.error(err);
+  } catch (err) {
+    // THIS SHOULD NEVER-EVER-EVER HAPPEN -- THIS IS A WORST CASE SCENARIO
+    // USAGE: ./fontello.js 2>/var/log/fontello-cf.log
+    console.error(err.stack || err.toString());
+  }
 });
 
 
