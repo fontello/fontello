@@ -75,7 +75,7 @@
           </div>
 
           <div class="btn-group pull-right">
-            <a id="result-download" class="btn btn-info disabled">
+            <a id="result-download" class="btn btn-info disabled icon-download">
               Download your font pack (<span id="selected-glyphs-count">0</span>)
             </a>
           </div>
@@ -88,15 +88,13 @@
           <input id="import-app-config" class="hidden" type="file" />
 
           <div class="btn-group pull-right">
-            <a id="import-app-config-btn" class="btn" href="#">
-              import
-            </a>
 
-            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-              clear
+            <a class="btn dropdown-toggle icon-cog" data-toggle="dropdown" href="#">
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
+              <li><a id="import-app-config-btn" href="#">Import 'config.json'</a></li>
+              <li class="divider"></li>
               <li><a id="reset-app-selections" href="#">Unselect glyphs</a></li>
               <li><a id="reset-app-all" href="#">Reset all changes</a></li>
             </ul>
