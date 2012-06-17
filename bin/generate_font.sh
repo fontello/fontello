@@ -63,7 +63,7 @@ ttf2eot < "$TMPDIR/$FONTNAME.ttf" > "$TMPDIR/$FONTNAME.eot"
 ## BUILD DEMO ##################################################################
 
 
-cp -r "$DEMO_TEMPLATE" "$TMPDIR/demo"
+#cp -r "$DEMO_TEMPLATE" "$TMPDIR/demo"
 jade --pretty --obj "$JSON_CONFIG" --out "$TMPDIR" "$DEMO_HTML_TPL"
 fontdemo.py -c "$CONFIG" "$DEMO_CSS_TPL" "$TMPDIR/$FONTNAME.css"
 

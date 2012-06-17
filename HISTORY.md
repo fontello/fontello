@@ -1,7 +1,8 @@
 2.0.1 / Rolling on website
 --------------------------
 
-*
+* Optimized demo (reduced files count)
+* Fixed server stability issues (increased open descriptors limit)
 
 
 2.0.1 / 2012-06-03
