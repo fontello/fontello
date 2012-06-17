@@ -12,7 +12,7 @@ TMPDIR=$2
 ZIPBALL=$3
 
 
-CONFIG=$TMPDIR/config.json
+CONFIG=$TMPDIR/generator-config.json
 JSON_CONFIG=$(node -e "process.stdout.write(JSON.stringify(require('$CONFIG')))")
 DEMO_TEMPLATE="$PWD/support/font-demo/demo"
 DEMO_HTML_TPL="$PWD/support/font-demo/demo.jade"
