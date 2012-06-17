@@ -126,6 +126,9 @@ module.exports = Backbone.Collection.extend({
       });
     });
 
+
+    nodeca.logger.debug('Built result font config', config);
+
     return config;
   },
 

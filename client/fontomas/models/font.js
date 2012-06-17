@@ -30,6 +30,7 @@ module.exports = Backbone.Model.extend({
 
   addGlyph: function (data) {
     return this._glyphs.create({
+      uid     : data.uid,
       source  : data,
       font    : this
     });

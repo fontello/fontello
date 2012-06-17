@@ -234,6 +234,8 @@ module.exports = function () {
   $('#import-app-config').change(function (event) {
     var file = (event.target.files || [])[0], reader;
 
+    nodeca.logger.debug('Import config requested', file);
+
     if (!file || 'application/json' !== file.type) {
       nodeca.client.fontomas.util.notify('error',
         nodeca.client.fontomas.render('error:invalid-config-file'));
@@ -255,6 +257,7 @@ module.exports = function () {
         return;
       }
 
+      nodeca.logger.debug('Config successfully parsed', config);
       session.readConfig(config);
     };
 

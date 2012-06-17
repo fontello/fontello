@@ -172,7 +172,7 @@ var Session = Backbone.Model.extend({
           selected: false,
           code:     null,
           css:      null
-        }, {silent: true});
+        });
       });
 
       // update modified glyphs
@@ -205,7 +205,11 @@ var Session = Backbone.Model.extend({
 
 
 Session.fromConfig = function fromConfig(manager, config) {
-  var data = {fontname: null, fonts: {}};
+  var data = {
+    name: 'Imported @' + (new Date).getTime(),
+    fontname: null,
+    fonts: {}
+  };
 
   if (!!config && _.isObject(config)) {
     // get fontname
@@ -227,6 +231,7 @@ Session.fromConfig = function fromConfig(manager, config) {
     });
   }
 
+  nodeca.logger.debug('Creating new session from parsed config', data);
   return new Session(data);
 };
 
