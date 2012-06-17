@@ -1,7 +1,9 @@
-/config/*.local.yml
-/node_modules/
-/doc/
-/tmp/
+config/*.local.yml
+node_modules/
+doc/
+tmp/
+log/
+
 *.log
 *.swp
 *.sublime-project
