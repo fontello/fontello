@@ -18,7 +18,7 @@
   "main"            : "./index.js",
 
   "dependencies"    : {
-                        "nlib"        : "https://github.com/nodeca/nlib/tarball/7e0fd2a73908a805741eb2642ad2f964d493c027",
+                        "nlib"        : "git://github.com/nodeca/nlib.git#e9c2f56b5b2cf08f6d55653a5868e4eb967ed231",
                         "connect"     : "2.2.2",
                         "qs"          : "0.5.0",
                         "mincer"      : "0.1.3",
