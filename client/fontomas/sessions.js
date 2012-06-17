@@ -204,6 +204,31 @@ var Session = Backbone.Model.extend({
 });
 
 
+Session.fromConfig = function fromConfig(manager, config) {
+  var data = {fontname: null, fonts: {}};
+
+  if (!!config && _.isObject(config)) {
+    // get fontname
+    data.fontname = String(config.name);
+
+    // deserialize glyphs
+    manager.fonts.each(function (f) {
+      var fontname = f.font.fontname, glyphs = [];
+
+      data.fonts[f.get('id')] = {glyphs: glyphs};
+
+      _.each(config.glyphs || [], function (g) {
+        if (fontname === g.src) {
+          glyphs.push(g);
+        }
+      });
+    });
+  }
+
+  return new Session(data);
+};
+
+
 var SessionsCollection = Backbone.Collection.extend({
   model: Session,
 
@@ -269,6 +294,20 @@ module.exports = Backbone.Model.extend({
       nodeca.logger.error("Cannot load session named '" + name +"'.");
       session = this.sessions.current;
     }
+
+    this.disable();
+
+    // seed models and ui elements
+    this.$fontname.val(session.get('fontname'));
+    session.seedInto(this.fonts);
+
+    this.enable();
+  },
+
+
+  readConfig: function (config) {
+    // create new Session from parsed config
+    var session = Session.fromConfig(this, config);
 
     this.disable();
 

@@ -114,10 +114,15 @@ module.exports = Backbone.Collection.extend({
 
     this.each(function (glyph) {
       config.glyphs.push({
-        code: glyph.get('code'),
-        css:  glyph.get('css'),
-        from: glyph.get('source').code,
-        src:  glyph.get('font').get('font').fontname
+        uid:        glyph.get('uid'),
+
+        orig_css:   glyph.get('source').css,
+        orig_code:  glyph.get('source').code,
+
+        css:        glyph.get('css'),
+        code:       glyph.get('code'),
+
+        src:        glyph.get('font').get('font').fontname
       });
     });
 
