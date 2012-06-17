@@ -213,11 +213,13 @@ Session.fromConfig = function fromConfig(manager, config) {
 
     // deserialize glyphs
     manager.fonts.each(function (f) {
-      var fontname = f.font.fontname, glyphs = [];
+      var fontname = f.get('font').fontname, glyphs = [];
 
       data.fonts[f.get('id')] = {glyphs: glyphs};
 
       _.each(config.glyphs || [], function (g) {
+        g.selected = true;
+
         if (fontname === g.src) {
           glyphs.push(g);
         }

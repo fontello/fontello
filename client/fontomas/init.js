@@ -255,7 +255,7 @@ module.exports = function () {
         return;
       }
 
-      session.load(config);
+      session.readConfig(config);
     };
 
     reader.readAsBinaryString(file);
