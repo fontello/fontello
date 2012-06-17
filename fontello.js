@@ -33,7 +33,7 @@ process.on('uncaughtException', function (err) {
   } catch (err) {
     // THIS SHOULD NEVER-EVER-EVER HAPPEN -- THIS IS A WORST CASE SCENARIO
     // USAGE: ./fontello.js 2>/var/log/fontello-cf.log
-    console.error(err.stack || err.toString());
+    process.stderr.write(err.stack || err.toString());
   }
 });
 
