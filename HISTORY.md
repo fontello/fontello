@@ -1,6 +1,7 @@
 2.0.1 / Rolling on website
 --------------------------
 
+* Added configuration import/export
 * Optimized demo (reduced files count)
 * Fixed server stability issues (increased open descriptors limit)
 
