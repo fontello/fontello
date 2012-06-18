@@ -22,7 +22,7 @@
                         "connect"     : "2.2.2",
                         "qs"          : "0.5.0",
                         "mincer"      : "git://github.com/nodeca/mincer.git#f57df03b7f9b3c4cd162cb35eb6b9545b80ff83b",
-                        "stylus"      : "0.26.0",
+                        "stylus"      : "0.27.1",
                         "nib"         : "0.4.1",
                         "less"        : "1.3.0",
                         "ejs"         : "0.7.1",
@@ -35,7 +35,7 @@
                         "cron"        : "0.3.0"
                       },
   "devDependencies" : {
-                        "supervisor"              : "0.3.1",
+                        "supervisor"              : "0.3.5",
                         "webkit-devtools-agent"   : "0.0.4"
                       },
   "engines"         : { "node": ">= 0.6.0" }
