@@ -85,7 +85,11 @@ function get_glyphs_config(params) {
     }
 
     glyph = _.find(font.glyphs, function (config) {
-      return config.uid === g.uid || config.code === g.orig_code;
+      if (!!config.uid) {
+        return config.uid === g.uid;
+      }
+
+      return config.code === g.orig_code;
     });
 
     if (!glyph) {
