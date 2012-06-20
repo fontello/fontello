@@ -36,6 +36,14 @@
   var io = nodeca.io = {};
 
 
+  // public getter for is_connected property
+  Object.defineProperty(io, 'connected', {
+    get: function () {
+      return is_connected;
+    }
+  });
+
+
   //
   // Errors
   //
@@ -102,6 +110,28 @@
    **/
   io.off = function off(event, handler) {
     events[event] = (!handler) ? [] : _.without(events[event], handler);
+  };
+
+
+  /**
+   *  nodeca.io.once(event[, handler]) -> Void
+   *  - event (String)
+   *  - handler (Function)
+   *
+   *  Similar to [[nodeca.io.on]] but fires handler only once.
+   *
+   *
+   *  ##### See also
+   *
+   *  - [nodeca.io.on]
+   **/
+  io.once = function once(event, handler) {
+    var ref = function () {
+      handler.apply(null, arguments);
+      io.off(ref);
+    };
+
+    io.on(event, ref);
   };
 
 
@@ -298,8 +328,15 @@
     // to the real state, so instead of relying on this state we use our own
     //
 
-    bayeux.bind('transport:up',   function () { is_connected = true; });
-    bayeux.bind('transport:down', function () { is_connected = false; });
+    bayeux.bind('transport:up',   function () {
+      is_connected = true;
+      emit('connected');
+    });
+
+    bayeux.bind('transport:down', function () {
+      is_connected = false;
+      emit('disconnected');
+    });
 
     //
     // faye handles reconnection on it's own:
