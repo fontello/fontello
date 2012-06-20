@@ -6,11 +6,11 @@
  **/
 
 
-/*global window, $, _, Faye, nodeca*/
-
-
 //= depend_on nodeca
 //= require faye-browser
+
+
+/*global window, $, _, Faye, nodeca*/
 
 
 (function () {
@@ -159,12 +159,20 @@
 
 
   /**
-   *  nodeca.io.apiTree(name, params[, options][, callback]) -> Void
+   *  nodeca.io.apiTree(name, params, options, callback) -> Void
+   *  nodeca.io.apiTree(name, params[, callback]) -> Void
+   *  nodeca.io.apiTree(name, callback) -> Void
    **/
   io.apiTree = function apiTree(name, params, options, callback) {
     var timeout, id = api3.last_msg_id++, data = {id: id};
 
-    // Scenario: rpc(name, params, callback);
+    // Scenario: rpc(name, callback);
+    if (_.isFunction(params)) {
+      callback = params;
+      params   = options  = {};
+    }
+
+    // Scenario: rpc(name, params[, callback]);
     if (_.isFunction(options)) {
       callback = options;
       options = {};
