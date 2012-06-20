@@ -286,21 +286,15 @@ module.exports = function () {
 
   $users_count = $('#stats-online');
 
-  function after_io_conn() {
+  nodeca.io.on('connected', function after_io_conn() {
     nodeca.server.fontomas.online({}, function (err, msg) {
       $users_count.text(msg.data.users);
     });
+  });
 
-    nodeca.io.subscribe('/stats/users_online', function (count) {
-      $users_count.text(count);
-    }).fail(function (err) {
-      nodeca.logger.error('Failed subscribe for stats updates: ' + err);
-    });
-  }
-
-  if (nodeca.io.connected) {
-    after_io_conn();
-  } else {
-    nodeca.io.once('connected', after_io_conn);
-  }
+  nodeca.io.subscribe('/stats/users_online', function (count) {
+    $users_count.text(count);
+  }).fail(function (err) {
+    nodeca.logger.error('Failed subscribe for stats updates: ' + err);
+  });
 };
