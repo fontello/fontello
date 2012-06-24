@@ -1,0 +1,53 @@
+// Buttons tweaks
+.btn
+  font-family sansWideFontFamily
+  background-image none
+  transition background-color 0.5s ease
+  &:hover
+    transition background-color 0.5s ease
+.btn-icon-only
+  min-width 40px
+  &:before
+    margin 0
+.btn-info
+  font-weight bold
+.btn.disabled, .btn[disabled]
+  opacity .4
+
+.input-append
+  whitespace nowrap
+
+// Focus style tweaks
+input:focus,
+textarea:focus
+  border-color rgba(168,82,82,.8)
+  outline 0
+
+  /* IE6-9 */
+  outline thin dotted \9
+
+  box-shadow 0 1px 1px rgba(0,0,0,.075) inset, 0 0 8px rgba(168,82,82,.6)
+
+
+
+/*
+.search-form
+  .search-query
+    margin-bottom 0
+    padding-top 2px
+    padding-bottom 2px
+    padding-left 25px
+    font-size 14px
+    border-radius 13px
+    &:focus, &.focused
+      padding-top 3px
+      padding-bottom 3px
+      padding-left 25px
+      background-color grayLightest
+  .icon-search
+    position absolute
+    top 4px
+    left 8px
+    &.focused
+      color grayDark
+*/

@@ -1,5 +1,5 @@
-//= require ./src/js/bootstrap-alert
-//= require ./src/js/bootstrap-button
+//= //require ./src/js/bootstrap-alert
+//= //require ./src/js/bootstrap-button
 //= //require ./src/js/bootstrap-carousel
 //= require ./src/js/bootstrap-collapse
 //= require ./src/js/bootstrap-dropdown
@@ -11,5 +11,5 @@
 //= require ./src/js/bootstrap-typeahead
 
 // Popover must go AFTER tooltip
-//= require ./src/js/bootstrap-popover
+//= //require ./src/js/bootstrap-popover
 
