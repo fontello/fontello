@@ -287,7 +287,7 @@ module.exports = function () {
   $users_count = $('#stats-online');
 
   nodeca.io.on('connected', function after_io_conn() {
-    nodeca.server.fontomas.online({}, function (err, msg) {
+    nodeca.server.fontomas.online(function (err, msg) {
       $users_count.text(msg.data.users);
     });
   });
