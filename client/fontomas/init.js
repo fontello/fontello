@@ -115,42 +115,6 @@ module.exports = function () {
 
 
   //
-  // Initialize clear (selections) button
-  //
-
-
-  $('#reset-app-selections').click(function (event) {
-    // do not change location
-    event.preventDefault();
-
-    fonts.each(function (f) {
-      f.eachGlyph(function (g) {
-        g.toggle('selected', false);
-      });
-    });
-  });
-
-
-  //
-  // Initialize reset everything button
-  //
-
-
-  $('#reset-app-all').click(function (event) {
-    // do not change location
-    event.preventDefault();
-
-    fonts.each(function (f) {
-      f.eachGlyph(function (g) {
-        g.toggle('selected', false);
-        g.unset('code');
-        g.unset('css');
-      });
-    });
-  });
-
-
-  //
   // Fontname
   //
 
@@ -176,7 +140,7 @@ module.exports = function () {
 
   var save_session = _.debounce(function () {
     session.save();
-  }, 5000);
+  }, 2000);
 
 
   // save current state upon fontname change
@@ -201,6 +165,47 @@ module.exports = function () {
 
 
   session.load();
+
+
+  //
+  // Initialize clear (selections) button
+  //
+
+
+  $('#reset-app-selections').click(function (event) {
+    // do not change location
+    event.preventDefault();
+
+    fonts.each(function (f) {
+      f.eachGlyph(function (g) {
+        g.toggle('selected', false);
+      });
+    });
+
+    save_session();
+  });
+
+
+  //
+  // Initialize reset everything button
+  //
+
+
+  $('#reset-app-all').click(function (event) {
+    // do not change location
+    event.preventDefault();
+
+    fonts.each(function (f) {
+      f.eachGlyph(function (g) {
+        g.toggle('selected', false);
+        g.unset('code');
+        g.unset('css');
+      });
+    });
+
+    $fontname.val('');
+    save_session();
+  });
 
 
   if ('development' === nodeca.runtime.env) {
