@@ -18,7 +18,7 @@
   "main"            : "./index.js",
 
   "dependencies"    : {
-                        "nlib"        : "git://github.com/nodeca/nlib.git#32f2504ef51d574b1a92299714df6fc1a38c761c",
+                        "nlib"        : "git://github.com/nodeca/nlib.git#24b35d9e7d6486c80491b09ae460418a9221fec5",
                         "connect"     : "2.3.4",
                         "qs"          : "0.5.0",
                         "mincer"      : "0.2.1",
