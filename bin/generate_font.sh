@@ -16,7 +16,8 @@ CONFIG=$TMPDIR/generator-config.json
 JSON_CONFIG=$(node -e "process.stdout.write(JSON.stringify(require('$CONFIG')))")
 DEMO_TEMPLATE="$PWD/support/font-demo/demo"
 DEMO_HTML_TPL="$PWD/support/font-demo/demo.jade"
-DEMO_CSS_TPL="$PWD/support/font-demo/css.mustache"
+#DEMO_CSS_TPL="$PWD/support/font-demo/css.mustache"
+DEMO_CSS_TPL="$PWD/support/font-demo/css.jade"
 
 
 ## HELPERS #####################################################################
@@ -65,7 +66,10 @@ ttf2eot < "$TMPDIR/$FONTNAME.ttf" > "$TMPDIR/$FONTNAME.eot"
 
 #cp -r "$DEMO_TEMPLATE" "$TMPDIR/demo"
 jade --pretty --obj "$JSON_CONFIG" --out "$TMPDIR" "$DEMO_HTML_TPL"
-fontdemo.py -c "$CONFIG" "$DEMO_CSS_TPL" "$TMPDIR/$FONTNAME.css"
+jade --obj "$JSON_CONFIG" --out "$TMPDIR" "$DEMO_CSS_TPL"
+mv "$TMPDIR/css.html" "$TMPDIR/$FONTNAME.css"
+#fontdemo.py -c "$CONFIG" "$DEMO_CSS_TPL" "$TMPDIR/$FONTNAME.css"
+exit 1
 
 
 ## BUILD ZIPBALL ###############################################################
