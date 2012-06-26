@@ -13,8 +13,6 @@ ZIPBALL=$3
 
 
 CONFIG=$TMPDIR/generator-config.json
-JSON_CONFIG=$(node -e "process.stdout.write(JSON.stringify(require('$CONFIG')))")
-DEMO_TEMPLATE="$PWD/support/font-demo/demo"
 DEMO_HTML_TPL="$PWD/support/font-demo/demo.jade"
 DEMO_CSS_TPL="$PWD/support/font-demo/css.jade"
 
@@ -35,6 +33,7 @@ require()
 ## PREPARE PATHS ###############################################################
 
 
+export PATH="$PWD/bin:$PATH"
 export PATH="$PWD/node_modules/.bin:$PATH"
 export PATH="$PWD/support/font-builder/bin:$PATH"
 export PATH="$PWD/support/font-builder/support/ttf2eot:$PATH"
@@ -63,10 +62,10 @@ ttf2eot < "$TMPDIR/$FONTNAME.ttf" > "$TMPDIR/$FONTNAME.eot"
 ## BUILD DEMO ##################################################################
 
 
-#cp -r "$DEMO_TEMPLATE" "$TMPDIR/demo"
-jade --pretty --obj "$JSON_CONFIG" --out "$TMPDIR" "$DEMO_HTML_TPL"
-jade --obj "$JSON_CONFIG" --out "$TMPDIR" "$DEMO_CSS_TPL"
-mv "$TMPDIR/css.html" "$TMPDIR/$FONTNAME.css"
+tpl-render.js --locals "$CONFIG" --input "$DEMO_HTML_TPL" \
+  --output "$TMPDIR/demo.html" --pretty
+tpl-render.js --locals "$CONFIG" --input "$DEMO_CSS_TPL" \
+  --output "$TMPDIR/$FONTNAME.css"
 
 
 ## BUILD ZIPBALL ###############################################################

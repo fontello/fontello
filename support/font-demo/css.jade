@@ -1,8 +1,5 @@
-- for (var i in glyphs)
-  - var g = glyphs[i]
-  - if (0xffff < g.code)
-    | @charset "UTF-8";
-    - break
+- if (_.any(glyphs, function (g) { return 0xffff < g.code; }))
+  | @charset "UTF-8";
 
 | 
 | 
