@@ -32,12 +32,11 @@
 | 
 | 
 
-- function unichr(c) { var a, b; if (c> 0xffff) { c-= 0x10000; a = 0xd800 + (c >> 10), b = 0xdc00 + (c & 0x3ff); return String.fromCharCode(a, b); } else { return String.fromCharCode(c); } }
-
-- for (var i in glyphs)
-  - var g = glyphs[i]
-  - var css = meta.css_prefix + g.css
-  - var hex = '\\' + g.code.toString(16)
-  - var chr = (0xffff < g.code) ? unichr(g.code) : hex
+- var i, g, css, hex, chr
+- for (i in glyphs)
+  - g = glyphs[i]
+  - css = meta.css_prefix + g.css
+  - hex = '\\' + g.code.toString(16)
+  - chr = (0xffff < g.code) ? unichr(g.code) : hex
   | .#{css}:before { content: "#{chr}"; } /* '#{hex}' */
   | 

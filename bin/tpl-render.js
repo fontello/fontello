@@ -16,28 +16,38 @@ var jade  = require('jade');
 ////////////////////////////////////////////////////////////////////////////////
 
 
-var cli = new (require('argparse').ArgumentParser)({addHelp: true});
+var options = (function (cli) {
+  cli.addArgument(['--locals'], {action: 'store', required: false});
+  cli.addArgument(['--output'], {action: 'store', required: true});
+  cli.addArgument(['--input'],  {action: 'store', required: true, dest: 'filename'});
+  cli.addArgument(['--pretty'], {action: 'storeTrue', defaultValue: false});
 
-
-cli.addArgument(['--locals'], {nargs: 1, required: false});
-cli.addArgument(['--input'],  {nargs: 1, required: true});
-cli.addArgument(['--output'], {nargs: 1, required: true});
-cli.addArgument(['--pretty'], {action: 'storeTrue', defaultValue: false});
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-var options = cli.parseArgs();
-var locals  = options.locals ? require(String(options.locals)) : {};
-var source  = fs.readFileSync(String(options.input), 'utf8');
-var fn      = jade.compile(String(source), {
-  filename: options.input, client: false, pretty: options.pretty
-});
-var result  = fn(_.extend({_:_}, locals));
+  return cli.parseArgs();
+}(new (require('argparse').ArgumentParser)));
 
 
 ////////////////////////////////////////////////////////////////////////////////
 
 
-fs.writeFileSync(String(options.output), result);
+var locals  = options.locals ? require(options.locals) : {};
+var source  = fs.readFileSync(options.filename, 'utf8');
+var result  = jade.compile(source, options)(_.extend({
+  _: _,
+  unichr: function unichr(code) {
+    /*jshint bitwise: false*/
+    if (code > 0xffff) {
+      code -= 0x10000;
+      var surrogate1 = 0xd800 + (code >> 10),
+          surrogate2 = 0xdc00 + (code & 0x3ff);
+      return String.fromCharCode(surrogate1, surrogate2);
+    } else {
+      return String.fromCharCode(code);
+    }
+  }
+}, locals));
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+fs.writeFileSync(options.output, result);
