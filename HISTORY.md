@@ -1,10 +1,11 @@
-2.0.1 / Rolling on website
+2.0.2 / Rolling on website
 --------------------------
 
 * Added configuration import/export
-* Optimized demo (reduced files count)
+* Optimized demo (reduced demo files count)
+* Minor UI tweaks (inputs, buttons)
 * Fixed server stability issues (increased open descriptors limit)
-
+* Migrated to node.js v0.8
 
 2.0.1 / 2012-06-03
 --------------------------
