@@ -68,6 +68,21 @@ function get_source_fonts() {
 }
 
 
+function get_used_fonts(glyphs) {
+  var fonts = {};
+
+  _.each(glyphs, function (g) {
+    if (fonts[g.src]) {
+      return;
+    }
+
+    fonts[g.src] = get_embedded_font(g.src);
+  });
+
+  return _.values(fonts);
+}
+
+
 // return valid glyphs configuration
 function get_glyphs_config(params) {
   var glyphs = [];
@@ -148,6 +163,7 @@ function get_font_config(params) {
     },
     glyphs:     glyphs_config,
     src_fonts:  get_source_fonts(),
+    used_fonts: get_used_fonts(glyphs_config),
     session:    params
   };
 }
