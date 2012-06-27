@@ -13,11 +13,10 @@ ZIPBALL=$3
 
 
 CONFIG=$TMPDIR/generator-config.json
-DEMO_HTML_TPL="$PWD/support/font-demo/demo.jade"
-DEMO_CSS_TPL="$PWD/support/font-demo/css.jade"
-DEMO_CSS_CODES_TPL="$PWD/support/font-demo/css-codes.jade"
-DEMO_LICENSE="$PWD/support/font-demo/LICENSE.jade"
-DEMO_README="$PWD/support/font-demo/README.txt"
+FONT_TEMPLATES="$PWD/support/font-templates"
+
+
+mkdir $TMPDIR/css $TMPDIR/font
 
 
 ## HELPERS #####################################################################
@@ -54,31 +53,32 @@ done
 ## BUILD FONT ##################################################################
 
 
-font_merge.py --config "$CONFIG" --dst_font "$TMPDIR/$FONTNAME.ttf"
+font_merge.py --config "$CONFIG" --dst_font "$TMPDIR/font/$FONTNAME.ttf"
 ttfautohint --latin-fallback --hinting-limit=200 --hinting-range-max=50 \
-  --symbol "$TMPDIR/$FONTNAME.ttf" "$TMPDIR/$FONTNAME-hinted.ttf"
-mv "$TMPDIR/$FONTNAME-hinted.ttf" "$TMPDIR/$FONTNAME.ttf"
-fontconvert.py --src_font "$TMPDIR/$FONTNAME.ttf" --fonts_dir "$TMPDIR"
-ttf2eot < "$TMPDIR/$FONTNAME.ttf" > "$TMPDIR/$FONTNAME.eot"
+  --symbol "$TMPDIR/font/$FONTNAME.ttf" "$TMPDIR/font/$FONTNAME-hinted.ttf"
+mv "$TMPDIR/font/$FONTNAME-hinted.ttf" "$TMPDIR/font/$FONTNAME.ttf"
+fontconvert.py --src_font "$TMPDIR/font/$FONTNAME.ttf" --fonts_dir "$TMPDIR/font"
+ttf2eot < "$TMPDIR/font/$FONTNAME.ttf" > "$TMPDIR/font/$FONTNAME.eot"
 
 
 ## BUILD DEMO ##################################################################
 
 
-tpl-render.js --locals "$CONFIG" --input "$DEMO_HTML_TPL" \
+tpl-render.js --locals "$CONFIG" --input "$FONT_TEMPLATES/demo.jade" \
   --output "$TMPDIR/demo.html" --pretty
-tpl-render.js --locals "$CONFIG" --input "$DEMO_CSS_TPL" \
-  --output "$TMPDIR/$FONTNAME.css"
+tpl-render.js --locals "$CONFIG" --input "$FONT_TEMPLATES/css/css.jade" \
+  --output "$TMPDIR/css/$FONTNAME.css"
 
 
 ## BUILD ADDITIONAL FILES ######################################################
 
 
-tpl-render.js --locals "$CONFIG" --input "$DEMO_CSS_CODES_TPL" \
-  --output "$TMPDIR/$FONTNAME-codes.css"
-tpl-render.js --locals "$CONFIG" --input "$DEMO_LICENSE" \
+tpl-render.js --locals "$CONFIG" --input "$FONT_TEMPLATES/css/css-codes.jade" \
+  --output "$TMPDIR/css/$FONTNAME-codes.css"
+tpl-render.js --locals "$CONFIG" --input "$FONT_TEMPLATES/LICENSE.jade" \
   --output "$TMPDIR/LICENSE.txt"
-cp "$DEMO_README" "$TMPDIR/"
+cp "$FONT_TEMPLATES/README.txt" "$TMPDIR/"
+
 
 ## BUILD ZIPBALL ###############################################################
 
