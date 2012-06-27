@@ -44,3 +44,9 @@ textarea:focus
     color gray
     top 6px
     left 8px
+
+// When we like to hide ugly file input, we can't use display:none, because
+// Chromium will miss events. So, use .invisible, but position out of screen
+input[type="file"].invisible
+  position absolute
+  left -10000px
