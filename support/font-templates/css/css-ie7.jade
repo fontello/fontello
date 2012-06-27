@@ -1,0 +1,20 @@
+:stylus_nowrap
+  [class^="icon-"], [class*=" icon-"]
+    font-family '#{font.fontname}'
+    font-style normal
+    font-weight normal
+
+    /* fix buttons height */
+    line-height 1em
+
+    /* you can be more comfortable with increased icons size */
+    /* font-zize: 120%; */
+
+- var i, g, css, hex, chr
+- for (i in glyphs)
+  - g = glyphs[i]
+  - css = meta.css_prefix + g.css
+  - hex = g.code.toString(16)
+  - chr = unichr(g.code)
+  != '\n'
+  | .#{css} { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x#{hex};&nbsp;'); }

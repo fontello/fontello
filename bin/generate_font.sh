@@ -61,22 +61,27 @@ fontconvert.py --src_font "$TMPDIR/font/$FONTNAME.ttf" --fonts_dir "$TMPDIR/font
 ttf2eot < "$TMPDIR/font/$FONTNAME.ttf" > "$TMPDIR/font/$FONTNAME.eot"
 
 
-## BUILD DEMO ##################################################################
+## BUILD TEMPLATES #############################################################
 
 
 tpl-render.js --locals "$CONFIG" --input "$FONT_TEMPLATES/demo.jade" \
   --output "$TMPDIR/demo.html" --pretty
+
 tpl-render.js --locals "$CONFIG" --input "$FONT_TEMPLATES/css/css.jade" \
   --output "$TMPDIR/css/$FONTNAME.css"
 
-
-## BUILD ADDITIONAL FILES ######################################################
-
+tpl-render.js --locals "$CONFIG" --input "$FONT_TEMPLATES/css/css-ie7.jade" \
+  --output "$TMPDIR/css/$FONTNAME-ie7.css"
 
 tpl-render.js --locals "$CONFIG" --input "$FONT_TEMPLATES/css/css-codes.jade" \
   --output "$TMPDIR/css/$FONTNAME-codes.css"
+
+tpl-render.js --locals "$CONFIG" --input "$FONT_TEMPLATES/css/css-ie7-codes.jade" \
+  --output "$TMPDIR/css/$FONTNAME-ie7-codes.css"
+
 tpl-render.js --locals "$CONFIG" --input "$FONT_TEMPLATES/LICENSE.jade" \
   --output "$TMPDIR/LICENSE.txt"
+
 cp "$FONT_TEMPLATES/README.txt" "$TMPDIR/"
 
 
