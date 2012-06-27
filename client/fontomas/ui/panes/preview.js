@@ -11,6 +11,8 @@ module.exports = Backbone.View.extend({
   initialize: function () {
     var $glyphs = this.$('#preview-font'), views = {};
 
+    this.changeGlyphSize(nodeca.config.fontomas.glyph_size.val);
+
     function add(glyph) {
       var v = new nodeca.client.fontomas.ui.panes.preview_glyph({model: glyph});
       views[glyph.cid] = v;
