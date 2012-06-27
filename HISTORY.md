@@ -2,7 +2,12 @@
 --------------------------
 
 * Added configuration import/export
-* Optimized demo (reduced demo files count)
+* Improved CSS generation
+  - use escaped chars when possible (for codes <= 0xFFFF)
+  - add encoding (first line) only when needed
+* Added README & LICENCE files to generated webfonts
+* Added css file without fontface, for automated assets build systems
+* Optimized demo (reduced files count)
 * Minor UI tweaks (inputs, buttons)
 * Fixed server stability issues (increased open descriptors limit)
 * Migrated to node.js v0.8

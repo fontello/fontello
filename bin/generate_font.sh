@@ -15,6 +15,9 @@ ZIPBALL=$3
 CONFIG=$TMPDIR/generator-config.json
 DEMO_HTML_TPL="$PWD/support/font-demo/demo.jade"
 DEMO_CSS_TPL="$PWD/support/font-demo/css.jade"
+DEMO_CSS_CODES_TPL="$PWD/support/font-demo/css-codes.jade"
+DEMO_LICENSE="$PWD/support/font-demo/LICENSE.jade"
+DEMO_README="$PWD/support/font-demo/README.txt"
 
 
 ## HELPERS #####################################################################
@@ -67,6 +70,15 @@ tpl-render.js --locals "$CONFIG" --input "$DEMO_HTML_TPL" \
 tpl-render.js --locals "$CONFIG" --input "$DEMO_CSS_TPL" \
   --output "$TMPDIR/$FONTNAME.css"
 
+
+## BUILD ADDITIONAL FILES ######################################################
+
+
+tpl-render.js --locals "$CONFIG" --input "$DEMO_CSS_CODES_TPL" \
+  --output "$TMPDIR/$FONTNAME-codes.css"
+tpl-render.js --locals "$CONFIG" --input "$DEMO_LICENSE" \
+  --output "$TMPDIR/LICENSE.txt"
+cp "$DEMO_README" "$TMPDIR/"
 
 ## BUILD ZIPBALL ###############################################################
 

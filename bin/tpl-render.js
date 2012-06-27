@@ -29,6 +29,22 @@ var options = (function (cli) {
 ////////////////////////////////////////////////////////////////////////////////
 
 
+var jade_filters = require('jade/lib/filters');
+
+jade_filters.stylus_nowrap = function(str, options){
+  var ret;
+  str = str.replace(/\\n/g, '\n');
+  var stylus = require('stylus');
+  stylus(str, options).render(function(err, css){
+    if (err) throw err;
+    ret = css.replace(/\n/g, '\\n');
+  });
+  return ret; 
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+
 var locals  = options.locals ? require(options.locals) : {};
 var source  = fs.readFileSync(options.filename, 'utf8');
 var result  = jade.compile(source, options)(_.extend({

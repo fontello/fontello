@@ -1,0 +1,16 @@
+- if (_.any(glyphs, function (g) { return 0xffff < g.code; }))
+  | @charset "UTF-8";
+  != '\n'
+  != '\n'
+
+- var i, g, css, hex, chr
+- for (i in glyphs)
+  - g = glyphs[i]
+  - css = meta.css_prefix + g.css
+  - hex = '\\' + g.code.toString(16)
+  - chr = unichr(g.code)
+  != '\n'
+  - if (0xffff < g.code)
+    | .#{css}:before { content: '#{chr}'; } /* '#{hex}' */
+  - else
+    | .#{css}:before { content: '#{hex}'; } /* '#{chr}' */
