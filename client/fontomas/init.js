@@ -79,8 +79,8 @@ module.exports = function () {
 
   $('#glyph-3d').change(function () {
     var val = 'checked' === $(this).attr('checked');
-    selector.$el.toggleClass('3d', val);
-    preview.$el.toggleClass('3d', val);
+    selector.$el.toggleClass('_3d', val);
+    preview.$el.toggleClass('_3d', val);
   });
 
 

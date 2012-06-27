@@ -1,5 +1,13 @@
-2.0.2 / Rolling on website
+2.0.3 / Rolling on website
 --------------------------
+
+* Preview tab content now resizeable too
+* Added '3D' effect to icons (can be switched off)
+* Tweaked styles again :)
+
+
+2.0.2 / 2012-06-27
+------------------
 
 * Added configuration import/export
 * Improved CSS generation
@@ -13,8 +21,9 @@
 * Fixed server stability issues (increased open file descriptors limit)
 * Migrated to node.js v0.8
 
+
 2.0.1 / 2012-06-03
---------------------------
+------------------
 
 * Reworked interface logic & look
 * Added search

@@ -6,7 +6,7 @@
 
 module.exports = Backbone.View.extend({
   tagName:    "div",
-  className:  "preview-glyph span2",
+  className:  "preview-glyph span3",
 
 
   render: function () {
