@@ -1,10 +1,14 @@
+| Font license info
+!= '\n\n\n'
+
 - var i, f
 - for (i in used_fonts)
   - f = used_fonts[i]
   | ## #{f.font.fullname}
-  |    #{f.font.copyright}
-  != '\n'
-  |    Author:    #{f.meta.author}
-  |    License:   #{f.meta.licence} (#{f.meta.license_url})
-  |    Homepage:  #{f.meta.homepage}
   != '\n\n'
+  |    #{f.font.copyright}
+  != '\n\n'
+  |    Author:    #{f.meta.author}
+  |    License:   #{f.meta.licence} (#{f.meta.licence_url})
+  |    Homepage:  #{f.meta.homepage}
+  != '\n\n\n'
