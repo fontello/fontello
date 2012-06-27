@@ -77,6 +77,13 @@ module.exports = function () {
   }, 250));
 
 
+  $('#glyph-3d').change(function () {
+    var val = 'checked' === $(this).attr('checked');
+    selector.$el.toggleClass('3d', val);
+    preview.$el.toggleClass('3d', val);
+  });
+
+
   // perform glyphs search
   $glyphs = $('.glyph');
   toolbar.on('change:search', function (q) {
