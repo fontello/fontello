@@ -24,5 +24,10 @@ module.exports = Backbone.View.extend({
       views[glyph.cid].remove();
       delete views[glyph.cid];
     });
+  },
+
+
+  changeGlyphSize: function (size) {
+    this.$el.css('font-size', size);
   }
 });

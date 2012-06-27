@@ -73,6 +73,7 @@ module.exports = function () {
 
   toolbar.on('change:glyph-size', _.debounce(function (size) {
     selector.changeGlyphSize(size);
+    preview.changeGlyphSize(size);
   }, 250));
 
 
