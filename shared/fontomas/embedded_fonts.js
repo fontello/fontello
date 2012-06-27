@@ -1646,11 +1646,11 @@ module.exports = [
     },
     "meta": {
       "github": "https://github.com/danielbruce/entypo",
-      "licence_url": "http://scripts.sil.org/OFL",
-      "licence": "SIL",
+      "license": "SIL",
       "author": "Daniel Buce",
       "twitter": "http://twitter.com/danielbruce_",
       "email": "daniel@precinct.net",
+      "license_url": "http://scripts.sil.org/OFL",
       "css_prefix": "icon-",
       "homepage": "http://www.entypo.com",
       "dribble": "http://dribbble.com/danielbruce",
@@ -1671,10 +1671,10 @@ module.exports = [
     },
     "meta": {
       "github": "https://github.com/FortAwesome/Font-Awesome",
-      "licence_url": "http://creativecommons.org/licenses/by/3.0/",
-      "licence": "CC BY 3.0",
+      "license": "CC BY 3.0",
       "author": "Dave Gandy",
       "twitter": "http://twitter.com/fortaweso_me/",
+      "license_url": "http://creativecommons.org/licenses/by/3.0/",
       "css_prefix": "icon-",
       "homepage": "http://fortawesome.github.com/Font-Awesome/",
       "email": "dave@davegandy.com",
@@ -3105,10 +3105,10 @@ module.exports = [
     },
     "meta": {
       "github": "https://github.com/somerandomdude/Iconic",
-      "licence_url": "http://scripts.sil.org/OFL",
-      "licence": "SIL",
+      "license": "SIL",
       "author": "P.J. Onori",
       "twitter": "http://twitter.com/somerandomdude",
+      "license_url": "http://scripts.sil.org/OFL",
       "css_prefix": "icon-",
       "homepage": "http://somerandomdude.com/work/iconic/",
       "email": "pj@somerandomdude.com",
@@ -4654,9 +4654,9 @@ module.exports = [
       "ascent": 800
     },
     "meta": {
-      "licence_url": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
       "css_prefix": "icon-",
-      "licence": "CC BY-SA 3.0",
+      "license": "CC BY-SA 3.0",
       "author": "Stephen Hutchings",
       "twitter": "https://twitter.com/Typicons/",
       "homepage": "http://typicons.com/",
@@ -5564,10 +5564,10 @@ module.exports = [
       "ascent": 800
     },
     "meta": {
-      "licence_url": "http://scripts.sil.org/OFL",
-      "licence": "SIL",
+      "license": "SIL",
       "author": "John Caserta",
       "twitter": "https://twitter.com/johncaserta",
+      "license_url": "http://scripts.sil.org/OFL",
       "css_prefix": "icon-",
       "homepage": "http://thedesignoffice.org/project/modern-pictograms/",
       "email": "info@johncaserta.com",
@@ -6507,9 +6507,9 @@ module.exports = [
       "ascent": 800
     },
     "meta": {
-      "licence_url": "http://scripts.sil.org/OFL",
+      "license_url": "http://scripts.sil.org/OFL",
       "css_prefix": "icon-",
-      "licence": "SIL",
+      "license": "SIL",
       "author": "Just Be Nice studio",
       "homepage": "http://www.justbenicestudio.com/studio/websymbols/",
       "email": "yes@justbenice.ru",
@@ -7315,9 +7315,9 @@ module.exports = [
     },
     "meta": {
       "github": "https://github.com/fontello/brandico.font",
-      "licence_url": "http://scripts.sil.org/OFL",
+      "license_url": "http://scripts.sil.org/OFL",
       "css_prefix": "icon-",
-      "licence": "SIL",
+      "license": "SIL",
       "author": "Crowdsourced, for Fontello project",
       "columns": 4
     },
