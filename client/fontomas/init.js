@@ -241,11 +241,21 @@ module.exports = function () {
 
     nodeca.logger.debug('Import config requested', file);
 
-    if (!file || 'application/json' !== file.type) {
+    // file.type is empty on Chromium, so we allow upload anything
+    // and will get real error only if JSON.parse fails
+
+    if (!file) {
+      // Unexpected behavior. Should not happen in real life.
       nodeca.client.fontomas.util.notify('error',
-        nodeca.client.fontomas.render('error:invalid-config-file'));
+        'You must choose a file.');
       return;
     }
+
+    // we must "reset" value of input field, otherwise Chromium will
+    // not fire change event if the same file will be chosen twice, e.g.
+    // import config -> made changes -> import config
+
+    $(this).val('');
 
     reader = new window.FileReader();
 
