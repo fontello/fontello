@@ -5,11 +5,12 @@
 * Improved CSS generation
   - use escaped chars when possible (for codes <= 0xFFFF)
   - add encoding (first line) only when needed
-* Added README & LICENCE files to generated webfonts
-* Added css file without fontface, for automated assets build systems
-* Optimized demo (reduced files count)
+  - ie7 support
+  - plains css with codes only, for automated asset build systems
+* Added README & LICENSE files to generated webfonts
+* Demo data bundled to single file now
 * Minor UI tweaks (inputs, buttons)
-* Fixed server stability issues (increased open descriptors limit)
+* Fixed server stability issues (increased open file descriptors limit)
 * Migrated to node.js v0.8
 
 2.0.1 / 2012-06-03
