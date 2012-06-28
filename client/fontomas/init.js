@@ -81,7 +81,7 @@ module.exports = function () {
     var val = 'checked' === $(this).attr('checked');
     selector.$el.toggleClass('_3d', val);
     preview.$el.toggleClass('_3d', val);
-  });
+  }).trigger('change');
 
 
   // perform glyphs search
