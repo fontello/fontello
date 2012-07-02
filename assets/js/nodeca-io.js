@@ -294,7 +294,7 @@
    *  nodeca.io.init() -> Void
    **/
   io.init = function () {
-    bayeux = new Faye.Client('/faye');
+    bayeux = new Faye.Client('/faye', {timeout: 45});
 
     if ('development' === nodeca.runtime.env) {
       // export some internals for debugging
