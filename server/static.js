@@ -29,5 +29,6 @@ module.exports = function (params, callback) {
 
   connect.static.send(http.req, http.res, function (err) {
     callback("File not found");
+    callback("[server.static] File not found: " + req.url);
   }, static_options);
 }

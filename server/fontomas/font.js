@@ -418,6 +418,6 @@ module.exports.download = function (params, callback) {
   }
 
   connect.static.send(http.req, http.res, function (err) {
-    callback("File not found");
+    callback("[server.fontomas.font.download] File not found: " + req.url);
   }, download_options);
 };
