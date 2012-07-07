@@ -3,6 +3,7 @@
 
 * Preview tab content now resizeable too
 * Added '3D' effect to icons (can be switched off)
+* Fixed work with Opera 12
 * Tweaked styles again :)
 
 
