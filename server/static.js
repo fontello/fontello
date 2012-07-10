@@ -28,18 +28,13 @@ module.exports = function (params, callback) {
   static_options.getOnly = true;
 
   connect.static.send(http.req, http.res, function (err) {
-    var prefix = '[server.static] (' + http.req.url + ')';
-
-    if (err && err.code) {
-      callback(prefix + 'File not found');
-      return;
-    }
+    var prefix = '[server.static] (' + http.req.url + ') ';
 
     if (err) {
-      callback(prefix + 'Unexpected error: ' + (err.stack || err));
+      callback(prefix + (err.stack || err));
       return;
     }
 
-    callback(prefix + 'Generic error');
+    callback(prefix + 'File not found');
   }, static_options);
 }
