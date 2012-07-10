@@ -418,13 +418,15 @@ module.exports.download = function (params, callback) {
   }
 
   connect.static.send(http.req, http.res, function (err) {
-    var prefix = '[server.fontomas.font.download] (' + http.req.url + ') ';
+    var prefix = '[server.fontomas.font.download] ',
+        suffix = ' (' + http.req.url + ')';
 
     if (err) {
-      callback(prefix + (err.stack || err));
+      callback(prefix + (err.message || err) + suffix +
+               (err.stack ? ('\n' + err.stack) : ''));
       return;
     }
 
-    callback(prefix + 'File not found');
+    callback(prefix + 'File not found' + suffix);
   }, download_options);
 };

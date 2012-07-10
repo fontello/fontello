@@ -28,13 +28,15 @@ module.exports = function (params, callback) {
   static_options.getOnly = true;
 
   connect.static.send(http.req, http.res, function (err) {
-    var prefix = '[server.static] (' + http.req.url + ') ';
+    var prefix = '[server.static] ',
+        suffix = ' (' + http.req.url + ')';
 
     if (err) {
-      callback(prefix + (err.stack || err));
+      callback(prefix + (err.message || err) + suffix +
+               (err.stack ? ('\n' + err.stack) : ''));
       return;
     }
 
-    callback(prefix + 'File not found');
+    callback(prefix + 'File not found' + suffix);
   }, static_options);
 }
