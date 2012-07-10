@@ -418,6 +418,18 @@ module.exports.download = function (params, callback) {
   }
 
   connect.static.send(http.req, http.res, function (err) {
-    callback("[server.fontomas.font.download] File not found: " + req.url);
+    var prefix = '[server.fontomas.font.download] (' + http.req.url + ')';
+
+    if (err && err.code) {
+      callback(prefix + 'File not found');
+      return;
+    }
+
+    if (err) {
+      callback(prefix + 'Unexpected error: ' + (err.stack || err));
+      return;
+    }
+
+    callback(prefix + 'Generic error');
   }, download_options);
 };
