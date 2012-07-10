@@ -302,6 +302,12 @@
     }
 
     //
+    // Temporarily disable websockets
+    //
+
+    bayeux.disable('websocket');
+
+    //
     // once connected, client.getState() always returns 'CONNECTED' regardless
     // to the real state, so instead of relying on this state we use our own
     //
