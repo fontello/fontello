@@ -274,7 +274,7 @@ module.exports.status = function (params, callback) {
       file      = path.join(DOWNLOAD_DIR, get_download_path(params.id));
 
   if (jobs[params.id]) {
-    response.data = {status: 'processing'};
+    response.data = {status: 'enqueued'};
     callback();
     return;
   }
@@ -326,12 +326,8 @@ module.exports.generate = function (params, callback) {
       queue_length: _.keys(jobs).length
     }));
   } else {
-    jobs[font_id] = {
-      start:  Date.now(),
-      status: 'enqueued',
-    };
-
     // enqueue new unique job
+    jobs[font_id] = {start:  Date.now()};
     job_mgr.enqueue('generate-font', font_id, font);
 
     nodeca.logger.info("New job created: " + JSON.stringify({

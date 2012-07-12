@@ -185,7 +185,7 @@ module.exports = Backbone.Collection.extend({
             return;
           }
 
-          if (/^(?:enqueued|processing)$/.test(msg.data.status)) {
+          if ('enqueued' === msg.data.status) {
             // TODO: notification about queue
             nodeca.logger.info("Your request is in progress and will be available soon.");
             setTimeout(poll_status, 500);
