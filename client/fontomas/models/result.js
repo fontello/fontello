@@ -169,15 +169,6 @@ module.exports = Backbone.Collection.extend({
             return;
           }
 
-          if ('error' === msg.data.status && 'UNKNOWN_FONT_ID' === msg.data.error.code) {
-            nodeca.client.fontomas.util.notify('error',
-              nodeca.client.fontomas.render('error:font-generate'));
-
-            // resend build request
-            self.startDownload(name);
-            return;
-          }
-
           if ('error' === msg.data.status){
             nodeca.client.fontomas.util.notify('error',
               nodeca.client.fontomas.render('error:rpc', {
@@ -194,17 +185,10 @@ module.exports = Backbone.Collection.extend({
             return;
           }
 
-          if ('processing' === msg.data.status) {
+          if (/^(?:enqueued|processing)$/.test(msg.data.status)) {
             // TODO: notification about queue
             nodeca.logger.info("Your request is in progress and will be available soon.");
             setTimeout(poll_status, 500);
-            return;
-          }
-
-          if ('enqueued' === msg.data.status) {
-            // TODO: notification about queue
-            nodeca.logger.info("Your request is in queue #" + msg.data.position);
-            setTimeout(poll_status, 3000);
             return;
           }
 

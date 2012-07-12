@@ -239,13 +239,6 @@ job_mgr.addJob('generate-font', {
       ], function (err) {
         if (err) {
           nodeca.logger.error(log_prefix + (err.stack || err.message || err.toString()));
-
-          jobs[font_id].status  = 'error';
-          jobs[font_id].error   = (err.message || err.toString());
-        } else {
-          // remove job from the cache as we check filesystem
-          // to decide whenever job is done or not
-          delete jobs[font_id];
         }
 
         // push final checkpoint
@@ -261,6 +254,7 @@ job_mgr.addJob('generate-font', {
           time:   (times[2] - times[0]) / 1000,
         });
 
+        delete jobs[font_id];
         self.finished = true;
       });
     } catch (err) {
@@ -277,26 +271,19 @@ job_mgr.addJob('generate-font', {
 // request font generation status
 module.exports.status = function (params, callback) {
   var response  = this.response,
-      job       = jobs[params.id],
       file      = path.join(DOWNLOAD_DIR, get_download_path(params.id));
 
-  if (job) {
-    response.data = {status: job.status, error: job.error};
-
-    if (job.error) {
-      // as long as user got info about error
-      // remove the job from the cache
-      delete jobs[params.id];
-    }
-
+  if (jobs[params.id]) {
+    response.data = {status: 'processing'};
     callback();
     return;
   }
 
   path.exists(file, function (exists) {
     if (!exists) {
-      // hob not found
-      response.error = {code: 'UNKNOWN_FONT_ID', message: "Unknown font id."};
+      // job not found
+      response.data   = {status: 'error'};
+      response.error  = 'Unknown font id (probably task crashed, try again).';
       callback();
       return;
     }
