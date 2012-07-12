@@ -326,12 +326,13 @@ module.exports.generate = function (params, callback) {
       queue_length: _.keys(jobs).length
     }));
   } else {
-    // enqueue new unique job
     jobs[font_id] = {
-      start:      Date.now(),
-      status:     'enqueued',
-      worker_id:  job_mgr.enqueue('generate-font', font_id, font)
+      start:  Date.now(),
+      status: 'enqueued',
     };
+
+    // enqueue new unique job
+    job_mgr.enqueue('generate-font', font_id, font);
 
     nodeca.logger.info("New job created: " + JSON.stringify({
       font_id     : font_id,
