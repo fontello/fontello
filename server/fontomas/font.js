@@ -219,6 +219,13 @@ job_mgr.addJob('generate-font', {
 
       nodeca.logger.info(log_prefix + 'Start generation: ' + JSON.stringify(config));
 
+      if (fs.existsSync(zipball)) {
+        nodeca.logger.info(log_prefix + "File already exists. Doing nothing.");
+        delete jobs[font_id];
+        this.finished = true;
+        return;
+      }
+
       // push timer checkpoint
       times.push(Date.now());
 
