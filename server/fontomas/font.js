@@ -215,13 +215,12 @@ job_mgr.addJob('generate-font', {
     try {
       tmp_dir = path.join(TMP_DIR, "fontello-" + font_id);
       zipball = path.join(DOWNLOAD_DIR, get_download_path(font_id));
-      times   = [jobs[font_id].start];
+      times   = [jobs[font_id]];
 
       nodeca.logger.info(log_prefix + 'Start generation: ' + JSON.stringify(config));
 
       if (fs.existsSync(zipball)) {
         nodeca.logger.info(log_prefix + "File already exists. Doing nothing.");
-        delete jobs[font_id];
         this.finished = true;
         return;
       }
@@ -254,16 +253,21 @@ job_mgr.addJob('generate-font', {
           time:   (times[2] - times[0]) / 1000,
         });
 
-        delete jobs[font_id];
         self.finished = true;
       });
     } catch (err) {
       nodeca.logger.error(log_prefix + 'Unexpected error happened: ' +
                           (err.stack || err.message || err.toString()));
 
-      delete jobs[font_id];
       this.finished = true;
     }
+  }
+});
+
+
+job_mgr.on('finished', function (job, worker) {
+  if ('generate-font' === job.name) {
+    delete jobs[worker.args[0]];
   }
 });
 
@@ -327,7 +331,7 @@ module.exports.generate = function (params, callback) {
     }));
   } else {
     // enqueue new unique job
-    jobs[font_id] = {start:  Date.now()};
+    jobs[font_id] = Date.now();
     job_mgr.enqueue('generate-font', font_id, font);
 
     nodeca.logger.info("New job created: " + JSON.stringify({
