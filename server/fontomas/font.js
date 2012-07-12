@@ -202,28 +202,6 @@ function get_download_url(font_id) {
 var jobs = {};
 
 
-// returns instance of job (searches on FS if needed)
-function get_job(font_id, callback) {
-  var job = jobs[font_id], file;
-
-  // return not-finished jobs as they are
-  if (job) {
-    callback(job);
-    return;
-  }
-
-  file = path.join(DOWNLOAD_DIR, get_download_path(font_id));
-  path.exists(file, function (result) {
-    if (!result) {
-      callback(/* undefined - job not found */);
-      return;
-    }
-
-    callback({status: 'finished', url: get_download_url(font_id)});
-  });
-}
-
-
 // define queue and jobs
 var job_mgr = new (neuron.JobManager)();
 job_mgr.addJob('generate-font', {
@@ -317,6 +295,28 @@ function get_job_data(id, job) {
 }
 
 
+// returns instance of job (searches on FS if needed)
+function get_job(font_id, callback) {
+  var job = jobs[font_id], file;
+
+  // return not-finished jobs as they are
+  if (job) {
+    callback(job);
+    return;
+  }
+
+  file = path.join(DOWNLOAD_DIR, get_download_path(font_id));
+  path.exists(file, function (result) {
+    if (!result) {
+      callback(/* undefined - job not found */);
+      return;
+    }
+
+    callback({status: 'finished', url: get_download_url(font_id)});
+  });
+}
+
+
 // request font generation status
 module.exports.status = function (params, callback) {
   var response = this.response;
@@ -340,7 +340,7 @@ module.exports.status = function (params, callback) {
 
 // request font generation
 module.exports.generate = function (params, callback) {
-  var self = this, font = get_font_config(params), font_id, errmsg;
+  var self = this, font = get_font_config(params), font_id, errmsg, job;
 
   if (!font || 0 >= font.glyphs.length) {
     callback("Invalid request");
@@ -362,34 +362,29 @@ module.exports.generate = function (params, callback) {
   }
 
   font_id = get_download_id(font);
+  job     = jobs[font_id];
 
-  get_job(font_id, function (job) {
-    if (job && jobs[font_id]) {
-      nodeca.logger.info("Job already in queue: " + JSON.stringify({
-        font_id     : font_id,
-        queue_length: _.keys(jobs).length
-      }));
-    } else if (job) {
-      nodeca.logger.info("Font already exists: " + JSON.stringify({
-        font_id: font_id
-      }));
-    } else {
-      // enqueue new unique job
-      job = jobs[font_id] = {
-        start:      Date.now(),
-        status:     'enqueued',
-        worker_id:  job_mgr.enqueue('generate-font', font_id, font)
-      };
+  if (job) {
+    nodeca.logger.info("Job already in queue: " + JSON.stringify({
+      font_id     : font_id,
+      queue_length: _.keys(jobs).length
+    }));
+  } else {
+    // enqueue new unique job
+    job = jobs[font_id] = {
+      start:      Date.now(),
+      status:     'enqueued',
+      worker_id:  job_mgr.enqueue('generate-font', font_id, font)
+    };
 
-      nodeca.logger.info("New job created: " + JSON.stringify({
-        font_id     : font_id,
-        queue_length: _.keys(jobs).length
-      }));
-    }
+    nodeca.logger.info("New job created: " + JSON.stringify({
+      font_id     : font_id,
+      queue_length: _.keys(jobs).length
+    }));
+  }
 
-    self.response.data = get_job_data(font_id, job);
-    callback();
-  });
+  self.response.data = get_job_data(font_id, job);
+  callback();
 };
 
 
