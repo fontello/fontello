@@ -265,7 +265,7 @@ job_mgr.addJob('generate-font', {
 });
 
 
-job_mgr.on('finished', function (job, worker) {
+job_mgr.on('finish', function (job, worker) {
   if ('generate-font' === job.name) {
     delete jobs[worker.args[0]];
   }
