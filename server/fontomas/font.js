@@ -267,72 +267,35 @@ job_mgr.addJob('generate-font', {
 });
 
 
+// request font generation status
+module.exports.status = function (params, callback) {
+  var response  = this.response,
+      job       = jobs[params.id],
+      file      = path.join(DOWNLOAD_DIR, get_download_path(params.id));
 
-function get_job_data(id, job) {
-  var data = {id: id, status: job.status};
-
-  if ('error' === job.status) {
-    data.error = job.error;
-    // as long as user got info about error
-    // remove the job from the cache
-    delete jobs[id];
-  }
-
-  if ('enqueued' === job.status) {
-    data.position = job_mgr.getPosition('generate-font', job.worker_id);
-
-    if (-1 === data.position) {
-      data.status = 'processing';
-      delete data.position;
-    }
-  }
-
-  if ('finished' === job.status) {
-    data.url = job.url;
-  }
-
-  return data;
-}
-
-
-// returns instance of job (searches on FS if needed)
-function get_job(font_id, callback) {
-  var job = jobs[font_id], file;
-
-  // return not-finished jobs as they are
   if (job) {
-    callback(job);
+    response.data = {status: job.status, error: job.error};
+
+    if (job.error) {
+      // as long as user got info about error
+      // remove the job from the cache
+      delete jobs[params.id];
+    }
+
+    callback();
     return;
   }
 
-  file = path.join(DOWNLOAD_DIR, get_download_path(font_id));
-  path.exists(file, function (result) {
-    if (!result) {
-      callback(/* undefined - job not found */);
-      return;
-    }
-
-    callback({status: 'finished', url: get_download_url(font_id)});
-  });
-}
-
-
-// request font generation status
-module.exports.status = function (params, callback) {
-  var response = this.response;
-
-  get_job(params.id, function (job) {
-    if (!job) {
-      response.error = {
-        code:     'UNKNOWN_FONT_ID',
-        message:  "Unknown font id."
-      };
-
+  path.exists(file, function (exists) {
+    if (!exists) {
+      // hob not found
+      response.error = {code: 'UNKNOWN_FONT_ID', message: "Unknown font id."};
       callback();
       return;
     }
 
-    response.data = get_job_data(params.id, job);
+    // job done
+    response.data = {status: 'finished', url: get_download_url(params.id)};
     callback();
   });
 };
@@ -340,7 +303,7 @@ module.exports.status = function (params, callback) {
 
 // request font generation
 module.exports.generate = function (params, callback) {
-  var self = this, font = get_font_config(params), font_id, errmsg, job;
+  var self = this, font = get_font_config(params), font_id, errmsg;
 
   if (!font || 0 >= font.glyphs.length) {
     callback("Invalid request");
@@ -362,16 +325,15 @@ module.exports.generate = function (params, callback) {
   }
 
   font_id = get_download_id(font);
-  job     = jobs[font_id];
 
-  if (job) {
+  if (jobs[font_id]) {
     nodeca.logger.info("Job already in queue: " + JSON.stringify({
       font_id     : font_id,
       queue_length: _.keys(jobs).length
     }));
   } else {
     // enqueue new unique job
-    job = jobs[font_id] = {
+    jobs[font_id] = {
       start:      Date.now(),
       status:     'enqueued',
       worker_id:  job_mgr.enqueue('generate-font', font_id, font)
@@ -383,7 +345,7 @@ module.exports.generate = function (params, callback) {
     }));
   }
 
-  self.response.data = get_job_data(font_id, job);
+  self.response.data = {id: font_id, status: 'enqueued'};
   callback();
 };
 
