@@ -16,6 +16,21 @@ webfont pack. Details available in LICENSE.txt file.
 ================================================================================
 
 
+Attention for server setup (IE users and others)
+------------------------------------------------
+
+You MUST setup server to reply with proper `mime-types` for font files. In other
+case, some browsers will fail to show fonts.
+
+Usually, `apache` already has necessary settings, but `nginx` and other
+webservers should be tuned. Here is list of mime types for our file extentions:
+
+- `application/vnd.ms-fontobject` - eot
+- `application/x-font-woff`	- woff
+- `application/x-font-ttf` - ttf
+- `image/svg+xml` - svg
+
+
 Comments on archive content
 ---------------------------
 
