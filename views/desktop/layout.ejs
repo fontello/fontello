@@ -19,6 +19,10 @@
 
     <script type="text/javascript"><%- asset_include('modernizr.js') %></script>
 
+    <!--[if lt IE 9]>
+      <script type="text/javascript"><%- asset_path('es5-shim.js') %></script>
+    <![endif]-->
+
     <script type="text/javascript">window.REALTIME_ID = '<%- random() %>';</script>
 
     <!-- Google Analytics -->
