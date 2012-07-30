@@ -1,0 +1,14 @@
+[class^="icon-"],
+[class*=" icon-"] {
+  font-family: 'icons';
+  font-style: normal;
+  font-weight: normal;
+/* fix buttons height */
+  line-height: 1em;
+/* you can be more comfortable with increased icons size */
+/* font-zize: 120%; */
+}
+
+.icon-cog { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x2699;&nbsp;'); }
+.icon-download-1 { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf000;&nbsp;'); }
+.icon-search { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf001;&nbsp;'); }

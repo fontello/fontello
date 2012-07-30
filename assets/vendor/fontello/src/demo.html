@@ -1,12 +1,7 @@
-<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
-<head>
-  <!--[if lt IE 9]>
-  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
-</head><style type="text/css">.clearfix {
+<!DOCTYPE html>
+<html>
+  <head><!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]--><style type="text/css">.clearfix {
   *zoom: 1;
 }
 .clearfix:before,
@@ -312,30 +307,38 @@ em {
   list-style: none outside none;
   margin-left: 0;
 }
+.the-icons li {
+  font-size: 14px;
+  line-height: 24px;
+  height: 24px;
+}
 </style>
-<link rel="stylesheet" href="icons.css">
-<body>
-  <div class="container">
-    <div class="page-header">
-      <h1>icons font icons demo</h1>
+    <link rel="stylesheet" href="css/icons.css"><!--[if IE 7]>
+    <link rel="stylesheet" href="css/icons-ie7.css"><![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="page-header">
+        <h1>icons font icons demo</h1>
+      </div>
+      <div class="row">
+        <div class="span3">
+          <ul class="the-icons"><li><i class="icon-cog"></i> icon-cog</li>
+          </ul>
+        </div>
+        <div class="span3">
+          <ul class="the-icons"><li><i class="icon-download-1"></i> icon-download-1</li>
+          </ul>
+        </div>
+        <div class="span3">
+          <ul class="the-icons"><li><i class="icon-search"></i> icon-search</li>
+          </ul>
+        </div>
+        <div class="span3">
+          <ul class="the-icons">
+          </ul>
+        </div>
+      </div>
     </div>
-    <div class="row">
-      <div class="span3">
-        <ul class="the-icons"><li><i class="icon-cog"></i> icon-cog</li>
-        </ul>
-      </div>
-      <div class="span3">
-        <ul class="the-icons"><li><i class="icon-download"></i> icon-download</li>
-        </ul>
-      </div>
-      <div class="span3">
-        <ul class="the-icons"><li><i class="icon-search"></i> icon-search</li>
-        </ul>
-      </div>
-      <div class="span3">
-        <ul class="the-icons">
-        </ul>
-      </div>
-    </div>
-  </div>
-</body>
+  </body>
+</html>
