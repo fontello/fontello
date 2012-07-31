@@ -35,7 +35,7 @@ at [github](https://github.com/fontello/).
 
 ## Contacts
 
-- Questions: [Google group](https://groups.google.com/group/fontomas-project/)
+- Questions: [Google group](https://groups.google.com/group/fontello/)
 - Bug reports: [Issue tracker](https://github.com/nodeca/fontomas/issues)
 - Suggestion for adding your OFL fonts or other collaborations: vitaly@rcdesign.ru
 
