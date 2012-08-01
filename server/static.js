@@ -15,7 +15,14 @@ var connect = require('connect');
 ////////////////////////////////////////////////////////////////////////////////
 
 
-var static_options = {root: path.join(nodeca.runtime.apps[0].root, 'public/root')};
+var static_options = {
+  root: path.join(nodeca.runtime.apps[0].root, 'public/root')
+};
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+
 module.exports = function (params, callback) {
   var http = this.origin.http;
 
@@ -39,4 +46,4 @@ module.exports = function (params, callback) {
 
     callback(prefix + 'File not found' + suffix);
   }, static_options);
-}
+};

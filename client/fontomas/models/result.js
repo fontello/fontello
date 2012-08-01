@@ -134,8 +134,6 @@ module.exports = Backbone.Collection.extend({
 
 
   startDownload: function (name) {
-    var self = this;
-
     if (!this.validate()) {
       return;
     }

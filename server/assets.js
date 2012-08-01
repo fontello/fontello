@@ -1,6 +1,9 @@
 'use strict';
 
 
+/*global nodeca*/
+
+
 // 3rd-party
 var Mincer  = require('mincer');
 

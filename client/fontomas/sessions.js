@@ -177,8 +177,7 @@ var Session = Backbone.Model.extend({
 
       // update modified glyphs
       _.each(font_data.glyphs, function (glyph_data) {
-        var data  = {},
-            glyph = font.getGlyph({
+        var glyph = font.getGlyph({
               uid:  glyph_data.uid,
               code: glyph_data.orig_code,
               css:  glyph_data.orig_css

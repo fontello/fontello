@@ -57,7 +57,7 @@ module.exports = Backbone.Model.extend({
 
 
   set: function(key, value, options) {
-    var attrs, attr, val, source;
+    var attrs, source;
 
     if (_.isObject(key) || null === key) {
       attrs = key;
