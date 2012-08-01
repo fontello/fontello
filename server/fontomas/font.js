@@ -159,7 +159,7 @@ function get_font_config(params) {
     },
     meta: {
       columns: 4,
-      css_prefix: 'icon-',
+      css_prefix: 'icon-'
     },
     glyphs:     glyphs_config,
     src_fonts:  get_source_fonts(),
@@ -250,7 +250,7 @@ job_mgr.addJob('generate-font', {
 
         stats.push({
           glyphs: config.glyphs.length,
-          time:   (times[2] - times[0]) / 1000,
+          time:   (times[2] - times[0]) / 1000
         });
 
         self.finished = true;
@@ -369,7 +369,7 @@ module.exports.download = function (params, callback) {
     http.res.setHeader('Content-Disposition', 'attachment; ' + filename);
   }
 
-  connect.static.send(http.req, http.res, function (err) {
+  connect['static'].send(http.req, http.res, function (err) {
     var prefix = '[server.fontomas.font.download] ',
         suffix = ' (' + http.req.url + ')';
 

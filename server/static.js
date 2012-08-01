@@ -34,7 +34,7 @@ module.exports = function (params, callback) {
   static_options.path    = params.file;
   static_options.getOnly = true;
 
-  connect.static.send(http.req, http.res, function (err) {
+  connect['static'].send(http.req, http.res, function (err) {
     var prefix = '[server.static] ',
         suffix = ' (' + http.req.url + ')';
 

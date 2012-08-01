@@ -6,7 +6,7 @@ module.exports = Backbone.Model.extend({
   defaults: function () {
     return {
       font:   {fontname: "unknown"},
-      glyphs: [],
+      glyphs: []
     };
   },
 

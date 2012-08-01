@@ -12,7 +12,7 @@ module.exports.notify = function (type, options, message) {
   $.noty(_.extend({layout: 'topRight'}, options, {
     type:   type,
     text:   message,
-    theme:  'noty_theme_twitter',
+    theme:  'noty_theme_twitter'
   }));
 };
 
