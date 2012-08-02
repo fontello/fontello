@@ -20,14 +20,24 @@
 
 
   (function (c) {
-    var log = c && c.log || $.noop;
+    var log = c.log || $.noop;
 
     nodeca.logger = {};
 
     _.each(['assert', 'error', 'info', 'debug'], function (level) {
-      nodeca.logger[level] = _.bind((c && c[level]) || function () {
-        log([level].concat(_.toArray(arguments)));
-      }, c || {});
+      var logger = c[level]; // try to get console.<level>
+
+      // we deal with IE6-7 where no console exist at all
+      // or we deal with IE8 where console.log or whatever might be an object
+      if (!_.isFunction(logger)) {
+        logger = function () {
+          log([level].concat(_.toArray(arguments)));
+        };
+      }
+
+      // logger is now a function for sure, so we can safely bind a console
+      // context, which is needed for Chrome
+      nodeca.logger[level] = _.bind(logger, c);
     });
-  }(window.console));
+  }(window.console || {}));
 }());
