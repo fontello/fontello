@@ -19,10 +19,15 @@
   };
 
 
-  nodeca.logger = {
-    assert : $.noop,
-    error  : $.noop,
-    info   : $.noop,
-    debug  : $.noop
-  };
+  (function (c) {
+    var log = c && c.log || $.noop;
+
+    nodeca.logger = {};
+
+    _.each(['assert', 'error', 'info', 'debug'], function (level) {
+      nodeca.logger[level] = _.bind((c && c[level]) || function () {
+        log([level].concat(_.toArray(arguments)));
+      }, c || {});
+    });
+  }(window.console));
 }());
