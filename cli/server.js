@@ -34,8 +34,6 @@ module.exports.commandLineArguments = [
 
 module.exports.run = function (args, callback) {
   Async.series([
-    require('../lib/init/logger'),
-
     NLib.init.loadServerApiSubtree,
     NLib.init.loadSharedApiSubtree,
     NLib.init.loadClientApiSubtree,
@@ -47,9 +45,6 @@ module.exports.run = function (args, callback) {
     NLib.init.initRouter,
 
     require('../lib/init/cronjob'),
-    require('../lib/init/server'),
-
-    // init repl only if it was required by `--repl` key
-    (args.repl ? require('../lib/init/repl') : function skip(next) { next(); })
+    require('../lib/init/server')
   ], callback);
 };
