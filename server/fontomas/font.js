@@ -13,7 +13,7 @@ var execFile  = require('child_process').execFile;
 
 
 // 3rd-party
-var connect = require('connect');
+var send    = require('send');
 var neuron  = require('neuron');
 var async   = require('nlib').Vendor.Async;
 var fstools = require('nlib').Vendor.FsTools;
@@ -346,22 +346,22 @@ module.exports.generate = function (params, callback) {
 
 
 // font downloader middleware
-var download_options  = {root: DOWNLOAD_DIR};
 var FINGERPRINT_RE    = /-([0-9a-f]{32,40})\.[^.]+$/;
+
 module.exports.download = function (params, callback) {
   var match = FINGERPRINT_RE.exec(params.file),
       http  = this.origin.http,
       filename;
 
   if (!http) {
-    callback("HTTP requests only");
+    callback({statusCode: 400, body: "HTTP ONLY"});
     return;
   }
 
-  console.log('downloads', params);
-
-  download_options.path    = params.file;
-  download_options.getOnly = true;
+  if ('GET' !== http.req.method && 'HEAD' !== http.req.method) {
+    callback({statusCode: 400});
+    return;
+  }
 
   if (match) {
     // beautify zipball name
@@ -369,16 +369,18 @@ module.exports.download = function (params, callback) {
     http.res.setHeader('Content-Disposition', 'attachment; ' + filename);
   }
 
-  connect['static'].send(http.req, http.res, function (err) {
-    var prefix = '[server.fontomas.font.download] ',
-        suffix = ' (' + http.req.url + ')';
+  send(http.req, filename)
+    .root(DOWNLOAD_DIR)
+    .on('error', function (err) {
+      if (404 === err.status) {
+        callback({statusCode: 404});
+        return;
+      }
 
-    if (err) {
-      callback(prefix + (err.message || err) + suffix +
-               (err.stack ? ('\n' + err.stack) : ''));
-      return;
-    }
-
-    callback(prefix + 'File not found' + suffix);
-  }, download_options);
+      callback(err);
+    })
+    .on('directory', function () {
+      callback({statusCode: 400});
+    })
+    .pipe(http.res);
 };
