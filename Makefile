@@ -41,16 +41,12 @@ dev-setup:
 
 
 dev-server:
-	if test ! `which supervisor` ; then \
-		echo "You need 'supervisor' installed in order to run lint." >&2 ; \
-		echo "   npm install supervisor" >&2 ; \
+	if test ! `which inotifywait` ; then \
+		echo "You need 'inotifywait' installed in order to run dev-server." >&2 ; \
+		echo "   sudo apt-get install inotify-tools" >&2 ; \
 		exit 128 ; \
 		fi
-	supervisor \
-		--watch "assets,client,lib,server,shared,src,views" \
-		--extensions "js|css|styl|less|ejs|jade" \
-		--no-restart-on error -- \
-		./fontello.js server
+	./support/forever.sh
 
 
 repl:
