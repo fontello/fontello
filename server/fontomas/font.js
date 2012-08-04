@@ -99,6 +99,10 @@ function get_glyphs_config(params) {
       return;
     }
 
+    // make sure codes are INTEGERS
+    g.code = +g.code;
+    g.orig_code = +g.code;
+
     glyph = _.find(font.glyphs, function (config) {
       if (!!config.uid) {
         return config.uid === g.uid;
