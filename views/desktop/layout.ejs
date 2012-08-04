@@ -63,16 +63,16 @@
 
       <!-- top toolbar/tabs -->
       <div class="container toolbar">
-        <div id="toolbar" class="btn-toolbar">
-          <div class="btn-group search-form">
+        <div id="toolbar" class="btn-toolbar clearfix">
+          <div class="btn-group search-form pull-left">
             <input id="search" class="input-medium search-query" type="text" placeholder="search" autocomplete="off">
             <div class="icon-search"></div>
           </div>
-          <div class="btn-group">
+          <div class="btn-group pull-left">
             <div id="glyph-size-slider"></div>
             <div id="glyph-size-value"><%= nodeca('config.fontomas.glyph_size.val') %>px</div>
           </div>
-          <div class="btn-group">
+          <div class="btn-group pull-left">
             <div class="switch-3d">
               <input type="checkbox" checked id="glyph-3d" /> 3D
             </div>
