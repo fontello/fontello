@@ -373,7 +373,7 @@ module.exports.download = function (params, callback) {
     http.res.setHeader('Content-Disposition', 'attachment; ' + filename);
   }
 
-  send(http.req, filename)
+  send(http.req, params.file)
     .root(DOWNLOAD_DIR)
     .on('error', function (err) {
       if (404 === err.status) {
