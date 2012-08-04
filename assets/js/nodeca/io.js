@@ -21,15 +21,8 @@
       events = {},
       // underlying bayeux client
       bayeux = null,
-      // whenever transport is up or not
-      is_connected = false,
-      // api3 related (used by apiTree() send/receive calls) properies
-      api3 = {
-        req_channel: '/x/api3-req/' + window.REALTIME_ID,
-        res_channel: '/x/api3-res/' + window.REALTIME_ID,
-        callbacks:    {},
-        last_msg_id:  0
-      };
+      // last xhr to allow interrupt it
+      last_xhr = null;
 
 
   // exported IO object
@@ -41,8 +34,6 @@
   //
 
 
-  io.ENOCONN    = 'IO_ENOCONN';
-  io.ETIMEOUT   = 'IO_ETIMEOUT';
   io.EWRONGVER  = 'IO_EWRONGVER';
 
 
@@ -61,7 +52,7 @@
 
   // executes all handlers registered for given `event`
   function emit(event, args) {
-    args = _.isArray(args) ? args : []; // needed for IE < 9
+    args = _.isArray(args) ? args : []; // for IE < 9
     _.each(events[event] || [], function (handler) {
       handler.apply(null, args);
     });
@@ -78,7 +69,9 @@
    *
    *  ##### Known events
    *
-   *  - `api3:version-mismatch(versions)`
+   *  - `connected`
+   *  - `disconnected`
+   *  - `rpc:version-mismatch({ client: "str", server: "str" })`
    **/
   io.on = function on(event, handler) {
     if (!events[event]) {
@@ -165,15 +158,15 @@
    *  nodeca.io.apiTree(name, callback) -> Void
    **/
   io.apiTree = function apiTree(name, params, options, callback) {
-    var timeout, id = api3.last_msg_id++, data = {id: id};
+    var xhr, payload = { version: nodeca.runtime.version, method: name };
 
-    // Scenario: rpc(name, callback);
+    // Scenario: apiTree(name, callback);
     if (_.isFunction(params)) {
       callback = params;
       params   = options  = {};
     }
 
-    // Scenario: rpc(name, params[, callback]);
+    // Scenario: apiTree(name, params[, callback]);
     if (_.isFunction(options)) {
       callback = options;
       options = {};
@@ -184,82 +177,60 @@
     callback  = callback || $.noop;
 
     //
-    // ERROR HANDLING
-    //
-    // - when there's no connection (or client is `connecting`), we execute
-    //   callback with `ENOCONN` error imediately
-    // - when connection lost during waiting for server to send a message into
-    //   response channel, we execute calback with `ECONNGONE` error
-    // - when server didn't received published request message within 30 seconds
-    //   we execute callback with `ETIMEOUT` error
+    // Interrupt previous rpc request
     //
 
-    // check if there an active connection
-    if (!is_connected) {
-      callback(ioerr(io.ENOCONN, 'No connection to the server (RT).'));
-      return;
+    if (last_xhr) {
+      (last_xhr.reject || $.noop)();
+      last_xhr = null;
     }
 
-    // fill in message
-    data.msg = {
-      version:  nodeca.runtime.version,
-      method:   name,
-      params:   params
-    };
+    // fill in payload params
+    payload.params = params;
 
-    // stop timer
-    function stop_timer() {
-      clearTimeout(timeout); // stop timeout counter
-      timeout = null; // mark timeout as "removed"
-    }
+    //
+    // Send request
+    //
 
-    // simple error handler
-    function handle_error(err) {
-      stop_timer();
-      delete api3.callbacks[id];
-      callback(err);
-    }
+    nodeca.logger.debug('API3 Sending request', payload);
+    xhr = last_xhr = $.post('/rpc', payload);
 
-    // handle transport down during request error
-    function handle_transport_down() {
-      // mimics `once()` event listener
-      bayeux.unbind('transport:down', handle_transport_down);
-      handle_error(ioerr(io.ECONNGONE, 'Server gone. (RT)'));
-    }
+    //
+    // Listen for a response
+    //
 
-    bayeux.bind('transport:down', handle_transport_down);
+    xhr.success(function (data) {
+      data = data || {};
 
-    // store callback for the response
-    api3.callbacks[id] = function (msg) {
-      stop_timer();
+      nodeca.logger.debug('API3 Received data', data);
 
-      bayeux.unbind('transport:down', handle_transport_down);
-
-      if (msg.version !== nodeca.runtime.version) {
+      if (data.version !== nodeca.runtime.version) {
         // emit version mismatch error
-        emit('api3:version-mismatch', {
+        emit('rpc:version-mismatch', {
           client: nodeca.runtime.version,
-          server: msg.version
+          server: data.version
         });
+
         callback(ioerr(io.EWRONGVER, 'Client version does not match server.'));
         return;
       }
 
       // run actual callback
-      callback(msg.err, msg.result);
-    };
+      callback(data.error, data.response);
+    });
 
-    // wait for successfull message delivery 10 seconds
-    timeout = setTimeout(function () {
-      handle_error(ioerr(io.ETIMEOUT, 'Timeout ' + name + ' execution.'));
-    }, 10000);
+    //
+    // Listen for an error
+    //
 
-
-    // send request
-    bayeux_call('publish', [api3.req_channel, data])
-      // see bayeux_call info for details on fail/done
-      .fail(handle_error)
-      .done(stop_timer);
+    xhr.fail(function (err) {
+      if (err) {
+        // fire callback with error only in case of real error
+        // and not due to our "previous request interruption"
+        // TODO: Handle this error separately - it's a real fuckup
+        callback(err);
+      }
+    });
   };
 
 
@@ -269,37 +240,12 @@
 
 
   /**
-   *  nodeca.io.auth(callback) -> Void
-   **/
-  io.auth = function (callback) {
-    // Not implemented yet
-    callback(null);
-  };
-
-
-  // responses listener
-  function handle_api3_response(data) {
-    var callback = api3.callbacks[data.id];
-
-    if (!callback) {
-      // unknown response id
-      return;
-    }
-
-    delete api3.callbacks[data.id];
-    callback(data.msg);
-  }
-
-
-  /**
    *  nodeca.io.init() -> Void
    **/
   io.init = function () {
     var l = window.location;
 
-    bayeux = new Faye.Client(l.protocol + '//' + l.host + '/faye', {
-      timeout: 45
-    });
+    bayeux = new Faye.Client(l.protocol + '//' + l.host + '/faye');
 
     if ('development' === nodeca.runtime.env) {
       // export some internals for debugging
@@ -312,20 +258,11 @@
     //
 
     bayeux.bind('transport:up',   function () {
-      is_connected = true;
       emit('connected');
     });
 
     bayeux.bind('transport:down', function () {
-      is_connected = false;
       emit('disconnected');
     });
-
-    //
-    // faye handles reconnection on it's own:
-    // https://groups.google.com/d/msg/faye-users/NJPd3v98zjY/hyGpoat5Of0J
-    //
-
-    bayeux.subscribe(api3.res_channel, handle_api3_response);
   };
 }());

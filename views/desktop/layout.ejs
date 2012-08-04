@@ -17,9 +17,7 @@
     <!-- the fav and touch icons -->
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 
-    <script type="text/javascript"><%- asset_include('modernizr.js') %></script>
-
-    <script type="text/javascript">window.REALTIME_ID = '<%- random() %>';</script>
+    <script type="text/javascript"><%- asset_include('loader.js') %></script>
 
     <!-- Google Analytics -->
     <script type="text/javascript">
@@ -72,7 +70,7 @@
           </div>
           <div class="btn-group">
             <div id="glyph-size-slider"></div>
-            <div id="glyph-size-value"><%= config('fontomas.glyph_size.val') %>px</div>
+            <div id="glyph-size-value"><%= nodeca('config.fontomas.glyph_size.val') %>px</div>
           </div>
           <div class="btn-group">
             <div class="switch-3d">

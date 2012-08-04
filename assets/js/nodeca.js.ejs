@@ -1,23 +1,17 @@
-/*global window*/
+/*global window, nodeca*/
 
+//= require_self
+//= require_tree ./nodeca
 
-// vim:syntax=javascript
-
-
-(function () {
+var nodeca = window.nodeca = (function (nodeca) {
   'use strict';
 
+  nodeca.config           = {};
+  nodeca.config.fontomas  = <%- JSON.stringify(nodeca('config.fontomas')) %>
 
-  var nodeca = window.nodeca = {
-    config: {
-      fontomas: <%- JSON.stringify(config('fontomas')) %>
-    },
-    runtime: {
-      env:      "<%= env() %>",
-      version:  "<%= version() %>"
-    }
-  };
-
+  nodeca.runtime          = {};
+  nodeca.runtime.env      = "<%= nodeca('runtime.env') %>";
+  nodeca.runtime.version  = "<%= nodeca('runtime.version') %>";
 
   (function (c) {
     var log = c.log || $.noop;
@@ -40,4 +34,8 @@
       nodeca.logger[level] = _.bind(logger, c);
     });
   }(window.console || {}));
-}());
+
+  return nodeca;
+}({}));
+
+// vim: syntax=javascript

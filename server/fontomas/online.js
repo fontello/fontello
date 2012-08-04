@@ -14,8 +14,8 @@ var realtime = require('../../lib/init/server/realtime');
 
 
 module.exports = function app(params, callback) {
-  if (!this.origin.realtime) {
-    callback('RT only');
+  if (!this.origin.rpc) {
+    callback({statusCode: 400, body: 'RPC only'});
     return;
   }
 
