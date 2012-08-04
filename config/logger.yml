@@ -1,0 +1,59 @@
+#
+# Logger configuration
+#
+
+logger:
+
+  options:
+
+    #
+    # Global minimal error level
+    #
+
+    level: debug
+
+    #
+    # Appenders options
+    #
+
+    file:
+      logSize: 10 # Max MB per log file
+      backups: 5  # Amount of "old" log files
+
+  #
+  # Logger categories
+  #
+
+  system:
+    - level:  debug
+      file:   log/system.log
+    - level:  error
+      file:   log/system-error.log
+
+  server.static:
+    - level:  debug
+      file:   log/static.log
+    - level:  error
+      file:   log/static-error.log
+
+  server.fontomas.font.download:
+    - level:  debug
+      file:   log/static.log
+    - level:  error
+      file:   log/static-error.log
+
+  server:
+    - level:  debug
+      file:   log/server.log
+    - level:  error
+      file:   log/server-error.log
+
+
+^production:
+  options:
+    logger:
+      level: info
+
+
+#
+# vim:syntax=yaml
