@@ -20,8 +20,9 @@ var fstools = require('nlib').Vendor.FsTools;
 
 
 // internal
-var stats   = require('../../lib/stats');
-var logger  = nodeca.logger.getLogger('server.fontomas.font');
+var stats       = require('../../lib/stats');
+var logger      = nodeca.logger.getLogger('server.fontomas.font');
+var fontConfig  = require('../../lib/font_config');
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -36,142 +37,6 @@ var CONFIG              = nodeca.config.fontomas;
 
 
 ////////////////////////////////////////////////////////////////////////////////
-
-
-// return font configuration
-var font_configs = null;
-function get_embedded_font(name) {
-  if (null === font_configs) {
-    font_configs = {};
-    nodeca.shared.fontomas.embedded_fonts.forEach(function (config) {
-      font_configs[config.font.fontname] = config;
-    });
-  }
-
-  return name ? font_configs[name] : font_configs;
-}
-
-
-var source_fonts;
-function get_source_fonts() {
-  var fonts_dir;
-
-  if (!source_fonts) {
-    source_fonts  = {};
-    fonts_dir     = path.join(APP_ROOT, 'assets/embedded_fonts');
-
-    _.each(get_embedded_font(), function (config, name) {
-      source_fonts[name] = path.join(fonts_dir, name + '.ttf');
-    });
-  }
-
-  return source_fonts;
-}
-
-
-function get_used_fonts(glyphs) {
-  var fonts = {};
-
-  _.each(glyphs, function (g) {
-    if (fonts[g.src]) {
-      return;
-    }
-
-    fonts[g.src] = get_embedded_font(g.src);
-  });
-
-  return _.values(fonts);
-}
-
-
-// return valid glyphs configuration
-function get_glyphs_config(params) {
-  var glyphs = [];
-
-  if (!_.isArray(params.glyphs)) {
-    return glyphs;
-  }
-
-  _.each(params.glyphs, function (g) {
-    var font = get_embedded_font(g.src), glyph;
-
-    if (!font) {
-      // unknown glyph source font
-      return;
-    }
-
-    // make sure codes are INTEGERS
-    g.code = +g.code;
-    g.orig_code = +g.code;
-
-    glyph = _.find(font.glyphs, function (config) {
-      if (!!config.uid) {
-        return config.uid === g.uid;
-      }
-
-      return config.code === g.orig_code;
-    });
-
-    if (!glyph) {
-      // unknown glyph code
-      return;
-    }
-
-    glyphs.push({
-      src:  g.src,
-      uid:  g.uid,
-      css:  g.css || glyph.css,
-      from: glyph.code,
-      code: g.code || glyph.code
-    });
-  });
-
-  if (0 === glyphs.length) {
-    // at least one glyph is required
-    return null;
-  }
-
-  // return glyphs config sorted by original codes
-  return _.sortBy(glyphs, function (g) { return g.from; });
-}
-
-
-function filter_fontname(str) {
-  str = _.isString(str) ? str : '';
-  return str.replace(/[^a-z0-9\-_]+/g, '-');
-}
-
-
-function get_font_config(params) {
-  var glyphs_config, fontname;
-
-  if (!_.isObject(params)) {
-    return null;
-  }
-
-  glyphs_config = get_glyphs_config(params);
-  fontname      = filter_fontname(params.name) || 'fontello';
-
-  return {
-    font: {
-      fontname:   fontname,
-      fullname:   fontname,
-      familyname: 'fontello',
-      copyright:  'Copyright (C) 2012 by original authors @ fontello.com',
-      ascent:     800,
-      descent:    200,
-      weight:     'Medium'
-    },
-    meta: {
-      columns: 4,
-      css_prefix: 'icon-'
-    },
-    glyphs:     glyphs_config,
-    src_fonts:  get_source_fonts(),
-    used_fonts: get_used_fonts(glyphs_config),
-    session:    params
-  };
-}
 
 
 // returns unique ID for requested list of glyphs
@@ -237,7 +102,6 @@ job_mgr.addJob('generate-font', {
         async.apply(fstools.remove, tmp_dir),
         async.apply(fstools.mkdir, tmp_dir),
         async.apply(fs.writeFile, path.join(tmp_dir, 'config.json'), JSON.stringify(config.session), 'utf8'),
-        async.apply(fs.writeFile, path.join(tmp_dir, 'generator-config.json'), JSON.stringify(config), 'utf8'),
         async.apply(execFile, GENERATOR_BIN, [config.font.fontname, tmp_dir, zipball], {cwd: APP_ROOT}),
         async.apply(fstools.remove, tmp_dir)
       ], function (err) {
@@ -306,7 +170,7 @@ module.exports.status = function (params, callback) {
 
 // request font generation
 module.exports.generate = function (params, callback) {
-  var self = this, font = get_font_config(params), font_id, errmsg;
+  var self = this, font = fontConfig(params), font_id, errmsg;
 
   if (!font || 0 >= font.glyphs.length) {
     callback("Invalid request");

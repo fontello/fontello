@@ -11,7 +11,7 @@ FONTNAME=$1
 TMPDIR=$2
 ZIPBALL=$3
 
-
+USER_CONFIG=$TMPDIR/config.json
 CONFIG=$TMPDIR/generator-config.json
 FONT_TEMPLATES="$PWD/support/font-templates"
 
@@ -48,6 +48,12 @@ export PATH="$PWD/support/font-builder/support/ttfautohint/frontend:$PATH"
 for dep in font_merge.py fontconvert.py fontdemo.py ttfautohint ttf2eot jade zip; do
   require $dep
 done
+
+
+## BUILD FONT CONFIG ###########################################################
+
+
+node ./fontello.js font_config --input $USER_CONFIG --output $CONFIG
 
 
 ## BUILD FONT ##################################################################
