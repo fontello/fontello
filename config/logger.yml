@@ -42,6 +42,12 @@ logger:
     - level:  error
       file:   log/static-error.log
 
+  server.fontomas.font:
+    - level:  debug
+      file:   log/generator.log
+    - level:  error
+      file:   log/generator-error.log
+
   server:
     - level:  debug
       file:   log/server.log
