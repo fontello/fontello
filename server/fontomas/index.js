@@ -32,7 +32,6 @@ module.exports = function app(params, callback) {
   // set headers
   this.response.headers['ETag']           = etag;
   this.response.headers['Cache-Control']  = 'private, max-age=0, must-revalidate';
-  this.response.headers['Content-Type']   = 'text/html; charset=utf8';
 
   // set view to be rendered
   this.response.view   = 'layout';
