@@ -21,17 +21,6 @@ module.exports.parserParameters= {
 };
 
 
-module.exports.commandLineArguments = [
-  {
-    args: ['--repl'],
-    options: {
-      help:   'start REPL server',
-      action: 'storeTrue'
-    }
-  }
-];
-
-
 module.exports.run = function (args, callback) {
   Async.series([
     NLib.init.loadServerApiSubtree,
