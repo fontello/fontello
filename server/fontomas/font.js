@@ -21,6 +21,7 @@ var fstools = require('nlib').Vendor.FsTools;
 
 // internal
 var stats   = require('../../lib/stats');
+var logger  = nodeca.logger.getLogger('server.fontomas.font');
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -221,10 +222,10 @@ job_mgr.addJob('generate-font', {
       zipball = path.join(DOWNLOAD_DIR, get_download_path(font_id));
       times   = [jobs[font_id]];
 
-      nodeca.logger.info(log_prefix + 'Start generation: ' + JSON.stringify(config));
+      logger.info(log_prefix + 'Start generation: ' + JSON.stringify(config.session));
 
       if (fs.existsSync(zipball)) {
-        nodeca.logger.info(log_prefix + "File already exists. Doing nothing.");
+        logger.info(log_prefix + "File already exists. Doing nothing.");
         this.finished = true;
         return;
       }
@@ -241,16 +242,16 @@ job_mgr.addJob('generate-font', {
         async.apply(fstools.remove, tmp_dir)
       ], function (err) {
         if (err) {
-          nodeca.logger.error(log_prefix + (err.stack || err.message || err.toString()));
+          logger.error(log_prefix + (err.stack || err.message || err.toString()));
         }
 
         // push final checkpoint
         times.push(Date.now());
 
         // log some statistical info
-        nodeca.logger.info(log_prefix + "Generated in " +
-                          ((times[2] - times[0]) / 1000) + "ms " +
-                          "(real: " + ((times[1] - times[0]) / 1000) + "ms)");
+        logger.info(log_prefix + "Generated in " +
+                    ((times[2] - times[0]) / 1000) + "ms " +
+                    "(real: " + ((times[1] - times[0]) / 1000) + "ms)");
 
         stats.push({
           glyphs: config.glyphs.length,
@@ -260,8 +261,8 @@ job_mgr.addJob('generate-font', {
         self.finished = true;
       });
     } catch (err) {
-      nodeca.logger.error(log_prefix + 'Unexpected error happened: ' +
-                          (err.stack || err.message || err.toString()));
+      logger.error(log_prefix + 'Unexpected error happened: ' +
+                   (err.stack || err.message || err.toString()));
 
       this.finished = true;
     }
@@ -321,7 +322,7 @@ module.exports.generate = function (params, callback) {
       message:  errmsg
     };
 
-    nodeca.logger.warn(errmsg);
+    logger.warn(errmsg);
     callback();
     return;
   }
@@ -329,7 +330,7 @@ module.exports.generate = function (params, callback) {
   font_id = get_download_id(font);
 
   if (jobs[font_id]) {
-    nodeca.logger.info("Job already in queue: " + JSON.stringify({
+    logger.info("Job already in queue: " + JSON.stringify({
       font_id     : font_id,
       queue_length: _.keys(jobs).length
     }));
@@ -338,7 +339,7 @@ module.exports.generate = function (params, callback) {
     jobs[font_id] = Date.now();
     job_mgr.enqueue('generate-font', font_id, font);
 
-    nodeca.logger.info("New job created: " + JSON.stringify({
+    logger.info("New job created: " + JSON.stringify({
       font_id     : font_id,
       queue_length: _.keys(jobs).length
     }));
