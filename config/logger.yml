@@ -55,10 +55,10 @@ logger:
       file:   log/server-error.log
 
 
-^production:
-  options:
-    logger:
-      level: info
+#^production:
+#  options:
+#    logger:
+#      level: info
 
 
 #
