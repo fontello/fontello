@@ -1,6 +1,11 @@
 "use strict";
 
 
+/**
+ *  server
+ **/
+
+
 /*global nodeca, _*/
 
 
@@ -23,6 +28,14 @@ var logger  = nodeca.logger.getLogger('server.static');
 ////////////////////////////////////////////////////////////////////////////////
 
 
+/**
+ *  server.static(params, callback) -> Void
+ *
+ *  - **HTTP only**
+ *
+ *  Middleware that serves static assets from `public/root` directory under the
+ *  main application root path.
+ **/
 module.exports = function (params, callback) {
   var req, res;
 
