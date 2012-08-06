@@ -36,6 +36,12 @@ logger:
     - level:  error
       file:   log/static-error.log
 
+  server.assets:
+    - level:  debug
+      file:   log/static.log
+    - level:  error
+      file:   log/static-error.log
+
   server.fontomas.font.download:
     - level:  debug
       file:   log/static.log
