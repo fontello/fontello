@@ -54,6 +54,12 @@ logger:
     - level:  error
       file:   log/server-error.log
 
+  rpc:
+    - level:  debug
+      file:   log/rpc.log
+    - level:  error
+      file:   log/rpc-error.log
+
 
 #^production:
 #  options:
