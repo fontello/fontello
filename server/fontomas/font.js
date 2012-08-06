@@ -9,6 +9,7 @@ var crypto    = require('crypto');
 var os        = require('os');
 var fs        = require('fs');
 var path      = require('path');
+var http      = require('http');
 var execFile  = require('child_process').execFile;
 
 
@@ -22,6 +23,7 @@ var fstools = require('nlib').Vendor.FsTools;
 // internal
 var stats       = require('../../lib/stats');
 var logger      = nodeca.logger.getLogger('server.fontomas.font');
+var dl_logger   = nodeca.logger.getLogger('server.fontomas.font.download');
 var fontConfig  = require('../../lib/font_config');
 
 
@@ -215,30 +217,36 @@ module.exports.generate = function (params, callback) {
 
 
 // font downloader middleware
-var FINGERPRINT_RE    = /-([0-9a-f]{32,40})\.[^.]+$/;
+var FINGERPRINT_RE = /-([0-9a-f]{32,40})\.[^.]+$/;
 
+
+// Send dowloaded file
+//
 module.exports.download = function (params, callback) {
-  var match = FINGERPRINT_RE.exec(params.file),
-      http  = this.origin.http,
-      filename;
+  var match, req, res, filename;
 
-  if (!http) {
+  if (!this.origin.http) {
     callback({statusCode: 400, body: "HTTP ONLY"});
     return;
   }
 
-  if ('GET' !== http.req.method && 'HEAD' !== http.req.method) {
+  req = this.origin.http.req;
+  res = this.origin.http.res;
+
+  if ('GET' !== req.method && 'HEAD' !== req.method) {
     callback({statusCode: 400});
     return;
   }
 
+  match = FINGERPRINT_RE.exec(params.file);
+
   if (match) {
     // beautify zipball name
     filename = 'filename=fontello-' + match[1].substr(0, 8) + '.zip';
-    http.res.setHeader('Content-Disposition', 'attachment; ' + filename);
+    res.setHeader('Content-Disposition', 'attachment; ' + filename);
   }
 
-  send(http.req, params.file)
+  send(req, params.file)
     .root(DOWNLOAD_DIR)
     .on('error', function (err) {
       if (404 === err.status) {
@@ -251,5 +259,15 @@ module.exports.download = function (params, callback) {
     .on('directory', function () {
       callback({statusCode: 400});
     })
-    .pipe(http.res);
+    .on('end', function() {
+      dl_logger.info('%s - "%s %s HTTP/%s" %d "%s" - %s',
+                     req.connection.remoteAddress,
+                     req.method,
+                     req.url,
+                     req.httpVersion,
+                     res.statusCode,
+                     req.headers['user-agent'],
+                     http.STATUS_CODES[res.statusCode]);
+    })
+    .pipe(res);
 };

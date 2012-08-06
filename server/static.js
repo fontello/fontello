@@ -6,6 +6,7 @@
 
 // stdlib
 var path = require('path');
+var http = require('http');
 
 
 // 3rd-party
@@ -15,26 +16,30 @@ var send = require('send');
 ////////////////////////////////////////////////////////////////////////////////
 
 
-var root = path.join(nodeca.runtime.apps[0].root, 'public/root');
+var root    = path.join(nodeca.runtime.apps[0].root, 'public/root');
+var logger  = nodeca.logger.getLogger('server.static');
 
 
 ////////////////////////////////////////////////////////////////////////////////
 
 
 module.exports = function (params, callback) {
-  var http = this.origin.http;
+  var req, res;
 
-  if (!http) {
+  if (!this.origin.http) {
     callback({statusCode: 400, body: "HTTP ONLY"});
     return;
   }
 
-  if ('GET' !== http.req.method && 'HEAD' !== http.req.method) {
+  req = this.origin.http.req;
+  res = this.origin.http.res;
+
+  if ('GET' !== req.method && 'HEAD' !== req.method) {
     callback({statusCode: 400});
     return;
   }
 
-  send(http.req, params.file)
+  send(req, params.file)
     .root(root)
     .on('error', function (err) {
       if (404 === err.status) {
@@ -47,5 +52,15 @@ module.exports = function (params, callback) {
     .on('directory', function () {
       callback({statusCode: 400});
     })
-    .pipe(http.res);
+    .on('end', function() {
+      logger.info('%s - "%s %s HTTP/%s" %d "%s" - %s',
+                  req.connection.remoteAddress,
+                  req.method,
+                  req.url,
+                  req.httpVersion,
+                  res.statusCode,
+                  req.headers['user-agent'],
+                  http.STATUS_CODES[res.statusCode]);
+    })
+    .pipe(res);
 };
