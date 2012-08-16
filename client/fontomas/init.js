@@ -293,20 +293,20 @@ module.exports = function () {
   //
 
 
-  nodeca.io.init();
+//  nodeca.io.init();
 
 
-  nodeca.io.on('rpc:version-mismatch', function (/* versions */) {
-    nodeca.client.fontomas.util.notify('error', {layout: 'bottom'},
-      nodeca.client.fontomas.render('error:rpc:server-mismatch'));
-  });
+//  nodeca.io.on('rpc:version-mismatch', function (/* versions */) {
+//    nodeca.client.fontomas.util.notify('error', {layout: 'bottom'},
+//      nodeca.client.fontomas.render('error:rpc:server-mismatch'));
+//  });
 
 
   //
   // live update of amount of online clients
   //
 
-
+/*
   $users_count = $('#stats-online');
 
 
@@ -321,4 +321,5 @@ module.exports = function () {
   }).fail(function (err) {
     nodeca.logger.error('Failed subscribe for stats updates: ' + err);
   });
+*/
 };
