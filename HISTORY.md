@@ -5,6 +5,8 @@
 * Added '3D' effect to icons (can be switched off)
 * Fixed work with Opera 12
 * Tweaked styles again :)
+* Fixed EOT fonts generation for customised font names
+* Improved work with proxies (switched back data exchange from realtime to ajax)
 
 
 2.0.2 / 2012-06-27
