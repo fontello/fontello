@@ -7623,6 +7623,38 @@ module.exports = [
           "offset": 0.05
         },
         "css": "odnoklassniki-rect"
+      },
+      {
+        "search": [
+          "friendfeed"
+        ],
+        "code": 62234,
+        "meta": {
+          "homepage": "http://openiconlibrary.sourceforge.net",
+          "author": "Open Icon Library"
+        },
+        "uid": "eeec90e0e80f11e1aff10800200c9a66",
+        "file": "friendfeed",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "friendfeed"
+      },
+      {
+        "search": [
+          "friendfeed"
+        ],
+        "code": 62235,
+        "meta": {
+          "homepage": "http://openiconlibrary.sourceforge.net",
+          "author": "Open Icon Library"
+        },
+        "uid": "41f4dd00e81111e1aff10800200c9a66",
+        "file": "friendfeed-rect",
+        "transform": {
+          "offset": 0.05
+        },
+        "css": "friendfeed-rect"
       }
     ],
     "transform": {
