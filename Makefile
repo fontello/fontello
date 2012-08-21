@@ -1,5 +1,10 @@
 PATH          := ./node_modules/.bin:$(PATH)
 
+# Add local versions of ttf2eot nd ttfautohint to the PATH
+PATH := $(PATH):./support/font-builder/support/ttf2eot
+PATH := $(PATH):./support/font-builder/support/ttfautohint/frontend
+PATH := $(PATH):./support/font-builder/bin
+
 PROJECT       :=  $(notdir ${PWD})
 TMP_PATH      := /tmp/${PROJECT}-$(shell date +%s)
 
@@ -32,6 +37,15 @@ rebuild-fonts:
 		done
 	bin/build_embedded_fonts_js.py -i assets/embedded_fonts -o shared/fontomas/embedded_fonts.js $(FONT_CONFIGS)
 	bin/build_embedded_fonts_css.py -o assets/embedded_fonts/fontface-embedded.css.ejs $(FONT_CONFIGS)
+	# build single font
+	mkdir ${TMP_PATH}
+	bin/build_common_font.py -i $(foreach f,$(FONTS), ./src/${f}) -o ${TMP_PATH}/fontello.ttf -c assets/embedded_fonts/remap_config.json
+	ttfautohint --latin-fallback --hinting-limit=200 --hinting-range-max=50 \
+  --symbol "${TMP_PATH}/fontello.ttf" "${TMP_PATH}/fontello-hinted.ttf"
+	mv "${TMP_PATH}/fontello-hinted.ttf" "assets/embedded_fonts/fontello.ttf"
+	fontconvert.py --src_font "assets/embedded_fonts/fontello.ttf" --fonts_dir "assets/embedded_fonts"
+	ttf2eot < "assets/embedded_fonts/fontello.ttf" > "assets/embedded_fonts/fontello.eot"
+	rm -rf ${TMP_PATH}
 
 
 dev-setup:
