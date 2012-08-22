@@ -67,7 +67,7 @@ module.exports = function render(viewsTree, path, locals, layout, skipBaseLayout
     layout = (!!skipBaseLayout ? layout.slice(1) : layout).reverse();
 
     _.each(layout, function (path) {
-      var fn = nodeca.shared.common.getByPath(viewsTree.layouts, path);
+      var fn = nodeca.shared.getByPath(viewsTree.layouts, path);
 
       if (!_.isFunction(fn)) {
         nodeca.logger.warn("Layout " + path + " not found");
