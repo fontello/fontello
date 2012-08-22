@@ -12,7 +12,7 @@ module.exports = Backbone.View.extend({
   render: function () {
     var code = this.model.get('source').code;
 
-    this.$el.html(nodeca.client.fontomas.render('preview:glyph', {
+    this.$el.html(nodeca.client.render('preview.glyph', {
       css: 'icon-' + this.model.get('css'),
       fnt: 'font-embedded-' + this.model.get('font').get('id'),
       chr: nodeca.client.fontomas.util.fixedFromCharCode(code)
