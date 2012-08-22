@@ -64,6 +64,6 @@ module.exports = function render(apiPath, locals, layout) {
     throw new Error("View " + apiPath + " not found");
   }
 
-  locals = _.extend(locals, helpers);
+  locals = _.extend(locals || {}, helpers);
   return nodeca.shared.common.render(nodeca.views, apiPath, locals, layout, true);
 };
