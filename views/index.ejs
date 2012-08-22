@@ -1,0 +1,161 @@
+<div class="container">
+  <div class="tab-content" id="myTabContent">
+    <!-- tab0 `Loading`-->
+    <div id="loading" class="tab-pane fade active in">
+        Loading...
+    </div>
+
+    <!-- tab1 `Select`-->
+    <div id="selector" class="tab-pane fade">
+      <ul id="selector-fonts" class="unstyled"></ul>
+    </div>
+
+    <!-- tab2 `Preview` -->
+    <div id="preview" class="tab-pane fade">
+      <div id="preview-font" class="row">
+      </div>
+    </div>
+
+    <!-- tab3 `Download` -->
+    <div id="codes-editor" class="tab-pane fade">
+      <p>Click symbol codes on black lines to edit</p>
+      <div id="result-font">
+      </div>
+    </div>
+
+  </div> <!-- /tab-content -->
+
+</div> <!-- /container -->
+
+
+<div class="gh-ribbon">
+  <a href="https://github.com/fontello/fontello" target="_blank" title="Fork me on GitHub">Fork me on GitHub</a>
+</div>
+
+<div class="jsnotice"><div class="alert alert-error">Fontello will not work without javascript!</div></div>
+
+<div id="err-bad-browser" class="modal hide fade" style="display: none;">
+  <div class="modal-header">
+    <h1>Bad Browser</h1>
+  </div>
+  <div class="modal-body">
+    <p>We have bad news for you - <strong>this application requires modern browser</strong>.
+        Please, upgrade and come back. Currently we support:</p>
+    <p>
+      <ul>
+        <li><a href="http://www.mozilla.com/firefox/">Firefox 10+</a></li>
+        <li><a href="http://www.google.com/chrome/">Chrome 16+</a></li>
+        <li><a href="http://www.opera.com/browser/">Opera 11.62+</a></li>
+      </ul>
+    </p>
+  </div>
+</div>
+
+<!-- templates
+================================================== -->
+<script data-tpl-id="error:no-config-import" type="text/x-template">
+  Config importer requires <strong>modern browser</strong>.
+  Please, <a href="http://www.mozilla.org/firefox/new/">upgrade</a>
+  your browser to be able import your previous configurations.
+</script>
+<script data-tpl-id="error:read-config-failed" type="text/x-template">
+  Failed read your config file: <em>{{error}}</em>.
+</script>
+<script data-tpl-id="error:rpc:version-mismatch" type="text/x-template">
+  Application is outdated. Please
+  <a href="/" style="text-decoration:underline"><strong>reload</strong></a>
+  the page.
+</script>
+<script data-tpl-id="error:rpc" type="text/x-template">
+  Internal error happened during processing your request:
+  <em>"{{error}}"</em>. Please, try again later.
+</script>
+<script data-tpl-id="selector:download-banner" type="text/x-template">
+  Are you designer? <a href="https://github.com/fontello/fontello/wiki/How-to-help" target="_blank">You can help</a> us improve fontello!
+</script>
+<script data-tpl-id="selector:max-glyphs-error" type="text/x-template">
+  You can&#39;t select more than {{max}} icons at once.
+  If you have a real use-case, please,
+  <a href="https://github.com/fontello/fontello/issues/new">create</a>
+  ticket in issue tracker.
+</script>
+<script data-tpl-id="selector:font-info" type="text/x-template">
+  <div class="modal fade">
+    <div class="modal-header">
+      <a class="close" data-dismiss="modal">×</a>
+      <h3>{{font.fullname}}</h3>
+    </div>
+    <div class="modal-body">
+      <dl class="dl-horizontal">
+        {{#if meta}}
+          {{#with meta}}
+            {{#if license}}
+              <dt>License:</dt>
+              <dd>
+                {{#if license_url}}
+                  <a href="{{license_url}}" target="_blank">{{license}}</a></dd>
+                {{else}}
+                  {{license}}
+                {{/if}}
+              </dd>
+            {{/if}}
+            {{#if author}}
+              <dt>Author:</dt>
+              <dd>{{author}}</dd>
+            {{/if}}
+            {{#if email}}
+              <dt>Email:</dt>
+              <dd><a href="mailto:{{email}}">{{email}}</a></dd>
+            {{/if}}
+            {{#if homepage}}
+              <dt>Homepage:</dt>
+              <dd><a href="{{homepage}}" target="_blank">{{homepage}}</a></dd>
+            {{/if}}
+            {{#if twitter}}
+              <dd><a href="{{twitter}}" target="_blank">Twitter</a></dd>
+            {{/if}}
+            {{#if dribble}}
+              <dd><a href="{{dribble}}" target="_blank">Dribble</a></dd>
+            {{/if}}
+            {{#if github}}
+              <dd><a href="{{github}}" target="_blank">Github</a></dd>
+            {{/if}}
+          {{/with}}
+        {{/if}}
+      </dl>
+    </div>
+  </div>
+</script>
+<script data-tpl-id="font-item" type="text/x-template">
+  <h2 class="src-font-head"><a class="label label-important font-info" href="#">info</a>
+    <a class="src-font-name _collapser" href="#">{{fontname}}</a>
+  </h2>
+  <ul class="unstyled font-glyphs {{css_class}}"></ul>
+</script>
+<script data-tpl-id="preview:glyph" type="text/x-template">
+  <span class="{{fnt}}">{{chr}}</span> {{css}}
+</script>
+<script data-tpl-id="resultfont-glyph-item" type="text/x-template">
+  <div class="top">{{{top}}}</div>
+  <div class="top edit">
+    <table>
+      <tbody>
+        <tr>
+          <td><input type="text"/></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="center {{css_class}}">{{{char}}}</div>
+  <div class="bottom">{{bottom}}</div>
+  <div class="bottom edit">
+    <table>
+      <tbody>
+        <tr>
+          <td>U+</td>
+          <td><input type="text"/></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</script>
