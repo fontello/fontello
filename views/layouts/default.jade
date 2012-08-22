@@ -102,3 +102,22 @@ html.no-js(lang='en', itemscope, itemtype='http://schema.org/WebPage')
           li: a.disabled(data-toggle="tab", data-submenu="#codes-editor-menu", href="#codes-editor") Edit codes
 
     != self.content
+
+    .gh-ribbon
+      a(href="https://github.com/fontello/fontello", target="_blank", title="Fork me on GitHub") Fork me on GitHub
+
+    .jsnotice
+      .alert.alert-error Fontello will not work without javascript!
+
+    #err-bad-browser.modal.hide.fade(style="display: none;")
+      .modal-header
+        h1 Bad Browser
+      .modal-body
+        p
+          | We have bad news for you - <strong>this application requires modern browser</strong>.
+          | Please, upgrade and come back. Currently we support:
+        p
+          ul
+            li: a(href="http://www.mozilla.com/firefox/") Firefox 10+
+            li: a(href="http://www.google.com/chrome/") Chrome 16+
+            li: a(href="http://www.opera.com/browser/") Opera 11.62+
