@@ -4,7 +4,7 @@
 "use strict";
 
 
-var SERIALIZER_VERSION  = 2;
+var SERIALIZER_VERSION  = 3;
 var STORAGE_KEY         = 'fontello:sessions';
 var MIGRATIONS          = [];
 
@@ -55,6 +55,32 @@ MIGRATIONS.push(function () {
 
   // we need to migrate ONLY if there's no new storage
   if (!store.get('fontello:sessions')) {
+    store.set('fontello:sessions', data);
+  }
+});
+
+
+//
+// Migrate from v2 to v3
+//
+
+
+MIGRATIONS.push(function () {
+  var data = store.get('fontello:sessions');
+
+  // migrate ONLY if user is using old version
+  if (2 === data.version) {
+    data.version = 3;
+
+    _.each(data.sessions, function (session) {
+      _.each(session.fonts, function (font) {
+        _.each(font.glyphs, function (glyph) {
+          glyph.css   = glyph.css || glyph.orig_css;
+          glyph.code  = glyph.code || glyph.orig_code;
+        });
+      });
+    });
+
     store.set('fontello:sessions', data);
   }
 });
@@ -128,34 +154,15 @@ var Session = Backbone.Model.extend({
       };
 
       f.eachGlyph(function (g) {
-        var is_selected = g.get('selected'),
-            is_modified = g.isModified();
-
-        // save only selected and/or modified glyphs to
-        // reduce amount of used space in the storage
-        if (is_selected || is_modified) {
-          var data = {
+        if (g.get('selected') || g.isModified()) {
+          font_data.glyphs.push({
             uid:        g.get('uid'),
             orig_code:  g.get('source').code,
-            orig_css:   g.get('source').css
-          };
-
-          // dramatically reduce amount of stored data by
-          // storing really changed values ONLY.
-
-          if (is_selected) {
-            data.selected = g.get('selected');
-          }
-
-          if (is_modified && g.get('code') !== data.orig_code) {
-            data.code = g.get('code');
-          }
-
-          if (is_modified && g.get('css') !== data.orig_css) {
-            data.css = g.get('css');
-          }
-
-          font_data.glyphs.push(data);
+            orig_css:   g.get('source').css,
+            selected:   g.get('selected'),
+            code:       g.get('code'),
+            css:        g.get('css')
+          });
         }
       });
     }, this);
