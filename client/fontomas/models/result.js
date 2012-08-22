@@ -6,7 +6,7 @@
 
 var raise_max_glyphs_reached = _.throttle(function () {
   nodeca.client.fontomas.util.notify('error',
-    nodeca.client.fontomas.render('selector:max-glyphs-error', {
+    nodeca.client.render('errors.max-glyphs', {
       max: nodeca.config.fontomas.max_glyphs
     }));
 }, 1000);
