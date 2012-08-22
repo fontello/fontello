@@ -30,7 +30,7 @@ module.exports = function () {
   // list of all fonts
   fonts = new (Backbone.Collection.extend({
     model: nodeca.client.fontomas.models.font
-  }))(nodeca.shared.fontomas.embedded_fonts);
+  }))(nodeca.shared.embedded_fonts);
 
   // special collection of selected glyphs (cache) with
   // extra model logic (validate, config creation and
