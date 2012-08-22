@@ -34,7 +34,7 @@ module.exports = function app(params, callback) {
   this.response.headers['Cache-Control']  = 'private, max-age=0, must-revalidate';
 
   // set view to be rendered
-  this.response.view = 'index';
+  this.response.view = 'app';
 
   // done
   callback();
