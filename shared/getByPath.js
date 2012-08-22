@@ -5,10 +5,6 @@
  *  shared
  **/
 
-/**
- *  shared.common
- **/
-
 
 /*global nodeca, _*/
 
@@ -17,7 +13,7 @@
 
 
 /**
- *  shared.common.getByPath(obj, path) -> Mixed
+ *  shared.getByPath(obj, path) -> Mixed
  *  - obj (Object): Object to get value from
  *  - path (String): Path of a property
  *
@@ -27,7 +23,7 @@
  *
  *  ##### Example
  *
- *      shared.common.getByPath({foo: {bar: 123}}, 'foo.bar');
+ *      shared.getByPath({foo: {bar: 123}}, 'foo.bar');
  *      // => 123
  **/
 module.exports = function getByPath(obj, path) {

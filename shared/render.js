@@ -5,10 +5,6 @@
  *  shared
  **/
 
-/**
- *  shared.common
- **/
-
 
 /*global nodeca, _*/
 
@@ -38,7 +34,7 @@ function get_layout_stack(layout) {
 
 
 /**
- *  shared.common.render(views, path, locals, layout, skipBaseLayout) -> String
+ *  shared.render(views, path, locals, layout, skipBaseLayout) -> String
  *  - viewsTree (Object): Views tree (without locale and/or theme subpaths).
  *  - path (String): View name to render, e.g. `forums.index`
  *  - locals (Object): Locals data to pass to the renderer function
@@ -55,7 +51,7 @@ function get_layout_stack(layout) {
  *  `content` property will be previously rendered layout.
  **/
 module.exports = function render(viewsTree, path, locals, layout, skipBaseLayout) {
-  var html, view = nodeca.shared.common.getByPath(viewsTree, path);
+  var html, view = nodeca.shared.getByPath(viewsTree, path);
 
   if (!!view) {
     html = view(locals);
