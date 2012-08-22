@@ -155,7 +155,7 @@ module.exports = Backbone.Collection.extend({
           layout:   'bottom',
           closeOnSelfClick: false,
           timeout:  20000 // 20 secs
-        }, nodeca.client.fontomas.render('selector:download-banner'));
+        }, nodeca.client.render('result.download-banner'));
 
       function poll_status() {
         nodeca.server.fontomas.font.status({id: font_id}, function (err, msg) {
