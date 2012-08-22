@@ -235,7 +235,7 @@ module.exports = function () {
 
     if (!window.FileReader) {
       nodeca.client.fontomas.util.notify('error',
-        nodeca.client.fontomas.render('error:no-config-import'));
+        nodeca.client.render('errors.no-file-reader'));
       return false;
     }
 
