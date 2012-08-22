@@ -103,7 +103,7 @@ job_mgr.addJob('generate-font', {
       async.series([
         async.apply(fstools.remove, tmp_dir),
         async.apply(fstools.mkdir, tmp_dir),
-        async.apply(fs.writeFile, path.join(tmp_dir, 'config.json'), JSON.stringify(config.session), 'utf8'),
+        async.apply(fs.writeFile, path.join(tmp_dir, 'config.json'), JSON.stringify(config.session, null, '  '), 'utf8'),
         async.apply(execFile, GENERATOR_BIN, [config.font.fontname, tmp_dir, zipball], {cwd: APP_ROOT}),
         async.apply(fstools.remove, tmp_dir)
       ], function (err) {
