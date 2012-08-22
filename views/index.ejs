@@ -62,53 +62,6 @@
   <a href="https://github.com/fontello/fontello/issues/new">create</a>
   ticket in issue tracker.
 </script>
-<script data-tpl-id="selector:font-info" type="text/x-template">
-  <div class="modal fade">
-    <div class="modal-header">
-      <a class="close" data-dismiss="modal">×</a>
-      <h3>{{font.fullname}}</h3>
-    </div>
-    <div class="modal-body">
-      <dl class="dl-horizontal">
-        {{#if meta}}
-          {{#with meta}}
-            {{#if license}}
-              <dt>License:</dt>
-              <dd>
-                {{#if license_url}}
-                  <a href="{{license_url}}" target="_blank">{{license}}</a></dd>
-                {{else}}
-                  {{license}}
-                {{/if}}
-              </dd>
-            {{/if}}
-            {{#if author}}
-              <dt>Author:</dt>
-              <dd>{{author}}</dd>
-            {{/if}}
-            {{#if email}}
-              <dt>Email:</dt>
-              <dd><a href="mailto:{{email}}">{{email}}</a></dd>
-            {{/if}}
-            {{#if homepage}}
-              <dt>Homepage:</dt>
-              <dd><a href="{{homepage}}" target="_blank">{{homepage}}</a></dd>
-            {{/if}}
-            {{#if twitter}}
-              <dd><a href="{{twitter}}" target="_blank">Twitter</a></dd>
-            {{/if}}
-            {{#if dribble}}
-              <dd><a href="{{dribble}}" target="_blank">Dribble</a></dd>
-            {{/if}}
-            {{#if github}}
-              <dd><a href="{{github}}" target="_blank">Github</a></dd>
-            {{/if}}
-          {{/with}}
-        {{/if}}
-      </dl>
-    </div>
-  </div>
-</script>
 <script data-tpl-id="font-item" type="text/x-template">
   <h2 class="src-font-head"><a class="label label-important font-info" href="#">info</a>
     <a class="src-font-name _collapser" href="#">{{fontname}}</a>

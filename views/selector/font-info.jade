@@ -1,0 +1,29 @@
+.modal.fade
+  .modal-heade
+    a.close(data-dismiss="modal") ×
+    h3 #{self.font.fullname}
+  .modal-body
+    dl.dl-horizontal
+      - if (self.meta)
+        - var meta = self.meta
+        - if (meta.license)
+          dt License:
+          - if (meta.license_meta)
+            dd: a(href=meta.license_meta, target="_blank") #{meta.license}
+          - else
+            dd: #{meta.license}
+        - if (meta.author)
+          dt Author:
+          dd #{meta.author}
+        - if (meta.email)
+          dt Email:
+          dd: a(href="mailto:#{meta.email}") #{meta.email}
+        - if (meta.homepage)
+          dt Homepage:
+          dd: a(href="#{meta.homepage}", target="_blank") #{meta.homepage}
+        - if (meta.twitter)
+          dd: a(href="#{meta.twitter}", target="_blank") Twitter
+        - if (meta.dribble)
+          dd: a(href="#{meta.dribble}", target="_blank") Dribble
+        - if (meta.github)
+          dd: a(href="#{meta.github}", target="_blank") Github
