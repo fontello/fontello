@@ -1,5 +1,5 @@
 .modal.fade
-  .modal-heade
+  .modal-header
     a.close(data-dismiss="modal") ×
     h3 #{self.font.fullname}
   .modal-body
@@ -8,10 +8,11 @@
         - var meta = self.meta
         - if (meta.license)
           dt License:
-          - if (meta.license_meta)
-            dd: a(href=meta.license_meta, target="_blank") #{meta.license}
-          - else
-            dd: #{meta.license}
+          dd
+            - if (meta.license_meta)
+              a(href=meta.license_meta, target="_blank") #{meta.license}
+            - else
+              | #{meta.license}
         - if (meta.author)
           dt Author:
           dd #{meta.author}
