@@ -39,7 +39,7 @@ module.exports = Backbone.View.extend({
   render: function () {
     var $info;
 
-    this.$el.html(nodeca.client.fontomas.render('font-item', {
+    this.$el.html(nodeca.client.render('selector.font-item', {
       id:         this.model.id,
       fontname:   this.model.get("font").fullname,
       css_class:  "font-embedded-" + this.model.get("id")
