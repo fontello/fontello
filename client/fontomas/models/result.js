@@ -138,7 +138,7 @@ module.exports = Backbone.Collection.extend({
       return;
     }
 
-    nodeca.server.fontomas.font.generate(this.getConfig(name), function (err, msg) {
+    nodeca.server.font.generate(this.getConfig(name), function (err, msg) {
       var font_id;
 
       if (err) {
@@ -158,7 +158,7 @@ module.exports = Backbone.Collection.extend({
         }, nodeca.client.render('result.download-banner'));
 
       function poll_status() {
-        nodeca.server.fontomas.font.status({id: font_id}, function (err, msg) {
+        nodeca.server.font.status({id: font_id}, function (err, msg) {
           if (err) {
             nodeca.client.fontomas.util.notify('error',
               nodeca.client.render('errors.fatal', {

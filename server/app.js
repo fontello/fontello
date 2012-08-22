@@ -17,7 +17,7 @@ function hash(str) {
 
 // FIXME: this works for single-process model only.
 //        switch to shared cache in future.
-var etag = hash('fontello-layout-' + Date.now());
+var etag = hash('fontello-app-' + Date.now());
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -32,9 +32,6 @@ module.exports = function app(params, callback) {
   // set headers
   this.response.headers['ETag']           = etag;
   this.response.headers['Cache-Control']  = 'private, max-age=0, must-revalidate';
-
-  // set view to be rendered
-  this.response.view = 'app';
 
   // done
   callback();

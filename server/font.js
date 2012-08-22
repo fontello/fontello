@@ -21,10 +21,10 @@ var fstools = require('nlib').Vendor.FsTools;
 
 
 // internal
-var stats       = require('../../lib/stats');
-var logger      = nodeca.logger.getLogger('server.fontomas.font');
-var dl_logger   = nodeca.logger.getLogger('server.fontomas.font.download');
-var fontConfig  = require('../../lib/font_config');
+var stats       = require('../lib/stats');
+var logger      = nodeca.logger.getLogger('server.font');
+var dl_logger   = nodeca.logger.getLogger('server.font.download');
+var fontConfig  = require('../lib/font_config');
 
 
 ////////////////////////////////////////////////////////////////////////////////

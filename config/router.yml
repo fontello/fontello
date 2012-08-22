@@ -1,8 +1,8 @@
 router:
   map:
-    fontomas.index:
+    app:
       "/": ~
-    fontomas.font.download:
+    font.download:
       "/download/{file}":
         file: /.+/
     assets:
