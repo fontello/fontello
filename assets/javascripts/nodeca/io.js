@@ -7,7 +7,6 @@
 
 
 //= depend_on nodeca
-//= require faye-browser
 
 
 /*global window, $, _, Faye, nodeca*/
@@ -19,8 +18,6 @@
 
   var // registered events
       events = {},
-      // underlying bayeux client
-      bayeux = null,
       // last xhr to allow interrupt it
       last_xhr = null;
 
@@ -96,59 +93,6 @@
    **/
   io.off = function off(event, handler) {
     events[event] = (!handler) ? [] : _.without(events[event], handler);
-  };
-
-
-  //
-  // Main API
-  //
-
-
-  function bayeux_call(name, args) {
-    var result = bayeux[name].apply(bayeux, args);
-
-    //
-    // provide jQuery.Defered style methods
-    //
-
-    // FAYE DOCUMENTATION:
-    //
-    //  Bear in mind that ‘success’ here just means the server received and
-    //  routed the message successfully, not that it has been received by all
-    //  other clients.
-    result.done = _.bind(function (fn) { this.callback(fn); return this; }, result);
-
-    // FAYE DOCUMENTATION:
-    //
-    //  An error means the server found a problem processing the message.
-    //  Network errors are not covered by this.
-    result.fail = _.bind(function (fn) { this.errback(fn); return this; }, result);
-
-    return result;
-  }
-
-
-  /**
-   *  nodeca.io.subscribe(channel, handler) -> Object
-   **/
-  io.subscribe = function subscribe(channel, handler) {
-    return bayeux_call('subscribe', [channel, handler]);
-  };
-
-
-  /**
-   *  nodeca.io.unsubscribe(channel[, handler]) -> Object
-   **/
-  io.unsubscribe = function unsubscribe(channel, handler) {
-    return bayeux_call('unsubscribe', [channel, handler]);
-  };
-
-
-  /**
-   *  nodeca.io.publish(channel, message) -> Object
-   **/
-  io.publish = function publish(channel, message) {
-    return bayeux_call('publish', [channel, message]);
   };
 
 
@@ -230,39 +174,6 @@
         // TODO: Handle this error separately - it's a real fuckup
         callback(err);
       }
-    });
-  };
-
-
-  //
-  // Initialization API
-  //
-
-
-  /**
-   *  nodeca.io.init() -> Void
-   **/
-  io.init = function () {
-    var l = window.location;
-
-    bayeux = new Faye.Client(l.protocol + '//' + l.host + '/faye');
-
-    if ('development' === nodeca.runtime.env) {
-      // export some internals for debugging
-      window.fontello_bayeux = bayeux;
-    }
-
-    //
-    // once connected, client.getState() always returns 'CONNECTED' regardless
-    // to the real state, so instead of relying on this state we use our own
-    //
-
-    bayeux.bind('transport:up',   function () {
-      emit('connected');
-    });
-
-    bayeux.bind('transport:down', function () {
-      emit('disconnected');
     });
   };
 }());
