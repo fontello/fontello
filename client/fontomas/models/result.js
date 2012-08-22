@@ -143,7 +143,7 @@ module.exports = Backbone.Collection.extend({
 
       if (err) {
         nodeca.client.fontomas.util.notify('error',
-          nodeca.client.fontomas.render('error:rpc', {
+          nodeca.client.render('errors.fatal', {
             error: (err.message || String(err))
           }));
         return;
@@ -161,7 +161,7 @@ module.exports = Backbone.Collection.extend({
         nodeca.server.fontomas.font.status({id: font_id}, function (err, msg) {
           if (err) {
             nodeca.client.fontomas.util.notify('error',
-              nodeca.client.fontomas.render('error:rpc', {
+              nodeca.client.render('errors.fatal', {
                 error: (err.message || String(err))
               }));
             return;
@@ -169,7 +169,7 @@ module.exports = Backbone.Collection.extend({
 
           if ('error' === msg.data.status){
             nodeca.client.fontomas.util.notify('error',
-              nodeca.client.fontomas.render('error:rpc', {
+              nodeca.client.render('errors.fatal', {
                 error: (msg.data.error || "Unexpected error.")
               }));
             return;

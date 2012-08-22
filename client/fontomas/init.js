@@ -274,7 +274,7 @@ module.exports = function () {
         config = JSON.parse(event.target.result);
       } catch (err) {
         nodeca.client.fontomas.util.notify('error',
-          nodeca.client.fontomas.render('error:read-config-failed', {
+          nodeca.client.render('errors.read-config', {
             error: (err.message || err.toString())
           }));
         return;
@@ -298,7 +298,7 @@ module.exports = function () {
 
 //  nodeca.io.on('rpc:version-mismatch', function (/* versions */) {
 //    nodeca.client.fontomas.util.notify('error', {layout: 'bottom'},
-//      nodeca.client.fontomas.render('error:rpc:server-mismatch'));
+//      nodeca.client.render('errors.version-mismatch'));
 //  });
 
 
