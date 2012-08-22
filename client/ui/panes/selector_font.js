@@ -57,7 +57,7 @@ module.exports = Backbone.View.extend({
 
     // process each glyph
     this.model.eachGlyph(function (glyph) {
-      var view = new nodeca.client.fontomas.ui.panes.selector_glyph({model: glyph});
+      var view = new nodeca.client.ui.panes.selector_glyph({model: glyph});
       this.$(".font-glyphs").append(view.render().el);
     }, this);
 

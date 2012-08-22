@@ -20,7 +20,7 @@ module.exports = Backbone.View.extend({
 
   onClickTop: function (event) {
     var self  = this,
-        val   = nodeca.client.fontomas.util.fixedFromCharCode(
+        val   = nodeca.client.util.fixedFromCharCode(
                 self.model.get("code"));
 
     this.$el.addClass("editing-top");
@@ -29,7 +29,7 @@ module.exports = Backbone.View.extend({
       .off(".fm-editing")
       .val(val)
       .on("blur.fm-editing", function (event) {
-        var code  = nodeca.client.fontomas.util.fixedCharCodeAt(
+        var code  = nodeca.client.util.fixedCharCodeAt(
                     self.$(".top.edit input").val());
 
         self.model.set("code", code);
@@ -75,11 +75,11 @@ module.exports = Backbone.View.extend({
     var matched, char, source;
 
     source  = this.model.get('source');
-    char    = nodeca.client.fontomas.util.fixedFromCharCode(this.model.get("code"));
+    char    = nodeca.client.util.fixedFromCharCode(this.model.get("code"));
 
     this.$el.html(nodeca.client.render('code-editor.glyph', {
       top:        this.model.get("code") === 32 ? "space" : char,
-      char:       nodeca.client.fontomas.util.fixedFromCharCode(source.code),
+      char:       nodeca.client.util.fixedFromCharCode(source.code),
       bottom:     this.toUnicode(this.model.get("code")),
       css_class:  "font-embedded-" + this.model.get('font').get('id')
     }));

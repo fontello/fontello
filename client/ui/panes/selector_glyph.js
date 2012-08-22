@@ -19,7 +19,7 @@ module.exports = Backbone.View.extend({
   initialize: function () {
     var self = this,
         code = this.model.get('source').code,
-        text = nodeca.client.fontomas.util.fixedFromCharCode(code);
+        text = nodeca.client.util.fixedFromCharCode(code);
 
     this.$el.data('model', this.model);
     this.$el.text(text);

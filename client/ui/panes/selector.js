@@ -9,7 +9,7 @@ module.exports = Backbone.View.extend({
 
 
   initialize: function (attributes) {
-    this.changeGlyphSize(nodeca.config.fontomas.glyph_size.val);
+    this.changeGlyphSize(nodeca.config.app.glyph_size.val);
     this.model.each(this.addFont, this);
   },
 
@@ -20,7 +20,7 @@ module.exports = Backbone.View.extend({
 
 
   addFont: function (font) {
-    var view = new nodeca.client.fontomas.ui.panes.selector_font({model: font});
+    var view = new nodeca.client.ui.panes.selector_font({model: font});
     this.$('#selector-fonts').append(view.render().el);
   }
 });

@@ -29,14 +29,14 @@ module.exports = function () {
 
   // list of all fonts
   fonts = new (Backbone.Collection.extend({
-    model: nodeca.client.fontomas.models.font
+    model: nodeca.client.models.font
   }))(nodeca.shared.embedded_fonts);
 
   // special collection of selected glyphs (cache) with
   // extra model logic (validate, config creation and
   // download requesting), but which can still be used
   // as a normal collection for the views
-  result = new nodeca.client.fontomas.models.result;
+  result = new nodeca.client.models.result;
 
 
   //
@@ -44,11 +44,11 @@ module.exports = function () {
   //
 
 
-  toolbar   = new nodeca.client.fontomas.ui.toolbar;
-  tabs      = new nodeca.client.fontomas.ui.tabs;
-  selector  = new nodeca.client.fontomas.ui.panes.selector({model: fonts});
-  preview   = new nodeca.client.fontomas.ui.panes.preview({model: result});
-  editor    = new nodeca.client.fontomas.ui.panes.codes_editor({model: result});
+  toolbar   = new nodeca.client.ui.toolbar;
+  tabs      = new nodeca.client.ui.tabs;
+  selector  = new nodeca.client.ui.panes.selector({model: fonts});
+  preview   = new nodeca.client.ui.panes.preview({model: result});
+  editor    = new nodeca.client.ui.panes.codes_editor({model: result});
 
 
   //
@@ -140,7 +140,7 @@ module.exports = function () {
 
 
   // Session manager instance
-  session = new nodeca.client.fontomas.sessions({
+  session = new nodeca.client.sessions({
     fontnameElement:  $fontname,
     fontsList:        fonts
   });
@@ -158,11 +158,11 @@ module.exports = function () {
   // change current state when some of glyph properties were changed
   fonts.each(function (f) {
     f.on('before:batch-select', function () {
-      nodeca.client.fontomas.sessions.disable();
+      nodeca.client.sessions.disable();
     });
 
     f.on('after:batch-select', function () {
-      nodeca.client.fontomas.sessions.enable();
+      nodeca.client.sessions.enable();
       save_session();
     });
 
@@ -234,7 +234,7 @@ module.exports = function () {
     event.preventDefault();
 
     if (!window.FileReader) {
-      nodeca.client.fontomas.util.notify('error',
+      nodeca.client.util.notify('error',
         nodeca.client.render('errors.no-file-reader'));
       return false;
     }
@@ -254,7 +254,7 @@ module.exports = function () {
 
     if (!file) {
       // Unexpected behavior. Should not happen in real life.
-      nodeca.client.fontomas.util.notify('error',
+      nodeca.client.util.notify('error',
         'You must choose a file.');
       return;
     }
@@ -273,7 +273,7 @@ module.exports = function () {
       try {
         config = JSON.parse(event.target.result);
       } catch (err) {
-        nodeca.client.fontomas.util.notify('error',
+        nodeca.client.util.notify('error',
           nodeca.client.render('errors.read-config', {
             error: (err.message || err.toString())
           }));

@@ -1,4 +1,4 @@
-fontomas:
+app:
   builder_concurrency: 4  # Default: amount of CPUs
   max_glyphs: ~           # Max allowed glyphs per download. Unlimited if null.
   glyph_size:

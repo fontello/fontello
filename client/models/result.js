@@ -5,9 +5,9 @@
 
 
 var raise_max_glyphs_reached = _.throttle(function () {
-  nodeca.client.fontomas.util.notify('error',
+  nodeca.client.util.notify('error',
     nodeca.client.render('errors.max-glyphs', {
-      max: nodeca.config.fontomas.max_glyphs
+      max: nodeca.config.app.max_glyphs
     }));
 }, 1000);
 
@@ -22,7 +22,7 @@ function start_download(id, url) {
 
 module.exports = Backbone.Collection.extend({
   initialize: function () {
-    this.maxGlyphs = nodeca.config.fontomas.max_glyphs || null;
+    this.maxGlyphs = nodeca.config.app.max_glyphs || null;
     this.usedCodes = {};
     this.usedCss   = {};
   },
@@ -45,7 +45,7 @@ module.exports = Backbone.Collection.extend({
         // no more free codes
         if (null === code) {
           // this should never happen in real life.
-          nodeca.client.fontomas.util.notify('error',
+          nodeca.client.util.notify('error',
             "Internal Error. Can't allocate code for glyph.");
 
           // model cannot be added to the collection
@@ -142,7 +142,7 @@ module.exports = Backbone.Collection.extend({
       var font_id;
 
       if (err) {
-        nodeca.client.fontomas.util.notify('error',
+        nodeca.client.util.notify('error',
           nodeca.client.render('errors.fatal', {
             error: (err.message || String(err))
           }));
@@ -151,7 +151,7 @@ module.exports = Backbone.Collection.extend({
 
       font_id = msg.data.id;
 
-      nodeca.client.fontomas.util.notify('information', {
+      nodeca.client.util.notify('information', {
           layout:   'bottom',
           closeOnSelfClick: false,
           timeout:  20000 // 20 secs
@@ -160,7 +160,7 @@ module.exports = Backbone.Collection.extend({
       function poll_status() {
         nodeca.server.font.status({id: font_id}, function (err, msg) {
           if (err) {
-            nodeca.client.fontomas.util.notify('error',
+            nodeca.client.util.notify('error',
               nodeca.client.render('errors.fatal', {
                 error: (err.message || String(err))
               }));
@@ -168,7 +168,7 @@ module.exports = Backbone.Collection.extend({
           }
 
           if ('error' === msg.data.status){
-            nodeca.client.fontomas.util.notify('error',
+            nodeca.client.util.notify('error',
               nodeca.client.render('errors.fatal', {
                 error: (msg.data.error || "Unexpected error.")
               }));
@@ -226,9 +226,9 @@ module.exports = Backbone.Collection.extend({
 
 
   _getFreeCode: function () {
-    var code = nodeca.config.fontomas.autoguess_charcode.min;
+    var code = nodeca.config.app.autoguess_charcode.min;
 
-    while (code <= nodeca.config.fontomas.autoguess_charcode.max) {
+    while (code <= nodeca.config.app.autoguess_charcode.max) {
       if (!this.usedCodes[code]) {
         // got unused code
         return code;

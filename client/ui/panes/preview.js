@@ -1,17 +1,20 @@
 /*global window, nodeca, jQuery, Handlebars, Backbone, $, _*/
 
+
 "use strict";
 
 
 module.exports = Backbone.View.extend({
-  el: '#codes-editor',
+  el: '#preview',
 
 
   initialize: function () {
-    var $glyphs = this.$('#result-font'), views = {};
+    var $glyphs = this.$('#preview-font'), views = {};
+
+    this.changeGlyphSize(nodeca.config.app.glyph_size.val);
 
     function add(glyph) {
-      var v = new nodeca.client.fontomas.ui.panes.codes_editor_glyph({model: glyph});
+      var v = new nodeca.client.ui.panes.preview_glyph({model: glyph});
       views[glyph.cid] = v;
       $glyphs.append(v.render().el);
     }
@@ -23,5 +26,10 @@ module.exports = Backbone.View.extend({
       views[glyph.cid].remove();
       delete views[glyph.cid];
     });
+  },
+
+
+  changeGlyphSize: function (size) {
+    this.$el.css('font-size', size);
   }
 });

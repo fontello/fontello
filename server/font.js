@@ -35,7 +35,7 @@ var APP_ROOT            = _.first(nodeca.runtime.apps).root;
 var DOWNLOAD_DIR        = path.join(APP_ROOT, 'public/download/');
 var DOWNLOAD_URL_PREFIX = "/download/";
 var GENERATOR_BIN       = path.join(APP_ROOT, 'bin/generate_font.sh');
-var CONFIG              = nodeca.config.fontomas;
+var CONFIG              = nodeca.config.app;
 
 
 ////////////////////////////////////////////////////////////////////////////////

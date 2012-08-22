@@ -18,7 +18,7 @@
 
 $(function () {
   "use strict";
-  nodeca.client.fontomas.init();
+  nodeca.client.init();
 });
 
 //

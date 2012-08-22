@@ -17,7 +17,7 @@ module.exports = Backbone.Model.extend({
 
   initialize: function (attributes) {
     this._glyphs = new (Backbone.Collection.extend({
-      model: nodeca.client.fontomas.models.glyph
+      model: nodeca.client.models.glyph
     }))();
 
     // remove glyphs data array
