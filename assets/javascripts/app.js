@@ -7,7 +7,6 @@
 //= require underscore
 //= require bootstrap/bootstrap
 //= require backbone
-//= require handlebars
 //= require jquery.collapser
 //= require jade/runtime
 //= require babelfish-runtime
