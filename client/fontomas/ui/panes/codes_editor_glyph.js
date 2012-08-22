@@ -77,7 +77,7 @@ module.exports = Backbone.View.extend({
     source  = this.model.get('source');
     char    = nodeca.client.fontomas.util.fixedFromCharCode(this.model.get("code"));
 
-    this.$el.html(nodeca.client.fontomas.render('resultfont-glyph-item', {
+    this.$el.html(nodeca.client.render('code-editor.glyph', {
       top:        this.model.get("code") === 32 ? "space" : char,
       char:       nodeca.client.fontomas.util.fixedFromCharCode(source.code),
       bottom:     this.toUnicode(this.model.get("code")),
