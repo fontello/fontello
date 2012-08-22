@@ -1,0 +1,23 @@
+//= require modernizr.custom
+//= require yepnope
+//= require_self
+
+
+/*jshint browser:true,node:false*/
+/*global yepnope*/
+
+
+yepnope([
+  {
+    //  JSON is required for Opera < 11 + IE < 8
+    //  See: http://caniuse.com/json
+    test: !!window.JSON,
+    nope: <%- JSON.stringify(asset_path('json2.js')) %>
+  },
+  {
+    load: <%- JSON.stringify(asset_path('app.js')) %>
+  }
+]);
+
+
+// vim: filetype=javascript:syntax=javascript

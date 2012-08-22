@@ -8,10 +8,28 @@ var nodeca = window.nodeca = (function (nodeca) {
 
   nodeca.config           = {};
   nodeca.config.fontomas  = <%- JSON.stringify(nodeca('config.fontomas')) %>
+  nodeca.views            = {};
+  nodeca.server           = {};
+  nodeca.shared           = {};
+  nodeca.client           = {};
 
   nodeca.runtime          = {};
   nodeca.runtime.env      = "<%= nodeca('runtime.env') %>";
   nodeca.runtime.version  = "<%= nodeca('runtime.version') %>";
+  nodeca.runtime.i18n     = new BabelFish({});
+
+  // translations injector
+  nodeca.runtime.i18n.load = function loadTranslations(lang, data) {
+    nodeca.runtime.i18n._storage[lang] = data;
+  };
+
+  // some defaults
+  nodeca.runtime.locale   = "<%= nodeca('config.locales.default') %>";
+
+  // translation helper with active locale
+  nodeca.runtime.t        = function (phrase, params) {
+    return nodeca.runtime.i18n.t(nodeca.runtime.locale, phrase, params);
+  };
 
   (function (c) {
     var log = c.log || $.noop;

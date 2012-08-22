@@ -34,8 +34,8 @@ module.exports = function app(params, callback) {
   this.response.headers['Cache-Control']  = 'private, max-age=0, must-revalidate';
 
   // set view to be rendered
-  this.response.view   = 'layout';
-  this.response.layout = null;
+  this.response.view   = 'fontello';
+  this.response.layout = false;
 
   // done
   callback();

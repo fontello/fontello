@@ -26,14 +26,13 @@ module.exports.run = function (args, callback) {
     NLib.init.loadServerApiSubtree,
     NLib.init.loadSharedApiSubtree,
     NLib.init.loadClientApiSubtree,
-    NLib.init.initTranslations,
-    NLib.init.buildBundles,
-
-    require('../lib/init/assets'),
-
     NLib.init.initRouter,
 
+    NLib.init.initTranslations,
+
     require('../lib/init/cronjob'),
+
+    require('../lib/init/assets'),
     require('../lib/init/server')
   ], callback);
 };

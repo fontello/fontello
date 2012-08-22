@@ -1,17 +1,21 @@
 /*global nodeca, _, $, Modernizr, window, document*/
 
-//= require json
 //= require store
 //= require jquery/jquery
 //= require jquery-ui/jquery-ui
 //= require jquery.noty/src/js/jquery.noty
-//= require bootstrap/bootstrap
 //= require underscore
+//= require bootstrap/bootstrap
 //= require backbone
 //= require handlebars
 //= require jquery.collapser
+//= require jade/runtime
+//= require babelfish-runtime
 //= require nodeca
-//= require fontomas/api
+//= require i18n
+//= require views
+//= require api
+//= require_self
 
 $(function () {
   "use strict";
