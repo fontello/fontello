@@ -38,11 +38,11 @@ function get_layout_stack(layout) {
 
 
 /**
- *  shared.common.render(views, path, layout, data, skipBaseLayout) -> String
+ *  shared.common.render(views, path, locals, layout, skipBaseLayout) -> String
  *  - viewsTree (Object): Views tree (without locale and/or theme subpaths).
  *  - path (String): View name to render, e.g. `forums.index`
+ *  - locals (Object): Locals data to pass to the renderer function
  *  - layout (String): Layout to render, e.g. `default.blogs`
- *  - data (Object): Locals data to pass to the renderer function
  *  - skipBaseLayout (Boolean): Whenever to skip rendering base layout or not
  *
  *  Renders view registered as `path` with given `layout` and returns result.
@@ -54,11 +54,11 @@ function get_layout_stack(layout) {
  *  property will be rendered view, then `default` layout with `data` where
  *  `content` property will be previously rendered layout.
  **/
-module.exports = function render(viewsTree, path, layout, data, skipBaseLayout) {
+module.exports = function render(viewsTree, path, locals, layout, skipBaseLayout) {
   var html, view = nodeca.shared.common.getByPath(viewsTree, path);
 
   if (!!view) {
-    html = view(data);
+    html = view(locals);
   } else {
     // Here we just notify that view not found.
     // This should never happen - one must check path existance before render()
@@ -78,8 +78,8 @@ module.exports = function render(viewsTree, path, layout, data, skipBaseLayout) 
         return;
       }
 
-      data.content = html;
-      html = fn(data);
+      locals.content = html;
+      html = fn(locals);
     });
   }
 
