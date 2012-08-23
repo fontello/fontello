@@ -28,6 +28,11 @@ module.exports = Backbone.Model.extend({
   },
 
 
+  getName: function () {
+    return this.get('font').fontname;
+  },
+
+
   addGlyph: function (data) {
     return this._glyphs.create({
       uid     : data.uid,

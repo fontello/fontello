@@ -72,20 +72,21 @@ module.exports = Backbone.View.extend({
 
 
   render: function () {
-    var matched, char, source;
-
-    source  = this.model.get('source');
-    char    = nodeca.client.util.fixedFromCharCode(this.model.get("code"));
+    var source  = this.model.get('source'),
+        font    = this.model.get('font').getName(),
+        uid     = source.uid,
+        code    = nodeca.shared.glyphs_map[font][uid],
+        char    = nodeca.client.util.fixedFromCharCode(this.model.get("code"));
 
     this.$el.html(nodeca.client.render('code-editor.glyph', {
       top:        this.model.get("code") === 32 ? "space" : char,
-      char:       nodeca.client.util.fixedFromCharCode(source.code),
+      chr:        nodeca.client.util.fixedFromCharCode(code),
       bottom:     this.toUnicode(this.model.get("code")),
       css_class:  "font-embedded-" + this.model.get('font').get('id')
     }));
 
-    matched = this.model.get("code") === source.code;
-    this.$el.toggleClass("mapping-matched", matched);
+    this.$el.toggleClass("mapping-matched",
+                         this.model.get("code") === source.code);
 
     return this;
   },
