@@ -23,15 +23,13 @@ module.exports.parserParameters= {
 
 module.exports.run = function (args, callback) {
   Async.series([
-    NLib.init.loadServerApiSubtree,
-    NLib.init.loadSharedApiSubtree,
-    NLib.init.loadClientApiSubtree,
-    NLib.init.initRouter,
-
-    NLib.init.initTranslations,
+    NLib.InitStages.loadServerApiSubtree,
+    NLib.InitStages.loadSharedApiSubtree,
+    NLib.InitStages.loadClientApiSubtree,
+    NLib.InitStages.initRouter,
+    NLib.InitStages.initTranslations,
 
     require('../lib/init/cronjob'),
-
     require('../lib/init/assets'),
     require('../lib/init/server')
   ], callback);

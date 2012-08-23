@@ -51,9 +51,9 @@ module.exports.commandLineArguments = [
 
 module.exports.run = function (args, callback) {
   Async.series([
-    NLib.init.loadServerApiSubtree,
-    NLib.init.loadSharedApiSubtree,
-    NLib.init.loadClientApiSubtree
+    NLib.InitStages.loadServerApiSubtree,
+    NLib.InitStages.loadSharedApiSubtree,
+    NLib.InitStages.loadClientApiSubtree
   ], function (err) {
     var input, config;
 
