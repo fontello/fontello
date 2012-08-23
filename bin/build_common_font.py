@@ -42,7 +42,7 @@ input_fonts = []
 for item in args.input_fonts:
     input_fonts += item
 
-new_font_config = {'name': 'fontello', 'glyphs': []}
+new_font_config = {}
 
 # init new font
 new_font = fontforge.font()
@@ -58,18 +58,13 @@ for path in input_fonts:
             stderr.write("Bad config format %s: \n" % os.path.join(path, 'config.yml') )
 
         font_name = config.get('font', {}).get('fontname', None)
-
         font_path = os.path.join(path, 'font', font_name + '.ttf')
+        src_font  = fontforge.open(font_path)
 
-        src_font = fontforge.open(font_path)
+        new_font_config[font_name] = {}
 
         for glyph in config['glyphs']:
-            glyph_info = {
-                'orig_code': glyph['code'],
-                'code': new_glyph_code,
-                'src': font_name
-            }
-            new_font_config['glyphs'].append(glyph_info)
+            new_font_config[font_name][glyph['uid']] = new_glyph_code
 
             # cp glyph
             src_font.selection.select(("unicode",), glyph['code'])
