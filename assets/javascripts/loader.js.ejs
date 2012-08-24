@@ -4,7 +4,7 @@
 
 
 /*jshint browser:true,node:false*/
-/*global yepnope*/
+/*global yepnope, window*/
 
 
 yepnope([
@@ -15,7 +15,10 @@ yepnope([
     nope: <%- JSON.stringify(asset_path('json2.js')) %>
   },
   {
-    load: <%- JSON.stringify(asset_path('app.js')) %>
+    load: <%- JSON.stringify(asset_path('app.js')) %>,
+    complete: function () {
+      window.nodeca.client.init();
+    }
   }
 ]);
 
