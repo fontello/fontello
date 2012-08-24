@@ -1,7 +1,6 @@
 .preview-glyph
   line-height 1.5em
   height 1.5em
-  overflow hidden
   white-space nowrap
 
   span.icon
@@ -11,6 +10,19 @@
 
   span.prefix
     margin-left 0.5em
+
+  &:hover .name
+    box-shadow 0 0 0px 2px rgba(168, 82, 82, 0.6) inset
+    border-radius 4px
+
+  .name
+    display inline-block
+
+    &:focus
+      outline none
+      box-shadow 0 0 8px rgba(168, 82, 82, 0.6), 0 0 0 2px rgba(168, 82, 82, 0.6)
+      border-radius 4px
+
 
 ._3d .preview-glyph span.icon
   text-shadow 1px 1px 1px rgba(127, 127, 127, 0.3)
