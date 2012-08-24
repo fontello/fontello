@@ -7333,9 +7333,6 @@ module.exports = [
         },
         "uid": "240979dd9fcf2e46250e66792edb8092",
         "file": "facebook",
-        "transform": {
-          "offset": 0.05
-        },
         "css": "facebook"
       },
       {
@@ -7350,9 +7347,6 @@ module.exports = [
         },
         "uid": "8045477f6a7ef0bd7caff130ad25b88d",
         "file": "facebook-rect",
-        "transform": {
-          "offset": 0.05
-        },
         "css": "facebook-rect"
       },
       {
@@ -7367,9 +7361,6 @@ module.exports = [
         },
         "uid": "d611dd319d8c13b4551dc5bd85c1bdfd",
         "file": "twitter",
-        "transform": {
-          "offset": 0.05
-        },
         "css": "twitter"
       },
       {
@@ -7419,9 +7410,6 @@ module.exports = [
         },
         "uid": "31483d870b3f14ac12bdfe7331a6af99",
         "file": "vimeo-rect",
-        "transform": {
-          "offset": 0.05
-        },
         "css": "vimeo-rect"
       },
       {
@@ -7436,9 +7424,6 @@ module.exports = [
         },
         "uid": "076f25da90f45dd112e006f2cd7ea76b",
         "file": "tumblr",
-        "transform": {
-          "offset": 0.05
-        },
         "css": "tumblr"
       },
       {
@@ -7453,9 +7438,6 @@ module.exports = [
         },
         "uid": "9e6a3483242474b6a1f77739ae3fdfdc",
         "file": "tumblr-rect",
-        "transform": {
-          "offset": 0.05
-        },
         "css": "tumblr-rect"
       },
       {
@@ -7469,9 +7451,6 @@ module.exports = [
         },
         "uid": "626fb97a7c0c0db53a1853fb9e96e223",
         "file": "googleplus-rect",
-        "transform": {
-          "offset": 0.05
-        },
         "css": "googleplus-rect"
       },
       {
@@ -7486,9 +7465,6 @@ module.exports = [
         },
         "uid": "24d1008bf15b6c02a5e7a6af026987dd",
         "file": "github-text",
-        "transform": {
-          "offset": 0.05
-        },
         "css": "github-text"
       },
       {
@@ -7520,9 +7496,6 @@ module.exports = [
         },
         "uid": "5a00c877da3f63d37cdc021815e3f5a9",
         "file": "skype",
-        "transform": {
-          "offset": 0.05
-        },
         "css": "skype"
       },
       {
@@ -7537,9 +7510,6 @@ module.exports = [
         },
         "uid": "01f67de2dc0137389f1c3aced6273acd",
         "file": "icq",
-        "transform": {
-          "offset": 0.05
-        },
         "css": "icq"
       },
       {
@@ -7554,9 +7524,6 @@ module.exports = [
         },
         "uid": "b2417d1ce399577d53fff70d54976fea",
         "file": "yandex",
-        "transform": {
-          "offset": 0.05
-        },
         "css": "yandex"
       },
       {
@@ -7571,9 +7538,6 @@ module.exports = [
         },
         "uid": "ea0cb6bedac64ae7933b03dad3130ef6",
         "file": "yandex-rect",
-        "transform": {
-          "offset": 0.05
-        },
         "css": "yandex-rect"
       },
       {
@@ -7587,9 +7551,6 @@ module.exports = [
         },
         "uid": "5b16ceef1c8638bd5389c9302ea04098",
         "file": "vkontakte-rect",
-        "transform": {
-          "offset": 0.05
-        },
         "css": "vkontakte-rect"
       },
       {
@@ -7603,9 +7564,6 @@ module.exports = [
         },
         "uid": "229e50061df526f24f1ae884fab52101",
         "file": "odnoklassniki",
-        "transform": {
-          "offset": 0.05
-        },
         "css": "odnoklassniki"
       },
       {
@@ -7619,46 +7577,173 @@ module.exports = [
         },
         "uid": "4a02cc611ae9fb342d6026b2ed6cc44e",
         "file": "odnoklassniki-rect",
-        "transform": {
-          "offset": 0.05
-        },
         "css": "odnoklassniki-rect"
       },
       {
         "search": [
           "friendfeed"
         ],
-        "code": 62234,
+        "code": 62226,
         "meta": {
           "homepage": "http://openiconlibrary.sourceforge.net",
           "author": "Open Icon Library"
         },
         "uid": "eeec90e0e80f11e1aff10800200c9a66",
         "file": "friendfeed",
-        "transform": {
-          "offset": 0.05
-        },
         "css": "friendfeed"
       },
       {
         "search": [
           "friendfeed"
         ],
-        "code": 62235,
+        "code": 62227,
         "meta": {
           "homepage": "http://openiconlibrary.sourceforge.net",
           "author": "Open Icon Library"
         },
         "uid": "41f4dd00e81111e1aff10800200c9a66",
         "file": "friendfeed-rect",
-        "transform": {
-          "offset": 0.05
-        },
         "css": "friendfeed-rect"
+      },
+      {
+        "search": [
+          "blogger"
+        ],
+        "code": 62228,
+        "meta": {
+          "homepage": "https://openclipart.org/",
+          "author": "Open Clip Art Library"
+        },
+        "uid": "303f1f30-eda7-11e1-aff1-0800200c9a66",
+        "file": "blogger",
+        "css": "blogger"
+      },
+      {
+        "search": [
+          "blogger"
+        ],
+        "code": 62229,
+        "meta": {
+          "homepage": "https://openclipart.org/",
+          "author": "Open Clip Art Library"
+        },
+        "uid": "a38dfae0ec2d11e1aff10800200c9a66",
+        "file": "blogger-rect",
+        "css": "blogger-rect"
+      },
+      {
+        "search": [
+          "deviantart"
+        ],
+        "code": 62230,
+        "meta": {
+          "homepage": "http://openiconlibrary.sourceforge.net",
+          "author": "Open Icon Library"
+        },
+        "uid": "d04790a0ec2d11e1aff10800200c9a66",
+        "file": "deviantart",
+        "transform": {
+          "rescale": 1.2,
+          "offset": -0.025
+        },
+        "css": "deviantart"
+      },
+      {
+        "search": [
+          "jabber"
+        ],
+        "code": 62231,
+        "meta": {
+          "homepage": "http://xmpp.org",
+          "author": "Jabber Software Foundation"
+        },
+        "uid": "466d1430ec2e11e1aff10800200c9a66",
+        "file": "jabber",
+        "css": "jabber"
+      },
+      {
+        "search": [
+          "lastfm"
+        ],
+        "code": 62232,
+        "meta": {
+          "homepage": "http://www.last.fm/resources",
+          "author": "Last.fm"
+        },
+        "uid": "9e237480ec2e11e1aff10800200c9a66",
+        "file": "lastfm",
+        "css": "lastfm"
+      },
+      {
+        "search": [
+          "lastfm"
+        ],
+        "code": 62233,
+        "meta": {
+          "homepage": "http://www.last.fm/resources",
+          "author": "Last.fm"
+        },
+        "uid": "53a3bbcda09740c98a1c3d2e0a6a89fb",
+        "file": "lastfm-rect",
+        "css": "lastfm-rect"
+      },
+      {
+        "search": [
+          "linkedin"
+        ],
+        "code": 62234,
+        "meta": {
+          "homepage": "http://openiconlibrary.sourceforge.net",
+          "author": "Open Icon Library"
+        },
+        "uid": "542e3f055aaa4ddfb9ab3e00397db47f",
+        "file": "linkedin",
+        "css": "linkedin"
+      },
+      {
+        "search": [
+          "linkedin"
+        ],
+        "code": 62235,
+        "meta": {
+          "homepage": "http://openiconlibrary.sourceforge.net",
+          "author": "Open Icon Library"
+        },
+        "uid": "e9e96618b0f44170930f9b179237c76e",
+        "file": "linkedin-rect",
+        "css": "linkedin-rect"
+      },
+      {
+        "search": [
+          "picasa"
+        ],
+        "code": 62236,
+        "meta": {
+          "homepage": "http://openiconlibrary.sourceforge.net",
+          "author": "Open Icon Library"
+        },
+        "uid": "d93230ef6fa54fb9805ba4cc9d9af5b1",
+        "file": "picasa",
+        "css": "picasa"
+      },
+      {
+        "search": [
+          "wordpress"
+        ],
+        "code": 62237,
+        "meta": {
+          "homepage": "http://openiconlibrary.sourceforge.net",
+          "author": "Open Icon Library"
+        },
+        "uid": "1357ba39f8dc4519949cc4da55226b62",
+        "file": "wordpress",
+        "css": "wordpress"
       }
     ],
     "transform": {
-      "baseline": 0.5
+      "rescale": 0.95,
+      "baseline": 0.5,
+      "offset": 0.025
     },
     "id": 6
   }
