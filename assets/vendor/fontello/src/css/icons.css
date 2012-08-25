@@ -22,9 +22,9 @@
 /* fix buttons height */
   line-height: 1em;
 /* you can be more comfortable with increased icons size */
-/* font-zize: 120%; */
+/* font-size: 120%; */
 }
 
-.icon-cog:before { content: '\2699'; } /* '⚙' */
-.icon-download-1:before { content: '\f000'; } /* '' */
+.icon-settings:before { content: '\2699'; } /* '⚙' */
+.icon-download:before { content: '\f000'; } /* '' */
 .icon-search:before { content: '\f001'; } /* '' */
