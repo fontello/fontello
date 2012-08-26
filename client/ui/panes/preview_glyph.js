@@ -21,7 +21,7 @@ module.exports = Backbone.View.extend({
     }));
 
 
-    var $editor = this.$el.find('.name');
+    var $editor = this.$el.find('.glyph-name');
 
     $editor.on('change', function (event, val) {
       self.model.set( 'css', val );
