@@ -21,18 +21,18 @@ module.exports = Backbone.View.extend({
     }));
 
 
-    var $editor = this.$el.find('.glyph-name');
-
-    $editor.on('change', function (event, val) {
-      self.model.set( 'css', val );
-    });
-
-    nodeca.client.inplace_editor($editor, {
-      html:   false,
-      filter: function (val) {
-        return String(val).replace(/[\t\r\n]+/g, ' ');
-      }
-    });
+    this.$el.find('.glyph-name')
+      .inplaceEditor({
+        type:       'text',
+        allowEmpty: false,
+        filter:     function (val) {
+          return String(val).replace(/[^a-zA-Z0-9\-\_]+/, '');
+        },
+        throttle:   100
+      })
+      .on('change', function (event, value) {
+        self.model.set( 'css', value );
+      });
 
     return this;
   }
