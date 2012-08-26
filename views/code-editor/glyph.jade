@@ -1,19 +1,7 @@
-.top !{self.top}
-
-.top.edit
-  table
-    tbody
-      tr
-        td: input(type="text")
-
-
+.top
+  .editable !{self.top}
 .center.font-fontello !{self.chr}
 
-.bottom #{self.bottom}
-
-.bottom.edit
-  table
-    tbody
-      tr
-        td: U+
-        td: input(type="text")
+.bottom
+  span U+
+  span.editable !{self.bottom}

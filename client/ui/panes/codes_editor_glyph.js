@@ -6,43 +6,10 @@ module.exports = Backbone.View.extend({
   tagName:    "div",
   className:  "result-glyph",
 
-  events:     {
-    "click .top":     "onClickTop",
-    "click .bottom":  "onClickBottom"
-  },
-
 
   initialize: function () {
     this.model.on("change",  this.render, this);
     this.model.on("destroy", this.remove, this);
-  },
-
-
-  onClickTop: function (event) {
-    var self  = this,
-        val   = nodeca.client.util.fixedFromCharCode(
-                self.model.get("code"));
-
-    this.$el.addClass("editing-top");
-    this.$(".top.edit input")
-      .focus()
-      .off(".fm-editing")
-      .val(val)
-      .on("blur.fm-editing", function (event) {
-        var code  = nodeca.client.util.fixedCharCodeAt(
-                    self.$(".top.edit input").val());
-
-        self.model.set("code", code);
-        self.$el.removeClass("editing-top");
-      })
-      .on("keyup.fm-editing", function (event) {
-        if (event.keyCode === 13) {
-          $(event.target).blur();
-        } else if (event.keyCode === 27) {
-          $(event.target).val(val);
-          self.$el.removeClass("editing-top");
-        }
-      });
   },
 
 
@@ -72,21 +39,43 @@ module.exports = Backbone.View.extend({
 
 
   render: function () {
-    var source  = this.model.get('source'),
-        font    = this.model.get('font').getName(),
+    var model   = this.model,
+        source  = model.get('source'),
+        font    = model.get('font').getName(),
         uid     = source.uid,
         code    = nodeca.shared.glyphs_map[font][uid],
-        char    = nodeca.client.util.fixedFromCharCode(this.model.get("code"));
+        char    = nodeca.client.util.fixedFromCharCode(model.get("code"));
 
     this.$el.html(nodeca.client.render('code-editor.glyph', {
-      top:        this.model.get("code") === 32 ? "space" : char,
+      top:        model.get("code") === 32 ? "space" : char,
       chr:        nodeca.client.util.fixedFromCharCode(code),
-      bottom:     this.toUnicode(this.model.get("code")),
-      css_class:  "font-embedded-" + this.model.get('font').get('id')
+      bottom:     this.toUnicode(model.get("code")),
+      css_class:  "font-embedded-" + model.get('font').get('id')
     }));
 
-    this.$el.toggleClass("mapping-matched",
-                         this.model.get("code") === source.code);
+    this.$el.find('.top .editable').inplaceEditor({
+      type:       'text',
+      allowEmpty: false,
+      filter:     function (val) {
+        var prev = this.prev || this.value;
+        this.prev = String(val).replace(prev, '');
+        return this.prev;
+      }
+    }).on('change', function (event, val) {
+      model.set("code", nodeca.client.util.fixedCharCodeAt(val));
+    });
+
+    this.$el.find('.bottom .editable').inplaceEditor({
+      type:       'text',
+      allowEmpty: false,
+      filter:     function (val) {
+        return String(val).replace(/[^0-9a-fA-F]/, '').substr(0, 6);
+      }
+    }).on('change', function (event, val) {
+        model.set("code", parseInt(val, 16));
+    });
+
+    this.$el.toggleClass("mapping-matched", model.get("code") === source.code);
 
     return this;
   },
@@ -101,6 +90,6 @@ module.exports = Backbone.View.extend({
   // return unicode code point in U+ notation
   toUnicode: function (code) {
     var c = code.toString(16).toUpperCase();
-    return "U+" + "0000".substr(0, Math.max(4 - c.length, 0)) + c;
+    return "0000".substr(0, Math.max(4 - c.length, 0)) + c;
   }
 });
