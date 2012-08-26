@@ -16,20 +16,21 @@
       self.deactivate();
     });
 
-    if (options.filter) {
+    if (options.validateChar) {
+      this.isValidChar = function (char) {
+        return options.validateChar.call(this, char);
+      };
+    }
+
+    if (options.filterValue) {
       this.update = function () {
-        var raw = this.getValue(), clean = options.filter.call(this, raw);
-        if (raw !== clean) {
+        var original  = this.getValue(),
+            clean     = options.filterValue.call(this, original);
+
+        if (original !== clean) {
           this.setValue(clean);
         }
       }
-    }
-
-    if (options.throttle && _) {
-      this._update = this.update;
-      this.update = _.throttle(function () {
-        self._update();
-      }, options.throttle);
     }
   }
 
@@ -41,26 +42,62 @@
       return;
     }
 
-    this.value      = this.getValue();
-    this.activated  = true;
+    this.initialValue = this.getValue();
+    this.lastChar     = null;
+    this.activated    = true;
 
-    this.$el.on('paste.inplaceEditor, keypress.inplaceEditor, keyup.inplaceEditor', function (event) {
+    //
+    // Do not allow paste if it was disabled
+    //
+
+    if (this.options.noPaste) {
+      this.$el.on('paste.inplaceEditor', function (event) {
+        event.stopImmediatePropagation();
+        return false;
+      });
+    }
+
+    //
+    // Listen for any keystrokes (used for chars filtration)
+    //
+
+    this.$el.on('keypress.inplaceEditor', function (event) {
       // ENTER
       if (13 === event.keyCode) {
         self.deactivate();
         return;
       }
 
+      // Validate incoming character
+      if (event.which !== 0 && event.charCode !== 0) {
+        if (false === self.isValidChar(String.fromCharCode(event.charCode))) {
+          // char fails validation
+          event.stopImmediatePropagation();
+          return false;
+        }
+
+        self.update();
+        self.lastChar = String.fromCharCode(event.charCode);
+      }
+    });
+
+    //
+    // Listen for ESCape
+    //
+
+    this.$el.on('keyup.inplaceEditor', function (event) {
       // ESC
       if (27 === event.keyCode) {
-        // **NOTICE** Firefox does not fires this event by some reasone
-        self.setValue(self.value);
+        event.stopImmediatePropagation();
+        self.setValue(self.initialValue);
         self.deactivate();
-        return;
+        return false;
       }
-
-      self.update();
     });
+
+    //
+    // Focus on enabled input
+    //
 
     this.$el.attr('contenteditable', true).focus();
   };
@@ -78,15 +115,15 @@
     this.$el.off('.inplaceEditor');
     this.$el.attr('contenteditable', false);
 
-    // call unthrottled update if it exists
-    this._update ? this._update() : this.update();
+    // run filters on exit
+    this.update();
 
     // get new value ONLY after update()
     value = this.getValue();
 
-    if (this.value !== value) {
+    if (this.initialValue !== value) {
       if (!value && !this.options.allowEmpty) {
-        this.setValue(this.value);
+        this.setValue(this.initialValue);
       } else {
         this.$el.trigger('change', [value]);
       }
@@ -104,6 +141,10 @@
   InplaceEditor.prototype.getValue = function getValue() {
     return this.$el['html' === this.options.type ? 'html' : 'text']();
   };
+
+
+  // By default isValidChar does nothing
+  InplaceEditor.prototype.isValidChar = $.noop;
 
 
   // By default update does nothing

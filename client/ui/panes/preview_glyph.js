@@ -22,12 +22,12 @@ module.exports = Backbone.View.extend({
 
 
     this.$el.find('.glyph-name').inplaceEditor({
-      type:       'text',
-      allowEmpty: false,
-      filter:     function (val) {
-        return String(val).replace(/[^a-zA-Z0-9\-\_]+/, '').substr(0, 20);
-      },
-      throttle:   100
+      type:         'text',
+      allowEmpty:   false,
+      noPaste:      true,
+      validateChar: function (char) {
+        return /[a-zA-Z0-9\-\_]/.test(char);
+      }
     }).on('change', function (event, value) {
       self.model.set( 'css', value );
     });

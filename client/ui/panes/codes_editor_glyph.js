@@ -13,31 +13,6 @@ module.exports = Backbone.View.extend({
   },
 
 
-  onClickBottom: function (event) {
-    var self  = this,
-        val   = this.model.get("code").toString(16).toUpperCase();
-
-    this.$el.addClass("editing-bottom");
-    this.$(".bottom.edit input")
-      .focus()
-      .off(".fm-editing")
-      .val(val)
-      .on("blur.fm-editing", function (event) {
-        var code = parseInt(self.$(".bottom.edit input").val(), 16);
-        self.model.set("code", code);
-        self.$el.removeClass("editing-bottom");
-      })
-      .on("keyup.fm-editing", function (event) {
-        if (event.keyCode === 13) {
-          $(event.target).blur();
-        } else if (event.keyCode === 27) {
-          $(event.target).val(val);
-          self.$el.removeClass("editing-bottom");
-        }
-      });
-  },
-
-
   render: function () {
     var model   = this.model,
         source  = model.get('source'),
@@ -54,22 +29,22 @@ module.exports = Backbone.View.extend({
     }));
 
     this.$el.find('.top .editable').inplaceEditor({
-      type:       'text',
-      allowEmpty: false,
-      filter:     function (val) {
-        var prev = this.prev || this.value;
-        this.prev = String(val).replace(prev, '');
-        return this.prev;
+      type:         'text',
+      allowEmpty:   false,
+      filterValue:  function (val) {
+        val = String(val).replace(this.lastChar || this.initialValue, '');
+        return val || this.lastChar || this.initialValue;
       }
     }).on('change', function (event, val) {
       model.set("code", nodeca.client.util.fixedCharCodeAt(val));
     });
 
     this.$el.find('.bottom .editable').inplaceEditor({
-      type:       'text',
-      allowEmpty: false,
-      filter:     function (val) {
-        return String(val).replace(/[^0-9a-fA-F]/, '').substr(0, 6);
+      type:         'text',
+      allowEmpty:   false,
+      noPaste:      true,
+      validateChar: function (char) {
+        return /[0-9a-fA-F]/.test(char);
       }
     }).on('change', function (event, val) {
         model.set("code", parseInt(val, 16));
