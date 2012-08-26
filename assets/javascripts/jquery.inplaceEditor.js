@@ -18,8 +18,8 @@
 
     if (options.filter) {
       this.update = function () {
-        var orig = this.getValue(), clean = options.filter(orig);
-        if (orig !== clean) {
+        var raw = this.getValue(), clean = options.filter.call(this, raw);
+        if (raw !== clean) {
           this.setValue(clean);
         }
       }
@@ -77,6 +77,9 @@
 
     this.$el.off('.inplaceEditor');
     this.$el.attr('contenteditable', false);
+
+    // call unthrottled update if it exists
+    this._update ? this._update() : this.update();
 
     if (this.value !== value) {
       if (!value && !this.options.allowEmpty) {
