@@ -42,13 +42,13 @@ logger:
     - level:  error
       file:   log/static-error.log
 
-  server.fontomas.font.download:
+  server.font.download:
     - level:  debug
       file:   log/static.log
     - level:  error
       file:   log/static-error.log
 
-  server.fontomas.font:
+  server.font:
     - level:  debug
       file:   log/generator.log
     - level:  error
