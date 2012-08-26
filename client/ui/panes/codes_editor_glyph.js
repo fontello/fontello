@@ -31,9 +31,13 @@ module.exports = Backbone.View.extend({
     this.$el.find('.top .editable').inplaceEditor({
       type:         'text',
       allowEmpty:   false,
+      validateChar: function (char) {
+        this.setValue(char);
+        return false;
+      },
       filterValue:  function (val) {
-        val = String(val).replace(this.lastChar || this.initialValue, '');
-        return val || this.lastChar || this.initialValue;
+        var code = nodeca.client.util.fixedCharCodeAt(val);
+        return nodeca.client.util.fixedFromCharCode(code);
       }
     }).on('change', function (event, val) {
       model.set("code", nodeca.client.util.fixedCharCodeAt(val));
@@ -44,7 +48,7 @@ module.exports = Backbone.View.extend({
       allowEmpty:   false,
       noPaste:      true,
       validateChar: function (char) {
-        return /[0-9a-fA-F]/.test(char);
+        return /[0-9a-fA-F]/.test(char) && 6 > this.getValue().length;
       }
     }).on('change', function (event, val) {
         model.set("code", parseInt(val, 16));

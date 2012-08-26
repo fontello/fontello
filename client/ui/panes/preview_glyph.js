@@ -26,7 +26,7 @@ module.exports = Backbone.View.extend({
       allowEmpty:   false,
       noPaste:      true,
       validateChar: function (char) {
-        return /[a-zA-Z0-9\-\_]/.test(char);
+        return /[a-zA-Z0-9\-\_]/.test(char) && 20 > this.getValue().length;
       }
     }).on('change', function (event, value) {
       self.model.set( 'css', value );

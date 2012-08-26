@@ -23,11 +23,10 @@
     }
 
     if (options.filterValue) {
-      this.update = function () {
-        var original  = this.getValue(),
-            clean     = options.filterValue.call(this, original);
+      this.update = function (value) {
+        var clean = options.filterValue.call(this, value);
 
-        if (original !== clean) {
+        if (value !== clean) {
           this.setValue(clean);
         }
       }
@@ -47,21 +46,27 @@
     this.activated    = true;
 
     //
-    // Do not allow paste if it was disabled
+    // Handle paste event
     //
 
-    if (this.options.noPaste) {
-      this.$el.on('paste.inplaceEditor', function (event) {
+    this.$el.on('paste.inplaceEditor', function (event) {
+      if (self.options.noPaste) {
         event.stopImmediatePropagation();
         return false;
-      });
-    }
+      }
+
+      setTimeout(function () {
+        self.update(self.getValue());
+      }, 0);
+    });
 
     //
     // Listen for any keystrokes (used for chars filtration)
     //
 
     this.$el.on('keypress.inplaceEditor', function (event) {
+      var char = String.fromCharCode(event.charCode);
+
       // ENTER
       if (13 === event.keyCode) {
         self.deactivate();
@@ -70,14 +75,14 @@
 
       // Validate incoming character
       if (event.which !== 0 && event.charCode !== 0) {
-        if (false === self.isValidChar(String.fromCharCode(event.charCode))) {
+        if (false === self.isValidChar(char)) {
           // char fails validation
           event.stopImmediatePropagation();
           return false;
         }
 
-        self.update();
-        self.lastChar = String.fromCharCode(event.charCode);
+        self.update(self.getValue());
+        self.lastChar = char;
       }
     });
 
@@ -116,7 +121,7 @@
     this.$el.attr('contenteditable', false);
 
     // run filters on exit
-    this.update();
+    this.update(this.getValue());
 
     // get new value ONLY after update()
     value = this.getValue();
