@@ -47,7 +47,6 @@
     this.$el.on('paste.inplaceEditor, keypress.inplaceEditor, keyup.inplaceEditor', function (event) {
       // ENTER
       if (13 === event.keyCode) {
-        self.update()
         self.deactivate();
         return;
       }
@@ -57,6 +56,7 @@
         // **NOTICE** Firefox does not fires this event by some reasone
         self.setValue(self.value);
         self.deactivate();
+        return;
       }
 
       self.update();
@@ -67,7 +67,7 @@
 
 
   InplaceEditor.prototype.deactivate = function () {
-    var value = this.getValue();
+    var value;
 
     if (!this.activated) {
       return;
@@ -81,11 +81,14 @@
     // call unthrottled update if it exists
     this._update ? this._update() : this.update();
 
+    // get new value ONLY after update()
+    value = this.getValue();
+
     if (this.value !== value) {
       if (!value && !this.options.allowEmpty) {
         this.setValue(this.value);
       } else {
-        this.$el.trigger('change', [this.getValue()]);
+        this.$el.trigger('change', [value]);
       }
     }
 
