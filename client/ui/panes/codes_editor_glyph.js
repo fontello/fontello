@@ -28,7 +28,7 @@ module.exports = Backbone.View.extend({
       css_class:  "font-embedded-" + model.get('font').get('id')
     }));
 
-    this.$el.find('.top .editable').inplaceEditor({
+    this.$el.find('.char-editable').inplaceEditor({
       type:         'text',
       allowEmpty:   false,
       validateChar: function (char) {
@@ -43,7 +43,7 @@ module.exports = Backbone.View.extend({
       model.set("code", nodeca.client.util.fixedCharCodeAt(val));
     });
 
-    this.$el.find('.bottom .editable').inplaceEditor({
+    this.$el.find('.code-editable').inplaceEditor({
       type:         'text',
       allowEmpty:   false,
       noPaste:      true,
