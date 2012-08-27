@@ -126,12 +126,14 @@
     // get new value ONLY after update()
     value = this.getValue();
 
-    if (this.initialValue !== value) {
-      if (!value && !this.options.allowEmpty) {
-        this.setValue(this.initialValue);
-      } else {
-        this.$el.trigger('change', [value]);
-      }
+    if (!value) {
+      // we do not allow empty values -
+      // and reset them to the initial state
+      this.setValue(this.initialValue);
+    } else if (this.initialValue !== value) {
+      // notify about value change only in case
+      // of actual changes
+      this.$el.trigger('change', [value]);
     }
 
     this.$el.blur();
@@ -139,12 +141,12 @@
 
 
   InplaceEditor.prototype.setValue = function setValue(val) {
-    this.$el['html' === this.options.type ? 'html' : 'text'](val);
+    this.$el.text($('<div>' + val + '</div>').text());
   };
 
 
   InplaceEditor.prototype.getValue = function getValue() {
-    return this.$el['html' === this.options.type ? 'html' : 'text']();
+    return this.$el.text();
   };
 
 

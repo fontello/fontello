@@ -22,8 +22,6 @@ module.exports = Backbone.View.extend({
 
 
     this.$el.find('.glyph-name').inplaceEditor({
-      type:         'text',
-      allowEmpty:   false,
       noPaste:      true,
       validateChar: function (char) {
         return /[a-zA-Z0-9\-\_]/.test(char) && 20 > this.getValue().length;

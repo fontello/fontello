@@ -29,8 +29,6 @@ module.exports = Backbone.View.extend({
     }));
 
     this.$el.find('.char-editable').inplaceEditor({
-      type:         'text',
-      allowEmpty:   false,
       validateChar: function (char) {
         this.setValue(char);
         return false;
@@ -44,8 +42,6 @@ module.exports = Backbone.View.extend({
     });
 
     this.$el.find('.code-editable').inplaceEditor({
-      type:         'text',
-      allowEmpty:   false,
       noPaste:      true,
       validateChar: function (char) {
         return /[0-9a-fA-F]/.test(char) && 6 > this.getValue().length;
