@@ -16,8 +16,8 @@ Add following code into the end of your shell startup script (`.bashrc` for BASH
 
 Reopen terminal. Install node (long), and set default version:
 
-    nvm install v0.6.14
-    nvm alias default 0.6
+    nvm install v0.8.8
+    nvm alias default 0.8
 
 ## Install Fontomas
 
