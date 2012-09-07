@@ -1,14 +1,22 @@
-2.0.3 / Rolling on website
+2.0.4 / Rolling on website
 --------------------------
+
+* ...
+
+
+2.0.3 / 2012-09-07
+------------------
 
 * Preview tab content now resizeable too
 * You can edit glyph names
-* Added '3D' effect to icons (can be switched off)
+* Codes edit improved
+* Fixed EOT fonts generation for customised font names
+* Added switchable '3D' shadow effect for icons
 * Fixed work with Opera 12
 * Tweaked styles again :)
-* Fixed EOT fonts generation for customised font names
 * Improved work with proxies (switched back data exchange from realtime to ajax)
-* Synked codebase with nodeca mainstream
+* Optimized page loading speed - merged all embedded fonts into single file
+* Synked libraries codebase with nodeca mainstream
 
 
 2.0.2 / 2012-06-27
