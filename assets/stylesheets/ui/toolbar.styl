@@ -5,11 +5,6 @@
 .navbar-fixed-top
   background-color #fff
 
-//== Fix vertical offset
-.btn-group > input
-  float left
-  margin-bottom 0
-
 //== Dirty fix typeahead & tooltip z-index, to be over static container
 .typeahead.dropdown-menu
 .tooltip
@@ -62,6 +57,9 @@
   background #ddd
   background-image: linear-gradient(top, #bbb 0%, #fff 80%, #ddd 100%);
 
+  // fix toolbar fontsize reset
+  font-size 14px
+
 .ui-slider .ui-slider-handle
   position absolute
   z-index 2
@@ -73,7 +71,6 @@
   border 1px solid #aaa
   background #aaa
   background-image: linear-gradient(top, #fff 0%, #eee 50%, #aaa 100%);
-  //box-shadow 0 0 2px #888;
 
   outline none
 

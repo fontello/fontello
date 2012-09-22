@@ -1,4 +1,5 @@
 // Buttons tweaks
+//
 .btn
   font-family sansWideFontFamily
   background-image none
@@ -19,6 +20,7 @@
 
 
 // Focus style tweak
+//
 input, textarea
   box-shadow 0 1px 1px rgba(0, 0, 0, .3) inset
 input:focus,
@@ -31,23 +33,27 @@ textarea:focus
 
 
 // Search icon tweak
-
+//
 .search-form
   .search-query
-    //margin-bottom 0
-    //padding-top 2px
-    //padding-bottom 2px
     padding-left 25px
-    //font-size 14px
-    //border-radius 13px
   .icon-search
     position absolute
     color gray
     top 6px
     left 8px
+    // restore font size
+    font-size 14px
 
-// When we like to hide ugly file input, we can't use display:none, because
+// Fix vertical offset for toolbar inputs
+//
+.btn-group > input
+  margin-bottom 0
+
+// When we like to hide ugly file input, but can't use display:none, because
 // Chromium will miss events. So, use .invisible, but position out of screen
+//
 input[type="file"].invisible
   position absolute
   left -10000px
+
