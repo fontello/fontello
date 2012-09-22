@@ -42,6 +42,7 @@ module.exports = function () {
       }());
 
       // Flattr
+      /*
 
       (function() {
         var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
@@ -50,6 +51,7 @@ module.exports = function () {
         s.src = '//api.flattr.com/js/0.6/load.js?mode=auto';
         t.parentNode.insertBefore(s, t);
       }());
+      */
 
     }, 2000);
   });
