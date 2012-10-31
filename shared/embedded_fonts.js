@@ -1649,11 +1649,11 @@ module.exports = [
       "license": "SIL",
       "author": "Daniel Buce",
       "twitter": "http://twitter.com/danielbruce_",
-      "email": "daniel@precinct.net",
       "license_url": "http://scripts.sil.org/OFL",
       "css_prefix": "icon-",
+      "dribbble": "http://dribbble.com/danielbruce",
       "homepage": "http://www.entypo.com",
-      "dribble": "http://dribbble.com/danielbruce",
+      "email": "daniel@precinct.net",
       "columns": 4
     },
     "id": 0
@@ -7738,6 +7738,32 @@ module.exports = [
         "uid": "1357ba39f8dc4519949cc4da55226b62",
         "file": "wordpress",
         "css": "wordpress"
+      },
+      {
+        "search": [
+          "instagram"
+        ],
+        "code": 62238,
+        "meta": {
+          "homepage": "http://dribbble.com/shots/690589-Instagram-Vector-Icon-Download",
+          "author": "Kyle Mac"
+        },
+        "uid": "dad4e7f8dc2e57c92cffc0231202d9a0",
+        "file": "instagram",
+        "css": "instagram"
+      },
+      {
+        "search": [
+          "instagram"
+        ],
+        "code": 62239,
+        "meta": {
+          "homepage": "http://dribbble.com/shots/690589-Instagram-Vector-Icon-Download",
+          "author": "Kyle Mac"
+        },
+        "uid": "cc20f2a7fa05a475130c406740bbbd26",
+        "file": "instagram-filled",
+        "css": "instagram-filled"
       }
     ],
     "transform": {
