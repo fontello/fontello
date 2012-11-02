@@ -1,4 +1,9 @@
 
+.icon-home:before { content: '\2302'; } /* '⌂' */
 .icon-settings:before { content: '\2699'; } /* '⚙' */
+.icon-mail:before { content: '\2709'; } /* '✉' */
+.icon-twitter-bird:before { content: '\f303'; } /* '' */
+.icon-github-text:before { content: '\f307'; } /* '' */
+.icon-deviantart:before { content: '\f316'; } /* '' */
 .icon-download:before { content: '\f000'; } /* '' */
 .icon-search:before { content: '\f001'; } /* '' */

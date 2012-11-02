@@ -24,6 +24,46 @@
       "css": "settings",
       "code": 9881,
       "src": "entypo"
+    },
+    {
+      "uid": "513ac180ff85bd275f2b736720cbbf5e",
+      "orig_css": "home",
+      "orig_code": 8962,
+      "css": "home",
+      "code": 8962,
+      "src": "entypo"
+    },
+    {
+      "uid": "e335adbc2d898c7d85d40c507796e7b4",
+      "orig_css": "mail",
+      "orig_code": 9993,
+      "css": "mail",
+      "code": 9993,
+      "src": "entypo"
+    },
+    {
+      "uid": "4c01f5d3ba5fbf029bca8630cce41e6a",
+      "orig_css": "twitter-bird",
+      "orig_code": 62211,
+      "css": "twitter-bird",
+      "code": 62211,
+      "src": "brandico"
+    },
+    {
+      "uid": "24d1008bf15b6c02a5e7a6af026987dd",
+      "orig_css": "github-text",
+      "orig_code": 62215,
+      "css": "github-text",
+      "code": 62215,
+      "src": "brandico"
+    },
+    {
+      "uid": "d04790a0ec2d11e1aff10800200c9a66",
+      "orig_css": "deviantart",
+      "orig_code": 62230,
+      "css": "deviantart",
+      "code": 62230,
+      "src": "brandico"
     }
   ]
 }

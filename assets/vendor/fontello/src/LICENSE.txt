@@ -10,3 +10,12 @@ Font license info
    Homepage:  http://www.entypo.com
 
 
+## Brandico
+
+   (C) 2012 by Vitaly Puzrin
+
+   Author:    Crowdsourced, for Fontello project
+   License:   SIL (http://scripts.sil.org/OFL)
+   Homepage:  
+
+
