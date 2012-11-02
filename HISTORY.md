@@ -1,7 +1,9 @@
 2.0.4 / Rolling on website
 --------------------------
 
-* ...
+* Moved font info from popup to main page, to better credit authors
+* Updated brandico with couple of icons
+* Minor fixes
 
 
 2.0.3 / 2012-09-07

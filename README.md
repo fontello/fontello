@@ -14,8 +14,7 @@ First, select the icons you like. Then update glyph codes (optional), and
 download your webfont bundle. We generate everything you need, ready for publishing
 on your website!
 
-Don't forget about donations... These are some awesome icons, available with an 
-open source license :) . A donation is the best way to express gratitude for our work.
+Don't forget about donations :)
 
 
 ## Embedded Fonts <a name="embedded"></a>
@@ -25,10 +24,13 @@ Fontello comes with the following embedded set of iconic fonts:
 - [__Entypo__](http://www.entypo.com/) by Daniel Bruce (CC BY-SA license)
 - [__Font Awesome__](http://fortawesome.github.com/Font-Awesome//) by Dave Gandy (CC BY-SA license)
 - [__Iconic__](https://github.com/somerandomdude/Iconic) by P.J. Onori (SIL OFL)
+- [__Typicons__](http://typicons.com/) by Stephen Hutchings (CC BY-SA 3.0 license)
+- [__Modern Pictograms__](Modern Pictograms) by John Caserta (SIL OFL)
+- [__Web Symbols__](http://www.justbenicestudio.com/studio/websymbols/) by Just Be Nice studio (SIL OFL)
 - [__Brandico__](https://github.com/fontello/brandico.font) by... all :) (SIL OFL)
 
 Please, note that these embedded fonts differ from the original files. We did some
-modifications to unify characteristics such as scale, ascent/descent andalignment. 
+modifications to unify characteristics such as scale, ascent/descent and alignment. 
 If you need specific details on modifications, take a look into the updated fonts repos
 at [github](https://github.com/fontello/).
 
@@ -46,7 +48,8 @@ at [github](https://github.com/fontello/).
 - Vitaly Puzrin ([puzrin](https://github.com/puzrin)).
   [Follow](https://twitter.com/puzrin) on twitter.
 - Aleksey Zapparov ([ixti](https://github.com/ixti)).
-  Follow [@zapparov](https://twitter.com/zapparov) on twitter.
+  [Follow](https://twitter.com/zapparov) on twitter.
+- Evgeny Shkuropat ([shkuropat](https://github.com/shkuropat)).
 
 
 ## License
