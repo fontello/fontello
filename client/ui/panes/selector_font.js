@@ -42,9 +42,10 @@ module.exports = Backbone.View.extend({
     this.$el.html(nodeca.client.render('selector.font-item', {
       id:         this.model.id,
       fontname:   this.model.get("font").fullname,
-      css_class:  "font-embedded-" + this.model.get("id")
+      css_class:  "font-embedded-" + this.model.get("id"),
+      all:       this.model.toJSON()
     }));
-
+/*
     // render info html
     $info = $(nodeca.client.render('selector.font-info', this.model.toJSON()));
 
@@ -54,7 +55,7 @@ module.exports = Backbone.View.extend({
       // prevent default browser behavior - jump to the top
       return false;
     });
-
+*/
     // process each glyph
     this.model.eachGlyph(function (glyph) {
       var view = new nodeca.client.ui.panes.selector_glyph({model: glyph});

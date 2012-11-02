@@ -1,4 +1,27 @@
 h2.src-font-head
-  a.label.label-important.font-info(href="#") info
+  //- a.label.label-important.font-info(href="#") info
   a.src-font-name._collapser(href="#") #{self.fontname}
+
+  - var meta = self.all.meta || {}
+
+  - if (meta.author)
+    small.font-details by #{meta.author}
+
+  - if (meta.license)
+    small.font-details license - #{meta.license}
+
+  small.font-details
+    - if (meta.homepage)
+      a.icon-home(href="#{meta.homepage}", target="_blank")
+    - if (meta.email)
+      a.icon-mail(href="mailto:#{meta.email}")
+    - if (meta.twitter)
+      a.icon-twitter-bird(href="#{meta.twitter}", target="_blank")
+    - if (meta.github)
+      a.icon-github-text(href="#{meta.github}", target="_blank")
+
+  //- no logo, sorry
+  //- - if (meta.dribbble)
+  //-  a.icon-(href="#{meta.dribbble}", target="_blank") Dribbble
+  
 ul.unstyled.font-glyphs.font-fontello

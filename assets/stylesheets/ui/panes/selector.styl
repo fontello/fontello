@@ -14,6 +14,33 @@ a.font-info
   margin-top 10px
   margin-right 5px
 
+// Font license & links
+//
+.icon-mail
+.icon-home
+.icon-twitter-bird
+.icon-github-text
+  &:before
+    width auto
+    opacity 1
+    //font-size: 100%
+    margin-left .2em
+a
+  &.icon-mail
+  &.icon-home
+  &.icon-twitter-bird
+  &.icon-github-text
+    transition all .5s ease
+    color #444
+    opacity .4
+
+    &:hover
+      opacity 1
+.font-details
+  margin-left 1em
+  margin-right 1em
+  font-size 14px
+
 /* Collapser & animations */
 a.src-font-name
   color inherit
@@ -74,6 +101,7 @@ a.src-font-name
 .font-glyphs
   display inline-block
   user-select none
+  margin-bottom 20px
 
 .glyph
   position relative
