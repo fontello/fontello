@@ -1,5 +1,5 @@
-2.0.4 / Rolling on website
---------------------------
+2.0.4 / 2012-11-06
+------------------
 
 * Moved font info from popup to main page, to better credit authors
 * Updated brandico with couple of icons
