@@ -18,7 +18,7 @@
   "main"            : "./index.js",
 
   "dependencies"    : {
-                        "nlib"        : "git://github.com/nodeca/nlib.git#95cd4ca92ca8d3b2d251830c01a277202e7dc09d",
+                        "nlib"        : "git://github.com/nodeca/nlib.git",
                         "argparse"    : "~0.1.3",
                         "underscore"  : "~1.3.3",
                         "send"        : "~0.0.3",
