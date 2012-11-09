@@ -1,0 +1,46 @@
+---
+bundles:
+  frontend:
+    - lib
+    - fontello
+
+packages:
+  lib:
+    lib:
+      root: ./assets/
+      include: app.js
+
+    bin:
+      root: ./assets/
+      include: /*\.(gif|png|otf|ttf|svg)/
+
+  fontello:
+    depends:
+      - lib
+
+    server:
+      root: ./server/
+      include: /*\.js/
+      exclude: /*\/_*/
+
+    client:
+      root: ./client/
+      include: /*\.js/
+      exclude: /*\/_*/
+
+    views:
+      root: ./client/
+      include: /*\.jade/
+      exclude: /*\/_*/
+
+    styles:
+      root: ./client/
+      include: app.styl
+
+    i18n:
+      root: ./client/
+      include: /*.i18n.yml/
+
+    bin:
+      root: ./client/
+      include: /*\.(gif|png|otf|ttf|svg)/
