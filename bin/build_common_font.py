@@ -47,6 +47,13 @@ new_font_config = {}
 # init new font
 new_font = fontforge.font()
 new_font.encoding = 'UnicodeFull'
+new_font.fontname = 'fembedded'
+new_font.fullname = 'fembedded'
+new_font.familyname = 'fembedded'
+new_font.ascent = 850
+new_font.descent = 150
+new_font.weight = 'Medium'
+
 
 new_glyph_code = GLYPHS_CODE_START
 

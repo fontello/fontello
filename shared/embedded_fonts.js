@@ -10,8 +10,17 @@ module.exports = [
         ],
         "code": 9834,
         "uid": "39e2e6682c28e1e3b5f49825a19717c4",
-        "file": "music",
-        "css": "music"
+        "css": "note"
+      },
+      {
+        "search": [
+          "music",
+          "note",
+          "song"
+        ],
+        "code": 9835,
+        "uid": "fda731b5a4026685e1a9c7e64228e2b2",
+        "css": "note-beamed"
       },
       {
         "search": [
@@ -21,8 +30,7 @@ module.exports = [
         ],
         "code": 127925,
         "uid": "f2a036a85c0a6a46b0c9709a70e1bb70",
-        "file": "song",
-        "css": "music-alt"
+        "css": "music"
       },
       {
         "search": [
@@ -31,18 +39,17 @@ module.exports = [
         ],
         "code": 128269,
         "uid": "7222571caa5c15f83dcfd447c58d68d9",
-        "file": "classic-search",
         "css": "search"
       },
       {
         "search": [
           "search",
-          "find"
+          "find",
+          "flashlight"
         ],
-        "code": 128270,
+        "code": 128294,
         "uid": "c9b928dc82d7d77033644fcf59dca3b3",
-        "file": "search",
-        "css": "search-alt"
+        "css": "flashlight"
       },
       {
         "search": [
@@ -51,7 +58,6 @@ module.exports = [
         ],
         "code": 9993,
         "uid": "e335adbc2d898c7d85d40c507796e7b4",
-        "file": "email",
         "css": "mail"
       },
       {
@@ -60,7 +66,6 @@ module.exports = [
         ],
         "code": 9829,
         "uid": "0eabe5f8d71cc838484ff39436426d2d",
-        "file": "heart",
         "css": "heart"
       },
       {
@@ -69,7 +74,6 @@ module.exports = [
         ],
         "code": 9825,
         "uid": "d18071bbf8f0a8cec8d1f556c91c6af0",
-        "file": "heart-outlined",
         "css": "heart-empty"
       },
       {
@@ -78,7 +82,6 @@ module.exports = [
         ],
         "code": 9733,
         "uid": "25b34dea4784f72c710454f32ff8fa2b",
-        "file": "star",
         "css": "star"
       },
       {
@@ -87,7 +90,6 @@ module.exports = [
         ],
         "code": 9734,
         "uid": "0e3f1335f83cca67329b2c4bcb3aaec5",
-        "file": "star-outlined",
         "css": "star-empty"
       },
       {
@@ -98,7 +100,6 @@ module.exports = [
         ],
         "code": 128100,
         "uid": "bbd66ef66bb8fa9edde54d9a90b89150",
-        "file": "contact-user",
         "css": "user"
       },
       {
@@ -109,7 +110,6 @@ module.exports = [
         ],
         "code": 128101,
         "uid": "ecf8edb95c3f45eb433b4cce7ba9f740",
-        "file": "contacts-users",
         "css": "users"
       },
       {
@@ -121,7 +121,6 @@ module.exports = [
         ],
         "code": 59136,
         "uid": "6274e0601f2feef7eced89146e708de0",
-        "file": "add-contact-add-user",
         "css": "user-add"
       },
       {
@@ -132,7 +131,6 @@ module.exports = [
         ],
         "code": 127916,
         "uid": "6341ebcbe1ed1f6777c1b9527ead368e",
-        "file": "movie",
         "css": "video"
       },
       {
@@ -143,7 +141,6 @@ module.exports = [
         ],
         "code": 127748,
         "uid": "3def559c3c39b8500882e02892b7daa8",
-        "file": "image",
         "css": "picture"
       },
       {
@@ -153,7 +150,6 @@ module.exports = [
         ],
         "code": 128247,
         "uid": "85017ab6ca074831a8de771b40e9640c",
-        "file": "camera",
         "css": "camera"
       },
       {
@@ -164,17 +160,16 @@ module.exports = [
         ],
         "code": 9871,
         "uid": "5e9f01871d44e56b45ecbfd00f4dbc3a",
-        "file": "image-list",
-        "css": "th"
+        "css": "layout"
       },
       {
         "search": [
+          "menu",
           "list"
         ],
         "code": 9776,
         "uid": "2cfb3f2b46b34a1790aec0aa846297b6",
-        "file": "list",
-        "css": "th-list"
+        "css": "menu"
       },
       {
         "search": [
@@ -185,8 +180,7 @@ module.exports = [
         ],
         "code": 10003,
         "uid": "14017aae737730faeda4a6fd8fb3a5f0",
-        "file": "check-ok",
-        "css": "ok"
+        "css": "check"
       },
       {
         "search": [
@@ -195,8 +189,8 @@ module.exports = [
           "reject"
         ],
         "code": 10005,
+        "from": 10060,
         "uid": "c709da589c923ba3c2ad48d9fc563e93",
-        "file": "check-not-ok",
         "css": "cancel"
       },
       {
@@ -207,16 +201,25 @@ module.exports = [
         ],
         "code": 10006,
         "uid": "c759418c008e9562944080fee617fc76",
-        "file": "close-circle",
-        "css": "cancel-circle"
+        "css": "cancel-circled"
+      },
+      {
+        "search": [
+          "close",
+          "cancel",
+          "reject"
+        ],
+        "code": 10062,
+        "uid": "bf45c39702763f1803b550c36a0ceb12",
+        "css": "cancel-squared"
       },
       {
         "search": [
           "plus"
         ],
         "code": 43,
+        "from": 10133,
         "uid": "70370693ada58ef0a60fa0984fe8d52a",
-        "file": "plus",
         "css": "plus"
       },
       {
@@ -224,17 +227,26 @@ module.exports = [
           "plus"
         ],
         "code": 10133,
+        "from": 8853,
         "uid": "a66cdc7278e6b33b8bd44a141f5e1a8d",
-        "file": "plus-circle",
-        "css": "plus-circle"
+        "css": "plus-circled"
+      },
+      {
+        "search": [
+          "plus",
+          "expand"
+        ],
+        "code": 8862,
+        "uid": "9e1c33b6849ceb08db8acfaf02188b7d",
+        "css": "plus-squared"
       },
       {
         "search": [
           "minus"
         ],
         "code": 45,
+        "from": 10134,
         "uid": "1256e3054823e304d7e452a589cf8bb8",
-        "file": "minus",
         "css": "minus"
       },
       {
@@ -242,9 +254,18 @@ module.exports = [
           "minus"
         ],
         "code": 10134,
+        "from": 8854,
         "uid": "3eb93689881ad0804f87052a53edc2b6",
-        "file": "minus-circle",
-        "css": "minus-circle"
+        "css": "minus-circled"
+      },
+      {
+        "search": [
+          "minus",
+          "collapse"
+        ],
+        "code": 8863,
+        "uid": "4ffa544c1a81c905f0a8a5745d8b9faa",
+        "css": "minus-squared"
       },
       {
         "search": [
@@ -253,7 +274,6 @@ module.exports = [
         ],
         "code": 10067,
         "uid": "3a230e539a4f3b904debd04c6c155034",
-        "file": "help",
         "css": "help"
       },
       {
@@ -263,8 +283,7 @@ module.exports = [
         ],
         "code": 59140,
         "uid": "de9a631a7d18106aea1c89ba51b1990a",
-        "file": "help-circle",
-        "css": "help-circle"
+        "css": "help-circled"
       },
       {
         "search": [
@@ -272,7 +291,6 @@ module.exports = [
         ],
         "code": 8505,
         "uid": "63b86fedd4ee9ad2105f54f4888e7088",
-        "file": "info",
         "css": "info"
       },
       {
@@ -281,28 +299,16 @@ module.exports = [
         ],
         "code": 59141,
         "uid": "7e4164950ffa4990961958b2d6318658",
-        "file": "info-circle",
-        "css": "info-circle"
+        "css": "info-circled"
       },
       {
         "search": [
           "back",
           "return"
         ],
-        "code": 59142,
+        "code": 128281,
         "uid": "3ba4275937db277075fc47d6b5a69a2e",
-        "file": "back",
         "css": "back"
-      },
-      {
-        "search": [
-          "back",
-          "return"
-        ],
-        "code": 59143,
-        "uid": "5308d824454af8ec7835786e272361a9",
-        "file": "back-alt",
-        "css": "back-alt"
       },
       {
         "search": [
@@ -310,7 +316,6 @@ module.exports = [
         ],
         "code": 8962,
         "uid": "513ac180ff85bd275f2b736720cbbf5e",
-        "file": "home",
         "css": "home"
       },
       {
@@ -320,7 +325,6 @@ module.exports = [
         ],
         "code": 128279,
         "uid": "815503841e980c848f55e0271deacead",
-        "file": "link",
         "css": "link"
       },
       {
@@ -330,7 +334,6 @@ module.exports = [
         ],
         "code": 128206,
         "uid": "44b9e75612c5fad5505edd70d071651f",
-        "file": "attach",
         "css": "attach"
       },
       {
@@ -339,7 +342,6 @@ module.exports = [
         ],
         "code": 128274,
         "uid": "1a7104205ea96e6f40ac716d0ca72f21",
-        "file": "lock",
         "css": "lock"
       },
       {
@@ -349,7 +351,6 @@ module.exports = [
         ],
         "code": 128275,
         "uid": "e81fc3a0d39ace6ee735d7b24eedd56d",
-        "file": "unlocked",
         "css": "lock-open"
       },
       {
@@ -359,7 +360,6 @@ module.exports = [
         ],
         "code": 59146,
         "uid": "25fc99a30fecc4021fdcae5fff5ba9ac",
-        "file": "view-eye",
         "css": "eye"
       },
       {
@@ -370,7 +370,6 @@ module.exports = [
         ],
         "code": 59148,
         "uid": "875ab0f6d417223f6ec76ff7f0a4baed",
-        "file": "offer-price-tag",
         "css": "tag"
       },
       {
@@ -379,8 +378,15 @@ module.exports = [
         ],
         "code": 128278,
         "uid": "23912d5623126e14b7b137c3ba557168",
-        "file": "bookmark",
         "css": "bookmark"
+      },
+      {
+        "search": [
+          "bookmarks"
+        ],
+        "code": 128209,
+        "uid": "8538a2249db7f07ae75411886732fb87",
+        "css": "bookmarks"
       },
       {
         "search": [
@@ -388,7 +394,6 @@ module.exports = [
         ],
         "code": 9873,
         "uid": "1d2a6c3d9236b88b0f185c7c4530fa52",
-        "file": "flag",
         "css": "flag"
       },
       {
@@ -396,12 +401,24 @@ module.exports = [
           "thumbs",
           "up",
           "like",
+          "love",
           "vote"
         ],
         "code": 128077,
         "uid": "7ad4d2306ebda8452e5e3eff3cd8241c",
-        "file": "like-thumbs-up",
         "css": "thumbs-up"
+      },
+      {
+        "search": [
+          "thumbs",
+          "down",
+          "dislike",
+          "unlike",
+          "vote"
+        ],
+        "code": 128078,
+        "uid": "429fba993b729174468a9493613ad1ba",
+        "css": "thumbs-down"
       },
       {
         "search": [
@@ -409,7 +426,6 @@ module.exports = [
         ],
         "code": 128229,
         "uid": "b08cfe8039de2ce815686aced2caef06",
-        "file": "download",
         "css": "download"
       },
       {
@@ -418,7 +434,6 @@ module.exports = [
         ],
         "code": 128228,
         "uid": "44199a54057e6e264fde61a49b034171",
-        "file": "upload",
         "css": "upload"
       },
       {
@@ -428,7 +443,6 @@ module.exports = [
         ],
         "code": 59153,
         "uid": "5d595124cecf472869d1cdc020da0ccc",
-        "file": "upload-to-cloud",
         "css": "upload-cloud"
       },
       {
@@ -437,7 +451,6 @@ module.exports = [
         ],
         "code": 59154,
         "uid": "b6fc2f656ef87275889422e19550680a",
-        "file": "reply",
         "css": "reply"
       },
       {
@@ -446,7 +459,6 @@ module.exports = [
         ],
         "code": 59155,
         "uid": "1a4b54ba5618e5364fc47a3d26c1cf59",
-        "file": "reply-to-all",
         "css": "reply-all"
       },
       {
@@ -455,7 +467,6 @@ module.exports = [
         ],
         "code": 10150,
         "uid": "ec347024a3640deebeeab53fd0d5ad03",
-        "file": "forward",
         "css": "forward"
       },
       {
@@ -464,8 +475,7 @@ module.exports = [
         ],
         "code": 10078,
         "uid": "c3e5dafba1739ef33cc574c7484febf7",
-        "file": "quote",
-        "css": "quote-right"
+        "css": "quote"
       },
       {
         "search": [
@@ -473,7 +483,6 @@ module.exports = [
         ],
         "code": 59156,
         "uid": "b6f32db98a3de777f5ae3005191b1831",
-        "file": "code",
         "css": "code"
       },
       {
@@ -483,7 +492,6 @@ module.exports = [
         ],
         "code": 59157,
         "uid": "390d6d13398cbf8c8c3c5493f7d34088",
-        "file": "export",
         "css": "export"
       },
       {
@@ -495,7 +503,6 @@ module.exports = [
         ],
         "code": 9998,
         "uid": "c77fd2fd065b5fe16d6f2b41e190b266",
-        "file": "write-new",
         "css": "pencil"
       },
       {
@@ -508,7 +515,6 @@ module.exports = [
         ],
         "code": 10002,
         "uid": "bcb868184ff9c35f8aef564f50c0d649",
-        "file": "feather",
         "css": "feather"
       },
       {
@@ -517,7 +523,6 @@ module.exports = [
         ],
         "code": 59158,
         "uid": "28f124a10127a47b9d9472699193d75a",
-        "file": "print",
         "css": "print"
       },
       {
@@ -527,7 +532,6 @@ module.exports = [
         ],
         "code": 59159,
         "uid": "216891b0093d4dbef19877d5b00d1b16",
-        "file": "retweet",
         "css": "retweet"
       },
       {
@@ -536,7 +540,6 @@ module.exports = [
         ],
         "code": 9000,
         "uid": "005a38f6af74b31aeb817fedb09d2175",
-        "file": "keyboard",
         "css": "keyboard"
       },
       {
@@ -547,7 +550,6 @@ module.exports = [
         ],
         "code": 59160,
         "uid": "16890362e811b4cb8de36282b071fe30",
-        "file": "comment",
         "css": "comment"
       },
       {
@@ -557,7 +559,6 @@ module.exports = [
         ],
         "code": 59168,
         "uid": "2c0b53280f82068f6bab4e2200025d9f",
-        "file": "chat",
         "css": "chat"
       },
       {
@@ -568,7 +569,6 @@ module.exports = [
         ],
         "code": 128276,
         "uid": "2c5335c6e56b876139d7a58ab2f4b2fe",
-        "file": "alert",
         "css": "bell"
       },
       {
@@ -584,13 +584,22 @@ module.exports = [
       },
       {
         "search": [
+          "attention",
+          "warning",
+          "alert"
+        ],
+        "code": 128165,
+        "uid": "39a5a0d7ce8342d149373b2ce219503a",
+        "css": "alert"
+      },
+      {
+        "search": [
           "contact",
           "card",
           "vcard"
         ],
         "code": 59170,
         "uid": "457c8e2b305e7af74c1be4f07a01ca92",
-        "file": "contact-card",
         "css": "vcard"
       },
       {
@@ -599,7 +608,6 @@ module.exports = [
         ],
         "code": 59171,
         "uid": "540b6a4262be769515c79700618b4aea",
-        "file": "address",
         "css": "address"
       },
       {
@@ -610,7 +618,6 @@ module.exports = [
         ],
         "code": 59172,
         "uid": "a42b598e4298f3319b25a2702a02e7ff",
-        "file": "location",
         "css": "location"
       },
       {
@@ -619,7 +626,6 @@ module.exports = [
         ],
         "code": 59175,
         "uid": "64f5a50cf7ac972a56a9a511acb5d28e",
-        "file": "map",
         "css": "map"
       },
       {
@@ -628,7 +634,6 @@ module.exports = [
         ],
         "code": 10146,
         "uid": "f8513213799b244e66b2836aeee88531",
-        "file": "direction",
         "css": "direction"
       },
       {
@@ -637,8 +642,15 @@ module.exports = [
         ],
         "code": 59176,
         "uid": "c117f17c0316ef71fb2a658c4c273002",
-        "file": "compass",
         "css": "compass"
+      },
+      {
+        "search": [
+          "cup"
+        ],
+        "code": 9749,
+        "uid": "9bdc80f58999873c5a8079ad2d7f4143",
+        "css": "cup"
       },
       {
         "search": [
@@ -646,8 +658,7 @@ module.exports = [
           "delete"
         ],
         "code": 59177,
-        "uid": "9bdc80f58999873c5a8079ad2d7f4143",
-        "file": "trash",
+        "uid": "2626e3a1bbcd90e45849af3b58a1d594",
         "css": "trash"
       },
       {
@@ -657,7 +668,6 @@ module.exports = [
         ],
         "code": 59184,
         "uid": "49bd3e825b8267f976f6d1ad391e2f4d",
-        "file": "document",
         "css": "doc"
       },
       {
@@ -667,7 +677,6 @@ module.exports = [
         ],
         "code": 59190,
         "uid": "922ab2cb66943a83de969990289ef1dc",
-        "file": "documents",
         "css": "docs"
       },
       {
@@ -677,8 +686,7 @@ module.exports = [
         ],
         "code": 59191,
         "uid": "8782cc70184b33096ae927590d1fadc4",
-        "file": "landscape-documents",
-        "css": "docs-landscape"
+        "css": "doc-landscape"
       },
       {
         "search": [
@@ -688,8 +696,26 @@ module.exports = [
         ],
         "code": 128196,
         "uid": "1189604bf305b6b03a74685ce60e6632",
-        "file": "text-document",
         "css": "doc-text"
+      },
+      {
+        "search": [
+          "doc",
+          "text",
+          "article"
+        ],
+        "code": 59185,
+        "uid": "1d7c1d30ad49a988556273a238097c2a",
+        "css": "doc-text-inv"
+      },
+      {
+        "search": [
+          "newspaper",
+          "article"
+        ],
+        "code": 128240,
+        "uid": "da0fd38d651815e3a12f6c030ff1fe5b",
+        "css": "newspaper"
       },
       {
         "search": [
@@ -698,8 +724,15 @@ module.exports = [
         ],
         "code": 128214,
         "uid": "51727ca007aa35ceabcaffc28934faee",
-        "file": "book",
         "css": "book-open"
+      },
+      {
+        "search": [
+          "book"
+        ],
+        "code": 128213,
+        "uid": "48b79f27e4798f23bafa07b55dbe5b73",
+        "css": "book"
       },
       {
         "search": [
@@ -707,7 +740,6 @@ module.exports = [
         ],
         "code": 128193,
         "uid": "0ccb084ddeeae372673793ed0b45bb4a",
-        "file": "folder",
         "css": "folder"
       },
       {
@@ -715,9 +747,17 @@ module.exports = [
           "archive"
         ],
         "code": 59192,
+        "from": 59392,
         "uid": "96ea1be71f597a5bdfc8f791ada4f651",
-        "file": "archive",
         "css": "archive"
+      },
+      {
+        "search": [
+          "box"
+        ],
+        "code": 128230,
+        "uid": "cc05df515bebe11df3ada0a5910a8f6d",
+        "css": "box"
       },
       {
         "search": [
@@ -725,7 +765,6 @@ module.exports = [
         ],
         "code": 59194,
         "uid": "3e617d8049807e128c80d0344ba09e37",
-        "file": "rss",
         "css": "rss"
       },
       {
@@ -736,7 +775,6 @@ module.exports = [
         ],
         "code": 128222,
         "uid": "5854855e963044f93b15738a5bb27a29",
-        "file": "phone",
         "css": "phone"
       },
       {
@@ -747,8 +785,15 @@ module.exports = [
         ],
         "code": 9881,
         "uid": "bc64550dd022ce21604f97309b346cea",
-        "file": "settings",
         "css": "cog"
+      },
+      {
+        "search": [
+          "tools"
+        ],
+        "code": 9874,
+        "uid": "6a7b9d4863bb7e6c79e9457a72d689b6",
+        "css": "tools"
       },
       {
         "search": [
@@ -756,8 +801,15 @@ module.exports = [
         ],
         "code": 59196,
         "uid": "91426c82d94428a33353e495418435e3",
-        "file": "share",
         "css": "share"
+      },
+      {
+        "search": [
+          "shareable"
+        ],
+        "code": 59198,
+        "uid": "e4536ab890a215f2fe8952de5c2fe354",
+        "css": "shareable"
       },
       {
         "search": [
@@ -766,9 +818,18 @@ module.exports = [
           "cart"
         ],
         "code": 59197,
-        "uid": "2c71ee1c65e1992ba32d5ffc5ee7f337",
-        "file": "shopping-bag",
+        "uid": "e126987944593dfee041f8e2a68145db",
         "css": "basket"
+      },
+      {
+        "search": [
+          "bag",
+          "shopping",
+          "cart"
+        ],
+        "code": 128092,
+        "uid": "2c71ee1c65e1992ba32d5ffc5ee7f337",
+        "css": "bag"
       },
       {
         "search": [
@@ -777,8 +838,23 @@ module.exports = [
         ],
         "code": 128197,
         "uid": "413717f5ea649e8d8b93938be277264a",
-        "file": "calendar",
         "css": "calendar"
+      },
+      {
+        "search": [
+          "login"
+        ],
+        "code": 59200,
+        "uid": "a204f0fa972408eaae5a363c444991b2",
+        "css": "login"
+      },
+      {
+        "search": [
+          "logout"
+        ],
+        "code": 59201,
+        "uid": "2d76f2c8d13be40694ecadfea7fb83c3",
+        "css": "logout"
       },
       {
         "search": [
@@ -786,7 +862,6 @@ module.exports = [
         ],
         "code": 127908,
         "uid": "1e099a876c8a6a83f10c9bafa9886614",
-        "file": "mic",
         "css": "mic"
       },
       {
@@ -797,8 +872,7 @@ module.exports = [
         ],
         "code": 128263,
         "uid": "2f750a9be253e8e451209574336e7020",
-        "file": "mute",
-        "css": "volume-off"
+        "css": "mute"
       },
       {
         "search": [
@@ -807,8 +881,7 @@ module.exports = [
         ],
         "code": 128266,
         "uid": "ef51920c7a9bed4d87f53709db115e34",
-        "file": "sound",
-        "css": "volume-up"
+        "css": "sound"
       },
       {
         "search": [
@@ -816,8 +889,8 @@ module.exports = [
           "sound"
         ],
         "code": 59202,
+        "from": 9207,
         "uid": "edd88296295d95d6510e66d9a6bbd6c3",
-        "file": "volume",
         "css": "volume"
       },
       {
@@ -827,7 +900,6 @@ module.exports = [
         ],
         "code": 128340,
         "uid": "8663320a860b00f26e94d3d15c9ba99a",
-        "file": "time-clock",
         "css": "clock"
       },
       {
@@ -839,7 +911,6 @@ module.exports = [
         ],
         "code": 9203,
         "uid": "7f6916533c0842b6cec699fd773693d3",
-        "file": "time-glass",
         "css": "hourglass"
       },
       {
@@ -850,7 +921,6 @@ module.exports = [
         ],
         "code": 128161,
         "uid": "4b20e1deee87faf4c3fab735fbd4bc1a",
-        "file": "light-bulb",
         "css": "lamp"
       },
       {
@@ -861,7 +931,6 @@ module.exports = [
         ],
         "code": 128261,
         "uid": "2d14369ed7f129e779eaa30195368218",
-        "file": "light-down",
         "css": "light-down"
       },
       {
@@ -872,8 +941,16 @@ module.exports = [
         ],
         "code": 128262,
         "uid": "f8e120c48c070f8afd2d072651b4fb9f",
-        "file": "light-up",
         "css": "light-up"
+      },
+      {
+        "search": [
+          "adjust",
+          "contrast"
+        ],
+        "code": 9681,
+        "uid": "f6fa10cb3ffec7becb60834f50bb0182",
+        "css": "adjust"
       },
       {
         "search": [
@@ -882,7 +959,6 @@ module.exports = [
         ],
         "code": 128683,
         "uid": "29e7f6072d5935d7818204d9b088508b",
-        "file": "block",
         "css": "block"
       },
       {
@@ -892,7 +968,6 @@ module.exports = [
         ],
         "code": 59204,
         "uid": "3a3f65b92c9b2fcbb3a8dcd0d42ee806",
-        "file": "full-screen",
         "css": "resize-full"
       },
       {
@@ -901,7 +976,6 @@ module.exports = [
         ],
         "code": 59206,
         "uid": "108c8ac13badc00ce66da014436e6eb1",
-        "file": "small-screen",
         "css": "resize-small"
       },
       {
@@ -911,7 +985,6 @@ module.exports = [
         ],
         "code": 59212,
         "uid": "9248ce8062fb4707a6919bfe9ac1af8e",
-        "file": "popup",
         "css": "popup"
       },
       {
@@ -920,7 +993,6 @@ module.exports = [
         ],
         "code": 59213,
         "uid": "77bcf90f0c68635bab5abfb4ed736696",
-        "file": "publish",
         "css": "publish"
       },
       {
@@ -929,7 +1001,6 @@ module.exports = [
         ],
         "code": 59214,
         "uid": "744a71fe4b5ab7c4f4b7cd598e9bf75a",
-        "file": "browser",
         "css": "window"
       },
       {
@@ -940,7 +1011,6 @@ module.exports = [
         ],
         "code": 59215,
         "uid": "0a3192de65a73ca1501b073ad601f87d",
-        "file": "select-box-arrow",
         "css": "arrow-combo"
       },
       {
@@ -951,8 +1021,7 @@ module.exports = [
         ],
         "code": 59224,
         "uid": "40ef3542646bed70cb63f1290c9d98c9",
-        "file": "down-circle-arrow",
-        "css": "down-circle2"
+        "css": "down-circled"
       },
       {
         "search": [
@@ -961,8 +1030,7 @@ module.exports = [
         ],
         "code": 59225,
         "uid": "0db0310883e0bdacfd1bb2d394238e8a",
-        "file": "left-circle-arrow",
-        "css": "left-circle2"
+        "css": "left-circled"
       },
       {
         "search": [
@@ -971,8 +1039,7 @@ module.exports = [
         ],
         "code": 59226,
         "uid": "52725ff4d4042964bd3a60609bf3695b",
-        "file": "right-circle-arrow",
-        "css": "right-circle2"
+        "css": "right-circled"
       },
       {
         "search": [
@@ -982,8 +1049,7 @@ module.exports = [
         ],
         "code": 59227,
         "uid": "64691230b90991883f94c6dfb2afc90a",
-        "file": "up-circle-arrow",
-        "css": "up-circle2"
+        "css": "up-circled"
       },
       {
         "search": [
@@ -992,7 +1058,6 @@ module.exports = [
         ],
         "code": 59228,
         "uid": "8704cd847a47b64265b8bb110c8b4d62",
-        "file": "open-arrow-down",
         "css": "down-open"
       },
       {
@@ -1002,7 +1067,6 @@ module.exports = [
         ],
         "code": 59229,
         "uid": "c311c48d79488965b0fab7f9cd12b6b5",
-        "file": "open-arrow-left",
         "css": "left-open"
       },
       {
@@ -1012,7 +1076,6 @@ module.exports = [
         ],
         "code": 59230,
         "uid": "749e7d90a9182938180f1d2d8c33584e",
-        "file": "open-arrow-right",
         "css": "right-open"
       },
       {
@@ -1022,8 +1085,79 @@ module.exports = [
         ],
         "code": 59231,
         "uid": "9c7ff134960bb5a82404e4aeaab366d9",
-        "file": "open-arrow-up",
         "css": "up-open"
+      },
+      {
+        "search": [
+          "arrow",
+          "down"
+        ],
+        "code": 59232,
+        "uid": "f11c9e95ae5eaa84d193e8fa1d38c6f9",
+        "css": "down-open-mini"
+      },
+      {
+        "search": [
+          "arrow",
+          "left"
+        ],
+        "code": 59233,
+        "uid": "592717bd601645d61517d2a584d04127",
+        "css": "left-open-mini"
+      },
+      {
+        "search": [
+          "arrow",
+          "right"
+        ],
+        "code": 59234,
+        "uid": "37f6cfbb4062ed0d01b351ec35c334ff",
+        "css": "right-open-mini"
+      },
+      {
+        "search": [
+          "arrow",
+          "up"
+        ],
+        "code": 59235,
+        "uid": "9e251fb8e9e1c71ab09683468e0479a3",
+        "css": "up-open-mini"
+      },
+      {
+        "search": [
+          "arrow",
+          "down"
+        ],
+        "code": 59236,
+        "uid": "289b5f92f23acf1059c93fbf401c1ad5",
+        "css": "down-open-big"
+      },
+      {
+        "search": [
+          "arrow",
+          "left"
+        ],
+        "code": 59237,
+        "uid": "884cfc3e6e2d456dd2a2ca0dbb9e6337",
+        "css": "left-open-big"
+      },
+      {
+        "search": [
+          "arrow",
+          "right"
+        ],
+        "code": 59238,
+        "uid": "004882ab2d5c418c5b2060e80596279b",
+        "css": "right-open-big"
+      },
+      {
+        "search": [
+          "arrow",
+          "up"
+        ],
+        "code": 59239,
+        "uid": "0805cca616b3c12714f35af4d0912c10",
+        "css": "up-open-big"
       },
       {
         "search": [
@@ -1032,8 +1166,7 @@ module.exports = [
         ],
         "code": 11015,
         "uid": "d5098cb09be5827a2911dbab5af49ad2",
-        "file": "thin-arrow-down",
-        "css": "down-thin"
+        "css": "down"
       },
       {
         "search": [
@@ -1042,8 +1175,7 @@ module.exports = [
         ],
         "code": 11013,
         "uid": "6acd5cf005d48f96787350e72bd45688",
-        "file": "thin-arrow-left",
-        "css": "left-thin"
+        "css": "left"
       },
       {
         "search": [
@@ -1052,8 +1184,7 @@ module.exports = [
         ],
         "code": 10145,
         "uid": "9e67bfab0143d9511f8eef6897caeb88",
-        "file": "thin-arrow-right",
-        "css": "right-thin"
+        "css": "right"
       },
       {
         "search": [
@@ -1062,8 +1193,7 @@ module.exports = [
         ],
         "code": 11014,
         "uid": "43c4064ec1260d0e55c37e0467c75cbb",
-        "file": "thin-arrow-up",
-        "css": "up-thin"
+        "css": "up"
       },
       {
         "search": [
@@ -1112,7 +1242,6 @@ module.exports = [
         ],
         "code": 58544,
         "uid": "78944e4652d6f9b8b506eaef331308cd",
-        "file": "bold-down-arrow",
         "css": "down-bold"
       },
       {
@@ -1122,7 +1251,6 @@ module.exports = [
         ],
         "code": 58541,
         "uid": "0222089fb4194cc714dcc1ffd2525c11",
-        "file": "bold-left-arrow",
         "css": "left-bold"
       },
       {
@@ -1132,7 +1260,6 @@ module.exports = [
         ],
         "code": 58542,
         "uid": "1a90b06af8614b12d8c8a5b90cc19ab3",
-        "file": "bold-right-arrow",
         "css": "right-bold"
       },
       {
@@ -1142,7 +1269,6 @@ module.exports = [
         ],
         "code": 58543,
         "uid": "8c8f768607b8fc4c92c0f85b488e87e8",
-        "file": "bold-up-arrow",
         "css": "up-bold"
       },
       {
@@ -1152,8 +1278,7 @@ module.exports = [
         ],
         "code": 8595,
         "uid": "a30a32d49f80bb534c062ae1743ef433",
-        "file": "down-arrow",
-        "css": "down"
+        "css": "down-thin"
       },
       {
         "search": [
@@ -1162,8 +1287,7 @@ module.exports = [
         ],
         "code": 8592,
         "uid": "8d8f4722d16e95290858eaf294d9d830",
-        "file": "left-arrow",
-        "css": "left"
+        "css": "left-thin"
       },
       {
         "search": [
@@ -1172,8 +1296,7 @@ module.exports = [
         ],
         "code": 8594,
         "uid": "ef3eda51383ce050517892df3fc05ffc",
-        "file": "right-arrow",
-        "css": "right"
+        "css": "right-thin"
       },
       {
         "search": [
@@ -1182,8 +1305,7 @@ module.exports = [
         ],
         "code": 8593,
         "uid": "dbc97808cba7d0c135c7054e7a85fb86",
-        "file": "up-arrow",
-        "css": "up"
+        "css": "up-thin"
       },
       {
         "search": [
@@ -1192,7 +1314,6 @@ module.exports = [
         ],
         "code": 10226,
         "uid": "465bb89b6f204234e5787c326b4ae54c",
-        "file": "reload-CCW",
         "css": "ccw"
       },
       {
@@ -1203,8 +1324,18 @@ module.exports = [
         ],
         "code": 10227,
         "uid": "bb46b15cb78cc4cc05d3d715d522ac4d",
-        "file": "reload-CW",
         "css": "cw"
+      },
+      {
+        "search": [
+          "circle",
+          "sync",
+          "reload",
+          "refresh"
+        ],
+        "code": 128260,
+        "uid": "3bd18d47a12b8709e9f4fe9ead4f7518",
+        "css": "arrows-ccw"
       },
       {
         "search": [
@@ -1212,8 +1343,16 @@ module.exports = [
         ],
         "code": 8627,
         "uid": "fa0118a65fc8dee739469f6901bbd189",
-        "file": "level-down",
         "css": "level-down"
+      },
+      {
+        "search": [
+          "back",
+          "return"
+        ],
+        "code": 8624,
+        "uid": "5308d824454af8ec7835786e272361a9",
+        "css": "level-up"
       },
       {
         "search": [
@@ -1222,8 +1361,25 @@ module.exports = [
         ],
         "code": 128256,
         "uid": "3d349daaea304032a7669b4f24931b6c",
-        "file": "shuffle",
         "css": "shuffle"
+      },
+      {
+        "search": [
+          "loop",
+          "repeat"
+        ],
+        "code": 128257,
+        "uid": "8e0220796066428d6ddea96a4f1b5131",
+        "css": "loop"
+      },
+      {
+        "search": [
+          "switch",
+          "exchange"
+        ],
+        "code": 8646,
+        "uid": "f0eac0958921fe45b85d01b79d76e86b",
+        "css": "switch"
       },
       {
         "search": [
@@ -1232,7 +1388,6 @@ module.exports = [
         ],
         "code": 9654,
         "uid": "cb13afd4722a849d48056540bb74c47e",
-        "file": "play",
         "css": "play"
       },
       {
@@ -1240,9 +1395,8 @@ module.exports = [
           "stop",
           "player"
         ],
-        "code": 9642,
+        "code": 9632,
         "uid": "48f2e18872fe74d4579a4c8a1527fc1e",
-        "file": "stop",
         "css": "stop"
       },
       {
@@ -1251,8 +1405,8 @@ module.exports = [
           "player"
         ],
         "code": 9097,
+        "from": 8214,
         "uid": "d8d378d0ce413f231dfa37592e39c227",
-        "file": "paus",
         "css": "pause"
       },
       {
@@ -1261,8 +1415,8 @@ module.exports = [
           "player"
         ],
         "code": 9899,
+        "from": 9679,
         "uid": "e188c02f740feff7e2d2bce1950b75fa",
-        "file": "record",
         "css": "record"
       },
       {
@@ -1272,7 +1426,6 @@ module.exports = [
         ],
         "code": 9197,
         "uid": "0afbb00323696f49e9c47f4d9fe6390b",
-        "file": "jump-to-end",
         "css": "to-end"
       },
       {
@@ -1282,7 +1435,6 @@ module.exports = [
         ],
         "code": 9198,
         "uid": "ceefe7653a4f6edaacce9e7f196cec5a",
-        "file": "jump-to-start",
         "css": "to-start"
       },
       {
@@ -1292,8 +1444,7 @@ module.exports = [
         ],
         "code": 9193,
         "uid": "18f7c393e3532e40edd45607c9d99988",
-        "file": "fast-forward",
-        "css": "fast-fw"
+        "css": "fast-forward"
       },
       {
         "search": [
@@ -1302,8 +1453,7 @@ module.exports = [
         ],
         "code": 9194,
         "uid": "85806fd8ab907f45d34f976354a0df23",
-        "file": "fast-backward",
-        "css": "fast-bw"
+        "css": "fast-backward"
       },
       {
         "search": [
@@ -1312,7 +1462,6 @@ module.exports = [
         ],
         "code": 59240,
         "uid": "be998d5ee625a58912ae630f34cc8419",
-        "file": "charge-empty",
         "css": "progress-0"
       },
       {
@@ -1322,7 +1471,6 @@ module.exports = [
         ],
         "code": 59241,
         "uid": "054519608bca087aa306252471dda9c4",
-        "file": "charge-one-third",
         "css": "progress-1"
       },
       {
@@ -1332,7 +1480,6 @@ module.exports = [
         ],
         "code": 59242,
         "uid": "3e49435dd1950a0b7543e13256c89e52",
-        "file": "charge-two-thirds",
         "css": "progress-2"
       },
       {
@@ -1342,7 +1489,6 @@ module.exports = [
         ],
         "code": 59243,
         "uid": "d924bc68683f68ecf5e09e49731fd59a",
-        "file": "charge-full",
         "css": "progress-3"
       },
       {
@@ -1351,7 +1497,6 @@ module.exports = [
         ],
         "code": 127919,
         "uid": "3eadc3e443cf1c7e17f1b44d21254c00",
-        "file": "center-crosshair",
         "css": "target"
       },
       {
@@ -1360,8 +1505,15 @@ module.exports = [
         ],
         "code": 127912,
         "uid": "80451d627470ea7f977a263fdb771d7b",
-        "file": "palette",
         "css": "palette"
+      },
+      {
+        "search": [
+          "list"
+        ],
+        "code": 57349,
+        "uid": "3626b3f3a0b284e7f4166b815719aece",
+        "css": "list"
       },
       {
         "search": [
@@ -1370,7 +1522,6 @@ module.exports = [
         ],
         "code": 57347,
         "uid": "97bd5542ed3e143d2ee9b60e14487615",
-        "file": "add-to-list",
         "css": "list-add"
       },
       {
@@ -1379,9 +1530,8 @@ module.exports = [
           "wifi",
           "signal"
         ],
-        "code": 59248,
+        "code": 128246,
         "uid": "84a7262985600b683bbab0da9298776d",
-        "file": "broadcast",
         "css": "signal"
       },
       {
@@ -1391,8 +1541,7 @@ module.exports = [
         ],
         "code": 127942,
         "uid": "978aa8facd816df874039e139cb0cdde",
-        "file": "top-list",
-        "css": "top-list"
+        "css": "trophy"
       },
       {
         "search": [
@@ -1400,7 +1549,6 @@ module.exports = [
         ],
         "code": 128267,
         "uid": "a51290161c48d96d7f2e2151a4cbcde1",
-        "file": "battery",
         "css": "battery"
       },
       {
@@ -1410,7 +1558,6 @@ module.exports = [
         ],
         "code": 59249,
         "uid": "89eb512cb82a1c3fe83cb16134f9876c",
-        "file": "back-in-time",
         "css": "back-in-time"
       },
       {
@@ -1421,7 +1568,6 @@ module.exports = [
         ],
         "code": 128187,
         "uid": "b7a336095aa4535c3689cb557edf23db",
-        "file": "tv-screen",
         "css": "monitor"
       },
       {
@@ -1431,7 +1577,6 @@ module.exports = [
         ],
         "code": 128241,
         "uid": "767fede84586366cd7d6c835be745454",
-        "file": "mobile",
         "css": "mobile"
       },
       {
@@ -1440,8 +1585,7 @@ module.exports = [
         ],
         "code": 59254,
         "uid": "414fe97e4af5215a06d29be0f2cecdf5",
-        "file": "network",
-        "css": "net"
+        "css": "network"
       },
       {
         "search": [
@@ -1450,7 +1594,6 @@ module.exports = [
         ],
         "code": 128191,
         "uid": "16f88519423df34fc5c48be7ded81b8f",
-        "file": "vinyl-record",
         "css": "cd"
       },
       {
@@ -1459,7 +1602,6 @@ module.exports = [
         ],
         "code": 59255,
         "uid": "b32d88adf7cd6bfa8d0e177dfa642a4d",
-        "file": "inbox",
         "css": "inbox"
       },
       {
@@ -1468,16 +1610,14 @@ module.exports = [
         ],
         "code": 59256,
         "uid": "d83b7429002f7b0b206c8d550034212b",
-        "file": "install",
         "css": "install"
       },
       {
         "search": [
           "globe"
         ],
-        "code": 119565,
+        "code": 127758,
         "uid": "6a12c2b74456ea21cc984e11dec227a1",
-        "file": "globe",
         "css": "globe"
       },
       {
@@ -1486,8 +1626,17 @@ module.exports = [
         ],
         "code": 9729,
         "uid": "114fed43140e2b5ce42c48b95c19375b",
-        "file": "cloud",
         "css": "cloud"
+      },
+      {
+        "search": [
+          "cloud",
+          "thunder",
+          "bolt"
+        ],
+        "code": 9928,
+        "uid": "66a40c7c0ee5ea61f4b6aa0dd0f9ebb9",
+        "css": "cloud-thunder"
       },
       {
         "search": [
@@ -1496,7 +1645,6 @@ module.exports = [
         ],
         "code": 9889,
         "uid": "98c63f6b98c543b52d4c43bcd486d28f",
-        "file": "flash",
         "css": "flash"
       },
       {
@@ -1506,19 +1654,29 @@ module.exports = [
         ],
         "code": 9789,
         "uid": "0d03db7afd4857accf1821efdc8ea72b",
-        "file": "sleep",
         "css": "moon"
       },
       {
         "search": [
           "flight",
           "plane",
-          "airplane"
+          "airplane",
+          "fly"
         ],
         "code": 9992,
         "uid": "6e8aea8fff9525dfc5149f0c03669091",
-        "file": "flight",
         "css": "flight"
+      },
+      {
+        "search": [
+          "paper",
+          "plane",
+          "fly"
+        ],
+        "code": 59291,
+        "from": 128319,
+        "uid": "db112402805d9dadc01ce009fbfdb914",
+        "css": "paper-plane"
       },
       {
         "search": [
@@ -1526,7 +1684,6 @@ module.exports = [
         ],
         "code": 127810,
         "uid": "41d534223ef447a01af3e2f629ec70eb",
-        "file": "leaf",
         "css": "leaf"
       },
       {
@@ -1535,7 +1692,6 @@ module.exports = [
         ],
         "code": 59272,
         "uid": "2f9f67ee4354feef8c1f51e03bac6ef3",
-        "file": "lifebuoy",
         "css": "lifebuoy"
       },
       {
@@ -1545,25 +1701,32 @@ module.exports = [
         ],
         "code": 59273,
         "uid": "97c6901d8db077614e77b089d4eedac8",
-        "file": "mouse-website",
         "css": "mouse"
       },
       {
         "search": [
-          "bag"
+          "briefcase"
         ],
-        "code": 59274,
+        "code": 128188,
         "uid": "9ea7cce5e08e5ac2c225fabf2e6dc353",
-        "file": "suitecase",
-        "css": "bag"
+        "css": "briefcase"
+      },
+      {
+        "search": [
+          "suitcase"
+        ],
+        "code": 59278,
+        "from": 128710,
+        "uid": "11dd26ebf6934bf750a9156b353d7f2d",
+        "css": "suitcase"
       },
       {
         "search": [
           "dot"
         ],
         "code": 59275,
+        "from": 9204,
         "uid": "d2c6b59d9a239140cb76be0627480855",
-        "file": "dot",
         "css": "dot"
       },
       {
@@ -1572,8 +1735,8 @@ module.exports = [
           "flickr"
         ],
         "code": 59276,
+        "from": 9205,
         "uid": "13b11ab72c6ae9c97ee12428e17f3a4e",
-        "file": "dots-two",
         "css": "dot-2"
       },
       {
@@ -1581,38 +1744,892 @@ module.exports = [
           "dot"
         ],
         "code": 59277,
+        "from": 9206,
         "uid": "d10920db2e79c997c5e783279291970c",
-        "file": "dots-three",
         "css": "dot-3"
       },
       {
         "search": [
-          "google",
-          "circles"
+          "brush"
         ],
-        "code": 62224,
-        "uid": "ea1225fead573e185817d60729569b44",
-        "file": "google-circles",
-        "css": "google-circles"
+        "code": 59290,
+        "uid": "39c4d0e225a1263a398a47523cb5b9bd",
+        "css": "brush"
+      },
+      {
+        "search": [
+          "magnet"
+        ],
+        "code": 59297,
+        "uid": "d55e21e6468c04c5ca38a6560b27d1aa",
+        "css": "magnet"
+      },
+      {
+        "search": [
+          "infinity"
+        ],
+        "code": 8734,
+        "uid": "34ba50fe8e4f95e7f3d76c6534814a70",
+        "css": "infinity"
+      },
+      {
+        "search": [
+          "erase"
+        ],
+        "code": 9003,
+        "uid": "e8239f8188c76c925be4bd1bbcc013ac",
+        "css": "erase"
+      },
+      {
+        "search": [
+          "chart",
+          "pie",
+          "diagram"
+        ],
+        "code": 59217,
+        "from": 9716,
+        "uid": "fb5082fac1794b69a1381196219a836e",
+        "css": "chart-pie"
+      },
+      {
+        "search": [
+          "chart",
+          "graph",
+          "line",
+          "diagram"
+        ],
+        "code": 128200,
+        "uid": "7184d8171b6a9b18eabbace94cca21db",
+        "css": "chart-line"
+      },
+      {
+        "search": [
+          "chart",
+          "bar",
+          "diagram"
+        ],
+        "code": 128202,
+        "uid": "7d90b6cb3f3783170a96b09e5f0de6d5",
+        "css": "chart-bar"
+      },
+      {
+        "search": [
+          "chart",
+          "area",
+          "diagram"
+        ],
+        "code": 128318,
+        "uid": "32b4054f35918992f723e39f4095f005",
+        "css": "chart-area"
+      },
+      {
+        "search": [
+          "tape",
+          "voice mail"
+        ],
+        "code": 9991,
+        "uid": "ed62f5f10b256b0a959e6c847ed8f4a6",
+        "css": "tape"
+      },
+      {
+        "search": [
+          "graduation"
+        ],
+        "code": 127891,
+        "uid": "ef74ff62feda486fd414410e782b598a",
+        "css": "graduation-cap"
+      },
+      {
+        "search": [
+          "language",
+          "translate"
+        ],
+        "code": 59218,
+        "from": 127892,
+        "uid": "ddecf5ad7935e3fb1b70dac6ed00d06a",
+        "css": "language"
+      },
+      {
+        "search": [
+          "ticket"
+        ],
+        "code": 127915,
+        "uid": "333bae7aaf7395d1004875be5a075661",
+        "css": "ticket"
+      },
+      {
+        "search": [
+          "whater",
+          "wash"
+        ],
+        "code": 128166,
+        "uid": "36a1cee80657a9c66e8384dd57bed66c",
+        "css": "water"
+      },
+      {
+        "search": [
+          "droplet",
+          "tint"
+        ],
+        "code": 128167,
+        "uid": "4efb719e797c54b3c58e5ae061d29d53",
+        "css": "droplet"
+      },
+      {
+        "search": [],
+        "code": 59219,
+        "from": 128168,
+        "uid": "5f3a0ebf2d13f60ec7ed76eb41ba9bb2",
+        "css": "air"
+      },
+      {
+        "search": [
+          "card",
+          "plastic",
+          "credit"
+        ],
+        "code": 128179,
+        "uid": "c5cd6ea1981cecdd85c42d9d209bc3b8",
+        "css": "credit-card"
+      },
+      {
+        "search": [
+          "floppy",
+          "save"
+        ],
+        "code": 128190,
+        "uid": "191bcf63575a78def53c907c3d3bf7f0",
+        "css": "floppy"
+      },
+      {
+        "search": [
+          "clipboard"
+        ],
+        "code": 128203,
+        "uid": "b95cfc96d48a72dd665e0ab109880b5e",
+        "css": "clipboard"
+      },
+      {
+        "search": [
+          "megaphone",
+          "bullhorn"
+        ],
+        "code": 128227,
+        "uid": "489090690d8bd1745e365485946e20a8",
+        "css": "megaphone"
+      },
+      {
+        "search": [
+          "database"
+        ],
+        "code": 59220,
+        "from": 128248,
+        "uid": "248db7c0563d8cee80b7041f7736dcad",
+        "css": "database"
+      },
+      {
+        "search": [
+          "drive",
+          "disk"
+        ],
+        "code": 59221,
+        "from": 128253,
+        "uid": "603d5ccab42d916e79d7c0fcdb56a614",
+        "css": "drive"
+      },
+      {
+        "search": [
+          "bucket"
+        ],
+        "code": 59222,
+        "from": 128254,
+        "uid": "8ea66d97faf9816abd34f48f3f26d216",
+        "css": "bucket"
+      },
+      {
+        "search": [
+          "thermometer"
+        ],
+        "code": 59223,
+        "from": 128255,
+        "uid": "d4939d1f4e5f03f6e58900b2ac8f1c6c",
+        "css": "thermometer"
+      },
+      {
+        "search": [
+          "key",
+          "password"
+        ],
+        "code": 128273,
+        "uid": "8beac4a5fd5bed9f82ca7a96cc8ba218",
+        "css": "key"
+      },
+      {
+        "search": [
+          "flow",
+          "cascade",
+          "junction"
+        ],
+        "code": 59280,
+        "from": 128360,
+        "uid": "898ddc67cb7d9ae53dbd4cce78043e9e",
+        "css": "flow-cascade"
+      },
+      {
+        "search": [
+          "flow",
+          "branch",
+          "junction"
+        ],
+        "code": 59281,
+        "from": 128361,
+        "uid": "4bcb3aaa98736be3027bef7c76c55021",
+        "css": "flow-branch"
+      },
+      {
+        "search": [
+          "flow",
+          "tree",
+          "junction"
+        ],
+        "code": 59282,
+        "from": 128362,
+        "uid": "8a1d446e5555e76f82ddb1c8b526f579",
+        "css": "flow-tree"
+      },
+      {
+        "search": [
+          "flow",
+          "line",
+          "junction"
+        ],
+        "code": 59283,
+        "from": 128363,
+        "uid": "6cea40aa6cc50057083e4f0a5b92410c",
+        "css": "flow-line"
+      },
+      {
+        "search": [
+          "flow",
+          "parallel",
+          "junction"
+        ],
+        "code": 59284,
+        "from": 128364,
+        "uid": "5f88095dc5e638863a0c733e99c32568",
+        "css": "flow-parallel"
+      },
+      {
+        "search": [
+          "rocket",
+          "fly"
+        ],
+        "code": 128640,
+        "uid": "9c7fd7637a41b59a358cb70893f945a5",
+        "css": "rocket"
+      },
+      {
+        "search": [
+          "gauge",
+          "meter",
+          "speed",
+          "indicator"
+        ],
+        "code": 59298,
+        "from": 128711,
+        "uid": "3a6f0140c3a390bdb203f56d1bfdefcb",
+        "css": "gauge"
+      },
+      {
+        "search": [],
+        "code": 59299,
+        "from": 128712,
+        "uid": "2bbde1076919db3d1dcc7f6b43d19bd4",
+        "css": "traffic-cone"
       },
       {
         "search": [
           "creative",
-          "commons"
+          "cc",
+          "licence"
         ],
         "code": 59301,
+        "from": 128325,
         "uid": "4a413ef43c364dafa42766e74c31bbca",
-        "file": "creative-commons",
         "css": "cc"
       },
       {
         "search": [
-          "entypo"
+          "creative",
+          "cc",
+          "licence"
         ],
-        "code": 62976,
-        "uid": "e9ede58f5f90bbc3e52bf4bf53da71c0",
-        "file": "entypo-square",
-        "css": "logo-entypo"
+        "code": 59302,
+        "from": 128326,
+        "uid": "72681d2825fef7fd83711278f845547b",
+        "css": "cc-by"
+      },
+      {
+        "search": [
+          "creative",
+          "cc",
+          "licence"
+        ],
+        "code": 59303,
+        "from": 128327,
+        "uid": "7540520e12e941839cdb7d76b12e82a8",
+        "css": "cc-nc"
+      },
+      {
+        "search": [
+          "creative",
+          "cc",
+          "licence"
+        ],
+        "code": 59304,
+        "from": 128328,
+        "uid": "2d741e29010c6afbfc3784251fbf4e8b",
+        "css": "cc-nc-eu"
+      },
+      {
+        "search": [
+          "creative",
+          "cc",
+          "licence"
+        ],
+        "code": 59305,
+        "from": 128329,
+        "uid": "3138d5e10d50279c6d97ad1c99fdb584",
+        "css": "cc-nc-jp"
+      },
+      {
+        "search": [
+          "creative",
+          "cc",
+          "licence"
+        ],
+        "code": 59306,
+        "from": 128330,
+        "uid": "900851106d63af1bc6076ae118dc543d",
+        "css": "cc-sa"
+      },
+      {
+        "search": [
+          "creative",
+          "cc",
+          "licence"
+        ],
+        "code": 59307,
+        "from": 128331,
+        "uid": "b92e2a918daa2f9a042df1ce942b686f",
+        "css": "cc-nd"
+      },
+      {
+        "search": [
+          "creative",
+          "cc",
+          "licence"
+        ],
+        "code": 59308,
+        "from": 128332,
+        "uid": "49679f26492c29c7bc277f1de9249229",
+        "css": "cc-pd"
+      },
+      {
+        "search": [
+          "creative",
+          "cc",
+          "licence"
+        ],
+        "code": 59309,
+        "from": 128333,
+        "uid": "94914cbbfba692ebbc13c179d62355f7",
+        "css": "cc-zero"
+      },
+      {
+        "search": [
+          "creative",
+          "cc",
+          "licence"
+        ],
+        "code": 59310,
+        "from": 128334,
+        "uid": "915c11e4e2e713cc7d65d32d66f004bf",
+        "css": "cc-share"
+      },
+      {
+        "search": [
+          "creative",
+          "cc",
+          "licence"
+        ],
+        "code": 59311,
+        "from": 128335,
+        "uid": "0cd7be54280d9ffbe0f48342c011268e",
+        "css": "cc-remix"
+      },
+      {
+        "search": [
+          "github",
+          "social",
+          "logo"
+        ],
+        "code": 62208,
+        "uid": "d94334f23acba022bfd68e49d76b31bb",
+        "css": "github"
+      },
+      {
+        "search": [
+          "github",
+          "social",
+          "logo"
+        ],
+        "code": 62209,
+        "uid": "91daf8fde1042a363514ca7e42d89570",
+        "css": "github-circled"
+      },
+      {
+        "search": [
+          "flickr",
+          "social",
+          "logo"
+        ],
+        "code": 62211,
+        "uid": "14cfd18cc1dd5fb99ba04311b888bc23",
+        "css": "flickr"
+      },
+      {
+        "search": [
+          "flickr",
+          "social",
+          "logo"
+        ],
+        "code": 62212,
+        "uid": "5bbd46b2a0b972533f4d3ef243645e1d",
+        "css": "flickr-circled"
+      },
+      {
+        "search": [
+          "vimeo",
+          "social",
+          "logo"
+        ],
+        "code": 62214,
+        "uid": "538531af0e023b15882c505ee2297cbe",
+        "css": "vimeo"
+      },
+      {
+        "search": [
+          "vimeo",
+          "social",
+          "logo"
+        ],
+        "code": 62215,
+        "uid": "6569bd1801e232180221ba0f6a4b8b27",
+        "css": "vimeo-circled"
+      },
+      {
+        "search": [
+          "twitter",
+          "social",
+          "logo"
+        ],
+        "code": 62217,
+        "uid": "d090355c31f497b61d676416c1fd39fb",
+        "css": "twitter"
+      },
+      {
+        "search": [
+          "twitter",
+          "social",
+          "logo"
+        ],
+        "code": 62218,
+        "uid": "0419da6446cb4f31093e2022793571ca",
+        "css": "twitter-circled"
+      },
+      {
+        "search": [
+          "facebook",
+          "social",
+          "logo"
+        ],
+        "code": 62220,
+        "uid": "bc50457410acf467b8b5721240768742",
+        "css": "facebook"
+      },
+      {
+        "search": [
+          "facebook",
+          "social",
+          "logo"
+        ],
+        "code": 62221,
+        "uid": "ce1d525f3f31024c6a6b38f5e9a88953",
+        "css": "facebook-circled"
+      },
+      {
+        "search": [
+          "facebook",
+          "social",
+          "logo"
+        ],
+        "code": 62222,
+        "uid": "47bd87a650e95b97f947d275ed968efe",
+        "css": "facebook-squared"
+      },
+      {
+        "search": [
+          "google",
+          "plus",
+          "social",
+          "logo"
+        ],
+        "code": 62223,
+        "uid": "b945f4ac2439565661e8e4878e35d379",
+        "css": "gplus"
+      },
+      {
+        "search": [
+          "google",
+          "plus",
+          "social",
+          "logo"
+        ],
+        "code": 62224,
+        "uid": "818a6c2a76c89800632c0335e9cdafee",
+        "css": "gplus-circled"
+      },
+      {
+        "search": [
+          "pinterest",
+          "social",
+          "logo"
+        ],
+        "code": 62226,
+        "uid": "689febe699d74bc8862965555503e445",
+        "css": "pinterest"
+      },
+      {
+        "search": [
+          "pinterest",
+          "social",
+          "logo"
+        ],
+        "code": 62227,
+        "uid": "2e9c0fdd4d59598cb122801ab80222e7",
+        "css": "pinterest-circled"
+      },
+      {
+        "search": [
+          "tumblr",
+          "social",
+          "logo"
+        ],
+        "code": 62229,
+        "uid": "d491462e64eb5b8c4f064108a2ff1780",
+        "css": "tumblr"
+      },
+      {
+        "search": [
+          "tumblr",
+          "social",
+          "logo"
+        ],
+        "code": 62230,
+        "uid": "72a6237752f5cd00a107d097adac9ce3",
+        "css": "tumblr-circled"
+      },
+      {
+        "search": [
+          "linkedin",
+          "social",
+          "logo"
+        ],
+        "code": 62232,
+        "uid": "7132e1233bc16cd1b6efe7e29d3613a5",
+        "css": "linkedin"
+      },
+      {
+        "search": [
+          "linkedin",
+          "social",
+          "logo"
+        ],
+        "code": 62233,
+        "uid": "21adad41ffebf469b2370d26bcb8a3c4",
+        "css": "linkedin-circled"
+      },
+      {
+        "search": [
+          "dribbble",
+          "social",
+          "logo"
+        ],
+        "code": 62235,
+        "uid": "e8d13cd05bd63219329b2b61835d776c",
+        "css": "dribbble"
+      },
+      {
+        "search": [
+          "dribbble",
+          "social",
+          "logo"
+        ],
+        "code": 62236,
+        "uid": "ec3e0b50a56867ac26a6de47953b9831",
+        "css": "dribbble-circled"
+      },
+      {
+        "search": [
+          "stumbleupon",
+          "social",
+          "logo"
+        ],
+        "code": 62238,
+        "uid": "ef5e2b339a93fff038cc6a28f8c91edd",
+        "css": "stumbleupon"
+      },
+      {
+        "search": [
+          "stumbleupon",
+          "social",
+          "logo"
+        ],
+        "code": 62239,
+        "uid": "e3606432570e59d4d852727bad063cd1",
+        "css": "stumbleupon-circled"
+      },
+      {
+        "search": [
+          "lastfm",
+          "social",
+          "logo"
+        ],
+        "code": 62241,
+        "uid": "ae49d5a5d0c2f7253f375bde5f0da2d2",
+        "css": "lastfm"
+      },
+      {
+        "search": [
+          "lastfm",
+          "social",
+          "logo"
+        ],
+        "code": 62242,
+        "uid": "9eedcbf6e07d6ba820e3e22f5ab6f734",
+        "css": "lastfm-circled"
+      },
+      {
+        "search": [
+          "rdio",
+          "social",
+          "logo"
+        ],
+        "code": 62244,
+        "uid": "406d96226bd9d021b7d976efa1c4a061",
+        "css": "rdio"
+      },
+      {
+        "search": [
+          "rdio",
+          "social",
+          "logo"
+        ],
+        "code": 62245,
+        "uid": "4d8e1f1173bab9aac8991e9eee2fa326",
+        "css": "rdio-circled"
+      },
+      {
+        "search": [
+          "spotify",
+          "social",
+          "logo"
+        ],
+        "code": 62247,
+        "uid": "882d407598d4e60074f5c08b3372811e",
+        "css": "spotify"
+      },
+      {
+        "search": [
+          "spotify",
+          "social",
+          "logo"
+        ],
+        "code": 62248,
+        "uid": "067edf3e1f6458e782d0254e63eb5eb6",
+        "css": "spotify-circled"
+      },
+      {
+        "search": [
+          "qq",
+          "social",
+          "logo"
+        ],
+        "code": 62250,
+        "uid": "935e2e437efbb3a69ed9a83e2d2f637e",
+        "css": "qq"
+      },
+      {
+        "search": [
+          "instagrem",
+          "social",
+          "logo"
+        ],
+        "code": 62253,
+        "uid": "0fbfb1cd7a847c88ea4c141d0e1bbdb5",
+        "css": "instagrem"
+      },
+      {
+        "search": [
+          "dropbox",
+          "social",
+          "logo"
+        ],
+        "code": 62256,
+        "uid": "b22fdf6cbaa9c54fbb0bc9abb0ed4098",
+        "css": "dropbox"
+      },
+      {
+        "search": [
+          "evernote",
+          "social",
+          "logo"
+        ],
+        "code": 62259,
+        "uid": "ce291d00162e998dbf5cb81bc5edff75",
+        "css": "evernote"
+      },
+      {
+        "search": [
+          "flattr",
+          "social",
+          "logo"
+        ],
+        "code": 62262,
+        "uid": "4274fc9f6190d330fcdf61e7ad564370",
+        "css": "flattr"
+      },
+      {
+        "search": [
+          "skype",
+          "social",
+          "logo"
+        ],
+        "code": 62265,
+        "uid": "28ccaf022b8363aeaa5b86f66e1f5173",
+        "css": "skype"
+      },
+      {
+        "search": [
+          "skype",
+          "social",
+          "logo"
+        ],
+        "code": 62266,
+        "uid": "8354734770d837204e6a004885240d2e",
+        "css": "skype-circled"
+      },
+      {
+        "search": [
+          "renren",
+          "social",
+          "logo"
+        ],
+        "code": 62268,
+        "uid": "7fe35dea791456114c356934333b4171",
+        "css": "renren"
+      },
+      {
+        "search": [
+          "sina-weibo",
+          "social",
+          "logo"
+        ],
+        "code": 62271,
+        "uid": "d1945696d6bbbf84e388df9961f26a37",
+        "css": "sina-weibo"
+      },
+      {
+        "search": [
+          "paypal",
+          "social",
+          "logo"
+        ],
+        "code": 62274,
+        "uid": "8d584f31a5d54de313f1f3da28708ec0",
+        "css": "paypal"
+      },
+      {
+        "search": [
+          "picasa",
+          "social",
+          "logo"
+        ],
+        "code": 62277,
+        "uid": "07269ba9c8905d091e1a01beab1f0958",
+        "css": "picasa"
+      },
+      {
+        "search": [
+          "soundcloud",
+          "social",
+          "logo"
+        ],
+        "code": 62280,
+        "uid": "b86600decaba538aca184421752cd640",
+        "css": "soundcloud"
+      },
+      {
+        "search": [
+          "mixi",
+          "social",
+          "logo"
+        ],
+        "code": 62283,
+        "uid": "c510878e39f27f3fb4e6171148829962",
+        "css": "mixi"
+      },
+      {
+        "search": [
+          "behance",
+          "social",
+          "logo"
+        ],
+        "code": 62286,
+        "uid": "84f3880057574e968053d6d6c8a7b216",
+        "css": "behance"
+      },
+      {
+        "search": [
+          "google",
+          "circles",
+          "social",
+          "logo"
+        ],
+        "code": 62289,
+        "uid": "5a24a9d2bffe3b66cea31ed2f57fb65a",
+        "css": "google-circles"
+      },
+      {
+        "search": [
+          "vkontakte",
+          "social",
+          "logo"
+        ],
+        "code": 62292,
+        "uid": "c9a7eca58474311926922ff8c2c1d256",
+        "css": "vkontakte"
+      },
+      {
+        "search": [
+          "smashing",
+          "social",
+          "logo"
+        ],
+        "code": 62295,
+        "uid": "2e97984c1130787e123117d4cacc07fa",
+        "css": "smashing"
       },
       {
         "search": [
@@ -1620,29 +2637,40 @@ module.exports = [
         ],
         "code": 62977,
         "uid": "c22c5fa36d200793ad39b984fb5c8610",
-        "file": "sweden",
-        "css": "flag-sw"
+        "css": "sweden"
+      },
+      {
+        "search": [
+          "entypo",
+          "daniel",
+          "bruce"
+        ],
+        "code": 62976,
+        "from": 128506,
+        "uid": "e9ede58f5f90bbc3e52bf4bf53da71c0",
+        "css": "db-shape"
       },
       {
         "search": [
           "daniel",
-          "bruce"
+          "bruce",
+          "megadesigner"
         ],
         "code": 62979,
+        "from": 128505,
         "uid": "ea16996158db7b9fedf060a4f44b27ee",
-        "file": "db-signature",
         "css": "logo-db"
       }
     ],
     "font": {
       "fontname": "entypo",
-      "descent": 200,
+      "descent": 150,
       "copyright": "Copyright (C) 2012 by Daniel Bruce",
       "familyname": "Entypo",
       "weight": "Medium",
       "version": "1.0",
       "fullname": "Entypo",
-      "ascent": 800
+      "ascent": 850
     },
     "meta": {
       "github": "https://github.com/danielbruce/entypo",
@@ -1661,13 +2689,13 @@ module.exports = [
   {
     "font": {
       "fontname": "fontawesome",
-      "descent": 200,
+      "descent": 150,
       "copyright": "Copyright (C) 2012 by Dave Gandy",
       "familyname": "Font Awesome",
       "weight": "Regular",
       "version": "1.0",
       "fullname": "Font Awesome",
-      "ascent": 800
+      "ascent": 850
     },
     "meta": {
       "github": "https://github.com/FortAwesome/Font-Awesome",
@@ -3086,22 +4114,21 @@ module.exports = [
       }
     ],
     "transform": {
-      "rescale": 1.052631579,
-      "baseline": 0.5,
-      "offset": -0.05
+      "rescale": 1.053,
+      "baseline": 0.5
     },
     "id": 1
   },
   {
     "font": {
       "fontname": "iconic",
-      "descent": 200,
+      "descent": 150,
       "copyright": "Copyright (C) 2012 by P.J. Onori",
       "familyname": "Iconic",
       "weight": "Medium",
       "version": "1.0",
       "fullname": "Iconic",
-      "ascent": 800
+      "ascent": 850
     },
     "meta": {
       "github": "https://github.com/somerandomdude/Iconic",
@@ -4638,20 +5665,20 @@ module.exports = [
     "transform": {
       "rescale": 1.2,
       "baseline": 0.5,
-      "offset": -0.05
+      "offset": -0.025
     },
     "id": 2
   },
   {
     "font": {
       "fontname": "typicons",
-      "descent": 200,
+      "descent": 150,
       "copyright": "(c) Stephen Hutchings 2012",
       "familyname": "Typicons",
       "weight": "Book",
       "version": "1.0",
       "fullname": "Typicons",
-      "ascent": 800
+      "ascent": 850
     },
     "meta": {
       "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
@@ -5319,8 +6346,19 @@ module.exports = [
         "code": 128257,
         "from": 76,
         "uid": "em9mdmyhjwd003ndercv4r08h0ai31tl",
-        "file": "loop",
         "css": "loop"
+      },
+      {
+        "search": [
+          "arrow",
+          "loop",
+          "reload",
+          "refresh"
+        ],
+        "code": 59136,
+        "from": 75,
+        "uid": "jskdfgyhjwd003ndercv4r08h0ai3dfg",
+        "css": "loop-alt"
       },
       {
         "search": [
@@ -5444,7 +6482,6 @@ module.exports = [
         "code": 119565,
         "from": 118,
         "uid": "igynut9bozd2s1mxnmkeeut1qou984gc",
-        "file": "globe",
         "css": "globe"
       },
       {
@@ -5464,7 +6501,6 @@ module.exports = [
         "code": 9889,
         "from": 111,
         "uid": "pgdm1vsngqxmheo5xkjpbm5o8k81pawd",
-        "file": "flash",
         "css": "flash"
       },
       {
@@ -5546,22 +6582,21 @@ module.exports = [
       }
     ],
     "transform": {
-      "rescale": 0.6,
-      "baseline": 0.5,
-      "offset": -0.44
+      "rescale": 1.2,
+      "baseline": 0.5
     },
     "id": 3
   },
   {
     "font": {
       "fontname": "modernpics",
-      "descent": 200,
+      "descent": 150,
       "copyright": "Copyright (c) 2012 by John Caserta. All rights reserved.",
       "familyname": "Modern Pictograms",
       "weight": "Normal",
       "version": "1.0",
       "fullname": "Modern Pictograms",
-      "ascent": 800
+      "ascent": 850
     },
     "meta": {
       "license": "SIL",
@@ -5640,17 +6675,6 @@ module.exports = [
         "from": 103,
         "uid": "d1a7ajpi3149rk5q4861jw9f2lzg27d1",
         "css": "user-pair"
-      },
-      {
-        "search": [
-          "movie",
-          "video",
-          "film"
-        ],
-        "code": 127916,
-        "from": 80,
-        "uid": "3f0r3y17tle74mzaafsx8frnp2nu36gg",
-        "css": "video"
       },
       {
         "search": [
@@ -5758,25 +6782,6 @@ module.exports = [
         "from": 43,
         "uid": "hbvhbnoivp3qj8xpyqrxa7dvq9ntnci3",
         "css": "plus"
-      },
-      {
-        "search": [
-          "help",
-          "question"
-        ],
-        "code": 59140,
-        "from": 63,
-        "uid": "uda7inu4er17zsorrfic7n0l6fvukfqn",
-        "css": "help-circle"
-      },
-      {
-        "search": [
-          "info"
-        ],
-        "code": 59141,
-        "from": 61,
-        "uid": "769oa3oy9cfucktpbod5cqmth9ioofxd",
-        "css": "info-circle"
       },
       {
         "search": [
@@ -6397,15 +7402,6 @@ module.exports = [
       },
       {
         "search": [
-          "money"
-        ],
-        "code": 128176,
-        "from": 36,
-        "uid": "qdrxlsrgibi1n48dmygz3rp6ciczkjfs",
-        "css": "money"
-      },
-      {
-        "search": [
           "money",
           "dollar"
         ],
@@ -6490,21 +7486,20 @@ module.exports = [
     ],
     "transform": {
       "rescale": 1.25,
-      "baseline": 0.25,
-      "offset": -0.05
+      "baseline": 0.5
     },
     "id": 4
   },
   {
     "font": {
       "fontname": "websymbols",
-      "descent": 200,
+      "descent": 150,
       "copyright": "Copyright (c) 2011 by Just Be Nice studio. All rights reserved.",
       "familyname": "Web Symbols",
       "weight": "Medium",
       "version": "1.0",
       "fullname": "Web Symbols",
-      "ascent": 800
+      "ascent": 850
     },
     "meta": {
       "license_url": "http://scripts.sil.org/OFL",
@@ -7163,7 +8158,6 @@ module.exports = [
         "code": 59309,
         "from": 113,
         "uid": "00d6d0f4cda0621ae03893dcfeb9bb1d",
-        "file": "list-numbered",
         "css": "list-numbered"
       },
       {
@@ -7304,23 +8298,6 @@ module.exports = [
     "id": 5
   },
   {
-    "font": {
-      "fontname": "brandico",
-      "version": "1.0",
-      "descent": 200,
-      "copyright": "(C) 2012 by Vitaly Puzrin",
-      "fullname": "Brandico",
-      "familyname": "Brandico",
-      "ascent": 800
-    },
-    "meta": {
-      "github": "https://github.com/fontello/brandico.font",
-      "license_url": "http://scripts.sil.org/OFL",
-      "css_prefix": "icon-",
-      "license": "SIL",
-      "author": "Crowdsourced, for Fontello project",
-      "columns": 4
-    },
     "glyphs": [
       {
         "search": [
@@ -7766,10 +8743,22 @@ module.exports = [
         "css": "instagram-filled"
       }
     ],
-    "transform": {
-      "rescale": 0.95,
-      "baseline": 0.5,
-      "offset": 0.025
+    "font": {
+      "fontname": "brandico",
+      "version": "1.0",
+      "descent": 150,
+      "copyright": "(C) 2012 by Vitaly Puzrin",
+      "fullname": "Brandico",
+      "familyname": "Brandico",
+      "ascent": 850
+    },
+    "meta": {
+      "github": "https://github.com/fontello/brandico.font",
+      "license_url": "http://scripts.sil.org/OFL",
+      "css_prefix": "icon-",
+      "license": "SIL",
+      "author": "Crowdsourced, for Fontello project",
+      "columns": 4
     },
     "id": 6
   }
