@@ -20,6 +20,7 @@ html
         background-color #fff
         border-bottom 1px solid #ddd
         padding-top 10px
+        z-index 10
 
       .the-icons li
         font-size 14px
@@ -51,7 +52,7 @@ html
         var obj = document.getElementById('icons');
 
         if (on) {
-          obj.className += ' ' + 'codesOn';
+          obj.className += ' codesOn';
         } else {
           obj.className = obj.className.replace(' codesOn', '');
         }
