@@ -3,6 +3,7 @@ Next
 
 * Updated Entypo to 2.0
 * Tuned fonts baseline
+* Added Meteocons font
 
 
 2.0.4 / 2012-11-06

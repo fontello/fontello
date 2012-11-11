@@ -25,7 +25,8 @@ Fontello comes with the following embedded set of iconic fonts:
 - [__Font Awesome__](http://fortawesome.github.com/Font-Awesome//) by Dave Gandy (CC BY-SA license)
 - [__Iconic__](https://github.com/somerandomdude/Iconic) by P.J. Onori (SIL OFL)
 - [__Typicons__](http://typicons.com/) by Stephen Hutchings (CC BY-SA 3.0 license)
-- [__Modern Pictograms__](Modern Pictograms) by John Caserta (SIL OFL)
+- [__Modern Pictograms__](http://thedesignoffice.org/project/modern-pictograms/) by John Caserta (SIL OFL)
+- [__Meteocons__](http://www.alessioatzeni.com/) by Alessio Atzeni (SIL OFL)
 - [__Web Symbols__](http://www.justbenicestudio.com/studio/websymbols/) by Just Be Nice studio (SIL OFL)
 - [__Brandico__](https://github.com/fontello/brandico.font) by... all :) (SIL OFL)
 

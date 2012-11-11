@@ -3,8 +3,9 @@
 .font-embedded-2 { font-family: 'iconic'; }
 .font-embedded-3 { font-family: 'typicons'; }
 .font-embedded-4 { font-family: 'modernpics'; }
-.font-embedded-5 { font-family: 'websymbols'; }
-.font-embedded-6 { font-family: 'brandico'; }
+.font-embedded-5 { font-family: 'meteocons'; }
+.font-embedded-6 { font-family: 'websymbols'; }
+.font-embedded-7 { font-family: 'brandico'; }
 
 @font-face {
   font-family: 'entypo';
@@ -57,6 +58,17 @@
        url('<%= asset_path("modernpics.woff") %>') format('woff'),
        url('<%= asset_path("modernpics.ttf") %>') format('truetype'),
        url('<%= asset_path("modernpics.svg") %>#modernpics') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'meteocons';
+  src: url('<%= asset_path("meteocons.eot") %>');
+  src: url('<%= asset_path("meteocons.eot") %>?#iefix') format('embedded-opentype'),
+       url('<%= asset_path("meteocons.woff") %>') format('woff'),
+       url('<%= asset_path("meteocons.ttf") %>') format('truetype'),
+       url('<%= asset_path("meteocons.svg") %>#meteocons') format('svg');
   font-weight: normal;
   font-style: normal;
 }

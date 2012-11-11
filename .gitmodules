@@ -22,3 +22,6 @@
 [submodule "src/typicons.font"]
 	path = src/typicons.font
 	url = git://github.com/fontello/typicons.font.git
+[submodule "src/meteocons.font"]
+	path = src/meteocons.font
+	url = git@github.com:fontello/meteocons.font.git

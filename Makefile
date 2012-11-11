@@ -16,6 +16,7 @@ FONTS         += awesome-uni.font
 FONTS         += iconic-uni.font
 FONTS         += typicons.font
 FONTS         += modernpics.font
+FONTS         += meteocons.font
 FONTS         += websymbols-uni.font
 FONTS         += brandico.font
 FONT_CONFIGS   = $(foreach f,$(FONTS),src/${f}/config.yml)

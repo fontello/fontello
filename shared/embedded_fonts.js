@@ -7491,6 +7491,476 @@ module.exports = [
     "id": 4
   },
   {
+    "glyphs": [
+      {
+        "search": [
+          "windy",
+          "rain",
+          "weather"
+        ],
+        "code": 33,
+        "uid": "b69ac48f8ad98e786047ff3d33101045",
+        "css": "windy-rain-inv"
+      },
+      {
+        "search": [
+          "snow",
+          "weather"
+        ],
+        "code": 34,
+        "uid": "87cf185e0420ff98e04406c0fbb873eb",
+        "css": "snow-inv"
+      },
+      {
+        "search": [
+          "snow",
+          "weather"
+        ],
+        "code": 35,
+        "uid": "f1315f7ea135cbea7966cce0e7c10ce0",
+        "css": "snow-heavy-inv"
+      },
+      {
+        "search": [
+          "hail",
+          "weather"
+        ],
+        "code": 36,
+        "uid": "ab5c31256cdd1f6b2d6de7202936f5a1",
+        "css": "hail-inv"
+      },
+      {
+        "search": [
+          "clouds",
+          "weather"
+        ],
+        "code": 37,
+        "uid": "8f1bbb4667a8372dc4bb7de767f22f11",
+        "css": "clouds-inv"
+      },
+      {
+        "search": [
+          "clouds",
+          "flash",
+          "weather"
+        ],
+        "code": 38,
+        "uid": "b2b73369982f91cddf8ec5f2a692e5ea",
+        "css": "clouds-flash-inv"
+      },
+      {
+        "search": [
+          "temperature",
+          "weather"
+        ],
+        "code": 39,
+        "uid": "906a8ebb0faf8db0411028a0364bb16d",
+        "css": "temperature"
+      },
+      {
+        "search": [
+          "compass",
+          "weather"
+        ],
+        "code": 40,
+        "uid": "a6a5b2ea227f86157ba54ae543785161",
+        "css": "compass"
+      },
+      {
+        "search": [
+          "not available",
+          "weather"
+        ],
+        "code": 41,
+        "uid": "053a1eaf96184e74876f45bd0f4970eb",
+        "css": "na"
+      },
+      {
+        "search": [
+          "celcius"
+        ],
+        "code": 42,
+        "uid": "39a24b1eb625a4a551585745107e8ef0",
+        "css": "celcius"
+      },
+      {
+        "search": [
+          "fahrenheit",
+          "weather"
+        ],
+        "code": 43,
+        "uid": "5478f7c5cc0ad4897835f711eccea4dd",
+        "css": "fahrenheit"
+      },
+      {
+        "search": [
+          "clouds",
+          "flash",
+          "weather"
+        ],
+        "code": 48,
+        "uid": "d05dd160c24e53afc4addd30b5655b74",
+        "css": "clouds-flash-alt"
+      },
+      {
+        "search": [
+          "sun",
+          "weather"
+        ],
+        "code": 49,
+        "uid": "c1306ee779029bed4f5a2b9b4f5c79e8",
+        "css": "sun-inv"
+      },
+      {
+        "search": [
+          "moon",
+          "weather"
+        ],
+        "code": 50,
+        "uid": "2adfda136b09532bd8174b025b67fe87",
+        "css": "moon-inv"
+      },
+      {
+        "search": [
+          "cloud",
+          "sun",
+          "weather"
+        ],
+        "code": 51,
+        "uid": "2c304ff49075ec9647f498504651abf5",
+        "css": "cloud-sun-inv"
+      },
+      {
+        "search": [
+          "cloud",
+          "moon",
+          "weather"
+        ],
+        "code": 52,
+        "uid": "c823149b79158a2bd56d802a6a6f1d1c",
+        "css": "cloud-moon-inv"
+      },
+      {
+        "search": [
+          "cloud",
+          "weather"
+        ],
+        "code": 53,
+        "uid": "7162ef3c04c51e39b8670cfedb15bcc3",
+        "css": "cloud-inv"
+      },
+      {
+        "search": [
+          "cloud",
+          "flash",
+          "weather"
+        ],
+        "code": 54,
+        "uid": "4bc859f73783486400fc769a90d0a8e0",
+        "css": "cloud-flash-inv"
+      },
+      {
+        "search": [
+          "rain",
+          "drizzle",
+          "weather"
+        ],
+        "code": 55,
+        "uid": "92234661a134ed625a779c534b242b3d",
+        "css": "drizzle"
+      },
+      {
+        "search": [
+          "rain",
+          "drizzle",
+          "weather"
+        ],
+        "code": 56,
+        "uid": "8d8a2d9bcc41c7ac794e83ffbb919c3c",
+        "css": "rain"
+      },
+      {
+        "search": [
+          "windy",
+          "weather"
+        ],
+        "code": 57,
+        "uid": "be6c21cbc48e60a39e80f8b2c33e360e",
+        "css": "windy-inv"
+      },
+      {
+        "search": [
+          "sun",
+          "sunrise",
+          "weather"
+        ],
+        "code": 65,
+        "uid": "1c2a34e8bd2f8a53e3b059447a8e544f",
+        "css": "sunrise"
+      },
+      {
+        "search": [
+          "sun",
+          "weather"
+        ],
+        "code": 66,
+        "uid": "95fb2e5fdd1ea7e4a420b6ed330e6b08",
+        "css": "sun"
+      },
+      {
+        "search": [
+          "moon",
+          "weather"
+        ],
+        "code": 67,
+        "uid": "34e68aa8fbf61f02a748043ccf448a3b",
+        "css": "moon"
+      },
+      {
+        "search": [
+          "eclipse",
+          "weather"
+        ],
+        "code": 68,
+        "uid": "48ab39ab0ba664052cfbf0e52563246a",
+        "css": "eclipse"
+      },
+      {
+        "search": [
+          "mist",
+          "fog",
+          "weather"
+        ],
+        "code": 69,
+        "uid": "a555120b3743d482efcc3058733d3fd9",
+        "css": "mist"
+      },
+      {
+        "search": [
+          "wind",
+          "weather"
+        ],
+        "code": 70,
+        "uid": "2efb5347832a09ae69de043f897ec4b9",
+        "css": "wind"
+      },
+      {
+        "search": [
+          "snowflake",
+          "weather"
+        ],
+        "code": 71,
+        "uid": "d0c325468a74095e565664bec2623aa3",
+        "css": "snowflake"
+      },
+      {
+        "search": [
+          "cloud",
+          "sun",
+          "weather"
+        ],
+        "code": 72,
+        "uid": "9cd3e294ca3ad3dda66bc5a804021c46",
+        "css": "cloud-sun"
+      },
+      {
+        "search": [
+          "cloud",
+          "moon",
+          "weather"
+        ],
+        "code": 73,
+        "uid": "2440f961b415837c6bf30424a6711708",
+        "css": "cloud-moon"
+      },
+      {
+        "search": [
+          "fog",
+          "sun",
+          "weather"
+        ],
+        "code": 74,
+        "uid": "957fd72e52a0e9eb585a0361114c4c83",
+        "css": "fog-sun"
+      },
+      {
+        "search": [
+          "fog",
+          "moon",
+          "weather"
+        ],
+        "code": 75,
+        "uid": "dbf0f9c3d15e5e8046bb5f5fb5898b49",
+        "css": "fog-moon"
+      },
+      {
+        "search": [
+          "fog",
+          "cloud",
+          "weather"
+        ],
+        "code": 76,
+        "uid": "aba39b610b88a73d81f0fa683649b92d",
+        "css": "fog-cloud"
+      },
+      {
+        "search": [
+          "fog",
+          "weather"
+        ],
+        "code": 77,
+        "uid": "2ca5a006e414e0827f7fc5b187689c04",
+        "css": "fog"
+      },
+      {
+        "search": [
+          "cloud",
+          "weather"
+        ],
+        "code": 78,
+        "uid": "17463471d0f132cee16835507ea51ecf",
+        "css": "cloud"
+      },
+      {
+        "search": [
+          "cloud",
+          "flash",
+          "weather"
+        ],
+        "code": 79,
+        "uid": "cc1179bd34dcbe7bf80785075af60d37",
+        "css": "cloud-flash"
+      },
+      {
+        "search": [
+          "cloud",
+          "flash",
+          "weather"
+        ],
+        "code": 80,
+        "uid": "9af2b75a89bd99b83457f041df26da8b",
+        "css": "cloud-flash-alt"
+      },
+      {
+        "search": [
+          "rain",
+          "drizzle",
+          "weather"
+        ],
+        "code": 81,
+        "uid": "f59875f40cbc5ad1b04775cd96feabf1",
+        "css": "drizzle"
+      },
+      {
+        "search": [
+          "rain",
+          "drizzle",
+          "weather"
+        ],
+        "code": 82,
+        "uid": "d577552bb94bdeb53e6517873481aeea",
+        "css": "rain"
+      },
+      {
+        "search": [
+          "windy",
+          "weather"
+        ],
+        "code": 83,
+        "uid": "5fad7d41511701337ddd5ad9896edc4b",
+        "css": "windy"
+      },
+      {
+        "search": [
+          "windy",
+          "rain",
+          "weather"
+        ],
+        "code": 84,
+        "uid": "86351391d6cbc7a85730414294139661",
+        "css": "windy-rain"
+      },
+      {
+        "search": [
+          "snow",
+          "weather"
+        ],
+        "code": 85,
+        "uid": "127ed05f3c024a9c73487f18cf3d530d",
+        "css": "snow"
+      },
+      {
+        "search": [
+          "snow",
+          "weather"
+        ],
+        "code": 86,
+        "uid": "02bb2eaa1515b8fc954abbaf80212739",
+        "css": "snow-alt"
+      },
+      {
+        "search": [
+          "snow",
+          "weather"
+        ],
+        "code": 87,
+        "uid": "0f6059e468716a93329821bcbf11220d",
+        "css": "snow-heavy"
+      },
+      {
+        "search": [
+          "hail",
+          "weather"
+        ],
+        "code": 88,
+        "uid": "b500010a53f4807828ac252725dc6fd1",
+        "css": "hail"
+      },
+      {
+        "search": [
+          "clouds",
+          "weather"
+        ],
+        "code": 89,
+        "uid": "b215adc51ca2aa37e7bbe244d1fa52cc",
+        "css": "clouds"
+      },
+      {
+        "search": [
+          "clouds",
+          "flash",
+          "weather"
+        ],
+        "code": 90,
+        "uid": "f4c428e42b86673278e98e6f2e0a8cd2",
+        "css": "clouds-flash"
+      }
+    ],
+    "font": {
+      "fontname": "meteocons",
+      "descent": 150,
+      "copyright": "Copyright (C) 2012 by Alessio Atzeni",
+      "familyname": "Meteocons",
+      "weight": "Normal",
+      "version": "1.0",
+      "fullname": "Meteocons",
+      "ascent": 850
+    },
+    "meta": {
+      "github": "https://github.com/danielbruce/entypo",
+      "license": "SIL",
+      "author": "Alessio Atzeni",
+      "twitter": "http://twitter.com/bluxart",
+      "license_url": "http://scripts.sil.org/OFL",
+      "css_prefix": "icon-",
+      "dribbble": "http://dribbble.com/Bluxart",
+      "homepage": "http://www.alessioatzeni.com",
+      "email": "info@alessioatzeni.com",
+      "columns": 4
+    },
+    "id": 5
+  },
+  {
     "font": {
       "fontname": "websymbols",
       "descent": 150,
@@ -8295,7 +8765,7 @@ module.exports = [
       "baseline": 0.5,
       "offset": 0.05
     },
-    "id": 5
+    "id": 6
   },
   {
     "glyphs": [
@@ -8760,6 +9230,6 @@ module.exports = [
       "author": "Crowdsourced, for Fontello project",
       "columns": 4
     },
-    "id": 6
+    "id": 7
   }
 ];
