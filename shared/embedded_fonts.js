@@ -8595,10 +8595,72 @@ module.exports = [
           "progress",
           "wait"
         ],
-        "code": 59307,
-        "from": 48,
+        "code": 48,
         "uid": "c87205006317fa2c4baa78a8f010336e",
-        "css": "progress"
+        "css": "progress-0"
+      },
+      {
+        "search": [
+          "progress",
+          "wait"
+        ],
+        "code": 49,
+        "uid": "219f912320853b772ced5ef8dcd90aa8",
+        "css": "progress-1"
+      },
+      {
+        "search": [
+          "progress",
+          "wait"
+        ],
+        "code": 50,
+        "uid": "52a572564b343cac4094f4065d9a60c7",
+        "css": "progress-2"
+      },
+      {
+        "search": [
+          "progress",
+          "wait"
+        ],
+        "code": 51,
+        "uid": "e1619edac8d9d337c29dad11e661b5ca",
+        "css": "progress-3"
+      },
+      {
+        "search": [
+          "progress",
+          "wait"
+        ],
+        "code": 52,
+        "uid": "7eb19468929f2d110339227ab4ea795f",
+        "css": "progress-4"
+      },
+      {
+        "search": [
+          "progress",
+          "wait"
+        ],
+        "code": 53,
+        "uid": "be68e15ee051e52d4922090cd05c176c",
+        "css": "progress-5"
+      },
+      {
+        "search": [
+          "progress",
+          "wait"
+        ],
+        "code": 54,
+        "uid": "5c56ff8528dc54a54e8c1d4a850b9014",
+        "css": "progress-6"
+      },
+      {
+        "search": [
+          "progress",
+          "wait"
+        ],
+        "code": 55,
+        "uid": "a54fbbda12ee4eff1a91d04a80f836b1",
+        "css": "progress-7"
       },
       {
         "search": [
