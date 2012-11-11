@@ -4,25 +4,84 @@ html
     //if lt IE 9
       script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
 
+    meta(charset='UTF-8')
+
     :stylus
-      @import "_demo"
+      @import "bootstrap"
+
+      body
+        margin-top 90px
+
+      .header
+        position fixed
+        top: 0
+        left 50%
+        margin-left -480px
+        background-color #fff
+        border-bottom 1px solid #ddd
+        padding-top 10px
+
+      .the-icons li
+        font-size 14px
+        line-height 24px
+        height 24px
+
+      .switch
+        position absolute
+        right 0
+        bottom 10px
+        color #666
+        input
+          margin-right .3em
+
+      .codesOn
+        .i-name
+          display none
+        .i-code
+          display inline
+      .i-code
+        display none
 
     link(rel='stylesheet', href='css/#{font.fontname}.css')
     //if IE 7
       link(rel='stylesheet', href='css/#{font.fontname}-ie7.css')
 
+    script
+      function toggleCodes(on) {
+        var obj = document.getElementById('icons');
+
+        if (on) {
+          obj.className += ' ' + 'codesOn';
+        } else {
+          obj.className = obj.className.replace(' codesOn', '');
+        }
+      }
+
   body
-    .container
-      .page-header
-        h1 #{font.fullname} font icons demo
+    .container.header
+      h1 #{font.fullname}
+        |  
+        small font demo
+      label.switch
+        input(type='checkbox', onclick='toggleCodes(this.checked)')
+        | show codes
+
+    #icons.container
       .row
         - var col_class = "span" + Math.ceil(12 / meta.columns)
         - var chunk_size = Math.ceil(glyphs.length / meta.columns)
         - for (var i = 0; i < meta.columns; i++)
+
           div(class=col_class)
-            ul.the-icons
+            ul.the-icons.unstyled
+
               - var offset = i * chunk_size
               - for (var c = 0; c < chunk_size && glyphs[offset + c]; c++)
                 - var g = glyphs[offset + c]
                 - var css_class = meta.css_prefix + (g.css || g.file)
-                | <li><i class="#{css_class}"></i> #{css_class}</li>
+                - var code = g.code.toString(16)
+                  li(title='Code: 0x#{code}')
+                    i(class=css_class)
+                    |  
+                    span.i-name #{css_class}
+                    span.i-code 0x#{code}
