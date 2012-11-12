@@ -22,6 +22,14 @@ nodeca.runtime.version = require('./package.json').version;
 
 
 //
+// Preinitialize some basics
+//
+
+
+require('./lib/io');
+
+
+//
 // Catch unexpected exceptions
 //
 

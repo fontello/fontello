@@ -20,17 +20,21 @@ var nodeca = window.nodeca = (function (nodeca) {
 
   // translations injector
   nodeca.runtime.i18n.load = function loadTranslations(lang, data) {
-    nodeca.runtime.i18n._storage[lang] = data;
-  };
+    if (undefined === nodeca.runtime.i18n._storage[lang]) {
+      nodeca.runtime.i18n._storage[lang] = {};
+    }
 
-  // some defaults
-  nodeca.runtime.locale   = "<%= nodeca('config.locales.default') %>";
+    $.extend(nodeca.runtime.i18n._storage[lang], data);
+  };
 
   // translation helper with active locale
   nodeca.runtime.t        = function (phrase, params) {
     return nodeca.runtime.i18n.t(nodeca.runtime.locale, phrase, params);
   };
 
+  nodeca.runtime.t.exists = function (phrase) {
+    return nodeca.runtime.i18n.hasPhrase(nodeca.runtime.locale, phrase);
+  };
 
   // Create cross-browser log wrapper
   //

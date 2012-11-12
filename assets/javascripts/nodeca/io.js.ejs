@@ -9,33 +9,24 @@
 //= depend_on nodeca
 
 
-/*global window, $, _, Faye, nodeca*/
+/*global window, $, _, nodeca*/
 
 
 (function () {
   'use strict';
 
 
-  var // registered events
-      events = {},
+  var events = { 'before.rpc': [], 'after.rpc': [] },
       // last xhr to allow interrupt it
       last_xhr = null;
 
 
   // exported IO object
-  var io = nodeca.io = {};
-
-
-  //
-  // Errors
-  //
-
-
-  io.EWRONGVER  = 'IO_EWRONGVER';
+  var io = nodeca.io = <%- JSON.stringify(nodeca('io')) %>;
 
 
   // error constructor
-  function ioerr(code, message) {
+  function error(code, message) {
     var err = new Error(message);
     err.code = code;
     return err;
@@ -47,53 +38,45 @@
   //
 
 
-  // executes all handlers registered for given `event`
-  function emit(event, args) {
-    args = _.isArray(args) ? args : []; // for IE < 9
-    _.each(events[event] || [], function (handler) {
-      handler.apply(null, args);
+  function emit(name, args) {
+    if (!events[name]) {
+      return;
+    }
+
+    args = args || [];
+
+    $.each(events[name], function (i, func) {
+      try {
+        func.apply(null, args);
+      } catch (err) {
+        // do not interrupt event handlers chain
+        // !!! THIS SHOULD NEVER HAPPEN !!!
+        nodeca.logger.error(err);
+      }
     });
   }
 
 
   /**
-   *  nodeca.io.on(event, handler) -> Void
-   *  - event (String)
-   *  - handler (Function)
-   *
-   *  Registers `handler` for an `event`.
-   *
+   *  nodeca.io.on(name, callback) -> Void
    *
    *  ##### Known events
    *
-   *  - `connected`
-   *  - `disconnected`
-   *  - `rpc:version-mismatch({ client: "str", server: "str" })`
+   *  - `rpc.request`
+   *  - `rpc.complete`
    **/
-  io.on = function on(event, handler) {
-    if (!events[event]) {
-      events[event] = [];
+  io.on = function on(name, callback) {
+    if (!events[name]) {
+      events[name] = [];
     }
 
-    events[event].push(handler);
+    events[name].push(callback);
   };
 
 
-  /**
-   *  nodeca.io.off(event[, handler]) -> Void
-   *  - event (String)
-   *  - handler (Function)
-   *
-   *  Unsubscribes `handler` (or all handlers) from specified `event`.
-   *
-   *
-   *  ##### See also
-   *
-   *  - [nodeca.io.on]
-   **/
-  io.off = function off(event, handler) {
-    events[event] = (!handler) ? [] : _.without(events[event], handler);
-  };
+  //
+  // Main API
+  //
 
 
   /**
@@ -102,7 +85,13 @@
    *  nodeca.io.apiTree(name, callback) -> Void
    **/
   io.apiTree = function apiTree(name, params, options, callback) {
-    var xhr, payload = { version: nodeca.runtime.version, method: name };
+    var xhr, payload;
+
+    payload = {
+      version:  nodeca.runtime.version,
+      method:   name,
+      csrf:     nodeca.runtime.csrf
+    };
 
     // Scenario: apiTree(name, callback);
     if (_.isFunction(params)) {
@@ -117,7 +106,7 @@
     }
 
     // fill in defaults
-    options   = options || {};
+    options   = options || {_retryOnCsrfError: true};
     callback  = callback || $.noop;
 
     //
@@ -137,7 +126,9 @@
     //
 
     nodeca.logger.debug('API3 Sending request', payload);
-    xhr = last_xhr = $.post('/rpc', payload);
+    emit('rpc.request');
+
+    xhr = last_xhr = $.post('/io/rpc', payload);
 
     //
     // Listen for a response
@@ -147,16 +138,28 @@
       data = data || {};
 
       nodeca.logger.debug('API3 Received data', data);
+      emit('rpc.complete');
 
       if (data.version !== nodeca.runtime.version) {
-        // emit version mismatch error
-        emit('rpc:version-mismatch', {
-          client: nodeca.runtime.version,
-          server: data.version
-        });
+        data.error = error(io.EWRONGVER, 'Client version does not match server.');
+        delete data.response;
+      }
 
-        callback(ioerr(io.EWRONGVER, 'Client version does not match server.'));
+      // if invalid CSRF token error and retry is allowed
+      if (data.error && nodeca.io.INVALID_CSRF_TOKEN === data.error.code && options._retryOnCsrfError) {
+        // renew CSRF token
+        nodeca.runtime.csrf = error.data;
+
+        // only one attempt to retry is allowed
+        options._retryOnCsrfError = false;
+
+        // try again
+        io.apiTree(name, params, options, callback);
         return;
+      }
+
+      if (data.error) {
+        emit('rpc.error', [data.error]);
       }
 
       // run actual callback
@@ -168,6 +171,14 @@
     //
 
     xhr.fail(function (err) {
+      nodeca.logger.error(err);
+
+      // rewrite error
+      err = error(nodeca.io.ECOMMUNICATION, 'Communication error');
+
+      emit('rpc.complete');
+      emit('rpc.error', [err]);
+
       if (err) {
         // fire callback with error only in case of real error
         // and not due to our "previous request interruption"
@@ -177,3 +188,5 @@
     });
   };
 }());
+
+// vim: filetype=javascript:syntax=javascript
