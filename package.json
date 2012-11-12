@@ -32,7 +32,8 @@
                         "csso"        : "~1.2.14",
                         "jade"        : "~0.27.2",
                         "neuron"      : "~0.4.5",
-                        "cron"        : "~1.0.0"
+                        "cron"        : "~1.0.0",
+                        "minimatch"   : "~ 0.2.9"
                       },
   "devDependencies" : {
                         "webkit-devtools-agent" : "~ 0.0.4"
