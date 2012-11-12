@@ -23,6 +23,10 @@ var etag = hash('fontello-app-' + Date.now());
 ////////////////////////////////////////////////////////////////////////////////
 
 
+// Validate input parameters
+nodeca.validate({});
+
+
 module.exports = function app(params, callback) {
   if (!this.origin.http) {
     callback('HTTP only');

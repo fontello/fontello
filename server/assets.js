@@ -18,8 +18,6 @@ var logger = nodeca.logger.getLogger('server.assets');
 var server;
 
 
-
-
 // Formats and writes log event into our logger
 //
 function assets_logger(level, event) {
@@ -32,7 +30,6 @@ function assets_logger(level, event) {
                 event.headers['user-agent'],
                 event.message);
 }
-
 
 
 // helper to pass request to the lazy-loaded miner server
@@ -50,6 +47,15 @@ function call_mincer_server(req, res) {
 
 
 ////////////////////////////////////////////////////////////////////////////////
+
+
+// Validate input parameters
+nodeca.validate({
+  path: {
+    type: "string",
+    required: true
+  }
+});
 
 
 module.exports = function (params, callback) {

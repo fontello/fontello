@@ -143,6 +143,15 @@ job_mgr.on('finish', function (job, worker) {
 });
 
 
+// Validate input parameters
+nodeca.validate('status', {
+  id: {
+    type: "string",
+    required: true
+  }
+});
+
+
 // request font generation status
 module.exports.status = function (params, callback) {
   var response  = this.response,
@@ -168,6 +177,19 @@ module.exports.status = function (params, callback) {
     callback();
   });
 };
+
+
+// Validate input parameters
+nodeca.validate('generate', {
+  name: {
+    type: "string",
+    required: false
+  },
+  glyphs: {
+    type: "array",
+    required: true
+  }
+});
 
 
 // request font generation
@@ -220,6 +242,15 @@ module.exports.generate = function (params, callback) {
 var FINGERPRINT_RE = /-([0-9a-f]{32,40})\.[^.]+$/;
 
 
+// Validate input parameters
+nodeca.validate('download', {
+  file: {
+    type: "string",
+    required: true
+  }
+});
+
+
 // Send dowloaded file
 //
 module.exports.download = function (params, callback) {
@@ -259,7 +290,7 @@ module.exports.download = function (params, callback) {
     .on('directory', function () {
       callback({statusCode: 400});
     })
-    .on('end', function() {
+    .on('end', function () {
       dl_logger.info('%s - "%s %s HTTP/%s" %d "%s" - %s',
                      req.connection.remoteAddress,
                      req.method,
