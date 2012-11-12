@@ -30,8 +30,8 @@ packages:
 
     views:
       root: ./client/
-      include: /*\.jade/
-      exclude: /*\/_*/
+      include: "**/*.jade"
+      exclude: /(^|\/)_.*/
 
     styles:
       root: ./client/
