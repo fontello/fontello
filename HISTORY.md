@@ -2,8 +2,10 @@ Next
 ------------------
 
 * Updated Entypo to 2.0
-* Tuned fonts baseline
+* Updated Font Awesome to 2.0
 * Added Meteocons font
+* Tuned fonts baseline
+* Improved generated demo (show glyph codes now)
 
 
 2.0.4 / 2012-11-06

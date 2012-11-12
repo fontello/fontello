@@ -2752,6 +2752,15 @@ module.exports = [
       },
       {
         "search": [
+          "mail",
+          "email"
+        ],
+        "code": 61664,
+        "uid": "ccc2329632396dc096bb638d4b46fb98",
+        "css": "mail-alt"
+      },
+      {
+        "search": [
           "heart"
         ],
         "code": 9829,
@@ -2805,6 +2814,26 @@ module.exports = [
         "from": 61447,
         "uid": "8b80d36d4ef43889db10bc1f0dc9a862",
         "css": "user"
+      },
+      {
+        "search": [
+          "users",
+          "contacts",
+          "friends"
+        ],
+        "code": 128101,
+        "from": 61632,
+        "uid": "31972e4e9d080eaa796290349ae6c1fd",
+        "css": "users"
+      },
+      {
+        "search": [
+          "user",
+          "medic"
+        ],
+        "code": 61952,
+        "uid": "82116c1c568d0b0383ee849662e57bae",
+        "css": "user-md"
       },
       {
         "search": [
@@ -3026,13 +3055,31 @@ module.exports = [
       },
       {
         "search": [
+          "link"
+        ],
+        "code": 128279,
+        "from": 61633,
+        "uid": "0ddd3e8201ccc7d41f7b7c9d27eca6c1",
+        "css": "link"
+      },
+      {
+        "search": [
           "link",
           "url"
         ],
-        "code": 128279,
-        "from": 61582,
+        "code": 61582,
         "uid": "e15f0d620a7897e2035c18c80142f6d9",
-        "css": "link"
+        "css": "link-ext"
+      },
+      {
+        "search": [
+          "attach",
+          "clip"
+        ],
+        "code": 128206,
+        "from": 61638,
+        "uid": "0d6ab6194c0eddda2b8c9cedf2ab248e",
+        "css": "attach"
       },
       {
         "search": [
@@ -3042,6 +3089,17 @@ module.exports = [
         "from": 61475,
         "uid": "c1f1975c885aa9f3dad7810c53b82074",
         "css": "lock"
+      },
+      {
+        "search": [
+          "lock",
+          "open",
+          "unlock"
+        ],
+        "code": 128275,
+        "from": 61596,
+        "uid": "657ab647f6248a6b57a5b893beaf35a9",
+        "css": "lock-open"
       },
       {
         "search": [
@@ -3105,6 +3163,14 @@ module.exports = [
         "from": 61486,
         "uid": "f04a5d24e9e659145b966739c4fde82a",
         "css": "bookmark"
+      },
+      {
+        "search": [
+          "bookmark"
+        ],
+        "code": 61591,
+        "uid": "2f5ef6f6b7aaebc56458ab4e865beff5",
+        "css": "bookmark-empty"
       },
       {
         "search": [
@@ -3242,6 +3308,36 @@ module.exports = [
       },
       {
         "search": [
+          "comment",
+          "reply",
+          "write"
+        ],
+        "code": 61669,
+        "uid": "9c1376672bb4f1ed616fdd78a23667e9",
+        "css": "comment"
+      },
+      {
+        "search": [
+          "chat",
+          "talk"
+        ],
+        "code": 61670,
+        "uid": "31951fbb9820ed0690f675b3d495c8da",
+        "css": "chat"
+      },
+      {
+        "search": [
+          "alert",
+          "bell",
+          "jingle"
+        ],
+        "code": 128276,
+        "from": 61602,
+        "uid": "cd21cbfb28ad4d903cede582157f65dc",
+        "css": "bell"
+      },
+      {
+        "search": [
           "attention",
           "warning",
           "alert"
@@ -3295,6 +3391,15 @@ module.exports = [
       },
       {
         "search": [
+          "doc",
+          "article"
+        ],
+        "code": 61637,
+        "uid": "c8585e1e5b0467f28b70bce765d5840c",
+        "css": "docs"
+      },
+      {
+        "search": [
           "folder"
         ],
         "code": 128193,
@@ -3310,6 +3415,41 @@ module.exports = [
         "from": 61564,
         "uid": "c95735c17a10af81448c7fed98a04546",
         "css": "folder-open"
+      },
+      {
+        "search": [
+          "rss"
+        ],
+        "code": 61598,
+        "uid": "72b1277834cba5b7944b0a6cac7ddb0d",
+        "css": "rss"
+      },
+      {
+        "search": [
+          "phone",
+          "telephone",
+          "call"
+        ],
+        "code": 128222,
+        "from": 61589,
+        "uid": "9f7e588c66cfd6891f6f507cf6f6596b",
+        "css": "phone"
+      },
+      {
+        "search": [
+          "phone"
+        ],
+        "code": 61592,
+        "uid": "ec488dfd1f548948c09671ca5a60ec92",
+        "css": "phone-squared"
+      },
+      {
+        "search": [
+          "menu"
+        ],
+        "code": 61641,
+        "uid": "559647a6f430b3aeadbecd67194451dd",
+        "css": "menu"
       },
       {
         "search": [
@@ -3332,6 +3472,17 @@ module.exports = [
         "from": 61573,
         "uid": "98687378abd1faf8f6af97c254eb6cd6",
         "css": "cog-alt"
+      },
+      {
+        "search": [
+          "wrench",
+          "tools",
+          "settings"
+        ],
+        "code": 128295,
+        "from": 61613,
+        "uid": "5bb103cd29de77e0e06a52638527b575",
+        "css": "wrench"
       },
       {
         "search": [
@@ -3450,6 +3601,15 @@ module.exports = [
       },
       {
         "search": [
+          "resize",
+          "fullscreen"
+        ],
+        "code": 61618,
+        "uid": "b013f6403e5ab0326614e68d1850fd6b",
+        "css": "resize-full-alt"
+      },
+      {
+        "search": [
           "resize"
         ],
         "code": 59206,
@@ -3524,6 +3684,46 @@ module.exports = [
         "from": 61467,
         "uid": "128d63150a41800e0beff55235269542",
         "css": "up-circle2"
+      },
+      {
+        "search": [
+          "down",
+          "arrow"
+        ],
+        "code": 9662,
+        "from": 61655,
+        "uid": "2d6150442079cbda7df64522dc24f482",
+        "css": "down-dir"
+      },
+      {
+        "search": [
+          "up",
+          "arrow"
+        ],
+        "code": 9652,
+        "from": 61656,
+        "uid": "80cd1022bd9ea151d554bec1fa05f2de",
+        "css": "up-dir"
+      },
+      {
+        "search": [
+          "left",
+          "arrow"
+        ],
+        "code": 9666,
+        "from": 61657,
+        "uid": "9dc654095085167524602c9acc0c5570",
+        "css": "left-dir"
+      },
+      {
+        "search": [
+          "right",
+          "arrow"
+        ],
+        "code": 9656,
+        "from": 61658,
+        "uid": "fb1c799ffe5bf8fb7f8bcb647c8fe9e6",
+        "css": "right-dir"
       },
       {
         "search": [
@@ -3607,6 +3807,86 @@ module.exports = [
       },
       {
         "search": [
+          "hand",
+          "right",
+          "arrow"
+        ],
+        "code": 9758,
+        "from": 61604,
+        "uid": "aa0d9175a3919a260a4012d560e9f01e",
+        "css": "right-hand"
+      },
+      {
+        "search": [
+          "hand",
+          "left",
+          "arrow"
+        ],
+        "code": 9756,
+        "from": 61605,
+        "uid": "3d99d345645f43e31e9e0fd48be37e9c",
+        "css": "left-hand"
+      },
+      {
+        "search": [
+          "hand",
+          "up",
+          "arrow"
+        ],
+        "code": 9757,
+        "from": 61606,
+        "uid": "034e645aa3bad56ce68389a816547c87",
+        "css": "up-hand"
+      },
+      {
+        "search": [
+          "hand",
+          "down",
+          "arrow"
+        ],
+        "code": 9759,
+        "from": 61607,
+        "uid": "beb43b8df442eac4b8d35f528d5ed5af",
+        "css": "down-hand"
+      },
+      {
+        "search": [
+          "left",
+          "arrow"
+        ],
+        "code": 61608,
+        "uid": "6855131631509e8795730ce062045ea1",
+        "css": "left-circled"
+      },
+      {
+        "search": [
+          "right",
+          "arrow"
+        ],
+        "code": 61609,
+        "uid": "19b04848ae7332d2c0ea2a9e19064037",
+        "css": "right-circled"
+      },
+      {
+        "search": [
+          "up",
+          "arrow"
+        ],
+        "code": 61610,
+        "uid": "2b8e9b027181aafd210bf29c5486d4a0",
+        "css": "up-circled"
+      },
+      {
+        "search": [
+          "down",
+          "arrow"
+        ],
+        "code": 61611,
+        "uid": "55ae6ea25cd707fe34af5b52b2001cdc",
+        "css": "down-circled"
+      },
+      {
+        "search": [
           "reload",
           "redo",
           "repeat"
@@ -3615,6 +3895,17 @@ module.exports = [
         "from": 61470,
         "uid": "bc71f4c6e53394d5ba46b063040014f1",
         "css": "cw"
+      },
+      {
+        "search": [
+          "reload",
+          "undo",
+          "arrow"
+        ],
+        "code": 10226,
+        "from": 61666,
+        "uid": "f9c3205df26e7778abac86183aefdc99",
+        "css": "ccw"
       },
       {
         "search": [
@@ -3790,6 +4081,43 @@ module.exports = [
       },
       {
         "search": [
+          "globe"
+        ],
+        "code": 127758,
+        "from": 61612,
+        "uid": "197375a3cea8cb90b02d06e4ddf1433d",
+        "css": "globe"
+      },
+      {
+        "search": [
+          "cloud"
+        ],
+        "code": 9729,
+        "from": 61634,
+        "uid": "2c413e78faf1d6631fd7b094d14c2253",
+        "css": "cloud"
+      },
+      {
+        "search": [
+          "flash",
+          "bolt"
+        ],
+        "code": 9889,
+        "from": 61671,
+        "uid": "3212f42c65d41ed91cb435d0490e29ed",
+        "css": "flash"
+      },
+      {
+        "search": [
+          "umbrella"
+        ],
+        "code": 9730,
+        "from": 61673,
+        "uid": "24ca41ab002c09de6e89b28f9d599508",
+        "css": "umbrella"
+      },
+      {
+        "search": [
           "flight",
           "plane",
           "airplane"
@@ -3934,6 +4262,81 @@ module.exports = [
       },
       {
         "search": [
+          "list"
+        ],
+        "code": 61642,
+        "uid": "a2a74f5e7b7d9ba054897d8c795a326a",
+        "css": "list-bullet"
+      },
+      {
+        "search": [
+          "list"
+        ],
+        "code": 61643,
+        "uid": "f6766a8b042c2453a4e153af03294383",
+        "css": "list-numbered"
+      },
+      {
+        "search": [
+          "strike"
+        ],
+        "code": 61644,
+        "uid": "61c242c9e2134d5864d7fdd57b3c9289",
+        "css": "strike"
+      },
+      {
+        "search": [
+          "underline"
+        ],
+        "code": 61645,
+        "uid": "d4a4a38a40b728f46dad1de4ac950231",
+        "css": "underline"
+      },
+      {
+        "search": [
+          "table"
+        ],
+        "code": 61646,
+        "uid": "8fb55fd696d9a0f58f3b27c1d8633750",
+        "css": "table"
+      },
+      {
+        "search": [
+          "columns"
+        ],
+        "code": 61659,
+        "uid": "53dd31a6cc6438192b2d7b09b1c1dd45",
+        "css": "columns"
+      },
+      {
+        "search": [
+          "scissors",
+          "cut"
+        ],
+        "code": 9986,
+        "from": 61636,
+        "uid": "8772331a9fec983cdb5d72902a6f9e0e",
+        "css": "scissors"
+      },
+      {
+        "search": [
+          "paste"
+        ],
+        "code": 61674,
+        "uid": "b429436ec5a518c78479d44ef18dbd60",
+        "css": "paste"
+      },
+      {
+        "search": [
+          "briefcase"
+        ],
+        "code": 128188,
+        "from": 61617,
+        "uid": "053b757d97042e1c94276200c7b64b91",
+        "css": "briefcase"
+      },
+      {
+        "search": [
           "off"
         ],
         "code": 59278,
@@ -4016,6 +4419,15 @@ module.exports = [
       },
       {
         "search": [
+          "check",
+          "empty"
+        ],
+        "code": 61590,
+        "uid": "4b900d04e8ab8c82f080c1cfbac5772c",
+        "css": "check-empty"
+      },
+      {
+        "search": [
           "asterisk"
         ],
         "code": 10033,
@@ -4066,6 +4478,47 @@ module.exports = [
       },
       {
         "search": [
+          "card",
+          "plastic",
+          "credit"
+        ],
+        "code": 128179,
+        "from": 61597,
+        "uid": "3d8cc269fdad8a4cda55a20542a84e5c",
+        "css": "credit-card"
+      },
+      {
+        "search": [
+          "floppy",
+          "save"
+        ],
+        "code": 128190,
+        "from": 61639,
+        "uid": "f4445feb55521283572ee88bc304f928",
+        "css": "floppy"
+      },
+      {
+        "search": [
+          "megaphone",
+          "bullhorn"
+        ],
+        "code": 128227,
+        "from": 61601,
+        "uid": "3e674995cacc2b09692c096ea7eb6165",
+        "css": "megaphone"
+      },
+      {
+        "search": [
+          "hdd",
+          "drive",
+          "disk"
+        ],
+        "code": 61600,
+        "uid": "795efd07cd5205b589c883916a76cff0",
+        "css": "hdd"
+      },
+      {
+        "search": [
           "key"
         ],
         "code": 128273,
@@ -4075,11 +4528,127 @@ module.exports = [
       },
       {
         "search": [
+          "certificate"
+        ],
+        "code": 61603,
+        "uid": "d61be837c725a299b432dcbee2ecdae6",
+        "css": "certificate"
+      },
+      {
+        "search": [
+          "tasks"
+        ],
+        "code": 61614,
+        "uid": "9396b2d8849e0213a0f11c5fd7fcc522",
+        "css": "tasks"
+      },
+      {
+        "search": [
+          "filter"
+        ],
+        "code": 61616,
+        "uid": "4109c474ff99cad28fd5a2c38af2ec6f",
+        "css": "filter"
+      },
+      {
+        "search": [
+          "beaker"
+        ],
+        "code": 61635,
+        "uid": "0f444c61b0d2c9966016d7ddb12f5837",
+        "css": "beaker"
+      },
+      {
+        "search": [
+          "magic"
+        ],
+        "code": 61648,
+        "uid": "ff70f7b3228702e0d590e60ed3b90bea",
+        "css": "magic"
+      },
+      {
+        "search": [
+          "truck"
+        ],
+        "code": 128666,
+        "from": 61649,
+        "uid": "7f3d8ff1d5f6ee019f0c00ed7a86caec",
+        "css": "truck"
+      },
+      {
+        "search": [
+          "money"
+        ],
+        "code": 61654,
+        "uid": "f279f25007794fa6837ff78fe94b216e",
+        "css": "money"
+      },
+      {
+        "search": [
+          "sort"
+        ],
+        "code": 61660,
+        "uid": "56a21935a5d4d79b2e91ec00f760b369",
+        "css": "sort"
+      },
+      {
+        "search": [
+          "sort"
+        ],
+        "code": 61661,
+        "uid": "94103e1b3f1e8cf514178ec5912b4469",
+        "css": "sort-down"
+      },
+      {
+        "search": [
+          "sort"
+        ],
+        "code": 61662,
+        "uid": "65b3ce930627cabfb6ac81ac60ec5ae4",
+        "css": "sort-up"
+      },
+      {
+        "search": [
+          "hammer",
+          "legal"
+        ],
+        "code": 128296,
+        "from": 61667,
+        "uid": "dec0ce0476433f7e49e096526cf89465",
+        "css": "hammer"
+      },
+      {
+        "search": [
+          "gauge",
+          "indicator"
+        ],
+        "code": 61668,
+        "uid": "0bda4bc779d4c32623dec2e43bd67ee8",
+        "css": "gauge"
+      },
+      {
+        "search": [
+          "sitemap"
+        ],
+        "code": 61672,
+        "uid": "6fe95ffc3c807e62647d4f814a96e0d7",
+        "css": "sitemap"
+      },
+      {
+        "search": [
           "github"
         ],
         "code": 62208,
         "from": 61586,
         "uid": "0ece9a12de796b8411f868d582bee678",
+        "css": "github-squared"
+      },
+      {
+        "search": [
+          "github"
+        ],
+        "code": 61595,
+        "uid": "0f6a2573a7b6df911ed199bb63717e27",
         "css": "github"
       },
       {
@@ -4089,6 +4658,14 @@ module.exports = [
         "code": 62212,
         "from": 61569,
         "uid": "906348dc798a0d42715cc97c875e3ac6",
+        "css": "twitter-squared"
+      },
+      {
+        "search": [
+          "twitter"
+        ],
+        "code": 61593,
+        "uid": "627abcdb627cb1789e009c08e2678ef9",
         "css": "twitter"
       },
       {
@@ -4098,13 +4675,74 @@ module.exports = [
         "code": 62216,
         "from": 61570,
         "uid": "4743b088aa95d6f3b6b990e770d3b647",
+        "css": "facebook-squared"
+      },
+      {
+        "search": [
+          "facebook"
+        ],
+        "code": 61594,
+        "uid": "8e04c98c8f5ca0a035776e3001ad2638",
         "css": "facebook"
       },
       {
+        "search": [
+          "linkedin"
+        ],
         "code": 62220,
         "from": 61580,
         "uid": "1145676a91138011729fa2909997af66",
+        "css": "linkedin-squared"
+      },
+      {
+        "search": [
+          "linkedin"
+        ],
+        "code": 61665,
+        "uid": "e9107949dd6c9e8ab2b29ae07156e38c",
         "css": "linkedin"
+      },
+      {
+        "search": [
+          "pinterest"
+        ],
+        "code": 61650,
+        "uid": "da851b7c1f84ee83f93b29ae613558dc",
+        "css": "pinterest-circled"
+      },
+      {
+        "search": [
+          "pinterest"
+        ],
+        "code": 61651,
+        "uid": "79689c4c425b7cdaa2746f510e81e27a",
+        "css": "pinterest-squared"
+      },
+      {
+        "search": [
+          "google",
+          "plus"
+        ],
+        "code": 61652,
+        "uid": "f0cf7db1b03cb65adc450aa3bdaf8c4d",
+        "css": "gplus-squared"
+      },
+      {
+        "search": [
+          "google",
+          "plus"
+        ],
+        "code": 61653,
+        "uid": "b8d0c7d76e87b94882329a88e8e43d3d",
+        "css": "gplus"
+      },
+      {
+        "search": [
+          "blank"
+        ],
+        "code": 61640,
+        "uid": "2c2ca8a96b31781c9c8056d05c0a8980",
+        "css": "blank"
       },
       {
         "code": 127819,
