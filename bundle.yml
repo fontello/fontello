@@ -29,7 +29,7 @@ packages:
       exclude: /*\/_*/
 
     views:
-      root: ./views/
+      root: ./client/
       include: "**/*.jade"
       exclude: /(^|\/)_.*/
 
