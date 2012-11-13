@@ -14,7 +14,7 @@ module.exports = Backbone.View.extend({
     this.changeGlyphSize(nodeca.config.app.glyph_size.val);
 
     function add(glyph) {
-      var v = new nodeca.client.ui.panes.preview_glyph({model: glyph});
+      var v = new nodeca.client.ui.panes.preview.glyph({model: glyph});
       views[glyph.cid] = v;
       $glyphs.append(v.render().el);
     }

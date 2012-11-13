@@ -20,7 +20,7 @@ module.exports = Backbone.View.extend({
 
 
   addFont: function (font) {
-    var view = new nodeca.client.ui.panes.selector_font({model: font});
+    var view = new nodeca.client.ui.panes.selector.font({model: font});
     this.$('#selector-fonts').append(view.render().el);
   }
 });

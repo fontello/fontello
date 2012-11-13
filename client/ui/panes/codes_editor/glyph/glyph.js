@@ -21,7 +21,7 @@ module.exports = Backbone.View.extend({
         code    = nodeca.shared.glyphs_map[font][uid],
         char    = nodeca.client.util.fixedFromCharCode(model.get("code"));
 
-    this.$el.html(nodeca.client.render('code-editor.glyph', {
+    this.$el.html(nodeca.client.render('ui.panes.codes_editor.glyph', {
       top:        model.get("code") === 32 ? "space" : char,
       chr:        nodeca.client.util.fixedFromCharCode(code),
       bottom:     this.toUnicode(model.get("code")),

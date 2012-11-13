@@ -15,7 +15,7 @@ module.exports = Backbone.View.extend({
         uid  = this.model.get('source').uid,
         code = nodeca.shared.glyphs_map[font][uid];
 
-    this.$el.html(nodeca.client.render('preview.glyph', {
+    this.$el.html(nodeca.client.render('ui.panes.preview.glyph', {
       css: this.model.get('css'),
       chr: nodeca.client.util.fixedFromCharCode(code)
     }));
