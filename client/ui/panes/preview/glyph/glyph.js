@@ -13,7 +13,7 @@ module.exports = Backbone.View.extend({
     var self = this,
         font = this.model.get('font').getName(),
         uid  = this.model.get('source').uid,
-        code = nodeca.shared.glyphs_map[font][uid];
+        code = require('../../../../../shared/glyphs_map')[font][uid];
 
     this.$el.html(nodeca.client.render('ui.panes.preview.glyph', {
       css: this.model.get('css'),
@@ -24,10 +24,10 @@ module.exports = Backbone.View.extend({
     this.$el.find('.glyph-name').inplaceEditor({
       noPaste:      true,
       validateChar: function (char) {
-        return /[a-zA-Z0-9\-\_]/.test(char) && 20 > this.getValue().length;
+        return (/[a-zA-Z0-9\-\_]/).test(char) && 20 > this.getValue().length;
       }
     }).on('change', function (event, value) {
-      self.model.set( 'css', value );
+      self.model.set('css', value);
     });
 
     return this;

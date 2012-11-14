@@ -9,6 +9,10 @@
 /*global window, $, _, JASON, nodeca*/
 
 
+var render    = require('../shared/render');
+var getByPath = require('../shared/getByPath');
+
+
 ////////////////////////////////////////////////////////////////////////////////
 
 
@@ -33,7 +37,7 @@ helpers.link_to = function (name, params) {
 };
 
 helpers.nodeca = function (path) {
-  return !path ? nodeca : nodeca.shared.getByPath(nodeca, path);
+  return !path ? nodeca : getByPath(nodeca, path);
 };
 
 // substitute JASON with JSON
@@ -51,11 +55,11 @@ helpers.jason = JSON.stringify;
  *
  *  Renders view.
  **/
-module.exports = function render(apiPath, locals, layout) {
-  if (!nodeca.shared.getByPath(nodeca.views, apiPath)) {
+module.exports = function (apiPath, locals, layout) {
+  if (!getByPath(nodeca.views, apiPath)) {
     throw new Error("View " + apiPath + " not found");
   }
 
   locals = _.extend(locals || {}, helpers);
-  return nodeca.shared.render(nodeca.views, apiPath, locals, layout, true);
+  return render(nodeca.views, apiPath, locals, layout, true);
 };

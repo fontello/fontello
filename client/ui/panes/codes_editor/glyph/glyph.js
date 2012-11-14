@@ -18,7 +18,7 @@ module.exports = Backbone.View.extend({
         source  = model.get('source'),
         font    = model.get('font').getName(),
         uid     = source.uid,
-        code    = nodeca.shared.glyphs_map[font][uid],
+        code    = require('../../../../../shared/glyphs_map')[font][uid],
         char    = nodeca.client.util.fixedFromCharCode(model.get("code"));
 
     this.$el.html(nodeca.client.render('ui.panes.codes_editor.glyph', {
@@ -44,10 +44,10 @@ module.exports = Backbone.View.extend({
     this.$el.find('.code-editable').inplaceEditor({
       noPaste:      true,
       validateChar: function (char) {
-        return /[0-9a-fA-F]/.test(char) && 6 > this.getValue().length;
+        return (/[0-9a-fA-F]/).test(char) && 6 > this.getValue().length;
       }
     }).on('change', function (event, val) {
-        model.set("code", parseInt(val, 16));
+      model.set("code", parseInt(val, 16));
     });
 
     this.$el.toggleClass("mapping-matched", model.get("code") === source.code);

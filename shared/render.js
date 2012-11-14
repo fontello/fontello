@@ -12,6 +12,21 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
+// TODO: support nested requires()
+function getByPath(obj, path) {
+  var parts = path.split('.');
+
+  // this is the fastest way to find nested value:
+  // http://jsperf.com/find-object-deep-nested-value
+
+  while (obj && parts.length) {
+    obj = obj[parts.shift()];
+  }
+
+  return obj;
+}
+
+
 //  get_layout_stack(layout) -> Array
 //  - layout (string): Full layout path
 //
@@ -51,7 +66,7 @@ function get_layout_stack(layout) {
  *  `content` property will be previously rendered layout.
  **/
 module.exports = function render(viewsTree, path, locals, layout, skipBaseLayout) {
-  var html, view = nodeca.shared.getByPath(viewsTree, path);
+  var html, view = getByPath(viewsTree, path);
 
   if (!!view) {
     html = view(locals);
@@ -67,7 +82,7 @@ module.exports = function render(viewsTree, path, locals, layout, skipBaseLayout
     layout = (!!skipBaseLayout ? layout.slice(1) : layout).reverse();
 
     _.each(layout, function (path) {
-      var fn = nodeca.shared.getByPath(viewsTree.layouts, path);
+      var fn = getByPath(viewsTree.layouts, path);
 
       if (!_.isFunction(fn)) {
         nodeca.logger.warn("Layout " + path + " not found");

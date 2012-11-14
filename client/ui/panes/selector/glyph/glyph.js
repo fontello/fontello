@@ -20,7 +20,7 @@ module.exports = Backbone.View.extend({
     var self = this,
         font = this.model.get('font').getName(),
         uid  = this.model.get('source').uid,
-        code = nodeca.shared.glyphs_map[font][uid],
+        code = require('../../../../../shared/glyphs_map')[font][uid],
         text = nodeca.client.util.fixedFromCharCode(code);
 
     this.$el.data('model', this.model);
