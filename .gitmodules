@@ -25,3 +25,6 @@
 [submodule "src/meteocons.font"]
 	path = src/meteocons.font
 	url = git@github.com:fontello/meteocons.font.git
+[submodule "src/zocial.font"]
+	path = src/zocial.font
+	url = git@github.com:fontello/zocial.font.git
