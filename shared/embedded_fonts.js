@@ -8599,6 +8599,546 @@ module.exports = [
     "id": 5
   },
   {
+    "font": {
+      "fontname": "maki",
+      "descent": 150,
+      "copyright": "Copyright (C) Mapbox, LCC",
+      "familyname": "Maki",
+      "weight": "Normal",
+      "version": "1.0",
+      "fullname": "Maki",
+      "ascent": 850
+    },
+    "meta": {
+      "github": "https://github.com/mapbox/maki",
+      "license": "BSD",
+      "author": "Mapbox",
+      "twitter": "http://twitter.com/mapbox",
+      "license_url": "https://github.com/mapbox/maki/blob/gh-pages/LICENSE.txt",
+      "css_prefix": "icon-",
+      "homepage": "http://mapbox.com/maki/",
+      "columns": 4
+    },
+    "glyphs": [
+      {
+        "search": [
+          "railway",
+          "streetcar"
+        ],
+        "code": 59392,
+        "uid": "88a1241bcbe45c8e9616fd34d0f68a55",
+        "css": "aboveground-rail"
+      },
+      {
+        "search": [
+          "airfield"
+        ],
+        "code": 59393,
+        "uid": "ee81e35eef77c7d4d26c75258f028bff",
+        "css": "airfield"
+      },
+      {
+        "search": [
+          "airport"
+        ],
+        "code": 59394,
+        "uid": "f7440aaf96d590adceeff59b4dcb32d0",
+        "css": "airport"
+      },
+      {
+        "search": [
+          "gallery"
+        ],
+        "code": 59395,
+        "uid": "05417ae0104ab18a0fe454358579a987",
+        "css": "art-gallery"
+      },
+      {
+        "search": [
+          "bar"
+        ],
+        "code": 59396,
+        "uid": "5c8822b310f20896a3c55a25b71008a8",
+        "css": "bar"
+      },
+      {
+        "search": [
+          "baseball"
+        ],
+        "code": 59398,
+        "uid": "dc4eb27cd8f0cd537206d00dd85c0286",
+        "css": "baseball"
+      },
+      {
+        "search": [
+          "basketball"
+        ],
+        "code": 59399,
+        "uid": "9f5ce0d9f586e3df00449ad6ed6b0bf3",
+        "css": "basketball"
+      },
+      {
+        "search": [
+          "beer"
+        ],
+        "code": 59400,
+        "uid": "77886ff217450e06c8ffb7c88cb41e8b",
+        "css": "beer"
+      },
+      {
+        "search": [
+          "railway",
+          "subway"
+        ],
+        "code": 59401,
+        "uid": "3fcff44d055ea3e68ea50aaa7d91947f",
+        "css": "belowground-rail"
+      },
+      {
+        "search": [
+          "bicycle"
+        ],
+        "code": 59402,
+        "uid": "aab7e7622e6ee1ed8166fb73f20e8c9a",
+        "css": "bicycle"
+      },
+      {
+        "search": [
+          "bus"
+        ],
+        "code": 59403,
+        "uid": "2b39f74a074e338a67270567e95142cb",
+        "css": "bus"
+      },
+      {
+        "search": [
+          "cafe"
+        ],
+        "code": 59404,
+        "uid": "492fe0ef4cb41d4e4de8502897685399",
+        "css": "cafe"
+      },
+      {
+        "search": [
+          "campsite"
+        ],
+        "code": 59405,
+        "uid": "244d3253e3ca5a0d602dd3574050fe93",
+        "css": "campsite"
+      },
+      {
+        "search": [
+          "cemetery"
+        ],
+        "code": 59406,
+        "uid": "cc50849b33fcede3d861f5a94a22969f",
+        "css": "cemetery"
+      },
+      {
+        "search": [
+          "cinema"
+        ],
+        "code": 59407,
+        "uid": "3fe687c833fa36452029b6d57e9149bf",
+        "css": "cinema"
+      },
+      {
+        "search": [
+          "college"
+        ],
+        "code": 59408,
+        "uid": "020dbfb0a5a4a25775bc751e5891e161",
+        "css": "college"
+      },
+      {
+        "search": [
+          "building"
+        ],
+        "code": 59409,
+        "uid": "fc455b9530e0b37facc289f42a120fdd",
+        "css": "commerical-building"
+      },
+      {
+        "search": [
+          "card"
+        ],
+        "code": 59410,
+        "uid": "5f1e8c36dffb553902e0e5c0c71faf6b",
+        "css": "credit-card"
+      },
+      {
+        "search": [
+          "cricket"
+        ],
+        "code": 59411,
+        "uid": "3dfa88388f5e84f8e8fdc4f6320c8b44",
+        "css": "cricket"
+      },
+      {
+        "search": [
+          "embassy"
+        ],
+        "code": 59412,
+        "uid": "aec75ed0b4851c282824143392dde047",
+        "css": "embassy"
+      },
+      {
+        "search": [
+          "fastfood",
+          "hamburger"
+        ],
+        "code": 59413,
+        "uid": "d27bcf5c8638e4078aaadae1d49b6909",
+        "css": "fast-food"
+      },
+      {
+        "search": [
+          "ferry"
+        ],
+        "code": 59414,
+        "uid": "6d3728ea0e5678ab9cf6840c4a040e34",
+        "css": "ferry"
+      },
+      {
+        "search": [
+          "fire station"
+        ],
+        "code": 59415,
+        "uid": "a9d3392264236bb9fe4d60a130c662d1",
+        "css": "fire-station"
+      },
+      {
+        "search": [
+          "football"
+        ],
+        "code": 59416,
+        "uid": "429c0a4a7c5aba2f8a894f98b48529b3",
+        "css": "football"
+      },
+      {
+        "search": [
+          "fuel"
+        ],
+        "code": 59417,
+        "uid": "63af7ffdab0d3546333634c63554bb82",
+        "css": "fuel"
+      },
+      {
+        "search": [
+          "garden"
+        ],
+        "code": 59418,
+        "uid": "d06b13f30947afbbdae6977413144183",
+        "css": "garden"
+      },
+      {
+        "search": [
+          "giraffe"
+        ],
+        "code": 59419,
+        "uid": "8815bdcacab2495dd436f029e78a15d7",
+        "css": "giraffe"
+      },
+      {
+        "search": [
+          "golf"
+        ],
+        "code": 59420,
+        "uid": "93f72325e13529f1673ae0c3be4b7d22",
+        "css": "golf"
+      },
+      {
+        "search": [
+          "grocery"
+        ],
+        "code": 59422,
+        "uid": "00341f8df1496285c31db5988db1d8b5",
+        "css": "grocery-store"
+      },
+      {
+        "search": [
+          "harbor"
+        ],
+        "code": 59423,
+        "uid": "484b90ec34c04b0db020143526d3c21a",
+        "css": "harbor"
+      },
+      {
+        "search": [
+          "heliport"
+        ],
+        "code": 59424,
+        "uid": "6dddcfc03d1eaa1bfee628ab291072b6",
+        "css": "heliport"
+      },
+      {
+        "search": [
+          "hospital"
+        ],
+        "code": 59425,
+        "uid": "f43389fa3f5a5b152ed0231fe7bb18a7",
+        "css": "hospital"
+      },
+      {
+        "search": [
+          "building",
+          "industrial"
+        ],
+        "code": 59426,
+        "uid": "134184de1e4f1dc3d40e0d93bb1ef15e",
+        "css": "industrial-building"
+      },
+      {
+        "search": [
+          "library"
+        ],
+        "code": 59427,
+        "uid": "56a766cedf13005162899b02cf9546b9",
+        "css": "library"
+      },
+      {
+        "search": [
+          "lodging"
+        ],
+        "code": 59428,
+        "uid": "de3978220965d0d1b1cbe671a5a57f9a",
+        "css": "lodging"
+      },
+      {
+        "search": [
+          "underground"
+        ],
+        "code": 59429,
+        "uid": "0b9e9d7b951b0acaac25b9d7ed258120",
+        "css": "london-underground"
+      },
+      {
+        "search": [
+          "minefield"
+        ],
+        "code": 59430,
+        "uid": "3e98530afcd866a9d607f8be2b5aa159",
+        "css": "minefield"
+      },
+      {
+        "search": [
+          "monument"
+        ],
+        "code": 59431,
+        "uid": "19d9ceb791d76257545e308954808fc1",
+        "css": "monument"
+      },
+      {
+        "search": [
+          "museum"
+        ],
+        "code": 59432,
+        "uid": "192955900fa17f5677c4fdf2b3f01be7",
+        "css": "museum"
+      },
+      {
+        "search": [
+          "pharmacy"
+        ],
+        "code": 59433,
+        "uid": "ee10c11395b5660a1e10a19cd66ea654",
+        "css": "pharmacy"
+      },
+      {
+        "search": [
+          "pitch"
+        ],
+        "code": 59434,
+        "uid": "5040789d726273a910ac5b59e9d8227a",
+        "css": "pitch"
+      },
+      {
+        "search": [
+          "police"
+        ],
+        "code": 59435,
+        "uid": "2e7c67db76849147d16a6763d07a03a9",
+        "css": "police"
+      },
+      {
+        "search": [
+          "post"
+        ],
+        "code": 59436,
+        "uid": "3333e460aa2cf5a69989c42c334a4194",
+        "css": "post"
+      },
+      {
+        "search": [
+          "prison"
+        ],
+        "code": 59437,
+        "uid": "0151454c6a8abec62b1b8810aca0af6a",
+        "css": "prison"
+      },
+      {
+        "search": [
+          "rail"
+        ],
+        "code": 59438,
+        "uid": "70276caa975cb1354bc375ca334f6b4b",
+        "css": "rail"
+      },
+      {
+        "search": [
+          "religious",
+          "christian"
+        ],
+        "code": 59439,
+        "uid": "7f8b6c0519d85119a6f41fa3c5794806",
+        "css": "religious-christian"
+      },
+      {
+        "search": [
+          "religious",
+          "islam"
+        ],
+        "code": 59440,
+        "uid": "2e99947836a643225daf0336e4814bb3",
+        "css": "religious-islam"
+      },
+      {
+        "search": [
+          "religious",
+          "jewish"
+        ],
+        "code": 59441,
+        "uid": "5604bbb863d0ea7b38dc331705aedb13",
+        "css": "religious-jewish"
+      },
+      {
+        "search": [
+          "restaurant"
+        ],
+        "code": 59442,
+        "uid": "5cc58545bb38c912940470480d3df145",
+        "css": "restaurant"
+      },
+      {
+        "search": [
+          "roadblock"
+        ],
+        "code": 59443,
+        "uid": "40664a3e8916bfdcc5fb5655d469723e",
+        "css": "roadblock"
+      },
+      {
+        "search": [
+          "school"
+        ],
+        "code": 59444,
+        "uid": "653750436fc99eeb29ccd487e6a5bfa6",
+        "css": "school"
+      },
+      {
+        "search": [
+          "shop"
+        ],
+        "code": 59445,
+        "uid": "83a806d41893e8bc6fac601669c76cd2",
+        "css": "shop"
+      },
+      {
+        "search": [
+          "skiing"
+        ],
+        "code": 59446,
+        "uid": "ebabd8ff4b67bdbba7660952c30813ca",
+        "css": "skiing"
+      },
+      {
+        "search": [
+          "soccer"
+        ],
+        "code": 59447,
+        "uid": "d8813acae9d35ada76fda399a6000587",
+        "css": "soccer"
+      },
+      {
+        "search": [
+          "swimming"
+        ],
+        "code": 59448,
+        "uid": "d368c9b110be1daa21f992afca084b8c",
+        "css": "swimming"
+      },
+      {
+        "search": [
+          "tennis"
+        ],
+        "code": 59449,
+        "uid": "8a4eb4f98d8e0f3686a741c952b03c08",
+        "css": "tennis"
+      },
+      {
+        "search": [
+          "theatre"
+        ],
+        "code": 59450,
+        "uid": "5f89d009e91c94c7c9be2f8711d7a2eb",
+        "css": "theatre"
+      },
+      {
+        "search": [
+          "toilet"
+        ],
+        "code": 59451,
+        "uid": "0d0a49f05cb202227853f85ce5f63cdc",
+        "css": "toilet"
+      },
+      {
+        "search": [
+          "town hall"
+        ],
+        "code": 59452,
+        "uid": "4c8822c296f8b46e1b0a1c0f627be146",
+        "css": "town-hall"
+      },
+      {
+        "search": [
+          "trash"
+        ],
+        "code": 59453,
+        "uid": "cad619ef78a5500c1e5b3d021d2fdd65",
+        "css": "trash"
+      },
+      {
+        "search": [
+          "tree"
+        ],
+        "code": 59454,
+        "uid": "878dccd7b810bc231a132d86a3028afe",
+        "css": "tree-1"
+      },
+      {
+        "search": [
+          "tree"
+        ],
+        "code": 59455,
+        "uid": "35b65a48339004a947a1dea3092e1daa",
+        "css": "tree-2"
+      },
+      {
+        "search": [
+          "warehouse"
+        ],
+        "code": 59456,
+        "uid": "bc6ef9c6531c54e927e9dc18e45524b2",
+        "css": "warehouse"
+      }
+    ],
+    "transform": {
+      "rescale": 1.2,
+      "baseline": 0.5
+    },
+    "id": 6
+  },
+  {
     "glyphs": [
       {
         "search": [
@@ -9403,7 +9943,7 @@ module.exports = [
       "homepage": "http://zocial.smcllns.com/",
       "columns": 4
     },
-    "id": 6
+    "id": 7
   },
   {
     "glyphs": [
@@ -9868,7 +10408,7 @@ module.exports = [
       "author": "Crowdsourced, for Fontello project",
       "columns": 4
     },
-    "id": 7
+    "id": 8
   },
   {
     "font": {
@@ -10737,6 +11277,6 @@ module.exports = [
       "baseline": 0.5,
       "offset": 0.05
     },
-    "id": 8
+    "id": 9
   }
 ];

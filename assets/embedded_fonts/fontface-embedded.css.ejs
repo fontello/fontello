@@ -4,9 +4,10 @@
 .font-embedded-3 { font-family: 'typicons'; }
 .font-embedded-4 { font-family: 'modernpics'; }
 .font-embedded-5 { font-family: 'meteocons'; }
-.font-embedded-6 { font-family: 'zocial'; }
-.font-embedded-7 { font-family: 'brandico'; }
-.font-embedded-8 { font-family: 'websymbols'; }
+.font-embedded-6 { font-family: 'maki'; }
+.font-embedded-7 { font-family: 'zocial'; }
+.font-embedded-8 { font-family: 'brandico'; }
+.font-embedded-9 { font-family: 'websymbols'; }
 
 @font-face {
   font-family: 'entypo';
@@ -70,6 +71,17 @@
        url('<%= asset_path("meteocons.woff") %>') format('woff'),
        url('<%= asset_path("meteocons.ttf") %>') format('truetype'),
        url('<%= asset_path("meteocons.svg") %>#meteocons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'maki';
+  src: url('<%= asset_path("maki.eot") %>');
+  src: url('<%= asset_path("maki.eot") %>?#iefix') format('embedded-opentype'),
+       url('<%= asset_path("maki.woff") %>') format('woff'),
+       url('<%= asset_path("maki.ttf") %>') format('truetype'),
+       url('<%= asset_path("maki.svg") %>#maki') format('svg');
   font-weight: normal;
   font-style: normal;
 }

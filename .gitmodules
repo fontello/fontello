@@ -28,3 +28,6 @@
 [submodule "src/zocial.font"]
 	path = src/zocial.font
 	url = git@github.com:fontello/zocial.font.git
+[submodule "src/maki.font"]
+	path = src/maki.font
+	url = git@github.com:fontello/maki.font.git

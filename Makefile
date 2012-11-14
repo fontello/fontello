@@ -17,6 +17,7 @@ FONTS         += iconic-uni.font
 FONTS         += typicons.font
 FONTS         += modernpics.font
 FONTS         += meteocons.font
+FONTS         += maki.font
 FONTS         += zocial.font
 FONTS         += brandico.font
 FONTS         += websymbols-uni.font
