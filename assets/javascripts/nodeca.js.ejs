@@ -31,27 +31,41 @@ var nodeca = window.nodeca = (function (nodeca) {
     return nodeca.runtime.i18n.t(nodeca.runtime.locale, phrase, params);
   };
 
-  (function (c) {
-    var log = c.log || $.noop;
+
+  // Create cross-browser log wrapper
+  //
+  (function () {
+    var dumb;
+
+    if (!window.console.log) {
+      dumb = $.noop;
+    } else {
+      dumb = function (a, b, c, d, e) {
+        try {
+          window.console.log(a, b, c, d, e);
+        } catch (e) {
+          // do nothing
+        }
+      };
+    }
 
     nodeca.logger = {};
 
-    _.each(['assert', 'error', 'info', 'debug'], function (level) {
-      var logger = c[level]; // try to get console.<level>
-
-      // we deal with IE6-7 where no console exist at all
-      // or we deal with IE8 where console.log or whatever might be an object
-      if (!_.isFunction(logger)) {
-        logger = function () {
-          log([level].concat(_.toArray(arguments)));
+    _.each(['assert', 'error', 'info', 'warn', 'debug'], function (level) {
+      if (!window.console[level]) {
+        nodeca.logger[level] = dumb;
+      } else {
+        nodeca.logger[level] = function (a, b, c, d, e) {
+          try {
+            window.console[level](a, b, c, d, e);
+          } catch (e) {
+            // do nothing
+          }
         };
       }
-
-      // logger is now a function for sure, so we can safely bind a console
-      // context, which is needed for Chrome
-      nodeca.logger[level] = _.bind(logger, c);
     });
-  }(window.console || {}));
+  }());
+
 
   return nodeca;
 }({}));
