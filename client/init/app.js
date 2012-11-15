@@ -234,8 +234,9 @@ module.exports = function () {
     event.preventDefault();
 
     if (!window.FileReader) {
-      nodeca.client.util.notify('error',
-        nodeca.client.render('errors.no-file-reader'));
+      nodeca.events.trigger('notification', [
+        'error', nodeca.runtime.t('errors.no_file_reader')
+      ]);
       return false;
     }
 
@@ -254,8 +255,9 @@ module.exports = function () {
 
     if (!file) {
       // Unexpected behavior. Should not happen in real life.
-      nodeca.client.util.notify('error',
-        'You must choose a file.');
+      nodeca.events.trigger('notification', [
+        'error', nodeca.runtime.t('errors.no_config_hosen')
+      ]);
       return;
     }
 
@@ -273,10 +275,11 @@ module.exports = function () {
       try {
         config = JSON.parse(event.target.result);
       } catch (err) {
-        nodeca.client.util.notify('error',
-          nodeca.client.render('errors.read-config', {
+        nodeca.events.trigger('notification', [
+          'error', nodeca.runtime.t('errors.read_config', {
             error: (err.message || err.toString())
-          }));
+          })
+        ]);
         return;
       }
 

@@ -1,0 +1,25 @@
+i18n:
+  en-US:
+    errors:
+      fatal: >
+        Internal error happened during processing your request:
+        <em>"#{error}"</em>. Please, try again later.
+      max_glyphs: >
+        You can't select more than #{max_glyphs} icons at once.
+        If you have a real use-case, please,
+        <a href="https://github.com/fontello/fontello/issues/new">create</a>
+        ticket in issue tracker.
+      glyphs_allocations: >
+        Internal Error. Can't allocate code for glyph.
+      no_file_reader: >
+        Config importer requires <strong>modern browser</strong>.
+        Please, <a href="http://www.mozilla.org/firefox/new/">upgrade</a>
+        your browser to be able import your previous configurations.
+      no_config_chosen: >
+        You must choose a file.
+      read_config: >
+        Failed read your config file: <em>#{error}</em>.
+      version_mismatch: >
+        Application is outdated. Please
+        <a href="/" style="text-decoration:underline"><strong>reload</strong></a>
+        the page.

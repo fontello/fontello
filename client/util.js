@@ -3,20 +3,6 @@
 "use strict";
 
 
-module.exports.notify = function (type, options, message) {
-  if (!message) {
-    message = options;
-    options = {};
-  }
-
-  $.noty(_.extend({layout: 'topRight'}, options, {
-    type:   type,
-    text:   message,
-    theme:  'noty_theme_twitter'
-  }));
-};
-
-
 // Int to char, with fix for big numbers
 // see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String/fromCharCode
 module.exports.fixedFromCharCode = function (code) {

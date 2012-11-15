@@ -1,0 +1,8 @@
+i18n:
+  en-US:
+    info:
+      download_banner: >
+        Are you designer?
+        <a href="https://github.com/fontello/fontello/wiki/How-to-help"
+           target="_blank">You can help</a>
+        us improve fontello!

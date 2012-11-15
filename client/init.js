@@ -6,6 +6,9 @@
 
 module.exports = function () {
   $(function () {
+    nodeca.events.trigger('page:loaded');
+
+
     nodeca.client.init.app();
 
     //

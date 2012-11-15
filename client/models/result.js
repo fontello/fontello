@@ -5,10 +5,11 @@
 
 
 var raise_max_glyphs_reached = _.throttle(function () {
-  nodeca.client.util.notify('error',
-    nodeca.client.render('errors.max-glyphs', {
+  nodeca.events.trigger('notification', [
+    'error', nodeca.runtime.t('errors.max_glyphs', {
       max: nodeca.config.app.max_glyphs
-    }));
+    })
+  ]);
 }, 1000);
 
 
@@ -45,8 +46,9 @@ module.exports = Backbone.Collection.extend({
         // no more free codes
         if (null === code) {
           // this should never happen in real life.
-          nodeca.client.util.notify('error',
-            "Internal Error. Can't allocate code for glyph.");
+          nodeca.events.trigger('notification', [
+            'error', nodeca.runtime.t('errors.glyphs_allocations')
+          ]);
 
           // model cannot be added to the collection
           return false;
@@ -142,36 +144,41 @@ module.exports = Backbone.Collection.extend({
       var font_id;
 
       if (err) {
-        nodeca.client.util.notify('error',
-          nodeca.client.render('errors.fatal', {
+        nodeca.events.trigger('notification', [
+          'error', nodeca.runtime.t('errors.fatal', {
             error: (err.message || String(err))
-          }));
+          })
+        ]);
         return;
       }
 
       font_id = msg.data.id;
 
-      nodeca.client.util.notify('information', {
+      nodeca.events.trigger('notification', [
+        'information', {
           layout:   'bottom',
           closeOnSelfClick: false,
           timeout:  20000 // 20 secs
-        }, nodeca.client.render('result.download-banner'));
+        }, nodeca.runtime.t('info.download_banner')
+      ]);
 
       function poll_status() {
         nodeca.server.font.status({id: font_id}, function (err, msg) {
           if (err) {
-            nodeca.client.util.notify('error',
-              nodeca.client.render('errors.fatal', {
+            nodeca.events.trigger('notification', [
+              'error', nodeca.runtime.t('info.fatal', {
                 error: (err.message || String(err))
-              }));
+              })
+            ]);
             return;
           }
 
-          if ('error' === msg.data.status){
-            nodeca.client.util.notify('error',
-              nodeca.client.render('errors.fatal', {
+          if ('error' === msg.data.status) {
+            nodeca.events.trigger('notification', [
+              'error', nodeca.runtime.t('info.fatal', {
                 error: (msg.data.error || "Unexpected error.")
-              }));
+              })
+            ]);
             return;
           }
 

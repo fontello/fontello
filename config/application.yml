@@ -9,8 +9,8 @@ app:
     min: 0xe800
     max: 0xf8ff
 locales:
-  enabled: [en]
-  default: en
+  enabled: [en-US]
+  default: en-US
 listen:
   host: localhost
   port: 3000
