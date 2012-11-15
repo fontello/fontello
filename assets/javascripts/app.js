@@ -5,6 +5,7 @@
 //= require underscore
 //= require bootstrap/bootstrap
 //= require backbone
+//= require knockout
 //= require jquery.collapser
 //= require jquery.inplaceEditor
 //= require jade/runtime
