@@ -24,8 +24,8 @@ function notify(type, options, message) {
 ////////////////////////////////////////////////////////////////////////////////
 
 
-nodeca.events.once('page:loaded', function () {
-  nodeca.events.on('notification', notify);
+nodeca.once('page:loaded', function () {
+  nodeca.on('notification', notify);
 });
 
 

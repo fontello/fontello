@@ -234,7 +234,7 @@ module.exports = function () {
     event.preventDefault();
 
     if (!window.FileReader) {
-      nodeca.events.trigger('notification', [
+      nodeca.trigger('notification', [
         'error', nodeca.runtime.t('errors.no_file_reader')
       ]);
       return false;
@@ -255,7 +255,7 @@ module.exports = function () {
 
     if (!file) {
       // Unexpected behavior. Should not happen in real life.
-      nodeca.events.trigger('notification', [
+      nodeca.trigger('notification', [
         'error', nodeca.runtime.t('errors.no_config_hosen')
       ]);
       return;
@@ -275,7 +275,7 @@ module.exports = function () {
       try {
         config = JSON.parse(event.target.result);
       } catch (err) {
-        nodeca.events.trigger('notification', [
+        nodeca.trigger('notification', [
           'error', nodeca.runtime.t('errors.read_config', {
             error: (err.message || err.toString())
           })

@@ -1,10 +1,24 @@
 /*global window, nodeca*/
 
+//= require EventEmitter
+
 //= require_self
 //= require_tree ./nodeca
 
+
 var nodeca = window.nodeca = (function (nodeca) {
   'use strict';
+
+  nodeca.once = function (evt, listener) {
+    var self = this, kamikaze;
+
+    kamikaze = function () {
+      self.off(evt, kamikaze);
+      return listener.apply(this, arguments);
+    };
+
+    this.on(evt, kamikaze);
+  };
 
   nodeca.config           = {};
   nodeca.config.app       = <%- JSON.stringify(nodeca('config.app')) %>
@@ -73,6 +87,6 @@ var nodeca = window.nodeca = (function (nodeca) {
 
 
   return nodeca;
-}({}));
+}(new EventEmitter));
 
 // vim: syntax=javascript
