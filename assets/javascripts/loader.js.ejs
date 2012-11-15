@@ -17,7 +17,9 @@ yepnope([
   {
     load: <%- JSON.stringify(asset_path('app.js')) %>,
     complete: function () {
-      window.nodeca.client.init();
+      $(function () {
+        window.nodeca.trigger('page:loaded');
+      });
     }
   }
 ]);

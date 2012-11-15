@@ -6,9 +6,6 @@
 
 module.exports = function () {
   $(function () {
-    nodeca.trigger('page:loaded');
-
-
     nodeca.client.init.app();
 
     //
@@ -19,7 +16,7 @@ module.exports = function () {
 
       // Twitter buttons
 
-      (function(d,s,id) {
+      (function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
 
         if (!d.getElementById(id)) {
