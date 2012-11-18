@@ -11,7 +11,7 @@ module.exports = function () {
     // models
     fonts, result, session,
     // ui views
-    toolbar, tabs, selector, preview, editor;
+    toolbar, tabs, preview, editor;
 
   // check browser's capabilities
   if (!Modernizr.fontface) {
@@ -45,7 +45,6 @@ module.exports = function () {
 
   toolbar   = new nodeca.client.ui.toolbar;
   tabs      = new nodeca.client.ui.tabs;
-  selector  = new nodeca.client.ui.panes.selector({model: fonts});
   preview   = new nodeca.client.ui.panes.preview({model: result});
   editor    = new nodeca.client.ui.panes.codes_editor({model: result});
 
@@ -71,14 +70,14 @@ module.exports = function () {
 
 
   toolbar.on('change:glyph-size', _.debounce(function (size) {
-    selector.changeGlyphSize(size);
+    nodeca.trigger('font-size:change', [size]);
     preview.changeGlyphSize(size);
   }, 250));
 
 
   $('#glyph-3d').change(function () {
     var val = 'checked' === $(this).attr('checked');
-    selector.$el.toggleClass('_3d', val);
+    nodeca.trigger('3d-mode:change', [val]);
     preview.$el.toggleClass('_3d', val);
   }).trigger('change');
 
