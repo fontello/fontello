@@ -9,6 +9,7 @@
 var nodeca = window.nodeca = (function (nodeca) {
   'use strict';
 
+  nodeca.emit = nodeca.trigger;
   nodeca.once = function (evt, listener) {
     var self = this, kamikaze;
 
