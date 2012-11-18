@@ -2,6 +2,8 @@
 
 "use strict";
 
+var util = require('../../../../../shared/util');
+
 module.exports = Backbone.View.extend({
   tagName:    "div",
   className:  "result-glyph",
@@ -19,11 +21,11 @@ module.exports = Backbone.View.extend({
         font    = model.get('font').getName(),
         uid     = source.uid,
         code    = require('../../../../../shared/glyphs_map')[font][uid],
-        char    = nodeca.client.util.fixedFromCharCode(model.get("code"));
+        char    = util.fixedFromCharCode(model.get("code"));
 
     this.$el.html(nodeca.client.render('ui.panes.codes_editor.glyph', {
       top:        model.get("code") === 32 ? "space" : char,
-      chr:        nodeca.client.util.fixedFromCharCode(code),
+      chr:        util.fixedFromCharCode(code),
       bottom:     this.toUnicode(model.get("code")),
       css_class:  "font-embedded-" + model.get('font').get('id')
     }));
@@ -34,11 +36,11 @@ module.exports = Backbone.View.extend({
         return false;
       },
       filterValue:  function (val) {
-        var code = nodeca.client.util.fixedCharCodeAt(val);
-        return nodeca.client.util.fixedFromCharCode(code);
+        var code = util.fixedCharCodeAt(val);
+        return util.fixedFromCharCode(code);
       }
     }).on('change', function (event, val) {
-      model.set("code", nodeca.client.util.fixedCharCodeAt(val));
+      model.set("code", util.fixedCharCodeAt(val));
     });
 
     this.$el.find('.code-editable').inplaceEditor({

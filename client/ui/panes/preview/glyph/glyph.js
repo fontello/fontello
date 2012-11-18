@@ -17,7 +17,7 @@ module.exports = Backbone.View.extend({
 
     this.$el.html(nodeca.client.render('ui.panes.preview.glyph', {
       css: this.model.get('css'),
-      chr: nodeca.client.util.fixedFromCharCode(code)
+      chr: require('../../../../../shared/util').fixedFromCharCode(code)
     }));
 
 
