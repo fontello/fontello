@@ -11,7 +11,7 @@ module.exports = function () {
     // models
     fonts, result, session,
     // ui views
-    toolbar, tabs, preview, editor;
+    toolbar, preview, editor;
 
   // check browser's capabilities
   if (!Modernizr.fontface) {
@@ -44,7 +44,6 @@ module.exports = function () {
 
 
   toolbar   = new nodeca.client.ui.toolbar;
-  tabs      = new nodeca.client.ui.tabs;
   preview   = new nodeca.client.ui.panes.preview({model: result});
   editor    = new nodeca.client.ui.panes.codes_editor({model: result});
 
@@ -104,12 +103,7 @@ module.exports = function () {
     var count = result.length;
 
     toolbar.setGlyphsCount(count);
-    tabs.setGlyphsCount(count);
   });
-
-
-  // show selector tab after  load complete
-  tabs.activate('#selector');
 
 
   // Attach tooltip handler to matching elements
