@@ -18,4 +18,4 @@ ul#selector-fonts.unstyled(data-bind="css: {_3d: has3DEffect()}, style: {fontSiz
       //-  a.icon-(href="#{meta.dribbble}", target="_blank") Dribbble
 
     ul.unstyled.font-glyphs.font-fontello(data-bind="foreach: glyphs")
-      li.glyph(data-bind="text: codeAsText")
+      li.glyph(data-bind="text: codeAsText, click: toggleSelection, css: selected() ? 'selected' : ''")

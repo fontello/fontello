@@ -12,7 +12,9 @@ nodeca.once('page:loaded', function () {
 
 
   function GlyphViewModel(font, data) {
-    this.codeAsText = fromCharCode(glyphs_map[font.fontname][data.uid]);
+    this.codeAsText       = fromCharCode(glyphs_map[font.fontname][data.uid]);
+    this.selected         = ko.observable(false);
+    this.toggleSelection  = function () { this.selected(!this.selected()); };
   }
 
 
@@ -48,14 +50,14 @@ nodeca.once('page:loaded', function () {
 
   $(function () {
     var
-    view  = $(nodeca.client.render('app.selector')).appendTo('#selector')[0],
+    $view = $(nodeca.client.render('app.selector')).appendTo('#selector'),
     model = new SelectorViewModel();
 
     //
     // Bind model and view
     //
 
-    ko.applyBindings(model, view);
+    ko.applyBindings(model, $view.get(0));
 
     //
     // Bind event handlers
@@ -67,6 +69,27 @@ nodeca.once('page:loaded', function () {
 
     nodeca.on('3d-mode:change', function (val) {
       model.has3DEffect(val);
+    });
+
+
+    $view.selectable({
+      filter: 'li.glyph:visible',
+      distance: 5,
+      stop: function () {
+        var $els = $view.find('.glyph.ui-selected');
+
+        // prevent from double-triggering event,
+        // otherwise click event will be fired as well
+        if (1 === $els.length) {
+          return;
+        }
+
+        nodeca.trigger('batch-glyphs-select:start');
+        $els.each(function () {
+          ko.dataFor(this).toggleSelection();
+        });
+        nodeca.trigger('batch-glyphs-select:finish');
+      }
     });
   });
 });
