@@ -12,6 +12,7 @@ nodeca.once('page:loaded', function () {
 
 
   function GlyphViewModel(font, data) {
+    this.uid              = data.uid;
     this.codeAsText       = fromCharCode(glyphs_map[font.fontname][data.uid]);
     this.selected         = ko.observable(false);
     this.toggleSelection  = function () { this.selected(!this.selected()); };
