@@ -14,3 +14,6 @@
 //= require i18n
 //= require views
 //= require api
+
+
+nodeca.client.init();
