@@ -13,7 +13,6 @@ module.exports = function () {
     // ui views
     toolbar, tabs, selector, preview, editor;
 
-
   // check browser's capabilities
   if (!Modernizr.fontface) {
     nodeca.logger.error("bad browser");
@@ -30,7 +29,7 @@ module.exports = function () {
   // list of all fonts
   fonts = new (Backbone.Collection.extend({
     model: nodeca.client.models.font
-  }))(require('../../shared/embedded_fonts'));
+  }))(require('../../../shared/embedded_fonts'));
 
   // special collection of selected glyphs (cache) with
   // extra model logic (validate, config creation and

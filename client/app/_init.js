@@ -1,4 +1,4 @@
-/*global $, nodeca*/
+/*global window, document, $, nodeca*/
 
 
 "use strict";
@@ -6,7 +6,7 @@
 
 module.exports = function () {
   $(function () {
-    nodeca.client.init.app();
+    require('./_init/legacy')();
 
     //
     // Social buttons defered load - after all
@@ -16,7 +16,7 @@ module.exports = function () {
 
       // Twitter buttons
 
-      (function(d, s, id) {
+      (function (d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
 
         if (!d.getElementById(id)) {
@@ -24,13 +24,13 @@ module.exports = function () {
           js.id = id;
           js.src = "//platform.twitter.com/widgets.js";
 
-          fjs.parentNode.insertBefore(js,fjs);
+          fjs.parentNode.insertBefore(js, fjs);
         }
       }(document, "script", "twitter-wjs"));
 
       // Google +1
 
-      (function() {
+      (function () {
         var po = document.createElement('script');
 
         po.type = 'text/javascript';
