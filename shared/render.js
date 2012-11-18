@@ -9,22 +9,10 @@
 /*global nodeca, _*/
 
 
+var getByPath = require('./getByPath');
+
+
 ////////////////////////////////////////////////////////////////////////////////
-
-
-// TODO: support nested requires()
-function getByPath(obj, path) {
-  var parts = path.split('.');
-
-  // this is the fastest way to find nested value:
-  // http://jsperf.com/find-object-deep-nested-value
-
-  while (obj && parts.length) {
-    obj = obj[parts.shift()];
-  }
-
-  return obj;
-}
 
 
 //  get_layout_stack(layout) -> Array
