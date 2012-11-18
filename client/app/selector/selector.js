@@ -1,4 +1,4 @@
-/*global $, _, nodeca*/
+/*global $, _, ko, nodeca*/
 
 
 'use strict';
@@ -6,35 +6,67 @@
 
 nodeca.once('page:loaded', function () {
   var
-  fonts         = require('../../../shared/embedded_fonts'),
-  glyphs_map    = require('../../../shared/glyphs_map'),
-  fromCharCode  = require('../../../shared/util').fixedFromCharCode;
+  embedded_fonts  = require('../../../shared/embedded_fonts'),
+  glyphs_map      = require('../../../shared/glyphs_map'),
+  fromCharCode    = require('../../../shared/util').fixedFromCharCode;
 
 
-  $.each(fonts, function () {
-    var remap = glyphs_map[this.font.fontname];
+  function GlyphViewModel(font, data) {
+    this.codeAsText = fromCharCode(glyphs_map[font.fontname][data.uid]);
+  }
 
-    $.each(this.glyphs, function () {
-      this.code_as_text = fromCharCode(remap[this.uid]);
+
+  function FontsViewModel(data) {
+    this.id           = data.id;
+    this.fontname     = data.font.fontname;
+
+    this.author       = data.meta.author;
+    this.authorText   = ko.computed(function () { return 'by ' + this.author; }, this);
+    this.license      = data.meta.license;
+    this.licenseText  = ko.computed(function () { return 'license - ' + this.license; }, this);
+    this.homepage     = data.meta.homepage;
+    this.email        = data.meta.email;
+    this.emailHref    = ko.computed(function () { return 'mailto:' + this.email; }, this);
+    this.twitter      = data.meta.twitter;
+    this.github       = data.meta.github;
+
+    this.glyphs       = _.map(data.glyphs, function (data) {
+      return new GlyphViewModel(this, data);
+    }, this);
+  }
+
+
+  function SelectorViewModel() {
+    this.has3DEffect  = ko.observable(true);
+    this.fontSize     = ko.observable(16);
+
+    this.fonts        = _.map(embedded_fonts, function (data) {
+      return new FontsViewModel(data);
     });
-  });
+  }
 
 
   $(function () {
-    var $fonts_list = $(nodeca.client.render('app.selector', { fonts: fonts }));
+    var
+    view  = $(nodeca.client.render('app.selector')).appendTo('#selector')[0],
+    model = new SelectorViewModel();
+
+    //
+    // Bind model and view
+    //
+
+    ko.applyBindings(model, view);
+
+    //
+    // Bind event handlers
+    //
 
     nodeca.on('font-size:change', function (size) {
-      $fonts_list.css('font-size', size);
+      model.fontSize(size);
     });
 
     nodeca.on('3d-mode:change', function (val) {
-      $fonts_list.toggleClass('_3d', val);
+      model.has3DEffect(val);
     });
-
-    $fonts_list.find('li.glyph').on('click', function () {
-      $(this).toggleClass('selected');
-    });
-
-    $fonts_list.appendTo('#selector');
   });
 });
