@@ -1,4 +1,4 @@
-/*global window, nodeca, jQuery, Handlebars, Backbone, $, _*/
+/*global window, N, jQuery, Handlebars, Backbone, $, _*/
 
 "use strict";
 
@@ -23,7 +23,7 @@ module.exports = Backbone.View.extend({
         code    = require('../../../../../shared/glyphs_map')[font][uid],
         char    = util.fixedFromCharCode(model.get("code"));
 
-    this.$el.html(nodeca.client.render('ui.panes.codes_editor.glyph', {
+    this.$el.html(N.client.render('ui.panes.codes_editor.glyph', {
       top:        model.get("code") === 32 ? "space" : char,
       chr:        util.fixedFromCharCode(code),
       bottom:     this.toUnicode(model.get("code")),

@@ -1,13 +1,13 @@
-/*global window, nodeca, jQuery, Handlebars, Backbone, $, _*/
+/*global window, N, jQuery, Handlebars, Backbone, $, _*/
 
 
 "use strict";
 
 
 var raise_max_glyphs_reached = _.throttle(function () {
-  nodeca.emit('notification', 'error',
-              nodeca.runtime.t('errors.max_glyphs', {
-                max: nodeca.config.app.max_glyphs
+  N.emit('notification', 'error',
+              N.runtime.t('errors.max_glyphs', {
+                max: N.config.app.max_glyphs
               }));
 }, 1000);
 
@@ -22,7 +22,7 @@ function start_download(id, url) {
 
 module.exports = Backbone.Collection.extend({
   initialize: function () {
-    this.maxGlyphs = nodeca.config.app.max_glyphs || null;
+    this.maxGlyphs = N.config.app.max_glyphs || null;
     this.usedCodes = {};
     this.usedCss   = {};
   },
@@ -45,8 +45,8 @@ module.exports = Backbone.Collection.extend({
         // no more free codes
         if (null === code) {
           // this should never happen in real life.
-          nodeca.emit('notification', 'error',
-                      nodeca.runtime.t('errors.glyphs_allocations'));
+          N.emit('notification', 'error',
+                      N.runtime.t('errors.glyphs_allocations'));
 
           // model cannot be added to the collection
           return false;
@@ -79,7 +79,7 @@ module.exports = Backbone.Collection.extend({
 
       if (!this.usedCodes[code]) {
         // this should never happen in real life.
-        nodeca.logger.error(
+        N.logger.error(
           "models.glyphs_collection.remove: code <" + code + "> " +
           "not found in used_codes map"
         );
@@ -127,7 +127,7 @@ module.exports = Backbone.Collection.extend({
     });
 
 
-    nodeca.logger.debug('Built result font config', config);
+    N.logger.debug('Built result font config', config);
 
     return config;
   },
@@ -138,12 +138,12 @@ module.exports = Backbone.Collection.extend({
       return;
     }
 
-    nodeca.server.font.generate(this.getConfig(name), function (err, msg) {
+    N.server.font.generate(this.getConfig(name), function (err, msg) {
       var font_id;
 
       if (err) {
-        nodeca.emit('notification', 'error',
-                    nodeca.runtime.t('errors.fatal', {
+        N.emit('notification', 'error',
+                    N.runtime.t('errors.fatal', {
                       error: (err.message || String(err))
                     }));
         return;
@@ -151,25 +151,25 @@ module.exports = Backbone.Collection.extend({
 
       font_id = msg.data.id;
 
-      nodeca.emit('notification', 'information', {
+      N.emit('notification', 'information', {
         layout:   'bottom',
         closeOnSelfClick: false,
         timeout:  20000 // 20 secs
-      }, nodeca.runtime.t('info.download_banner'));
+      }, N.runtime.t('info.download_banner'));
 
       function poll_status() {
-        nodeca.server.font.status({id: font_id}, function (err, msg) {
+        N.server.font.status({id: font_id}, function (err, msg) {
           if (err) {
-            nodeca.emit('notification', 'error',
-                        nodeca.runtime.t('info.fatal', {
+            N.emit('notification', 'error',
+                        N.runtime.t('info.fatal', {
                           error: (err.message || String(err))
                         }));
             return;
           }
 
           if ('error' === msg.data.status) {
-            nodeca.emit('notification', 'error',
-                        nodeca.runtime.t('info.fatal', {
+            N.emit('notification', 'error',
+                        N.runtime.t('info.fatal', {
                           error: (msg.data.error || "Unexpected error.")
                         }));
             return;
@@ -177,7 +177,7 @@ module.exports = Backbone.Collection.extend({
 
           if ('finished' === msg.data.status) {
             // TODO: normal notification about success
-            nodeca.logger.info("Font successfully generated. " +
+            N.logger.info("Font successfully generated. " +
                                "Your download link: " + msg.data.url);
             start_download(font_id, msg.data.url);
             return;
@@ -185,13 +185,13 @@ module.exports = Backbone.Collection.extend({
 
           if ('enqueued' === msg.data.status) {
             // TODO: notification about queue
-            nodeca.logger.info("Your request is in progress and will be available soon.");
+            N.logger.info("Your request is in progress and will be available soon.");
             setTimeout(poll_status, 500);
             return;
           }
 
           // Unexpected behavior
-          nodeca.logger.error("Unexpected behavior");
+          N.logger.error("Unexpected behavior");
         });
       }
 
@@ -226,9 +226,9 @@ module.exports = Backbone.Collection.extend({
 
 
   _getFreeCode: function () {
-    var code = nodeca.config.app.autoguess_charcode.min;
+    var code = N.config.app.autoguess_charcode.min;
 
-    while (code <= nodeca.config.app.autoguess_charcode.max) {
+    while (code <= N.config.app.autoguess_charcode.max) {
       if (!this.usedCodes[code]) {
         // got unused code
         return code;

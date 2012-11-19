@@ -1,4 +1,4 @@
-/*global window, nodeca, Handlebars, Backbone, $, _, store*/
+/*global window, N, Handlebars, Backbone, $, _, store*/
 
 
 "use strict";
@@ -237,7 +237,7 @@ Session.fromConfig = function fromConfig(manager, config) {
     });
   }
 
-  nodeca.logger.debug('Creating new session from parsed config', data);
+  N.logger.debug('Creating new session from parsed config', data);
   return new Session(data);
 };
 
@@ -304,7 +304,7 @@ module.exports = Backbone.Model.extend({
     if (!session) {
       // this should never happen!!! and can happen ONLY if somebody
       // will remove named session
-      nodeca.logger.error("Cannot load session named '" + name +"'.");
+      N.logger.error("Cannot load session named '" + name +"'.");
       session = this.sessions.current;
     }
 

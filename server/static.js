@@ -6,7 +6,7 @@
  **/
 
 
-/*global nodeca, _*/
+/*global N, _*/
 
 
 // stdlib
@@ -21,15 +21,15 @@ var send = require('send');
 ////////////////////////////////////////////////////////////////////////////////
 
 
-var root    = path.join(nodeca.runtime.apps[0].root, 'public/root');
-var logger  = nodeca.logger.getLogger('server.static');
+var root    = path.join(N.runtime.apps[0].root, 'public/root');
+var logger  = N.logger.getLogger('server.static');
 
 
 ////////////////////////////////////////////////////////////////////////////////
 
 
 // Validate input parameters
-nodeca.validate({
+N.validate({
   file: {
     type: "string",
     required: true

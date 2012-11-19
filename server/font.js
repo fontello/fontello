@@ -1,4 +1,4 @@
-/*global nodeca, _*/
+/*global N, _*/
 
 
 "use strict";
@@ -22,8 +22,8 @@ var fstools = require('nlib').Vendor.FsTools;
 
 // internal
 var stats       = require('../lib/stats');
-var logger      = nodeca.logger.getLogger('server.font');
-var dl_logger   = nodeca.logger.getLogger('server.font.download');
+var logger      = N.logger.getLogger('server.font');
+var dl_logger   = N.logger.getLogger('server.font.download');
 var fontConfig  = require('../lib/font_config');
 
 
@@ -31,11 +31,11 @@ var fontConfig  = require('../lib/font_config');
 
 
 var TMP_DIR             = '/tmp/fontello';
-var APP_ROOT            = _.first(nodeca.runtime.apps).root;
+var APP_ROOT            = _.first(N.runtime.apps).root;
 var DOWNLOAD_DIR        = path.join(APP_ROOT, 'public/download/');
 var DOWNLOAD_URL_PREFIX = "/download/";
 var GENERATOR_BIN       = path.join(APP_ROOT, 'bin/generate_font.sh');
-var CONFIG              = nodeca.config.app;
+var CONFIG              = N.config.app;
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -45,7 +45,7 @@ var CONFIG              = nodeca.config.app;
 function get_download_id(config) {
   var hash = crypto.createHash('md5');
 
-  hash.update('fontello' + nodeca.runtime.version);
+  hash.update('fontello' + N.runtime.version);
   hash.update(JSON.stringify({
     fontname: config.font.fontname,
     glyphs:   config.glyphs
@@ -144,7 +144,7 @@ job_mgr.on('finish', function (job, worker) {
 
 
 // Validate input parameters
-nodeca.validate('status', {
+N.validate('status', {
   id: {
     type: "string",
     required: true
@@ -180,7 +180,7 @@ module.exports.status = function (params, callback) {
 
 
 // Validate input parameters
-nodeca.validate('generate', {
+N.validate('generate', {
   name: {
     type: "string",
     required: false
@@ -243,7 +243,7 @@ var FINGERPRINT_RE = /-([0-9a-f]{32,40})\.[^.]+$/;
 
 
 // Validate input parameters
-nodeca.validate('download', {
+N.validate('download', {
   file: {
     type: "string",
     required: true

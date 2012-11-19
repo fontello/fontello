@@ -1,4 +1,4 @@
-/*global window, nodeca, jQuery, Handlebars, Backbone, $, _*/
+/*global window, N, jQuery, Handlebars, Backbone, $, _*/
 
 "use strict";
 

@@ -1,4 +1,4 @@
-/*global nodeca*/
+/*global N*/
 
 
 "use strict";
@@ -24,7 +24,7 @@ var etag = hash('fontello-app-' + Date.now());
 
 
 // Validate input parameters
-nodeca.validate({});
+N.validate({});
 
 
 module.exports = function app(params, callback) {

@@ -1,7 +1,7 @@
 'use strict';
 
 
-/*global nodeca*/
+/*global N*/
 
 
 // 3rd-party
@@ -9,7 +9,7 @@ var Mincer  = require('mincer');
 
 
 // internal
-var logger = nodeca.logger.getLogger('server.assets');
+var logger = N.logger.getLogger('server.assets');
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -37,7 +37,7 @@ function call_mincer_server(req, res) {
   var assets;
 
   if (!server) {
-    assets = nodeca.runtime.assets,
+    assets = N.runtime.assets,
     server = new Mincer.Server(assets.environment, assets.manifest);
     server.log = assets_logger;
   }
@@ -50,7 +50,7 @@ function call_mincer_server(req, res) {
 
 
 // Validate input parameters
-nodeca.validate({
+N.validate({
   path: {
     type: "string",
     required: true

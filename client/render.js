@@ -6,7 +6,7 @@
  **/
 
 
-/*global window, $, _, JASON, nodeca*/
+/*global window, $, _, JASON, N*/
 
 
 var render    = require('../shared/render');
@@ -23,7 +23,7 @@ var helpers        = {};
 ////////////////////////////////////////////////////////////////////////////////
 
 
-helpers.t = nodeca.runtime.t;
+helpers.t = N.runtime.t;
 
 
 _.each(['asset_path', 'asset_include'], function (method) {
@@ -33,11 +33,11 @@ _.each(['asset_path', 'asset_include'], function (method) {
 });
 
 helpers.link_to = function (name, params) {
-  return nodeca.runtime.router.linkTo(name, params) || '#';
+  return N.runtime.router.linkTo(name, params) || '#';
 };
 
-helpers.nodeca = function (path) {
-  return !path ? nodeca : getByPath(nodeca, path);
+helpers.N = function (path) {
+  return !path ? N : getByPath(N, path);
 };
 
 // substitute JASON with JSON
@@ -56,10 +56,10 @@ helpers.jason = JSON.stringify;
  *  Renders view.
  **/
 module.exports = function (apiPath, locals, layout) {
-  if (!getByPath(nodeca.views, apiPath)) {
+  if (!getByPath(N.views, apiPath)) {
     throw new Error("View " + apiPath + " not found");
   }
 
   locals = _.extend(locals || {}, helpers);
-  return render(nodeca.views, apiPath, locals, layout, true);
+  return render(N.views, apiPath, locals, layout, true);
 };

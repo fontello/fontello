@@ -1,4 +1,4 @@
-/*global window, nodeca, jQuery, Handlebars, Backbone, $, _*/
+/*global window, N, jQuery, Handlebars, Backbone, $, _*/
 
 
 "use strict";
@@ -15,7 +15,7 @@ module.exports = Backbone.View.extend({
         uid  = this.model.get('source').uid,
         code = require('../../../../../shared/glyphs_map')[font][uid];
 
-    this.$el.html(nodeca.client.render('ui.panes.preview.glyph', {
+    this.$el.html(N.client.render('ui.panes.preview.glyph', {
       css: this.model.get('css'),
       chr: require('../../../../../shared/util').fixedFromCharCode(code)
     }));

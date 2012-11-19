@@ -1,4 +1,4 @@
-/*global window, nodeca, jQuery, Handlebars, Backbone, $, _*/
+/*global window, N, jQuery, Handlebars, Backbone, $, _*/
 
 
 "use strict";
@@ -17,7 +17,7 @@ module.exports = Backbone.Model.extend({
 
   initialize: function (attributes) {
     this._glyphs = new (Backbone.Collection.extend({
-      model: nodeca.client.models.glyph
+      model: N.client.models.glyph
     }))();
 
     // remove glyphs data array

@@ -6,7 +6,7 @@
  **/
 
 
-/*global nodeca, _*/
+/*global N, _*/
 
 
 var getByPath = require('./getByPath');
@@ -61,7 +61,7 @@ module.exports = function render(viewsTree, path, locals, layout, skipBaseLayout
   } else {
     // Here we just notify that view not found.
     // This should never happen - one must check path existance before render()
-    nodeca.logger.warn("View " + path + " not found");
+    N.logger.warn("View " + path + " not found");
     html = '';
   }
 
@@ -73,7 +73,7 @@ module.exports = function render(viewsTree, path, locals, layout, skipBaseLayout
       var fn = getByPath(viewsTree.layouts, path);
 
       if (!_.isFunction(fn)) {
-        nodeca.logger.warn("Layout " + path + " not found");
+        N.logger.warn("Layout " + path + " not found");
         return;
       }
 

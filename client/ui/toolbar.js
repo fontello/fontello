@@ -1,4 +1,4 @@
-/*global window, nodeca, jQuery, Handlebars, Backbone, $, _*/
+/*global window, N, jQuery, Handlebars, Backbone, $, _*/
 
 
 "use strict";
@@ -32,9 +32,9 @@ module.exports = Backbone.View.extend({
     $('#glyph-size-slider').slider({
       orientation:  'horizontal',
       range:        'min',
-      value:        nodeca.config.app.glyph_size.val,
-      min:          nodeca.config.app.glyph_size.min,
-      max:          nodeca.config.app.glyph_size.max,
+      value:        N.config.app.glyph_size.val,
+      min:          N.config.app.glyph_size.min,
+      max:          N.config.app.glyph_size.max,
       slide:        function (event, ui) {
         /*jshint bitwise:false*/
         var val = ~~ui.value;

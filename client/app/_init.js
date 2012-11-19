@@ -1,4 +1,4 @@
-/*global window, document, $, nodeca*/
+/*global window, document, $, N*/
 
 
 "use strict";

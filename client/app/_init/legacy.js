@@ -1,4 +1,4 @@
-/*global nodeca, _, $, Modernizr, Backbone, window, Faye*/
+/*global N, _, $, Modernizr, Backbone, window, Faye*/
 
 
 "use strict";
@@ -15,7 +15,7 @@ module.exports = function () {
 
   // check browser's capabilities
   if (!Modernizr.fontface) {
-    nodeca.logger.error("bad browser");
+    N.logger.error("bad browser");
     $('#err-bad-browser').modal({backdrop: 'static', keyboard: false});
     return;
   }
@@ -28,14 +28,14 @@ module.exports = function () {
 
   // list of all fonts
   fonts = new (Backbone.Collection.extend({
-    model: nodeca.client.models.font
+    model: N.client.models.font
   }))(require('../../../shared/embedded_fonts'));
 
   // special collection of selected glyphs (cache) with
   // extra model logic (validate, config creation and
   // download requesting), but which can still be used
   // as a normal collection for the views
-  result = new nodeca.client.models.result;
+  result = new N.client.models.result;
 
 
   //
@@ -43,9 +43,9 @@ module.exports = function () {
   //
 
 
-  toolbar   = new nodeca.client.ui.toolbar;
-  preview   = new nodeca.client.ui.panes.preview({model: result});
-  editor    = new nodeca.client.ui.panes.codes_editor({model: result});
+  toolbar   = new N.client.ui.toolbar;
+  preview   = new N.client.ui.panes.preview({model: result});
+  editor    = new N.client.ui.panes.codes_editor({model: result});
 
 
   //
@@ -69,14 +69,14 @@ module.exports = function () {
 
 
   toolbar.on('change:glyph-size', _.debounce(function (size) {
-    nodeca.emit('font-size:change', size);
+    N.emit('font-size:change', size);
     preview.changeGlyphSize(size);
   }, 250));
 
 
   $('#glyph-3d').change(function () {
     var val = 'checked' === $(this).attr('checked');
-    nodeca.emit('3d-mode:change', val);
+    N.emit('3d-mode:change', val);
     preview.$el.toggleClass('_3d', val);
   }).trigger('change');
 
@@ -132,7 +132,7 @@ module.exports = function () {
 
 
   // Session manager instance
-  session = new nodeca.client.sessions({
+  session = new N.client.sessions({
     fontnameElement:  $fontname,
     fontsList:        fonts
   });
@@ -150,11 +150,11 @@ module.exports = function () {
   // change current state when some of glyph properties were changed
   fonts.each(function (f) {
     f.on('before:batch-select', function () {
-      nodeca.client.sessions.disable();
+      N.client.sessions.disable();
     });
 
     f.on('after:batch-select', function () {
-      nodeca.client.sessions.enable();
+      N.client.sessions.enable();
       save_session();
     });
 
@@ -208,7 +208,7 @@ module.exports = function () {
   });
 
 
-  if ('development' === nodeca.runtime.env) {
+  if ('development' === N.runtime.env) {
     // export some internal collections for debugging
     window.fontello_fonts   = fonts;
     window.fontello_result  = result;
@@ -226,8 +226,8 @@ module.exports = function () {
     event.preventDefault();
 
     if (!window.FileReader) {
-      nodeca.emit('notification', 'error',
-                  nodeca.runtime.t('errors.no_file_reader'));
+      N.emit('notification', 'error',
+                  N.runtime.t('errors.no_file_reader'));
       return false;
     }
 
@@ -239,15 +239,15 @@ module.exports = function () {
   $('#import-app-config-file').change(function (event) {
     var file = (event.target.files || [])[0], reader;
 
-    nodeca.logger.debug('Import config requested', file);
+    N.logger.debug('Import config requested', file);
 
     // file.type is empty on Chromium, so we allow upload anything
     // and will get real error only if JSON.parse fails
 
     if (!file) {
       // Unexpected behavior. Should not happen in real life.
-      nodeca.emit('notification', 'error',
-                  nodeca.runtime.t('errors.no_config_hosen'));
+      N.emit('notification', 'error',
+                  N.runtime.t('errors.no_config_hosen'));
       return;
     }
 
@@ -265,14 +265,14 @@ module.exports = function () {
       try {
         config = JSON.parse(event.target.result);
       } catch (err) {
-        nodeca.emit('notification', 'error',
-                    nodeca.runtime.t('errors.read_config', {
+        N.emit('notification', 'error',
+                    N.runtime.t('errors.read_config', {
                       error: (err.message || err.toString())
                     }));
         return;
       }
 
-      nodeca.logger.debug('Config successfully parsed', config);
+      N.logger.debug('Config successfully parsed', config);
       session.readConfig(config);
     };
 

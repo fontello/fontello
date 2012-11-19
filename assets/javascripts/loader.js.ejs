@@ -4,7 +4,7 @@
 
 
 /*jshint browser:true,node:false*/
-/*global yepnope, window*/
+/*global yepnope, N, window*/
 
 
 yepnope([
@@ -18,7 +18,7 @@ yepnope([
     load: <%- JSON.stringify(asset_path('app.js')) %>,
     complete: function () {
       $(function () {
-        window.nodeca.emit('page:loaded');
+        N.emit('page:loaded');
       });
     }
   }

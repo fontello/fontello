@@ -1,7 +1,7 @@
-/*global nodeca*/
+/*global N*/
 
 
 'use strict';
 
 
-nodeca.once('page:loaded', require('./_init'));
+N.once('page:loaded', require('./_init'));

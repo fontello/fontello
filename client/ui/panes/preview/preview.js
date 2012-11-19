@@ -1,4 +1,4 @@
-/*global window, nodeca, jQuery, Handlebars, Backbone, $, _*/
+/*global window, N, jQuery, Handlebars, Backbone, $, _*/
 
 
 "use strict";
@@ -11,10 +11,10 @@ module.exports = Backbone.View.extend({
   initialize: function () {
     var $glyphs = this.$('#preview-font'), views = {};
 
-    this.changeGlyphSize(nodeca.config.app.glyph_size.val);
+    this.changeGlyphSize(N.config.app.glyph_size.val);
 
     function add(glyph) {
-      var v = new nodeca.client.ui.panes.preview.glyph({model: glyph});
+      var v = new N.client.ui.panes.preview.glyph({model: glyph});
       views[glyph.cid] = v;
       $glyphs.append(v.render().el);
     }

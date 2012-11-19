@@ -1,7 +1,7 @@
 'use strict';
 
 
-/*global $, _, nodeca*/
+/*global $, _, N*/
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -24,8 +24,8 @@ function notify(type, options, message) {
 ////////////////////////////////////////////////////////////////////////////////
 
 
-nodeca.once('page:loaded', function () {
-  nodeca.on('notification', notify);
+N.once('page:loaded', function () {
+  N.on('notification', notify);
 });
 
 

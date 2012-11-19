@@ -1,15 +1,15 @@
 /**
- *  nodeca.io
+ *  N.io
  *
- *  This module provides realtime communication methods for nodeca/nlib based
+ *  This module provides realtime communication methods for Nlib based
  *  applications.
  **/
 
 
-//= depend_on nodeca
+//= depend_on n
 
 
-/*global window, $, _, nodeca*/
+/*global window, $, _, N*/
 
 
 (function () {
@@ -22,7 +22,7 @@
 
 
   // exported IO object
-  var io = nodeca.io = <%- JSON.stringify(nodeca('io')) %>;
+  var io = N.io = <%- JSON.stringify(N('io')) %>;
 
 
   // error constructor
@@ -51,14 +51,14 @@
       } catch (err) {
         // do not interrupt event handlers chain
         // !!! THIS SHOULD NEVER HAPPEN !!!
-        nodeca.logger.error(err);
+        N.logger.error(err);
       }
     });
   }
 
 
   /**
-   *  nodeca.io.on(name, callback) -> Void
+   *  N.io.on(name, callback) -> Void
    *
    *  ##### Known events
    *
@@ -80,17 +80,17 @@
 
 
   /**
-   *  nodeca.io.apiTree(name, params, options, callback) -> Void
-   *  nodeca.io.apiTree(name, params[, callback]) -> Void
-   *  nodeca.io.apiTree(name, callback) -> Void
+   *  N.io.apiTree(name, params, options, callback) -> Void
+   *  N.io.apiTree(name, params[, callback]) -> Void
+   *  N.io.apiTree(name, callback) -> Void
    **/
   io.apiTree = function apiTree(name, params, options, callback) {
     var xhr, payload;
 
     payload = {
-      version:  nodeca.runtime.version,
+      version:  N.runtime.version,
       method:   name,
-      csrf:     nodeca.runtime.csrf
+      csrf:     N.runtime.csrf
     };
 
     // Scenario: apiTree(name, callback);
@@ -125,7 +125,7 @@
     // Send request
     //
 
-    nodeca.logger.debug('API3 Sending request', payload);
+    N.logger.debug('API3 Sending request', payload);
     emit('rpc.request');
 
     xhr = last_xhr = $.post('/io/rpc', payload);
@@ -137,18 +137,18 @@
     xhr.success(function (data) {
       data = data || {};
 
-      nodeca.logger.debug('API3 Received data', data);
+      N.logger.debug('API3 Received data', data);
       emit('rpc.complete');
 
-      if (data.version !== nodeca.runtime.version) {
+      if (data.version !== N.runtime.version) {
         data.error = error(io.EWRONGVER, 'Client version does not match server.');
         delete data.response;
       }
 
       // if invalid CSRF token error and retry is allowed
-      if (data.error && nodeca.io.INVALID_CSRF_TOKEN === data.error.code && options._retryOnCsrfError) {
+      if (data.error && N.io.INVALID_CSRF_TOKEN === data.error.code && options._retryOnCsrfError) {
         // renew CSRF token
-        nodeca.runtime.csrf = error.data;
+        N.runtime.csrf = error.data;
 
         // only one attempt to retry is allowed
         options._retryOnCsrfError = false;
@@ -171,10 +171,10 @@
     //
 
     xhr.fail(function (err) {
-      nodeca.logger.error(err);
+      N.logger.error(err);
 
       // rewrite error
-      err = error(nodeca.io.ECOMMUNICATION, 'Communication error');
+      err = error(N.io.ECOMMUNICATION, 'Communication error');
 
       emit('rpc.complete');
       emit('rpc.error', [err]);

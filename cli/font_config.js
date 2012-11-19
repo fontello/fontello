@@ -1,10 +1,10 @@
 "use strict";
 
 
-/*global nodeca*/
+/*global N*/
 
 
-// nodeca
+// N
 var NLib = require('nlib');
 
 
@@ -18,7 +18,7 @@ var fontConfig = require('../lib/font_config');
 
 
 module.exports.parserParameters= {
-  version:      nodeca.runtime.version,
+  version:      N.runtime.version,
   addHelp:      true,
   help:         'prepare font configuration',
   description:  'prepare font configuration'

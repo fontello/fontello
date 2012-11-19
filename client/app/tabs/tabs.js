@@ -1,7 +1,7 @@
 'use strict';
 
 
-/*global $, ko, nodeca*/
+/*global $, ko, N*/
 
 
 // prevent the event from bubbling to ancestor elements
@@ -14,14 +14,14 @@ function stopPropagation(event) {
 var selectedGlyphs = ko.observable(0);
 
 
-nodeca.on('glyph:create', function (glyph) {
+N.on('glyph:create', function (glyph) {
   glyph.selected.subscribe(function (value) {
     selectedGlyphs(selectedGlyphs() + (value ? +1 : -1));
   });
 });
 
 
-nodeca.once('page:loaded', function () {
+N.once('page:loaded', function () {
   var
   $tabs_container = $('#tabs').tab(),
   $preview_tab    = $tabs_container.find('a[href="#preview"]'),

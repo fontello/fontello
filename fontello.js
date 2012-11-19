@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 
-/*global nodeca*/
+/*global N*/
 
 
 "use strict";
@@ -18,7 +18,7 @@ var app = require('nlib').Application.create({
 //
 
 
-nodeca.runtime.version = require('./package.json').version;
+N.runtime.version = require('./package.json').version;
 
 
 //
@@ -48,10 +48,10 @@ process.on('uncaughtException', function (err) {
 
     msg += '\n' + stack.split('\n').slice(1).join('\n');
 
-    nodeca.logger.fatal(msg);
+    N.logger.fatal(msg);
   } catch (loggerError) {
     // THIS SHOULD NEVER-EVER-EVER HAPPEN -- THIS IS A WORST CASE SCENARIO
-    // USAGE: ./nodeca.js 2>/var/log/nodeca-cf.log
+    // USAGE: ./N.js 2>/var/log/N-cf.log
     process.stderr.write('\nLogger failed write: ' + loggerError.stack);
     process.stderr.write('\nOriginal error happened: ' + msg);
   }
@@ -64,7 +64,7 @@ process.on('uncaughtException', function (err) {
 
 
 function shutdown_gracefully() {
-  nodeca.logger.info('Shutting down...');
+  N.logger.info('Shutting down...');
   process.exit(0);
 }
 

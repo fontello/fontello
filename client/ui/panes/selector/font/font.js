@@ -1,4 +1,4 @@
-/*global window, nodeca, jQuery, Handlebars, Backbone, $, _*/
+/*global window, N, jQuery, Handlebars, Backbone, $, _*/
 
 "use strict";
 
@@ -39,7 +39,7 @@ module.exports = Backbone.View.extend({
   render: function () {
     var $info;
 
-    this.$el.html(nodeca.client.render('ui.panes.selector.font', {
+    this.$el.html(N.client.render('ui.panes.selector.font', {
       id:         this.model.id,
       fontname:   this.model.get("font").fullname,
       css_class:  "font-embedded-" + this.model.get("id"),
@@ -48,7 +48,7 @@ module.exports = Backbone.View.extend({
 
     // process each glyph
     this.model.eachGlyph(function (glyph) {
-      var view = new nodeca.client.ui.panes.selector.glyph({model: glyph});
+      var view = new N.client.ui.panes.selector.glyph({model: glyph});
       this.$(".font-glyphs").append(view.render().el);
     }, this);
 

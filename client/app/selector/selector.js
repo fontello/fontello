@@ -1,10 +1,10 @@
-/*global $, _, ko, nodeca*/
+/*global $, _, ko, N*/
 
 
 'use strict';
 
 
-nodeca.once('page:loaded', function () {
+N.once('page:loaded', function () {
   var
   embedded_fonts  = require('../../../shared/embedded_fonts'),
   glyphs_map      = require('../../../shared/glyphs_map'),
@@ -18,7 +18,7 @@ nodeca.once('page:loaded', function () {
     this.selected         = ko.observable(false);
     this.toggleSelection  = function () { this.selected(!this.selected()); };
 
-    nodeca.emit('glyph:create', this);
+    N.emit('glyph:create', this);
   }
 
 
@@ -54,7 +54,7 @@ nodeca.once('page:loaded', function () {
 
   $(function () {
     var
-    $view = $(nodeca.client.render('app.selector')).appendTo('#selector'),
+    $view = $(N.client.render('app.selector')).appendTo('#selector'),
     model = new SelectorViewModel();
 
     //
@@ -67,11 +67,11 @@ nodeca.once('page:loaded', function () {
     // Bind event handlers
     //
 
-    nodeca.on('font-size:change', function (size) {
+    N.on('font-size:change', function (size) {
       model.fontSize(size);
     });
 
-    nodeca.on('3d-mode:change', function (val) {
+    N.on('3d-mode:change', function (val) {
       model.has3DEffect(val);
     });
 
@@ -88,11 +88,11 @@ nodeca.once('page:loaded', function () {
           return;
         }
 
-        nodeca.emit('batch-glyphs-select:start');
+        N.emit('batch-glyphs-select:start');
         $els.each(function () {
           ko.dataFor(this).toggleSelection();
         });
-        nodeca.emit('batch-glyphs-select:finish');
+        N.emit('batch-glyphs-select:finish');
       }
     });
   });

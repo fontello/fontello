@@ -10,7 +10,7 @@
 //= require jquery.inplaceEditor
 //= require jade/runtime
 //= require babelfish-runtime
-//= require nodeca
+//= require n
 //= require i18n
 //= require views
 //= require api

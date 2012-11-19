@@ -1,10 +1,10 @@
 "use strict";
 
 
-/*global nodeca*/
+/*global N*/
 
 
-// nodeca
+// N
 var NLib = require('nlib');
 
 
@@ -14,7 +14,7 @@ var FsTools = NLib.Vendor.FsTools;
 
 
 module.exports.parserParameters= {
-  version:      nodeca.runtime.version,
+  version:      N.runtime.version,
   addHelp:      true,
   help:         'start fontello server',
   description:  'Start fontello server'
