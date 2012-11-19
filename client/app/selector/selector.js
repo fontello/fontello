@@ -18,7 +18,7 @@ nodeca.once('page:loaded', function () {
     this.selected         = ko.observable(false);
     this.toggleSelection  = function () { this.selected(!this.selected()); };
 
-    nodeca.trigger('glyph:create', [this]);
+    nodeca.emit('glyph:create', this);
   }
 
 
@@ -88,11 +88,11 @@ nodeca.once('page:loaded', function () {
           return;
         }
 
-        nodeca.trigger('batch-glyphs-select:start');
+        nodeca.emit('batch-glyphs-select:start');
         $els.each(function () {
           ko.dataFor(this).toggleSelection();
         });
-        nodeca.trigger('batch-glyphs-select:finish');
+        nodeca.emit('batch-glyphs-select:finish');
       }
     });
   });

@@ -5,11 +5,10 @@
 
 
 var raise_max_glyphs_reached = _.throttle(function () {
-  nodeca.trigger('notification', [
-    'error', nodeca.runtime.t('errors.max_glyphs', {
-      max: nodeca.config.app.max_glyphs
-    })
-  ]);
+  nodeca.emit('notification', 'error',
+              nodeca.runtime.t('errors.max_glyphs', {
+                max: nodeca.config.app.max_glyphs
+              }));
 }, 1000);
 
 
@@ -46,9 +45,8 @@ module.exports = Backbone.Collection.extend({
         // no more free codes
         if (null === code) {
           // this should never happen in real life.
-          nodeca.trigger('notification', [
-            'error', nodeca.runtime.t('errors.glyphs_allocations')
-          ]);
+          nodeca.emit('notification', 'error',
+                      nodeca.runtime.t('errors.glyphs_allocations'));
 
           // model cannot be added to the collection
           return false;
@@ -144,41 +142,36 @@ module.exports = Backbone.Collection.extend({
       var font_id;
 
       if (err) {
-        nodeca.trigger('notification', [
-          'error', nodeca.runtime.t('errors.fatal', {
-            error: (err.message || String(err))
-          })
-        ]);
+        nodeca.emit('notification', 'error',
+                    nodeca.runtime.t('errors.fatal', {
+                      error: (err.message || String(err))
+                    }));
         return;
       }
 
       font_id = msg.data.id;
 
-      nodeca.trigger('notification', [
-        'information', {
-          layout:   'bottom',
-          closeOnSelfClick: false,
-          timeout:  20000 // 20 secs
-        }, nodeca.runtime.t('info.download_banner')
-      ]);
+      nodeca.emit('notification', 'information', {
+        layout:   'bottom',
+        closeOnSelfClick: false,
+        timeout:  20000 // 20 secs
+      }, nodeca.runtime.t('info.download_banner'));
 
       function poll_status() {
         nodeca.server.font.status({id: font_id}, function (err, msg) {
           if (err) {
-            nodeca.trigger('notification', [
-              'error', nodeca.runtime.t('info.fatal', {
-                error: (err.message || String(err))
-              })
-            ]);
+            nodeca.emit('notification', 'error',
+                        nodeca.runtime.t('info.fatal', {
+                          error: (err.message || String(err))
+                        }));
             return;
           }
 
           if ('error' === msg.data.status) {
-            nodeca.trigger('notification', [
-              'error', nodeca.runtime.t('info.fatal', {
-                error: (msg.data.error || "Unexpected error.")
-              })
-            ]);
+            nodeca.emit('notification', 'error',
+                        nodeca.runtime.t('info.fatal', {
+                          error: (msg.data.error || "Unexpected error.")
+                        }));
             return;
           }
 

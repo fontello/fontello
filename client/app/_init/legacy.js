@@ -69,14 +69,14 @@ module.exports = function () {
 
 
   toolbar.on('change:glyph-size', _.debounce(function (size) {
-    nodeca.trigger('font-size:change', [size]);
+    nodeca.emit('font-size:change', size);
     preview.changeGlyphSize(size);
   }, 250));
 
 
   $('#glyph-3d').change(function () {
     var val = 'checked' === $(this).attr('checked');
-    nodeca.trigger('3d-mode:change', [val]);
+    nodeca.emit('3d-mode:change', val);
     preview.$el.toggleClass('_3d', val);
   }).trigger('change');
 
@@ -226,9 +226,8 @@ module.exports = function () {
     event.preventDefault();
 
     if (!window.FileReader) {
-      nodeca.trigger('notification', [
-        'error', nodeca.runtime.t('errors.no_file_reader')
-      ]);
+      nodeca.emit('notification', 'error',
+                  nodeca.runtime.t('errors.no_file_reader'));
       return false;
     }
 
@@ -247,9 +246,8 @@ module.exports = function () {
 
     if (!file) {
       // Unexpected behavior. Should not happen in real life.
-      nodeca.trigger('notification', [
-        'error', nodeca.runtime.t('errors.no_config_hosen')
-      ]);
+      nodeca.emit('notification', 'error',
+                  nodeca.runtime.t('errors.no_config_hosen'));
       return;
     }
 
@@ -267,11 +265,10 @@ module.exports = function () {
       try {
         config = JSON.parse(event.target.result);
       } catch (err) {
-        nodeca.trigger('notification', [
-          'error', nodeca.runtime.t('errors.read_config', {
-            error: (err.message || err.toString())
-          })
-        ]);
+        nodeca.emit('notification', 'error',
+                    nodeca.runtime.t('errors.read_config', {
+                      error: (err.message || err.toString())
+                    }));
         return;
       }
 
