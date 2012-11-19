@@ -23,20 +23,17 @@ N.once('page:loaded', function () {
 
 
   function FontsViewModel(data) {
-    this.id           = data.id;
-    this.fontname     = data.font.fontname;
+    this.id       = data.id;
+    this.fontname = data.font.fontname;
 
-    this.author       = data.meta.author;
-    this.authorText   = ko.computed(function () { return 'by ' + this.author; }, this);
-    this.license      = data.meta.license;
-    this.licenseText  = ko.computed(function () { return 'license - ' + this.license; }, this);
-    this.homepage     = data.meta.homepage;
-    this.email        = data.meta.email;
-    this.emailHref    = ko.computed(function () { return 'mailto:' + this.email; }, this);
-    this.twitter      = data.meta.twitter;
-    this.github       = data.meta.github;
+    this.author   = data.meta.author;
+    this.license  = data.meta.license;
+    this.homepage = data.meta.homepage;
+    this.email    = data.meta.email;
+    this.twitter  = data.meta.twitter;
+    this.github   = data.meta.github;
 
-    this.glyphs       = _.map(data.glyphs, function (data) {
+    this.glyphs   = _.map(data.glyphs, function (data) {
       return new GlyphViewModel(this, data);
     }, this);
   }

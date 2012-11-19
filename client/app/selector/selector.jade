@@ -4,12 +4,12 @@ ul#selector-fonts.unstyled(data-bind="css: {_3d: has3DEffect()}, style: {fontSiz
       //- a.label.label-important.font-info(href="#") info
       a.src-font-name._collapser(href="#", data-bind="text: fontname")
 
-      small.font-details(data-bind="if: author, text: authorText")
-      small.font-details(data-bind="if: license, text: licenseText")
+      small.font-details(data-bind="if: author, text: 'by ' + author")
+      small.font-details(data-bind="if: license, text: 'license - ' + license")
 
       small.font-details
         a.icon-home(data-bind="if: homepage, attr: {href: homepage}", target="_blank")
-        a.icon-mail(data-bind="if: email, attr: {href: emailHref}")
+        a.icon-mail(data-bind="if: email, attr: {href: 'mailto:' + email}")
         a.icon-twitter-bird(data-bind="if: twitter, attr: {href: twitter}", target="_blank")
         a.icon-github-text(data-bind="if: github, attr: {href: github}", target="_blank")
 
