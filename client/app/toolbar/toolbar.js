@@ -1,7 +1,7 @@
 'use strict';
 
 
-/*global $, ko, N*/
+/*global _, $, ko, N*/
 
 
 // prevent the event from bubbling to ancestor elements
@@ -9,6 +9,18 @@ function stopPropagation(event) {
   event.preventDefault();
   event.stopPropagation();
 }
+
+
+var keywords = _.chain(require('../../../shared/embedded_fonts'))
+  .map(function (font) {
+    return _.map(font.glyphs, function (glyph) {
+      return glyph.search;
+    });
+  })
+  .flatten()
+  .map(String)
+  .uniq()
+  .value();
 
 
 var model = {
@@ -47,7 +59,7 @@ N.on('glyph:create', function (glyph) {
 
 N.once('page:loaded', function () {
   $(function () {
-    var $view = $('#toolbar'), $glyph_size_value;
+    var $view = $('#toolbar'), $glyph_size_value, $glyphs, $search, on_search_change;
 
     // initialize glyph-size slider
     $glyph_size_value = $('#glyph-size-value');
@@ -64,6 +76,34 @@ N.once('page:loaded', function () {
         N.emit('font-size:change', val);
       }
     });
+
+    $glyphs = $('.glyph');
+
+    // search query change event listener
+    on_search_change = function (event) {
+      var q = $.trim($search.val());
+
+      if (0 === q.length) {
+        $glyphs.show();
+        return;
+      }
+
+      $glyphs.hide().filter(function () {
+        var model = ko.dataFor(this);
+        return model && 0 <= model.keywords.indexOf(q);
+      }).show();
+    };
+
+    // init search input
+    $search = $('#search')
+      .on('change', on_search_change)
+      .on('keyup', _.debounce(on_search_change, 250))
+      .on('focus keyup', _.debounce(function () {
+        $search.typeahead('hide');
+      }, 5000))
+      .typeahead({
+        source: keywords
+      });
 
     ko.applyBindings(model, $view.get(0));
   });

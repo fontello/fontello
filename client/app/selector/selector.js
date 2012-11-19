@@ -14,6 +14,7 @@ N.once('page:loaded', function () {
   function GlyphViewModel(font, data) {
     this.font             = font;
     this.uid              = data.uid;
+    this.keywords         = (data.search || []).join('|');
     this.codeAsText       = fromCharCode(glyphs_map[font.fontname][data.uid]);
     this.selected         = ko.observable(false);
     this.toggleSelection  = function () { this.selected(!this.selected()); };
