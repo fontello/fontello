@@ -11,7 +11,7 @@ module.exports = function () {
     // models
     fonts, result, session,
     // ui views
-    toolbar, preview, editor;
+    preview, editor;
 
   // check browser's capabilities
   if (!Modernizr.fontface) {
@@ -43,7 +43,6 @@ module.exports = function () {
   //
 
 
-  toolbar   = new N.client.ui.toolbar;
   preview   = new N.client.ui.panes.preview({model: result});
   editor    = new N.client.ui.panes.codes_editor({model: result});
 
@@ -55,54 +54,10 @@ module.exports = function () {
 
   fonts.each(function (f) {
     f.eachGlyph(function (g) {
-      toolbar.addKeywords(g.get('source').search || []);
       g.on('change:selected', function (g, val) {
         result[val ? 'add' : 'remove'](g);
       });
     });
-  });
-
-
-  toolbar.on('click:download', function () {
-    result.startDownload($('#result-fontname').val());
-  });
-
-
-  toolbar.on('change:glyph-size', _.debounce(function (size) {
-    N.emit('font-size:change', size);
-    preview.changeGlyphSize(size);
-  }, 250));
-
-
-  $('#glyph-3d').change(function () {
-    var val = 'checked' === $(this).attr('checked');
-    N.emit('3d-mode:change', val);
-    preview.$el.toggleClass('_3d', val);
-  }).trigger('change');
-
-
-  // perform glyphs search
-  $glyphs = $('.glyph');
-  toolbar.on('change:search', function (q) {
-    q = $.trim(q);
-
-    if (0 === q.length) {
-      $glyphs.show();
-      return;
-    }
-
-    $glyphs.hide().filter(function () {
-      var model = $(this).data('model');
-      return model && 0 <= model.keywords.indexOf(q);
-    }).show();
-  });
-
-
-  // update selected glyphs count
-  result.on('add remove', function () {
-    var count = result.length;
-
-    toolbar.setGlyphsCount(count);
   });
 
 
@@ -265,10 +220,9 @@ module.exports = function () {
       try {
         config = JSON.parse(event.target.result);
       } catch (err) {
-        N.emit('notification', 'error',
-                    N.runtime.t('errors.read_config', {
-                      error: (err.message || err.toString())
-                    }));
+        N.emit('notification', 'error', N.runtime.t('errors.read_config', {
+          error: (err.message || err.toString())
+        }));
         return;
       }
 
