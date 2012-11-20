@@ -1,0 +1,10 @@
+.modal.hide.fade(style="display: none;")
+  .modal-header
+    h1= self.t('errors.bad_browser.title')
+  .modal-body
+    p= self.t('errors.bad_browser.message')
+    p
+      ul
+        li: a(href="http://www.mozilla.com/firefox/") Firefox 10+
+        li: a(href="http://www.google.com/chrome/") Chrome 16+
+        li: a(href="http://www.opera.com/browser/") Opera 11.62+
