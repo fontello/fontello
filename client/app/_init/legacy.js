@@ -9,9 +9,7 @@ module.exports = function () {
     // jQuery $elements
     $fontname, $users_count, $glyphs, $import,
     // models
-    fonts, result, session,
-    // ui views
-    preview, editor;
+    fonts, result, session;
 
   // check browser's capabilities
   if (!Modernizr.fontface) {
@@ -29,22 +27,13 @@ module.exports = function () {
   // list of all fonts
   fonts = new (Backbone.Collection.extend({
     model: N.client.models.font
-  }))(require('../../../shared/embedded_fonts'));
+  }))([]);
 
   // special collection of selected glyphs (cache) with
   // extra model logic (validate, config creation and
   // download requesting), but which can still be used
   // as a normal collection for the views
   result = new N.client.models.result;
-
-
-  //
-  // Views (UI)
-  //
-
-
-  preview   = new N.client.ui.panes.preview({model: result});
-  editor    = new N.client.ui.panes.codes_editor({model: result});
 
 
   //

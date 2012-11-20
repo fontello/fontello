@@ -1,0 +1,10 @@
+#result-font(data-bind="foreach: glyphs")
+  .result-glyph
+    .top
+      span.char-editable(data-bind="text: char")
+
+    .center.font-fontello(data-bind="text: codeAsText")
+
+    .bottom
+      span.code-prefix U+
+      span.code-editable(data-bind="text: code")

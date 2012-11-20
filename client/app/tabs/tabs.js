@@ -24,8 +24,8 @@ N.on('glyph:create', function (glyph) {
 N.once('page:loaded', function () {
   var
   $tabs_container = $('#tabs').tab(),
-  $preview_tab    = $tabs_container.find('a[href="#preview"]'),
-  $editor_tab     = $tabs_container.find('a[href="#codes-editor"]');
+  $names_tab      = $tabs_container.find('a[href="#names-editor"]'),
+  $codes_tab      = $tabs_container.find('a[href="#codes-editor"]');
 
   // add submenu activation
   $tabs_container.find('a[data-toggle="tab"]').on('shown', function (event) {
@@ -36,10 +36,10 @@ N.once('page:loaded', function () {
     $($curr.data('submenu')).addClass('active');
   });
 
-  $preview_tab.add($editor_tab).on('click', stopPropagation);
+  $names_tab.add($codes_tab).on('click', stopPropagation);
 
   selectedGlyphs.subscribe(function (count) {
-    var $tabs = $preview_tab.add($editor_tab);
+    var $tabs = $names_tab.add($codes_tab);
 
     $tabs.toggleClass('disabled', !count);
     $tabs[!count ? 'on' : 'off']('click', stopPropagation);

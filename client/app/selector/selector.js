@@ -11,16 +11,50 @@ N.once('page:loaded', function () {
   fromCharCode    = require('../../../shared/util').fixedFromCharCode;
 
 
+  function toUnicode(code) {
+    var c = code.toString(16).toUpperCase();
+    return "0000".substr(0, Math.max(4 - c.length, 0)) + c;
+  }
+
+
   function GlyphViewModel(font, data) {
+    var self = this;
+
     this.font             = font;
     this.uid              = data.uid;
-    this.keywords         = (data.search || []).join('|');
+    this.keywords         = (data.search || []).join(',');
     this.codeAsText       = fromCharCode(glyphs_map[font.fontname][data.uid]);
+    this.cssName          = data.css;
+
+    this.char             = data.code === 32 ? "space" : fromCharCode(data.code);
+    this.code             = toUnicode(data.code);
+
     this.selected         = ko.observable(false);
     this.toggleSelection  = function () { this.selected(!this.selected()); };
 
     N.emit('glyph:create', this);
+
+    this.selected.subscribe(function (value) {
+      var type = value ? 'selected' : 'unselected';
+      N.emit('glyph.' + type, self);
+    });
   }
+
+
+  GlyphViewModel.prototype.inspect = function () {
+    return JSON.stringify({
+      uid:  this.uid,
+      font: {
+        id:   this.font.id,
+        name: this.font.fontname
+      }
+    });
+  };
+
+
+  GlyphViewModel.prototype.toString = function () {
+    return  'GlyphViewModel(' + this.inspect() + ')';
+  };
 
 
   function FontsViewModel(data) {
