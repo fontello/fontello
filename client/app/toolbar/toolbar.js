@@ -11,7 +11,7 @@ function stopPropagation(event) {
 }
 
 
-var keywords = _.chain(require('../../../shared/embedded_fonts'))
+var keywords = _.chain(require('../../../lib/shared/embedded_fonts'))
   .map(function (font) {
     return _.map(font.glyphs, function (glyph) {
       return glyph.search;

@@ -8,9 +8,10 @@
 
 
 var
-embedded_fonts  = require('../../../shared/embedded_fonts'),
-glyphs_map      = require('../../../shared/glyphs_map'),
-fromCharCode    = require('../../../shared/util').fixedFromCharCode;
+render          = require('../../../lib/render/client'),
+embedded_fonts  = require('../../../lib/shared/embedded_fonts'),
+glyphs_map      = require('../../../lib/shared/glyphs_map'),
+fromCharCode    = require('../../../lib/util').fixedFromCharCode;
 
 
 function toUnicode(code) {
@@ -131,7 +132,7 @@ N.on('session:load', function (data) {
 
 N.once('page:loaded', function () {
   $(function () {
-    var $view = $(N.client.render('app.selector')).appendTo('#selector');
+    var $view = $(render('app.selector')).appendTo('#selector');
 
     //
     // Bind model and view

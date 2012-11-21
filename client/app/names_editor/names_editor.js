@@ -4,6 +4,9 @@
 'use strict';
 
 
+var render = require('../../../lib/render/client');
+
+
 function NamesEditorModel() {
   this.glyphs = ko.observableArray();
 
@@ -20,7 +23,7 @@ function NamesEditorModel() {
 N.once('page:loaded', function () {
   $(function () {
     var
-    $view = $(N.client.render('app.names_editor')).appendTo('#names-editor'),
+    $view = $(render('app.names_editor')).appendTo('#names-editor'),
     model = new NamesEditorModel();
 
     //
