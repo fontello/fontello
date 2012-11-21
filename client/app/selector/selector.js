@@ -39,6 +39,11 @@ function GlyphViewModel(font, data) {
     var type = value ? 'selected' : 'unselected';
     N.emit('glyph:' + type, self);
   });
+
+
+  this.isModified = function () {
+    return !!this.selected();
+  }.bind(this);
 }
 
 
@@ -104,6 +109,31 @@ N.on('font-size:change', function (size) {
 N.on('3d-mode:change', function (val) {
   model.has3DEffect(val);
 });
+
+
+var autoSaveSession = _.debounce(function () {
+  var data = {};
+
+  _.each(model.fonts, function (font) {
+    var font_data = { collapsed: false, glyphs: [] };
+
+    _.each(font.glyphs, function (glyph) {
+      if (glyph.isModified()) {
+        font_data.glyphs.push({
+          uid:  glyph.uid
+        });
+      }
+    });
+
+    data[font.id] = font_data;
+  });
+
+  N.emit('session:save', { fonts: data });
+}, 500);
+
+
+N.on('glyph:selected',    autoSaveSession);
+N.on('glyph:unselected',  autoSaveSession);
 
 
 N.on('session:load', function (data) {

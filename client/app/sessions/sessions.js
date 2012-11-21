@@ -366,3 +366,19 @@ N.once('fonts:ready', function () {
     N.emit('session:load', session);
   }
 });
+
+
+N.on('session:save', function (data) {
+  var
+  storage = store.get(STORAGE_KEY) || {sessions: []},
+  session = _.find(data.sessions, function (session) {
+    return '$current$' === session.name;
+  }) || {};
+
+  _.extend(session, _.pick(data || {}, 'fonts'), {name: '$current$'});
+
+  store.set(STORAGE_KEY, {
+    version:  SERIALIZER_VERSION,
+    sessions: [session]
+  });
+});
