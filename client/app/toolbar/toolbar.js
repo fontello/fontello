@@ -50,10 +50,14 @@ model.with3DEffect.subscribe(function (value) {
 // Subscribe to events
 //
 
-N.on('glyph:create', function (glyph) {
-  glyph.selected.subscribe(function (value) {
-    model.selectedGlyphs(model.selectedGlyphs() + (value ? +1 : -1));
-  });
+
+N.on('glyph:selected', function () {
+  model.selectedGlyphs(model.selectedGlyphs() + 1);
+});
+
+
+N.on('glyph:unselected', function () {
+  model.selectedGlyphs(model.selectedGlyphs() - 1);
 });
 
 

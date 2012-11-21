@@ -30,8 +30,8 @@ N.once('page:loaded', function () {
     // Bind event handlers
     //
 
-    N.on('glyph.selected',    model.addGlyph);
-    N.on('glyph.unselected',  model.removeGlyph);
+    N.on('glyph:selected',    model.addGlyph);
+    N.on('glyph:unselected',  model.removeGlyph);
 
     //
     // Bind model and view

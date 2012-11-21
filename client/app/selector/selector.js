@@ -35,11 +35,9 @@ function GlyphViewModel(font, data) {
   this.selected         = ko.observable(false);
   this.toggleSelection  = function () { this.selected(!this.selected()); };
 
-  N.emit('glyph:create', this);
-
   this.selected.subscribe(function (value) {
     var type = value ? 'selected' : 'unselected';
-    N.emit('glyph.' + type, self);
+    N.emit('glyph:' + type, self);
   });
 }
 
@@ -160,5 +158,8 @@ N.once('page:loaded', function () {
         N.emit('batch-glyphs-select:finish');
       }
     });
+
+
+    N.emit('fonts:ready');
   });
 });

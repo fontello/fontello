@@ -355,7 +355,7 @@ module.exports = Backbone.Model.extend({
 
 
 
-N.on('page:loaded', function () {
+N.once('fonts:ready', function () {
   var
   data    = store.get(STORAGE_KEY) || {sessions: []},
   session = _.find(data.sessions, function (session) {

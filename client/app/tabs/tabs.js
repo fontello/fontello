@@ -14,10 +14,13 @@ function stopPropagation(event) {
 var selectedGlyphs = ko.observable(0);
 
 
-N.on('glyph:create', function (glyph) {
-  glyph.selected.subscribe(function (value) {
-    selectedGlyphs(selectedGlyphs() + (value ? +1 : -1));
-  });
+N.on('glyph:selected', function () {
+  selectedGlyphs(selectedGlyphs() + 1);
+});
+
+
+N.on('glyph:unselected', function () {
+  selectedGlyphs(selectedGlyphs() - 1);
 });
 
 
