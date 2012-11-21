@@ -352,3 +352,17 @@ module.exports = Backbone.Model.extend({
   // if model doesn't have own `sync()` method.
   sync: function () {}
 });
+
+
+
+N.on('page:loaded', function () {
+  var
+  data    = store.get(STORAGE_KEY) || {sessions: []},
+  session = _.find(data.sessions, function (session) {
+    return '$current$' === session.name;
+  });
+
+  if (session) {
+    N.emit('session:load', session);
+  }
+});
