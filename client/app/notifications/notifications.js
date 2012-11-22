@@ -25,9 +25,3 @@ function notify(type, options, message) {
 
 
 N.on('notification', notify);
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-module.exports = notify;
