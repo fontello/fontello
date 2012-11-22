@@ -41,7 +41,7 @@ function GlyphViewModel(font, data) {
   });
 
 
-  this.reset = function () {
+  this.reset = function (all) {
     this.selected(false);
   };
 
@@ -143,7 +143,15 @@ N.on('glyph:unselected',  autoSaveSession);
 N.on('app:reset', function () {
   _.each(model.fonts, function (font) {
     _.each(font.glyphs, function (glyph) {
-      glyph.reset();
+      glyph.reset(true);
+    });
+  });
+});
+
+N.on('app:reset-selection', function () {
+  _.each(model.fonts, function (font) {
+    _.each(font.glyphs, function (glyph) {
+      glyph.reset(false);
     });
   });
 });
