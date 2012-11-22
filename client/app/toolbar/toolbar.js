@@ -29,6 +29,7 @@ function ToolbarModel() {
 
   N.on('fonts_ready', function (fontsList) {
     self.selectedGlyphs = fontsList.selectedGlyphs;
+    self.selectedCount  = fontsList.selectedCount;
   });
 
   this.fontname = ko.observable('');
@@ -49,7 +50,7 @@ function ToolbarModel() {
   }
 
   this.startDownload    = function () {
-    if (0 === this.selectedGlyphs().length) {
+    if (0 === this.selectedCount()) {
       return;
     }
 

@@ -2,7 +2,7 @@ ul#selector-fonts.unstyled(data-bind="style: {fontSize: fontSize() + 'px'}, fore
   li(data-bind="attr: {id: 'font-id-' + id}", class="ui-selectable")
     h2.src-font-head
       //- a.label.label-important.font-info(href="#") info
-      a.src-font-name._collapser(href="#", data-bind="text: fontname")
+      a.src-font-name._collapser(href="#", data-bind="text: fullname")
 
       small.font-details(data-bind="if: author, text: 'by ' + author")
       small.font-details(data-bind="if: license, text: 'license - ' + license")

@@ -63,9 +63,9 @@ html.no-js(lang='en', itemscope, itemtype='http://schema.org/WebPage')
             #glyph-size-value #{self.N('config.app.glyph_size.val')}px
 
           .btn-group.pull-right
-            a#result-download.btn.btn-info.disabled.icon-download(data-bind="css: {disabled: selectedGlyphs().length <= 0}, click: startDownload")
+            a#result-download.btn.btn-info.disabled.icon-download(data-bind="css: {disabled: selectedCount() <= 0}, click: startDownload")
               |  Download webfont (
-              span#selected-glyphs-count(data-bind="text: selectedGlyphs().length")
+              span#selected-glyphs-count(data-bind="text: selectedCount()")
               | )
 
           .btn-group.pull-right
