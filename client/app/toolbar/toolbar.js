@@ -4,9 +4,7 @@
 /*global window, _, $, ko, N*/
 
 
-var
-render      = require('../../../lib/render/client'),
-readConfig  = require('./_reader');
+var readConfig = require('./_reader');
 
 
 // prevent the event from bubbling to ancestor elements
@@ -58,7 +56,7 @@ function ToolbarModel() {
       var font_id;
 
       if (err) {
-        N.emit('notification', 'error', render('errors.fatal', {
+        N.emit('notification', 'error', N.runtime.t('errors.fatal', {
           error: (err.message || String(err))
         }));
         return;
@@ -75,14 +73,14 @@ function ToolbarModel() {
       function poll_status() {
         N.server.font.status({id: font_id}, function (err, msg) {
           if (err) {
-            N.emit('notification', 'error', render('errors.fatal', {
+            N.emit('notification', 'error', N.runtime.t('errors.fatal', {
               error: (err.message || String(err))
             }));
             return;
           }
 
           if ('error' === msg.data.status) {
-            N.emit('notification', 'error', render('errors.fatal', {
+            N.emit('notification', 'error', N.runtime.t('errors.fatal', {
               error: (msg.data.error || "Unexpected error.")
             }));
             return;
