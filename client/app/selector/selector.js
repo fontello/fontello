@@ -41,6 +41,10 @@ function GlyphViewModel(font, data) {
   });
 
 
+  this.reset = function () {
+    this.selected(false);
+  };
+
   this.isModified = function () {
     return !!this.selected();
   }.bind(this);
@@ -136,6 +140,15 @@ N.on('glyph:selected',    autoSaveSession);
 N.on('glyph:unselected',  autoSaveSession);
 
 
+N.on('app:reset', function () {
+  _.each(model.fonts, function (font) {
+    _.each(font.glyphs, function (glyph) {
+      glyph.reset();
+    });
+  });
+});
+
+
 N.on('session:load', function (data) {
   data = data.fonts;
 
@@ -159,37 +172,35 @@ N.on('session:load', function (data) {
 
 
 N.once('page:loaded', function () {
-  $(function () {
-    var $view = $(render('app.selector')).appendTo('#selector');
+  var $view = $(render('app.selector')).appendTo('#selector');
 
-    //
-    // Bind model and view
-    //
+  //
+  // Bind model and view
+  //
 
-    ko.applyBindings(model, $view.get(0));
+  ko.applyBindings(model, $view.get(0));
 
 
-    $view.selectable({
-      filter: 'li.glyph:visible',
-      distance: 5,
-      stop: function () {
-        var $els = $view.find('.glyph.ui-selected');
+  $view.selectable({
+    filter: 'li.glyph:visible',
+    distance: 5,
+    stop: function () {
+      var $els = $view.find('.glyph.ui-selected');
 
-        // prevent from double-triggering event,
-        // otherwise click event will be fired as well
-        if (1 === $els.length) {
-          return;
-        }
-
-        N.emit('batch-glyphs-select:start');
-        $els.each(function () {
-          ko.dataFor(this).toggleSelection();
-        });
-        N.emit('batch-glyphs-select:finish');
+      // prevent from double-triggering event,
+      // otherwise click event will be fired as well
+      if (1 === $els.length) {
+        return;
       }
-    });
 
-
-    N.emit('fonts:ready');
+      N.emit('batch-glyphs-select:start');
+      $els.each(function () {
+        ko.dataFor(this).toggleSelection();
+      });
+      N.emit('batch-glyphs-select:finish');
+    }
   });
+
+
+  N.emit('fonts:ready');
 });

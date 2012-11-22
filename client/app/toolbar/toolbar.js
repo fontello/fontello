@@ -207,6 +207,13 @@ N.once('page:loaded', function () {
         source: keywords
       });
 
+
+    $view.find('#reset-app-all').click(function () {
+      if (window.confirm(N.runtime.t('confirm.app_reset'))) {
+        N.emit('app:reset');
+      }
+    });
+
     ko.applyBindings(model, $view.get(0));
   });
 });
