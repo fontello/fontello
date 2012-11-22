@@ -31,7 +31,7 @@ N.on('glyph:selected',    model.addGlyph);
 N.on('glyph:unselected',  model.removeGlyph);
 
 
-N.once('page:loaded', function () {
+$(function () {
   var $view = $(render('app.codes_editor')).appendTo('#codes-editor');
 
   //

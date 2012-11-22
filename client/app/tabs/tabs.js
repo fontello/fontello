@@ -24,7 +24,7 @@ N.on('glyph:unselected', function () {
 });
 
 
-N.once('page:loaded', function () {
+$(function () {
   var
   $tabs_container = $('#tabs').tab(),
   $names_tab      = $tabs_container.find('a[href="#names-editor"]'),

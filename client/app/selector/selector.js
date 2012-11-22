@@ -204,10 +204,12 @@ N.on('config:load', function (config) {
 });
 
 
-////////////////////////////////////////////////////////////////////////////////
+N.once('init_complete', function () {
+  N.emit('fonts:ready');
+});
 
 
-N.once('page:loaded', function () {
+$(function () {
   var $view = $(render('app.selector')).appendTo('#selector');
 
   //
@@ -236,7 +238,4 @@ N.once('page:loaded', function () {
       N.emit('batch-glyphs-select:finish');
     }
   });
-
-
-  N.emit('fonts:ready');
 });

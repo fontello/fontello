@@ -17,9 +17,7 @@ yepnope([
   {
     load: <%- JSON.stringify(asset_path('app.js')) %>,
     complete: function () {
-      $(function () {
-        N.emit('page:loaded');
-      });
+      N.emit('init_complete');
     }
   }
 ]);

@@ -175,92 +175,90 @@ N.on('session:load', function (session) {
 });
 
 
-N.once('page:loaded', function () {
-  $(function () {
-    var $view = $('#toolbar'), $glyph_size_value, $glyphs, $search, on_search_change;
+$(function () {
+  var $view = $('#toolbar'), $glyph_size_value, $glyphs, $search, on_search_change;
 
-    var notify_font_size_change = _.debounce(function (val) {
-      N.emit('font-size:change', val);
-    }, 175);
+  var notify_font_size_change = _.debounce(function (val) {
+    N.emit('font-size:change', val);
+  }, 175);
 
-    // initialize glyph-size slider
-    $glyph_size_value = $('#glyph-size-value');
-    $('#glyph-size-slider').slider({
-      orientation:  'horizontal',
-      range:        'min',
-      value:        N.config.app.glyph_size.val,
-      min:          N.config.app.glyph_size.min,
-      max:          N.config.app.glyph_size.max,
-      slide:        function (event, ui) {
-        /*jshint bitwise:false*/
-        var val = ~~ui.value;
-        $glyph_size_value.text(val + 'px');
-        notify_font_size_change(val);
-      }
-    });
-
-    $glyphs = $('.glyph');
-
-    // search query change event listener
-    on_search_change = function (event) {
-      var q = $.trim($search.val());
-
-      if (0 === q.length) {
-        $glyphs.show();
-        return;
-      }
-
-      $glyphs.hide().filter(function () {
-        var model = ko.dataFor(this);
-        return model && 0 <= model.keywords.indexOf(q);
-      }).show();
-    };
-
-    // init search input
-    $search = $('#search')
-      .on('change', on_search_change)
-      .on('keyup', _.debounce(on_search_change, 250))
-      .on('focus keyup', _.debounce(function () {
-        $search.typeahead('hide');
-      }, 5000))
-      .typeahead({
-        source: keywords
-      });
-
-    $view.find('#reset-app-all').click(function () {
-      if (window.confirm(N.runtime.t('confirm.app_reset'))) {
-        N.emit('app:reset');
-      }
-    });
-
-    $view.find('#reset-app-selection').click(function () {
-      N.emit('app:reset-selection');
-    });
-
-    $view.find('#import-app-config').click(function (event) {
-      event.preventDefault();
-
-      if (!window.FileReader) {
-        N.emit('notification', 'error', N.runtime.t('errors.no_file_reader'));
-        return false;
-      }
-
-      $view.find('#import-app-config-file').click();
-      return false;
-    });
-
-    $view.find('#import-app-config-file').change(function (event) {
-      var file = (event.target.files || [])[0];
-
-      // we must "reset" value of input field, otherwise Chromium will
-      // not fire change event if the same file will be chosen twice, e.g.
-      // import config -> made changes -> import config
-
-      $(this).val('');
-
-      readConfig(file);
-    });
-
-    ko.applyBindings(model, $view.get(0));
+  // initialize glyph-size slider
+  $glyph_size_value = $('#glyph-size-value');
+  $('#glyph-size-slider').slider({
+    orientation:  'horizontal',
+    range:        'min',
+    value:        N.config.app.glyph_size.val,
+    min:          N.config.app.glyph_size.min,
+    max:          N.config.app.glyph_size.max,
+    slide:        function (event, ui) {
+      /*jshint bitwise:false*/
+      var val = ~~ui.value;
+      $glyph_size_value.text(val + 'px');
+      notify_font_size_change(val);
+    }
   });
+
+  $glyphs = $('.glyph');
+
+  // search query change event listener
+  on_search_change = function (event) {
+    var q = $.trim($search.val());
+
+    if (0 === q.length) {
+      $glyphs.show();
+      return;
+    }
+
+    $glyphs.hide().filter(function () {
+      var model = ko.dataFor(this);
+      return model && 0 <= model.keywords.indexOf(q);
+    }).show();
+  };
+
+  // init search input
+  $search = $('#search')
+    .on('change', on_search_change)
+    .on('keyup', _.debounce(on_search_change, 250))
+    .on('focus keyup', _.debounce(function () {
+      $search.typeahead('hide');
+    }, 5000))
+    .typeahead({
+      source: keywords
+    });
+
+  $view.find('#reset-app-all').click(function () {
+    if (window.confirm(N.runtime.t('confirm.app_reset'))) {
+      N.emit('app:reset');
+    }
+  });
+
+  $view.find('#reset-app-selection').click(function () {
+    N.emit('app:reset-selection');
+  });
+
+  $view.find('#import-app-config').click(function (event) {
+    event.preventDefault();
+
+    if (!window.FileReader) {
+      N.emit('notification', 'error', N.runtime.t('errors.no_file_reader'));
+      return false;
+    }
+
+    $view.find('#import-app-config-file').click();
+    return false;
+  });
+
+  $view.find('#import-app-config-file').change(function (event) {
+    var file = (event.target.files || [])[0];
+
+    // we must "reset" value of input field, otherwise Chromium will
+    // not fire change event if the same file will be chosen twice, e.g.
+    // import config -> made changes -> import config
+
+    $(this).val('');
+
+    readConfig(file);
+  });
+
+  ko.applyBindings(model, $view.get(0));
 });
