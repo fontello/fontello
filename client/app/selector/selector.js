@@ -149,18 +149,20 @@ N.on('glyph:selected',    autoSaveSession);
 N.on('glyph:unselected',  autoSaveSession);
 
 
-N.on('app:reset', function () {
+N.on('reset.all', function () {
   _.each(model.fonts, function (font) {
     _.each(font.glyphs, function (glyph) {
-      glyph.reset(true);
+      glyph.selected(false);
+      glyph.code(glyph.codeOriginal);
+      glyph.cssName(glyph.cssNameOriginal);
     });
   });
 });
 
-N.on('app:reset-selection', function () {
+N.on('reset.selection', function () {
   _.each(model.fonts, function (font) {
     _.each(font.glyphs, function (glyph) {
-      glyph.reset(false);
+      glyph.selected(false);
     });
   });
 });

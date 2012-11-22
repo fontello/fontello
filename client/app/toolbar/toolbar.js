@@ -161,7 +161,7 @@ N.on('config:load', function (config) {
 });
 
 
-N.on('app:reset', function () {
+N.on('reset.*', function () {
   model.fontname('');
 });
 
@@ -228,12 +228,12 @@ $(function () {
 
   $view.find('#reset-app-all').click(function () {
     if (window.confirm(N.runtime.t('confirm.app_reset'))) {
-      N.emit('app:reset');
+      N.emit('reset.all');
     }
   });
 
   $view.find('#reset-app-selection').click(function () {
-    N.emit('app:reset-selection');
+    N.emit('reset.selection');
   });
 
   $view.find('#import-app-config').click(function (event) {
