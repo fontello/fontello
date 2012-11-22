@@ -176,6 +176,25 @@ N.on('session:load', function (data) {
 });
 
 
+N.on('config:load', function (config) {
+  var map = {};
+
+  _.each(config.glyphs, function (g) {
+    map[g.uid] = g;
+  });
+
+  _.each(model.fonts, function (font) {
+    _.each(font.glyphs, function (glyph) {
+      glyph.reset();
+
+      if (map[glyph.uid] && font.fontname === map[glyph.uid].src) {
+        glyph.selected(true);
+      }
+    });
+  });
+});
+
+
 ////////////////////////////////////////////////////////////////////////////////
 
 

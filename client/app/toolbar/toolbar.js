@@ -5,6 +5,7 @@
 
 
 var render = require('../../../lib/render/client');
+var readConfig = require('./_reader');
 
 
 // prevent the event from bubbling to ancestor elements
@@ -155,6 +156,16 @@ N.on('glyph:selected',    model.addGlyph);
 N.on('glyph:unselected',  model.removeGlyph);
 
 
+N.on('config:load', function (config) {
+  model.fontname(config.name || '');
+});
+
+
+N.on('app:reset', function () {
+  model.fontname('');
+});
+
+
 N.once('page:loaded', function () {
   $(function () {
     var $view = $('#toolbar'), $glyph_size_value, $glyphs, $search, on_search_change;
@@ -215,6 +226,30 @@ N.once('page:loaded', function () {
 
     $view.find('#reset-app-selection').click(function () {
       N.emit('app:reset-selection');
+    });
+
+    $view.find('#import-app-config').click(function (event) {
+      event.preventDefault();
+
+      if (!window.FileReader) {
+        N.emit('notification', 'error', N.runtime.t('errors.no_file_reader'));
+        return false;
+      }
+
+      $view.find('#import-app-config-file').click();
+      return false;
+    });
+
+    $view.find('#import-app-config-file').change(function (event) {
+      var file = (event.target.files || [])[0];
+
+      // we must "reset" value of input field, otherwise Chromium will
+      // not fire change event if the same file will be chosen twice, e.g.
+      // import config -> made changes -> import config
+
+      $(this).val('');
+
+      readConfig(file);
     });
 
     ko.applyBindings(model, $view.get(0));
