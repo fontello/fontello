@@ -27,12 +27,18 @@ function GlyphViewModel(font, data) {
   this.uid              = data.uid;
   this.keywords         = (data.search || []).join(',');
   this.codeAsText       = fromCharCode(glyphs_map[font.fontname][data.uid]);
-  this.cssName          = data.css;
-
-  this.char             = data.code === 32 ? "space" : fromCharCode(data.code);
-  this.code             = toUnicode(data.code);
 
   this.selected         = ko.observable(false);
+
+  this.cssNameOriginal  = data.css;
+  this.cssName          = ko.observable(this.cssNameOriginal);
+
+  this.charOriginal     = data.code === 32 ? "space" : fromCharCode(data.code);
+  this.char             = ko.observable(this.charOriginal);
+
+  this.codeOriginal     = toUnicode(data.code);
+  this.code             = ko.observable(this.codeOriginal);
+
   this.toggleSelection  = function () { this.selected(!this.selected()); };
 
   this.selected.subscribe(function (value) {
@@ -46,7 +52,10 @@ function GlyphViewModel(font, data) {
   };
 
   this.isModified = function () {
-    return !!this.selected();
+    return  !!this.selected() ||
+            this.cssName() !== this.cssNameOriginal ||
+            this.code() !== this.codeOriginal ||
+            this.char() !== this.charOriginal;
   }.bind(this);
 }
 

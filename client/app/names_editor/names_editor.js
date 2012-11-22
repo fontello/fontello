@@ -20,23 +20,22 @@ function NamesEditorModel() {
 }
 
 
+var model = new NamesEditorModel();
+
+//
+// Bind event handlers
+//
+
+N.on('glyph:selected',    model.addGlyph);
+N.on('glyph:unselected',  model.removeGlyph);
+
+
 N.once('page:loaded', function () {
-  $(function () {
-    var
-    $view = $(render('app.names_editor')).appendTo('#names-editor'),
-    model = new NamesEditorModel();
+  var $view = $(render('app.names_editor')).appendTo('#names-editor');
 
-    //
-    // Bind event handlers
-    //
+  //
+  // Bind model and view
+  //
 
-    N.on('glyph:selected',    model.addGlyph);
-    N.on('glyph:unselected',  model.removeGlyph);
-
-    //
-    // Bind model and view
-    //
-
-    ko.applyBindings(model, $view.get(0));
-  });
+  ko.applyBindings(model, $view.get(0));
 });

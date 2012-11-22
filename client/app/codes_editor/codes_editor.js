@@ -20,23 +20,23 @@ function CodesEditorModel() {
 }
 
 
+var model = new CodesEditorModel();
+
+
+//
+// Bind event handlers
+//
+
+N.on('glyph:selected',    model.addGlyph);
+N.on('glyph:unselected',  model.removeGlyph);
+
+
 N.once('page:loaded', function () {
-  $(function () {
-    var
-    $view = $(render('app.codes_editor')).appendTo('#codes-editor'),
-    model = new CodesEditorModel();
+  var $view = $(render('app.codes_editor')).appendTo('#codes-editor');
 
-    //
-    // Bind event handlers
-    //
+  //
+  // Bind model and view
+  //
 
-    N.on('glyph:selected',    model.addGlyph);
-    N.on('glyph:unselected',  model.removeGlyph);
-
-    //
-    // Bind model and view
-    //
-
-    ko.applyBindings(model, $view.get(0));
-  });
+  ko.applyBindings(model, $view.get(0));
 });
