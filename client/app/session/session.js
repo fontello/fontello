@@ -4,6 +4,9 @@
 "use strict";
 
 
+var embedded_fonts  = require('../../../lib/shared/embedded_fonts');
+
+
 var SERIALIZER_VERSION  = 3;
 var STORAGE_KEY         = 'fontello:sessions';
 var MIGRATIONS          = [];
@@ -185,10 +188,10 @@ var Session = Backbone.Model.extend({
       // update modified glyphs
       _.each(font_data.glyphs, function (glyph_data) {
         var glyph = font.getGlyph({
-              uid:  glyph_data.uid,
-              code: glyph_data.orig_code,
-              css:  glyph_data.orig_css
-            });
+          uid:  glyph_data.uid,
+          code: glyph_data.orig_code,
+          css:  glyph_data.orig_css
+        });
 
         if (glyph) {
           glyph.set(filter_obj_keys(glyph_data, ['selected', 'code', 'css']));
@@ -304,7 +307,7 @@ module.exports = Backbone.Model.extend({
     if (!session) {
       // this should never happen!!! and can happen ONLY if somebody
       // will remove named session
-      N.logger.error("Cannot load session named '" + name +"'.");
+      N.logger.error("Cannot load session named '" + name + "'.");
       session = this.sessions.current;
     }
 
@@ -355,7 +358,7 @@ module.exports = Backbone.Model.extend({
 
 
 
-N.once('fonts:ready', function () {
+N.once('fonts_ready', function () {
   var
   data    = store.get(STORAGE_KEY) || {sessions: []},
   session = _.find(data.sessions, function (session) {
@@ -363,12 +366,12 @@ N.once('fonts:ready', function () {
   });
 
   if (session) {
-    N.emit('session:load', session);
+    N.emit('session_load', session);
   }
 });
 
 
-N.on('session:save', function (data) {
+N.on('session_save', function (data) {
   var
   storage = Object(store.get(STORAGE_KEY)),
   session = Object(_.find(storage.sessions || [], function (session) {
@@ -383,4 +386,31 @@ N.on('session:save', function (data) {
     version:  SERIALIZER_VERSION,
     sessions: [session]
   });
+});
+
+
+var font_ids = {};
+
+
+_.each(embedded_fonts, function (font) {
+  font_ids[font.fontname] = font.id;
+});
+
+
+N.on('import_config', function (config) {
+  var session = { fontname: config.name, fonts: {} };
+
+  _.each(config.glyphs, function (g) {
+    var id = font_ids[g.src];
+
+    if (!session.fonts[id]) {
+      session.fonts[id] = { collapsed: false, glyphs: [] };
+    }
+
+    session.fonts[id].glyphs.push({
+      uid: g.uid
+    });
+  });
+
+  N.emit('session_load', session);
 });

@@ -102,7 +102,7 @@ N.on('font_size_change', fontSize);
 
 
 var autoSaveSession = _.debounce(function () {
-  var data = {};
+  var session = { fonts: {} };
 
   _.each(fontsList.fonts, function (font) {
     var font_data = { collapsed: false, glyphs: [] };
@@ -110,15 +110,15 @@ var autoSaveSession = _.debounce(function () {
     _.each(font.glyphs, function (glyph) {
       if (glyph.isModified()) {
         font_data.glyphs.push({
-          uid:  glyph.uid
+          uid: glyph.uid
         });
       }
     });
 
-    data[font.id] = font_data;
+    session.fonts[font.id] = font_data;
   });
 
-  N.emit('session:save', { fonts: data });
+  N.emit('session_save', session);
 }, 500);
 
 
@@ -129,7 +129,7 @@ _.each(fontsList.fonts, function (font) {
 });
 
 
-N.on('reset.all', function () {
+N.on('reset_all', function () {
   _.each(fontsList.fonts, function (font) {
     _.each(font.glyphs, function (glyph) {
       glyph.selected(false);
@@ -140,14 +140,14 @@ N.on('reset.all', function () {
 });
 
 
-N.on('reset.selection', function () {
+N.on('reset_selection', function () {
   _.each(fontsList.selectedGlyphs(), function (glyph) {
     glyph.selected(false);
   });
 });
 
 
-N.on('session:load', function (session) {
+N.on('session_load', function (session) {
   var fonts = session.fonts || [];
 
   _.each(fontsList.fonts, function (font) {
@@ -161,25 +161,6 @@ N.on('session:load', function (session) {
           g.selected(true);
         }
       });
-    });
-  });
-});
-
-
-N.on('config:load', function (config) {
-  var map = {};
-
-  _.each(config.glyphs, function (g) {
-    map[g.uid] = g;
-  });
-
-  _.each(fontsList.fonts, function (font) {
-    _.each(font.glyphs, function (glyph) {
-      glyph.reset();
-
-      if (map[glyph.uid] && font.fontname === map[glyph.uid].src) {
-        glyph.selected(true);
-      }
     });
   });
 });

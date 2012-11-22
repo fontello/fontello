@@ -31,7 +31,7 @@ module.exports = function (file) {
     }
 
     N.logger.debug('Config successfully parsed', config);
-    N.emit('config:load', config);
+    N.emit('import_config', config);
   };
 
   reader.readAsBinaryString(file);
