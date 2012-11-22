@@ -36,7 +36,11 @@ N.once('fonts_ready', function (fontsList) {
     toggleEditors(fontsList.selectedCount());
     fontsList.selectedCount.subscribe(toggleEditors);
 
-    N.on('reset', function (type) {
+    N.on('reset_all', function (type) {
+      $tabs_container.find('a[href="#selector"]').tab('show');
+    });
+
+    N.on('reset_selected', function (type) {
       $tabs_container.find('a[href="#selector"]').tab('show');
     });
 

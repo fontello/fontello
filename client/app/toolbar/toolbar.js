@@ -134,7 +134,12 @@ var model = new ToolbarModel();
 //
 
 
-N.on('reset', function () {
+N.on('reset_selected', function () {
+  model.fontname('');
+});
+
+
+N.on('reset_all', function () {
   model.fontname('');
 });
 
@@ -202,12 +207,12 @@ $(function () {
 
   $view.find('#reset-app-all').click(function () {
     if (window.confirm(N.runtime.t('confirm.app_reset'))) {
-      N.emit('reset', 'all');
+      N.emit('reset_all');
     }
   });
 
   $view.find('#reset-app-selected').click(function () {
-    N.emit('reset', 'selected');
+    N.emit('reset_selected');
   });
 
   $view.find('#import-app-config').click(function (event) {
