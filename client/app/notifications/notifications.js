@@ -4,10 +4,7 @@
 /*global $, _, N*/
 
 
-////////////////////////////////////////////////////////////////////////////////
-
-
-function notify(type, options, message) {
+N.on('notification', function notify(type, options, message) {
   if (!message) {
     message = options;
     options = {};
@@ -18,10 +15,4 @@ function notify(type, options, message) {
     text:   message,
     theme:  'noty_theme_twitter'
   }));
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-N.on('notification', notify);
+});
