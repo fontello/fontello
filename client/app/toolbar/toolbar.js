@@ -65,6 +65,10 @@ N.once('page:loaded', function () {
   $(function () {
     var $view = $('#toolbar'), $glyph_size_value, $glyphs, $search, on_search_change;
 
+    var notify_font_size_change = _.debounce(function (val) {
+      N.emit('font-size:change', val);
+    }, 175);
+
     // initialize glyph-size slider
     $glyph_size_value = $('#glyph-size-value');
     $('#glyph-size-slider').slider({
@@ -77,7 +81,7 @@ N.once('page:loaded', function () {
         /*jshint bitwise:false*/
         var val = ~~ui.value;
         $glyph_size_value.text(val + 'px');
-        N.emit('font-size:change', val);
+        notify_font_size_change(val);
       }
     });
 
