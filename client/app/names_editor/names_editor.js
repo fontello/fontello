@@ -7,35 +7,14 @@
 var render = require('../../../lib/render/client');
 
 
-function NamesEditorModel() {
-  this.glyphs = ko.observableArray();
+N.once('fonts_ready', function (fontsList) {
+  $(function () {
+    var $view = $(render('app.names_editor')).appendTo('#names-editor');
 
-  this.addGlyph = function (glyph) {
-    this.glyphs.push(glyph);
-  }.bind(this);
+    //
+    // Bind model and view
+    //
 
-  this.removeGlyph = function (glyph) {
-    this.glyphs.remove(glyph);
-  }.bind(this);
-}
-
-
-var model = new NamesEditorModel();
-
-//
-// Bind event handlers
-//
-
-N.on('glyph:selected',    model.addGlyph);
-N.on('glyph:unselected',  model.removeGlyph);
-
-
-$(function () {
-  var $view = $(render('app.names_editor')).appendTo('#names-editor');
-
-  //
-  // Bind model and view
-  //
-
-  ko.applyBindings(model, $view.get(0));
+    ko.applyBindings(fontsList, $view.get(0));
+  });
 });

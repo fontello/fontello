@@ -7,36 +7,14 @@
 var render = require('../../../lib/render/client');
 
 
-function CodesEditorModel() {
-  this.glyphs = ko.observableArray();
+N.once('fonts_ready', function (fontsList) {
+  $(function () {
+    var $view = $(render('app.codes_editor')).appendTo('#codes-editor');
 
-  this.addGlyph = function (glyph) {
-    this.glyphs.push(glyph);
-  }.bind(this);
+    //
+    // Bind model and view
+    //
 
-  this.removeGlyph = function (glyph) {
-    this.glyphs.remove(glyph);
-  }.bind(this);
-}
-
-
-var model = new CodesEditorModel();
-
-
-//
-// Bind event handlers
-//
-
-N.on('glyph:selected',    model.addGlyph);
-N.on('glyph:unselected',  model.removeGlyph);
-
-
-$(function () {
-  var $view = $(render('app.codes_editor')).appendTo('#codes-editor');
-
-  //
-  // Bind model and view
-  //
-
-  ko.applyBindings(model, $view.get(0));
+    ko.applyBindings(fontsList, $view.get(0));
+  });
 });

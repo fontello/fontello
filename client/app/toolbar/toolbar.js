@@ -4,8 +4,9 @@
 /*global window, _, $, ko, N*/
 
 
-var render = require('../../../lib/render/client');
-var readConfig = require('./_reader');
+var
+render      = require('../../../lib/render/client'),
+readConfig  = require('./_reader');
 
 
 // prevent the event from bubbling to ancestor elements
@@ -26,27 +27,16 @@ function start_download(id, url) {
 function ToolbarModel() {
   var self = this;
 
-  this.glyphs = ko.observableArray();
+  N.on('fonts_ready', function (fontsList) {
+    self.selectedGlyphs = fontsList.selectedGlyphs;
+  });
 
-  this.addGlyph = function (glyph) {
-    this.glyphs.push(glyph);
-  }.bind(this);
-
-  this.removeGlyph = function (glyph) {
-    this.glyphs.remove(glyph);
-  }.bind(this);
-
-  this.countSelectedGlyphs = ko.computed(function () {
-    return this.glyphs().length;
-  }, this);
-
-  this.with3DEffect     = ko.observable(true);
-  this.fontname         = ko.observable('');
+  this.fontname = ko.observable('');
 
   function getConfig() {
     var config = {name: $.trim(self.fontname()), glyphs: []};
 
-    _.each(self.glyphs(), function (glyph) {
+    _.each(self.selectedGlyphs(), function (glyph) {
       config.glyphs.push({
         uid: glyph.uid,
         src: glyph.font.fontname
@@ -59,7 +49,7 @@ function ToolbarModel() {
   }
 
   this.startDownload    = function () {
-    if (0 === this.glyphs().length) {
+    if (0 === this.selectedGlyphs().length) {
       return;
     }
 
@@ -139,21 +129,8 @@ var model = new ToolbarModel();
 
 
 //
-// Expose some events
-//
-
-model.with3DEffect.subscribe(function (value) {
-  N.emit('3d-mode:change', value);
-});
-
-
-//
 // Subscribe to events
 //
-
-
-N.on('glyph:selected',    model.addGlyph);
-N.on('glyph:unselected',  model.removeGlyph);
 
 
 N.on('config:load', function (config) {
@@ -179,7 +156,7 @@ $(function () {
   var $view = $('#toolbar'), $glyph_size_value, $glyphs, $search, on_search_change;
 
   var notify_font_size_change = _.debounce(function (val) {
-    N.emit('font-size:change', val);
+    N.emit('font_size_change', val);
   }, 175);
 
   // initialize glyph-size slider

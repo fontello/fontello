@@ -20,7 +20,7 @@ function toUnicode(code) {
 }
 
 
-function GlyphViewModel(font, data) {
+function GlyphModel(font, data) {
   var self = this;
 
   this.font             = font;
@@ -41,16 +41,6 @@ function GlyphViewModel(font, data) {
 
   this.toggleSelection  = function () { this.selected(!this.selected()); };
 
-  this.selected.subscribe(function (value) {
-    var type = value ? 'selected' : 'unselected';
-    N.emit('glyph:' + type, self);
-  });
-
-
-  this.reset = function (all) {
-    this.selected(false);
-  };
-
   this.isModified = function () {
     return  !!this.selected() ||
             this.cssName() !== this.cssNameOriginal ||
@@ -60,23 +50,7 @@ function GlyphViewModel(font, data) {
 }
 
 
-GlyphViewModel.prototype.inspect = function () {
-  return JSON.stringify({
-    uid:  this.uid,
-    font: {
-      id:   this.font.id,
-      name: this.font.fontname
-    }
-  });
-};
-
-
-GlyphViewModel.prototype.toString = function () {
-  return  'GlyphViewModel(' + this.inspect() + ')';
-};
-
-
-function FontsViewModel(data) {
+function FontModel(data) {
   this.id       = data.id;
   this.fontname = data.font.fontname;
 
@@ -88,46 +62,49 @@ function FontsViewModel(data) {
   this.github   = data.meta.github;
 
   this.glyphs   = _.map(data.glyphs, function (data) {
-    return new GlyphViewModel(this, data);
+    return new GlyphModel(this, data);
   }, this);
 }
 
 
-function SelectorViewModel() {
-  this.has3DEffect  = ko.observable(true);
-  this.fontSize     = ko.observable(16);
-
-  this.fonts        = _.map(embedded_fonts, function (data) {
-    return new FontsViewModel(data);
+function FontsList() {
+  this.fonts = _.map(embedded_fonts, function (data) {
+    return new FontModel(data);
   });
+
+  this.selectedGlyphs = ko.computed(function () {
+    var glyphs = [];
+
+    _.each(this.fonts, function (font) {
+      _.each(font.glyphs, function (glyph) {
+        if (glyph.selected()) {
+          glyphs.push(glyph);
+        }
+      });
+    });
+
+    return glyphs;
+  }, this);
 }
 
 
 ////////////////////////////////////////////////////////////////////////////////
 
 
-var model = new SelectorViewModel();
+var fontsList = new FontsList();
+var fontSize  = ko.observable(16);
 
 
-//
-// Bind event handlers
-//
+////////////////////////////////////////////////////////////////////////////////
 
 
-N.on('font-size:change', function (size) {
-  model.fontSize(size);
-});
-
-
-N.on('3d-mode:change', function (val) {
-  model.has3DEffect(val);
-});
+N.on('font_size_change', fontSize);
 
 
 var autoSaveSession = _.debounce(function () {
   var data = {};
 
-  _.each(model.fonts, function (font) {
+  _.each(fontsList.fonts, function (font) {
     var font_data = { collapsed: false, glyphs: [] };
 
     _.each(font.glyphs, function (glyph) {
@@ -145,12 +122,15 @@ var autoSaveSession = _.debounce(function () {
 }, 500);
 
 
-N.on('glyph:selected',    autoSaveSession);
-N.on('glyph:unselected',  autoSaveSession);
+_.each(fontsList.fonts, function (font) {
+  _.each(font.glyphs, function (glyph) {
+    glyph.selected.subscribe(autoSaveSession);
+  });
+});
 
 
 N.on('reset.all', function () {
-  _.each(model.fonts, function (font) {
+  _.each(fontsList.fonts, function (font) {
     _.each(font.glyphs, function (glyph) {
       glyph.selected(false);
       glyph.code(glyph.codeOriginal);
@@ -159,11 +139,10 @@ N.on('reset.all', function () {
   });
 });
 
+
 N.on('reset.selection', function () {
-  _.each(model.fonts, function (font) {
-    _.each(font.glyphs, function (glyph) {
-      glyph.selected(false);
-    });
+  _.each(fontsList.selectedGlyphs(), function (glyph) {
+    glyph.selected(false);
   });
 });
 
@@ -171,7 +150,7 @@ N.on('reset.selection', function () {
 N.on('session:load', function (session) {
   var fonts = session.fonts || [];
 
-  _.each(model.fonts, function (font) {
+  _.each(fontsList.fonts, function (font) {
     if (!fonts[font.id]) {
       return;
     }
@@ -194,7 +173,7 @@ N.on('config:load', function (config) {
     map[g.uid] = g;
   });
 
-  _.each(model.fonts, function (font) {
+  _.each(fontsList.fonts, function (font) {
     _.each(font.glyphs, function (glyph) {
       glyph.reset();
 
@@ -206,11 +185,6 @@ N.on('config:load', function (config) {
 });
 
 
-N.once('init_complete', function () {
-  N.emit('fonts:ready');
-});
-
-
 $(function () {
   var $view = $(render('app.selector')).appendTo('#selector');
 
@@ -218,7 +192,10 @@ $(function () {
   // Bind model and view
   //
 
-  ko.applyBindings(model, $view.get(0));
+  ko.applyBindings({
+    fonts:    fontsList.fonts,
+    fontSize: fontSize
+  }, $view.get(0));
 
 
   $view.selectable({
@@ -233,11 +210,17 @@ $(function () {
         return;
       }
 
-      N.emit('batch-glyphs-select:start');
       $els.each(function () {
         ko.dataFor(this).toggleSelection();
       });
-      N.emit('batch-glyphs-select:finish');
     }
   });
+});
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+N.once('init_complete', function () {
+  N.emit('fonts_ready', fontsList);
 });
