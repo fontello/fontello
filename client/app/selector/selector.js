@@ -258,22 +258,6 @@ var autoSaveSession = _.debounce(function () {
 fontsList.modifiedGlyphs.subscribe(autoSaveSession);
 
 
-N.on('reset_selected', function () {
-  _.each(fontsList.selectedGlyphs(), function (glyph) {
-    glyph.selected(false);
-  });
-});
-
-
-N.on('reset_all', function () {
-  _.each(fontsList.modifiedGlyphs(), function (glyph) {
-    glyph.selected(false);
-    glyph.code(glyph.originalCode);
-    glyph.name(glyph.originalName);
-  });
-});
-
-
 N.on('session_load', function (session) {
   var fonts = session.fonts || [];
 
@@ -289,6 +273,22 @@ N.on('session_load', function (session) {
         }
       });
     });
+  });
+});
+
+
+N.on('reset_selected', function () {
+  _.each(fontsList.selectedGlyphs(), function (glyph) {
+    glyph.selected(false);
+  });
+});
+
+
+N.on('reset_all', function () {
+  _.each(fontsList.modifiedGlyphs(), function (glyph) {
+    glyph.selected(false);
+    glyph.code(glyph.originalCode);
+    glyph.name(glyph.originalName);
   });
 });
 
