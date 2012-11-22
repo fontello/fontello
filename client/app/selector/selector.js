@@ -157,15 +157,15 @@ N.on('app:reset-selection', function () {
 });
 
 
-N.on('session:load', function (data) {
-  data = data.fonts;
+N.on('session:load', function (session) {
+  var fonts = session.fonts || [];
 
   _.each(model.fonts, function (font) {
-    if (!data[font.id]) {
+    if (!fonts[font.id]) {
       return;
     }
 
-    _.each(data[font.id].glyphs, function (glyph) {
+    _.each(fonts[font.id].glyphs, function (glyph) {
       _.each(font.glyphs, function (g) {
         if (g.uid === glyph.uid) {
           g.selected(true);

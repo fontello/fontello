@@ -165,6 +165,15 @@ N.on('app:reset', function () {
   model.fontname('');
 });
 
+model.fontname.subscribe(_.debounce(function (value) {
+  N.emit('session:save', { fontname: value });
+}, 250));
+
+
+N.on('session:load', function (session) {
+  model.fontname(session.fontname || '');
+});
+
 
 N.once('page:loaded', function () {
   $(function () {

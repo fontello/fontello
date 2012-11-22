@@ -370,12 +370,14 @@ N.once('fonts:ready', function () {
 
 N.on('session:save', function (data) {
   var
-  storage = store.get(STORAGE_KEY) || {sessions: []},
-  session = _.find(data.sessions, function (session) {
+  storage = Object(store.get(STORAGE_KEY)),
+  session = Object(_.find(storage.sessions || [], function (session) {
     return '$current$' === session.name;
-  }) || {};
+  }));
 
-  _.extend(session, _.pick(data || {}, 'fonts'), {name: '$current$'});
+  _.extend(session, _.pick(Object(data), 'fontname', 'fonts'), {
+    name: '$current$'
+  });
 
   store.set(STORAGE_KEY, {
     version:  SERIALIZER_VERSION,
