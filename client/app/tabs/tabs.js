@@ -4,47 +4,31 @@
 /*global $, ko, N*/
 
 
-// prevent the event from bubbling to ancestor elements
-function stopPropagation(event) {
-  event.preventDefault();
-  event.stopPropagation();
-}
-
-
 N.once('fonts_ready', function (fontsList) {
   $(function () {
-    var
-    $tabs_container = $('#tabs').tab(),
-    $names_tab      = $tabs_container.find('a[href="#names-editor"]'),
-    $codes_tab      = $tabs_container.find('a[href="#codes-editor"]'),
-    $editors        = $names_tab.add($codes_tab);
+    var $view = $('#tabs').tab();
 
-    // add submenu activation
-    $tabs_container.find('a[data-toggle="tab"]').on('shown', function (event) {
-      var $curr = $(event.target),
-          $prev = $(event.relatedTarget);
+    //
+    // Bind model and view
+    //
 
-      $($prev.data('submenu')).removeClass('active');
-      $($curr.data('submenu')).addClass('active');
-    });
+    ko.applyBindings(fontsList, $view.get(0));
 
-    function toggleEditors(count) {
-      $editors.toggleClass('disabled', !count);
-      $editors[!count ? 'on' : 'off']('click', stopPropagation);
+    //
+    // Jump to selector on resets
+    //
+
+    function jumpToSelector() {
+      $view.find('a[href="#selector"]').tab('show');
     }
 
-    toggleEditors(fontsList.selectedCount());
-    fontsList.selectedCount.subscribe(toggleEditors);
+    N.on('reset_all',       jumpToSelector);
+    N.on('reset_selected',  jumpToSelector);
 
-    N.on('reset_all', function (type) {
-      $tabs_container.find('a[href="#selector"]').tab('show');
-    });
+    //
+    // Jump to selector on startup
+    //
 
-    N.on('reset_selected', function (type) {
-      $tabs_container.find('a[href="#selector"]').tab('show');
-    });
-
-    // show selector tab after  load complete
-    $tabs_container.find('a[href="#selector"]').tab('show');
+    jumpToSelector();
   });
 });
