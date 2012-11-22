@@ -305,6 +305,9 @@ $(function () {
     fontSize: fontSize
   }, $view.get(0));
 
+  //
+  // Init multi-select of glyphs
+  //
 
   $view.selectable({
     filter: 'li.glyph:visible',
