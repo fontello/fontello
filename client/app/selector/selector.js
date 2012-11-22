@@ -11,7 +11,8 @@ var
 render          = require('../../../lib/render/client'),
 embedded_fonts  = require('../../../lib/shared/embedded_fonts'),
 glyphs_map      = require('../../../lib/shared/glyphs_map'),
-fromCharCode    = require('../../../lib/util').fixedFromCharCode;
+fromCharCode    = require('../../../lib/util').fixedFromCharCode,
+charCodeAt      = require('../../../lib/util').fixedCharCodeAt;
 
 
 function toUnicode(code) {
@@ -21,32 +22,70 @@ function toUnicode(code) {
 
 
 function GlyphModel(font, data) {
-  var self = this;
+
+  //
+  // Essential properties
+  //
+
+  this.uid              = data.uid;
+  this.originalName     = data.css;
+  this.originalCode     = data.code;
+
+  //
+  // Helper properties
+  //
 
   this.font             = font;
-  this.uid              = data.uid;
   this.keywords         = (data.search || []).join(',');
-  this.codeAsText       = fromCharCode(glyphs_map[font.fontname][data.uid]);
+  this.charRef          = fromCharCode(glyphs_map[font.fontname][data.uid]);
+
+  //
+  // Actual properties state
+  //
 
   this.selected         = ko.observable(false);
+  this.name             = ko.observable(this.originalName);
+  this.code             = ko.observable(this.originalCode);
 
-  this.cssNameOriginal  = data.css;
-  this.cssName          = ko.observable(this.cssNameOriginal);
+  //
+  // Helpers
+  //
 
-  this.charOriginal     = data.code === 32 ? "space" : fromCharCode(data.code);
-  this.char             = ko.observable(this.charOriginal);
-
-  this.codeOriginal     = toUnicode(data.code);
-  this.code             = ko.observable(this.codeOriginal);
-
-  this.toggleSelection  = function () { this.selected(!this.selected()); };
-
-  this.isModified = function () {
-    return  !!this.selected() ||
-            this.cssName() !== this.cssNameOriginal ||
-            this.code() !== this.codeOriginal ||
-            this.char() !== this.charOriginal;
+  this.toggleSelection  = function () {
+    this.selected(!this.selected());
   }.bind(this);
+
+  this.isModified       = function () {
+    return  !!this.selected() ||
+            this.name() !== this.originalName ||
+            this.code() !== this.originalCode;
+  }.bind(this);
+
+  //
+  // User-friendly proxies to char code
+  //
+
+  this.customChar       = ko.computed({
+    read: function () {
+      return fromCharCode(this.code());
+    },
+    write: function (value) {
+      this.code(charCodeAt(value));
+    },
+    owner: this
+  });
+
+  this.customHex        = ko.computed({
+    read: function () {
+      var code = this.code().toString(16).toUpperCase();
+      return "0000".substr(0, Math.max(4 - code.length, 0)) + code;
+    },
+    write: function (value) {
+      this.code(parseInt(value, 16));
+    },
+    owner: this
+  });
+
 }
 
 

@@ -1,5 +1,5 @@
 #preview-font.row(data-bind="foreach: selectedGlyphs")
   .preview-glyph.span3
-    span.font-fontello.icon(data-bind="text: codeAsText")
+    span.font-fontello.icon(data-bind="text: charRef")
     span.prefix icon-
-    input.glyph-name(data-bind="value: cssName")
+    input.glyph-name(data-bind="value: name")
