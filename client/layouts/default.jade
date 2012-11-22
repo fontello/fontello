@@ -68,9 +68,9 @@ html.no-js(lang='en', itemscope, itemtype='http://schema.org/WebPage')
               |  3D
 
           .btn-group.pull-right
-            a#result-download.btn.btn-info.disabled.icon-download(data-bind="css: {disabled: selectedGlyphs() <= 0}, click: startDownload")
+            a#result-download.btn.btn-info.disabled.icon-download(data-bind="css: {disabled: countSelectedGlyphs() <= 0}, click: startDownload")
               |  Download webfont (
-              span#selected-glyphs-count(data-bind="text: selectedGlyphs")
+              span#selected-glyphs-count(data-bind="text: countSelectedGlyphs")
               | )
 
           .btn-group.pull-right

@@ -1,13 +1,124 @@
 'use strict';
 
 
-/*global _, $, ko, N*/
+/*global window, _, $, ko, N*/
+
+
+var render = require('../../../lib/render/client');
 
 
 // prevent the event from bubbling to ancestor elements
 function stopPropagation(event) {
   event.preventDefault();
   event.stopPropagation();
+}
+
+
+// starts download of the result font
+function start_download(id, url) {
+  $('iframe#' + id).remove();
+  $('<iframe></iframe>').attr({id: id, src: url}).css('display', 'none')
+    .appendTo(window.document.body);
+}
+
+
+function ToolbarModel() {
+  var self = this;
+
+  this.glyphs = ko.observableArray();
+
+  this.addGlyph = function (glyph) {
+    this.glyphs.push(glyph);
+  }.bind(this);
+
+  this.removeGlyph = function (glyph) {
+    this.glyphs.remove(glyph);
+  }.bind(this);
+
+  this.countSelectedGlyphs = ko.computed(function () {
+    return this.glyphs().length;
+  }, this);
+
+  this.with3DEffect     = ko.observable(true);
+  this.fontname         = ko.observable('');
+
+  function getConfig() {
+    var config = {name: $.trim(self.fontname()), glyphs: []};
+
+    _.each(self.glyphs(), function (glyph) {
+      config.glyphs.push({
+        uid: glyph.uid,
+        src: glyph.font.fontname
+      });
+    });
+
+    N.logger.debug('Built result font config', config);
+
+    return config;
+  }
+
+  this.startDownload    = function () {
+    if (0 === this.glyphs().length) {
+      return;
+    }
+
+    N.server.font.generate(getConfig(), function (err, msg) {
+      var font_id;
+
+      if (err) {
+        N.emit('notification', 'error', render('errors.fatal', {
+          error: (err.message || String(err))
+        }));
+        return;
+      }
+
+      font_id = msg.data.id;
+
+      N.emit('notification', 'information', {
+        layout:   'bottom',
+        closeOnSelfClick: false,
+        timeout:  20000 // 20 secs
+      }, N.runtime.t('info.download_banner'));
+
+      function poll_status() {
+        N.server.font.status({id: font_id}, function (err, msg) {
+          if (err) {
+            N.emit('notification', 'error', render('errors.fatal', {
+              error: (err.message || String(err))
+            }));
+            return;
+          }
+
+          if ('error' === msg.data.status) {
+            N.emit('notification', 'error', render('errors.fatal', {
+              error: (msg.data.error || "Unexpected error.")
+            }));
+            return;
+          }
+
+          if ('finished' === msg.data.status) {
+            // TODO: normal notification about success
+            N.logger.info("Font successfully generated. " +
+                          "Your download link: " + msg.data.url);
+            start_download(font_id, msg.data.url);
+            return;
+          }
+
+          if ('enqueued' === msg.data.status) {
+            // TODO: notification about queue
+            N.logger.info("Your request is in progress and will be available soon.");
+            setTimeout(poll_status, 500);
+            return;
+          }
+
+          // Unexpected behavior
+          N.logger.error("Unexpected behavior");
+        });
+      }
+
+      poll_status();
+    });
+  }.bind(this);
 }
 
 
@@ -23,18 +134,7 @@ var keywords = _.chain(require('../../../lib/shared/embedded_fonts'))
   .value();
 
 
-var model = {
-  with3DEffect:   ko.observable(true),
-  selectedGlyphs: ko.observable(0),
-  fontname:       ko.observable(''),
-  startDownload:  function () {
-    if (0 === model.selectedGlyphs()) {
-      return;
-    }
-
-    alert('Not yet implemented');
-  }
-};
+var model = new ToolbarModel();
 
 
 //
@@ -51,14 +151,8 @@ model.with3DEffect.subscribe(function (value) {
 //
 
 
-N.on('glyph:selected', function () {
-  model.selectedGlyphs(model.selectedGlyphs() + 1);
-});
-
-
-N.on('glyph:unselected', function () {
-  model.selectedGlyphs(model.selectedGlyphs() - 1);
-});
+N.on('glyph:selected',    model.addGlyph);
+N.on('glyph:unselected',  model.removeGlyph);
 
 
 N.once('page:loaded', function () {
