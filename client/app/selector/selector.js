@@ -150,6 +150,7 @@ function FontModel(data) {
 
   //
   // Returns array of selected glyphs of a font
+  // throttling compensates mass reflows on multiselect
   //
 
   this.selectedGlyphs = ko.computed(function () {
@@ -162,10 +163,11 @@ function FontModel(data) {
     });
 
     return glyphs;
-  }, this);
+  }, this).extend({ throttle: 100 });
 
   //
   // Returns array of modified glyphs of a font
+  // throttling compensates mass reflows on multiselect
   //
 
   this.modifiedGlyphs = ko.computed(function () {
@@ -178,7 +180,7 @@ function FontModel(data) {
     });
 
     return glyphs;
-  }, this);
+  }, this).extend({ throttle: 100 });
 }
 
 
@@ -189,6 +191,7 @@ function FontsList() {
 
   //
   // Returns array of selected glyphs from all fonts
+  // throttling compensates mass reflows on multiselect
   //
 
   this.selectedGlyphs = ko.computed(function () {
@@ -199,7 +202,7 @@ function FontsList() {
     });
 
     return glyphs;
-  }, this);
+  }, this).extend({ throttle: 100 });
 
   //
   // Returns amount of selected glyphs from all fonts
@@ -211,6 +214,7 @@ function FontsList() {
 
   //
   // Returns array of modified glyphs from all fonts
+  // throttling compensates mass reflows on multiselect
   //
 
   this.modifiedGlyphs = ko.computed(function () {
@@ -221,7 +225,7 @@ function FontsList() {
     });
 
     return glyphs;
-  }, this);
+  }, this).extend({ throttle: 100 });
 }
 
 
