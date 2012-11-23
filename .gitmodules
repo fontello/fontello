@@ -31,3 +31,6 @@
 [submodule "src/maki.font"]
 	path = src/maki.font
 	url = git@github.com:fontello/maki.font.git
+[submodule "src/fontelico.font"]
+	path = src/fontelico.font
+	url = git://github.com/fontello/fontelico.font.git

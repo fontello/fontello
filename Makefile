@@ -11,6 +11,7 @@ TMP_PATH      := /tmp/${PROJECT}-$(shell date +%s)
 REMOTE_NAME   ?= origin
 REMOTE_REPO   ?= $(shell git config --get remote.${REMOTE_NAME}.url)
 
+FONTS         += fontelico.font
 FONTS         += entypo
 FONTS         += awesome-uni.font
 FONTS         += iconic-uni.font
