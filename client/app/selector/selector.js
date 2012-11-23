@@ -81,11 +81,15 @@ function GlyphModel(font, data) {
     this.selected(!this.selected());
   }.bind(this);
 
-  this.isModified       = function () {
+  //
+  // Whenever or not glyph should be treaten as "modified"
+  //
+
+  this.isModified       = ko.computed(function () {
     return  !!this.selected() ||
             this.name() !== this.originalName ||
             this.code() !== this.originalCode;
-  }.bind(this);
+  }, this);
 
   //
   // code value as character (for code editor)
