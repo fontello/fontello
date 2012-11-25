@@ -242,6 +242,23 @@ function FontsList() {
 
     return glyphs;
   }, this).extend({ throttle: 100 });
+
+  //
+  // Returns whenever font list has modified glyphs or collapsed fonts
+  // throttling compensates mass reflows on multiselect
+  //
+
+  this.modified = ko.computed(function () {
+    var value = false;
+
+    _.each(this.fonts, function (font) {
+      value = font.collapsed() || value;
+    });
+
+    value = !!this.modifiedGlyphs().length || value;
+
+    return value;
+  }, this).extend({ throttle: 100 });
 }
 
 
@@ -262,7 +279,7 @@ var autoSaveSession = _.debounce(function () {
   var session = { fonts: {} };
 
   _.each(fontsList.fonts, function (font) {
-    var font_data = { collapsed: false, glyphs: [] };
+    var font_data = { collapsed: font.collapsed(), glyphs: [] };
 
     _.each(font.glyphs, function (glyph) {
       if (glyph.isModified()) {
@@ -283,7 +300,7 @@ var autoSaveSession = _.debounce(function () {
 }, 500);
 
 
-fontsList.modifiedGlyphs.subscribe(autoSaveSession);
+fontsList.modified.subscribe(autoSaveSession);
 
 
 N.on('session_load', function (session) {
