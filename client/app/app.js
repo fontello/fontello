@@ -8,9 +8,6 @@ $(function () {
   // Attach tooltip handler to matching elements
   $('._tip').tooltip();
 
-  // Attach collapse handler to matching elements
-  $('._collapser').ndCollapser();
-
   //
   // Social buttons defered load - after all
   //
