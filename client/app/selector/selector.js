@@ -131,22 +131,36 @@ function FontModel(data) {
   // Essential properties
   //
 
-  this.id       = data.id;
-  this.fullname = data.font.fullname;
-  this.fontname = data.font.fontname;
+  this.id         = data.id;
+  this.fullname   = data.font.fullname;
+  this.fontname   = data.font.fontname;
 
-  this.author   = data.meta.author;
-  this.license  = data.meta.license;
-  this.homepage = data.meta.homepage;
-  this.email    = data.meta.email;
-  this.twitter  = data.meta.twitter;
-  this.github   = data.meta.github;
+  this.author     = data.meta.author;
+  this.license    = data.meta.license;
+  this.homepage   = data.meta.homepage;
+  this.email      = data.meta.email;
+  this.twitter    = data.meta.twitter;
+  this.github     = data.meta.github;
+
+  //
+  // View state properties
+  //
+
+  this.collapsed  = ko.observable(false);
+
+  //
+  // Helpers
+  //
+
+  this.toggleCollapsed = function () {
+    this.collapsed(!this.collapsed());
+  }.bind(this);
 
   //
   // Array of font glyphs
   //
 
-  this.glyphs   = _.map(data.glyphs, function (data) {
+  this.glyphs     = _.map(data.glyphs, function (data) {
     return new GlyphModel(this, data);
   }, this);
 
@@ -277,8 +291,11 @@ N.on('session_load', function (session) {
 
   _.each(fontsList.fonts, function (font) {
     if (!fonts[font.id]) {
+      font.collapsed(false);
       return;
     }
+
+    font.collapsed(!!fonts[font.id].collapsed);
 
     _.each(fonts[font.id].glyphs, function (glyph) {
       _.each(font.glyphs, function (g) {
