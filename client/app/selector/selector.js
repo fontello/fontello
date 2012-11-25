@@ -253,7 +253,11 @@ var autoSaveSession = _.debounce(function () {
     _.each(font.glyphs, function (glyph) {
       if (glyph.isModified()) {
         font_data.glyphs.push({
-          uid: glyph.uid
+          uid:        glyph.uid,
+          orig_code:  glyph.originalCode,
+          orig_css:   glyph.originalName,
+          code:       glyph.code(),
+          css:        glyph.name()
         });
       }
     });
@@ -280,6 +284,8 @@ N.on('session_load', function (session) {
       _.each(font.glyphs, function (g) {
         if (g.uid === glyph.uid) {
           g.selected(true);
+          g.code(glyph.code);
+          g.name(glyph.css);
         }
       });
     });
