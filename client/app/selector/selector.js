@@ -86,9 +86,14 @@ function GlyphModel(font, data) {
   //
 
   this.isModified       = ko.computed(function () {
-    return  !!this.selected() ||
-            this.name() !== this.originalName ||
-            this.code() !== this.originalCode;
+    var value = false;
+
+    // We need to call all "observable" properties to have proper deps graph
+    value = !!this.selected() || value;
+    value = this.name() !== this.originalName || value;
+    value = this.code() !== this.originalCode || value;
+
+    return value;
   }, this);
 
   //
@@ -248,13 +253,15 @@ function FontsList() {
   // throttling compensates mass reflows on multiselect
   //
 
-  this.modified = ko.computed(function () {
+  this.isModified = ko.computed(function () {
     var value = false;
 
     _.each(this.fonts, function (font) {
+      // We need to call collapsed() of each font to have proper deps graph
       value = font.collapsed() || value;
     });
 
+    // call modifiedGlyphs() in any case to have proper deps graph
     value = !!this.modifiedGlyphs().length || value;
 
     return value;
@@ -300,7 +307,7 @@ var autoSaveSession = _.debounce(function () {
 }, 500);
 
 
-fontsList.modified.subscribe(autoSaveSession);
+fontsList.isModified.subscribe(autoSaveSession);
 
 
 N.on('session_load', function (session) {
