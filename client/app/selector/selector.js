@@ -284,8 +284,8 @@ N.on('session_load', function (session) {
       _.each(font.glyphs, function (g) {
         if (g.uid === glyph.uid) {
           g.selected(true);
-          g.code(glyph.code);
-          g.name(glyph.css);
+          g.code(glyph.code || glyph.orig_code || g.originalCode);
+          g.name(glyph.css || glyph.orig_css || g.originalName);
         }
       });
     });

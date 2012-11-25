@@ -392,8 +392,8 @@ N.on('session_save', function (data) {
 var font_ids = {};
 
 
-_.each(embedded_fonts, function (font) {
-  font_ids[font.fontname] = font.id;
+_.each(embedded_fonts, function (o) {
+  font_ids[o.font.fontname] = o.id;
 });
 
 
@@ -407,9 +407,8 @@ N.on('import_config', function (config) {
       session.fonts[id] = { collapsed: false, glyphs: [] };
     }
 
-    session.fonts[id].glyphs.push({
-      uid: g.uid
-    });
+    session.fonts[id].glyphs.push(
+      _.pick(g, 'uid', 'css', 'code', 'orig_css', 'orig_code'));
   });
 
   N.emit('session_load', session);

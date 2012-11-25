@@ -37,8 +37,15 @@ function ToolbarModel() {
 
     _.each(self.selectedGlyphs(), function (glyph) {
       config.glyphs.push({
-        uid: glyph.uid,
-        src: glyph.font.fontname
+        uid:        glyph.uid,
+
+        orig_css:   glyph.originalName,
+        orig_code:  glyph.originalCode,
+
+        css:        glyph.name(),
+        code:       glyph.code(),
+
+        src:        glyph.font.fontname
       });
     });
 
