@@ -1,10 +1,10 @@
 #result-font(data-bind="foreach: selectedGlyphs")
   .result-glyph
     .top
-      input.char-editable(data-bind="value: customChar()")
+      input.char-editable(data-bind="value: customChar")
 
     .center.font-fontello(data-bind="text: charRef")
 
     .bottom
       span.code-prefix U+
-      input.code-editable(data-bind="value: customHex()")
+      input.code-editable(data-bind="value: customHex")

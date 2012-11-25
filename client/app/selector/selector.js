@@ -115,6 +115,8 @@ function GlyphModel(font, data) {
       return "0000".substr(0, Math.max(4 - code.length, 0)) + code;
     },
     write: function (value) {
+      // value must be HEX string - omit invalid chars
+      value = 0 + value.replace(/[^0-9a-f]+/g, '');
       this.code(parseInt(value, 16));
     },
     owner: this
