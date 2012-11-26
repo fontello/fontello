@@ -456,9 +456,6 @@ N.on('session_load', function (session) {
     fonts[id] = font;
   });
 
-
-  console.log( fonts );
-
   _.each(fontsList.fonts, function (font) {
     var session_font = fonts[font.id] || { collapsed: false, glyphs: {} };
 
