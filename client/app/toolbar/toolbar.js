@@ -182,27 +182,11 @@ $(function () {
     }
   });
 
-  $glyphs = $('.glyph');
-
-  // search query change event listener
-  on_search_change = function (event) {
-    var q = $.trim($search.val());
-
-    if (0 === q.length) {
-      $glyphs.show();
-      return;
-    }
-
-    $glyphs.hide().filter(function () {
-      var model = ko.dataFor(this);
-      return model && 0 <= model.keywords.indexOf(q);
-    }).show();
-  };
-
   // init search input
   $search = $('#search')
-    .on('change', on_search_change)
-    .on('keyup', _.debounce(on_search_change, 250))
+    .on('keyup', function (event) {
+      N.emit('filter_keyword', $.trim($search.val()));
+    })
     .on('focus keyup', _.debounce(function () {
       $search.typeahead('hide');
     }, 5000))

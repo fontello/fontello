@@ -1,5 +1,5 @@
 ul#selector-fonts.unstyled(data-bind="style: {fontSize: fontSize() + 'px'}, foreach: fonts")
-  li(data-bind="attr: {id: 'font-id-' + id}, css: {_collapsed: collapsed}", class="ui-selectable")
+  li(data-bind="attr: {id: 'font-id-' + id}, css: {_collapsed: collapsed, hide: !countVisible()}", class="ui-selectable")
     h2.src-font-head
       //- a.label.label-important.font-info(href="#") info
       a.src-font-name._collapser(href="#", data-bind="text: fullname, click: toggleCollapsed")

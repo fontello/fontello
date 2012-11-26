@@ -162,7 +162,7 @@ function observableWithHistory(initial) {
 ////////////////////////////////////////////////////////////////////////////////
 
 
-function GlyphModel(font, data) {
+function GlyphModel(font, data, options) {
 
   //
   // Essential properties
@@ -197,11 +197,24 @@ function GlyphModel(font, data) {
   }.bind(this);
 
   //
+  // Whenver or not glyph should be visible
+  //
+
+  this.visible          = ko.computed(function () {
+    return 0 <= this.keywords.indexOf(options.keyword());
+  }, this);
+
+  //
   // Complex class name based on selected state and css-ext data
   //
 
   this.displayClass     = ko.computed(function () {
-    var list = [ data['css-ext'], this.selected() ? 'selected' : '' ];
+    var list = [
+      data['css-ext'],
+      this.visible() ? '' : 'hide',
+      this.selected() ? 'selected' : ''
+    ];
+
     return _.filter(list, Boolean).join(' ');
   }, this);
 
@@ -260,7 +273,7 @@ function GlyphModel(font, data) {
 }
 
 
-function FontModel(data) {
+function FontModel(data, options) {
 
   //
   // Essential properties
@@ -296,7 +309,7 @@ function FontModel(data) {
   //
 
   this.glyphs     = _.map(data.glyphs, function (data) {
-    return new GlyphModel(this, data);
+    return new GlyphModel(this, data, options);
   }, this);
 
   //
@@ -332,12 +345,29 @@ function FontModel(data) {
 
     return glyphs;
   }, this).extend({ throttle: 100 });
+
+  //
+  // Returns amount of visible glyphs
+  // throttling compensates mass reflows on multiselect
+  //
+
+  this.countVisible = ko.computed(function () {
+    var result = 0;
+
+    _.each(this.glyphs, function (glyph) {
+      if (glyph.visible()) {
+        result++;
+      }
+    });
+
+    return result;
+  }, this).extend({ throttle: 100 });
 }
 
 
-function FontsList() {
+function FontsList(options) {
   this.fonts = _.map(embedded_fonts, function (data) {
-    return new FontModel(data);
+    return new FontModel(data, options);
   });
 
   //
@@ -402,14 +432,16 @@ function FontsList() {
 ////////////////////////////////////////////////////////////////////////////////
 
 
-var fontsList = new FontsList();
+var keyword   = ko.observable('').extend({ throttle: 100 });
+var fontsList = new FontsList({ keyword: keyword });
 var fontSize  = ko.observable(16);
 
 
 ////////////////////////////////////////////////////////////////////////////////
 
 
-N.on('font_size_change', fontSize);
+N.on('font_size_change',  fontSize);
+N.on('filter_keyword',    keyword);
 
 
 var autoSaveSession = _.debounce(function () {
