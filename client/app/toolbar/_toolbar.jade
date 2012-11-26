@@ -26,7 +26,7 @@
       data-bind="value: fontname",
       data-placement="bottom")
 
-  input#import-file.invisible(type="file", data-bind="change: importFile")
+  input#import-file.invisible(type="file", data-bind="event: {change: importFile}")
 
   .btn-group.pull-right
 
