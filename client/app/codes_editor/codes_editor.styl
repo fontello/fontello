@@ -6,9 +6,9 @@
   //background-color #888
   //border-left 1px solid #888
   //border-right 1px solid #888
-  background-color #444
-  border-left 1px solid #444
-  border-right 1px solid #444
+  background-color grayDark
+  border-left 1px solid grayDark
+  border-right 1px solid grayDark
   border-radius 6px
 
   .top
@@ -16,11 +16,18 @@
     line-height 16px
     font-size 14px
 
+    input
+      width 15px
+      border 0
+      border-radius 3px
+      background-color grayLighter
+
+
   .center
     height 64px
     line-height 64px
     text-align center
-    background-color #fff
+    background-color white
     color #444
     font-size 24px
 
@@ -29,6 +36,11 @@
     line-height 16px
     font-size 10px
 
+    input
+      width 45px
+      border 0
+      border-radius 3px
+      background-color grayLighter
 
   //&.mapping-matched
   //  border-color #444
@@ -43,14 +55,14 @@
 
   &:hover
     .char-editable, .code-editable
-      background-color #888
+      background-color #eee
       border-radius 2px
       cursor pointer
 
   .char-editable, .code-editable
     &:focus
       outline none
-      box-shadow 0 0 2px #fff
+      box-shadow 0 0 2px white
       background-color white
       color grayDark
       border-radius 2px
