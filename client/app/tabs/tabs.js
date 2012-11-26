@@ -6,13 +6,20 @@
 
 N.once('fonts_ready', function (fontsList) {
   $(function () {
-    var $view = $('#tabs').tab();
+    var
+    $view = $('#tabs').tab(),
+    tabs  = {
+      selectedCount:  fontsList.selectedCount,
+      preventDefault: function (target, event) {
+        event.preventDefault();
+      }
+    };
 
     //
     // Bind model and view
     //
 
-    ko.applyBindings(fontsList, $view.get(0));
+    ko.applyBindings(tabs, $view.get(0));
 
     //
     // Jump to selector on resets
