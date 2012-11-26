@@ -98,11 +98,10 @@ var codeRemap = (function (map) {
       }
 
       // try next code
-      code += 1;
+      code++;
     }
 
-    // can't find empty code.
-    // SHOULD NEVER happen in real life.
+    // SHOULD NEVER HAPPEN (only if max pool size is < amount of all glyphs):
     throw "Run out of free codes";
   }
 
@@ -123,9 +122,15 @@ var codeRemap = (function (map) {
   }
 
   function register(model) {
-    if (map[model.code()]) {
-      model.code(find_free_code());
+    var code = model.code();
+
+    // code is already taken
+    if (map[code]) {
+      model.code(code = find_free_code());
     }
+
+    // register new model
+    map[code] = model;
 
     model.code.subscribe(function (code) {
       allocate(model, code);
