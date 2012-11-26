@@ -59,7 +59,7 @@ var nameRemap = (function (map) {
     return name.replace(suffix_re, '') + '-' + index;
   }
 
-  function allocate(model, name, log) {
+  function allocate(model, name) {
     var
     prev_name = model.name.prev(),
     conflict  = map[name];
@@ -79,7 +79,7 @@ var nameRemap = (function (map) {
     allocate(model, model.name());
 
     model.name.subscribe(function (name) {
-      allocate(model, name, 1);
+      allocate(model, name);
     });
   }
 
