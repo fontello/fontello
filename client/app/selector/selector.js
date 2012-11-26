@@ -103,7 +103,7 @@ var codeRemap = (function (map) {
 
     // can't find empty code.
     // SHOULD NEVER happen in real life.
-    throw "Out of free codes";
+    throw "Run out of free codes";
   }
 
   function allocate(model, code) {
