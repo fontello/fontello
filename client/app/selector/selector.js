@@ -408,6 +408,7 @@ var autoSaveSession = _.debounce(function () {
       if (glyph.isModified()) {
         font_data.glyphs.push({
           uid:        glyph.uid,
+          selected:   glyph.selected(),
           orig_code:  glyph.originalCode,
           orig_css:   glyph.originalName,
           code:       glyph.code(),
@@ -440,7 +441,7 @@ N.on('session_load', function (session) {
     _.each(fonts[font.id].glyphs, function (glyph) {
       _.each(font.glyphs, function (g) {
         if (g.uid === glyph.uid) {
-          g.selected(true);
+          g.selected(!!g.selected);
           g.code(glyph.code || glyph.orig_code || g.originalCode);
           g.name(glyph.css || glyph.orig_css || g.originalName);
         }
