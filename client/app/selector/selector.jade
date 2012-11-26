@@ -18,6 +18,6 @@ ul#selector-fonts.unstyled(data-bind="style: {fontSize: fontSize() + 'px'}, fore
       //-  a.icon-(href="#{meta.dribbble}", target="_blank") Dribbble
 
     ul.unstyled.font-glyphs.font-fontello(data-bind="foreach: glyphs")
-      li.glyph(data-bind="css: selected() ? 'selected' : '', click: toggleSelection")
+      li.glyph(data-bind="css: displayClass, click: toggleSelection")
         span(data-bind="text: charRef")
         input.hidden(type="checkbox", data-bind="checked: selected, attr: {id: uid, value: selected() ? 'on' : 'off'}")

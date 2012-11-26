@@ -192,6 +192,15 @@ function GlyphModel(font, data) {
   }.bind(this);
 
   //
+  // Complex class name based on selected state and css-ext data
+  //
+
+  this.displayClass     = ko.computed(function () {
+    var list = [ data['css-ext'], this.selected() ? 'selected' : '' ];
+    return _.filter(list, Boolean).join(' ');
+  }, this);
+
+  //
   // Whenever or not glyph should be treaten as "modified"
   //
 
