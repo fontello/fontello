@@ -75,8 +75,16 @@ N.once('fonts_ready', function (fontsList) {
     // Trigger change of hidden file input
     //
 
-    toolbar.chooseFile = function () {
+    toolbar.chooseFile = function (model, event) {
+      event.preventDefault();
+
+      if (!window.FileReader) {
+        N.emit('notification', 'error', N.runtime.t('errors.no_file_reader'));
+        return false;
+      }
+
       $view.find('#import-file').click();
+      return false;
     };
 
     //

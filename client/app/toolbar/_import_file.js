@@ -1,16 +1,27 @@
 'use strict';
 
 
-/*global window, _, $, ko, N*/
+/*global window, _, $, N*/
 
 
-function read_config(file) {
-  var reader = new window.FileReader();
+N.on('import_file', function (file) {
+  if ('application/json' === file.type && _.isObject(file.data)) {
+    N.emit('import_config', file.data);
+  }
+});
 
-  N.logger.debug('Import config requested', file);
 
-  // file.type is empty on Chromium, so we allow upload anything
-  // and will get real error only if JSON.parse fails
+// Handles change event of file input
+//
+module.exports = function (model, event) {
+  var
+  file    = (event.target.files || [])[0],
+  reader  = new window.FileReader();
+
+  // we must "reset" value of input field, otherwise Chromium will
+  // not fire change event if the same file will be chosen twice, e.g.
+  // import file -> made changes -> import same file
+  $(event.target).val('');
 
   if (!file) {
     // Unexpected behavior. Should not happen in real life.
@@ -19,25 +30,28 @@ function read_config(file) {
   }
 
   reader.onload = function (event) {
-    var config;
+    var
+    data = event.target.result,
+    type = file.type;
 
-    try {
-      config = JSON.parse(event.target.result);
-    } catch (err) {
-      N.emit('notification', 'error', N.runtime.t('errors.read_config', {
-        error: (err.message || err.toString())
-      }));
-      return;
+    // Chromium omits type on JSON files, so if type is JSON, or
+    // it's not specified, we are parsing data and set json type
+    // on success
+    if (!type  || /\/json$/.test(type)) {
+      try {
+        data = JSON.parse(data);
+        type = 'application/json';
+      } catch (err) {
+        // do nothing
+      }
     }
 
-    N.logger.debug('Config successfully parsed', config);
-    N.emit('import_config', config);
+    N.emit('import_file', {
+      type: type,
+      name: file.name,
+      data: data
+    });
   };
 
   reader.readAsBinaryString(file);
-}
-
-
-module.exports = function () {
-  console.log(arguments);
 };
