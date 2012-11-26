@@ -8,9 +8,11 @@
 
 
 var
-render          = require('../../../lib/render/client'),
-embedded_fonts  = require('../../../lib/embedded_fonts/configs'),
-glyphs_map      = require('../../../lib/embedded_fonts/glyphs_map');
+render            = require('../../../lib/render/client'),
+embedded_fonts    = require('../../../lib/embedded_fonts/configs'),
+glyphs_map        = require('../../../lib/embedded_fonts/glyphs_map'),
+trackNameChanges  = require('./_namesTracker'),
+trackCodeChanges  = require('./_codesTracker');
 
 
 // Int to char, with fix for big numbers
@@ -47,121 +49,6 @@ function fixedCharCodeAt(char) {
 ////////////////////////////////////////////////////////////////////////////////
 
 
-var nameRemap = (function (map) {
-  var suffix_re = /-(\d+)$/;
-
-
-  function increase_suffix(name) {
-    var
-    match = suffix_re.exec(name),
-    index = match ? parseInt(match[1], 10) + 1 : 1;
-
-    return name.replace(suffix_re, '') + '-' + index;
-  }
-
-  function allocate(model, name) {
-    var
-    prev_name = model.name.prev(),
-    conflict  = map[name];
-
-    if (model === map[prev_name]) {
-      map[prev_name] = null;
-    }
-
-    map[name] = model;
-
-    if (conflict && conflict !== model) {
-      conflict.name(increase_suffix(name));
-    }
-  }
-
-  function register(model) {
-    allocate(model, model.name());
-
-    model.name.subscribe(function (name) {
-      allocate(model, name);
-    });
-  }
-
-  return { register: register };
-}({}));
-
-
-var codeRemap = (function (map) {
-  function find_free_code() {
-    var code = N.config.app.autoguess_charcode.min;
-
-    while (code <= N.config.app.autoguess_charcode.max) {
-      if (!map[code]) {
-        // got unused code
-        return code;
-      }
-
-      // try next code
-      code++;
-    }
-
-    // SHOULD NEVER HAPPEN (only if max pool size is < amount of all glyphs):
-    throw "Run out of free codes";
-  }
-
-  function allocate(model, code) {
-    var
-    prev_code = model.code.prev(),
-    conflict  = map[code];
-
-    if (model === map[prev_code]) {
-      map[prev_code] = null;
-    }
-
-    map[code] = model;
-
-    if (conflict && conflict !== model) {
-      conflict.code(prev_code === code ? find_free_code() : prev_code);
-    }
-  }
-
-  function register(model) {
-    var code = model.code();
-
-    // code is already taken
-    if (map[code]) {
-      model.code(code = find_free_code());
-    }
-
-    // register new model
-    map[code] = model;
-
-    model.code.subscribe(function (code) {
-      allocate(model, code);
-    });
-  }
-
-  return { register: register };
-}({}));
-
-
-function observableWithHistory(initial) {
-  var curr, prev;
-
-  prev = initial;
-  curr = ko.observable(initial);
-
-  curr.subscribe(function (value) {
-    prev = value;
-  }, curr, 'beforeChange');
-
-  curr.prev = function () {
-    return prev;
-  };
-
-  return curr;
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
 function GlyphModel(font, data, options) {
 
   //
@@ -185,8 +72,8 @@ function GlyphModel(font, data, options) {
   //
 
   this.selected         = ko.observable(false);
-  this.name             = observableWithHistory(this.originalName);
-  this.code             = observableWithHistory(this.originalCode);
+  this.name             = ko.observable(this.originalName);
+  this.code             = ko.observable(this.originalCode);
 
   //
   // Helpers
@@ -268,8 +155,8 @@ function GlyphModel(font, data, options) {
   // Register glyph in the names/codes swap-remap handler
   //
 
-  nameRemap.register(this);
-  codeRemap.register(this);
+  trackNameChanges(this);
+  trackCodeChanges(this);
 }
 
 
