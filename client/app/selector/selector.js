@@ -48,7 +48,7 @@ function fixedCharCodeAt(char) {
 
 
 var nameRemap = (function (map) {
-  var suffix_re = /-?(\d+)$/;
+  var suffix_re = /-(\d+)$/;
 
 
   function increase_suffix(name) {
