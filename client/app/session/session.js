@@ -4,7 +4,7 @@
 "use strict";
 
 
-var embedded_fonts  = require('../../../lib/shared/embedded_fonts');
+var embedded_fonts  = require('../../../lib/embedded_fonts/configs');
 
 
 var SERIALIZER_VERSION  = 3;

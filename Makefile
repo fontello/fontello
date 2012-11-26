@@ -39,11 +39,11 @@ rebuild-fonts:
 	for config in $(FONT_CONFIGS); do \
 		bin/font_copy_to_assets.py -c "$$config" -o assets/embedded_fonts; \
 		done
-	bin/build_embedded_fonts_js.py -i assets/embedded_fonts -o lib/shared/embedded_fonts.js $(FONT_CONFIGS)
+	bin/build_embedded_fonts_js.py -i assets/embedded_fonts -o lib/embedded_fonts/configs.js $(FONT_CONFIGS)
 	bin/build_embedded_fonts_css.py -o assets/embedded_fonts/fontface-embedded.css.ejs $(FONT_CONFIGS)
 	# build single font
 	mkdir ${TMP_PATH}
-	bin/build_common_font.py -i $(foreach f,$(FONTS), ./src/${f}) -o ${TMP_PATH}/fontello.ttf -c lib/shared/glyphs_map.js
+	bin/build_common_font.py -i $(foreach f,$(FONTS), ./src/${f}) -o ${TMP_PATH}/fontello.ttf -c lib/embedded_fonts/glyphs_map.js
 	ttfautohint --latin-fallback --hinting-limit=200 --hinting-range-max=50 \
   --symbol "${TMP_PATH}/fontello.ttf" "${TMP_PATH}/fontello-hinted.ttf"
 	mv "${TMP_PATH}/fontello-hinted.ttf" "assets/embedded_fonts/fontello.ttf"

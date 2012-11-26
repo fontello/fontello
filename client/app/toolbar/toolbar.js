@@ -119,7 +119,7 @@ function ToolbarModel() {
 }
 
 
-var keywords = _.chain(require('../../../lib/shared/embedded_fonts'))
+var keywords = _.chain(require('../../../lib/embedded_fonts/configs'))
   .map(function (font) {
     return _.map(font.glyphs, function (glyph) {
       return glyph.search;

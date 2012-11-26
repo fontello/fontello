@@ -9,8 +9,8 @@
 
 var
 render          = require('../../../lib/render/client'),
-embedded_fonts  = require('../../../lib/shared/embedded_fonts'),
-glyphs_map      = require('../../../lib/shared/glyphs_map');
+embedded_fonts  = require('../../../lib/embedded_fonts/configs'),
+glyphs_map      = require('../../../lib/embedded_fonts/glyphs_map');
 
 
 // Int to char, with fix for big numbers
