@@ -13,7 +13,7 @@ N.on('import_file', function (file) {
 
 // Handles change event of file input
 //
-module.exports = function (model, event) {
+module.exports = function (data, event) {
   var
   file    = (event.target.files || [])[0],
   reader  = new window.FileReader();

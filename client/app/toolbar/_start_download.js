@@ -5,14 +5,15 @@
 
 
 // starts download of the result font
-function start_download(id, url) {
+function injectDownloadUrl(id, url) {
   $('iframe#' + id).remove();
   $('<iframe></iframe>').attr({id: id, src: url}).css('display', 'none')
     .appendTo(window.document.body);
 }
 
 
-function get_config(self) {
+// prepare config for the font builder
+function getConfig(self) {
   var config = {
     name:   $.trim(self.fontname()),
     glyphs: []
@@ -38,14 +39,14 @@ function get_config(self) {
 }
 
 
-function downloader() {
-  var self = this;
-
-  if (0 === self.selectedCount()) {
-    return;
+// Request font build and download on success
+//
+module.exports = function (data, event) {
+  if (!this.selectedCount()) {
+    return false;
   }
 
-  N.server.font.generate(get_config(self), function (err, msg) {
+  N.server.font.generate(getConfig(this), function (err, msg) {
     var font_id;
 
     if (err) {
@@ -83,7 +84,7 @@ function downloader() {
           // TODO: normal notification about success
           N.logger.info("Font successfully generated. " +
                         "Your download link: " + msg.data.url);
-          start_download(font_id, msg.data.url);
+          injectDownloadUrl(font_id, msg.data.url);
           return;
         }
 
@@ -99,11 +100,7 @@ function downloader() {
       });
     }
 
+    // start polling
     poll_status();
   });
-}
-
-
-module.exports = function () {
-  console.log(arguments);
 };
