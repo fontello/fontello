@@ -4,7 +4,7 @@
 /*global window, _, $, ko, N*/
 
 
-module.exports = function (file) {
+function read_config(file) {
   var reader = new window.FileReader();
 
   N.logger.debug('Import config requested', file);
@@ -35,4 +35,9 @@ module.exports = function (file) {
   };
 
   reader.readAsBinaryString(file);
+}
+
+
+module.exports = function () {
+  console.log(arguments);
 };

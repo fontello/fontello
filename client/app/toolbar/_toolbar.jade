@@ -1,15 +1,19 @@
 #toolbar.btn-toolbar.clearfix
 
   .btn-group.search-form.pull-left
-    input#search.input-medium.search-query(type="text", placeholder="search", autocomplete="off")
+    input#search.input-medium.search-query(
+      type="text",
+      placeholder="search",
+      autocomplete="off")
     .icon-search
 
   .btn-group.pull-left
     #glyph-size-slider
-    #glyph-size-value #{self.N('config.app.glyph_size.val')}px
+    #glyph-size-value(data-bind="text: fontSize() + 'px'")
 
   .btn-group.pull-right
-    a#result-download.btn.btn-info.disabled.icon-download(data-bind="css: {disabled: selectedCount() <= 0}, click: startDownload")
+    a#result-download.btn.btn-info.disabled.icon-download(
+      data-bind="css: {disabled: !selectedCount()}, click: startDownload")
       |  Download webfont (
       span#selected-glyphs-count(data-bind="text: selectedCount()")
       | )
@@ -22,7 +26,7 @@
       data-bind="value: fontname",
       data-placement="bottom")
 
-  input#import-app-config-file.invisible(type="file")
+  input#import-file.invisible(type="file", data-bind="change: importFile")
 
   .btn-group.pull-right
 
@@ -30,11 +34,11 @@
       span.caret
 
     ul.dropdown-menu
-      li: a#import-app-config(href="#")
+      li: a(href="#", data-bind="click: chooseFile")
         | Import <em>config.json</em>
       li.divider
-      li: a#reset-app-selected(href="#") Unselect glyphs
-      li: a#reset-app-all(href="#") Reset all changes
+      li: a(href="#", data-bind="click: resetSelected") Unselect glyphs
+      li: a(href="#", data-bind="click: resetAll") Reset all changes
 
 
 include ./_tabs
