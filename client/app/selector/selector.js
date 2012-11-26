@@ -240,7 +240,7 @@ function GlyphModel(font, data) {
     },
     write: function (value) {
       // value must be HEX string - omit invalid chars
-      value = 0 + value.replace(/[^0-9a-f]+/g, '');
+      value = 0 + value.replace(/[^0-9a-fA-F]+/g, '');
       this.code(parseInt(value, 16));
     },
     owner: this
