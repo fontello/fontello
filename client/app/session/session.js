@@ -407,8 +407,14 @@ N.on('import_config', function (config) {
       session.fonts[id] = { collapsed: false, glyphs: [] };
     }
 
-    session.fonts[id].glyphs.push(
-      _.pick(g, 'uid', 'css', 'code', 'orig_css', 'orig_code'));
+    session.fonts[id].glyphs.push({
+      selected:   true,
+      uid:        g.uid,
+      css:        g.css,
+      code:       g.code,
+      orig_css:   g.orig_css,
+      orig_code:  g.orig_code
+    });
   });
 
   N.emit('session_load', session);
