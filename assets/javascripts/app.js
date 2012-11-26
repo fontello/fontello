@@ -6,7 +6,6 @@
 //= require bootstrap/bootstrap
 //= require backbone
 //= require knockout
-//= require jquery.inplaceEditor
 //= require jade/runtime
 //= require babelfish-runtime
 //= require n
