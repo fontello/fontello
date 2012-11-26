@@ -47,6 +47,67 @@ function fixedCharCodeAt(char) {
 ////////////////////////////////////////////////////////////////////////////////
 
 
+var nameRemap = (function (map) {
+  var suffix_re = /-(\d+)?/;
+
+
+  function increase_suffix(name) {
+    var
+    match = suffix_re.exec(name),
+    index = match ? parseInt(match[1], 10) + 1 : 1;
+
+    return name.replace(suffix_re, '') + '-' + index;
+  }
+
+  function allocate(model, name, log) {
+    var
+    prev_name = model.name.prev(),
+    conflict  = map[name];
+
+    if (model === map[prev_name]) {
+      map[prev_name] = null;
+    }
+
+    map[name] = model;
+
+    if (conflict && conflict !== model) {
+      conflict.name(increase_suffix(name));
+    }
+  }
+
+  function register(model) {
+    allocate(model, model.name());
+
+    model.name.subscribe(function (name) {
+      allocate(model, name, 1);
+    });
+  }
+
+  return { register: register };
+}({}));
+
+
+function observableWithHistory(initial) {
+  var curr, prev;
+
+  prev = initial;
+  curr = ko.observable(initial);
+
+  curr.subscribe(function (value) {
+    prev = value;
+  }, curr, 'beforeChange');
+
+  curr.prev = function () {
+    return prev;
+  };
+
+  return curr;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+
 function GlyphModel(font, data) {
 
   //
@@ -70,7 +131,7 @@ function GlyphModel(font, data) {
   //
 
   this.selected         = ko.observable(false);
-  this.name             = ko.observable(this.originalName);
+  this.name             = observableWithHistory(this.originalName);
   this.code             = ko.observable(this.originalCode);
 
   //
@@ -127,6 +188,11 @@ function GlyphModel(font, data) {
     owner: this
   });
 
+  //
+  // Register glyph in the names swap-remap handler
+  //
+
+  nameRemap.register(this);
 }
 
 
