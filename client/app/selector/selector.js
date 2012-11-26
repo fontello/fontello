@@ -87,6 +87,55 @@ var nameRemap = (function (map) {
 }({}));
 
 
+var codeRemap = (function (map) {
+  function find_free_code() {
+    var code = N.config.app.autoguess_charcode.min;
+
+    while (code <= N.config.app.autoguess_charcode.max) {
+      if (!map[code]) {
+        // got unused code
+        return code;
+      }
+
+      // try next code
+      code += 1;
+    }
+
+    // can't find empty code.
+    // SHOULD NEVER happen in real life.
+    throw "Out of free codes";
+  }
+
+  function allocate(model, code) {
+    var
+    prev_code = model.code.prev(),
+    conflict  = map[code];
+
+    if (model === map[prev_code]) {
+      map[prev_code] = null;
+    }
+
+    map[code] = model;
+
+    if (conflict && conflict !== model) {
+      conflict.code(prev_code === code ? find_free_code() : prev_code);
+    }
+  }
+
+  function register(model) {
+    if (map[model.code()]) {
+      model.code(find_free_code());
+    }
+
+    model.code.subscribe(function (code) {
+      allocate(model, code);
+    });
+  }
+
+  return { register: register };
+}({}));
+
+
 function observableWithHistory(initial) {
   var curr, prev;
 
@@ -132,7 +181,7 @@ function GlyphModel(font, data) {
 
   this.selected         = ko.observable(false);
   this.name             = observableWithHistory(this.originalName);
-  this.code             = ko.observable(this.originalCode);
+  this.code             = observableWithHistory(this.originalCode);
 
   //
   // Helpers
@@ -189,10 +238,11 @@ function GlyphModel(font, data) {
   });
 
   //
-  // Register glyph in the names swap-remap handler
+  // Register glyph in the names/codes swap-remap handler
   //
 
   nameRemap.register(this);
+  codeRemap.register(this);
 }
 
 
