@@ -35,6 +35,7 @@ help:
 
 
 rebuild-fonts:
+	./support/font-builder/bin/font-check.js $(FONT_CONFIGS)
 	mkdir -p assets/embedded_fonts
 	for config in $(FONT_CONFIGS); do \
 		bin/font_copy_to_assets.py -c "$$config" -o assets/embedded_fonts; \
