@@ -14,12 +14,15 @@ var SUFFIX_RE = /-(\d+)$/;
 ////////////////////////////////////////////////////////////////////////////////
 
 
-function increaseSuffix(name) {
-  var
-  match = SUFFIX_RE.exec(name),
-  index = match ? parseInt(match[1], 10) + 1 : 1;
+function findFreeName(name) {
+  var index = 1;
 
-  return name.replace(SUFFIX_RE, '') + '-' + index;
+  while (map[name]) {
+    name = name.replace(SUFFIX_RE, '') + '-' + index;
+    index++;
+  }
+
+  return name;
 }
 
 
@@ -33,7 +36,7 @@ function allocate(model, name, prevName) {
   map[name] = model;
 
   if (conflict && conflict !== model) {
-    conflict.name(increaseSuffix(name));
+    conflict.name(findFreeName(name));
   }
 }
 
@@ -41,16 +44,38 @@ function allocate(model, name, prevName) {
 module.exports = function (model) {
   var prev = model.name();
 
-  // initial allocation
-  allocate(model, prev, prev);
-
-  // keep track on previous value
+  // keep track on previous name value
   model.name.subscribe(function (name) {
     prev = name;
   }, model, 'beforeChange');
 
-  // handle name change
+  // handle name change. and call allocation
   model.name.subscribe(function (name) {
-    allocate(model, name, prev);
+    if (model.selected()) {
+      allocate(model, name, prev);
+    }
   });
+
+  // keep track on selected state, before it's actual change
+  // handling beforeChange in order to be able to change name
+  // (when it's going to be selected) before allocation handler
+  model.selected.subscribe(function (value) {
+    var name = model.name();
+
+    // glyph is going to be unselected:
+    // remove from the map
+    if (value) {
+      map[name] = null;
+      return;
+    }
+
+    // glyphs is going to be selected, but it's name already "taken":
+    // find free name and update model
+    if (map[name]) {
+      name = findFreeName(name);
+      model.name(name);
+    }
+
+    map[name] = model;
+  }, model, 'beforeChange');
 };
