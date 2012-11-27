@@ -1,4 +1,6 @@
 config/*.local.yml
+config/application.yml
+config/production.yml
 node_modules/
 doc/
 tmp/
