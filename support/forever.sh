@@ -1,11 +1,13 @@
 #!/usr/bin/env sh
 
+set -e
+
 FONTELLO_PID=""
-WATCH_PATHS="assets client config node_modules shared server src support views"
+WATCH_PATHS="assets client config lib node_modules server src support"
 
 start_fontello() {
-  test "x" != "x$FONTELLO_PID" && kill -9 $FONTELLO_PID
-  node ./fontello.js server & FONTELLO_PID=$!
+  (test "x" != "x$FONTELLO_PID" && kill -9 $FONTELLO_PID) || true
+  (node ./fontello.js server & FONTELLO_PID=$!) || true
 }
 
 # Initial start
