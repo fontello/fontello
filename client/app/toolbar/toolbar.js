@@ -18,13 +18,13 @@ var knownKeywords = _.chain(require('../../../lib/embedded_fonts/configs'))
 ////////////////////////////////////////////////////////////////////////////////
 
 
-function ToolbarModel(fontsList, N) {
+function ToolbarModel(fontsList, fontname, N) {
 
   //
   // Essential properties
   //
 
-  this.fontname = ko.observable('');
+  this.fontname = fontname;
   this.fontSize = ko.observable(N.config.app.glyph_size.val).extend({ throttle: 100 });
 
   //
@@ -59,18 +59,6 @@ function ToolbarModel(fontsList, N) {
   this.fontSize.subscribe(function (value) {
     N.emit('font_size_change', value);
   });
-
-  //
-  // emit/subscribe session save/load
-  //
-
-  this.fontname.subscribe(function (value) {
-    N.emit('session_save', { fontname: value });
-  });
-
-  N.on('session_load', function (session) {
-    this.fontname(session.fontname || '');
-  }.bind(this));
 }
 
 
@@ -78,11 +66,21 @@ function ToolbarModel(fontsList, N) {
 
 
 module.exports = function (window, N) {
-  N.once('fonts_ready', function (fontsList) {
-    var toolbar = new ToolbarModel(fontsList, N);
+  var fontname = ko.observable('');
 
+  fontname.subscribe(function (value) {
+    N.emit('session_save', { fontname: value });
+  });
+
+  N.on('session_load', function (session) {
+    fontname(session.fontname || '');
+  });
+
+  N.once('fonts_ready', function (fontsList) {
     $(function () {
-      var $view = $('#toolbar');
+      var
+      $view   = $('#toolbar'),
+      toolbar = new ToolbarModel(fontsList, fontname, N);
 
       //
       // Trigger change of hidden file input
