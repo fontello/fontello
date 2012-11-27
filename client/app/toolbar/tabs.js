@@ -8,12 +8,7 @@ N.once('fonts_ready', function (fontsList) {
   $(function () {
     var
     $view = $('#tabs').tab(),
-    tabs  = {
-      selectedCount:  fontsList.selectedCount,
-      preventDefault: function (target, event) {
-        event.preventDefault();
-      }
-    };
+    tabs  = { selectedCount: fontsList.selectedCount };
 
     //
     // Bind model and view
@@ -26,7 +21,7 @@ N.once('fonts_ready', function (fontsList) {
     //
 
     function jumpToSelector() {
-      $view.find('a[href="#selector"]').tab('show');
+      $view.find('a[data-target="#selector"]').tab('show');
     }
 
     N.on('reset_all',       jumpToSelector);
