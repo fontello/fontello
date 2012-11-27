@@ -386,8 +386,6 @@ module.exports = function (window, N) {
 
         if (!session_glyph) {
           glyph.selected(false);
-          glyph.code(glyph.originalCode);
-          glyph.name(glyph.originalName);
           return;
         }
 
