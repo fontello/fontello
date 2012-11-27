@@ -1,4 +1,4 @@
-/*global $, _, ko, N*/
+/*global $, _, ko*/
 
 
 'use strict';
@@ -327,133 +327,134 @@ var fontSize  = ko.observable(16);
 ////////////////////////////////////////////////////////////////////////////////
 
 
-N.on('font_size_change',  fontSize);
-N.on('filter_keyword',    keyword);
+module.exports = function (window, N) {
+  N.on('font_size_change',  fontSize);
+  N.on('filter_keyword',    keyword);
+
+  var autoSaveSession = _.debounce(function () {
+    var session = { fonts: {} };
+
+    _.each(fontsList.fonts, function (font) {
+      var font_data = { collapsed: font.collapsed(), glyphs: [] };
+
+      _.each(font.glyphs, function (glyph) {
+        if (glyph.isModified()) {
+          font_data.glyphs.push({
+            uid:        glyph.uid,
+            selected:   glyph.selected(),
+            orig_code:  glyph.originalCode,
+            orig_css:   glyph.originalName,
+            code:       glyph.code(),
+            css:        glyph.name()
+          });
+        }
+      });
+
+      session.fonts[font.id] = font_data;
+    });
+
+    N.emit('session_save', session);
+  }, 500);
 
 
-var autoSaveSession = _.debounce(function () {
-  var session = { fonts: {} };
+  fontsList.isModified.subscribe(autoSaveSession);
 
-  _.each(fontsList.fonts, function (font) {
-    var font_data = { collapsed: font.collapsed(), glyphs: [] };
 
-    _.each(font.glyphs, function (glyph) {
-      if (glyph.isModified()) {
-        font_data.glyphs.push({
-          uid:        glyph.uid,
-          selected:   glyph.selected(),
-          orig_code:  glyph.originalCode,
-          orig_css:   glyph.originalName,
-          code:       glyph.code(),
-          css:        glyph.name()
+  N.on('session_load', function (session) {
+    var fonts = {};
+
+    // remap session font lists into maps
+    _.each(session.fonts || [], function (font, id) {
+      var glyphs = {};
+
+      _.each(font.glyphs, function (glyph) {
+        glyphs[glyph.uid] = glyph;
+      });
+
+      font.glyphs = glyphs;
+      fonts[id] = font;
+    });
+
+    _.each(fontsList.fonts, function (font) {
+      var session_font = fonts[font.id] || { collapsed: false, glyphs: {} };
+
+      // set collapsed state of font
+      font.collapsed(!!session_font.collapsed);
+
+      _.each(font.glyphs, function (glyph) {
+        var session_glyph = session_font.glyphs[glyph.uid];
+
+        if (!session_glyph) {
+          glyph.selected(false);
+          glyph.code(glyph.originalCode);
+          glyph.name(glyph.originalName);
+          return;
+        }
+
+        glyph.selected(!!session_glyph.selected);
+        glyph.code(session_glyph.code || session_glyph.orig_code || glyph.originalCode);
+        glyph.name(session_glyph.css || session_glyph.orig_css || glyph.originalName);
+      });
+    });
+  });
+
+
+  N.on('reset_selected', function () {
+    _.each(fontsList.selectedGlyphs(), function (glyph) {
+      glyph.selected(false);
+    });
+  });
+
+
+  N.on('reset_all', function () {
+    _.each(fontsList.modifiedGlyphs(), function (glyph) {
+      glyph.selected(false);
+      glyph.code(glyph.originalCode);
+      glyph.name(glyph.originalName);
+    });
+  });
+
+
+  $(function () {
+    var $view = $(render('app.selector')).appendTo('#selector');
+
+    //
+    // Bind model and view
+    //
+
+    ko.applyBindings({
+      fonts:    fontsList.fonts,
+      fontSize: fontSize
+    }, $view.get(0));
+
+    //
+    // Init multi-select of glyphs
+    //
+
+    $view.selectable({
+      filter: 'li.glyph:visible',
+      distance: 5,
+      stop: function () {
+        var $els = $view.find('.glyph.ui-selected');
+
+        // prevent from double-triggering event,
+        // otherwise click event will be fired as well
+        if (1 === $els.length) {
+          return;
+        }
+
+        $els.each(function () {
+          ko.dataFor(this).toggleSelection();
         });
       }
     });
-
-    session.fonts[font.id] = font_data;
   });
-
-  N.emit('session_save', session);
-}, 500);
-
-
-fontsList.isModified.subscribe(autoSaveSession);
-
-
-N.on('session_load', function (session) {
-  var fonts = {};
-
-  // remap session font lists into maps
-  _.each(session.fonts || [], function (font, id) {
-    var glyphs = {};
-
-    _.each(font.glyphs, function (glyph) {
-      glyphs[glyph.uid] = glyph;
-    });
-
-    font.glyphs = glyphs;
-    fonts[id] = font;
-  });
-
-  _.each(fontsList.fonts, function (font) {
-    var session_font = fonts[font.id] || { collapsed: false, glyphs: {} };
-
-    // set collapsed state of font
-    font.collapsed(!!session_font.collapsed);
-
-    _.each(font.glyphs, function (glyph) {
-      var session_glyph = session_font.glyphs[glyph.uid];
-
-      if (!session_glyph) {
-        glyph.selected(false);
-        glyph.code(glyph.originalCode);
-        glyph.name(glyph.originalName);
-        return;
-      }
-
-      glyph.selected(!!session_glyph.selected);
-      glyph.code(session_glyph.code || session_glyph.orig_code || glyph.originalCode);
-      glyph.name(session_glyph.css || session_glyph.orig_css || glyph.originalName);
-    });
-  });
-});
-
-
-N.on('reset_selected', function () {
-  _.each(fontsList.selectedGlyphs(), function (glyph) {
-    glyph.selected(false);
-  });
-});
-
-
-N.on('reset_all', function () {
-  _.each(fontsList.modifiedGlyphs(), function (glyph) {
-    glyph.selected(false);
-    glyph.code(glyph.originalCode);
-    glyph.name(glyph.originalName);
-  });
-});
-
-
-$(function () {
-  var $view = $(render('app.selector')).appendTo('#selector');
 
   //
-  // Bind model and view
+  // Once all init finished - notify that fonts are ready
   //
 
-  ko.applyBindings({
-    fonts:    fontsList.fonts,
-    fontSize: fontSize
-  }, $view.get(0));
-
-  //
-  // Init multi-select of glyphs
-  //
-
-  $view.selectable({
-    filter: 'li.glyph:visible',
-    distance: 5,
-    stop: function () {
-      var $els = $view.find('.glyph.ui-selected');
-
-      // prevent from double-triggering event,
-      // otherwise click event will be fired as well
-      if (1 === $els.length) {
-        return;
-      }
-
-      $els.each(function () {
-        ko.dataFor(this).toggleSelection();
-      });
-    }
+  N.once('init_complete', function () {
+    N.emit('fonts_ready', fontsList);
   });
-});
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-N.once('init_complete', function () {
-  N.emit('fonts_ready', fontsList);
-});
+};

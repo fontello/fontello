@@ -1,18 +1,20 @@
 'use strict';
 
 
-/*global $, _, N*/
+/*global $*/
 
 
-N.on('notification', function notify(type, options, message) {
-  if (!message) {
-    message = options;
-    options = {};
-  }
+module.exports = function (window, N) {
+  N.on('notification', function notify(type, options, message) {
+    if (!message) {
+      message = options;
+      options = {};
+    }
 
-  $.noty(_.extend({layout: 'topRight'}, options, {
-    type:   type,
-    text:   message,
-    theme:  'noty_theme_twitter'
-  }));
-});
+    $.noty($.extend({layout: 'topRight'}, options, {
+      type:   type,
+      text:   message,
+      theme:  'noty_theme_twitter'
+    }));
+  });
+};

@@ -18,7 +18,7 @@ var knownKeywords = _.chain(require('../../../lib/embedded_fonts/configs'))
 ////////////////////////////////////////////////////////////////////////////////
 
 
-function ToolbarModel(fontsList) {
+function ToolbarModel(fontsList, N) {
 
   //
   // Essential properties
@@ -65,63 +65,65 @@ function ToolbarModel(fontsList) {
 ////////////////////////////////////////////////////////////////////////////////
 
 
-N.once('fonts_ready', function (fontsList) {
-  $(function () {
-    var
-    $view   = $('#toolbar'),
-    toolbar = new ToolbarModel(fontsList);
+module.exports = function (window, N) {
+  N.once('fonts_ready', function (fontsList) {
+    $(function () {
+      var
+      $view   = $('#toolbar'),
+      toolbar = new ToolbarModel(fontsList, N);
 
-    //
-    // Trigger change of hidden file input
-    //
+      //
+      // Trigger change of hidden file input
+      //
 
-    toolbar.chooseFile = function (model, event) {
-      event.preventDefault();
+      toolbar.chooseFile = function (model, event) {
+        event.preventDefault();
 
-      if (!window.FileReader) {
-        N.emit('notification', 'error', N.runtime.t('errors.no_file_reader'));
+        if (!window.FileReader) {
+          N.emit('notification', 'error', N.runtime.t('errors.no_file_reader'));
+          return false;
+        }
+
+        $view.find('#import-file').click();
         return false;
-      }
+      };
 
-      $view.find('#import-file').click();
-      return false;
-    };
+      //
+      // Initialize jquery fontSize slider
+      //
 
-    //
-    // Initialize jquery fontSize slider
-    //
-
-    $view.find('#glyph-size-slider').slider({
-      orientation:  'horizontal',
-      range:        'min',
-      value:        N.config.app.glyph_size.val,
-      min:          N.config.app.glyph_size.min,
-      max:          N.config.app.glyph_size.max,
-      slide:        function (event, ui) {
-        /*jshint bitwise:false*/
-        toolbar.fontSize(~~ui.value);
-      }
-    });
-
-    //
-    // Initialize Twitter Bootstrap typeahead plugin
-    //
-
-    $view.find('#search')
-      .on('keyup', function (event) {
-        N.emit('filter_keyword', $.trim($(this).val()));
-      })
-      .on('focus keyup', _.debounce(function () {
-        $(this).typeahead('hide');
-      }, 5000))
-      .typeahead({
-        source: knownKeywords
+      $view.find('#glyph-size-slider').slider({
+        orientation:  'horizontal',
+        range:        'min',
+        value:        N.config.app.glyph_size.val,
+        min:          N.config.app.glyph_size.min,
+        max:          N.config.app.glyph_size.max,
+        slide:        function (event, ui) {
+          /*jshint bitwise:false*/
+          toolbar.fontSize(~~ui.value);
+        }
       });
 
-    //
-    // Apply KO bindings
-    //
+      //
+      // Initialize Twitter Bootstrap typeahead plugin
+      //
 
-    ko.applyBindings(toolbar, $view.get(0));
+      $view.find('#search')
+        .on('keyup', function (event) {
+          N.emit('filter_keyword', $.trim($(this).val()));
+        })
+        .on('focus keyup', _.debounce(function () {
+          $(this).typeahead('hide');
+        }, 5000))
+        .typeahead({
+          source: knownKeywords
+        });
+
+      //
+      // Apply KO bindings
+      //
+
+      ko.applyBindings(toolbar, $view.get(0));
+    });
   });
-});
+};

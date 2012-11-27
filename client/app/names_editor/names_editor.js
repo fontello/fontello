@@ -1,4 +1,4 @@
-/*global $, _, ko, N*/
+/*global $, ko*/
 
 
 'use strict';
@@ -7,14 +7,16 @@
 var render = require('../../../lib/render/client');
 
 
-N.once('fonts_ready', function (fontsList) {
-  $(function () {
-    var $view = $(render('app.names_editor')).appendTo('#names-editor');
+module.exports = function (window, N) {
+  N.once('fonts_ready', function (fontsList) {
+    $(function () {
+      var $view = $(render('app.names_editor')).appendTo('#names-editor');
 
-    //
-    // Bind model and view
-    //
+      //
+      // Bind model and view
+      //
 
-    ko.applyBindings(fontsList, $view.get(0));
+      ko.applyBindings(fontsList, $view.get(0));
+    });
   });
-});
+};

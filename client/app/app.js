@@ -1,40 +1,44 @@
-/*global document, $, N*/
+/*global $*/
 
 
 'use strict';
 
 
-$(function () {
-  // Attach tooltip handler to matching elements
-  $('._tip').tooltip();
+module.exports = function (window, N) {
+  var document = window.document;
 
-  //
-  // Social buttons defered load - after all
-  //
+  $(function () {
+    // Attach tooltip handler to matching elements
+    $('._tip').tooltip();
 
-  setTimeout(function () {
-    function injectScript(src, async, id) {
-      var el, script;
+    //
+    // Social buttons defered load - after all
+    //
 
-      if (id && document.getElementById(id)) {
-        return;
+    setTimeout(function () {
+      function injectScript(src, async, id) {
+        var el, script;
+
+        if (id && document.getElementById(id)) {
+          return;
+        }
+
+        el = document.createElement('script');
+
+        el.id     = id;
+        el.type   = 'text/javascript';
+        el.async  = async;
+        el.src    = src;
+
+        script = document.getElementsByTagName('script')[0];
+        script.parentNode.insertBefore(el, script);
       }
 
-      el = document.createElement('script');
+      // Twitter buttons
+      injectScript('//platform.twitter.com/widgets.js', false, 'twitter-wjs');
 
-      el.id     = id;
-      el.type   = 'text/javascript';
-      el.async  = async;
-      el.src    = src;
-
-      script = document.getElementsByTagName('script')[0];
-      script.parentNode.insertBefore(el, script);
-    }
-
-    // Twitter buttons
-    injectScript('//platform.twitter.com/widgets.js', false, 'twitter-wjs');
-
-    // Google +1
-    injectScript('https://apis.google.com/js/plusone.js', true);
-  }, 2000);
-});
+      // Google +1
+      injectScript('https://apis.google.com/js/plusone.js', true);
+    }, 2000);
+  });
+};
