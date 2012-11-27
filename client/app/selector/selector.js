@@ -364,13 +364,6 @@ module.exports = function (window, N) {
       fonts[id] = font;
     });
 
-    // reset all changes
-    _.each(fontsList.modifiedGlyphs(), function (glyph) {
-      glyph.selected(false);
-      glyph.code(glyph.originalCode);
-      glyph.name(glyph.originalName);
-    });
-
     _.each(fontsList.fonts, function (font) {
       var session_font = fonts[font.id] || { collapsed: false, glyphs: {} };
 
@@ -378,13 +371,11 @@ module.exports = function (window, N) {
       font.collapsed(!!session_font.collapsed);
 
       _.each(font.glyphs, function (glyph) {
-        var session_glyph = session_font.glyphs[glyph.uid];
+        var session_glyph = session_font.glyphs[glyph.uid] || {};
 
-        if (session_glyph && session_glyph.selected) {
-          glyph.selected(true);
-          glyph.code(session_glyph.code || session_glyph.orig_code || glyph.originalCode);
-          glyph.name(session_glyph.css || session_glyph.orig_css || glyph.originalName);
-        }
+        glyph.selected(!!session_glyph.selected);
+        glyph.code(session_glyph.code || session_glyph.orig_code || glyph.originalCode);
+        glyph.name(session_glyph.css || session_glyph.orig_css || glyph.originalName);
       });
     });
   });
