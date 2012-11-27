@@ -2,68 +2,191 @@
   "name": "icons",
   "glyphs": [
     {
-      "uid": "7222571caa5c15f83dcfd447c58d68d9",
-      "orig_css": "search",
-      "orig_code": 61441,
-      "css": "search",
-      "code": 61441,
-      "src": "entypo"
-    },
-    {
-      "uid": "b08cfe8039de2ce815686aced2caef06",
-      "orig_css": "download",
-      "orig_code": 61440,
-      "css": "download",
-      "code": 61440,
-      "src": "entypo"
-    },
-    {
-      "uid": "bc64550dd022ce21604f97309b346cea",
-      "orig_css": "cog",
-      "orig_code": 9881,
-      "css": "settings",
-      "code": 9881,
-      "src": "entypo"
-    },
-    {
+      "search": [
+        "home"
+      ],
+      "code": 8962,
       "uid": "513ac180ff85bd275f2b736720cbbf5e",
+      "css": "home",
       "orig_css": "home",
       "orig_code": 8962,
-      "css": "home",
-      "code": 8962,
-      "src": "entypo"
+      "src": "entypo",
+      "from": 8962
     },
     {
+      "search": [
+        "settings",
+        "cog",
+        "gear"
+      ],
+      "code": 9881,
+      "uid": "bc64550dd022ce21604f97309b346cea",
+      "css": "settings",
+      "orig_css": "cog",
+      "orig_code": 9881,
+      "src": "entypo",
+      "from": 9881
+    },
+    {
+      "search": [
+        "mail",
+        "email"
+      ],
+      "code": 9993,
       "uid": "e335adbc2d898c7d85d40c507796e7b4",
+      "css": "mail",
       "orig_css": "mail",
       "orig_code": 9993,
-      "css": "mail",
-      "code": 9993,
-      "src": "entypo"
+      "src": "entypo",
+      "from": 9993
     },
     {
+      "search": [
+        "load",
+        "progress",
+        "wait"
+      ],
+      "code": 59444,
+      "meta": {
+        "email": "berbentseva_angela@yahoo.com",
+        "author": "Angela Berbentseva, specially for fontello"
+      },
+      "uid": "9bd60140934a1eb9236fd7a8ab1ff6ba",
+      "css-ext": "animate-spin",
+      "css": "load",
+      "orig_css": "spin4",
+      "orig_code": 59444,
+      "src": "fontelico",
+      "from": 59444
+    },
+    {
+      "search": [
+        "browser",
+        "firefox"
+      ],
+      "code": 59456,
+      "meta": {
+        "email": "berbentseva_angela@yahoo.com",
+        "author": "Angela Berbentseva"
+      },
+      "uid": "62c089cb34e74b3a1200bc7f5314eb4e",
+      "css": "firefox",
+      "orig_css": "firefox",
+      "orig_code": 59456,
+      "src": "fontelico",
+      "from": 59456
+    },
+    {
+      "search": [
+        "browser",
+        "chrome"
+      ],
+      "code": 59457,
+      "meta": {
+        "email": "berbentseva_angela@yahoo.com",
+        "author": "Angela Berbentseva"
+      },
+      "uid": "9c2b737b16ae2c8d66b7bfd29ba5ecd8",
+      "css": "chrome",
+      "orig_css": "chrome",
+      "orig_code": 59457,
+      "src": "fontelico",
+      "from": 59457
+    },
+    {
+      "search": [
+        "browser",
+        "opera"
+      ],
+      "code": 59458,
+      "meta": {
+        "email": "berbentseva_angela@yahoo.com",
+        "author": "Angela Berbentseva"
+      },
+      "uid": "45861dd1e5ce4fde338bcccf01eeb808",
+      "css": "opera",
+      "orig_css": "opera",
+      "orig_code": 59458,
+      "src": "fontelico",
+      "from": 59458
+    },
+    {
+      "search": [
+        "twitter"
+      ],
+      "code": 62211,
+      "meta": {
+        "homepage": "https://twitter.com/about/resources/logos",
+        "author": "Twitter"
+      },
       "uid": "4c01f5d3ba5fbf029bca8630cce41e6a",
+      "file": "twitter-bird",
+      "transform": {
+        "rescale": 0.9,
+        "offset": 0.05
+      },
+      "css": "twitter-bird",
       "orig_css": "twitter-bird",
       "orig_code": 62211,
-      "css": "twitter-bird",
-      "code": 62211,
-      "src": "brandico"
+      "src": "brandico",
+      "from": 62211
     },
     {
+      "search": [
+        "github"
+      ],
+      "code": 62215,
+      "meta": {
+        "twitter": "https://twitter.com/puzrin",
+        "github": "https://github.com/puzrin",
+        "author": "Vitaly Puzrin"
+      },
       "uid": "24d1008bf15b6c02a5e7a6af026987dd",
+      "file": "github-text",
+      "css": "github-text",
       "orig_css": "github-text",
       "orig_code": 62215,
-      "css": "github-text",
-      "code": 62215,
-      "src": "brandico"
+      "src": "brandico",
+      "from": 62215
     },
     {
-      "uid": "d04790a0ec2d11e1aff10800200c9a66",
-      "orig_css": "deviantart",
-      "orig_code": 62230,
-      "css": "deviantart",
-      "code": 62230,
-      "src": "brandico"
+      "search": [
+        "dribbble",
+        "social",
+        "logo"
+      ],
+      "code": 62235,
+      "uid": "e8d13cd05bd63219329b2b61835d776c",
+      "css": "dribbble",
+      "orig_css": "dribbble",
+      "orig_code": 62235,
+      "src": "entypo",
+      "from": 62235
+    },
+    {
+      "search": [
+        "download"
+      ],
+      "code": 61440,
+      "uid": "b08cfe8039de2ce815686aced2caef06",
+      "css": "download",
+      "orig_css": "download",
+      "orig_code": 61440,
+      "src": "entypo",
+      "from": 128229
+    },
+    {
+      "search": [
+        "search",
+        "find"
+      ],
+      "code": 61441,
+      "uid": "7222571caa5c15f83dcfd447c58d68d9",
+      "css": "search",
+      "orig_css": "search",
+      "orig_code": 61441,
+      "src": "entypo",
+      "from": 128269
     }
   ]
 }
