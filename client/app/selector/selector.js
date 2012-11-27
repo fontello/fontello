@@ -380,8 +380,8 @@ module.exports = function (window, N) {
       _.each(font.glyphs, function (glyph) {
         var session_glyph = session_font.glyphs[glyph.uid];
 
-        if (session_glyph) {
-          glyph.selected(!!session_glyph.selected);
+        if (session_glyph && session_glyph.selected) {
+          glyph.selected(true);
           glyph.code(session_glyph.code || session_glyph.orig_code || glyph.originalCode);
           glyph.name(session_glyph.css || session_glyph.orig_css || glyph.originalName);
         }
