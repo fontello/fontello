@@ -18,13 +18,13 @@ var knownKeywords = _.chain(require('../../../lib/embedded_fonts/configs'))
 ////////////////////////////////////////////////////////////////////////////////
 
 
-function ToolbarModel(fontsList) {
+function ToolbarModel(fontsList, fontname, N) {
 
   //
   // Essential properties
   //
 
-  this.fontname = ko.observable('');
+  this.fontname = fontname;
   this.fontSize = ko.observable(N.config.app.glyph_size.val).extend({ throttle: 100 });
 
   //
@@ -65,63 +65,75 @@ function ToolbarModel(fontsList) {
 ////////////////////////////////////////////////////////////////////////////////
 
 
-N.once('fonts_ready', function (fontsList) {
-  $(function () {
-    var
-    $view   = $('#toolbar'),
-    toolbar = new ToolbarModel(fontsList);
+module.exports = function (window, N) {
+  var fontname = ko.observable('');
 
-    //
-    // Trigger change of hidden file input
-    //
+  fontname.subscribe(function (value) {
+    N.emit('session_save', { fontname: value });
+  });
 
-    toolbar.chooseFile = function (model, event) {
-      event.preventDefault();
+  N.on('session_load', function (session) {
+    fontname(session.fontname || '');
+  });
 
-      if (!window.FileReader) {
-        N.emit('notification', 'error', N.runtime.t('errors.no_file_reader'));
+  N.once('fonts_ready', function (fontsList) {
+    $(function () {
+      var
+      $view   = $('#toolbar'),
+      toolbar = new ToolbarModel(fontsList, fontname, N);
+
+      //
+      // Trigger change of hidden file input
+      //
+
+      toolbar.chooseFile = function (model, event) {
+        event.preventDefault();
+
+        if (!window.FileReader) {
+          N.emit('notification', 'error', N.runtime.t('errors.no_file_reader'));
+          return false;
+        }
+
+        $view.find('#import-file').click();
         return false;
-      }
+      };
 
-      $view.find('#import-file').click();
-      return false;
-    };
+      //
+      // Initialize jquery fontSize slider
+      //
 
-    //
-    // Initialize jquery fontSize slider
-    //
-
-    $view.find('#glyph-size-slider').slider({
-      orientation:  'horizontal',
-      range:        'min',
-      value:        N.config.app.glyph_size.val,
-      min:          N.config.app.glyph_size.min,
-      max:          N.config.app.glyph_size.max,
-      slide:        function (event, ui) {
-        /*jshint bitwise:false*/
-        toolbar.fontSize(~~ui.value);
-      }
-    });
-
-    //
-    // Initialize Twitter Bootstrap typeahead plugin
-    //
-
-    $view.find('#search')
-      .on('keyup', function (event) {
-        N.emit('filter_keyword', $.trim($(this).val()));
-      })
-      .on('focus keyup', _.debounce(function () {
-        $(this).typeahead('hide');
-      }, 5000))
-      .typeahead({
-        source: knownKeywords
+      $view.find('#glyph-size-slider').slider({
+        orientation:  'horizontal',
+        range:        'min',
+        value:        N.config.app.glyph_size.val,
+        min:          N.config.app.glyph_size.min,
+        max:          N.config.app.glyph_size.max,
+        slide:        function (event, ui) {
+          /*jshint bitwise:false*/
+          toolbar.fontSize(~~ui.value);
+        }
       });
 
-    //
-    // Apply KO bindings
-    //
+      //
+      // Initialize Twitter Bootstrap typeahead plugin
+      //
 
-    ko.applyBindings(toolbar, $view.get(0));
+      $view.find('#search')
+        .on('keyup', function (event) {
+          N.emit('filter_keyword', $.trim($(this).val()));
+        })
+        .on('focus keyup', _.debounce(function () {
+          $(this).typeahead('hide');
+        }, 5000))
+        .typeahead({
+          source: knownKeywords
+        });
+
+      //
+      // Apply KO bindings
+      //
+
+      ko.applyBindings(toolbar, $view.get(0));
+    });
   });
-});
+};

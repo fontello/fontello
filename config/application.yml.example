@@ -11,6 +11,6 @@ app:
 locales:
   enabled: [en-US]
   default: en-US
-listen:
-  host: localhost
-  port: 3000
+bind:
+  default:
+    listen: localhost:3000

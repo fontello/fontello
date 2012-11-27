@@ -1,0 +1,4 @@
+^production:
+  bind:
+    default:
+      listen: 0.0.0.0:80

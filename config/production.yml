@@ -1,4 +1,0 @@
-^production:
-  listen:
-    host: fontello.com
-    port: 80
