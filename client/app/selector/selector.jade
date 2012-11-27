@@ -1,5 +1,5 @@
 ul#selector-fonts.unstyled(data-bind="style: {fontSize: fontSize() + 'px'}, foreach: fonts")
-  li(data-bind="attr: {id: 'font-id-' + id}, css: {_collapsed: collapsed, hide: !countVisible()}", class="ui-selectable")
+  li.ui-selectable(data-bind="visible: visibleCount, attr: {id: 'font-id-' + id}, css: {_collapsed: collapsed}")
     h2.src-font-head
       //- a.label.label-important.font-info(href="#") info
       a.src-font-name._collapser(href="#", data-bind="text: fullname, click: toggleCollapsed")
@@ -18,6 +18,6 @@ ul#selector-fonts.unstyled(data-bind="style: {fontSize: fontSize() + 'px'}, fore
       //-  a.icon-(href="#{meta.dribbble}", target="_blank") Dribbble
 
     ul.unstyled.font-glyphs.font-fontello(data-bind="foreach: glyphs")
-      li.glyph(data-bind="css: displayClass, click: toggleSelection")
+      li.glyph(data-bind="visible: visible, css: { selected : selected }, click: toggleSelection")
         span(data-bind="css: cssExt, text: charRef")
         input.hidden(type="checkbox", data-bind="checked: selected, attr: {id: uid, value: selected() ? 'on' : 'off'}")

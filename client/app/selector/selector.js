@@ -93,19 +93,6 @@ function GlyphModel(font, data, options) {
   }, this);
 
   //
-  // Complex class name based on selected state and css-ext data
-  //
-
-  this.displayClass     = ko.computed(function () {
-    var list = [
-      this.visible() ? '' : 'hide',
-      this.selected() ? 'selected' : ''
-    ];
-
-    return _.filter(list, Boolean).join(' ');
-  }, this);
-
-  //
   // Whenever or not glyph should be treaten as "modified"
   //
 
@@ -238,7 +225,7 @@ function FontModel(data, options) {
   // throttling compensates mass reflows on multiselect
   //
 
-  this.countVisible = ko.computed(function () {
+  this.visibleCount = ko.computed(function () {
     var result = 0;
 
     _.each(this.glyphs, function (glyph) {
