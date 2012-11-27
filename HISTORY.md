@@ -6,6 +6,7 @@
 * Added Meteocons font
 * Added Fontelico font
 * Tuned fonts baseline
+* Added glyphs tooltips on selector panel
 * Improved generated demo (show glyph codes now)
 * New arcitecture, use knockout.js
 
