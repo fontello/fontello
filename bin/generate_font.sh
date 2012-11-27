@@ -85,6 +85,8 @@ tpl-render.js --locals "$CONFIG" --input "$FONT_TEMPLATES/css/css-codes.jade" \
 tpl-render.js --locals "$CONFIG" --input "$FONT_TEMPLATES/css/css-ie7-codes.jade" \
   --output "$TMPDIR/css/$FONTNAME-ie7-codes.css"
 
+cp "$FONT_TEMPLATES/css/animation.css" "$TMPDIR/css/animation.css"
+
 tpl-render.js --locals "$CONFIG" --input "$FONT_TEMPLATES/LICENSE.jade" \
   --output "$TMPDIR/LICENSE.txt"
 

@@ -44,6 +44,7 @@ html
         display none
 
     link(rel='stylesheet', href='css/#{font.fontname}.css')
+    link(rel='stylesheet', href='css/animation.css')
     //if IE 7
       link(rel='stylesheet', href='css/#{font.fontname}-ie7.css')
 
@@ -79,7 +80,10 @@ html
               - var offset = i * chunk_size
               - for (var c = 0; c < chunk_size && glyphs[offset + c]; c++)
                 - var g = glyphs[offset + c]
+
                 - var css_class = meta.css_prefix + (g.css || g.file)
+                - if (g['css-ext']) css_class += ' ' + g['css-ext']
+
                 - var code = g.code.toString(16)
                   li(title='Code: 0x#{code}')
                     i(class=css_class)

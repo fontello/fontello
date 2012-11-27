@@ -19,5 +19,5 @@ ul#selector-fonts.unstyled(data-bind="style: {fontSize: fontSize() + 'px'}, fore
 
     ul.unstyled.font-glyphs.font-fontello(data-bind="foreach: glyphs")
       li.glyph(data-bind="css: displayClass, click: toggleSelection")
-        span(data-bind="text: charRef")
+        span(data-bind="css: cssExt, text: charRef")
         input.hidden(type="checkbox", data-bind="checked: selected, attr: {id: uid, value: selected() ? 'on' : 'off'}")

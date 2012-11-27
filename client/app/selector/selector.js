@@ -66,6 +66,7 @@ function GlyphModel(font, data, options) {
   this.font             = font;
   this.keywords         = (data.search || []).join(',');
   this.charRef          = fixedFromCharCode(glyphs_map[font.fontname][data.uid]);
+  this.cssExt          = data['css-ext'];
 
   //
   // Actual properties state
@@ -97,7 +98,6 @@ function GlyphModel(font, data, options) {
 
   this.displayClass     = ko.computed(function () {
     var list = [
-      data['css-ext'],
       this.visible() ? '' : 'hide',
       this.selected() ? 'selected' : ''
     ];
