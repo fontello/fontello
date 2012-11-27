@@ -1,17 +1,32 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 set -e
 
-FONTELLO_PID=""
+
+PIDFILE="tmp/forever.pid"
 WATCH_PATHS="assets client config lib node_modules server src support"
 
+
 start_fontello() {
-  (test "x" != "x$FONTELLO_PID" && kill -9 $FONTELLO_PID) || true
-  (node ./fontello.js server & FONTELLO_PID=$!) || true
+  PID=$(cat $PIDFILE)
+  ( test "x" != "x$PID" && kill -9 $PID 2>/dev/null) || true
+  ( node ./fontello.js server & PID=$! ) || true
+  echo $PID > $PIDFILE
 }
+
+
+# handle Ctrl+C
+trap "cat $PIDFILE | xargs kill" SIGINT SIGTERM
+
+
+# make sure pidfile can be created
+mkdir -p $(dirname $PIDFILE)
+touch $PIDFILE
+
 
 # Initial start
 start_fontello
+
 
 inotifywait -m -r --format '%w%f' -e modify -e move -e create -e delete $WATCH_PATHS | while read f ; do
   # when not excluded
