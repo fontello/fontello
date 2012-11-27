@@ -38,34 +38,53 @@ function allocate(model, code, prevCode) {
     map[prevCode] = null;
   }
 
+  if (!model.selected()) {
+    return;
+  }
+
   map[code] = model;
 
-  if (conflict && conflict !== model) {
+  if (conflict && conflict !== model && conflict.selected()) {
     conflict.code(prevCode === code ? findFreeCode() : prevCode);
   }
 }
 
 
 module.exports = function (model) {
-  var
-  code = model.code(),
-  prev = code;
+  var prev = model.code();
 
-  // code is already taken
-  if (map[code]) {
-    model.code(code = findFreeCode());
-  }
-
-  // register new model
-  map[code] = model;
-
-  // keep track on previous value
+  // keep track on previous code value
   model.code.subscribe(function (code) {
     prev = code;
   }, model, 'beforeChange');
 
-  // handle code change
+  // handle name change. and call allocation
   model.code.subscribe(function (code) {
-    allocate(model, code, prev);
+    if (model.selected()) {
+      allocate(model, code, prev);
+    }
   });
+
+  // keep track on selected state, before it's actual change
+  // handling beforeChange in order to be able to change code
+  // (when it's going to be selected) before allocation handler
+  model.selected.subscribe(function (value) {
+    var code = model.code();
+
+    // glyph is going to be unselected:
+    // remove from the map
+    if (value) {
+      map[code] = null;
+      return;
+    }
+
+    // glyphs is going to be selected, but it's code already "taken":
+    // find free code and update model
+    if (map[code]) {
+      code = findFreeCode(code);
+      model.code(code);
+    }
+
+    map[code] = model;
+  }, model, 'beforeChange');
 };
