@@ -4,15 +4,15 @@ ul#selector-fonts.unstyled(data-bind='style: {fontSize: fontSize() + "px"}, fore
       //- a.label.label-important.font-info(href="#") info
       a.src-font-name._collapser(href="#", data-bind='text: fullname, click: toggleCollapsed')
 
-      small.font-details(data-bind='if: author, text: "by " + author')
-      small.font-details(data-bind='if: license, text: "license - " + license')
+      small.font-details(data-bind='visible: author, text: "by " + author')
+      small.font-details(data-bind='visible: license, text: "license - " + license')
 
       small.font-details
-        a.icon-home(data-bind='if: homepage, attr: {href: homepage}', target='_blank')
-        a.icon-mail(data-bind='if: email, attr: {href: "mailto:" + email}')
-        a.icon-twitter-bird(data-bind='if: twitter, attr: {href: twitter}', target='_blank')
-        a.icon-github-text(data-bind='if: github, attr: {href: github}', target='_blank')
-        a.icon-dribbble(data-bind='if: dribbble, attr: {href: dribbble}', target='_blank')
+        a.icon-home(data-bind='visible: homepage, attr: {href: homepage}', target='_blank')
+        a.icon-mail(data-bind='visible: email, attr: {href: "mailto:" + email}')
+        a.icon-twitter-bird(data-bind='visible: twitter, attr: {href: twitter}', target='_blank')
+        a.icon-github-text(data-bind='visible: github, attr: {href: github}', target='_blank')
+        a.icon-dribbble(data-bind='visible: dribbble, attr: {href: dribbble}', target='_blank')
 
     ul.unstyled.font-glyphs.font-fontello(data-bind='foreach: glyphs')
       li.glyph(data-bind='visible: visible, attr: { title: tooltip }')
