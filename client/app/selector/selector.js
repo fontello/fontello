@@ -8,9 +8,9 @@
 
 
 var
-render            = require('../../../lib/render/client'),
-embedded_fonts    = require('../../../lib/embedded_fonts/configs'),
-glyphs_map        = require('../../../lib/embedded_fonts/glyphs_map'),
+render            = require('@/lib/render/client'),
+embedded_fonts    = require('@/lib/embedded_fonts/configs'),
+glyphs_map        = require('@/lib/embedded_fonts/glyphs_map'),
 trackNameChanges  = require('./_namesTracker'),
 trackCodeChanges  = require('./_codesTracker');
 

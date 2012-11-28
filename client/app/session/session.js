@@ -10,7 +10,7 @@ var KNOWN_FONT_IDS      = {};
 
 
 // Fill in known fonts
-_.each(require('../../../lib/embedded_fonts/configs'), function (o) {
+_.each(require('@/lib/embedded_fonts/configs'), function (o) {
   KNOWN_FONT_IDS[o.font.fontname] = o.id;
 });
 

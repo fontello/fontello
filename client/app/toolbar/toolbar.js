@@ -4,7 +4,7 @@
 /*global window, _, $, ko, N*/
 
 
-var knownKeywords = _.chain(require('../../../lib/embedded_fonts/configs'))
+var knownKeywords = _.chain(require('@/lib/embedded_fonts/configs'))
   // get list of keywords of all glyphs in the font,
   // flatten array, make sure all elementes are Strings,
   // and return an array with unique elements only
