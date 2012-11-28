@@ -63,10 +63,15 @@ function ToolbarModel(fontsList, fontname, N) {
     N.emit('font_size_change', value);
   });
 
-  N.on('build.started', function() {
+  //
+  // Subscribe for build.started/finished events
+  //
+
+  N.on('build.started', function () {
     self.building(true);
   });
-  N.on('build.finished', function() {
+
+  N.on('build.finished', function () {
     self.building(false);
   });
 
