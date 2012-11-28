@@ -99,6 +99,36 @@ p.note
   z-index 100
 
 
+//
+// Animation for spinners
+//
+// - 5 turns, to not abuse peoples
+// - instant, on mouse hover
+//
+
+@keyframes spin
+  from
+    -moz-transform rotate(0deg)
+    -o-transform rotate(0deg)
+    -webkit-transform rotate(0deg)
+    transform rotate(0deg)
+  to
+    -moz-transform rotate(359deg)
+    -o-transform rotate(359deg)
+    -webkit-transform rotate(359deg)
+    transform rotate(359deg)
+
+// ! `:before` animation is not supported well
+// We have to rotate parent, and it should be block/inline-block
+
+.animate-spin
+  animation spin 2s infinite linear
+  text-shadow none !important
+  display inline-block
+  &:before
+    font-size inherit !important
+
+
 @import "toolbar/toolbar"
 @import "selector/selector"
 @import "names_editor/names_editor"

@@ -12,8 +12,10 @@
     #glyph-size-value(data-bind="text: fontSize() + 'px'")
 
   .btn-group.pull-right
-    a#result-download.btn.btn-info.disabled.icon-download(
+    a#result-download.btn.btn-info.disabled(
       data-bind="css: {disabled: !selectedCount()}, click: startDownload")
+      i.icon-download(data-bind='visible: !building()')
+      i.icon-load.animate-spin(data-bind='visible: building()')
       |  Download webfont (
       span#selected-glyphs-count(data-bind="text: selectedCount()")
       | )

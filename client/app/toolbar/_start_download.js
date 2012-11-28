@@ -64,12 +64,15 @@ module.exports = function (data, event) {
       timeout:  20000 // 20 secs
     }, N.runtime.t('info.download_banner'));
 
+    N.emit('build.started');
+
     function poll_status() {
       N.server.font.status({id: font_id}, function (err, msg) {
         if (err) {
           N.emit('notification', 'error', N.runtime.t('errors.fatal', {
             error: (err.message || String(err))
           }));
+          N.emit('build.finished');
           return;
         }
 
@@ -77,6 +80,7 @@ module.exports = function (data, event) {
           N.emit('notification', 'error', N.runtime.t('errors.fatal', {
             error: (msg.data.error || "Unexpected error.")
           }));
+          N.emit('build.finished');
           return;
         }
 
@@ -85,6 +89,7 @@ module.exports = function (data, event) {
           N.logger.info("Font successfully generated. " +
                         "Your download link: " + msg.data.url);
           injectDownloadUrl(font_id, msg.data.url);
+          N.emit('build.finished');
           return;
         }
 

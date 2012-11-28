@@ -19,13 +19,16 @@ var knownKeywords = _.chain(require('@/lib/embedded_fonts/configs'))
 
 
 function ToolbarModel(fontsList, fontname, N) {
-
+  var self = this;
   //
   // Essential properties
   //
 
   this.fontname = fontname;
   this.fontSize = ko.observable(N.config.app.glyph_size.val).extend({ throttle: 100 });
+
+  // true, after download button pressed, until font buildeing finished
+  this.building = ko.observable(false);
 
   //
   // Proxy to fontsList properties
@@ -59,6 +62,14 @@ function ToolbarModel(fontsList, fontname, N) {
   this.fontSize.subscribe(function (value) {
     N.emit('font_size_change', value);
   });
+
+  N.on('build.started', function() {
+    self.building(true);
+  });
+  N.on('build.finished', function() {
+    self.building(false);
+  });
+
 }
 
 
