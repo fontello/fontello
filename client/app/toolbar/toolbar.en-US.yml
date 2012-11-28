@@ -12,7 +12,7 @@ i18n:
           fatal: >
             Internal error happened during processing your request:
             <em>"#{error}"</em>. Please, try again later.
-          no_file_reader: >
+          invalid_browser: >
             Config importer requires <strong>modern browser</strong>.
             Please, <a href="http://www.mozilla.org/firefox/new/">upgrade</a>
             your browser to be able import your previous configurations.

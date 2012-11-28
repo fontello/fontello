@@ -105,12 +105,6 @@ module.exports.init = function (window, N) {
       toolbar.chooseFile = function (model, event) {
         event.preventDefault();
 
-        if (!window.FileReader) {
-          N.emit('notification', 'error',
-                 N.runtime.t('app.toolbar.error.no_file_reader'));
-          return false;
-        }
-
         $view.find('#import-file').click();
         return false;
       };
