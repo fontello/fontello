@@ -1,4 +1,4 @@
-/*global $, _, store*/
+/*global window, $, _, store, N*/
 
 
 "use strict";
@@ -18,7 +18,7 @@ _.each(require('@/lib/embedded_fonts/configs'), function (o) {
 // MIGRATIONS //////////////////////////////////////////////////////////////////
 
 
-function migrate(window, N) {
+function migrate() {
   //
   // Run migrations ONLY if there's no new version of session storage found
   //
@@ -123,8 +123,8 @@ function migrate(window, N) {
 ////////////////////////////////////////////////////////////////////////////////
 
 
-module.exports.init = function (window, N) {
-  migrate(window, N);
+module.exports.init = function () {
+  migrate();
 
   N.once('fonts_ready', function () {
     var

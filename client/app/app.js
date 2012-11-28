@@ -1,12 +1,10 @@
-/*global $*/
+/*global document, $*/
 
 
 'use strict';
 
 
-module.exports.init = function (window, N) {
-  var document = window.document;
-
+module.exports.init = function () {
   $(function () {
     // Attach tooltip handler to matching elements
     $('._tip').tooltip();

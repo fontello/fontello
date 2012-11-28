@@ -4,7 +4,7 @@
 /*global window, _, $, N*/
 
 
-module.exports.init = function (window, N) {
+module.exports.init = function () {
   // Handles change event of file input
   //
   function onFileChange(event) {

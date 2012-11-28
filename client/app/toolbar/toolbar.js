@@ -18,7 +18,7 @@ var knownKeywords = _.chain(require('@/lib/embedded_fonts/configs'))
 ////////////////////////////////////////////////////////////////////////////////
 
 
-function ToolbarModel(fontsList, fontname, N) {
+function ToolbarModel(fontsList, fontname) {
   var self = this;
   //
   // Essential properties
@@ -84,7 +84,7 @@ function ToolbarModel(fontsList, fontname, N) {
 ////////////////////////////////////////////////////////////////////////////////
 
 
-module.exports.init = function (window, N) {
+module.exports.init = function () {
   var fontname = ko.observable('');
 
   fontname.subscribe(function (value) {
@@ -99,7 +99,7 @@ module.exports.init = function (window, N) {
     $(function () {
       var
       $view   = $('#toolbar'),
-      toolbar = new ToolbarModel(fontsList, fontname, N);
+      toolbar = new ToolbarModel(fontsList, fontname);
 
       //
       // Initialize jquery fontSize slider
@@ -144,5 +144,5 @@ module.exports.init = function (window, N) {
   // init tabs
   //
 
-  require('./_tabs/tabs').init(window, N);
+  require('./_tabs/tabs').init();
 };

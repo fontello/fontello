@@ -1,4 +1,4 @@
-/*global $, _, ko, N*/
+/*global $, _, ko*/
 
 
 'use strict';

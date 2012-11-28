@@ -1,4 +1,4 @@
-/*global $, ko*/
+/*global $, ko, N*/
 
 
 'use strict';
@@ -7,7 +7,7 @@
 var render = require('@/lib/render/client');
 
 
-module.exports.init = function (window, N) {
+module.exports.init = function () {
   N.once('fonts_ready', function (fontsList) {
     $(function () {
       var $view = $(render('app.codes_editor')).appendTo('#codes-editor');

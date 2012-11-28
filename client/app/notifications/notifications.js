@@ -1,10 +1,10 @@
 'use strict';
 
 
-/*global $*/
+/*global $, N*/
 
 
-module.exports.init = function (window, N) {
+module.exports.init = function () {
   N.on('notify', function notify(type, options, message) {
     if (!message) {
       message = options;

@@ -1,10 +1,10 @@
 'use strict';
 
 
-/*global $, ko*/
+/*global $, ko, N*/
 
 
-module.exports.init = function (window, N) {
+module.exports.init = function () {
   N.once('fonts_ready', function (fontsList) {
     $(function () {
       var

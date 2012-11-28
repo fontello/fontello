@@ -1,4 +1,4 @@
-/*global $, _, ko*/
+/*global $, _, ko, N*/
 
 
 'use strict';
@@ -317,7 +317,7 @@ var fontSize  = ko.observable(16);
 ////////////////////////////////////////////////////////////////////////////////
 
 
-module.exports.init = function (window, N) {
+module.exports.init = function () {
   N.on('font_size_change',  fontSize);
   N.on('filter_keyword',    keyword);
 
