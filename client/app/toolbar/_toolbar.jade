@@ -2,45 +2,45 @@
 
   .btn-group.search-form.pull-left
     input#search.input-medium.search-query(
-      type="text",
-      placeholder="search",
-      autocomplete="off")
+      type='text',
+      placeholder='search',
+      autocomplete='off')
     .icon-search
 
   .btn-group.pull-left
     #glyph-size-slider
-    #glyph-size-value(data-bind="text: fontSize() + 'px'")
+    #glyph-size-value(data-bind='text: fontSize() + "px"')
 
   .btn-group.pull-right
     a#result-download.btn.btn-info.disabled(
-      data-bind="css: {disabled: !selectedCount()}, click: startDownload")
+      data-bind='css: {disabled: !selectedCount()}, click: startDownload')
       i.icon-download(data-bind='visible: !building()')
       i.icon-load.animate-spin(data-bind='visible: building()')
       |  Download webfont (
-      span#selected-glyphs-count(data-bind="text: selectedCount()")
+      span#selected-glyphs-count(data-bind='text: selectedCount()')
       | )
 
   .btn-group.pull-right
-    input#result-fontname.input-medium._tip(type="text",
-      placeholder="file name",
-      autocomplete="off",
-      title="Font files will have this name. Use only small 'a'-'z' letters, '-' and '_'",
-      data-bind="value: fontname",
-      data-placement="bottom")
+    input#result-fontname.input-medium._tip(type='text',
+      placeholder='file name',
+      autocomplete='off',
+      title='Font files will have this name. Use only small "a"-"z" letters, "-" and "_"',
+      data-bind='value: fontname',
+      data-placement='bottom')
 
-  input#import-file.invisible(type="file", data-bind="event: {change: importFile}")
+  input#import-file.invisible(type='file', data-bind='event: {change: importFile}')
 
   .btn-group.pull-right
 
-    a.btn.dropdown-toggle.icon-settings(data-toggle="dropdown", href="#")
+    a.btn.dropdown-toggle.icon-settings(data-toggle='dropdown', href='#')
       span.caret
 
     ul.dropdown-menu
-      li: a(href="#", data-bind="click: chooseFile")
+      li: a(href='#', data-bind='click: chooseFile')
         | Import <em>config.json</em>
       li.divider
-      li: a(href="#", data-bind="click: resetSelected") Unselect glyphs
-      li: a(href="#", data-bind="click: resetAll") Reset all changes
+      li: a(href='#', data-bind='click: resetSelected') Unselect glyphs
+      li: a(href='#', data-bind='click: resetAll') Reset all changes
 
 
 include ./_tabs
