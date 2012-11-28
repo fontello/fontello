@@ -15,7 +15,7 @@ ul#selector-fonts.unstyled(data-bind='style: {fontSize: fontSize() + "px"}, fore
         a.icon-dribbble(data-bind='if: dribbble, attr: {href: dribbble}', target='_blank')
 
     ul.unstyled.font-glyphs.font-fontello(data-bind='foreach: glyphs')
-      li.glyph(data-bind='visible: visible, attr: { title: tooltip })
+      li.glyph(data-bind='visible: visible, attr: { title: tooltip }')
         input.hidden(type='checkbox', data-bind='checked: selected, attr: { id: uid }')
         label(data-bind='attr: { for: uid }')
           span(data-bind='css: cssExt, text: charRef')
