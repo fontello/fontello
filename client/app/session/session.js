@@ -123,7 +123,7 @@ function migrate(window, N) {
 ////////////////////////////////////////////////////////////////////////////////
 
 
-module.exports = function (window, N) {
+module.exports.init = function (window, N) {
   migrate(window, N);
 
   N.once('fonts_ready', function () {

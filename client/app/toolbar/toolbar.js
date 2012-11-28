@@ -76,7 +76,7 @@ function ToolbarModel(fontsList, fontname, N) {
 ////////////////////////////////////////////////////////////////////////////////
 
 
-module.exports = function (window, N) {
+module.exports.init = function (window, N) {
   var fontname = ko.observable('');
 
   fontname.subscribe(function (value) {

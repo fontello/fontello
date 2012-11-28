@@ -4,7 +4,7 @@
 /*global $*/
 
 
-module.exports = function (window, N) {
+module.exports.init = function (window, N) {
   N.on('notification', function notify(type, options, message) {
     if (!message) {
       message = options;

@@ -4,7 +4,7 @@
 'use strict';
 
 
-module.exports = function (window, N) {
+module.exports.init = function (window, N) {
   var document = window.document;
 
   $(function () {

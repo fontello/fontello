@@ -317,7 +317,7 @@ var fontSize  = ko.observable(16);
 ////////////////////////////////////////////////////////////////////////////////
 
 
-module.exports = function (window, N) {
+module.exports.init = function (window, N) {
   N.on('font_size_change',  fontSize);
   N.on('filter_keyword',    keyword);
 
