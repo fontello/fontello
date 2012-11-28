@@ -106,7 +106,8 @@ module.exports.init = function (window, N) {
         event.preventDefault();
 
         if (!window.FileReader) {
-          N.emit('notification', 'error', N.runtime.t('app.toolbar.error.no_file_reader'));
+          N.emit('notification', 'error',
+                 N.runtime.t('app.toolbar.error.no_file_reader'));
           return false;
         }
 

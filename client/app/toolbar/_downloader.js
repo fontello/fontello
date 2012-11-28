@@ -46,7 +46,7 @@ function getConfig(self) {
 function pollStatus(id) {
   N.server.font.status({id: id}, function (err, msg) {
     if (err) {
-      N.emit('notification', 'error', N.runtime.t('errors.fatal', {
+      N.emit('notification', 'error', N.runtime.t('app.toolbar.error.fatal', {
         error: (err.message || String(err))
       }));
       N.emit('build.finished');
@@ -54,7 +54,7 @@ function pollStatus(id) {
     }
 
     if ('error' === msg.data.status) {
-      N.emit('notification', 'error', N.runtime.t('errors.fatal', {
+      N.emit('notification', 'error', N.runtime.t('app.toolbar.error.fatal', {
         error: (msg.data.error || "Unexpected error.")
       }));
       N.emit('build.finished');
@@ -96,7 +96,7 @@ module.exports = function (data, event) {
     var font_id;
 
     if (err) {
-      N.emit('notification', 'error', N.runtime.t('errors.fatal', {
+      N.emit('notification', 'error', N.runtime.t('app.toolbar.error.fatal', {
         error: (err.message || String(err))
       }));
       return;

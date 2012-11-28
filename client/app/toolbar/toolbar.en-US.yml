@@ -9,6 +9,9 @@ i18n:
           us improve fontello!
         confirm_app_reset: Are you sure?
         error:
+          fatal: >
+            Internal error happened during processing your request:
+            <em>"#{error}"</em>. Please, try again later.
           no_file_reader: >
             Config importer requires <strong>modern browser</strong>.
             Please, <a href="http://www.mozilla.org/firefox/new/">upgrade</a>
