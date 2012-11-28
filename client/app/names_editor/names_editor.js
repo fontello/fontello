@@ -7,7 +7,7 @@
 var render = require('@/lib/render/client');
 
 
-module.exports = function (window, N) {
+module.exports.init = function (window, N) {
   N.once('fonts_ready', function (fontsList) {
     $(function () {
       var $view = $(render('app.names_editor')).appendTo('#names-editor');

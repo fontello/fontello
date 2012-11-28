@@ -4,7 +4,7 @@
 /*global $, ko*/
 
 
-module.exports = function (window, N) {
+module.exports.init = function (window, N) {
   N.once('fonts_ready', function (fontsList) {
     $(function () {
       var
