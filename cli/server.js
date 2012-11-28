@@ -13,7 +13,7 @@ var Async   = NLib.Vendor.Async;
 var FsTools = NLib.Vendor.FsTools;
 
 
-module.exports.parserParameters= {
+module.exports.parserParameters = {
   version:      N.runtime.version,
   addHelp:      true,
   help:         'start fontello server',
@@ -27,6 +27,9 @@ module.exports.run = function (args, callback) {
     NLib.InitStages.loadSharedApiSubtree,
     NLib.InitStages.loadClientApiSubtree,
     NLib.InitStages.initRouter,
+
+    require('../lib/init/locales'),
+
     NLib.InitStages.initTranslations,
 
     require('../lib/init/cronjob'),
