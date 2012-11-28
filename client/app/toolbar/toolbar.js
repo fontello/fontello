@@ -52,8 +52,8 @@ function ToolbarModel(fontsList, fontname, N) {
     N.emit('reset_selected');
   };
 
-  this.importFile     = require('./_import_file').bind(this);
-  this.startDownload  = require('./_start_download').bind(this);
+  this.importFile     = require('./_file_importer').bind(this);
+  this.startDownload  = require('./_downloader').bind(this);
 
   //
   // Notify application about font size changes
@@ -152,4 +152,10 @@ module.exports.init = function (window, N) {
       ko.applyBindings(toolbar, $view.get(0));
     });
   });
+
+  //
+  // init tabs
+  //
+
+  require('./_tabs/tabs').init(window, N);
 };
