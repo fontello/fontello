@@ -8,10 +8,8 @@ WATCH_PATHS="assets client config lib node_modules server src support"
 
 
 start_fontello() {
-  PID=$(cat $PIDFILE)
-  ( test "x" != "x$PID" && kill -9 $PID 2>/dev/null) || true
-  ( node ./fontello.js server & PID=$! ) || true
-  echo $PID > $PIDFILE
+  ( kill -9 $(cat $PIDFILE) 2>/dev/null) || true
+  ( node ./fontello.js server & echo $! > $PIDFILE ) || true
 }
 
 
