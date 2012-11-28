@@ -157,8 +157,15 @@ module.exports.init = function (window, N) {
   });
 
 
-  N.on('import_config', function (config) {
-    var session = { fontname: config.name, fonts: {} };
+  N.on('import.done', function (file) {
+    var config, session;
+
+    if ('application/json' !== file.type || !_.isObject(file.data)) {
+      return;
+    }
+
+    config  = file.data;
+    session = { fontname: config.name, fonts: {} };
 
     _.each(config.glyphs, function (g) {
       var id = KNOWN_FONT_IDS[g.src];

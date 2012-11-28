@@ -41,6 +41,10 @@ function ToolbarModel(fontsList, fontname, N) {
   // Handlers
   //
 
+  this.importFile     = function () {
+    N.emit('import.start');
+  };
+
   this.resetAll       = function () {
     if (window.confirm(N.runtime.t('app.toolbar.confirm_app_reset'))) {
       this.fontname('');
@@ -52,8 +56,7 @@ function ToolbarModel(fontsList, fontname, N) {
     N.emit('reset_selected');
   };
 
-  this.importFile     = require('./_file_importer').bind(this);
-  this.startDownload  = require('./_downloader').bind(this);
+  this.startDownload = require('./_downloader').bind(this);
 
   //
   // Notify application about font size changes
@@ -97,17 +100,6 @@ module.exports.init = function (window, N) {
       var
       $view   = $('#toolbar'),
       toolbar = new ToolbarModel(fontsList, fontname, N);
-
-      //
-      // Trigger change of hidden file input
-      //
-
-      toolbar.chooseFile = function (model, event) {
-        event.preventDefault();
-
-        $view.find('#import-file').click();
-        return false;
-      };
 
       //
       // Initialize jquery fontSize slider

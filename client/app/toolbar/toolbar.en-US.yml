@@ -12,9 +12,3 @@ i18n:
           fatal: >
             Internal error happened during processing your request:
             <em>"#{error}"</em>. Please, try again later.
-          invalid_browser: >
-            Config importer requires <strong>modern browser</strong>.
-            Please, <a href="http://www.mozilla.org/firefox/new/">upgrade</a>
-            your browser to be able import your previous configurations.
-          no_config_chosen: >
-            You must choose a file.

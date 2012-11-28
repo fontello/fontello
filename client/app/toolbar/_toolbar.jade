@@ -28,15 +28,13 @@
       data-bind='value: fontname',
       data-placement='bottom')
 
-  input#import-file.invisible(type='file', data-bind='event: {change: importFile}')
-
   .btn-group.pull-right
 
     a.btn.dropdown-toggle.icon-settings(data-toggle='dropdown', href='#')
       span.caret
 
     ul.dropdown-menu
-      li: a(href='#', data-bind='click: chooseFile')
+      li: a(href='#', data-bind='click: importFile')
         | Import <em>config.json</em>
       li.divider
       li: a(href='#', data-bind='click: resetSelected') Unselect glyphs
