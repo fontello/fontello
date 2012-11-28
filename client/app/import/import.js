@@ -21,7 +21,7 @@ module.exports.init = function (window, N) {
 
       if (!file) {
         // Unexpected behavior. Should not happen in real life.
-        N.emit('notification', 'error', N.runtime.t('app.import.error.no_config_chosen'));
+        N.emit('notify', 'error', N.runtime.t('app.import.error.no_config_chosen'));
         return;
       }
 
@@ -51,7 +51,7 @@ module.exports.init = function (window, N) {
 
       reader.readAsBinaryString(file);
     } catch (err) {
-      N.emit('notification', 'error',
+      N.emit('notify', 'error',
               N.runtime.t('app.import.error.invalid_browser'));
     }
   }

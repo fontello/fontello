@@ -5,7 +5,7 @@
 
 
 module.exports.init = function (window, N) {
-  N.on('notification', function notify(type, options, message) {
+  N.on('notify', function notify(type, options, message) {
     if (!message) {
       message = options;
       options = {};

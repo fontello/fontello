@@ -46,7 +46,7 @@ function getConfig(self) {
 function pollStatus(id) {
   N.server.font.status({id: id}, function (err, msg) {
     if (err) {
-      N.emit('notification', 'error', N.runtime.t('app.toolbar.error.fatal', {
+      N.emit('notify', 'error', N.runtime.t('app.toolbar.error.fatal', {
         error: (err.message || String(err))
       }));
       N.emit('build.finished');
@@ -54,7 +54,7 @@ function pollStatus(id) {
     }
 
     if ('error' === msg.data.status) {
-      N.emit('notification', 'error', N.runtime.t('app.toolbar.error.fatal', {
+      N.emit('notify', 'error', N.runtime.t('app.toolbar.error.fatal', {
         error: (msg.data.error || "Unexpected error.")
       }));
       N.emit('build.finished');
@@ -62,7 +62,7 @@ function pollStatus(id) {
     }
 
     if ('finished' === msg.data.status) {
-      // TODO: normal notification about success
+      // TODO: normal notify about success
       N.logger.info("Font successfully generated. " +
                     "Your download link: " + msg.data.url);
       injectDownloadUrl(id, msg.data.url);
@@ -71,7 +71,7 @@ function pollStatus(id) {
     }
 
     if ('enqueued' === msg.data.status) {
-      // TODO: notification about queue
+      // TODO: notify about queue
       N.logger.info("Your request is in progress and will be available soon.");
       setTimeout(function () {
         pollStatus(id);
@@ -96,7 +96,7 @@ module.exports = function (data, event) {
     var font_id;
 
     if (err) {
-      N.emit('notification', 'error', N.runtime.t('app.toolbar.error.fatal', {
+      N.emit('notify', 'error', N.runtime.t('app.toolbar.error.fatal', {
         error: (err.message || String(err))
       }));
       return;
@@ -104,7 +104,7 @@ module.exports = function (data, event) {
 
     font_id = msg.data.id;
 
-    N.emit('notification', 'information', {
+    N.emit('notify', 'information', {
       layout:   'bottom',
       closeOnSelfClick: false,
       timeout:  20000 // 20 secs
