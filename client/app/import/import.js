@@ -57,7 +57,18 @@ module.exports.init = function (window, N) {
   }
 
   $(function () {
-    var $el = $('<input type="file">').hide().appendTo('body');
+    var $el = $('<input type="file">');
+
+    // !!! WARNING !!!
+    // Chrome does not triggers events, when element has "display: none"
+    $el.css({
+      visibility: 'hidden',
+      position:   'absolute',
+      left:       '-10000px'
+    });
+
+    // inject $el into body
+    $el.appendTo('body');
 
     // listen input changes
     $el.on('change', onFileChange);
