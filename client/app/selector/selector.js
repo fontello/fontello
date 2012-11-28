@@ -165,6 +165,7 @@ function FontModel(data, options) {
   this.email      = data.meta.email;
   this.twitter    = data.meta.twitter;
   this.github     = data.meta.github;
+  this.dribbble   = data.meta.dribbble;
 
   //
   // View state properties

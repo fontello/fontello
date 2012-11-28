@@ -20,6 +20,7 @@ a.font-info
 .icon-home
 .icon-twitter-bird
 .icon-github-text
+.icon-dribbble
   &:before
     width auto
     opacity 1
@@ -30,6 +31,7 @@ a
   &.icon-home
   &.icon-twitter-bird
   &.icon-github-text
+  &.icon-dribbble
     transition all .5s ease
     color #444
     opacity .4
@@ -109,23 +111,32 @@ a.src-font-name
 .glyph
   position relative
   float left
-  border 1px #ccc solid
-  border-radius 6px
   cursor pointer
-  text-align center
   width 48px
   height 48px
-  line-height 48px
   margin 0 0 8px 8px
-  transition all .1s ease
-  box-shadow 1px 1px 3px #eee
 
-  &:hover
-    background #333
-    color #fff
-    //opacity .8
+  > label
+    border 1px #ccc solid
+    border-radius 6px
+    position absolute
+    width 100%
+    height 100%
+    margin 0
 
-  &.selected
+    line-height 48px
+    text-align center
+
+    transition all .1s ease
+    box-shadow 1px 1px 3px #eee
+
+
+    &:hover
+      background #333
+      color #fff
+      //opacity .8
+
+  > input:checked ~ label
     background-color #fffdfd
     border-color #d88
     box-shadow 0 0 0px 2px #d88 inset, 1px 1px 3px 1px #eee
@@ -133,19 +144,20 @@ a.src-font-name
     &:hover
       background #666
 
-  &.ui-selecting
+  &.ui-selecting > label
     background-color #eeffee
     border-color #8d8
     &:hover
       color inherit
     //box-shadow 0 0 3px #ada inset
 
-  &.selected.ui-selecting
+  &.ui-selecting > input:checked ~ label
     background-color #eeffee
     border-color #666
     box-shadow 0 0 3px #666 inset
     &:hover
       color inherit
+
 
 //
 // Animation tweaks

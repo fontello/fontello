@@ -1,23 +1,21 @@
-ul#selector-fonts.unstyled(data-bind="style: {fontSize: fontSize() + 'px'}, foreach: fonts")
-  li.ui-selectable(data-bind="visible: visibleCount, attr: {id: 'font-id-' + id}, css: {_collapsed: collapsed}")
+ul#selector-fonts.unstyled(data-bind='style: {fontSize: fontSize() + "px"}, foreach: fonts')
+  li.ui-selectable(data-bind='visible: visibleCount(), attr: {id: "font-id-" + id}, css: {_collapsed: collapsed }')
     h2.src-font-head
       //- a.label.label-important.font-info(href="#") info
-      a.src-font-name._collapser(href="#", data-bind="text: fullname, click: toggleCollapsed")
+      a.src-font-name._collapser(href="#", data-bind='text: fullname, click: toggleCollapsed')
 
-      small.font-details(data-bind="if: author, text: 'by ' + author")
-      small.font-details(data-bind="if: license, text: 'license - ' + license")
+      small.font-details(data-bind='if: author, text: "by " + author')
+      small.font-details(data-bind='if: license, text: "license - " + license')
 
       small.font-details
-        a.icon-home(data-bind="if: homepage, attr: {href: homepage}", target="_blank")
-        a.icon-mail(data-bind="if: email, attr: {href: 'mailto:' + email}")
-        a.icon-twitter-bird(data-bind="if: twitter, attr: {href: twitter}", target="_blank")
-        a.icon-github-text(data-bind="if: github, attr: {href: github}", target="_blank")
+        a.icon-home(data-bind='if: homepage, attr: {href: homepage}', target='_blank')
+        a.icon-mail(data-bind='if: email, attr: {href: "mailto:" + email}')
+        a.icon-twitter-bird(data-bind='if: twitter, attr: {href: twitter}', target='_blank')
+        a.icon-github-text(data-bind='if: github, attr: {href: github}', target='_blank')
+        a.icon-dribbble(data-bind='if: dribbble, attr: {href: dribbble}', target='_blank')
 
-      //- no logo, sorry
-      //- - if (meta.dribbble)
-      //-  a.icon-(href="#{meta.dribbble}", target="_blank") Dribbble
-
-    ul.unstyled.font-glyphs.font-fontello(data-bind="foreach: glyphs")
-      li.glyph(data-bind="visible: visible, css: { selected : selected }, attr: { title: tooltip }, click: toggleSelection")
-        span(data-bind="css: cssExt, text: charRef")
-        input.hidden(type="checkbox", data-bind="checked: selected, attr: {id: uid, value: selected() ? 'on' : 'off'}")
+    ul.unstyled.font-glyphs.font-fontello(data-bind='foreach: glyphs')
+      li.glyph(data-bind='visible: visible, attr: { title: tooltip })
+        input.hidden(type='checkbox', data-bind='checked: selected(), attr: { id: uid }')
+        label(data-bind='attr: { for: uid }')
+          span(data-bind='css: cssExt, text: charRef')
