@@ -4,7 +4,7 @@
 "use strict";
 
 
-var render = require('../../../lib/render/client');
+var render = require('@/lib/render/client');
 
 
 module.exports = function (window, N) {
