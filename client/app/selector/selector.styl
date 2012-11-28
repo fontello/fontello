@@ -161,6 +161,12 @@ a.src-font-name
     &:hover
       color inherit
 
+// Chrome hack - it hes different icon alligment, no ideas why
+//
+@media screen and (-webkit-min-device-pixel-ratio:0)
+  .glyph > label > span
+    line-height 50px
+
 
 //
 // Animation tweaks
