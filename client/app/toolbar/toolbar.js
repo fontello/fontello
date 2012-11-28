@@ -42,7 +42,7 @@ function ToolbarModel(fontsList, fontname, N) {
   //
 
   this.resetAll       = function () {
-    if (window.confirm(N.runtime.t('confirm.app_reset'))) {
+    if (window.confirm(N.runtime.t('app.toolbar.confirm_app_reset'))) {
       this.fontname('');
       N.emit('reset_all');
     }
@@ -106,7 +106,7 @@ module.exports.init = function (window, N) {
         event.preventDefault();
 
         if (!window.FileReader) {
-          N.emit('notification', 'error', N.runtime.t('errors.no_file_reader'));
+          N.emit('notification', 'error', N.runtime.t('app.toolbar.error.no_file_reader'));
           return false;
         }
 

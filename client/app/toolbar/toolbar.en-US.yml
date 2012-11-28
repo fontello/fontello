@@ -1,0 +1,17 @@
+i18n:
+  en-US:
+    app:
+      toolbar:
+        download_banner: >
+          Are you designer?
+          <a href="https://github.com/fontello/fontello/wiki/How-to-help"
+              target="_blank">You can help</a>
+          us improve fontello!
+        confirm_app_reset: Are you sure?
+        error:
+          no_file_reader: >
+            Config importer requires <strong>modern browser</strong>.
+            Please, <a href="http://www.mozilla.org/firefox/new/">upgrade</a>
+            your browser to be able import your previous configurations.
+          no_config_chosen: >
+            You must choose a file.

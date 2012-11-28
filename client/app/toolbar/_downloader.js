@@ -108,7 +108,7 @@ module.exports = function (data, event) {
       layout:   'bottom',
       closeOnSelfClick: false,
       timeout:  20000 // 20 secs
-    }, N.runtime.t('info.download_banner'));
+    }, N.runtime.t('app.toolbar.download_banner'));
 
     N.emit('build.started');
 

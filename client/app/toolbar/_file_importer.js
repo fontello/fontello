@@ -25,7 +25,7 @@ module.exports = function (data, event) {
 
   if (!file) {
     // Unexpected behavior. Should not happen in real life.
-    N.emit('notification', 'error', N.runtime.t('errors.no_config_chosen'));
+    N.emit('notification', 'error', N.runtime.t('app.toolbar.error.no_config_chosen'));
     return;
   }
 

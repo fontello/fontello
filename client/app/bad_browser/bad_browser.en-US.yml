@@ -1,0 +1,8 @@
+i18n:
+  en-US:
+    app:
+      bad_browser:
+        title: Bad Browser
+        message: >
+          We have bad news for you - <strong>this application requires modern
+          browser</strong>. Please, upgrade and come back. Currently we support:
