@@ -31,6 +31,7 @@
 .icon-home:before { content: '\2302'; } /* '⌂' */
 .icon-settings:before { content: '\2699'; } /* '⚙' */
 .icon-mail:before { content: '\2709'; } /* '✉' */
+.icon-remove:before { content: '\2715'; } /* '✕' */
 .icon-load:before { content: '\e834'; } /* '' */
 .icon-firefox:before { content: '\e840'; } /* '' */
 .icon-chrome:before { content: '\e841'; } /* '' */
