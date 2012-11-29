@@ -1,4 +1,4 @@
-#result-font(data-bind='foreach: { data: selectedGlyphs, beforeRemove: hideGlyph }')
+#result-font(data-bind='foreach: selectedGlyphs, beforeRemove: hideGlyph')
   .result-glyph
     .top
       input.char-editable(data-bind='value: customChar')
