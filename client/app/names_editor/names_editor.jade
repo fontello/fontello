@@ -1,4 +1,4 @@
-#preview-font.row(data-bind='style: {fontSize: fontSize() + "px"}, foreach: selectedGlyphs, beforeRemove: hideGlyph')
+#preview-font.row(data-bind='style: {fontSize: fontSize() + "px"}, foreach: { data: selectedGlyphs, beforeRemove: hideGlyph }')
   .preview-glyph.span3
     span.font-fontello.icon(data-bind='text: charRef')
     span.prefix icon-
