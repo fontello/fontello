@@ -29,6 +29,16 @@ module.exports.init = function () {
       N.on('reset_selected',  jumpToSelector);
 
       //
+      // Jump to selector if no selected glyphs left
+      //
+
+      fontsList.selectedCount.subscribe(function (count) {
+        if (0 === count) {
+          jumpToSelector();
+        }
+      });
+
+      //
       // Jump to selector on startup
       //
 
