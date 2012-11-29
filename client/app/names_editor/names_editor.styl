@@ -1,5 +1,6 @@
 #names-editor
   overflow hidden
+  padding-bottom 10px // to show shadow of bottom row elements
 
 #preview
   padding-bottom 10px // to show shadow of bottom row elements
@@ -28,13 +29,14 @@
     cursor pointer
 
   .glyph-name
-    transition all .3s ease-in-out
+    transition background-color .3s ease-in-out
     display inline-block
     box-shadow none
     border 0
     padding-top 0
     padding-bottom 2px
     width 150px
+    font-size inherit
 
     &:focus
       outline none
