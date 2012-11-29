@@ -3,25 +3,18 @@
   width 64px
   margin 0 10px 10px 0
   color #fff
-  //background-color #888
-  //border-left 1px solid #888
-  //border-right 1px solid #888
+
   background-color grayDark
   border-left 1px solid grayDark
   border-right 1px solid grayDark
   border-radius 6px
 
-  .top
-    text-align center
-    line-height 16px
-    font-size 14px
+  box-shadow: 0 0 1px grayLight
 
+  .top
+    font-size 14px
     input
       width 15px
-      border 0
-      border-radius 3px
-      background-color grayLighter
-
 
   .center
     height 64px
@@ -32,15 +25,22 @@
     font-size 24px
 
   .bottom
-    text-align center
-    line-height 16px
     font-size 10px
-
     input
       width 45px
-      border 0
+
+
+  .top, .bottom
+    text-align center
+    line-height 16px
+
+    input
+      transition all .3s ease
+      border 1px solid grayLight
       border-radius 3px
-      background-color grayLighter
+      background-color grayDark
+      color grayLighter
+      box-shadow 0 0 1px gray
 
   //&.mapping-matched
   //  border-color #444
@@ -54,16 +54,14 @@
 
 
   &:hover
-    .char-editable, .code-editable
-      background-color #eee
-      border-radius 2px
-      cursor pointer
+    .top, .bottom
+      input
+        background-color gray
+        color white
+        cursor pointer
 
-  .char-editable, .code-editable
-    &:focus
-      outline none
-      box-shadow 0 0 2px white
-      background-color white
+  .top, .bottom
+    input:focus
+      background-color grayLighter
       color grayDark
-      border-radius 2px
       cursor auto
