@@ -4,8 +4,12 @@ ul#selector-fonts.unstyled(data-bind='style: {fontSize: fontSize() + "px"}, fore
       //- a.label.label-important.font-info(href="#") info
       a.src-font-name._collapser(href="#", data-bind='text: fullname, click: toggleCollapsed')
 
-      small.font-details(data-bind='visible: author, text: "by " + author')
-      small.font-details(data-bind='visible: license, text: "license - " + license')
+      small.font-details(data-bind='visible: author')= self.t('app.selector.author')
+        |  
+        span(data-bind='text: author')
+      small.font-details(data-bind='visible: license')= self.t('app.selector.license')
+        |  
+        span(data-bind='text: license')
 
       small.font-details
         a.icon-home(data-bind='visible: homepage, attr: {href: homepage}', target='_blank')

@@ -1,0 +1,6 @@
+i18n:
+  en-US:
+    app:
+      selector:
+        author: by
+        license: license -

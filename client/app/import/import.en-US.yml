@@ -4,8 +4,9 @@ i18n:
       import:
         error:
           invalid_browser: >
-            Config importer requires <strong>modern browser</strong>.
-            Please, <a href="http://www.mozilla.org/firefox/new/">upgrade</a>
-            your browser to be able import your previous configurations.
+            Your browser does not support this operation, because it's not
+            enougth modern. Please,
+            <a href="http://www.mozilla.org/firefox/new/">upgrade</a>
+            it to something better.
           no_config_chosen: >
             You must choose a file.
