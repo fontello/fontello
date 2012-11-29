@@ -12,9 +12,20 @@
   box-shadow: 0 0 1px grayLight
 
   .top
+    position relative
     font-size 14px
     input
       width 15px
+
+  .remove
+    position absolute
+    top 4px
+    right -2px
+    color grayLighter
+    transition all .3s ease-in-out
+    opacity 0
+  &:hover .remove
+    opacity 1
 
   .center
     height 64px
@@ -35,7 +46,7 @@
     line-height 16px
 
     input
-      transition all .3s ease
+      transition all .3s ease-in-out
       border 1px solid grayLight
       border-radius 3px
       background-color grayDark

@@ -9,6 +9,7 @@
   height 1.5em
   white-space nowrap
   background-color white
+  position relative
 
   span.icon
     display inline-block
@@ -27,12 +28,13 @@
     cursor pointer
 
   .glyph-name
+    transition all .3s ease-in-out
     display inline-block
     box-shadow none
     border 0
     padding-top 0
     padding-bottom 2px
-    width 160px
+    width 150px
 
     &:focus
       outline none
@@ -42,6 +44,16 @@
       position relative
       z-index 1000
       cursor auto
+
+  .remove
+    position absolute
+    top 2px
+    right -3px
+    color grayLighter
+    transition all .3s ease-in-out
+    opacity 0
+  &:hover .remove
+    opacity 1
 
 
 ._3d .preview-glyph span.icon

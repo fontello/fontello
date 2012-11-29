@@ -2,6 +2,7 @@
   .result-glyph
     .top
       input.char-editable(data-bind='value: customChar')
+      a.remove.icon-remove(href='#', title=self.t('app.codes_editor.remove'), data-bind='click: toggleSelection')
 
     .center.font-fontello(data-bind='text: charRef')
 
