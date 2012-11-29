@@ -6,11 +6,19 @@
 
 var render = require('@/lib/render/client');
 
-var fontSize  = ko.observable(16);
+
+function NamesEditorModel(fontsList) {
+  this.selectedGlyphs = fontsList.selectedGlyphs;
+  this.fontSize       = ko.observable(16);
+  this.hideGlyph      = function (el) {
+    $(el).fadeOut('fast');
+  };
+
+  N.on('font_size_change',  this.fontSize);
+}
 
 
 module.exports.init = function () {
-  N.on('font_size_change',  fontSize);
   N.once('fonts_ready', function (fontsList) {
     $(function () {
       var $view = $(render('app.names_editor')).appendTo('#names-editor');
@@ -19,10 +27,7 @@ module.exports.init = function () {
       // Bind model and view
       //
 
-      ko.applyBindings({
-      	fontsList: fontsList,
-      	fontSize: fontSize
-      }, $view.get(0));
+      ko.applyBindings(new NamesEditorModel(fontsList), $view.get(0));
     });
   });
 };
