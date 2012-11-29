@@ -9,9 +9,7 @@ var render = require('@/lib/render/client');
 
 function CodesEditorModel(fontsList) {
   this.selectedGlyphs = fontsList.selectedGlyphs;
-  this.hideGlyph      = function (el) {
-    $(el).fadeOut('fast');
-  };
+  this.hideGlyph      = function (el) { $(el).fadeOut(); };
 }
 
 

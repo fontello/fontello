@@ -10,9 +10,7 @@ var render = require('@/lib/render/client');
 function NamesEditorModel(fontsList) {
   this.selectedGlyphs = fontsList.selectedGlyphs;
   this.fontSize       = ko.observable(16);
-  this.hideGlyph      = function (el) {
-    $(el).fadeOut('fast');
-  };
+  this.hideGlyph      = function (el) { $(el).fadeOut(); };
 
   N.on('font_size_change',  this.fontSize);
 }
