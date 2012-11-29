@@ -7,6 +7,7 @@
 * Added Fontelico font
 * Tuned fonts baseline
 * Added glyphs tooltips on selector panel
+* Added delete buttons on codes editor and names editor
 * Improved generated demo (show glyph codes now)
 * New arcitecture, use knockout.js
 
