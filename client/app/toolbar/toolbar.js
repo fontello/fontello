@@ -56,7 +56,9 @@ function ToolbarModel(fontsList, fontname) {
     N.emit('reset_selected');
   };
 
-  this.startDownload = require('./_downloader').bind(this);
+  this.startDownload = function () {
+    N.emit('build_font', this.fontname());
+  }.bind(this);
 
   //
   // Notify application about font size changes

@@ -13,34 +13,6 @@ function injectDownloadUrl(id, url) {
 }
 
 
-// prepare config for the font builder
-//
-function getConfig(self) {
-  var config = {
-    name:   $.trim(self.fontname()),
-    glyphs: []
-  };
-
-  _.each(self.selectedGlyphs(), function (glyph) {
-    config.glyphs.push({
-      uid:        glyph.uid,
-
-      orig_css:   glyph.originalName,
-      orig_code:  glyph.originalCode,
-
-      css:        glyph.name(),
-      code:       glyph.code(),
-
-      src:        glyph.font.fontname
-    });
-  });
-
-  N.logger.debug('Built result font config', config);
-
-  return config;
-}
-
-
 // poll status update. starts download when font is ready.
 //
 function pollStatus(id) {
@@ -85,14 +57,8 @@ function pollStatus(id) {
 }
 
 
-// Request font build and download on success
-//
-module.exports = function (data, event) {
-  if (!this.selectedCount()) {
-    return false;
-  }
-
-  N.server.font.generate(getConfig(this), function (err, msg) {
+function startBuilder(config) {
+  N.server.font.generate(config, function (err, msg) {
     var font_id;
 
     if (err) {
@@ -114,5 +80,48 @@ module.exports = function (data, event) {
 
     // start polling
     pollStatus(font_id);
+  });
+}
+
+
+// prepare config for the font builder
+//
+function getConfig(fontname, selectedGlyphs) {
+  var config = {
+    name:   $.trim(fontname),
+    glyphs: []
+  };
+
+  _.each(selectedGlyphs, function (glyph) {
+    config.glyphs.push({
+      uid:        glyph.uid,
+
+      orig_css:   glyph.originalName,
+      orig_code:  glyph.originalCode,
+
+      css:        glyph.name(),
+      code:       glyph.code(),
+
+      src:        glyph.font.fontname
+    });
+  });
+
+  N.logger.debug('Built result font config', config);
+
+  return config;
+}
+
+
+// Request font build and download on success
+//
+module.exports.init = function () {
+  N.once('fonts_ready', function (fontsList) {
+    N.on('build_font', function (fontname) {
+      if (!fontsList.selectedCount()) {
+        return;
+      }
+
+      startBuilder(getConfig(fontname, fontsList.selectedGlyphs()));
+    });
   });
 };
