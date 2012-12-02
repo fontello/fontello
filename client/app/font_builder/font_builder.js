@@ -58,6 +58,8 @@ function pollStatus(id) {
 
 
 function startBuilder(config) {
+  N.logger.debug('About to build font', config);
+
   N.server.font.generate(config, function (err, msg) {
     var font_id;
 
@@ -84,44 +86,22 @@ function startBuilder(config) {
 }
 
 
-// prepare config for the font builder
-//
-function getConfig(fontname, selectedGlyphs) {
-  var config = {
-    name:   $.trim(fontname),
-    glyphs: []
-  };
-
-  _.each(selectedGlyphs, function (glyph) {
-    config.glyphs.push({
-      uid:        glyph.uid,
-
-      orig_css:   glyph.originalName,
-      orig_code:  glyph.originalCode,
-
-      css:        glyph.name(),
-      code:       glyph.code(),
-
-      src:        glyph.font.fontname
-    });
-  });
-
-  N.logger.debug('Built result font config', config);
-
-  return config;
-}
-
-
 // Request font build and download on success
 //
 module.exports.init = function () {
   N.once('fonts_ready', function (fontsList) {
     N.on('build_font', function (fontname) {
+      var config = { name: $.trim(fontname) };
+
       if (!fontsList.selectedCount()) {
         return;
       }
 
-      startBuilder(getConfig(fontname, fontsList.selectedGlyphs()));
+      config.glyphs = _.map(fontsList.selectedGlyphs(), function (glyph) {
+        return glyph.serialize();
+      });
+
+      startBuilder(config);
     });
   });
 };
