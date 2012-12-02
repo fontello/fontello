@@ -1,0 +1,58 @@
+- if (_.any(glyphs, function (g) { return 0xffff < g.code; }))
+  | @charset "UTF-8";
+  != '\n'
+  != '\n'
+
+:stylus_nowrap
+  @font-face {
+    font-family: '#{font.fontname}';
+    src: url('../font/#{font.fontname}.eot');
+    src: url('../font/#{font.fontname}.eot?#iefix') format('embedded-opentype'),
+         url('../font/#{font.fontname}.svg##{font.fontname}') format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: '#{font.fontname}';
+    src: url('data:application/octet-stream;base64,%WOFF64%') format('woff'),
+         url('data:application/octet-stream;base64,%TTF64%') format('truetype');
+  }
+ 
+  [class^="icon-"], [class*=" icon-"]
+    &:before
+      font-family '#{font.fontname}'
+      font-style normal
+      font-weight normal
+      speak none
+
+      display inline-block
+      text-decoration inherit
+      width 1em
+      margin-right .2em
+      text-align center
+      opacity .8
+
+      /* fix buttons height, for twitter bootstrap */
+      line-height 1em
+
+      /* Animation center compensation - magrins should be symmetric */
+      /* remove if not needed */
+      margin-left .2em
+
+      /* you can be more comfortable with increased icons size */
+      /* font-size: 120%; */
+
+      /* Uncomment for 3D effect */
+      /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+
+- var i, g, css, hex, chr
+- for (i in glyphs)
+  - g = glyphs[i]
+  - css = meta.css_prefix + g.css
+  - hex = '\\' + g.code.toString(16)
+  - chr = unichr(g.code)
+  != '\n'
+  - if (0xffff < g.code)
+    | .#{css}:before { content: '#{chr}'; } /* '#{hex}' */
+  - else
+    | .#{css}:before { content: '#{hex}'; } /* '#{chr}' */

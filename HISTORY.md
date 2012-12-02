@@ -9,6 +9,8 @@
 * Added glyphs tooltips on selector panel
 * Added delete buttons on codes editor and names editor
 * Improved generated demo (show glyph codes now)
+* Added css with base64 woff & ttf fonts, to workaround CORS issues in FF & IE9,
+  when you don't wish to set `Access-Control-Allow-Origin` server headers.
 * New arcitecture, use knockout.js
 
 

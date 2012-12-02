@@ -93,6 +93,17 @@ tpl-render.js --locals "$CONFIG" --input "$FONT_TEMPLATES/LICENSE.jade" \
 cp "$FONT_TEMPLATES/README.txt" "$TMPDIR/"
 
 
+
+WOFF64=$(base64 -w0 "$TMPDIR/font/$FONTNAME.woff")
+TTF64=$(base64 -w0 "$TMPDIR/font/$FONTNAME.ttf")
+tpl-render.js --locals "$CONFIG" --input "$FONT_TEMPLATES/css/css-embedded.jade" \
+  --output "$TMPDIR/css/$FONTNAME-embedded.css"
+sed -i "s|%WOFF64%|$WOFF64|" "$TMPDIR/css/$FONTNAME-embedded.css"
+sed -i "s|%TTF64%|$TTF64|" "$TMPDIR/css/$FONTNAME-embedded.css"
+
+
+
+
 ## BUILD ZIPBALL ###############################################################
 
 

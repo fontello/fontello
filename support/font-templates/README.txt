@@ -50,10 +50,12 @@ Because we like to fit all your needs :)
   no needs to manually edit files, just override old version with archive
   content. See fontello source codes for example.
 
-- *-base64-woff.css - basic file, but with embedded WOFF font, to avoid
-  firefox CORS issues, when fonts are hosted on the separate domain. We strongly
-  recommend to resolve this issue by proper server headers. But if you don't
-  mind, or wish fast and dirty solution - this hack is for you.
+- *-embedded.css - basic css file, but with embedded WOFF font, to avoid
+  CORS issues in Firefox and IE9+, when fonts are hosted on the separate domain.
+  We strongly recommend to resolve this issue by `Access-Control-Allow-Origin`
+  server headers. But if you ok with dirty hack - this file is for you. Note,
+  that data url moved to separate @font-face to avoid problems with <IE9, when
+  string is too long.
 
 - animate.css - use it to get ideas about spinner rotation animation.
 
