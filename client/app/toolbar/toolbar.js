@@ -38,29 +38,6 @@ function ToolbarModel(fontsList, fontname) {
   this.selectedCount  = fontsList.selectedCount;
 
   //
-  // Handlers
-  //
-
-  this.importFile     = function () {
-    N.emit('import.start');
-  };
-
-  this.resetAll       = function () {
-    if (window.confirm(N.runtime.t('app.toolbar.confirm_app_reset'))) {
-      this.fontname('');
-      N.emit('reset_all');
-    }
-  }.bind(this);
-
-  this.resetSelected  = function () {
-    N.emit('reset_selected');
-  };
-
-  this.startDownload = function () {
-    N.emit('build_font', this.fontname());
-  }.bind(this);
-
-  //
   // Notify application about font size changes
   //
 
@@ -97,11 +74,19 @@ module.exports.init = function () {
     fontname(session.fontname || '');
   });
 
+
   N.once('fonts_ready', function (fontsList) {
     $(function () {
       var
       $view   = $('#toolbar'),
       toolbar = new ToolbarModel(fontsList, fontname);
+
+      N.on('ask_reset_all', function () {
+        if (window.confirm(N.runtime.t('app.toolbar.confirm_app_reset'))) {
+          toolbar.fontname('');
+          N.emit('reset_all');
+        }
+      });
 
       //
       // Initialize jquery fontSize slider
@@ -139,6 +124,12 @@ module.exports.init = function () {
       //
 
       ko.applyBindings(toolbar, $view.get(0));
+
+      //
+      // Notify font_builder that we're ready
+      //
+
+      N.emit('toolbar_ready', toolbar);
     });
   });
 

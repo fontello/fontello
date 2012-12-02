@@ -13,7 +13,8 @@
 
   .btn-group.pull-right
     a#result-download.btn.btn-info.disabled(
-      data-bind='css: {disabled: !selectedCount()}, click: startDownload')
+      data-on-click='build_font',
+      data-bind='css: {disabled: !selectedCount()}')
       i.icon-download(data-bind='visible: !building()')
       i.icon-load.animate-spin(style='display:none', data-bind='visible: building()')
       |  Download webfont (
@@ -34,11 +35,11 @@
       span.caret
 
     ul.dropdown-menu
-      li: a(href='#', data-bind='click: importFile')
+      li: a(href='#', data-on-click='import.start')
         | Import <em>config.json</em>
       li.divider
-      li: a(href='#', data-bind='click: resetSelected') Unselect glyphs
-      li: a(href='#', data-bind='click: resetAll') Reset all changes
+      li: a(href='#', data-on-click='reset_selected') Unselect glyphs
+      li: a(href='#', data-on-click='ask_reset_all') Reset all changes
 
 
 include ./_tabs/tabs

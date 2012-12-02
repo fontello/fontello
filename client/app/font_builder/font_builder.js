@@ -89,19 +89,31 @@ function startBuilder(config) {
 // Request font build and download on success
 //
 module.exports.init = function () {
+  var
+  selectedCount   = $.noop,
+  selectedGlyphs  = $.noop,
+  fontname        = $.noop;
+
   N.once('fonts_ready', function (fontsList) {
-    N.on('build_font', function (fontname) {
-      var config = { name: $.trim(fontname) };
+    selectedCount   = fontsList.selectedCount;
+    selectedGlyphs  = fontsList.selectedGlyphs;
+  });
 
-      if (!fontsList.selectedCount()) {
-        return;
-      }
+  N.once('toolbar_ready', function (toolbar) {
+    fontname = toolbar.fontname;
+  });
 
-      config.glyphs = _.map(fontsList.selectedGlyphs(), function (glyph) {
-        return glyph.serialize();
-      });
+  N.on('build_font', function () {
+    var config = { name: $.trim(fontname()) };
 
-      startBuilder(config);
+    if (!selectedCount()) {
+      return;
+    }
+
+    config.glyphs = _.map(selectedGlyphs(), function (glyph) {
+      return glyph.serialize();
     });
+
+    startBuilder(config);
   });
 };
