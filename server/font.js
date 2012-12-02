@@ -257,7 +257,7 @@ module.exports.download = function (params, callback) {
   var match, req, res, filename;
 
   if (!this.origin.http) {
-    callback({statusCode: 400, body: "HTTP ONLY"});
+    callback({code: N.io.BAD_REQUEST, body: "HTTP ONLY"});
     return;
   }
 
@@ -265,7 +265,7 @@ module.exports.download = function (params, callback) {
   res = this.origin.http.res;
 
   if ('GET' !== req.method && 'HEAD' !== req.method) {
-    callback({statusCode: 400});
+    callback(N.io.BAD_REQUEST);
     return;
   }
 
@@ -281,14 +281,14 @@ module.exports.download = function (params, callback) {
     .root(DOWNLOAD_DIR)
     .on('error', function (err) {
       if (404 === err.status) {
-        callback({statusCode: 404});
+        callback(N.io.NOT_FOUND);
         return;
       }
 
       callback(err);
     })
     .on('directory', function () {
-      callback({statusCode: 400});
+      callback(N.io.BAD_REQUEST);
     })
     .on('end', function () {
       dl_logger.info('%s - "%s %s HTTP/%s" %d "%s" - %s',

@@ -60,7 +60,7 @@ N.validate({
 
 module.exports = function (params, callback) {
   if (!this.origin.http) {
-    callback({statusCode: 400, body: "HTTP ONLY"});
+    callback({code: N.io.BAD_REQUEST, body: "HTTP ONLY"});
     return;
   }
 
