@@ -138,7 +138,6 @@
       data = data || {};
 
       N.logger.debug('API3 Received data', data);
-      emit('rpc.complete');
 
       if (data.version !== N.runtime.version) {
         data.error = error(io.EWRONGVER, 'Client version does not match server.');
@@ -162,6 +161,8 @@
         emit('rpc.error', [data.error]);
       }
 
+      emit('rpc.complete');
+
       // run actual callback
       callback(data.error, data.response);
     });
@@ -170,21 +171,24 @@
     // Listen for an error
     //
 
-    xhr.fail(function (err) {
-      N.logger.error(err);
+    xhr.fail(function (jqXHR, status) {
+      var err;
 
-      // rewrite error
+      // for possible status values see: http://api.jquery.com/jQuery.ajax/
+
+      if ('abort' === status) {
+        return;
+      }
+
+      N.logger.error('Failed RPC call: ' + status, jqXHR);
+
+      // any non-abort error - is communication problem
       err = error(N.io.ECOMMUNICATION, 'Communication error');
 
-      emit('rpc.complete');
       emit('rpc.error', [err]);
+      emit('rpc.complete');
 
-      if (err) {
-        // fire callback with error only in case of real error
-        // and not due to our "previous request interruption"
-        // TODO: Handle this error separately - it's a real fuckup
-        callback(err);
-      }
+      callback(err);
     });
   };
 }());

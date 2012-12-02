@@ -18,15 +18,15 @@ function injectDownloadUrl(id, url) {
 function pollStatus(id) {
   N.server.font.status({id: id}, function (err, msg) {
     if (err) {
-      N.emit('notify', 'error', N.runtime.t('app.toolbar.error.fatal', {
-        error: (err.message || String(err))
+      N.emit('notify', 'error', N.runtime.t('app.font_builder.error', {
+        error: (err.message || err.body || 'Application error')
       }));
       N.emit('build.finished');
       return;
     }
 
     if ('error' === msg.data.status) {
-      N.emit('notify', 'error', N.runtime.t('app.toolbar.error.fatal', {
+      N.emit('notify', 'error', N.runtime.t('app.font_builder.error', {
         error: (msg.data.error || "Unexpected error.")
       }));
       N.emit('build.finished');
@@ -64,8 +64,8 @@ function startBuilder(config) {
     var font_id;
 
     if (err) {
-      N.emit('notify', 'error', N.runtime.t('app.toolbar.error.fatal', {
-        error: (err.message || String(err))
+      N.emit('notify', 'error', N.runtime.t('app.font_builder.error', {
+        error: (err.message || err.body || 'Application error')
       }));
       return;
     }
@@ -76,7 +76,7 @@ function startBuilder(config) {
       layout:   'bottom',
       closeOnSelfClick: false,
       timeout:  20000 // 20 secs
-    }, N.runtime.t('app.toolbar.download_banner'));
+    }, N.runtime.t('app.font_builder.download_banner'));
 
     N.emit('build.started');
 
