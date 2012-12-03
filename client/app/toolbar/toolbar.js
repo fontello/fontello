@@ -81,7 +81,7 @@ module.exports.init = function () {
       $view   = $('#toolbar'),
       toolbar = new ToolbarModel(fontsList, fontname);
 
-      N.on('ask_reset_all', function () {
+      N.on('reset_all_confirm', function () {
         if (window.confirm(N.runtime.t('app.toolbar.confirm_app_reset'))) {
           toolbar.fontname('');
           N.emit('reset_all');
