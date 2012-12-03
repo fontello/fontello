@@ -418,7 +418,7 @@ module.exports.init = function () {
 
 
   $(function () {
-    var $view = $(render('app.selector')).appendTo('#selector');
+    var $view = $('#selector');
 
     //
     // Bind model and view

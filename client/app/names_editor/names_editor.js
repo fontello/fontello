@@ -23,7 +23,7 @@ function NamesEditorModel(fontsList) {
 module.exports.init = function () {
   N.once('fonts_ready', function (fontsList) {
     $(function () {
-      var $view = $(render('app.names_editor')).appendTo('#names-editor');
+      var $view = $('#names-editor');
 
       //
       // Bind model and view

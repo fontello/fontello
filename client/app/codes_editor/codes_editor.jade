@@ -1,11 +1,14 @@
-#result-font(data-bind='foreach: { data: selectedGlyphs, beforeRemove: hideGlyph }')
-  .result-glyph
-    .top
-      input.char-editable(data-bind='value: customChar')
-      a.remove.icon-remove(href='#', title=self.t('app.codes_editor.remove'), data-bind='click: toggleSelection')
+#codes-editor.tab-pane.fade
+  p.note= self.t('app.codes_editor.help')
 
-    .center.font-fontello(data-bind='text: charRef')
+  #result-font(data-bind='foreach: { data: selectedGlyphs, beforeRemove: hideGlyph }')
+    .result-glyph
+      .top
+        input.char-editable(data-bind='value: customChar')
+        a.remove.icon-remove(href='#', title=self.t('app.codes_editor.remove'), data-bind='click: toggleSelection')
 
-    .bottom
-      span.code-prefix U+
-      input.code-editable(data-bind='value: customHex')
+      .center.font-fontello(data-bind='text: charRef')
+
+      .bottom
+        span.code-prefix U+
+        input.code-editable(data-bind='value: customHex')

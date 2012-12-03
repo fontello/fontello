@@ -20,7 +20,7 @@ function CodesEditorModel(fontsList) {
 module.exports.init = function () {
   N.once('fonts_ready', function (fontsList) {
     $(function () {
-      var $view = $(render('app.codes_editor')).appendTo('#codes-editor');
+      var $view = $('#codes-editor');
 
       //
       // Bind model and view

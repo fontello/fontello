@@ -3,17 +3,13 @@
     // tab0 `Loading`
     #loading.tab-pane.fade.active.in
       i.icon-load.animate-spin
-      = self.t('app.loading')
+      |  #{self.t('app.loading')}
 
     // tab1 `Select
-    #selector.tab-pane.fade
+    include selector/selector
 
     // tab2 `Preview`
-    #names-editor.tab-pane.fade
-      // KLUDGE: p.note can't go to codes-editor template as otherwise knockout
-      //         messes with context
-      p.note Click glyph name to edit
+    include names_editor/names_editor
 
     // tab3 `Download`
-    #codes-editor.tab-pane.fade
-      p.note Click symbol codes on black lines to edit
+    include codes_editor/codes_editor
