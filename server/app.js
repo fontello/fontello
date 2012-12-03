@@ -36,6 +36,7 @@ module.exports = function app(params, callback) {
   // set headers
   this.response.headers['ETag']           = etag;
   this.response.headers['Cache-Control']  = 'private, max-age=0, must-revalidate';
+  this.response.layout                    = 'app.layout';
 
   // done
   callback();
