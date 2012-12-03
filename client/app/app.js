@@ -1,10 +1,23 @@
-/*global document, $*/
+/*global document, $, N*/
 
 
 'use strict';
 
 
 module.exports.init = function () {
+  N.on('io.error', function (err) {
+    if (N.io.ECOMMUNICATION === err.code) {
+      N.emit('notify', 'error', N.runtime.t('app.errors.communication'));
+      return;
+    }
+
+    if (N.io.EWRONGVER === err.code) {
+      N.emit('notify', 'error', N.runtime.t('app.errors.version'));
+      return;
+    }
+  });
+
+
   $(function () {
     // Attach tooltip handler to matching elements
     $('._tip').tooltip();

@@ -16,13 +16,15 @@
   'use strict';
 
 
-  var events = { 'before.rpc': [], 'after.rpc': [] },
-      // last xhr to allow interrupt it
-      last_xhr = null;
-
-
+  var
+  // last xhr to allow interrupt it
+  last_xhr = null,
   // exported IO object
-  var io = N.io = <%- JSON.stringify(N('io')) %>;
+  io = <%- JSON.stringify(N('io')) %>;
+
+
+  // export into N.io
+  N.io = io;
 
 
   // error constructor
@@ -30,30 +32,6 @@
     var err = new Error(message);
     err.code = code;
     return err;
-  }
-
-
-  //
-  // Events
-  //
-
-
-  function emit(name, args) {
-    if (!events[name]) {
-      return;
-    }
-
-    args = args || [];
-
-    $.each(events[name], function (i, func) {
-      try {
-        func.apply(null, args);
-      } catch (err) {
-        // do not interrupt event handlers chain
-        // !!! THIS SHOULD NEVER HAPPEN !!!
-        N.logger.error(err);
-      }
-    });
   }
 
 
@@ -126,7 +104,7 @@
     //
 
     N.logger.debug('API3 Sending request', payload);
-    emit('rpc.request');
+    N.emit('io.request');
 
     xhr = last_xhr = $.post('/io/rpc', payload);
 
@@ -158,10 +136,10 @@
       }
 
       if (data.error) {
-        emit('rpc.error', [data.error]);
+        N.emit('io.error', data.error);
       }
 
-      emit('rpc.complete');
+      N.emit('io.complete');
 
       // run actual callback
       callback(data.error, data.response);
@@ -185,8 +163,8 @@
       // any non-abort error - is communication problem
       err = error(N.io.ECOMMUNICATION, 'Communication error');
 
-      emit('rpc.error', [err]);
-      emit('rpc.complete');
+      N.emit('io.error', err);
+      N.emit('io.complete');
 
       callback(err);
     });

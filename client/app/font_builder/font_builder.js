@@ -16,8 +16,8 @@ function injectDownloadUrl(id, url) {
 function notifyError(err) {
   var msg;
 
-  if (N.io.ECOMMUNICATION === err.code) {
-    N.emit('notify', 'error', N.runtime.t('app.font_builder.errors.communication'));
+  if (err.code && 100 > err.code) {
+    // do not handle system-wide errors
     return;
   }
 
@@ -41,7 +41,7 @@ function pollStatus(id) {
     }
 
     if ('error' === msg.data.status) {
-      N.emit('notify', 'error', N.runtime.t('app.font_builder.errors.app', {
+      N.emit('notify', 'error', N.runtime.t('app.font_builder.errors.generic', {
         error: (msg.data.error || "Unexpected error.")
       }));
       N.emit('build.finished');

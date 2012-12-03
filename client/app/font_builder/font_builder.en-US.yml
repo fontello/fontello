@@ -8,11 +8,9 @@ i18n:
               target="_blank">You can help</a>
           us improve fontello!
         errors:
-          app: >
+          generic: >
             Internal error happened during processing your request:
             <em>"#{error}"</em>. Please, try again later.
           fatal: >
             Fatal error happened during processing your request:
             <em>"#{error}"</em>. Please, try again later.
-          communication: >
-            Can't connect to the server. Please, try again later.

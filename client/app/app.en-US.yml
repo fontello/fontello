@@ -2,3 +2,8 @@ i18n:
   en-US:
     app:
       loading: Loading...
+      errors:
+        communication: >
+          Can't connect to the server. Please, try again later.
+        version: >
+          Application is outdated. Please reload the page.
