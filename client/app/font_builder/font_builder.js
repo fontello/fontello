@@ -13,20 +13,35 @@ function injectDownloadUrl(id, url) {
 }
 
 
+function notifyError(err) {
+  var msg;
+
+  if (N.io.ECOMMUNICATION === err.code) {
+    N.emit('notify', 'error', N.runtime.t('app.font_builder.errors.communication'));
+    return;
+  }
+
+  // try to extract error message
+  msg = err.message || err.body || (err.code ? 'ERR' + err.code : null);
+
+  N.emit('notify', 'error', N.runtime.t('app.font_builder.errors.fatal', {
+    error: msg || 'Unexpected error'
+  }));
+}
+
+
 // poll status update. starts download when font is ready.
 //
 function pollStatus(id) {
   N.server.font.status({id: id}, function (err, msg) {
     if (err) {
-      N.emit('notify', 'error', N.runtime.t('app.font_builder.error', {
-        error: (err.message || err.body || 'Application error')
-      }));
+      notifyError(err);
       N.emit('build.finished');
       return;
     }
 
     if ('error' === msg.data.status) {
-      N.emit('notify', 'error', N.runtime.t('app.font_builder.error', {
+      N.emit('notify', 'error', N.runtime.t('app.font_builder.errors.app', {
         error: (msg.data.error || "Unexpected error.")
       }));
       N.emit('build.finished');
@@ -64,9 +79,7 @@ function startBuilder(config) {
     var font_id;
 
     if (err) {
-      N.emit('notify', 'error', N.runtime.t('app.font_builder.error', {
-        error: (err.message || err.body || 'Application error')
-      }));
+      notifyError(err);
       return;
     }
 
