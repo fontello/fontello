@@ -4,7 +4,7 @@ html.no-js(lang='en', itemscope, itemtype='http://schema.org/WebPage')
     //- http://validator.w3.org  recommendation
     meta(charset='UTF-8')
 
-    title Fontello - easy icon font composer
+    title= self.t('app.layout.title')
     meta(name="description", content="Tool to build custom fonts with icons.")
 
     //- schema.org microformats for g+
@@ -39,13 +39,13 @@ html.no-js(lang='en', itemscope, itemtype='http://schema.org/WebPage')
       .navbar.navbar-inverse
         .navbar-inner
           .container
-            h1.brand Fontello - icon fonts generator
+            h1.brand= self.t('app.layout.title')
             ul.nav
               li: a(href="https://groups.google.com/group/fontello", target="_blank") Discuss
-              li: a(href="https://github.com/fontello/fontello", target="_blank") Github
-              li: a(href="https://github.com/fontello/fontello/issues", target="_blank") Bug reports
-              li: a.twitter-follow-button(href="https://twitter.com/puzrin", data-show-count="false", data-show-screen-name="false") Follow
-              li: a.twitter-share-button(href="https://twitter.com/share", data-url="http://fontello.com", data-text="Fontello - icon webfonts generator, open source") Tweet
+              li: a(href="https://github.com/fontello/fontello", target="_blank") GitHub
+              li: a(href="https://github.com/fontello/fontello/issues", target="_blank")= self.t('app.layout.bugs')
+              li: a.twitter-follow-button(href="https://twitter.com/puzrin", data-show-count="false", data-show-screen-name="false")= self.t('app.layout.twitter.follow')
+              li: a.twitter-share-button(href="https://twitter.com/share", data-url="http://fontello.com", data-text="#{self.t('app.layout.twitter.text')}")= self.t('app.layout.twitter.share')
               li.gplus
                 .g-plusone(data-size="medium")
               li: a.FlattrButton(style="display:none;", rev="flattr;button:compact;", href="http://fontello.com")
@@ -55,11 +55,11 @@ html.no-js(lang='en', itemscope, itemtype='http://schema.org/WebPage')
         include @/client/app/toolbar/toolbar
         include @/client/app/tabs/tabs
 
-        a.donate(target='_blank', href='https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=575L9QR4V5TNU') Donate via paypal
+        a.donate(target='_blank', href='https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=575L9QR4V5TNU')= self.t('app.layout.donate')
     != self.content
 
     //-.gh-ribbon
     //-  a(href="https://github.com/fontello/fontello", target="_blank", title="Fork me on GitHub") Fork me on GitHub
 
     .jsnotice
-      .alert.alert-error Fontello will not work without javascript!
+      .alert.alert-error= self.t('app.layout.nojs_alert')

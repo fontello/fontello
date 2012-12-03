@@ -1,0 +1,12 @@
+i18n:
+  en-US:
+    app:
+      layout:
+        title: Fontello - icon fonts generator
+        bugs: Bug reports
+        twitter:
+          follow: Follow
+          share: Tweet
+          text: Fontello - icon webfonts generator, open source
+        donate: Donate via PayPal
+        nojs_alert: Fontello will not work without javascript!
