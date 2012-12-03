@@ -132,10 +132,4 @@ module.exports.init = function () {
       N.emit('toolbar_ready', toolbar);
     });
   });
-
-  //
-  // init tabs
-  //
-
-  require('./_tabs/tabs').init();
 };
