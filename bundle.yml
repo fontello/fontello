@@ -15,6 +15,6 @@ packages:
       include: "**/*.jade"
       exclude: /(^|\/)_.*/
 
-    i18n:
+    i18n_client:
       root: ./client/
-      include: "**/*.yml"
+      include: "**/i18n/*.yml"

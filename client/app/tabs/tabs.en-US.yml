@@ -1,7 +1,0 @@
-i18n:
-  en-US:
-    app:
-      tabs:
-        selector: Select Icons
-        names_editor: Edit Names
-        codes_editor: Edit Codes
