@@ -25,7 +25,6 @@ module.exports.run = function (args, callback) {
   Async.series([
     NLib.InitStages.loadServerApiSubtree,
     NLib.InitStages.loadSharedApiSubtree,
-    NLib.InitStages.loadClientApiSubtree,
     NLib.InitStages.initRouter,
 
     require('../lib/init/locales'),
