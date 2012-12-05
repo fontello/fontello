@@ -28,9 +28,6 @@ module.exports.run = function (args, callback) {
     NLib.InitStages.initRouter,
 
     require('../lib/init/locales'),
-
-    NLib.InitStages.initTranslations,
-
     require('../lib/init/cronjob'),
     require('../lib/init/assets'),
     require('../lib/init/server')
