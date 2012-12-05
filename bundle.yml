@@ -17,4 +17,4 @@ packages:
 
     i18n_client:
       root: ./client/
-      include: "**/i18n/*.yml"
+      include: "i18n/*.yml"
