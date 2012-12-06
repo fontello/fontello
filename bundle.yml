@@ -4,17 +4,25 @@ bundles:
     - fontello
 
 packages:
+
   fontello:
+
     client:
       root: ./client/
-      include: "**/*.js"
+      include: "*.js"
       exclude: /(^|\/)_.*/
 
     views:
       root: ./client/
-      include: "**/*.jade"
+      include: "*.jade"
       exclude: /(^|\/)_.*/
 
     i18n_client:
       root: ./client/
       include: "i18n/*.yml"
+
+    server:
+      root: ./server/
+      include: "*.js"
+      exclude: /(^|\/)_.*/
+      apiPrefix: ~
