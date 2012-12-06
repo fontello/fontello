@@ -25,6 +25,7 @@ module.exports.run = function (args, callback) {
   Async.series([
     require('../lib/init/server-tree'),
     require('../lib/init/locales'),
+    require('../lib/init/styles'),
 
     NLib.InitStages.initRouter,
 

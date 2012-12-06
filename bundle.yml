@@ -8,21 +8,26 @@ packages:
   fontello:
 
     client:
-      root: ./client/
-      include: "*.js"
-      exclude: /(^|\/)_.*/
+      root:       "./client/"
+      include:    "*.js"
+      exclude:    "/(^|\\/)_.*/"
 
     views:
-      root: ./client/
-      include: "*.jade"
-      exclude: /(^|\/)_.*/
+      root:       "./client/"
+      include:    "*.jade"
+      exclude:    "/(^|\\/)_.*/"
 
     i18n_client:
-      root: ./client/
-      include: "i18n/*.yml"
+      root:       "./client/"
+      include:    "i18n/*.yml"
+
+    styles:
+      root:       "./client/"
+      main:       "app.styl"
+      include:    "*.styl"
 
     server:
-      root: ./server/
-      include: "*.js"
-      exclude: /(^|\/)_.*/
-      apiPrefix: ~
+      root:       "./server/"
+      include:    "*.js"
+      exclude:    "/(^|\\/)_.*/"
+      apiPrefix:  ~
