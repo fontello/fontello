@@ -23,7 +23,7 @@ packages:
 
     styles:
       root:       "./client/"
-      main:       "app.styl"
+      main:       "app/app.styl"
       include:    "*.styl"
 
     server:
