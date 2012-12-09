@@ -1,8 +1,4 @@
 ---
-bundles:
-  frontend:
-    - fontello
-
 packages:
 
   fontello:
@@ -31,3 +27,11 @@ packages:
       include:    "*.js"
       exclude:    "/(^|\\/)_.*/"
       apiPrefix:  ~
+
+    i18n_server:
+      root:       "./server/"
+      include:    "i18n/*.yml"
+
+    bin:
+      root:       "./assets/"
+      include:    "/\\.(jpg|png|gif|svg|ttf|eof|woff)$/"
