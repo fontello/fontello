@@ -34,4 +34,4 @@ packages:
 
     bin:
       root:       "./assets/"
-      include:    "/\\.(jpg|png|gif|svg|ttf|eof|woff)$/"
+      include:    "/\\.(jpg|png|gif|svg|ttf|eot|woff)$/"
