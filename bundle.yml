@@ -7,11 +7,13 @@ packages:
       root:       "./client/"
       include:    "*.js"
       exclude:    "/(^|\\/)_.*/"
+      apiPrefix:  ~
 
     views:
       root:       "./client/"
       include:    "*.jade"
       exclude:    "/(^|\\/)_.*/"
+      apiPrefix:  ~
 
     i18n_client:
       root:       "./client/"
