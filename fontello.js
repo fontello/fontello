@@ -74,6 +74,12 @@ process.on('SIGTERM', shutdown_gracefully);
 process.on('SIGINT',  shutdown_gracefully);
 
 
+// Notify about unclean exit
+process.on('SIGQUIT', function () {
+  process.exit(1);
+});
+
+
 //
 // Register filters
 //
