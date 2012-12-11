@@ -1,14 +1,15 @@
-//= require store
-//= require jquery/jquery
-//= require jquery-ui/jquery-ui
-//= require jquery.noty/src/js/jquery.noty
-//= require underscore
-//= require bootstrap/bootstrap
-//= require backbone
-//= require knockout
-//= require jade/runtime
+//= require fontello/vendor/store
+//= require fontello/vendor/jquery/jquery
+//= require fontello/vendor/jquery-ui/jquery-ui
+//= require fontello/vendor/jquery.noty/src/js/jquery.noty
+//= require fontello/vendor/underscore
+//= require fontello/vendor/bootstrap/bootstrap
+//= require fontello/vendor/backbone
+//= require fontello/vendor/knockout
+//= require fontello/vendor/jade/runtime
+//
 //= require babelfish-runtime
-//= require n
-//= require i18n
-//= require views
-//= require api
+//
+//= require fontello/javascripts/n
+//
+//= require fontello.en-US
