@@ -18,6 +18,7 @@ packages:
     i18n_client:
       root:       "./client/"
       include:    "i18n/*.yml"
+      apiPrefix:  ~
 
     styles:
       root:       "./client/"
@@ -33,6 +34,7 @@ packages:
     i18n_server:
       root:       "./server/"
       include:    "i18n/*.yml"
+      apiPrefix:  ~
 
     bin:
       root:       "./assets/"
