@@ -1,11 +1,11 @@
 #codes-editor.tab-pane.fade
-  p.note= self.t('app.codes_editor.help')
+  p.note= self.t('help')
 
   #result-font(data-bind='foreach: { data: selectedGlyphs, beforeRemove: hideGlyph }')
     .result-glyph
       .top
         input.char-editable(data-bind='value: customChar')
-        a.remove.icon-remove(href='#', title=self.t('app.codes_editor.remove'), data-bind='click: toggleSelection')
+        a.remove.icon-remove(href='#', title=self.t('remove'), data-bind='click: toggleSelection')
 
       .center.font-fontello(data-bind='text: charRef')
 

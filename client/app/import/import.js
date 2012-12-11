@@ -1,7 +1,7 @@
 'use strict';
 
 
-/*global window, _, $, N*/
+/*global window, _, $, N, t*/
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -23,7 +23,7 @@ function onFileChange(event) {
 
     if (!file) {
       // Unexpected behavior. Should not happen in real life.
-      N.emit('notify', 'error', N.runtime.t('app.import.error.no_config_chosen'));
+      N.emit('notify', 'error', t('error.no_config_chosen'));
       return;
     }
 
@@ -53,8 +53,7 @@ function onFileChange(event) {
 
     reader.readAsBinaryString(file);
   } catch (err) {
-    N.emit('notify', 'error',
-            N.runtime.t('app.import.error.invalid_browser'));
+    N.emit('notify', 'error', t('error.invalid_browser'));
   }
 }
 

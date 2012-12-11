@@ -1,7 +1,7 @@
 'use strict';
 
 
-/*global window, _, $, ko, N*/
+/*global window, _, $, ko, N, t*/
 
 
 var knownKeywords = _.chain(require('@/lib/embedded_fonts/configs'))
@@ -82,7 +82,7 @@ module.exports.init = function () {
       toolbar = new ToolbarModel(fontsList, fontname);
 
       N.on('reset_all_confirm', function () {
-        if (window.confirm(N.runtime.t('app.toolbar.confirm_app_reset'))) {
+        if (window.confirm(t('confirm_app_reset'))) {
           toolbar.fontname('');
           N.emit('reset_all');
         }

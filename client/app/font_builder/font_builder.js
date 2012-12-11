@@ -1,7 +1,7 @@
 'use strict';
 
 
-/*global window, _, $, ko, N*/
+/*global window, _, $, ko, N, t*/
 
 
 // starts download of the result font
@@ -24,7 +24,7 @@ function notifyError(err) {
   // try to extract error message
   msg = err.message || err.body || (err.code ? 'ERR' + err.code : null);
 
-  N.emit('notify', 'error', N.runtime.t('app.font_builder.errors.fatal', {
+  N.emit('notify', 'error', t('errors.fatal', {
     error: msg || 'Unexpected error'
   }));
 }
@@ -41,7 +41,7 @@ function pollStatus(id) {
     }
 
     if ('error' === msg.data.status) {
-      N.emit('notify', 'error', N.runtime.t('app.font_builder.errors.generic', {
+      N.emit('notify', 'error', t('errors.generic', {
         error: (msg.data.error || "Unexpected error.")
       }));
       N.emit('build.finished');
@@ -89,7 +89,7 @@ function startBuilder(config) {
       layout:   'bottom',
       closeOnSelfClick: false,
       timeout:  20000 // 20 secs
-    }, N.runtime.t('app.font_builder.download_banner'));
+    }, t('download_banner'));
 
     N.emit('build.started');
 

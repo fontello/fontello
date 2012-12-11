@@ -5,10 +5,10 @@
         //- a.label.label-important.font-info(href="#") info
         a.src-font-name._collapser(href="#", data-bind='text: fullname, click: toggleCollapsed')
 
-        small.font-details(data-bind='visible: author')= self.t('app.selector.author')
+        small.font-details(data-bind='visible: author')= self.t('author')
           |  
           span(data-bind='text: author')
-        small.font-details(data-bind='visible: license')= self.t('app.selector.license')
+        small.font-details(data-bind='visible: license')= self.t('license')
           |  
           span(data-bind='text: license')
 

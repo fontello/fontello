@@ -1,4 +1,4 @@
-/*global document, $, N*/
+/*global document, $, N, t*/
 
 
 'use strict';
@@ -7,12 +7,12 @@
 module.exports.init = function () {
   N.on('io.error', function (err) {
     if (N.io.ECOMMUNICATION === err.code) {
-      N.emit('notify', 'error', N.runtime.t('app.errors.communication'));
+      N.emit('notify', 'error', t('communication'));
       return;
     }
 
     if (N.io.EWRONGVER === err.code) {
-      N.emit('notify', 'error', N.runtime.t('app.errors.version'));
+      N.emit('notify', 'error', t('version'));
       return;
     }
   });

@@ -3,13 +3,13 @@
     // tab0 `Loading`
     #loading.tab-pane.fade.active.in
       i.icon-load.animate-spin
-      |  #{self.t('app.loading')}
+      |  #{self.t('loading')}
 
     // tab1 `Select
-    include selector/selector
+    != self.include('app.selector')
 
     // tab2 `Preview`
-    include names_editor/names_editor
+    != self.include('app.names_editor')
 
     // tab3 `Download`
-    include codes_editor/codes_editor
+    != self.include('app.codes_editor')
