@@ -15,6 +15,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Css generator')
     parser.add_argument('config', nargs='+', type=str,
         help='Config example: src/font1/config.yml src/font2/config.yml')
+    parser.add_argument('-p', '--assets_path', type=str, required=False,
+        help='Assets path used to prefix font filenames.')
     parser.add_argument('-o', '--dst_file',  type=str, required=True,
         help='Output css file')
 
@@ -26,11 +28,11 @@ if __name__ == '__main__':
     tpl_class    = ".font-embedded-{i} {{ font-family: '{fontname}'; }}"
     tpl_fontface = """@font-face {{
   font-family: '{fontname}';
-  src: url('<%= asset_path("{fontname}.eot") %>');
-  src: url('<%= asset_path("{fontname}.eot") %>?#iefix') format('embedded-opentype'),
-       url('<%= asset_path("{fontname}.woff") %>') format('woff'),
-       url('<%= asset_path("{fontname}.ttf") %>') format('truetype'),
-       url('<%= asset_path("{fontname}.svg") %>#{fontname}') format('svg');
+  src: url('<%= asset_path("{assets_path}{fontname}.eot") %>');
+  src: url('<%= asset_path("{assets_path}{fontname}.eot") %>?#iefix') format('embedded-opentype'),
+       url('<%= asset_path("{assets_path}{fontname}.woff") %>') format('woff'),
+       url('<%= asset_path("{assets_path}{fontname}.ttf") %>') format('truetype'),
+       url('<%= asset_path("{assets_path}{fontname}.svg") %>#{fontname}') format('svg');
   font-weight: normal;
   font-style: normal;
 }}"""
@@ -57,7 +59,7 @@ if __name__ == '__main__':
             sys.exit(1)
 
         css_class.append(tpl_class.format(i=i, fontname=fontname))
-        css_fontface.append(tpl_fontface.format(fontname=fontname))
+        css_fontface.append(tpl_fontface.format(assets_path=args.assets_path, fontname=fontname))
 
     css = '\n'.join(css_class) + '\n\n' + '\n\n'.join(css_fontface)
 
