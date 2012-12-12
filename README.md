@@ -17,6 +17,14 @@ on your website!
 Don't forget about donations :)
 
 
+## Compatibility
+
+1. Desktop is fully supported. IE6-7 requires alternate CSS.
+2. Mobiles - all modern systems work without problems. There are limits on very old androids
+   and rare browsers. Also, Windows Mobile IE9 sucks, as IE  usually does :) . See
+   [details](http://blog.kaelig.fr/post/33373448491/testing-font-face-support-on-mobile-and-tablet).
+
+
 ## Embedded Fonts <a name="embedded"></a>
 
 Fontello comes with the following embedded set of icon fonts:
@@ -32,9 +40,7 @@ Fontello comes with the following embedded set of icon fonts:
 - [__Brandico__](https://github.com/fontello/brandico.font) by... all :) (SIL OFL)
 
 Please, note that these embedded fonts differ from the original files. We did some
-modifications to unify characteristics such as scale, ascent/descent and alignment. 
-If you need specific details on modifications, take a look into the updated fonts repos
-at [github](https://github.com/fontello/).
+modifications to unify characteristics such as scale, ascent/descent and alignment.
 
 
 ## Contacts
