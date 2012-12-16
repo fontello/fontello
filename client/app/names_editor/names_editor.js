@@ -4,9 +4,6 @@
 'use strict';
 
 
-var render = require('@/lib/render/client');
-
-
 function NamesEditorModel(fontsList) {
   this.selectedGlyphs = fontsList.selectedGlyphs;
   this.fontSize       = ko.observable(16);
