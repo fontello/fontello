@@ -38,5 +38,7 @@ packages:
 
     bin:
       root:       "./assets/"
-      include:    "*"
-      exclude:    ".jshintrc"
+      include:
+        - javascripts/loader.js.ejs
+        - javascripts/app.js
+        - vendor/**.js
