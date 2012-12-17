@@ -39,3 +39,4 @@ packages:
     bin:
       root:       "./assets/"
       include:    "*"
+      exclude:    ".jshintrc"
