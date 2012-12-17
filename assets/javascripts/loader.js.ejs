@@ -1,5 +1,5 @@
-//= require fontello/vendor/modernizr.custom
-//= require fontello/vendor/yepnope
+//= require vendor/modernizr.custom
+//= require vendor/yepnope
 //= require_self
 
 
@@ -12,10 +12,10 @@ yepnope([
     //  JSON is required for Opera < 11 + IE < 8
     //  See: http://caniuse.com/json
     test: !!window.JSON,
-    nope: <%- JSON.stringify(asset_path('fontello/vendor/json2.js')) %>
+    nope: <%- JSON.stringify(asset_path('vendor/json2.js')) %>
   },
   {
-    load: <%- JSON.stringify(asset_path('fontello/javascripts/app.js')) %>,
+    load: <%- JSON.stringify(asset_path('javascripts/app.js')) %>,
     complete: function () {
       N.emit('init_complete');
     }

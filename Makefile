@@ -41,7 +41,7 @@ rebuild-fonts:
 		bin/font_copy_to_assets.py -c "$$config" -o assets/embedded_fonts; \
 		done
 	bin/build_embedded_fonts_js.py -i assets/embedded_fonts -o lib/embedded_fonts/configs.js $(FONT_CONFIGS)
-	bin/build_embedded_fonts_css.py -p fontello/embedded_fonts/ -o assets/embedded_fonts/fontface-embedded.css.ejs $(FONT_CONFIGS)
+	bin/build_embedded_fonts_css.py -p embedded_fonts/ -o assets/embedded_fonts/fontface-embedded.css.ejs $(FONT_CONFIGS)
 	# build single font
 	mkdir ${TMP_PATH}
 	bin/build_common_font.py -i $(foreach f,$(FONTS), ./src/${f}) -o ${TMP_PATH}/fontello.ttf -c lib/embedded_fonts/glyphs_map.js
