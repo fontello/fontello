@@ -16,30 +16,37 @@ Add following code into the end of your shell startup script (`.bashrc` for BASH
 
 Reopen terminal. Install node (long), and set default version:
 
-    nvm install v0.8.8
+    nvm install v0.8.16
     nvm alias default 0.8
 
-## Install Fontomas
+## Install Fontello
 
-    sudo apt-get install zip
-    git clone git://github.com/nodeca/fontomas.git fontomas
-    cd fontomas
+Install fontello sources & dependencies:
+
+    sudo apt-get install zip inotify-tools
+    git clone git://github.com/fontello/fontello.git
+    cd fontello
     git submodule init
     git submodule update
+    npm install
+
+Compile font-builder binaries (ttf2eot & ttfautohint), and install dependencies
+
     cd support/font-builder
     sudo make dev-deps
     make support
 
-Then, depending on your installation type, run:
+Rename example configs in `./config/` folder to real files, and edit, if needed.
 
-- `npm install` for production
-- `make dev-setup` for development
 
 ## Run Fontomas server
 
-    make app-start
+In dev, with auto-restart on files change:
+
+    make dev-server
 
 Now you can point your browser to the page http://localhost:3000
+
 
 ## Rebuilding embedded fonts
 

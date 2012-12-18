@@ -27,9 +27,8 @@ FONT_CONFIGS   = $(foreach f,$(FONTS),src/${f}/config.yml)
 
 help:
 	echo "make help           - Print this help"
-	echo "make app-start      - Run Fontomas server"
+	echo "make dev-server     - Run dev server with autoreleat on files change"
 	echo "make rebuild-fonts  - Rebuild embedded fonts"
-	echo "make dev-setup      - Install deps for development"
 	echo "make lint           - Lint sources with JSHint"
 	echo "make gh-pages       - Build and push the project into gh-pages branch"
 
@@ -51,12 +50,6 @@ rebuild-fonts:
 	fontconvert.py --src_font "assets/embedded_fonts/fontello.ttf" --fonts_dir "assets/embedded_fonts"
 	ttf2eot < "assets/embedded_fonts/fontello.ttf" > "assets/embedded_fonts/fontello.eot"
 	rm -rf ${TMP_PATH}
-
-
-dev-setup:
-	rm -rf node_modules
-	npm install
-	npm install -g jshint
 
 
 dev-server:
@@ -84,7 +77,7 @@ repl:
 
 lint:
 	if test ! `which jshint` ; then \
-		echo "You need 'jshint' installed in order to run lint." >&2 ; \
+		echo "You need 'jshint' installed: 'npm install -g jshint'" >&2 ; \
 		exit 128 ; \
 		fi
 	jshint . --show-non-errors
