@@ -34,7 +34,8 @@
                         "neuron"        : "~0.4.5",
                         "cron"          : "~1.0.0",
                         "minimatch"     : "~ 0.2.9",
-                        "find-requires" : "~ 0.1.4"
+                        "find-requires" : "~ 0.1.4",
+                        "pointer"       : "~ 0.1.0"
                       },
   "devDependencies" : {
                         "webkit-devtools-agent" : "~ 0.0.4"
