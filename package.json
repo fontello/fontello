@@ -36,6 +36,7 @@
                         "neuron"        : "~ 0.4.5",
                         "nib"           : "~ 0.8.1",
                         "pointer"       : "~ 0.1.0",
+                        "revalidator"   : "~ 0.1.5",
                         "qs"            : "~ 0.5.0",
                         "send"          : "~ 0.1.0",
                         "shellwords"    : "~ 0.1.0",
