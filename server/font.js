@@ -16,8 +16,8 @@ var execFile  = require('child_process').execFile;
 // 3rd-party
 var send    = require('send');
 var neuron  = require('neuron');
-var async   = require('nlib').Vendor.Async;
-var fstools = require('nlib').Vendor.FsTools;
+var async   = require('async');
+var fstools = require('fs-tools');
 
 
 // internal
