@@ -9,4 +9,4 @@ require('./lib/runner').bootstrap(__dirname, {
     require('./lib/io');
     require('./lib/filters');
   }
-}).run();
+});
