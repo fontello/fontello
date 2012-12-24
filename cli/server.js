@@ -4,13 +4,8 @@
 /*global N*/
 
 
-// N
-var NLib = require('nlib');
-
-
 // 3rd-party
-var Async   = NLib.Vendor.Async;
-var FsTools = NLib.Vendor.FsTools;
+var async = require('async');
 
 
 module.exports.parserParameters = {
@@ -22,7 +17,7 @@ module.exports.parserParameters = {
 
 
 module.exports.run = function (args, callback) {
-  Async.series([
+  async.series([
     function (next) { N.logger.debug('Init app...'); next(); },
     require('../lib/init/app'),
 
