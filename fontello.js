@@ -5,8 +5,9 @@
 
 
 require('./lib/runner').bootstrap(__dirname, {
-  init: function () {
+  init: function (N, next) {
     require('./lib/io');
     require('./lib/filters');
+    next();
   }
 });
