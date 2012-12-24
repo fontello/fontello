@@ -30,6 +30,7 @@
                         "js-yaml"       : "~ 1.0.3",
                         "less"          : "~ 1.3.0",
                         "lodash"        : "*",
+                        "log4js"        : "~ 0.5.1",
                         "mincer"        : "~ 0.4.1",
                         "minimatch"     : "~ 0.2.9",
                         "neuron"        : "~ 0.4.5",
