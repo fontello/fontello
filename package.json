@@ -19,7 +19,7 @@
 
   "dependencies"    : {
                         "argparse"      : "~ 0.1.3",
-                        "async"         : "~ 0.1.23",
+                        "async"         : "~ 0.1.22",
                         "babelfish"     : "~ 0.1.1",
                         "cron"          : "~ 1.0.0",
                         "csso"          : "~ 1.2.14",
