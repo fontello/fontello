@@ -6,7 +6,7 @@
  **/
 
 
-/*global N, _*/
+/*global N*/
 
 
 // stdlib

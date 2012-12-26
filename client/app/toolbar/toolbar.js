@@ -1,7 +1,10 @@
 'use strict';
 
 
-/*global window, _, $, ko, N, t*/
+/*global window, $, ko, N, t*/
+
+
+var _ = N.runtime.underscore;
 
 
 var knownKeywords = _.chain(require('^/lib/embedded_fonts/configs'))

@@ -1,7 +1,10 @@
-/*global window, $, _, store, N*/
+/*global window, $, store, N*/
 
 
 "use strict";
+
+
+var _ = N.runtime.underscore;
 
 
 var SERIALIZER_VERSION  = 3;

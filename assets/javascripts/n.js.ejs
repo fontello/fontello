@@ -14,11 +14,13 @@ var N = window.N = (function (N) {
   N.shared           = {};
   N.client           = {};
 
-  N.runtime          = {};
-  N.runtime.env      = "<%= N('runtime.env') %>";
-  N.runtime.version  = "<%= N('runtime.version') %>";
-  N.runtime.locale   = "en-US";
-  N.runtime.i18n     = new BabelFish({});
+  N.runtime             = {};
+  // KLUDGE: Eventually should be removed in favour of require('underscore')
+  N.runtime.underscore  = window._;
+  N.runtime.env         = "<%= N('runtime.env') %>";
+  N.runtime.version     = "<%= N('runtime.version') %>";
+  N.runtime.locale      = "en-US";
+  N.runtime.i18n        = new BabelFish({});
 
   // translations injector
   N.runtime.i18n.load = function loadTranslations(lang, data) {
