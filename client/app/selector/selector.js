@@ -1,10 +1,10 @@
-/*global $, ko, N*/
+/*global window, underscore, $, ko, N*/
 
 
 'use strict';
 
 
-var _ = N.runtime.underscore;
+var _ = underscore;
 
 
 ////////////////////////////////////////////////////////////////////////////////

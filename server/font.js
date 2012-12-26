@@ -1,4 +1,4 @@
-/*global N*/
+/*global underscore, N*/
 
 
 "use strict";
@@ -14,7 +14,7 @@ var execFile  = require('child_process').execFile;
 
 
 // 3rd-party
-var _       = N.runtime.underscore;
+var _       = underscore;
 var send    = require('send');
 var neuron  = require('neuron');
 var async   = require('async');

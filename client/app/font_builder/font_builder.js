@@ -1,10 +1,10 @@
 'use strict';
 
 
-/*global window, $, ko, N, t*/
+/*global window, underscore, $, ko, N, t*/
 
 
-var _ = N.runtime.underscore;
+var _ = underscore;
 
 
 // starts download of the result font

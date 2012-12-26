@@ -1,8 +1,10 @@
 //= require vendor/eventemitter2
+//= require vendor/underscore
 
 //= require_self
 //= require_tree ./n
 
+window.underscore  = window._;
 
 var N = window.N = (function (N) {
   'use strict';
@@ -15,8 +17,6 @@ var N = window.N = (function (N) {
   N.client           = {};
 
   N.runtime             = {};
-  // KLUDGE: Eventually should be removed in favour of require('underscore')
-  N.runtime.underscore  = window._;
   N.runtime.env         = "<%= N('runtime.env') %>";
   N.runtime.version     = "<%= N('runtime.version') %>";
   N.runtime.locale      = "en-US";
