@@ -31,7 +31,7 @@ function start_logger(file) {
 }
 
 
-var logfile = path.join(N.runtime.apps[0].root, 'log/fontello-stats.log');
+var logfile = path.join(N.runtime.mainApp.root, 'log/fontello-stats.log');
 var logger  = start_logger(logfile);
 
 

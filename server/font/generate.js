@@ -9,32 +9,35 @@ var crypto    = require('crypto');
 var os        = require('os');
 var fs        = require('fs');
 var path      = require('path');
-var http      = require('http');
 var execFile  = require('child_process').execFile;
 
 
 // 3rd-party
 var _       = underscore;
-var send    = require('send');
 var neuron  = require('neuron');
 var async   = require('async');
 var fstools = require('fs-tools');
 
 
 // internal
-var stats       = require('../lib/stats');
-var logger      = N.logger.getLogger('server.font');
-var dl_logger   = N.logger.getLogger('server.font.download');
-var fontConfig  = require('../lib/font_config');
+var fontConfig      = require('../../lib/font_config');
+var stats           = require('./_build_stats');
+var APP_ROOT        = require('./_common').APP_ROOT;
+var DOWNLOAD_DIR    = require('./_common').DOWNLOAD_DIR;
+var JOBS            = require('./_common').JOBS;
+var getDownloadUrl  = require('./_common').getDownloadUrl;
+var getDownloadPath = require('./_common').getDownloadPath;
 
 
 ////////////////////////////////////////////////////////////////////////////////
 
 
+// logger of font generator
+var logger = N.logger.getLogger('server.font');
+
+
+// some generator specific variables
 var TMP_DIR             = '/tmp/fontello';
-var APP_ROOT            = _.first(N.runtime.apps).root;
-var DOWNLOAD_DIR        = path.join(APP_ROOT, 'public/download/');
-var DOWNLOAD_URL_PREFIX = "/download/";
 var GENERATOR_BIN       = path.join(APP_ROOT, 'bin/generate_font.sh');
 var CONFIG              = N.config.app;
 
@@ -43,7 +46,7 @@ var CONFIG              = N.config.app;
 
 
 // returns unique ID for requested list of glyphs
-function get_download_id(config) {
+function getDownloadID(config) {
   var hash = crypto.createHash('md5');
 
   hash.update('fontello' + N.runtime.version);
@@ -56,28 +59,12 @@ function get_download_id(config) {
 }
 
 
-function get_download_path(font_id) {
-  var a, b;
-
-  a = font_id.substr(0, 2);
-  b = font_id.substr(2, 2);
-
-  return [a, b, 'fontello-' + font_id].join("/") + ".zip";
-}
+// define neuron queue
+var jobMgr = new (neuron.JobManager)();
 
 
-function get_download_url(font_id) {
-  return DOWNLOAD_URL_PREFIX + get_download_path(font_id);
-}
-
-
-// status of jobs by their ids
-var jobs = {};
-
-
-// define queue and jobs
-var job_mgr = new (neuron.JobManager)();
-job_mgr.addJob('generate-font', {
+// define neuron job
+jobMgr.addJob('generate-font', {
   dirname: '/tmp',
   concurrency: (CONFIG.builder_concurrency || os.cpus().length),
   work: function (font_id, config) {
@@ -87,8 +74,8 @@ job_mgr.addJob('generate-font', {
 
     try {
       tmp_dir = path.join(TMP_DIR, "fontello-" + font_id);
-      zipball = path.join(DOWNLOAD_DIR, get_download_path(font_id));
-      times   = [jobs[font_id]];
+      zipball = path.join(DOWNLOAD_DIR, getDownloadPath(font_id));
+      times   = [JOBS[font_id]];
 
       logger.info(log_prefix + 'Start generation: ' + JSON.stringify(config.session));
 
@@ -137,51 +124,19 @@ job_mgr.addJob('generate-font', {
 });
 
 
-job_mgr.on('finish', function (job, worker) {
+// action after job was finished
+jobMgr.on('finish', function (job, worker) {
   if ('generate-font' === job.name) {
-    delete jobs[worker.args[0]];
+    delete JOBS[worker.args[0]];
   }
 });
 
 
-// Validate input parameters
-N.validate('status', {
-  id: {
-    type: "string",
-    required: true
-  }
-});
-
-
-// request font generation status
-module.exports.status = function (params, callback) {
-  var response  = this.response,
-      file      = path.join(DOWNLOAD_DIR, get_download_path(params.id));
-
-  if (jobs[params.id]) {
-    response.data = {status: 'enqueued'};
-    callback();
-    return;
-  }
-
-  path.exists(file, function (exists) {
-    if (!exists) {
-      // job not found
-      response.data   = {status: 'error'};
-      response.error  = 'Unknown font id (probably task crashed, try again).';
-      callback();
-      return;
-    }
-
-    // job done
-    response.data = {status: 'finished', url: get_download_url(params.id)};
-    callback();
-  });
-};
+////////////////////////////////////////////////////////////////////////////////
 
 
 // Validate input parameters
-N.validate('generate', {
+N.validate({
   name: {
     type: "string",
     required: false
@@ -193,8 +148,11 @@ N.validate('generate', {
 });
 
 
+////////////////////////////////////////////////////////////////////////////////
+
+
 // request font generation
-module.exports.generate = function (params, callback) {
+module.exports = function (params, callback) {
   var self = this, font = fontConfig(params), font_id, errmsg;
 
   if (!font || 0 >= font.glyphs.length) {
@@ -216,90 +174,24 @@ module.exports.generate = function (params, callback) {
     return;
   }
 
-  font_id = get_download_id(font);
+  font_id = getDownloadID(font);
 
-  if (jobs[font_id]) {
+  if (JOBS[font_id]) {
     logger.info("Job already in queue: " + JSON.stringify({
       font_id     : font_id,
-      queue_length: _.keys(jobs).length
+      queue_length: _.keys(JOBS).length
     }));
   } else {
     // enqueue new unique job
-    jobs[font_id] = Date.now();
-    job_mgr.enqueue('generate-font', font_id, font);
+    JOBS[font_id] = Date.now();
+    jobMgr.enqueue('generate-font', font_id, font);
 
     logger.info("New job created: " + JSON.stringify({
       font_id     : font_id,
-      queue_length: _.keys(jobs).length
+      queue_length: _.keys(JOBS).length
     }));
   }
 
   self.response.data = {id: font_id, status: 'enqueued'};
   callback();
-};
-
-
-// font downloader middleware
-var FINGERPRINT_RE = /-([0-9a-f]{32,40})\.[^.]+$/;
-
-
-// Validate input parameters
-N.validate('download', {
-  file: {
-    type: "string",
-    required: true
-  }
-});
-
-
-// Send dowloaded file
-//
-module.exports.download = function (params, callback) {
-  var match, req, res, filename;
-
-  if (!this.origin.http) {
-    callback({code: N.io.BAD_REQUEST, body: "HTTP ONLY"});
-    return;
-  }
-
-  req = this.origin.http.req;
-  res = this.origin.http.res;
-
-  if ('GET' !== req.method && 'HEAD' !== req.method) {
-    callback(N.io.BAD_REQUEST);
-    return;
-  }
-
-  match = FINGERPRINT_RE.exec(params.file);
-
-  if (match) {
-    // beautify zipball name
-    filename = 'filename=fontello-' + match[1].substr(0, 8) + '.zip';
-    res.setHeader('Content-Disposition', 'attachment; ' + filename);
-  }
-
-  send(req, params.file)
-    .root(DOWNLOAD_DIR)
-    .on('error', function (err) {
-      if (404 === err.status) {
-        callback(N.io.NOT_FOUND);
-        return;
-      }
-
-      callback(err);
-    })
-    .on('directory', function () {
-      callback(N.io.BAD_REQUEST);
-    })
-    .on('end', function () {
-      dl_logger.info('%s - "%s %s HTTP/%s" %d "%s" - %s',
-                     req.connection.remoteAddress,
-                     req.method,
-                     req.url,
-                     req.httpVersion,
-                     res.statusCode,
-                     req.headers['user-agent'],
-                     http.STATUS_CODES[res.statusCode]);
-    })
-    .pipe(res);
 };
