@@ -23,6 +23,7 @@
                         "babelfish"     : "~ 0.1.1",
                         "cron"          : "~ 1.0.0",
                         "csso"          : "~ 1.2.14",
+                        "collections"   : "~ 0.1.4",
                         "ejs"           : "~ 0.8.2",
                         "find-requires" : "~ 0.1.4",
                         "fs-tools"      : "~ 0.2.7",
