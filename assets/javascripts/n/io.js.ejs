@@ -20,7 +20,7 @@
   // last xhr to allow interrupt it
   last_xhr = null,
   // exported IO object
-  io = <%- N('io', true) %>;
+  io = <%- JSON.stringify(N.io) %>;
 
 
   // export into N.io
