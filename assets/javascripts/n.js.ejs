@@ -10,15 +10,15 @@ var N = window.N = (function (N) {
   'use strict';
 
   N.config           = {};
-  N.config.app       = <%- JSON.stringify(N('config.app')) %>
+  N.config.app       = <%- N('config.app', true) %>
   N.views            = {};
   N.server           = {};
   N.shared           = {};
   N.client           = {};
 
   N.runtime             = {};
-  N.runtime.env         = "<%= N('runtime.env') %>";
-  N.runtime.version     = "<%= N('runtime.version') %>";
+  N.runtime.env         = <%- N('runtime.env', true) %>;
+  N.runtime.version     = <%- N('runtime.version', true) %>;
   N.runtime.locale      = "en-US";
   N.runtime.i18n        = new BabelFish({});
 
