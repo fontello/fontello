@@ -15,8 +15,19 @@ module.exports.parserParameters = {
   description:  'Start fontello server'
 };
 
+module.exports.commandLineArguments = [
+  {
+    args: ['--test'],
+    options: {
+      help:   'exit immideately, with code 0 on successeful init',
+      action: 'storeTrue'
+    }
+  }
+];
+
 
 module.exports.run = function (args, callback) {
+
   async.series([
     function (next) { N.logger.debug('Init app...'); next(); },
     require('../lib/init/app'),
@@ -26,5 +37,18 @@ module.exports.run = function (args, callback) {
 
     function (next) { N.logger.debug('Init server...'); next(); },
     require('../lib/init/server')
-  ], callback);
+  ], function (err) {
+    if (err) {
+      callback(err);
+      return;
+    }
+
+    // for `--test` just exit on success
+    if (args.test) {
+      process.stdout.write('\nSetver exec test OK');
+      process.exit(0);
+    }
+
+    callback;
+  });
 };
