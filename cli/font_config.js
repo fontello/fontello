@@ -4,11 +4,6 @@
 /*global N*/
 
 
-// 3rd-party
-var Async   = require('async');
-var FsTools = require('fs-tools');
-
-
 // internal
 var fontConfig = require('../lib/font_config');
 

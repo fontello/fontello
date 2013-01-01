@@ -9,3 +9,4 @@ assets/embedded_fonts/
 public/
 src/
 support/
+lib/embedded_fonts

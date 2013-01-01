@@ -25,7 +25,6 @@ var stats           = require('./_build_stats');
 var APP_ROOT        = require('./_common').APP_ROOT;
 var DOWNLOAD_DIR    = require('./_common').DOWNLOAD_DIR;
 var JOBS            = require('./_common').JOBS;
-var getDownloadUrl  = require('./_common').getDownloadUrl;
 var getDownloadPath = require('./_common').getDownloadPath;
 
 

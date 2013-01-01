@@ -1,6 +1,3 @@
-/*global $, ko*/
-
-
 'use strict';
 
 

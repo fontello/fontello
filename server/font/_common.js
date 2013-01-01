@@ -7,7 +7,7 @@
 "use strict";
 
 
-/*global underscore, N*/
+/*global N*/
 
 
 // stdlib

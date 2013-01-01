@@ -1,4 +1,4 @@
-/*global window, underscore, $, ko, N*/
+/*global underscore, $, ko, N*/
 
 
 'use strict';

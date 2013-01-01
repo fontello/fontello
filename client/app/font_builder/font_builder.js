@@ -1,7 +1,7 @@
 'use strict';
 
 
-/*global window, underscore, $, ko, N, t*/
+/*global window, underscore, $, N, t*/
 
 
 var _ = underscore;

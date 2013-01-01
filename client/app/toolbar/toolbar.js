@@ -112,7 +112,7 @@ module.exports.init = function () {
       //
 
       $view.find('#search')
-        .on('keyup', function (event) {
+        .on('keyup', function () {
           N.emit('filter_keyword', $.trim($(this).val()));
         })
         .on('focus keyup', _.debounce(function () {

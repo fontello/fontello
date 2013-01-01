@@ -19,7 +19,7 @@ module.exports.commandLineArguments = [
   {
     args: ['--test'],
     options: {
-      help:   'exit immideately, with code 0 on successeful init',
+      help:   'Start server an terminates immedeately, with code 0 on init success.',
       action: 'storeTrue'
     }
   }
@@ -49,6 +49,6 @@ module.exports.run = function (args, callback) {
       process.exit(0);
     }
 
-    callback;
+    callback();
   });
 };

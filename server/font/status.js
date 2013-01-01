@@ -1,4 +1,4 @@
-/*global underscore, N*/
+/*global N*/
 
 
 "use strict";

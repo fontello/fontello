@@ -1,4 +1,4 @@
-/*global window, underscore, $, store, N*/
+/*global window, underscore, store, N*/
 
 
 "use strict";
