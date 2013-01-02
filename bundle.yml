@@ -42,3 +42,4 @@ packages:
         - javascripts/loader.js.ejs
         - javascripts/app.js
         - vendor/**.js
+        - "/\\.(eot|svg|ttf|woff|png|jpg|gif)$/"
