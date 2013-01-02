@@ -84,6 +84,8 @@ lint:
 
 
 test: lint
+	# cleanup assets
+	rm -rf public/assets
 	node ./fontello.js server --test
 
 
