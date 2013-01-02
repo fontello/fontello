@@ -28,7 +28,7 @@ function ToolbarModel(fontsList, fontname) {
   //
 
   this.fontname = fontname;
-  this.fontSize = ko.observable(N.config.glyph_size.val).extend({ throttle: 100 });
+  this.fontSize = ko.observable(N.runtime.config.glyph_size.val).extend({ throttle: 100 });
 
   // true, after download button pressed, until font buildeing finished
   this.building = ko.observable(false);
@@ -98,9 +98,9 @@ module.exports.init = function () {
       $view.find('#glyph-size-slider').slider({
         orientation:  'horizontal',
         range:        'min',
-        value:        N.config.glyph_size.val,
-        min:          N.config.glyph_size.min,
-        max:          N.config.glyph_size.max,
+        value:        N.runtime.config.glyph_size.val,
+        min:          N.runtime.config.glyph_size.min,
+        max:          N.runtime.config.glyph_size.max,
         slide:        function (event, ui) {
           /*jshint bitwise:false*/
           toolbar.fontSize(~~ui.value);

@@ -9,7 +9,11 @@ var request = require('supertest')('http://localhost:3000');
 
 describe('Server HTTP', function () {
   before(function (done) {
-    require('../../fontello')(['server'], done);
+    var
+    runner      = require('../../lib.runner'),
+    application = require('../../fontello');
+
+    runner.bootstrap(application, ['server'], done);
   });
 
   it("/ GET", function (done) {

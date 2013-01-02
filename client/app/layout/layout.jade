@@ -18,6 +18,7 @@ html.no-js(lang='en', itemscope, itemtype='http://schema.org/WebPage')
     //- the fav and touch icons
     link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
 
+    meta(name="runtime", content=JSON.stringify(self.runtime))
     script(type="text/javascript") !{self.asset_include('javascripts/loader.js')}
 
     //- Google Analytics

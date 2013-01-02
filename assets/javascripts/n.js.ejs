@@ -9,13 +9,12 @@ window.underscore  = window._;
 var N = window.N = (function (N) {
   'use strict';
 
-  N.config           = <%- JSON.stringify(N.runtime.config) %>;
   N.views            = {};
   N.server           = {};
   N.shared           = {};
   N.client           = {};
 
-  N.runtime             = {};
+  N.runtime             = JSON.parse($('meta[name="runtime"]').attr('content'));
   N.runtime.env         = <%- JSON.stringify(N.runtime.env) %>;
   N.runtime.version     = <%- JSON.stringify(N.runtime.version) %>;
   N.runtime.locale      = "en-US";
