@@ -2,4 +2,4 @@ language: node_js
 node_js:
  - 0.8
 before_script: "npm install"
-script: "make test"
+script: "make setup test"
