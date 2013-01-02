@@ -47,7 +47,7 @@ module.exports.run = function (args, callback) {
 
     // for `--test` just exit on success
     if (args.test) {
-      process.stdout.write('\nServer exec test OK\n');
+      process.stdout.write('Server exec test OK\n');
       process.exit(0);
     }
 
