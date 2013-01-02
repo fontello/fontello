@@ -4,7 +4,7 @@ configured: true
 
 
 # Different application-specific constants
-# 
+#
 options:
 
   # Number of sinultaneous font-builder processes
@@ -13,11 +13,11 @@ options:
   builder_concurrency: 2
 
   # Max allowed glyphs per download. Unlimited if null.
-  # 
+  #
   max_glyphs: ~
 
   # Toolbar size slider params
-  # 
+  #
   glyph_size:
     min: 12               # minimal size
     val: 16               # default size
