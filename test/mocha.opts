@@ -1,2 +1,3 @@
 --reporter spec
 --ui bdd
+--globals N,underscore
