@@ -83,14 +83,21 @@ lint:
 	jshint . --show-non-errors
 
 
-test: lint
-	# cleanup assets
-	rm -rf public/assets
-	# prepare app config
+setup:
 	if test ! -e ./config/application.yml ; then \
 		cp ./config/application.yml.example ./config/applicationl.yml ; \
 		fi
+
+
+cleanup:
+	# cleanup assets
+	rm -rf public/assets
+
+
+test: cleanup setup lint
+	mocha ./test/unit/
 	node ./fontello.js server --test
+	mocha ./test/server/
 
 
 gh-pages:

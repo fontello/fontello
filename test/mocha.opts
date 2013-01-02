@@ -1,5 +1,2 @@
 --reporter spec
 --ui bdd
-test/unit/
-test/http/
-
