@@ -14,3 +14,4 @@ locales:
 bind:
   default:
     listen: localhost:3000
+configured: true
