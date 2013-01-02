@@ -77,7 +77,7 @@ repl:
 
 lint:
 	if test ! `which jshint` ; then \
-		echo "You need 'jshint' installed: 'npm install -g jshint'" >&2 ; \
+		echo "You need 'jshint' installed in order to run lint." >&2 ; \
 		exit 128 ; \
 		fi
 	jshint . --show-non-errors
