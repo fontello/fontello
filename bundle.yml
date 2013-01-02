@@ -41,5 +41,5 @@ packages:
       include:
         - javascripts/loader.js.ejs
         - javascripts/app.js
-        - vendor/**.js
+        - vendor/json2.js
         - "/\\.(eot|svg|ttf|woff|png|jpg|gif)$/"
