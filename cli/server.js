@@ -15,11 +15,13 @@ module.exports.parserParameters = {
   description:  'Start fontello server'
 };
 
+
 module.exports.commandLineArguments = [
   {
     args: ['--test'],
     options: {
-      help:   'Start server an terminates immedeately, with code 0 on init success.',
+      help:   'Start server an terminates immediately, ' +
+              'with code 0 on init success.',
       action: 'storeTrue'
     }
   }
@@ -45,7 +47,7 @@ module.exports.run = function (args, callback) {
 
     // for `--test` just exit on success
     if (args.test) {
-      process.stdout.write('\nSetver exec test OK');
+      process.stdout.write('\nServer exec test OK\n');
       process.exit(0);
     }
 
