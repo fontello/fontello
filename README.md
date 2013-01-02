@@ -1,6 +1,8 @@
 Fontello - icon font scissors
 =============================
 
+[![Build Status](https://travis-ci.org/fontello/fontello.png)](https://travis-ci.org/fontello/fontello)
+
 Website: [fontello.com](http://fontello.com/)
 
 This tool lets you combine icon webfonts for your own project. With fontello you can:
