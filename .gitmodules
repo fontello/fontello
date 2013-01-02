@@ -24,13 +24,13 @@
 	url = git://github.com/fontello/typicons.font.git
 [submodule "src/meteocons.font"]
 	path = src/meteocons.font
-	url = git@github.com:fontello/meteocons.font.git
+	url = git://github.com/fontello/meteocons.font.git
 [submodule "src/zocial.font"]
 	path = src/zocial.font
-	url = git@github.com:fontello/zocial.font.git
+	url = git://github.com/fontello/zocial.font.git
 [submodule "src/maki.font"]
 	path = src/maki.font
-	url = git@github.com:fontello/maki.font.git
+	url = git://github.com/fontello/maki.font.git
 [submodule "src/fontelico.font"]
 	path = src/fontelico.font
 	url = git://github.com/fontello/fontelico.font.git
