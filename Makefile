@@ -86,6 +86,10 @@ lint:
 test: lint
 	# cleanup assets
 	rm -rf public/assets
+	# prepare app config
+	if test ! -e ./config/application.yml ; then \
+		cp ./config/application.yml.example ./config/applicationl.yml ; \
+		fi
 	node ./fontello.js server --test
 
 
