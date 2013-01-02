@@ -1,1 +1,5 @@
---reporter spec --ui bdd
+--reporter spec
+--ui bdd
+test/unit/
+test/http/
+

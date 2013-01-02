@@ -13,7 +13,7 @@ var assert = require('assert');
 
 
 // internal
-var Hooker = require('../lib/support/hooker');
+var Hooker = require('../../lib/support/hooker');
 
 
 describe('Hooker', function () {
