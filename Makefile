@@ -85,7 +85,7 @@ lint:
 
 setup:
 	if test ! -e ./config/application.yml ; then \
-		cp ./config/application.yml.example ./config/applicationl.yml ; \
+		cp ./config/application.yml.example ./config/application.yml ; \
 		fi
 
 
