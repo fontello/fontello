@@ -84,6 +84,7 @@ lint:
 
 
 test: lint
+	node ./fontello.js server --test
 
 
 gh-pages:
