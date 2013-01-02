@@ -1,4 +1,4 @@
-/*global describe, it*/
+/*global before, describe, it*/
 
 
 'use strict';
@@ -8,6 +8,10 @@ var request = require('supertest')('http://localhost:3000');
 
 
 describe('Server HTTP', function () {
+  before(function (done) {
+    require('../../fontello')(['server'], done);
+  });
+
   it("/ GET", function (done) {
     request
       .get('/')
