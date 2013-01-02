@@ -38,7 +38,7 @@ var logger = N.logger.getLogger('server.font');
 // some generator specific variables
 var TMP_DIR             = '/tmp/fontello';
 var GENERATOR_BIN       = path.join(APP_ROOT, 'bin/generate_font.sh');
-var CONFIG              = N.config.app;
+var CONFIG              = N.config.options;
 
 
 ////////////////////////////////////////////////////////////////////////////////
