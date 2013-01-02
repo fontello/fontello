@@ -9,8 +9,7 @@ window.underscore  = window._;
 var N = window.N = (function (N) {
   'use strict';
 
-  N.config           = {};
-  N.config.app       = <%- JSON.stringify(N.config.app) %>
+  N.config           = <%- JSON.stringify(N.runtime.config) %>;
   N.views            = {};
   N.server           = {};
   N.shared           = {};

@@ -14,9 +14,9 @@ var map = Object(null);
 
 
 function findFreeCode() {
-  var code = N.config.app.autoguess_charcode.min;
+  var code = N.config.autoguess_charcode.min;
 
-  while (code <= N.config.app.autoguess_charcode.max) {
+  while (code <= N.config.autoguess_charcode.max) {
     if (!map[code]) {
       // got unused code
       return code;
