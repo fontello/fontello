@@ -60,7 +60,7 @@ node ./fontello.js font_config --input $USER_CONFIG --output $CONFIG
 
 
 font_merge.py --config "$CONFIG" --dst_font "$TMPDIR/font/$FONTNAME.ttf"
-ttfautohint --latin-fallback --hinting-limit=200 --hinting-range-max=50 \
+ttfautohint --latin-fallback --no-info --windows-compatibility \
   --symbol "$TMPDIR/font/$FONTNAME.ttf" "$TMPDIR/font/$FONTNAME-hinted.ttf"
 mv "$TMPDIR/font/$FONTNAME-hinted.ttf" "$TMPDIR/font/$FONTNAME.ttf"
 fontconvert.py --src_font "$TMPDIR/font/$FONTNAME.ttf" --fonts_dir "$TMPDIR/font"

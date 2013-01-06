@@ -44,7 +44,7 @@ rebuild-fonts:
 	# build single font
 	mkdir ${TMP_PATH}
 	bin/build_common_font.py -i $(foreach f,$(FONTS), ./src/${f}) -o ${TMP_PATH}/fontello.ttf -c lib/embedded_fonts/glyphs_map.js
-	ttfautohint --latin-fallback --hinting-limit=200 --hinting-range-max=50 \
+	ttfautohint --latin-fallback --no-info --windows-compatibility \
   --symbol "${TMP_PATH}/fontello.ttf" "${TMP_PATH}/fontello-hinted.ttf"
 	mv "${TMP_PATH}/fontello-hinted.ttf" "assets/embedded_fonts/fontello.ttf"
 	fontconvert.py --src_font "assets/embedded_fonts/fontello.ttf" --fonts_dir "assets/embedded_fonts"
