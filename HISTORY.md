@@ -2,7 +2,7 @@
 ------------------
 
 * Updated Entypo to 2.0
-* Updated Font Awesome to 2.0
+* Updated Font Awesome to 3.0
 * Added Meteocons font
 * Added Fontelico font
 * Tuned fonts baseline
@@ -11,7 +11,7 @@
 * Improved generated demo (show glyph codes now)
 * Added css with base64 woff & ttf fonts, to workaround CORS issues in FF & IE9,
   when you don't wish to set `Access-Control-Allow-Origin` server headers.
-* New arcitecture, use knockout.js
+* New modularized architecture (all as `blocks` + knockout.js on client side)
 
 
 2.0.4 / 2012-11-06
