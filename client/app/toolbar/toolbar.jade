@@ -7,9 +7,6 @@
       autocomplete='off')
     .icon-search
 
-  .btn-group.pull-left
-    #glyph-size-slider
-    #glyph-size-value(data-bind='text: fontSize() + "px"')
 
   .btn-group.pull-right
     a#result-download.btn.btn-info.disabled(
@@ -40,3 +37,7 @@
       li.divider
       li: a(href='#', data-on-click='reset_selected') Unselect glyphs
       li: a(href='#', data-on-click='reset_all_confirm') Reset all changes
+
+  .btn-group.pull-right
+    #glyph-size-slider
+    #glyph-size-value(data-bind='text: fontSize() + "px"')
