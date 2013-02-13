@@ -3,14 +3,15 @@
   != '\n'
   != '\n'
 
+- var rnd = Math.floor(Math.random()*100000000);
 :stylus_nowrap
   @font-face {
     font-family: '#{font.fontname}';
-    src: url('../font/#{font.fontname}.eot');
-    src: url('../font/#{font.fontname}.eot?#iefix') format('embedded-opentype'),
-         url('../font/#{font.fontname}.woff') format('woff'),
-         url('../font/#{font.fontname}.ttf') format('truetype'),
-         url('../font/#{font.fontname}.svg##{font.fontname}') format('svg');
+    src: url('../font/#{font.fontname}.eot?#{rnd}');
+    src: url('../font/#{font.fontname}.eot?#{rnd}#iefix') format('embedded-opentype'),
+         url('../font/#{font.fontname}.woff?#{rnd}') format('woff'),
+         url('../font/#{font.fontname}.ttf?#{rnd}') format('truetype'),
+         url('../font/#{font.fontname}.svg?#{rnd}##{font.fontname}') format('svg');
     font-weight: normal;
     font-style: normal;
   }
