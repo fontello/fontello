@@ -18,6 +18,16 @@
     src: url('data:application/octet-stream;base64,%WOFF64%') format('woff'),
          url('data:application/octet-stream;base64,%TTF64%') format('truetype');
   }
+  /* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+  /* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+  /*
+  @media screen and (-webkit-min-device-pixel-ratio:0) {
+    @font-face {
+      font-family: '#{font.fontname}';
+      src: url('../font/#{font.fontname}.svg?#{rnd}##{font.fontname}') format('svg');
+    }
+  }
+  */
  
   [class^="icon-"], [class*=" icon-"]
     &:before

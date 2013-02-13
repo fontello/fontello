@@ -15,7 +15,17 @@
     font-weight: normal;
     font-style: normal;
   }
- 
+  /* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+  /* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+  /*
+  @media screen and (-webkit-min-device-pixel-ratio:0) {
+    @font-face {
+      font-family: '#{font.fontname}';
+      src: url('../font/#{font.fontname}.svg?#{rnd}##{font.fontname}') format('svg');
+    }
+  }
+  */
+
   [class^="icon-"], [class*=" icon-"]
     &:before
       font-family '#{font.fontname}'
