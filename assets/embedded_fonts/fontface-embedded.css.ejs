@@ -5,10 +5,11 @@
 .font-embedded-4 { font-family: 'typicons'; }
 .font-embedded-5 { font-family: 'modernpics'; }
 .font-embedded-6 { font-family: 'meteocons'; }
-.font-embedded-7 { font-family: 'maki'; }
-.font-embedded-8 { font-family: 'zocial'; }
-.font-embedded-9 { font-family: 'brandico'; }
-.font-embedded-10 { font-family: 'websymbols'; }
+.font-embedded-7 { font-family: 'mfglabs'; }
+.font-embedded-8 { font-family: 'maki'; }
+.font-embedded-9 { font-family: 'zocial'; }
+.font-embedded-10 { font-family: 'brandico'; }
+.font-embedded-11 { font-family: 'websymbols'; }
 
 @font-face {
   font-family: 'fontelico';
@@ -83,6 +84,17 @@
        url('<%= asset_path("embedded_fonts/meteocons.woff") %>') format('woff'),
        url('<%= asset_path("embedded_fonts/meteocons.ttf") %>') format('truetype'),
        url('<%= asset_path("embedded_fonts/meteocons.svg") %>#meteocons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'mfglabs';
+  src: url('<%= asset_path("embedded_fonts/mfglabs.eot") %>');
+  src: url('<%= asset_path("embedded_fonts/mfglabs.eot") %>?#iefix') format('embedded-opentype'),
+       url('<%= asset_path("embedded_fonts/mfglabs.woff") %>') format('woff'),
+       url('<%= asset_path("embedded_fonts/mfglabs.ttf") %>') format('truetype'),
+       url('<%= asset_path("embedded_fonts/mfglabs.svg") %>#mfglabs') format('svg');
   font-weight: normal;
   font-style: normal;
 }

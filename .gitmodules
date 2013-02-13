@@ -34,3 +34,6 @@
 [submodule "src/fontelico.font"]
 	path = src/fontelico.font
 	url = git://github.com/fontello/fontelico.font.git
+[submodule "src/mfglabs.font"]
+	path = src/mfglabs.font
+	url = git://github.com/fontello/mfglabs.font.git
