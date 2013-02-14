@@ -69,10 +69,12 @@ function GlyphModel(font, data, options) {
   
   // we search by name AND aliases
   this.keywords         = [this.originalName].concat(data.search || []).join(',');
+
+
   this.charRef          = fixedFromCharCode(glyphs_map[font.fontname][data.uid]);
   this.cssExt           = data['css-ext'];
   this.tooltip          = "name: '" + this.originalName + "'" +
-                          (this.keywords ? ', tags: ' + this.keywords : '');
+                          (data.search ? ',   tags: ' + data.search.join(', ') : '');
 
   //
   // Actual properties state
