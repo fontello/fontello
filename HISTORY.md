@@ -5,12 +5,16 @@
 * Updated Font Awesome to 3.0
 * Added Meteocons font
 * Added Fontelico font
+* Added Elusive font
 * Tuned fonts baseline
 * Added glyphs tooltips on selector panel
 * Added delete buttons on codes editor and names editor
 * Improved generated demo (show glyph codes now)
 * Added css with base64 woff & ttf fonts, to workaround CORS issues in FF & IE9,
   when you don't wish to set `Access-Control-Allow-Origin` server headers.
+* Removed default opacity
+* Rearranged toolbar controls, to show `search` better
+* Added random number to generated CSS font paths, to avoid cache issues (#127)
 * New modularized architecture (all as `blocks` + knockout.js on client side)
 
 
