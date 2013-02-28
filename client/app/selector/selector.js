@@ -33,12 +33,12 @@ function fixedFromCharCode(code) {
 
 
 // Char to Int, with fix for big numbers
-function fixedCharCodeAt(char) {
+function fixedCharCodeAt(chr) {
   /*jshint bitwise: false*/
-  var char1 = char.charCodeAt(0),
-      char2 = char.charCodeAt(1);
+  var char1 = chr.charCodeAt(0),
+      char2 = chr.charCodeAt(1);
 
-  if ((char.length >= 2) &&
+  if ((chr.length >= 2) &&
       ((char1 & 0xfc00) === 0xd800) &&
       ((char2 & 0xfc00) === 0xdc00)) {
     return 0x10000 + ((char1 - 0xd800) << 10) + (char2 - 0xdc00);
@@ -66,7 +66,7 @@ function GlyphModel(font, data, options) {
   //
 
   this.font             = font;
-  
+
   // we search by name AND aliases
   this.keywords         = [this.originalName].concat(data.search || []).join(',');
 
