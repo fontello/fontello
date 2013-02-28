@@ -9,7 +9,8 @@
 .font-embedded-8 { font-family: 'maki'; }
 .font-embedded-9 { font-family: 'zocial'; }
 .font-embedded-10 { font-family: 'brandico'; }
-.font-embedded-11 { font-family: 'websymbols'; }
+.font-embedded-11 { font-family: 'elusive'; }
+.font-embedded-12 { font-family: 'websymbols'; }
 
 @font-face {
   font-family: 'fontelico';
@@ -128,6 +129,17 @@
        url('<%= asset_path("embedded_fonts/brandico.woff") %>') format('woff'),
        url('<%= asset_path("embedded_fonts/brandico.ttf") %>') format('truetype'),
        url('<%= asset_path("embedded_fonts/brandico.svg") %>#brandico') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'elusive';
+  src: url('<%= asset_path("embedded_fonts/elusive.eot") %>');
+  src: url('<%= asset_path("embedded_fonts/elusive.eot") %>?#iefix') format('embedded-opentype'),
+       url('<%= asset_path("embedded_fonts/elusive.woff") %>') format('woff'),
+       url('<%= asset_path("embedded_fonts/elusive.ttf") %>') format('truetype'),
+       url('<%= asset_path("embedded_fonts/elusive.svg") %>#elusive') format('svg');
   font-weight: normal;
   font-style: normal;
 }

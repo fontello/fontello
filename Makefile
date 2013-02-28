@@ -22,6 +22,7 @@ FONTS         += mfglabs.font
 FONTS         += maki.font
 FONTS         += zocial.font
 FONTS         += brandico.font
+FONTS         += elusive.font
 FONTS         += websymbols-uni.font
 FONT_CONFIGS   = $(foreach f,$(FONTS),src/${f}/config.yml)
 
