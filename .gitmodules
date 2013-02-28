@@ -37,3 +37,6 @@
 [submodule "src/mfglabs.font"]
 	path = src/mfglabs.font
 	url = git://github.com/fontello/mfglabs.font.git
+[submodule "src/elusive.font"]
+	path = src/elusive.font
+	url = git://github.com/fontello/elusive.font.git
