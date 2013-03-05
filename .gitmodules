@@ -40,3 +40,6 @@
 [submodule "src/elusive.font"]
 	path = src/elusive.font
 	url = git://github.com/fontello/elusive.font.git
+[submodule "src/linecons.font"]
+	path = src/linecons.font
+	url = git://github.com/fontello/linecons.font.git
