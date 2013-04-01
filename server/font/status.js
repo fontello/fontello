@@ -1,7 +1,4 @@
-/*global N*/
-
-
-"use strict";
+'use strict';
 
 
 // stdlib
@@ -18,40 +15,37 @@ var getDownloadPath = require('./_common').getDownloadPath;
 ////////////////////////////////////////////////////////////////////////////////
 
 
-// Validate input parameters
-N.validate({
-  id: {
-    type: "string",
-    required: true
-  }
-});
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
 // request font generation status
-module.exports = function (params, callback) {
-  var response  = this.response,
-      file      = path.join(DOWNLOAD_DIR, getDownloadPath(params.id));
+module.exports = function (N, apiPath) {
+  N.validate(apiPath, {
+    id: {
+      type: "string"
+    , required: true
+    }
+  });
 
-  if (JOBS[params.id]) {
-    response.data = {status: 'enqueued'};
-    callback();
-    return;
-  }
+  N.wire.on(apiPath, function (env, callback) {
+    var file = path.join(DOWNLOAD_DIR, getDownloadPath(env.params.id));
 
-  path.exists(file, function (exists) {
-    if (!exists) {
-      // job not found
-      response.data   = {status: 'error'};
-      response.error  = 'Unknown font id (probably task crashed, try again).';
+    if (JOBS[env.params.id]) {
+      env.response.data.status = 'enqueued';
       callback();
       return;
     }
 
-    // job done
-    response.data = {status: 'finished', url: getDownloadUrl(params.id)};
-    callback();
+    path.exists(file, function (exists) {
+      if (!exists) {
+        // job not found
+        env.response.data.status = 'error';
+        env.response.error = 'Unknown font id (probably task crashed, try again).';
+        callback();
+        return;
+      }
+
+      // job done
+      env.response.data.status = 'finished';
+      env.response.data.url = getDownloadUrl(env.params.id);
+      callback();
+    });
   });
 };

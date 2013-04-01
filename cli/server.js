@@ -1,18 +1,16 @@
+// Start server
+//
+
 "use strict";
 
 
-/*global N*/
-
-
-// 3rd-party
-var async = require('async');
+////////////////////////////////////////////////////////////////////////////////
 
 
 module.exports.parserParameters = {
-  version:      N.runtime.version,
   addHelp:      true,
-  help:         'start fontello server',
-  description:  'Start fontello server'
+  help:         'start nodeca server',
+  description:  'Start nodeca server'
 };
 
 
@@ -28,29 +26,28 @@ module.exports.commandLineArguments = [
 ];
 
 
-module.exports.run = function (args, callback) {
+module.exports.run = function (N, args, callback) {
 
-  async.series([
-    function (next) { N.logger.debug('Init app...'); next(); },
-    require('../lib/init/app'),
+  N.wire.emit([
+      'init:models',
+      'init:migrations',
+      'init:bundle',
+      'init:server'
+    ], N,
 
-    function (next) { N.logger.debug('Init cronjob...'); next(); },
-    require('../lib/init/cronjob'),
+    function (err) {
+      if (err) {
+        callback(err);
+        return;
+      }
 
-    function (next) { N.logger.debug('Init server...'); next(); },
-    require('../lib/init/server')
-  ], function (err) {
-    if (err) {
-      callback(err);
-      return;
+      // for `--test` just exit on success
+      if (args.test) {
+        process.stdout.write('Server exec test OK\n');
+        process.exit(0);
+      }
+
+      callback();
     }
-
-    // for `--test` just exit on success
-    if (args.test) {
-      process.stdout.write('Server exec test OK\n');
-      process.exit(0);
-    }
-
-    callback();
-  });
+  );
 };

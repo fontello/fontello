@@ -4,10 +4,7 @@
 // - download()
 
 
-"use strict";
-
-
-/*global N*/
+'use strict';
 
 
 // stdlib

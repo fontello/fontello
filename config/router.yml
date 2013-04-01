@@ -1,13 +1,18 @@
 router:
   map:
-    app:
+    fontello.application:
       "/": ~
-    font.download:
+
+    fontello.font.download:
       "/download/{file}":
         file: /.+/
-    assets:
+
+    core.assets:
       "/assets/{path}":
         path: /.+/
-    static:
+        responder: bin
+
+    core.static:
       "/{file}":
         file: /favicon.ico|robots.txt|snippet.png|fuckup.log/
+        responder: bin

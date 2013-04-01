@@ -1,12 +1,9 @@
-/*global N*/
-
-
 'use strict';
 
 
 // stdlib
-var path  = require('path');
-var fs    = require('fs');
+var path = require('path');
+var fs   = require('fs');
 
 
 function start_logger(file) {

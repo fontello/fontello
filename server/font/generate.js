@@ -1,7 +1,4 @@
-/*global underscore, N*/
-
-
-"use strict";
+'use strict';
 
 
 // stdlib
@@ -13,7 +10,7 @@ var execFile  = require('child_process').execFile;
 
 
 // 3rd-party
-var _       = underscore;
+var _       = require('lodash');
 var neuron  = require('neuron');
 var async   = require('async');
 var fstools = require('fs-tools');
@@ -67,9 +64,11 @@ jobMgr.addJob('generate-font', {
   dirname: '/tmp',
   concurrency: (CONFIG.builder_concurrency || os.cpus().length),
   work: function (font_id, config) {
-    var self        = this,
-        log_prefix  = '[font::' + font_id + '] ',
-        tmp_dir, zipball, times;
+    var self = this
+      , log_prefix = '[font::' + font_id + '] '
+      , tmp_dir
+      , zipball
+      , times;
 
     try {
       tmp_dir = path.join(TMP_DIR, "fontello-" + font_id);
@@ -88,11 +87,11 @@ jobMgr.addJob('generate-font', {
       times.push(Date.now());
 
       async.series([
-        async.apply(fstools.remove, tmp_dir),
-        async.apply(fstools.mkdir, tmp_dir),
-        async.apply(fs.writeFile, path.join(tmp_dir, 'config.json'), JSON.stringify(config.session, null, '  '), 'utf8'),
-        async.apply(execFile, GENERATOR_BIN, [config.font.fontname, tmp_dir, zipball], {cwd: APP_ROOT}),
         async.apply(fstools.remove, tmp_dir)
+      , async.apply(fstools.mkdir, tmp_dir)
+      , async.apply(fs.writeFile, path.join(tmp_dir, 'config.json'), JSON.stringify(config.session, null, '  '), 'utf8')
+      , async.apply(execFile, GENERATOR_BIN, [config.font.fontname, tmp_dir, zipball], {cwd: APP_ROOT})
+      , async.apply(fstools.remove, tmp_dir)
       ], function (err) {
         if (err) {
           logger.error(log_prefix + (err.stack || err.message || err.toString()));
@@ -107,8 +106,8 @@ jobMgr.addJob('generate-font', {
                     "(real: " + ((times[1] - times[0]) / 1000) + "ms)");
 
         stats.push({
-          glyphs: config.glyphs.length,
-          time:   (times[2] - times[0]) / 1000
+          glyphs: config.glyphs.length
+        , time:   (times[2] - times[0]) / 1000
         });
 
         self.finished = true;
@@ -134,63 +133,61 @@ jobMgr.on('finish', function (job, worker) {
 ////////////////////////////////////////////////////////////////////////////////
 
 
-// Validate input parameters
-N.validate({
-  name: {
-    type: "string",
-    required: false
-  },
-  glyphs: {
-    type: "array",
-    required: true
-  }
-});
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
 // request font generation
-module.exports = function (params, callback) {
-  var self = this, font = fontConfig(params), font_id, errmsg;
+module.exports = function (N, apiPath) {
+  N.validate(apiPath, {
+    name: {
+      type: "string"
+    , required: false
+    }
+  , glyphs: {
+      type: "array"
+    , required: true
+    }
+  });
 
-  if (!font || 0 >= font.glyphs.length) {
-    callback("Invalid request");
-    return;
-  }
+  N.wire.on(apiPath, function (env, callback) {
+    var font = fontConfig(env.params), font_id, errmsg;
 
-  if (CONFIG.max_glyphs && CONFIG.max_glyphs < font.glyphs.length) {
-    errmsg = 'Too many icons requested: ' + font.glyphs.length +
-             ' of ' + CONFIG.max_glyphs + ' allowed.';
+    if (!font || 0 >= font.glyphs.length) {
+      callback("Invalid request");
+      return;
+    }
 
-    this.response.error = {
-      code:     'MAX_GLYPHS_LIMIT',
-      message:  errmsg
-    };
+    if (CONFIG.max_glyphs && CONFIG.max_glyphs < font.glyphs.length) {
+      errmsg = 'Too many icons requested: ' + font.glyphs.length +
+               ' of ' + CONFIG.max_glyphs + ' allowed.';
 
-    logger.warn(errmsg);
+      env.response.error = {
+        code:     'MAX_GLYPHS_LIMIT'
+      , message:  errmsg
+      };
+
+      logger.warn(errmsg);
+      callback();
+      return;
+    }
+
+    font_id = getDownloadID(font);
+
+    if (JOBS[font_id]) {
+      logger.info("Job already in queue: " + JSON.stringify({
+        font_id: font_id
+      , queue_length: _.keys(JOBS).length
+      }));
+    } else {
+      // enqueue new unique job
+      JOBS[font_id] = Date.now();
+      jobMgr.enqueue('generate-font', font_id, font);
+
+      logger.info("New job created: " + JSON.stringify({
+        font_id: font_id
+      , queue_length: _.keys(JOBS).length
+      }));
+    }
+
+    env.response.data.id = font_id;
+    env.response.data.status = 'enqueued';
     callback();
-    return;
-  }
-
-  font_id = getDownloadID(font);
-
-  if (JOBS[font_id]) {
-    logger.info("Job already in queue: " + JSON.stringify({
-      font_id     : font_id,
-      queue_length: _.keys(JOBS).length
-    }));
-  } else {
-    // enqueue new unique job
-    JOBS[font_id] = Date.now();
-    jobMgr.enqueue('generate-font', font_id, font);
-
-    logger.info("New job created: " + JSON.stringify({
-      font_id     : font_id,
-      queue_length: _.keys(JOBS).length
-    }));
-  }
-
-  self.response.data = {id: font_id, status: 'enqueued'};
-  callback();
+  });
 };

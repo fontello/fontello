@@ -1,0 +1,247 @@
+//= require vendor/modernizr.custom
+//= require vendor/yepnope
+//= require_self
+
+
+/*global yepnope*/
+
+
+window.NodecaLoader = (function () {
+  'use strict';
+
+
+  var NodecaLoader = {};
+
+
+  var URL_JSON2_SHIM = <%- JSON.stringify(asset_path('vendor/json2/json2.js')) %>
+    , URL_ES5_SHIM   = <%- JSON.stringify(asset_path('vendor/es5-shim/es5-shim.js')) %>;
+
+
+  // Mapping of package names to package metadata for all available packages at
+  // the currect locale. The metadata is an object consists of three keys:
+  //
+  //   `js`            - URL to bundle, containing this package's JS
+  //   `css`           - URL to bundle, containing this package's CSS
+  //   `packagesQueue` - sorted list of dependencies, including this
+  //                     package (just list of package names)
+  //
+  // This variable is initialized by `loadAssets.init()`.
+  var assets;
+
+
+  // Track loaded URLs (as keys, values are just `true`)
+  var loaded = {};
+
+
+  // Hash-table storage of all the defined modules (from the loaded packages).
+  // A key may be either an absolute path to module files or alias name of the
+  // module. An associated value is the module's metadata object. Such objects
+  // have the following structure:
+  //
+  //   `root`    - Absolute path to the module's directory.
+  //   `apiPath` - Nodeca API path to use with Wire.
+  //               Example: "admin.users.usergroups.create"
+  //   `func`    - Function with all actual code of the module.
+  //               It's executed on the first require.
+  //
+  var modules = {};
+
+
+  // Sandbox object passed as an argument to each module.
+  // It should be filled via `NodecaLoader.execute`.
+  var N = { loader: NodecaLoader };
+
+
+  // Simple cross-browser `forEach` iterator for arrays.
+  function forEach(array, iterator) {
+    var index, length;
+
+    for (index = 0, length = array.length; index < length; index += 1) {
+      iterator(array[index], index);
+    }
+  }
+
+
+  function isArray(object) {
+    return '[object Array]' === Object.prototype.toString.call(object);
+  }
+
+
+  function isFunction(object) {
+    return '[object Function]' === Object.prototype.toString.call(object);
+  }
+
+
+  // Cached non-operable function.
+  function noop() {}
+
+
+  // Load a package with all of associated assets ans dependences.
+  // `preload` parameter is an optional array of URLs which are needed to load
+  // before the given package.
+  function loadAssets(pkgName, preload, callback) {
+    var resources;
+
+    if (isFunction(preload)) {
+      callback = preload;
+      preload  = null;
+    }
+
+    if (!assets[pkgName]) {
+      callback(new Error('We dont know such package (' + pkgName + ')'));
+      return;
+    }
+
+    // Copy the preload array to allow pushing without side-effects.
+    resources = preload ? preload.slice(0) : [];
+
+    forEach(assets[pkgName].packagesQueue, function (dependency) {
+      var pkgDist = assets[dependency];
+
+      if (pkgDist.css && !loaded[pkgDist.css]) {
+        resources.push(pkgDist.css);
+      }
+
+      if (pkgDist.js && !loaded[pkgDist.js]) {
+        resources.push(pkgDist.js);
+      }
+    });
+
+    // NOTE: YepNope will *only* call `complete` when `resources` is not empty.
+    if (resources.length > 0) {
+      yepnope({
+        load: resources,
+        complete: function () {
+          forEach(resources, function (res) { loaded[res] = true; });
+          callback();
+        }
+      });
+    } else {
+      callback();
+    }
+  }
+
+
+  // Loads all necessary shims and libraries and assets for given package.
+  loadAssets.init = function init(assetsMap, pkgName) {
+    var shims = [];
+
+    // Set internal assets map.
+    assets = assetsMap;
+
+    // Init can be called only once.
+    loadAssets.init = noop;
+
+    // Mark all stylesheets of the given package as loaded, since they are
+    // included to head of the page.
+    forEach(assets[pkgName].packagesQueue, function (dependency) {
+      if (assets[dependency].css) {
+        loaded[assets[dependency].css] = true;
+      }
+    });
+
+    // Choose necessary polyfills.
+    if (!window.JSON) {
+      // JSON is required for Opera < 11 + IE < 8
+      //See: http://caniuse.com/json
+      shims.push(URL_JSON2_SHIM);
+    }
+    if (!Function.prototype.bind) {
+      // http://kangax.github.com/es5-compat-table/
+      shims.push(URL_ES5_SHIM);
+    }
+
+    loadAssets(pkgName, shims, function () {
+      if (N.wire) {
+        $(function () {
+          N.wire.emit('navigate.done', {
+            url: window.location.href
+            // FIXME: We need a better way to get API path of a start page.
+          , apiPath: N.runtime.router.match(window.location.href).meta
+          });
+        });
+      } else {
+        alert('Init error: failed to load core JS files. Refresh page & try again. ' +
+              'If problem still exists - contact administrator.');
+      }
+    });
+  };
+
+
+  // Global-only require used to initialize the loaded packages.
+  function require(id) {
+    var target = modules[id];
+
+    if (!target) {
+      throw new Error('Unknown module "' + id + '"');
+    }
+
+    // If it's a first require of the given module, initialize it first.
+    if (!target.module) {
+
+      // Local `t` (translate) function for use only within this module.
+      // It allows to use phrase strings relative to the module's API path.
+      function __t__(phrase, params) {
+        if ('.' === phrase.charAt(0)) {
+          phrase = phrase.substr(1);
+        } else {
+          phrase = target.apiPath + '.' + phrase;
+        }
+        return N.runtime.t(phrase, params);
+      }
+
+      target.module = {
+        apiPath: target.apiPath
+      , exports: {}
+      };
+
+      // Execute the module's `func` function. It will populate the exports.
+      target.func.call(
+        target.module.exports // this object
+      , N
+      , require // pass self
+      , target.module.exports
+      , target.module
+      , __t__
+      );
+    }
+
+    return target.module.exports;
+  }
+
+
+  // Defines a module. See comment on `modules` variable for details.
+  function define(identifiers, apiPath, func) {
+    if (!isArray(identifiers)) {
+      identifiers = [ identifiers ];
+    }
+
+    var definition = {
+      identifiers: identifiers
+    , apiPath:     apiPath
+    , func:        func
+    };
+
+    forEach(identifiers, function (id) {
+      modules[id] = definition;
+    });
+  }
+
+
+  // Instantly executes the given `func` function passing `N` and `require`
+  // as arguments.
+  function execute(func) {
+    func.call({}, N, require);
+  }
+
+
+  NodecaLoader.N          = N;
+  NodecaLoader.modules    = modules;
+  NodecaLoader.loadAssets = loadAssets;
+  NodecaLoader.require    = require;
+  NodecaLoader.define     = define;
+  NodecaLoader.execute    = execute;
+
+
+  return NodecaLoader;
+})();

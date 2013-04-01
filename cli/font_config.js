@@ -1,15 +1,11 @@
 "use strict";
 
 
-/*global N*/
-
-
 // internal
 var fontConfig = require('../lib/font_config');
 
 
 module.exports.parserParameters = {
-  version:      N.runtime.version,
   addHelp:      true,
   help:         'prepare font configuration',
   description:  'prepare font configuration'
@@ -40,7 +36,7 @@ module.exports.commandLineArguments = [
 ];
 
 
-module.exports.run = function (args, callback) {
+module.exports.run = function (N, args, callback) {
   var input, config;
 
   try {

@@ -1,45 +1,36 @@
----
-packages:
-
+bundles:
   fontello:
+    - fontello
 
+packages:
+  fontello:
     client:
-      root:       "./client/"
-      include:    "*.js"
-      exclude:    "/(^|\\/)_.*/"
-      apiPrefix:  ~
+      main: client/main.js
+      include: client/**.js
+      exclude: /(^|\/)_.*/
 
     views:
-      root:       "./client/"
-      include:    "*.jade"
-      exclude:    "/(^|\\/)_.*/"
-      apiPrefix:  ~
+      include: client/**.jade
+      exclude: /(^|\/)_.*/
 
     i18n_client:
-      root:       "./client/"
-      include:    "i18n/*.yml"
-      apiPrefix:  ~
+      include: client/**i18n/*.yml
 
     styles:
-      root:       "./client/"
-      main:       "app/app.styl"
-      include:    "*.styl"
+      main: client/main.styl
+      include: client/**.styl
 
     server:
-      root:       "./server/"
-      include:    "*.js"
-      exclude:    "/(^|\\/)_.*/"
-      apiPrefix:  ~
+      include: server/**.js
+      exclude: /(^|\/)_.*/
 
     i18n_server:
-      root:       "./server/"
-      include:    "i18n/*.yml"
-      apiPrefix:  ~
+      include: server/**i18n/*.yml
 
     bin:
-      root:       "./assets/"
+      root: assets
       include:
-        - javascripts/loader.js.ejs
-        - javascripts/app.js
+        - loader.js.ejs
         - vendor/json2.js
-        - "/\\.(eot|svg|ttf|woff|png|jpg|gif)$/"
+        - vendor/es5-shim.js
+        - /\.(eot|svg|ttf|woff|png|jpg|gif)$/

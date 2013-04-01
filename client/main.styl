@@ -1,0 +1,79 @@
+//= require vendor/bootstrap/bootstrap
+//= require vendor/bootstrap/bootstrap-responsive
+//= require vendor/jquery.noty/noty
+//= require vendor/fontello/icons
+//= require embedded_fonts/fontface-fontello
+//= require_self
+//= require styles
+
+
+@import "nib"
+
+
+//
+// Bootstrap overrides.
+//
+
+
+// Buttons tweaks
+//
+.btn
+  font-family sansWideFontFamily
+  background-image none
+  transition background-color 0.5s ease
+  &:hover
+    transition background-color 0.5s ease
+.btn-icon-only
+  min-width 40px
+  &:before
+    margin 0
+.btn-info
+  font-weight bold
+.btn.disabled, .btn[disabled]
+  opacity .4
+
+.input-append
+  whitespace nowrap
+
+
+// Focus style tweak
+//
+input, textarea
+  box-shadow 0 1px 1px rgba(0, 0, 0, .3) inset
+input:focus,
+textarea:focus
+  border-color rgba(168,82,82,.8)
+  outline 0
+  /* IE6-9 */
+  outline thin dotted \9
+  box-shadow 0 1px 1px rgba(0, 0, 0, .075) inset, 0 0 8px rgba(168, 82, 82, .6)
+
+
+// Search icon tweak
+//
+.search-form
+  .search-query
+    padding-left 25px
+    border-color #888
+  .icon-search
+    position absolute
+    color gray
+    top 6px
+    left 8px
+    // restore font size
+    font-size 14px
+
+    &:before
+      opacity 1
+
+// Fix vertical offset for toolbar inputs
+//
+.btn-group > input
+  margin-bottom 0
+
+// When we like to hide ugly file input, but can't use display:none, because
+// Chromium will miss events. So, use .invisible, but position out of screen
+//
+input[type="file"].invisible
+  position absolute
+  left -10000px

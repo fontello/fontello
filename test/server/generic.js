@@ -4,16 +4,24 @@
 'use strict';
 
 
+var path    = require('path');
 var request = require('supertest')('http://localhost:3000');
 
 
 describe('Server HTTP', function () {
   before(function (done) {
-    var
-    runner      = require('../../lib/runner'),
-    application = require('../../fontello');
+    function init(N) {
+      require('../../lib/hooks.js')(N);
+      N.wire.after('init:server', function() { done(); });
+    }
 
-    runner.bootstrap(application, ['server'], done);
+    // Replace real process arguments passing 'server' option for the runner.
+    process.argv = ['node', 'fontello.js', 'server'];
+
+    require('../../lib/system/runner').bootstrap({
+      root: path.resolve(__dirname, '../..')
+    , init: init
+    });
   });
 
   it("/ GET", function (done) {
@@ -22,6 +30,7 @@ describe('Server HTTP', function () {
       .expect(/fontello/)
       .expect(200, done);
   });
+
   it("/ HEAD", function (done) {
     request
       .head('/')

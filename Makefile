@@ -98,9 +98,8 @@ cleanup:
 
 
 test: cleanup lint
-	mocha ./test/unit/
 	node ./fontello.js server --test
-	mocha --timeout 10000 ./test/server/
+	mocha --timeout 40000 ./test/server/
 
 
 gh-pages:

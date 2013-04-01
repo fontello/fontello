@@ -1,0 +1,129 @@
+@import "nib"
+@import "../system/_variables"
+
+
+html
+  overflow-y scroll // remove glitch on step 3, when scroller disappears
+
+body
+  padding-top 180px // make the container go all the way to the bottom of the topbar
+  padding-bottom 30px
+
+.navbar
+  box-shadow 0 0 4px #444
+
+.brand
+  line-height 20px
+  padding-top 0 !important
+  padding-bottom 0 !important
+
+//======== Github ribbon ========
+.gh-ribbon
+  position fixed
+  right -60px
+  top 44px
+  z-index 10000
+  background-color #686868
+  padding 1px 0
+  transform rotate(45deg)
+  width 230px
+  box-shadow 0 0 2px #6666
+  display none
+  a
+    display: block;
+    color #fff
+    border 1px solid #aaa
+    font-size 13px
+    font-weight bold
+    padding 4px 50px 2px
+    text-align center
+    outline none
+    &:hover
+      text-decoration none
+
+// use moderniser to show only fo browsers,
+// wich supports rotation
+.csstransforms .gh-ribbon
+  display block
+
+//======== Social buttons ========
+iframe
+  &.twitter-follow-button
+  &.twitter-share-button
+    margin-left 10px
+    margin-top 9px
+  &.FlattrButton
+    margin-top 10px
+
+.gplus > div
+  top 9px
+  position relative
+
+.nav
+  .twitter-follow-button
+  .twitter-share-button
+  .gplus
+  .FlattrButton
+    transition: opacity .5s ease;
+    opacity: .6
+
+.nav:hover
+  .twitter-follow-button
+  .twitter-share-button
+  .gplus
+  .FlattrButton
+    opacity: 1
+
+//====== warning for disabled JS ===
+.js  .jsnotice
+  display none
+
+
+.no-js .jsnotice
+  position absolute
+  left 30%
+  right 30%
+  top 90px
+  z-index 10000
+  font-size 54px
+  line-height 81px
+  font-weight bold
+
+
+p.note
+  color #888
+
+.ui-selectable-helper
+  border 1px dotted black
+  position absolute
+  z-index 100
+
+
+//
+// Animation for spinners
+//
+// - 5 turns, to not abuse peoples
+// - instant, on mouse hover
+//
+
+@keyframes spin
+  from
+    -moz-transform rotate(0deg)
+    -o-transform rotate(0deg)
+    -webkit-transform rotate(0deg)
+    transform rotate(0deg)
+  to
+    -moz-transform rotate(359deg)
+    -o-transform rotate(359deg)
+    -webkit-transform rotate(359deg)
+    transform rotate(359deg)
+
+// ! `:before` animation is not supported well
+// We have to rotate parent, and it should be block/inline-block
+
+.animate-spin
+  animation spin 2s infinite linear
+  display inline-block
+  &:before
+    font-size inherit !important
+    text-shadow none
