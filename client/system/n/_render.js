@@ -6,12 +6,11 @@
 
 
 var _      = require('lodash');
-var date   = require('../../date');
-var render = require('../../render/common');
+var date   = require('../../../lib/system/date');
+var render = require('../../../lib/system/render/common');
 
 // Expose jade runtime to `window.jade`
-require('./jade_runtime.js');
-
+require('./_jade_runtime.js');
 
 ////////////////////////////////////////////////////////////////////////////////
 

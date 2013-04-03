@@ -5,7 +5,7 @@ bundles:
 packages:
   fontello:
     client:
-      main: client/main.js
+      main: client/system/n/n.js.ejs
       include: client/**.js
       exclude: /(^|\/)_.*/
 
@@ -17,7 +17,7 @@ packages:
       include: client/**i18n/*.yml
 
     styles:
-      main: client/main.styl
+      main: assets/assets.styl
       include: client/**.styl
 
     server:

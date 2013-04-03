@@ -6,11 +6,3 @@
 //= require vendor/jquery.noty/src/js/jquery.noty
 //= require vendor/bootstrap/bootstrap
 //= require vendor/knockout
-//= require_self
-//= require client
-
-
-window.NodecaLoader.execute(function (N, require) {
-  'use strict';
-  require('../lib/system/client/n.js.ejs');
-});
