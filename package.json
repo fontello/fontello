@@ -42,10 +42,7 @@
                         "send"          : "~ 0.1.0",
                         "stylus"        : "~ 0.32.1",
                         "uglify-js"     : "~ 2.2.5",
-                        "cookie"        : "~ 0.0.5",
-                        "redis"         : "~ 0.8.2",
-                        "mongoose"      : "~ 3.6.2",
-                        "redback"       : "~ 0.3.5"
+                        "cookie"        : "~ 0.0.5"
                       },
   "devDependencies" : {
                         "jshint"        : "*",
