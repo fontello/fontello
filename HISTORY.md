@@ -1,3 +1,9 @@
+4.0.0 / ...
+------------------
+
+* Updated to new (wire-based) nodeca architectire
+
+
 3.0.0 / 2013-04-01
 ------------------
 
