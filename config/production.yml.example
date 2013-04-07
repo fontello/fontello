@@ -1,4 +1,27 @@
+#
+# Environment-dependent configs. Use ^your_name to define enviroment,
+# and define variables to override. Here is typical sample for production,
+# staging & testing.
+#
+
+
 ^production:
+
   bind:
     default:
       listen: 0.0.0.0:80
+    host: localhost
+    port: 80
+    #mount: //fontello.com/
+
+  database:
+    mongo:
+      host: localhost
+      port: 27017
+      database: fontello
+      #user: mongouser
+      #password: m0NGoP4$$WORd
+
+  logger:
+    options:
+      level: info

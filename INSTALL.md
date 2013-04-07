@@ -1,6 +1,20 @@
 installation instruction
 
-## Install node.js
+
+## MongoDB
+
+http://docs.mongodb.org/manual/tutorial/install-mongodb-on-debian-or-ubuntu-linux/
+
+Follow instructions on link above. Then edit `/etc/mongodb.conf`,
+add `bind_ip = 127.0.0.1` to the start.
+
+    restart mongodb
+
+If you don't use db auth - no mode actions needed. If you plan to use
+it - create database and set login/password.
+
+
+## node.js
 
 Install build dependencies of node:
 
@@ -16,10 +30,11 @@ Add following code into the end of your shell startup script (`.bashrc` for BASH
 
 Reopen terminal. Install node (long), and set default version:
 
-    nvm install v0.8.16
+    nvm install v0.8
     nvm alias default 0.8
 
-## Install Fontello
+
+## Fontello
 
 Install fontello sources & dependencies:
 

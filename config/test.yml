@@ -1,0 +1,9 @@
+# Configuration for testing
+
+^test:
+  database:
+
+    mongo:
+      host: localhost
+      port: 27017
+      database: fontello-test

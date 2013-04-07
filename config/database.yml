@@ -1,0 +1,12 @@
+#
+# Database
+#
+
+database:
+
+  mongo:
+    host: localhost
+    port: 27017
+    database: fontello-dev
+    #user: mongouser
+    #password: m0NGoP4$$WORd
