@@ -50,6 +50,7 @@ Compile font-builder binaries (ttf2eot & ttfautohint), and install dependencies
     cd support/font-builder
     sudo make dev-deps
     make support
+    npm install
 
 Rename example configs in `./config/` folder to real files, and edit, if needed.
 
