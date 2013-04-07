@@ -84,7 +84,7 @@ module.exports.commandLineArguments = [
       nargs: '?',
       defaultValue: null
     }
-  },
+  }
 ];
 
 module.exports.run = function (N, args, callback) {
