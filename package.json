@@ -19,22 +19,22 @@
 
   "dependencies"    : {
                         "argparse"      : "~ 0.1.3",
-                        "async"         : "~ 0.1.22",
+                        "async"         : "~ 0.2.6",
                         "babelfish"     : "~ 0.2.0",
                         "cron"          : "~ 1.0.0",
-                        "csso"          : "~ 1.2.14",
+                        "csso"          : "~ 1.3.6",
                         "collections"   : "~ 0.1.4",
                         "ejs"           : "~ 0.8.2",
                         "find-requires" : "~ 0.1.4",
                         "fs-tools"      : "~ 0.2.7",
-                        "jade"          : "~ 0.27.2",
+                        "jade"          : "~ 0.28.2",
                         "js-yaml"       : "~ 2.0.3",
-                        "less"          : "= 1.3.1",
+                        "less"          : "~ 1.3.3",
                         "lodash"        : "~ 1.0.1",
                         "log4js"        : "~ 0.5.1",
                         "mincer"        : "~ 0.4.5",
                         "neuron"        : "~ 0.4.5",
-                        "nib"           : "~ 0.8.1",
+                        "nib"           : "~ 0.9.1",
                         "pointer"       : "~ 0.1.2",
                         "puncher"       : "~ 1.1.0",
                         "revalidator"   : "~ 0.1.5",
@@ -47,9 +47,9 @@
                       },
   "devDependencies" : {
                         "jshint"        : "*",
-                        "mocha"         : "~ 1.7.4",
-                        "supertest"     : "~ 0.5.1",
-                        "chai"          : "~ 1.4.2"
+                        "mocha"         : "*",
+                        "supertest"     : "*",
+                        "chai"          : "*"
                       },
   "engines"         : { "node": ">= 0.8.0" }
 }
