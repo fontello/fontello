@@ -18,7 +18,6 @@ var fstools = require('fs-tools');
 
 // internal
 var fontConfig      = require('../../lib/font_config');
-var stats           = require('./_build_stats');
 var APP_ROOT        = require('./_common').APP_ROOT;
 var DOWNLOAD_DIR    = require('./_common').DOWNLOAD_DIR;
 var JOBS            = require('./_common').JOBS;
@@ -105,10 +104,13 @@ jobMgr.addJob('generate-font', {
                     ((times[2] - times[0]) / 1000) + "ms " +
                     "(real: " + ((times[1] - times[0]) / 1000) + "ms)");
 
+        // Record statistics
+        /*
         stats.push({
           glyphs: config.glyphs.length
         , time:   (times[2] - times[0]) / 1000
         });
+        */
 
         self.finished = true;
       });
