@@ -1,5 +1,5 @@
 //= require vendor/modernizr.custom
-//= require vendor/yepnope
+//= require vendor/yepnope/yepnope
 //= require_self
 
 
@@ -197,7 +197,7 @@ window.NodecaLoader = (function () {
 
       // Execute the module's `func` function. It will populate the exports.
       target.func.call(
-        target.module.exports // this object
+        window // this object
       , N
       , require // pass self
       , target.module.exports
