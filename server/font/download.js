@@ -17,7 +17,7 @@ var DOWNLOAD_DIR = require('./_common').DOWNLOAD_DIR;
 
 
 // logger of font downloads
-var logger = N.logger.getLogger('server.font.download');
+var logger = N.logger.getLogger('font.download');
 
 
 // font downloader middleware

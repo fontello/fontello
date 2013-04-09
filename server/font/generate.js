@@ -28,7 +28,7 @@ var getDownloadPath = require('./_common').getDownloadPath;
 
 
 // logger of font generator
-var logger = N.logger.getLogger('server.font');
+var logger = N.logger.getLogger('font');
 
 
 // some generator specific variables

@@ -30,37 +30,31 @@ logger:
     - level:  error
       file:   log/system-error.log
 
-  server.static:
+  bin@:
     - level:  debug
       file:   log/static.log
     - level:  error
       file:   log/static-error.log
 
-  server.assets:
+  font.download:
     - level:  debug
       file:   log/static.log
     - level:  error
       file:   log/static-error.log
 
-  server.font.download:
-    - level:  debug
-      file:   log/static.log
-    - level:  error
-      file:   log/static-error.log
-
-  server.font:
+  font:
     - level:  debug
       file:   log/generator.log
     - level:  error
       file:   log/generator-error.log
 
-  server:
+  http@:
     - level:  debug
       file:   log/server.log
     - level:  error
       file:   log/server-error.log
 
-  rpc:
+  rpc@:
     - level:  debug
       file:   log/rpc.log
     - level:  error
