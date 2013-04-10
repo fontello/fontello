@@ -146,12 +146,18 @@ window.NodecaLoader = (function () {
       //See: http://caniuse.com/json
       shims.push(URL_JSON2_SHIM);
     }
-    if (!Function.prototype.bind) {
+    if (!Object.keys) {
       // http://kangax.github.com/es5-compat-table/
       shims.push(URL_ES5_SHIM);
     }
 
     loadAssets(pkgName, shims, function () {
+      if (!window.JSON || !Object.keys) {
+        alert('Init error: failed to load browser shims. Refresh page & try again. ' +
+              'If problem still exists - contact administrator.');
+        return;
+      }
+
       if (N.wire) {
         $(function () {
           N.wire.emit('navigate.done', {
