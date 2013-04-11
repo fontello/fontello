@@ -10,4 +10,4 @@ public/
 src/
 support/
 lib/embedded_fonts
-client/system/n/_jade_runtime.js
+client/system/_n/jade_runtime.js
