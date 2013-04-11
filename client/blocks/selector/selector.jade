@@ -22,5 +22,5 @@
       ul.unstyled.font-glyphs.font-fontello(data-bind='foreach: glyphs')
         li.glyph(data-bind='visible: visible, attr: { title: tooltip }')
           input.hidden(type='checkbox', data-bind='checked: selected, attr: { id: uid }')
-          label(data-bind='attr: { for: uid }')
+          label(data-bind='attr: { "for": uid }')
             span(data-bind='css: cssExt, text: charRef')
