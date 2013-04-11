@@ -33,4 +33,4 @@ packages:
         - loader.js.ejs
         - vendor/json2/json2.js
         - vendor/es5-shim/es5-shim.js
-        - /\.(eot|svg|ttf|woff|png|jpg|gif)$/
+        - /\.(eot|svg|ttf|woff)$/
