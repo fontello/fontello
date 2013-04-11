@@ -5,4 +5,4 @@
 //= require vendor/jquery.noty/src/js/jquery.noty
 //= require vendor/bootstrap/bootstrap
 //= require vendor/store
-//= require vendor/knockout
+//= require vendor/knockout/build/output/knockout-latest.debug
