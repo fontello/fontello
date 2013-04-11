@@ -1,10 +1,11 @@
 {
   "dependencies": {
-    "jquery"      : "~1.7.2",
+    "jquery"      : "~1.9.1",
     "jquery-ui"   : "~1.10.2",
     "es5-shim"    : "~2.0.8",
     "history.js"  : "*",
     "json2"       : "*",
-    "knockout"    : "~2.2.1"
+    "knockout"    : "~2.2.1",
+    "bootstrap"   : "~2.3.1"
   }
 }

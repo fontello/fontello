@@ -7,6 +7,6 @@
 //= require vendor/jquery-ui/ui/jquery.ui.selectable
 //= require vendor/jquery-ui/ui/jquery.ui.slider
 //= require vendor/jquery.noty/src/js/jquery.noty
-//= require vendor/bootstrap/bootstrap
+//= require vendor/bootstrap_custom/bootstrap
 //= require vendor/store
 //= require vendor/knockout/build/output/knockout-latest.debug
