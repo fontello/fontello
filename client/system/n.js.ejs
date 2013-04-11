@@ -17,7 +17,7 @@
 window.NodecaLoader.execute(function (N, require) {
   'use strict';
 
-  var Wire      = require('../../../lib/system/wire');
+  var Wire      = require('../../lib/system/wire');
   var Pointer   = require('pointer');
   var BabelFish = require('babelfish');
 
@@ -51,7 +51,7 @@ window.NodecaLoader.execute(function (N, require) {
   });
 
   N.wire           = new Wire();
-  N.logger         = require('./_logger');
-  N.io             = require('./_io');
-  N.runtime.render = require('./_render');
+  N.logger         = require('./_n/logger');
+  N.io             = require('./_n/io');
+  N.runtime.render = require('./_n/render');
 });
