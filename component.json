@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "jquery"      : "~1.7.2",
+    "jquery-ui"   : "~1.10.2",
     "es5-shim"    : "~2.0.8",
     "history.js"  : "*",
     "json2"       : "*",
