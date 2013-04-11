@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "es5-shim"    : "~2.0.8",
+    "history.js"  : "*",
+    "json2"       : "*"
+  }
+}
