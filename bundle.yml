@@ -17,7 +17,7 @@ packages:
       include: client/**i18n/*.yml
 
     styles:
-      main: assets/assets.styl
+      main: client/system/main.styl
       include: client/**.styl
 
     server:
