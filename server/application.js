@@ -14,7 +14,7 @@ function hash(str) {
 
 // FIXME: this works for single-process model only.
 //        switch to shared cache in future.
-var etag = hash('fontello-app-' + Date.now());
+//var etag = hash('fontello-app-' + Date.now());
 
 
 ////////////////////////////////////////////////////////////////////////////////
