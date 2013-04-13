@@ -119,7 +119,7 @@ N.wire.once('fonts_ready', function (fontsList) {
 
     $view.find('#search')
       .on('keyup', function () {
-        N.wire.emit('filter_keyword', $.trim($(this).val()));
+        N.wire.emit('search_update', $.trim($(this).val()));
       })
       .on('focus keyup', _.debounce(function () {
         $(this).typeahead('hide');

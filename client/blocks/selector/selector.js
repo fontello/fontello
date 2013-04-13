@@ -117,7 +117,7 @@ function GlyphModel(font, data, options) {
   //
 
   this.visible = ko.computed(function () {
-    return 0 <= this.keywords.indexOf(options.keyword());
+    return 0 <= this.keywords.indexOf(options.searchWord());
   }, this);
 
   //
@@ -153,7 +153,7 @@ function GlyphModel(font, data, options) {
   // code value as hex-string (for code editor)
   //
 
-  this.customHex        = ko.computed({
+  this.customHex = ko.computed({
     read: function () {
       var code = this.code().toString(16).toUpperCase();
       return "0000".substr(0, Math.max(4 - code.length, 0)) + code;
@@ -338,14 +338,16 @@ function FontsList(options) {
 
     return value;
   }, this).extend({ throttle: 100 });
+
 }
 
 
 ////////////////////////////////////////////////////////////////////////////////
 
 
-var keyword   = ko.observable('').extend({ throttle: 100 });
-var fontsList = new FontsList({ keyword: keyword });
+var searchWord = ko.observable('').extend({ throttle: 100 });
+var searchMode = ko.computed(function () { return searchWord().length > 0; })
+var fontsList = new FontsList({ searchWord: searchWord });
 var fontSize  = ko.observable(16);
 
 
@@ -353,7 +355,7 @@ var fontSize  = ko.observable(16);
 
 
 N.wire.on('font_size_change', fontSize);
-N.wire.on('filter_keyword',   keyword);
+N.wire.on('search_update',   searchWord);
 
 
 var autoSaveSession = _.debounce(function () {
@@ -443,7 +445,8 @@ $(function () {
 
   ko.applyBindings({
     fonts:    fontsList.fonts,
-    fontSize: fontSize
+    fontSize: fontSize,
+    searchMode: searchMode
   }, $view.get(0));
 
   //

@@ -1,10 +1,11 @@
 #selector.tab-pane.fade
-  ul#selector-fonts.unstyled(data-bind='style: { fontSize: fontSize() + "px" }, foreach: fonts')
+  ul#selector-fonts.unstyled(data-bind="style: { 'fontSize': fontSize() + 'px' }, css: { 'search-mode': searchMode }, foreach: fonts")
     li.ui-selectable(data-bind='visible: visibleCount(), attr: { id: "font-id-" + id }, css: { _collapsed: collapsed }')
 
       h2.src-font-head
         div.font-counters
           small
+            span.search-cnt.icon-search(data-bind="text: visibleCount()")
             span.selected-cnt(data-bind="visible: selectedGlyphs().length, text: '+' + selectedGlyphs().length")
 
         a.src-font-name._collapser(href="#", data-bind='text: fullname, click: toggleCollapsed')

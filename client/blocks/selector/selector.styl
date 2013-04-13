@@ -102,20 +102,31 @@ a.src-font-name
   margin-left 5px
 
 //
-// Cuunters near font name
+// Counters near font name
 //
 
 .font-counters
   position absolute
-  left -50px
-  width 50px
+  left -10em
+  width 10em
   text-align right
 
   .selected-cnt
+  .search-cnt
     font-size 14px
     color red
     margin-right .5em
     opacity .6
+
+  .search-cnt
+    color green
+    display none
+
+.search-mode .font-counters
+  .selected-cnt
+    display none
+  .search-cnt
+    display inline
 
 #local-files
   /* chrome/opera doesn't trigger events on "display: none;" elements */
