@@ -3,6 +3,7 @@
 
 .icon-home:before { content: '\2302'; } /* '⌂' */
 .icon-mail:before { content: '\2709'; } /* '✉' */
+.icon-check:before { content: '\2713'; } /* '✓' */
 .icon-remove:before { content: '\2715'; } /* '✕' */
 .icon-load:before { content: '\e834'; } /* '' */
 .icon-firefox:before { content: '\e840'; } /* '' */

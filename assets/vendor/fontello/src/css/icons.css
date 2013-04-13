@@ -2,8 +2,8 @@
 
 @font-face {
   font-family: 'icons';
-  src: url("../font/icons.eot?98411532");
-  src: url("../font/icons.eot?98411532#iefix") format('embedded-opentype'), url("../font/icons.woff?98411532") format('woff'), url("../font/icons.ttf?98411532") format('truetype'), url("../font/icons.svg?98411532#icons") format('svg');
+  src: url("../font/icons.eot?16605081");
+  src: url("../font/icons.eot?16605081#iefix") format('embedded-opentype'), url("../font/icons.woff?16605081") format('woff'), url("../font/icons.ttf?16605081") format('truetype'), url("../font/icons.svg?16605081#icons") format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -13,7 +13,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'icons';
-    src: url('../font/icons.svg?98411532#icons') format('svg');
+    src: url('../font/icons.svg?16605081#icons') format('svg');
   }
 }
 */
@@ -45,6 +45,7 @@
 
 .icon-home:before { content: '\2302'; } /* '⌂' */
 .icon-mail:before { content: '\2709'; } /* '✉' */
+.icon-check:before { content: '\2713'; } /* '✓' */
 .icon-remove:before { content: '\2715'; } /* '✕' */
 .icon-load:before { content: '\e834'; } /* '' */
 .icon-firefox:before { content: '\e840'; } /* '' */
