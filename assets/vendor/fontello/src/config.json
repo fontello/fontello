@@ -15,20 +15,6 @@
     },
     {
       "search": [
-        "settings",
-        "cog",
-        "gear"
-      ],
-      "code": 9881,
-      "uid": "bc64550dd022ce21604f97309b346cea",
-      "css": "settings",
-      "orig_css": "cog",
-      "orig_code": 9881,
-      "src": "entypo",
-      "from": 9881
-    },
-    {
-      "search": [
         "mail",
         "email"
       ],
@@ -194,13 +180,28 @@
         "search",
         "find"
       ],
-      "code": 61441,
+      "code": 128295,
       "uid": "7222571caa5c15f83dcfd447c58d68d9",
       "css": "search",
       "orig_css": "search",
-      "orig_code": 61441,
+      "orig_code": 128295,
       "src": "entypo",
       "from": 128269
+    },
+    {
+      "search": [
+        "wrench",
+        "tools",
+        "settings",
+        "params"
+      ],
+      "code": 61441,
+      "from": 128295,
+      "uid": "5bb103cd29de77e0e06a52638527b575",
+      "css": "settings",
+      "orig_css": "wrench",
+      "orig_code": 61441,
+      "src": "fontawesome"
     }
   ]
 }

@@ -5,7 +5,7 @@ Font license info
 
    Copyright (C) 2012 by Daniel Bruce
 
-   Author:    Daniel Buce
+   Author:    Daniel Bruce
    License:   SIL (http://scripts.sil.org/OFL)
    Homepage:  http://www.entypo.com
 
@@ -26,5 +26,14 @@ Font license info
    Author:    Crowdsourced, for Fontello project
    License:   SIL (http://scripts.sil.org/OFL)
    Homepage:  
+
+
+## Font Awesome
+
+   Copyright (C) 2012 by Dave Gandy
+
+   Author:    Dave Gandy
+   License:   CC BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
+   Homepage:  http://fortawesome.github.com/Font-Awesome/
 
 

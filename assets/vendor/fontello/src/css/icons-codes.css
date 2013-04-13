@@ -1,6 +1,7 @@
+@charset "UTF-8";
+
 
 .icon-home:before { content: '\2302'; } /* '⌂' */
-.icon-settings:before { content: '\2699'; } /* '⚙' */
 .icon-mail:before { content: '\2709'; } /* '✉' */
 .icon-remove:before { content: '\2715'; } /* '✕' */
 .icon-load:before { content: '\e834'; } /* '' */
@@ -11,4 +12,5 @@
 .icon-github-text:before { content: '\f307'; } /* '' */
 .icon-dribbble:before { content: '\f31b'; } /* '' */
 .icon-download:before { content: '\f000'; } /* '' */
-.icon-search:before { content: '\f001'; } /* '' */
+.icon-search:before { content: '🔧'; } /* '\1f527' */
+.icon-settings:before { content: '\f001'; } /* '' */
