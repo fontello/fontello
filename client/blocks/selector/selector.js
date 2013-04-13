@@ -212,7 +212,7 @@ function FontModel(data, options) {
     if (collapseState) {
       $('#font-id-'+this.id + " .font-glyphs").slideUp();
     } else {
-      $('#font-id-'+this.id + " .font-glyphs").slideDown();      
+      $('#font-id-'+this.id + " .font-glyphs").slideDown();
     }
   }.bind(this));
 
