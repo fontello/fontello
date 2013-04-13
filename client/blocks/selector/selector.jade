@@ -1,6 +1,6 @@
 #selector.tab-pane.fade
-  ul#selector-fonts.unstyled(data-bind='style: {fontSize: fontSize() + "px"}, foreach: fonts')
-    li.ui-selectable(data-bind='visible: visibleCount(), attr: {id: "font-id-" + id}, css: {_collapsed: collapsed }')
+  ul#selector-fonts.unstyled(data-bind='style: { fontSize: fontSize() + "px" }, foreach: fonts')
+    li.ui-selectable(data-bind='visible: visibleCount(), attr: { id: "font-id-" + id }, css: { _collapsed: collapsed }')
       h2.src-font-head
         //- a.label.label-important.font-info(href="#") info
         a.src-font-name._collapser(href="#", data-bind='text: fullname, click: toggleCollapsed')
@@ -13,14 +13,15 @@
           span(data-bind='text: license')
 
         small.font-details
-          a.icon-home(data-bind='visible: homepage, attr: {href: homepage}', target='_blank')
-          a.icon-mail(data-bind='visible: email, attr: {href: "mailto:" + email}')
-          a.icon-twitter-bird(data-bind='visible: twitter, attr: {href: twitter}', target='_blank')
-          a.icon-github-text(data-bind='visible: github, attr: {href: github}', target='_blank')
-          a.icon-dribbble(data-bind='visible: dribbble, attr: {href: dribbble}', target='_blank')
+          a.icon-home(data-bind='visible: homepage, attr: { href: homepage }', target='_blank')
+          a.icon-mail(data-bind='visible: email, attr: { href: "mailto:" + email }')
+          a.icon-twitter-bird(data-bind='visible: twitter, attr: { href: twitter }', target='_blank')
+          a.icon-github-text(data-bind='visible: github, attr: { href: github }', target='_blank')
+          a.icon-dribbble(data-bind='visible: dribbble, attr: { href: dribbble }', target='_blank')
 
       ul.unstyled.font-glyphs.font-fontello(data-bind='foreach: glyphs')
         li.glyph(data-bind='visible: visible, attr: { title: tooltip }')
           input(type='checkbox', data-bind='checked: selected, attr: { id: uid }')
-          label(data-bind="attr: { 'for': uid }")
+          //- class binding for the label - kludge for IE8, that sucks with input:checked
+          label(data-bind="attr: { 'for': uid }, css: { checked: selected }")
             span(data-bind='css: cssExt, text: charRef')

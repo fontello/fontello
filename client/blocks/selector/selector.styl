@@ -119,7 +119,7 @@ a.src-font-name
   height 48px
   margin 0 0 8px 8px
 
-  > label
+  label
     border 1px #ccc solid
     border-radius 6px
     position absolute
@@ -146,7 +146,7 @@ a.src-font-name
     position absolute
     left -10000px
 
-  > input:checked ~ label
+  input:checked + label
     background-color #fffdfd
     border-color #d88
     box-shadow 0 0 0px 2px #d88 inset, 1px 1px 3px 1px #eee
@@ -154,19 +154,36 @@ a.src-font-name
     &:hover
       background #666
 
-  &.ui-selecting > label
+  &.ui-selecting label
     background-color #eeffee
     border-color #8d8
     &:hover
       color inherit
     //box-shadow 0 0 3px #ada inset
 
-  &.ui-selecting > input:checked ~ label
+  &.ui-selecting input:checked + label
     background-color #eeffee
     border-color #666
     box-shadow 0 0 3px #666 inset
     &:hover
       color inherit
+
+// IE8 compatibility layer. Input:checked does not work (no ideas why),
+// so, apply "checked" class to label manually, via knockout
+.glyph
+  label.checked
+    background-color #fffdfd
+    border-color #d88
+    box-shadow 0 0 0px 2px #d88 inset, 1px 1px 3px 1px #eee
+    &:hover
+      background #666
+  &.ui-selecting label.checked
+    background-color #eeffee
+    border-color #666
+    box-shadow 0 0 3px #666 inset
+    &:hover
+      color inherit
+
 
 // Chrome hack - it hes different icon alligment, no ideas why
 //
