@@ -346,7 +346,7 @@ function FontsList(options) {
 
 
 var searchWord = ko.observable('').extend({ throttle: 100 });
-var searchMode = ko.computed(function () { return searchWord().length > 0; })
+var searchMode = ko.computed(function () { return searchWord().length > 0; });
 var fontsList = new FontsList({ searchWord: searchWord });
 var fontSize  = ko.observable(16);
 
