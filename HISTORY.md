@@ -1,6 +1,8 @@
 4.0.0 / ...
 ------------------
 
+* Added count of selected glyphs for each font
+* IE8 regressions fixes
 * Updated to new (wire-based) nodeca architectire
 
 
