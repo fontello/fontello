@@ -207,6 +207,15 @@ function FontModel(data, options) {
     this.collapsed(!this.collapsed());
   }.bind(this);
 
+  // animation on collapse state change
+  this.collapsed.subscribe(function(collapseState) {
+    if (collapseState) {
+      $('#font-id-'+this.id + " .font-glyphs").slideUp();
+    } else {
+      $('#font-id-'+this.id + " .font-glyphs").slideDown();      
+    }
+  }.bind(this));
+
   //
   // Array of font glyphs
   //
