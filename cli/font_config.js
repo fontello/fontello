@@ -47,7 +47,7 @@ module.exports.run = function (N, args, callback) {
   }
 
   try {
-    config = JSON.stringify(fontConfig(input));
+    config = JSON.stringify(fontConfig(input), null, '  ');
     require('fs').writeFileSync(args.output, config);
   } catch (err) {
     callback(err);

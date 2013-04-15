@@ -89,6 +89,9 @@ jobMgr.addJob('generate-font', {
         async.apply(fstools.remove, tmp_dir)
       , async.apply(fstools.mkdir, tmp_dir)
       , async.apply(fs.writeFile, path.join(tmp_dir, 'config.json'), JSON.stringify(config.session, null, '  '), 'utf8')
+      // Write full config immediately, to avoid app exec from shell script
+      // `log4js` has races with locks on multiple copies run,
+      , async.apply(fs.writeFile, path.join(tmp_dir, 'generator-config.json'), JSON.stringify(fontConfig(config.session), null, '  '), 'utf8')
       , async.apply(execFile, GENERATOR_BIN, [config.font.fontname, tmp_dir, zipball], {cwd: APP_ROOT})
       , async.apply(fstools.remove, tmp_dir)
       ], function (err) {

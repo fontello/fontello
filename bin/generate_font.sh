@@ -52,9 +52,9 @@ done
 
 ## BUILD FONT CONFIG ###########################################################
 
-
-node ./fontello.js font_config --input $USER_CONFIG --output $CONFIG
-
+# no more needs - generate in application
+#node ./fontello.js font_config --input $USER_CONFIG --output $CONFIG
+#cp $USER_CONFIG $CONFIG
 
 ## BUILD FONT ##################################################################
 
