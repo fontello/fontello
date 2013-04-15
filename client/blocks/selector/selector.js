@@ -458,7 +458,7 @@ $(function () {
   ko.applyBindings({
     fontsList:  fontsList,
     fontSize:   fontSize,
-    searchMode: searchMode,
+    searchMode: searchMode
   }, $view.get(0));
 
   //
