@@ -152,24 +152,35 @@ window.NodecaLoader = (function () {
     }
 
     loadAssets(pkgName, shims, function () {
+      var url, route;
+
       if (!window.JSON || !Object.keys) {
         alert('Init error: failed to load browser shims. Refresh page & try again. ' +
               'If problem still exists - contact administrator.');
         return;
       }
 
-      if (N.wire) {
-        $(function () {
-          N.wire.emit('navigate.done', {
-            url: window.location.href
-            // FIXME: We need a better way to get API path of a start page.
-          , apiPath: N.runtime.router.match(window.location.href).meta
-          });
-        });
-      } else {
+      if (!N.wire) {
         alert('Init error: failed to load core JS files. Refresh page & try again. ' +
               'If problem still exists - contact administrator.');
+        return;
       }
+
+      // We need URL *without* a hashtag, to properly match it.
+      url = location.protocol + '//' + location.host + location.pathname;
+      route = N.runtime.router.match(url);
+
+      if (!route) {
+        alert('Init error: failed to detect internal identifier (route) of ' +
+              'this page. Refresh page & try again. If problem still exists ' +
+              '- contact administrator.');
+        return;
+      }
+
+      // Execute after DOM is loaded:
+      $(function () {
+        N.wire.emit('navigate.done', { url: url, apiPath: route.meta });
+      });
     });
   };
 
