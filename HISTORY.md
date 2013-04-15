@@ -2,6 +2,7 @@
 ------------------
 
 * Added count of selected/searched glyphs for each font
+* Added message, when nothing found
 * IE8 regressions fixes
 * Updated to new (wire-based) nodeca architectire
 

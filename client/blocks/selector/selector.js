@@ -320,6 +320,18 @@ function FontsList(options) {
     return glyphs;
   }, this).extend({ throttle: 100 });
 
+  this.visibleCount = ko.computed(function () {
+    var result = 0;
+
+    _.each(this.fonts, function (font) {
+      if (font.visibleCount()) {
+        result++;
+      }
+    });
+
+    return result;
+  }, this).extend({ throttle: 100 });
+
   //
   // Returns whenever font list has modified glyphs or collapsed fonts
   // throttling compensates mass reflows on multiselect
@@ -444,9 +456,9 @@ $(function () {
   //
 
   ko.applyBindings({
-    fonts:    fontsList.fonts,
-    fontSize: fontSize,
-    searchMode: searchMode
+    fontsList:  fontsList,
+    fontSize:   fontSize,
+    searchMode: searchMode,
   }, $view.get(0));
 
   //
