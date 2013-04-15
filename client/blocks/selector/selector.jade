@@ -6,7 +6,7 @@
         div.font-counters
           small
             span.search-cnt.icon-search(data-bind="text: visibleCount()")
-            span.selected-cnt.icon-check(data-bind="visible: selectedGlyphs().length, text: selectedGlyphs().length")
+            span.selected-cnt(data-bind="visible: selectedGlyphs().length, text: selectedGlyphs().length")
 
         a.src-font-name._collapser(href="#", data-bind='text: fullname, click: toggleCollapsed')
 
