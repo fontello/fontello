@@ -152,7 +152,7 @@ window.NodecaLoader = (function () {
     }
 
     loadAssets(pkgName, shims, function () {
-      var url, route;
+      var route;
 
       if (!window.JSON || !Object.keys) {
         alert('Init error: failed to load browser shims. Refresh page & try again. ' +
@@ -166,9 +166,9 @@ window.NodecaLoader = (function () {
         return;
       }
 
-      // We need URL *without* a hashtag, to properly match it.
-      url = location.protocol + '//' + location.host + location.pathname;
-      route = N.runtime.router.match(url);
+      // First try to match full URL, if not matched - try without anchor.
+      route = N.runtime.router.match(location.href) ||
+              N.runtime.router.match(location.href.split('#')[0]);
 
       if (!route) {
         alert('Init error: failed to detect internal identifier (route) of ' +
@@ -179,7 +179,11 @@ window.NodecaLoader = (function () {
 
       // Execute after DOM is loaded:
       $(function () {
-        N.wire.emit('navigate.done', { url: url, apiPath: route.meta });
+        N.wire.emit('navigate.done', {
+          url:     location.href
+        , apiPath: route.meta
+        , params:  route.params
+        });
       });
     });
   };

@@ -448,23 +448,17 @@ N.wire.on('reset_all', function () {
 });
 
 
-$(function () {
+N.wire.once('navigate.done', function (data) {
   var $view = $('#selector');
 
-  //
   // Bind model and view
-  //
-
   ko.applyBindings({
     fontsList:  fontsList,
     fontSize:   fontSize,
     searchMode: searchMode
   }, $view.get(0));
 
-  //
   // Init multi-select of glyphs
-  //
-
   $view.selectable({
     filter: 'li.glyph:visible',
     distance: 5,
@@ -482,12 +476,12 @@ $(function () {
       });
     }
   });
-});
 
-//
-// Once all init finished - notify that fonts are ready
-//
-
-N.wire.once('navigate.done', function () {
+  // Once all init finished - notify that fonts are ready
   N.wire.emit('fonts_ready', fontsList);
+
+  // Setup initial search string.
+  if (data.params && data.params.search) {
+    N.wire.emit('search_update', data.params.search);
+  }
 });

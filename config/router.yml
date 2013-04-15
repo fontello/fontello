@@ -2,6 +2,8 @@ router:
   map:
     fontello.application:
       "/": ~
+      "/#&search={search}":
+        search: /\S+/
 
     fontello.font.download:
       "/download/{file}":
