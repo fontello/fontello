@@ -112,11 +112,11 @@ function startBuilder(config) {
 N.wire.on('build_font', function () {
   var config = { name: $.trim(N.app.fontName()) };
 
-  if (!N.app.fontList.selectedCount()) {
+  if (!N.app.fontsList.selectedCount()) {
     return;
   }
 
-  config.glyphs = _.map(N.app.fontList.selectedGlyphs(), function (glyph) {
+  config.glyphs = _.map(N.app.fontsList.selectedGlyphs(), function (glyph) {
     return glyph.serialize();
   });
 
