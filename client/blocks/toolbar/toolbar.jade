@@ -15,15 +15,17 @@
       data-bind='css: {disabled: !selectedCount()}')
       i.icon-download(data-bind='visible: !building()')
       i.icon-load.animate-spin(style='display:none', data-bind='visible: building()')
-      |  Download webfont (
+      |  
+      = self.t('download')
+      |  (
       span#selected-glyphs-count(data-bind='text: selectedCount()')
       | )
 
   .btn-group.pull-right
     input#result-fontname.input-medium._tip(type='text',
-      placeholder='file name',
+      placeholder=self.t('file_name_placeholder'),
       autocomplete='off',
-      title='Font files will have this name. Use only small "a"-"z" letters, "-" and "_"',
+      title=self.t('file_name_help'),
       data-bind='value: fontName',
       data-placement='bottom')
 
@@ -34,11 +36,10 @@
       span.caret
 
     ul.dropdown-menu
-      li: a(href='#', data-on-click='import.start')
-        | Import <em>config.json</em>
+      li: a(href='#', data-on-click='import.start')= self.t('menu_import_config')
       li.divider
-      li: a(href='#', data-on-click='reset_selected') Unselect glyphs
-      li: a(href='#', data-on-click='reset_all_confirm') Reset all changes
+      li: a(href='#', data-on-click='cmd:reset_selected')= self.t('menu_unselect_all')
+      li: a(href='#', data-on-click='cmd:reset_all')= self.t('menu_reset_all')
 
   .btn-group.pull-right
     #glyph-size-slider

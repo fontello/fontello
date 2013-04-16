@@ -4,43 +4,21 @@
 /*global ko*/
 
 
-var _ = require('lodash');
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-N.wire.on('cmd:search_update', N.app.searchWord);
-
-
-
-N.wire.on('reset_selected', function () {
-  _.each(N.app.fontsList.selectedGlyphs(), function (glyph) {
-    glyph.selected(false);
-  });
-});
-
-
-N.wire.on('reset_all', function () {
-  _.each(N.app.fontsList.modifiedGlyphs(), function (glyph) {
-    glyph.selected(false);
-    glyph.code(glyph.originalCode);
-    glyph.name(glyph.originalName);
-  });
-});
-
-
-N.wire.once('navigate.done', function (data) {
+N.wire.once('navigate.done', function () {
   var $view = $('#selector');
 
+  //
   // Bind model and view
+  //
   ko.applyBindings({
     fontsList:  N.app.fontsList,
     fontSize:   N.app.fontSize,
     searchMode: N.app.searchMode
   }, $view.get(0));
 
+  //
   // Init multi-select of glyphs
+  //
   $view.selectable({
     filter: 'li.glyph:visible',
     distance: 5,
@@ -59,8 +37,9 @@ N.wire.once('navigate.done', function (data) {
     }
   });
 
-  // Setup initial search string.
-  if (data.params && data.params.search) {
-    N.wire.emit('cmd:search_update', data.params.search);
-  }
+  //
+  // Setup default collapse state
+  //
+  N.app.fontsList.fonts.forEach(function (font) { font.setCollapseState(); });
+
 });

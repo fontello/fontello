@@ -1,5 +1,6 @@
 en-US:
   title: Fontello - icon fonts generator
+  description: Tool to build custom fonts with icons.
   desc_long: >
     Easy way to create custom icon font for your site. Select
     images from large collection, and make webfont pack with one click.

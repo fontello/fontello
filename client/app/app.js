@@ -124,14 +124,9 @@ function GlyphModel(font, data, options) {
   //
 
   this.isModified = ko.computed(function () {
-    var value = false;
-
-    // We need to call all "observable" properties to have proper deps graph
-    value = !!this.selected() || value;
-    value = this.name() !== this.originalName || value;
-    value = this.code() !== this.originalCode || value;
-
-    return value;
+    return this.selected() ||
+      (this.name() !== this.originalName) ||
+      (this.code() !== this.originalCode);
   }, this);
 
   //
@@ -206,14 +201,20 @@ function FontModel(data, options) {
     this.collapsed(!this.collapsed());
   }.bind(this);
 
-  // animation on collapse state change
-  this.collapsed.subscribe(function(collapseState) {
-    if (collapseState) {
+  this.setCollapseState = function (state) {
+    if (state === true || state === false) {
+      this.collapsed(state);
+    }
+
+    if (this.collapsed()) {
       $('#font-id-'+this.id + " .font-glyphs").slideUp();
     } else {
       $('#font-id-'+this.id + " .font-glyphs").slideDown();
     }
-  }.bind(this));
+  }.bind(this);
+
+  // animation on collapse state change
+  this.collapsed.subscribe(this.setCollapseState);
 
   //
   // Array of font glyphs
@@ -238,15 +239,7 @@ function FontModel(data, options) {
   //
 
   this.modifiedGlyphs = ko.computed(function () {
-    var glyphs = [];
-
-    _.each(this.glyphs, function (glyph) {
-      if (glyph.isModified()) {
-        glyphs.push(glyph);
-      }
-    });
-
-    return glyphs;
+    return _.filter(this.glyphs, function (glyph) { return glyph.isModified(); });
   }, this).extend({ throttle: 100 });
 
   //
@@ -290,13 +283,9 @@ function FontsList(options) {
   //
 
   this.modifiedGlyphs = ko.computed(function () {
-    var glyphs = [];
-
-    _.each(this.fonts, function (font) {
-      glyphs = glyphs.concat(font.modifiedGlyphs());
-    });
-
-    return glyphs;
+    return _.reduce(this.fonts, function (result, font) {
+      return Array.concat(result, font.modifiedGlyphs());
+    }, []);
   }, this).extend({ throttle: 100 });
 
   // Count of visible fonts, with reflow compensation
@@ -323,7 +312,6 @@ function FontsList(options) {
 
     return value;
   }, this).extend({ throttle: 100 });
-
 }
 
 
@@ -351,6 +339,37 @@ N.wire.once('navigate.done', function () {
 
   N.app.fontName.subscribe(function () {
     N.wire.emit('session_save');
+  });
+
+  //
+  // Basic commands
+  //
+
+  N.wire.on('cmd:reset_selected', function () {
+    _.each(N.app.fontsList.selectedGlyphs(), function (glyph) {
+      glyph.selected(false);
+    });
+  });
+
+  N.wire.on('cmd:reset_all', function (src) {
+
+    // is `src` set, then event was produced
+    // by link click and we need confirmation
+    if (src) {
+      if (!window.confirm(t('confirm_app_reset'))) {
+        return;
+      }
+    }
+
+    N.app.fontName('');
+
+    _.each(N.app.fontsList.fonts, function(font) {
+      _.each(font.glyphs, function(glyph) {
+        glyph.selected(false);
+        glyph.code(glyph.originalCode);
+        glyph.name(glyph.originalName);
+      });
+    });
   });
 
 });

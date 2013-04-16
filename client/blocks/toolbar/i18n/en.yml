@@ -1,2 +1,8 @@
 en-US:
-  confirm_app_reset: Are you sure?
+  download: Download webfont
+  file_name_placeholder: file name
+  file_name_help: Font files will have this name. Use only small "a"-"z" letters, "-" and "_"
+
+  menu_unselect_all: Unselect glyphs
+  menu_reset_all: Reset all changes
+  menu_import_config: Import config.json

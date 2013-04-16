@@ -64,16 +64,9 @@ function ToolbarModel() {
 ////////////////////////////////////////////////////////////////////////////////
 
 
-N.wire.once('navigate.done', function () {
+N.wire.once('navigate.done', function (data) {
   var $view   = $('#toolbar')
     , toolbar = new ToolbarModel();
-
-  N.wire.on('reset_all_confirm', function () {
-    if (window.confirm(t('confirm_app_reset'))) {
-      N.app.fontName('');
-      N.wire.emit('reset_all');
-    }
-  });
 
   //
   // Initialize jquery fontSize slider
@@ -96,11 +89,11 @@ N.wire.once('navigate.done', function () {
 
   $view.find('#search')
     .on('keyup', function () {
-      N.wire.emit('cmd:search_update', $.trim($(this).val()));
+      N.app.searchWord($.trim($(this).val()));
     })
     .on('focus keyup', _.debounce(function () {
       $(this).typeahead('hide');
-    }, 5000))
+    }, 3000))
     .typeahead({
       source: knownKeywords
     });
@@ -112,8 +105,12 @@ N.wire.once('navigate.done', function () {
   ko.applyBindings(toolbar, $view.get(0));
 
   //
-  // Notify font_builder that we're ready
+  // Setup initial search string.
   //
 
-  N.wire.emit('toolbar_ready', toolbar);
+  if (data.params && data.params.search) {
+    $view.find('#search').val(data.params.search);
+    N.app.searchWord(data.params.search);
+  }
+
 });
