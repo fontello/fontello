@@ -2,6 +2,7 @@ en-US:
   download: Download webfont
   file_name_placeholder: file name
   file_name_help: Font files will have this name. Use only small "a"-"z" letters, "-" and "_"
+  search_permalink_help: Permalink to this search result
 
   menu_unselect_all: Unselect glyphs
   menu_reset_all: Reset all changes

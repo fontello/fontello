@@ -8,6 +8,14 @@
     div.i-search-box
       i.icon-search
 
+  .btn-group.pull-left
+    a.search-permalink.btn.btn-link._tip(
+      data-bind="visible: searchMode(), attr: { 'href': '/#search=' + searchWord() }",
+      title=self.t('search_permalink_help'),
+      data-placement='bottom',
+      style='display:none'
+    )
+      i.icon-link
 
   .btn-group.pull-right
     a#result-download.btn.btn-info.disabled(
@@ -43,4 +51,4 @@
 
   .btn-group.pull-right
     #glyph-size-slider
-    #glyph-size-value(data-bind='text: fontSize() + "px"')
+    #glyph-size-value(data-bind="text: fontSize() + 'px'")

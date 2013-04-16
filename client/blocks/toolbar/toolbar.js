@@ -41,11 +41,13 @@ function ToolbarModel() {
   this.building = ko.observable(false);
 
   //
-  // Proxy to fontsList properties
+  // Proxy to global properties
   //
 
   this.selectedGlyphs = N.app.fontsList.selectedGlyphs;
   this.selectedCount  = N.app.fontsList.selectedCount;
+  this.searchWord     = N.app.searchWord;
+  this.searchMode     = N.app.searchMode;
 
   //
   // Subscribe for build.started/finished events

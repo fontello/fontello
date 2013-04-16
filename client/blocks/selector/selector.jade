@@ -1,7 +1,7 @@
 #selector.tab-pane.fade
   ul#selector-fonts.unstyled(data-bind="style: { 'fontSize': fontSize() + 'px' }, css: { 'search-mode': searchMode }")
     // ko foreach: fontsList.fonts
-    li.ui-selectable(data-bind='visible: visibleCount(), attr: { id: "font-id-" + id }, css: { _collapsed: collapsed }')
+    li.ui-selectable(data-bind="visible: visibleCount(), attr: { id: 'font-id-' + id }, css: { _collapsed: collapsed }")
 
       h2.src-font-head
         div.font-counters
