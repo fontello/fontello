@@ -265,7 +265,7 @@ function FontsList(options) {
 
   this.selectedGlyphs = ko.computed(function () {
     return _.reduce(this.fonts, function (result, font) {
-      return Array.concat(result, font.selectedGlyphs());
+      return result.concat(font.selectedGlyphs());
     }, []);
   }, this).extend({ throttle: 100 });
 
@@ -284,7 +284,7 @@ function FontsList(options) {
 
   this.modifiedGlyphs = ko.computed(function () {
     return _.reduce(this.fonts, function (result, font) {
-      return Array.concat(result, font.modifiedGlyphs());
+      return result.concat(font.modifiedGlyphs());
     }, []);
   }, this).extend({ throttle: 100 });
 
