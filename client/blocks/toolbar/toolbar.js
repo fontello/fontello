@@ -34,8 +34,7 @@ function ToolbarModel() {
   // Essential properties
   //
 
-  this.fontName = N.app.fontName;
-  this.fontSize = N.app.fontSize;
+  this.fontSize = ko.observable(N.app.fontSize());
 
   // true, after download button pressed, until font buildeing finished
   this.building = ko.observable(false);
@@ -48,6 +47,7 @@ function ToolbarModel() {
   this.selectedCount  = N.app.fontsList.selectedCount;
   this.searchWord     = N.app.searchWord;
   this.searchMode     = N.app.searchMode;
+  this.fontName       = N.app.fontName;
 
   //
   // Subscribe for build.started/finished events
@@ -70,6 +70,11 @@ N.wire.once('navigate.done', function (data) {
   var $view   = $('#toolbar')
     , toolbar = new ToolbarModel();
 
+  // Debounced updater of global font size
+  var updateAppFontSize = _.debounce(function () {
+    N.app.fontSize(toolbar.fontSize());
+  }, 500);
+
   //
   // Initialize jquery fontSize slider
   //
@@ -77,11 +82,12 @@ N.wire.once('navigate.done', function (data) {
   $view.find('#glyph-size-slider').slider({
     orientation:  'horizontal',
     range:        'min',
-    value:        N.runtime.config.glyph_size.val,
+    value:        toolbar.fontSize(),//N.runtime.config.glyph_size.val,
     min:          N.runtime.config.glyph_size.min,
     max:          N.runtime.config.glyph_size.max,
     slide:        function (event, ui) {
-      N.app.fontSize(Math.round(ui.value));
+      toolbar.fontSize(Math.round(ui.value));
+      updateAppFontSize();
     }
   });
 
