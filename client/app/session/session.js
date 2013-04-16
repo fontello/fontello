@@ -24,10 +24,13 @@ _.each(require('../../../lib/embedded_fonts/configs'), function (o) {
 
 //  {STORAGE_KEY}:
 //    version:      (Number)  version of serilalizer
-//    sessions:
-//      name:
-//      fontname:
-//      fonts:
+//
+//    sessions:     [Array]   session objects (currently only [0] used)
+//
+//      name:       (String)  session name (now only one, with name `$current$`)
+//      fontname:   (String)  font name, defined by user
+//      fonts:      [Array]   saved fonts data
+//
 //        {font_id}:
 //          collapsed:  (Boolean) whenever font is collapsed or not
 //          glyphs:     (Array)   list of modified and/or selected glyphs
@@ -43,67 +46,83 @@ _.each(require('../../../lib/embedded_fonts/configs'), function (o) {
 ////////////////////////////////////////////////////////////////////////////////
 
 
-N.wire.once('fonts_ready', function () {
-  var data    = store.get(STORAGE_KEY) || { sessions: [] }
-    , session = _.find(data.sessions, function (session) {
-        return '$current$' === session.name;
-      });
-
-  if (session) {
-    N.wire.emit('session_load', session);
-  }
+// Try to load session before everything (tweak priority)
+//
+N.wire.once('navigate.done', { priority: -10 }, function () {
+  N.wire.emit('session_load');
 });
 
 
-N.wire.on('session_save', function (data) {
+
+N.wire.on('session_save', function () {
   var storage = Object(store.get(STORAGE_KEY))
     , session = Object(_.find(storage.sessions || [], function (session) {
         return '$current$' === session.name;
       }));
 
-  _.extend(session, _.pick(Object(data), 'fontname', 'fonts'), {
-    name: '$current$'
+  //
+  // Fill session data
+  //
+  session.name = '$current$';
+  session.fontname = N.app.fontName();
+  session.fonts = {};
+
+  _.each(N.app.fontsList.fonts, function (font) {
+    var font_data = { collapsed: font.collapsed(), glyphs: [] };
+
+    _.each(font.glyphs, function (glyph) {
+      if (glyph.isModified()) {
+        font_data.glyphs.push({
+          uid:        glyph.uid,
+          selected:   glyph.selected(),
+          orig_code:  glyph.originalCode,
+          orig_css:   glyph.originalName,
+          code:       glyph.code(),
+          css:        glyph.name()
+        });
+      }
+    });
+
+    session.fonts[font.id] = font_data;
   });
 
+  //
+  // Save
+  //
   store.set(STORAGE_KEY, {
     version:  SERIALIZER_VERSION,
+    // now always write to idx 0, until multisession support added
     sessions: [session]
   });
 });
 
 
-N.wire.on('import.done', function (file) {
-  var config, session;
 
-  if ('application/json' !== file.type || !_.isObject(file.data)) {
-    return;
+N.wire.on('session_load', function (s) {
+  var data, session;
+
+  if (s) {
+    session = s;
+  } else {
+    // Extract everything from store, if possible
+    data = store.get(STORAGE_KEY) || { sessions: [] };
+
+    // Try to find current session
+    session = _.find(data.sessions, function (session) {
+      return '$current$' === session.name;
+    });
+
+    if (!session) {
+      return;
+    }
   }
 
-  config  = file.data;
-  session = { fontname: config.name, fonts: {} };
+  //
+  // Now load session data into models
+  //
 
-  _.each(config.glyphs, function (g) {
-    var id = KNOWN_FONT_IDS[g.src];
+  N.app.fontName(session.fontname);
 
-    if (!session.fonts[id]) {
-      session.fonts[id] = { collapsed: false, glyphs: [] };
-    }
-
-    session.fonts[id].glyphs.push({
-      selected:  true,
-      uid:       g.uid,
-      css:       g.css,
-      code:      g.code,
-      orig_css:  g.orig_css,
-      orig_code: g.orig_code
-    });
-  });
-
-  N.wire.emit('session_load', session);
-});
-
-
-N.wire.on('session_load', function (session) {
   var fonts = {};
 
   // remap session font lists into maps

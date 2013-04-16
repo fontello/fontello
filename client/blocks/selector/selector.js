@@ -59,9 +59,6 @@ N.wire.once('navigate.done', function (data) {
     }
   });
 
-  // Once all init finished - notify that fonts are ready
-  N.wire.emit('fonts_ready', N.app.fontsList);
-
   // Setup initial search string.
   if (data.params && data.params.search) {
     N.wire.emit('cmd:search_update', data.params.search);

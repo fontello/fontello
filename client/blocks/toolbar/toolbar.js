@@ -34,7 +34,7 @@ function ToolbarModel() {
   // Essential properties
   //
 
-  this.fontname = N.app.fontname;
+  this.fontName = N.app.fontName;
   this.fontSize = N.app.fontSize;
 
   // true, after download button pressed, until font buildeing finished
@@ -64,26 +64,13 @@ function ToolbarModel() {
 ////////////////////////////////////////////////////////////////////////////////
 
 
-var fontname = ko.observable('');
-
-
-fontname.subscribe(function (value) {
-  N.wire.emit('session_save', { fontname: value });
-});
-
-
-N.wire.on('session_load', function (session) {
-  fontname(session.fontname || '');
-});
-
-
-N.wire.once('navigate.done', function (fontsList) {
+N.wire.once('navigate.done', function () {
   var $view   = $('#toolbar')
-    , toolbar = new ToolbarModel(fontsList, fontname);
+    , toolbar = new ToolbarModel();
 
   N.wire.on('reset_all_confirm', function () {
     if (window.confirm(t('confirm_app_reset'))) {
-      toolbar.fontname('');
+      N.app.fontName('');
       N.wire.emit('reset_all');
     }
   });

@@ -4,7 +4,7 @@
 /*global ko*/
 
 
-N.wire.once('fonts_ready', function () {
+N.wire.once('navigate.done', { priority: 10 }, function () {
   $(function () {
     var $view = $('#tabs').tab()
       , tabs  = { selectedCount: N.app.fontsList.selectedCount };

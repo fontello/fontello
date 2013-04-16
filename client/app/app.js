@@ -15,6 +15,7 @@ var embedded_fonts    = require('../../lib/embedded_fonts/configs')
 
 // Int to char, with fix for big numbers
 // see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String/fromCharCode
+//
 function fixedFromCharCode(code) {
   /*jshint bitwise: false*/
   if (code > 0xffff) {
@@ -31,6 +32,7 @@ function fixedFromCharCode(code) {
 
 
 // Char to Int, with fix for big numbers
+//
 function fixedCharCodeAt(chr) {
   /*jshint bitwise: false*/
   var char1 = chr.charCodeAt(0)
@@ -227,15 +229,7 @@ function FontModel(data, options) {
   //
 
   this.selectedGlyphs = ko.computed(function () {
-    var glyphs = [];
-
-    _.each(this.glyphs, function (glyph) {
-      if (glyph.selected()) {
-        glyphs.push(glyph);
-      }
-    });
-
-    return glyphs;
+    return _.filter(this.glyphs, function (glyph) { return glyph.selected(); });
   }, this).extend({ throttle: 100 });
 
   //
@@ -261,15 +255,7 @@ function FontModel(data, options) {
   //
 
   this.visibleCount = ko.computed(function () {
-    var result = 0;
-
-    _.each(this.glyphs, function (glyph) {
-      if (glyph.visible()) {
-        result++;
-      }
-    });
-
-    return result;
+    return _.reduce(this.glyphs, function (cnt, glyph) { return cnt + (glyph.visible() ? 1 : 0); }, 0);
   }, this).extend({ throttle: 100 });
 }
 
@@ -285,13 +271,9 @@ function FontsList(options) {
   //
 
   this.selectedGlyphs = ko.computed(function () {
-    var glyphs = [];
-
-    _.each(this.fonts, function (font) {
-      glyphs = glyphs.concat(font.selectedGlyphs());
-    });
-
-    return glyphs;
+    return _.reduce(this.fonts, function (result, font) {
+      return Array.concat(result, font.selectedGlyphs());
+    }, []);
   }, this).extend({ throttle: 100 });
 
   //
@@ -317,16 +299,10 @@ function FontsList(options) {
     return glyphs;
   }, this).extend({ throttle: 100 });
 
+  // Count of visible fonts, with reflow compensation
+  //
   this.visibleCount = ko.computed(function () {
-    var result = 0;
-
-    _.each(this.fonts, function (font) {
-      if (font.visibleCount()) {
-        result++;
-      }
-    });
-
-    return result;
+    return _.reduce(this.fonts, function (cnt, font) { return cnt + (font.visibleCount() ? 1 : 0); }, 0);
   }, this).extend({ throttle: 100 });
 
   //
@@ -364,33 +340,17 @@ N.app.fontSize    = ko.observable(N.runtime.config.glyph_size.val).extend({ thro
 N.app.fontName    = ko.observable('');
 
 
-
 // Autosave generator - after every fontlist change
 // emit session change (debounced)
 //
 N.wire.once('navigate.done', function () {
+
   N.app.fontsList.isModified.subscribe(_.debounce(function () {
-    var session = { fonts: {} };
-
-    _.each(N.app.fontsList.fonts, function (font) {
-      var font_data = { collapsed: font.collapsed(), glyphs: [] };
-
-      _.each(font.glyphs, function (glyph) {
-        if (glyph.isModified()) {
-          font_data.glyphs.push({
-            uid:        glyph.uid,
-            selected:   glyph.selected(),
-            orig_code:  glyph.originalCode,
-            orig_css:   glyph.originalName,
-            code:       glyph.code(),
-            css:        glyph.name()
-          });
-        }
-      });
-
-      session.fonts[font.id] = font_data;
-    });
-
-    N.wire.emit('session_save', session);
+    N.wire.emit('session_save');
   }, 500));
+
+  N.app.fontName.subscribe(function () {
+    N.wire.emit('session_save');
+  });
+
 });
