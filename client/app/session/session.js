@@ -18,89 +18,6 @@ _.each(require('../../../lib/embedded_fonts/configs'), function (o) {
 });
 
 
-// MIGRATIONS //////////////////////////////////////////////////////////////////
-
-
-function migrate() {
-  //
-  // Run migrations ONLY if there's no new version of session storage found
-  //
-
-  if (SERIALIZER_VERSION === (store.get(STORAGE_KEY) || {}).version) {
-    return;
-  }
-
-  //
-  // Migrate from v1 (Backbone.localStorage based) to v2
-  //
-
-  (function () {
-    var data, ids;
-
-    if (!window.localStorage || store.disabled) {
-      // Backbone.localStorage used LocalStorage directly, so we will
-      // need to "access" it directly as well to get the list of models
-      return;
-    }
-
-    /*global localStorage*/
-
-    data = { version: 2, sessions: [] };
-    ids  = localStorage.getItem('Fontello:Sessions');
-
-    // found old session
-    if (/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}/.test(ids)) {
-      store.remove('Fontello:Sessions');
-      _.each(ids.split(','), function (id) {
-        var session;
-
-        id = 'Fontello:Sessions-' + id;
-
-        session = JSON.parse(localStorage.getItem(id));
-
-        if (session && '$current$' === session.name) {
-          data.sessions.push({
-            name:     '$current$',
-            fontname: (session.data || {}).name,
-            fonts:    (session.data || {}).fonts
-          });
-        }
-
-        store.remove(id);
-      });
-    }
-
-    // we need to migrate ONLY if there's no new storage
-    if (!store.get('fontello:sessions')) {
-      store.set('fontello:sessions', data);
-    }
-  })();
-
-  //
-  // Migrate from v2 to v3
-  //
-
-  (function () {
-    var data = store.get('fontello:sessions');
-
-    // migrate ONLY if user is using old version
-    if (2 === data.version) {
-      data.version = 3;
-
-      _.each(data.sessions, function (session) {
-        _.each(session.fonts, function (font) {
-          _.each(font.glyphs, function (glyph) {
-            glyph.css   = glyph.css || glyph.orig_css;
-            glyph.code  = glyph.code || glyph.orig_code;
-          });
-        });
-      });
-
-      store.set('fontello:sessions', data);
-    }
-  })();
-}
-
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -124,9 +41,6 @@ function migrate() {
 
 
 ////////////////////////////////////////////////////////////////////////////////
-
-
-migrate();
 
 
 N.wire.once('fonts_ready', function () {
