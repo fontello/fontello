@@ -1,9 +1,7 @@
-@charset "UTF-8";
-
 @font-face {
   font-family: 'icons';
-  src: url("../font/icons.eot?16605081");
-  src: url("../font/icons.eot?16605081#iefix") format('embedded-opentype'), url("../font/icons.woff?16605081") format('woff'), url("../font/icons.ttf?16605081") format('truetype'), url("../font/icons.svg?16605081#icons") format('svg');
+  src: url("../font/icons.eot?62333947");
+  src: url("../font/icons.eot?62333947#iefix") format('embedded-opentype'), url("../font/icons.woff?62333947") format('woff'), url("../font/icons.ttf?62333947") format('truetype'), url("../font/icons.svg?62333947#icons") format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -13,7 +11,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'icons';
-    src: url('../font/icons.svg?16605081#icons') format('svg');
+    src: url('../font/icons.svg?62333947#icons') format('svg');
   }
 }
 */
@@ -55,5 +53,6 @@
 .icon-github-text:before { content: '\f307'; } /* '' */
 .icon-dribbble:before { content: '\f31b'; } /* '' */
 .icon-download:before { content: '\f000'; } /* '' */
-.icon-search:before { content: '🔧'; } /* '\1f527' */
+.icon-search:before { content: '\f003'; } /* '' */
+.icon-link:before { content: '\f002'; } /* '' */
 .icon-settings:before { content: '\f001'; } /* '' */

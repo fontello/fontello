@@ -1,5 +1,3 @@
-@charset "UTF-8";
-
 
 .icon-home:before { content: '\2302'; } /* '⌂' */
 .icon-mail:before { content: '\2709'; } /* '✉' */
@@ -13,5 +11,6 @@
 .icon-github-text:before { content: '\f307'; } /* '' */
 .icon-dribbble:before { content: '\f31b'; } /* '' */
 .icon-download:before { content: '\f000'; } /* '' */
-.icon-search:before { content: '🔧'; } /* '\1f527' */
+.icon-search:before { content: '\f003'; } /* '' */
+.icon-link:before { content: '\f002'; } /* '' */
 .icon-settings:before { content: '\f001'; } /* '' */
