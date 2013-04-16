@@ -1,8 +1,11 @@
 4.0.0 / ...
 ------------------
 
+* Permalinks for search results
+* Focus on search field after load
 * Added count of selected/searched glyphs for each font
 * Added message, when nothing found
+* Search field now can be cleared by escape
 * IE8 regressions fixes
 * Updated to new (wire-based) nodeca architectire
 
