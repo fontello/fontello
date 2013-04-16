@@ -30,10 +30,10 @@ function notifyError(err) {
   // try to extract error message
   msg = err.message || err.body || (err.code ? 'ERR' + err.code : null);
 
-  N.wire.emit('notify', {
-    type: 'error'
-  , text: t('errors.fatal', { error: msg || 'Unexpected error' })
-  });
+  N.wire.emit(
+    'notify',
+    t('errors.fatal', { error: msg || 'Unexpected error' })
+  );
 }
 
 
@@ -48,10 +48,10 @@ function pollStatus(id) {
     }
 
     if ('error' === msg.data.status) {
-      N.wire.emit('notify', {
-        type: 'error'
-      , text: t('errors.generic', { error: msg.data.error || 'Unexpected error.' })
-      });
+      N.wire.emit(
+        'notify',
+        t('errors.generic', { error: msg.data.error || 'Unexpected error.' })
+      );
       N.wire.emit('build.finished');
       return;
     }

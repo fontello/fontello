@@ -20,7 +20,7 @@ function onFileChange(event) {
 
     if (!file) {
       // Unexpected behavior. Should not happen in real life.
-      N.wire.emit('notify', { type: 'error', text: t('error.no_config_chosen') });
+      N.wire.emit('notify', t('error.no_config_chosen'));
       return;
     }
 
@@ -49,7 +49,7 @@ function onFileChange(event) {
 
     reader.readAsBinaryString(file);
   } catch (err) {
-    N.wire.emit('notify', { type: 'error', text: t('error.invalid_browser') });
+    N.wire.emit('notify', t('error.invalid_browser'));
   }
 }
 

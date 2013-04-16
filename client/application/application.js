@@ -1,20 +1,7 @@
 'use strict';
 
 
-N.wire.on('io.error', function (err) {
-  if (N.io.ECOMMUNICATION === err.code) {
-    N.wire.emit('notify', { type: 'error', text: t('errors.communication') });
-    return;
-  }
-
-  if (N.io.EWRONGVER === err.code) {
-    N.wire.emit('notify', { type: 'error', text: t('errors.version') });
-    return;
-  }
-});
-
-
-$(function () {
+N.wire.once('navigate.done', function () {
   // Attach tooltip handler to matching elements
   $('._tip').tooltip();
 
