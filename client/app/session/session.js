@@ -187,3 +187,35 @@ N.wire.on('import.done', function (file) {
 
   N.wire.emit('session_load', session);
 });
+
+
+N.wire.on('session_load', function (session) {
+  var fonts = {};
+
+  // remap session font lists into maps
+  _.each(session.fonts || [], function (font, id) {
+    var glyphs = {};
+
+    _.each(font.glyphs, function (glyph) {
+      glyphs[glyph.uid] = glyph;
+    });
+
+    font.glyphs = glyphs;
+    fonts[id] = font;
+  });
+
+  _.each(N.app.fontsList.fonts, function (font) {
+    var session_font = fonts[font.id] || { collapsed: false, glyphs: {} };
+
+    // set collapsed state of font
+    font.collapsed(!!session_font.collapsed);
+
+    _.each(font.glyphs, function (glyph) {
+      var session_glyph = session_font.glyphs[glyph.uid] || {};
+
+      glyph.selected(!!session_glyph.selected);
+      glyph.code(session_glyph.code || session_glyph.orig_code || glyph.originalCode);
+      glyph.name(session_glyph.css || session_glyph.orig_css || glyph.originalName);
+    });
+  });
+});

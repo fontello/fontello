@@ -4,8 +4,8 @@
 /*global ko*/
 
 
-function CodesEditorModel(fontsList) {
-  this.selectedGlyphs = fontsList.selectedGlyphs;
+function CodesEditorModel() {
+  this.selectedGlyphs = N.app.fontsList.selectedGlyphs;
 
   this.hideGlyph = function (glyph) {
     $(glyph).fadeOut(function () {
@@ -15,9 +15,9 @@ function CodesEditorModel(fontsList) {
 }
 
 
-N.wire.once('fonts_ready', function (fontsList) {
+N.wire.once('navigate.done', function () {
   var $view = $('#codes-editor');
 
   // Bind model and view
-  ko.applyBindings(new CodesEditorModel(fontsList), $view.get(0));
+  ko.applyBindings(new CodesEditorModel(), $view.get(0));
 });

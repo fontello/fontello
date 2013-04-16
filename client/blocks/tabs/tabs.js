@@ -4,10 +4,10 @@
 /*global ko*/
 
 
-N.wire.once('fonts_ready', function (fontsList) {
+N.wire.once('fonts_ready', function () {
   $(function () {
     var $view = $('#tabs').tab()
-      , tabs  = { selectedCount: fontsList.selectedCount };
+      , tabs  = { selectedCount: N.app.fontsList.selectedCount };
 
     //
     // Bind model and view
@@ -30,7 +30,7 @@ N.wire.once('fonts_ready', function (fontsList) {
     // Jump to selector if no selected glyphs left
     //
 
-    fontsList.selectedCount.subscribe(function (count) {
+    N.app.fontsList.selectedCount.subscribe(function (count) {
       if (0 === count) {
         jumpToSelector();
       }

@@ -109,32 +109,14 @@ function startBuilder(config) {
 }
 
 
-// Request font build and download on success
-//
-var selectedCount  = $.noop
-  , selectedGlyphs = $.noop
-  , fontname       = $.noop;
-
-
-N.wire.once('fonts_ready', function (fontsList) {
-  selectedCount  = fontsList.selectedCount;
-  selectedGlyphs = fontsList.selectedGlyphs;
-});
-
-
-N.wire.once('toolbar_ready', function (toolbar) {
-  fontname = toolbar.fontname;
-});
-
-
 N.wire.on('build_font', function () {
-  var config = { name: $.trim(fontname()) };
+  var config = { name: $.trim(N.app.fontName()) };
 
-  if (!selectedCount()) {
+  if (!N.app.fontList.selectedCount()) {
     return;
   }
 
-  config.glyphs = _.map(selectedGlyphs(), function (glyph) {
+  config.glyphs = _.map(N.app.fontList.selectedGlyphs(), function (glyph) {
     return glyph.serialize();
   });
 
