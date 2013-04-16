@@ -1,6 +1,6 @@
 router:
   map:
-    fontello.application:
+    fontello.app:
       "/": ~
       "/#&search={search}":
         search: /\S+/
