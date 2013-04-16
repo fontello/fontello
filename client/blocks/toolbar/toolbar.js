@@ -88,7 +88,11 @@ N.wire.once('navigate.done', function (data) {
   //
 
   $view.find('#search')
-    .on('keyup', function () {
+    .on('keyup', function (e) {
+      // Clear content on escape
+      if (e.keyCode === 27) {
+        $(this).val('');
+      }
       N.app.searchWord($.trim($(this).val()));
     })
     .on('focus keyup', _.debounce(function () {
@@ -96,7 +100,8 @@ N.wire.once('navigate.done', function (data) {
     }, 3000))
     .typeahead({
       source: knownKeywords
-    });
+    })
+    .focus();
 
   //
   // Apply KO bindings
@@ -107,10 +112,26 @@ N.wire.once('navigate.done', function (data) {
   //
   // Setup initial search string.
   //
+  $.fn.setCursorPosition = function(pos) {
+    if ($(this).get(0).setSelectionRange) {
+      $(this).get(0).setSelectionRange(pos, pos);
+    } else if ($(this).get(0).createTextRange) {
+      var range = $(this).get(0).createTextRange();
+      range.collapse(true);
+      range.moveEnd('character', pos);
+      range.moveStart('character', pos);
+      range.select();
+    }
+  };
+
+  var txt;
 
   if (data.params && data.params.search) {
-    $view.find('#search').val(data.params.search);
-    N.app.searchWord(data.params.search);
+    txt = data.params.search;
+    $view.find('#search')
+      .val(txt)
+      .setCursorPosition(txt.length);
+    N.app.searchWord(txt);
   }
 
 });
