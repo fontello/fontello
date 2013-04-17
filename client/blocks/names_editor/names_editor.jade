@@ -1,9 +1,11 @@
 #names-editor.tab-pane.fade
   p.note= self.t('help')
 
-  #preview-font.row(data-bind='style: {fontSize: fontSize() + "px"}, foreach: { data: selectedGlyphs, beforeRemove: hideGlyph }')
+  #preview-font.row(data-bind='style: {fontSize: fontSize() + "px"}')
+    // ko foreach: { data: selectedGlyphs, beforeRemove: hideGlyph }
     .preview-glyph.span3
       span.font-fontello.icon(data-bind='text: charRef')
       span.prefix icon-
       input.glyph-name(data-bind='value: name')
       a.remove.icon-remove(href='#', title=self.t('remove'), data-bind='click: toggleSelection')
+    // /ko

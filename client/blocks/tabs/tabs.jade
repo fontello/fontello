@@ -1,6 +1,6 @@
 ul#tabs.nav.nav-tabs
   li: a(data-toggle='tab', data-target='#selector')= self.t('selector')
-  li: a(data-bind='css: {disabled: !selectedCount()}, attr: {"data-toggle": selectedCount() ? "tab" : ""}',
+  li: a(data-bind="css: { disabled: !selectedCount() }, attr: { 'data-toggle': selectedCount() ? 'tab' : '' }",
         data-target='#names-editor')= self.t('names_editor')
-  li: a(data-bind='css: {disabled: !selectedCount()}, attr: {"data-toggle": selectedCount() ? "tab" : ""}',
+  li: a(data-bind="css: { disabled: !selectedCount() }, attr: { 'data-toggle': selectedCount() ? 'tab' : '' }",
         data-target='#codes-editor')= self.t('codes_editor')

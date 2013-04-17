@@ -1,0 +1,63 @@
+@import "../_variables"
+
+
+body
+  padding-top 180px // make the container go all the way to the bottom of the topbar
+  padding-bottom 30px
+
+.navbar
+  box-shadow 0 0 4px #444
+
+.brand
+  line-height 20px
+  padding-top 0 !important
+  padding-bottom 0 !important
+
+
+// Social buttons
+//
+iframe
+  &.twitter-follow-button
+  &.twitter-share-button
+    margin-left 10px
+    margin-top 9px
+  &.FlattrButton
+    margin-top 10px
+
+.gplus > div
+  top 9px
+  position relative
+
+.nav
+  .twitter-follow-button
+  .twitter-share-button
+  .gplus
+  .FlattrButton
+    transition: opacity .5s ease;
+    opacity: .6
+
+.nav:hover
+  .twitter-follow-button
+  .twitter-share-button
+  .gplus
+  .FlattrButton
+    opacity: 1
+
+
+// Warning for disabled JS
+//
+.js  .jsnotice
+  display none
+
+.no-js .jsnotice
+  position absolute
+  left 30%
+  right 30%
+  top 90px
+  z-index 10000
+  font-size 54px
+  line-height 81px
+  font-weight bold
+
+p.note
+  color #888

@@ -53,10 +53,8 @@ function fixedCharCodeAt(chr) {
 
 function GlyphModel(font, data, options) {
 
+  // Read-only properties
   //
-  // Essential properties
-  //
-
   this.uid          = data.uid;
   this.originalName = data.css;
   this.originalCode = data.code;
@@ -69,7 +67,6 @@ function GlyphModel(font, data, options) {
 
   // we search by name AND aliases
   this.keywords = [this.originalName].concat(data.search || []).join(',');
-
 
   this.charRef = fixedFromCharCode(glyphs_map[font.fontname][data.uid]);
   this.cssExt  = data['css-ext'];
@@ -84,11 +81,9 @@ function GlyphModel(font, data, options) {
   this.name     = ko.observable(this.originalName);
   this.code     = ko.observable(this.originalCode);
 
-  //
   // Serialization. Make sure to update this method to have
   // desired fields sent to the server (by font builder).
   //
-
   this.serialize = function () {
     return {
       uid:       this.uid
@@ -111,28 +106,22 @@ function GlyphModel(font, data, options) {
     this.selected(!this.selected());
   }.bind(this);
 
-  //
   // Whenver or not glyph should be visible
   //
-
   this.visible = ko.computed(function () {
     return 0 <= this.keywords.indexOf(options.searchWord());
   }, this);
 
-  //
   // Whenever or not glyph should be treaten as "modified"
   //
-
   this.isModified = ko.computed(function () {
     return this.selected() ||
       (this.name() !== this.originalName) ||
       (this.code() !== this.originalCode);
   }, this);
 
-  //
   // code value as character (for code editor)
   //
-
   this.customChar = ko.computed({
     read: function () {
       return fixedFromCharCode(this.code());
@@ -143,10 +132,8 @@ function GlyphModel(font, data, options) {
   , owner: this
   });
 
-  //
   // code value as hex-string (for code editor)
   //
-
   this.customHex = ko.computed({
     read: function () {
       var code = this.code().toString(16).toUpperCase();
@@ -160,10 +147,8 @@ function GlyphModel(font, data, options) {
   , owner: this
   });
 
-  //
   // Register glyph in the names/codes swap-remap handler
   //
-
   trackNameChanges(this);
   trackCodeChanges(this);
 }
@@ -213,40 +198,36 @@ function FontModel(data, options) {
     }
   }.bind(this);
 
-  // animation on collapse state change
+  // animate collapse on state change
   this.collapsed.subscribe(this.setCollapseState);
 
-  //
+
   // Array of font glyphs
   //
-
   this.glyphs = _.map(data.glyphs, function (data) {
     return new GlyphModel(this, data, options);
   }, this);
 
+  // Array of selected glyphs of a font
   //
-  // Returns array of selected glyphs of a font
-  // throttling compensates mass reflows on multiselect
-  //
-
   this.selectedGlyphs = ko.computed(function () {
     return _.filter(this.glyphs, function (glyph) { return glyph.selected(); });
   }, this).extend({ throttle: 100 });
 
+  // selected glyphs count
   //
-  // Returns array of modified glyphs of a font
-  // throttling compensates mass reflows on multiselect
-  //
+  this.selectedCount = ko.computed(function () {
+    return this.selectedGlyphs().length;
+  }, this);
 
+  // Array of modified glyphs of a font
+  //
   this.modifiedGlyphs = ko.computed(function () {
     return _.filter(this.glyphs, function (glyph) { return glyph.isModified(); });
   }, this).extend({ throttle: 100 });
 
+  // Visible glyphs count
   //
-  // Returns amount of visible glyphs
-  // throttling compensates mass reflows on multiselect
-  //
-
   this.visibleCount = ko.computed(function () {
     return _.reduce(this.glyphs, function (cnt, glyph) { return cnt + (glyph.visible() ? 1 : 0); }, 0);
   }, this).extend({ throttle: 100 });
@@ -258,30 +239,22 @@ function FontsList(options) {
     return new FontModel(data, options);
   });
 
+  // Array of selected glyphs from all fonts
   //
-  // Returns array of selected glyphs from all fonts
-  // throttling compensates mass reflows on multiselect
-  //
-
   this.selectedGlyphs = ko.computed(function () {
     return _.reduce(this.fonts, function (result, font) {
       return result.concat(font.selectedGlyphs());
     }, []);
   }, this).extend({ throttle: 100 });
 
+  // Count of selected glyphs from all fonts
   //
-  // Returns amount of selected glyphs from all fonts
-  //
-
   this.selectedCount = ko.computed(function () {
     return this.selectedGlyphs().length;
   }, this);
 
-  //
   // Returns array of modified glyphs from all fonts
-  // throttling compensates mass reflows on multiselect
   //
-
   this.modifiedGlyphs = ko.computed(function () {
     return _.reduce(this.fonts, function (result, font) {
       return result.concat(font.modifiedGlyphs());
@@ -294,11 +267,8 @@ function FontsList(options) {
     return _.reduce(this.fonts, function (cnt, font) { return cnt + (font.visibleCount() ? 1 : 0); }, 0);
   }, this).extend({ throttle: 100 });
 
-  //
   // Returns whenever font list has modified glyphs or collapsed fonts
-  // throttling compensates mass reflows on multiselect
   //
-
   this.isModified = ko.computed(function () {
     var value = false;
 
