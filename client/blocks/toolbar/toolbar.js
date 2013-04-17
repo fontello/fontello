@@ -29,12 +29,16 @@ var knownKeywords = _(require('../../../lib/embedded_fonts/configs'))
 
 
 function ToolbarModel() {
-  var self = this;
   //
   // Essential properties
   //
 
   this.fontSize = ko.observable(N.app.fontSize());
+
+  this.fontSize.subscribe(_.debounce(function (value) {
+    N.app.fontSize(value);
+  }, 500));
+
 
   // true, after download button pressed, until font buildeing finished
   this.building = ko.observable(false);
@@ -48,18 +52,6 @@ function ToolbarModel() {
   this.searchWord     = N.app.searchWord;
   this.searchMode     = N.app.searchMode;
   this.fontName       = N.app.fontName;
-
-  //
-  // Subscribe for build.started/finished events
-  //
-
-  N.wire.on('build.started', function () {
-    self.building(true);
-  });
-
-  N.wire.on('build.finished', function () {
-    self.building(false);
-  });
 }
 
 
@@ -70,10 +62,18 @@ N.wire.once('navigate.done', function (data) {
   var $view   = $('#toolbar')
     , toolbar = new ToolbarModel();
 
-  // Debounced updater of global font size
-  var updateAppFontSize = _.debounce(function () {
-    N.app.fontSize(toolbar.fontSize());
-  }, 500);
+
+  //
+  // Subscribe for build.started/finished events
+  //
+
+  N.wire.on('build.started', function () {
+    toolbar.building(true);
+  });
+
+  N.wire.on('build.finished', function () {
+    toolbar.building(false);
+  });
 
   //
   // Initialize jquery fontSize slider
@@ -87,7 +87,6 @@ N.wire.once('navigate.done', function (data) {
     max:          N.runtime.config.glyph_size.max,
     slide:        function (event, ui) {
       toolbar.fontSize(Math.round(ui.value));
-      updateAppFontSize();
     }
   });
 
