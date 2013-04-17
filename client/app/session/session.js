@@ -54,7 +54,7 @@ N.wire.once('navigate.done', { priority: -10 }, function () {
 
 
 
-N.wire.on('session_save', function () {
+N.wire.on('session_save', _.debounce(function () {
   var storage = Object(store.get(STORAGE_KEY))
     , session = Object(_.find(storage.sessions || [], function (session) {
         return '$current$' === session.name;
@@ -94,7 +94,7 @@ N.wire.on('session_save', function () {
     // now always write to idx 0, until multisession support added
     sessions: [session]
   });
-});
+}, 500));
 
 
 

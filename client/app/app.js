@@ -333,11 +333,15 @@ N.app.fontName    = ko.observable('');
 //
 N.wire.once('navigate.done', function () {
 
-  N.app.fontsList.isModified.subscribe(_.debounce(function () {
+  N.app.fontsList.isModified.subscribe(function () {
     N.wire.emit('session_save');
-  }, 500));
+  });
 
   N.app.fontName.subscribe(function () {
+    N.wire.emit('session_save');
+  });
+
+  N.app.fontSize.subscribe(function () {
     N.wire.emit('session_save');
   });
 
