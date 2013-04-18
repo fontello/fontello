@@ -21,7 +21,7 @@ window.NodecaLoader.execute(function (N, require) {
   var Pointer   = require('pointer');
   var BabelFish = require('babelfish');
 
-  N.runtime         = JSON.parse($('meta[name="runtime"]').attr('content'));
+  N.runtime         = JSON.parse($('#runtime').text());
   N.runtime.env     = <%- JSON.stringify(N.runtime.env) %>;
   N.runtime.version = <%- JSON.stringify(N.runtime.version) %>;
   N.runtime.router  = new Pointer();

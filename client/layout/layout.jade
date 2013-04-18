@@ -20,7 +20,6 @@ html.no-js(lang='en', itemscope, itemtype='http://schema.org/WebPage')
     //- the fav and touch icons
     link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
 
-    meta(name="runtime", content=JSON.stringify(self.runtime))
     script(type="text/javascript")
       !{self.asset_include('loader.js')}
       NodecaLoader.loadAssets.init(
@@ -70,3 +69,6 @@ html.no-js(lang='en', itemscope, itemtype='http://schema.org/WebPage')
 
     .jsnotice
       .alert.alert-error= self.t('nojs_alert')
+
+
+    div#runtime(style="display: none")= JSON.stringify(self.runtime)
