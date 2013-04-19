@@ -179,7 +179,7 @@ window.NodecaLoader = (function () {
 
       // Execute after DOM is loaded:
       $(function () {
-        N.wire.emit('navigate.done', {
+        N.wire.emit(['navigate.done', 'navigate.done:' + route.meta], {
           url:     location.href
         , apiPath: route.meta
         , params:  route.params
