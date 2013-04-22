@@ -40,11 +40,17 @@ function renderNewContent(data, callback) {
   })).hide();
 
   $('#content').fadeOut('fast', function () {
+    var offset = data.anchor ? $(data.anchor).offset() : null;
+
     $(this).replaceWith(content);
     content.fadeIn('fast');
 
-    $('html:not(:animated)').animate({
-      scrollTop: data.anchor ? ($(data.anchor).position().top) : 0
+    // To scroll window:
+    // - WebKit-based browsers and the quirks mode use `body` element.
+    // - Other browsers use `html` element.
+    $('html:not(:animated), body:not(:animated)').animate({
+      scrollTop:  offset ? offset.top  : 0
+    , scrollLeft: offset ? offset.left : 0
     }, 300);
 
     callback();
