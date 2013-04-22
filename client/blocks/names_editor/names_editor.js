@@ -5,8 +5,12 @@
 
 
 function NamesEditorModel() {
+
   this.selectedGlyphs = N.app.fontsList.selectedGlyphs;
   this.fontSize       = N.app.fontSize;
+  this.cssPrefixText  = N.app.cssPrefixText;
+  this.cssUseSuffix   = N.app.cssUseSuffix;
+
   this.hideGlyph      = function (el) {
     $(el).fadeOut(function () {
       $(this).remove();

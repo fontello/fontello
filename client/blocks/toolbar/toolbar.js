@@ -53,6 +53,8 @@ function ToolbarModel() {
   this.searchWord     = N.app.searchWord;
   this.searchMode     = N.app.searchMode;
   this.fontName       = N.app.fontName;
+  this.cssPrefixText  = N.app.cssPrefixText;
+  this.cssUseSuffix   = N.app.cssUseSuffix;
 }
 
 

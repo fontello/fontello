@@ -67,6 +67,8 @@ N.wire.on('session_save', _.debounce(function () {
   //
   session.name = '$current$';
   session.fontname = N.app.fontName();
+  session.css_prefix_text = N.app.cssPrefixText();
+  session.css_use_suffix = N.app.cssUseSuffix();
   session.fonts = {};
 
   _.each(N.app.fontsList.fonts, function (font) {
@@ -129,6 +131,18 @@ N.wire.on('session_load', function (s) {
   //
 
   N.app.fontName(session.fontname);
+
+  if (_.has(session, 'css_prefix_text')) {
+    N.app.cssPrefixText(String(session.css_prefix_text));
+  } else {
+    N.app.cssPrefixText('icon-'); // legacy fallback
+  }
+
+  if (_.has(session, 'css_use_suffix')) {
+    N.app.cssUseSuffix(Boolean(session.css_use_suffix));
+  } else {
+    N.app.cssUseSuffix(false); // legacy fallback
+  }
 
   var fonts = {};
 

@@ -7,3 +7,5 @@ en-US:
   menu_unselect_all: Unselect glyphs
   menu_reset_all: Reset all changes
   menu_import_config: Import config.json
+  menu_css_prefix_text: 'CSS prefix:'
+  menu_css_use_suffix: add after icon name

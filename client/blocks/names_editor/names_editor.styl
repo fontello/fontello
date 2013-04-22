@@ -15,15 +15,19 @@
   background-color white
   position relative
 
-  span.icon
+  .icon
     display inline-block
     min-width 1em
     text-align center
     cursor default
+    margin-right 0.5em
 
-  span.prefix
-    margin-left 0.5em
+  .prefix
+  .suffix
     cursor default
+
+  .suffix
+    display none
 
   &:hover .glyph-name
     background-color lighten(yellow, 70%)
@@ -60,6 +64,12 @@
   &:hover .remove
     opacity 1
 
-
-._3d .preview-glyph span.icon
-  text-shadow 1px 1px 1px rgba(127, 127, 127, 0.3)
+// Toggle vosual state for suffix-based CSS style
+//
+.css-use-suffix
+  .prefix
+    display none
+  .suffix
+    display inline
+  .glyph-name
+    text-align right

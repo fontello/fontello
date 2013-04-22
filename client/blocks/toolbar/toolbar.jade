@@ -38,7 +38,7 @@
       data-bind='value: fontName',
       data-placement='bottom')
 
-  .btn-group.pull-right
+  .btn-group.pull-right.dropdown
 
     a.btn.dropdown-toggle(data-toggle='dropdown', href='#')
       i.icon-settings
@@ -49,6 +49,15 @@
       li.divider
       li: a(href='#', data-on-click='cmd:reset_selected')= self.t('menu_unselect_all')
       li: a(href='#', data-on-click='cmd:reset_all')= self.t('menu_reset_all')
+      li.divider
+      li
+        form.menuitem-form(onsubmit='return false;')
+          fieldset
+            label(for='css-prefix')= self.t('menu_css_prefix_text')
+            input#css-prefix.input-medium(type='text', data-bind='value: cssPrefixText')
+            label.checkbox
+              input(type='checkbox', data-bind='checked: cssUseSuffix')
+              = self.t('menu_css_use_suffix')
 
   .btn-group.pull-right
     #glyph-size-slider

@@ -291,11 +291,13 @@ function FontsList(options) {
 // Create global `model` and properties
 N.app = {};
 
-N.app.searchWord = ko.observable('').extend({ throttle: 100 });
+N.app.searchWord  = ko.observable('').extend({ throttle: 100 });
 N.app.searchMode  = ko.computed(function () { return N.app.searchWord().length > 0; });
 N.app.fontsList   = new FontsList({ searchWord: N.app.searchWord });
 N.app.fontSize    = ko.observable(N.runtime.config.glyph_size.val);
 N.app.fontName    = ko.observable('');
+N.app.cssPrefixText = ko.observable('icon-');
+N.app.cssUseSuffix  = ko.observable(false);
 
 
 // Autosave generator - after every fontlist change
@@ -312,6 +314,14 @@ N.wire.once('navigate.done', function () {
   });
 
   N.app.fontSize.subscribe(function () {
+    N.wire.emit('session_save');
+  });
+
+  N.app.cssPrefixText.subscribe(function () {
+    N.wire.emit('session_save');
+  });
+
+  N.app.cssUseSuffix.subscribe(function () {
     N.wire.emit('session_save');
   });
 
