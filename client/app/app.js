@@ -294,7 +294,7 @@ N.app = {};
 N.app.searchWord = ko.observable('').extend({ throttle: 100 });
 N.app.searchMode  = ko.computed(function () { return N.app.searchWord().length > 0; });
 N.app.fontsList   = new FontsList({ searchWord: N.app.searchWord });
-N.app.fontSize    = ko.observable(N.runtime.config.glyph_size.val).extend({ throttle: 100 });
+N.app.fontSize    = ko.observable(N.runtime.config.glyph_size.val);
 N.app.fontName    = ko.observable('');
 
 
@@ -336,6 +336,7 @@ N.wire.once('navigate.done', function () {
     }
 
     N.app.fontName('');
+    //N.app.fontSize(N.runtime.config.glyph_size.val);
 
     _.each(N.app.fontsList.fonts, function(font) {
       _.each(font.glyphs, function(glyph) {

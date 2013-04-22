@@ -37,6 +37,7 @@ function ToolbarModel() {
 
   this.fontSize.subscribe(_.debounce(function (value) {
     N.app.fontSize(value);
+    N.wire.emit('session_save');
   }, 500));
 
 
@@ -79,7 +80,8 @@ N.wire.once('navigate.done', function (data) {
   // Initialize jquery fontSize slider
   //
 
-  $view.find('#glyph-size-slider').slider({
+  toolbar.fontSize(N.app.fontSize()); // Sync with global, to track first session load
+  $('#glyph-size-slider').slider({
     orientation:  'horizontal',
     range:        'min',
     value:        toolbar.fontSize(),//N.runtime.config.glyph_size.val,
@@ -94,7 +96,7 @@ N.wire.once('navigate.done', function (data) {
   // Initialize Twitter Bootstrap typeahead plugin
   //
 
-  $view.find('#search')
+  $('#search')
     .on('keyup', function (e) {
       // Clear content on escape
       if (e.keyCode === 27) {

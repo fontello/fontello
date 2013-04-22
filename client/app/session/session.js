@@ -25,6 +25,8 @@ _.each(require('../../../lib/embedded_fonts/configs'), function (o) {
 //  {STORAGE_KEY}:
 //    version:      (Number)  version of serilalizer
 //
+//    font_size:    (Number)  app font scale
+//
 //    sessions:     [Array]   session objects (currently only [0] used)
 //
 //      name:       (String)  session name (now only one, with name `$current$`)
@@ -91,6 +93,7 @@ N.wire.on('session_save', _.debounce(function () {
   //
   store.set(STORAGE_KEY, {
     version:  SERIALIZER_VERSION,
+    font_size: N.app.fontSize(),
     // now always write to idx 0, until multisession support added
     sessions: [session]
   });
@@ -106,6 +109,10 @@ N.wire.on('session_load', function (s) {
   } else {
     // Extract everything from store, if possible
     data = store.get(STORAGE_KEY) || { sessions: [] };
+
+    if (_.isNumber(data.font_size) && (data.font_size > 0)) {
+      N.app.fontSize(data.font_size);
+    }
 
     // Try to find current session
     session = _.find(data.sessions, function (session) {
