@@ -145,6 +145,14 @@ module.exports = function (N, apiPath) {
       type: "string"
     , required: false
     }
+  , css_prefix_text: {
+      type: "string"
+    , required: true
+    }
+  , css_use_suffix: {
+      type: "boolean"
+    , required: true
+    }
   , glyphs: {
       type: "array"
     , required: true
@@ -153,6 +161,9 @@ module.exports = function (N, apiPath) {
 
   N.wire.on(apiPath, function (env, callback) {
     var font = fontConfig(env.params), font_id, errmsg;
+
+    if (env.params.css_use_suffix == 'false') { env.params.css_use_suffix = false; }
+    if (env.params.css_use_suffix == 'true') { env.params.css_use_suffix = true; }
 
     if (!font || 0 >= font.glyphs.length) {
       callback("Invalid request");

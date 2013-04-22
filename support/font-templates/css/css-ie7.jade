@@ -1,19 +1,24 @@
-:stylus_nowrap
-  [class^="icon-"], [class*=" icon-"]
-    font-family '#{font.fontname}'
-    font-style normal
-    font-weight normal
+- if (!meta.css_use_suffix)
+  | [class^="#{meta.css_prefix_text}"], [class*=" #{meta.css_prefix_text}"]
+- else
+  | [class$="#{meta.css_prefix_text}"], [class*="#{meta.css_prefix_text} "]
 
-    /* fix buttons height */
-    line-height 1em
-
-    /* you can be more comfortable with increased icons size */
-    /* font-size: 120%; */
+| {
+|   font-family: '#{font.fontname}';
+|   font-style: normal;
+|   font-weight: normal;
+| 
+|   /* fix buttons height */
+|   line-height: 1em;
+| 
+|   /* you can be more comfortable with increased icons size */
+|   /* font-size: 120%; */
+| }
 
 - var i, g, css, hex, chr
 - for (i in glyphs)
   - g = glyphs[i]
-  - css = meta.css_prefix + g.css
+  - css = meta.css_use_suffix ? g.css + meta.css_prefix_text : meta.css_prefix_text + g.css
   - hex = g.code.toString(16)
   - chr = unichr(g.code)
   != '\n'

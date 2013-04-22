@@ -6,7 +6,7 @@
 - var i, g, css, hex, chr
 - for (i in glyphs)
   - g = glyphs[i]
-  - css = meta.css_prefix + g.css
+  - css = meta.css_use_suffix ? g.css + meta.css_prefix_text : meta.css_prefix_text + g.css
   - hex = '\\' + g.code.toString(16)
   - chr = unichr(g.code)
   != '\n'

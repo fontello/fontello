@@ -26,41 +26,46 @@
   }
   */
 
-  [class^="icon-"], [class*=" icon-"]
-    &:before
-      font-family '#{font.fontname}'
-      font-style normal
-      font-weight normal
-      speak none
+- if (!meta.css_use_suffix)
+  | [class^="#{meta.css_prefix_text}"]:before, [class*=" #{meta.css_prefix_text}"]:before
+- else
+  | [class$="#{meta.css_prefix_text}"]:before, [class*="#{meta.css_prefix_text} "]:before
 
-      display inline-block
-      text-decoration inherit
-      width 1em
-      margin-right .2em
-      text-align center
-      /* opacity .8 */
-
-      /* For safety - reset parent styles, that can break glyph codes*/
-      font-variant: normal;
-      text-transform: none;
-      
-      /* fix buttons height, for twitter bootstrap */
-      line-height 1em
-
-      /* Animation center compensation - magrins should be symmetric */
-      /* remove if not needed */
-      margin-left .2em
-
-      /* you can be more comfortable with increased icons size */
-      /* font-size: 120%; */
-
-      /* Uncomment for 3D effect */
-      /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+| {
+|   font-family: "#{font.fontname}";
+|   font-style: normal;
+|   font-weight: normal;
+|   speak: none;
+| 
+|   display: inline-block;
+|   text-decoration: inherit;
+|   width: 1em;
+|   margin-right: .2em;
+|   text-align: center;
+|   /* opacity: .8; */
+| 
+|   /* For safety - reset parent styles, that can break glyph codes*/
+|   font-variant: normal;
+|   text-transform: none;
+|      
+|   /* fix buttons height, for twitter bootstrap */
+|   line-height: 1em;
+| 
+|   /* Animation center compensation - magrins should be symmetric */
+|   /* remove if not needed */
+|   margin-left: .2em;
+| 
+|   /* you can be more comfortable with increased icons size */
+|   /* font-size: 120%; */
+| 
+|   /* Uncomment for 3D effect */
+|   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+| }
 
 - var i, g, css, hex, chr
 - for (i in glyphs)
   - g = glyphs[i]
-  - css = meta.css_prefix + g.css
+  - css = meta.css_use_suffix ? g.css + meta.css_prefix_text : meta.css_prefix_text + g.css
   - hex = '\\' + g.code.toString(16)
   - chr = unichr(g.code)
   != '\n'

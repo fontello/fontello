@@ -81,7 +81,8 @@ html
               - for (var c = 0; c < chunk_size && glyphs[offset + c]; c++)
                 - var g = glyphs[offset + c]
 
-                - var css_class = meta.css_prefix + (g.css || g.file)
+                - var css_class = meta.css_use_suffix ? (g.css || g.file) + meta.css_prefix_text : meta.css_prefix_text + (g.css || g.file)
+
                 - if (g['css-ext']) css_class += ' ' + g['css-ext']
 
                 - var code = g.code.toString(16)
