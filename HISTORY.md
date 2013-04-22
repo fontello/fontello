@@ -1,10 +1,12 @@
 4.0.0 / ...
 ------------------
 
+* Added configurable prefixes fir icon names
+* Added persistanse for glyphs size
 * Permalinks for search results
 * Focus on search field after load
 * Added count of selected/searched glyphs for each font
-* Added message, when nothing found
+* Added message, when nothing found in search
 * Search field now can be cleared by escape
 * IE8 regressions fixes
 * Updated to new (wire-based) nodeca architectire
