@@ -2,34 +2,35 @@
   | @charset "UTF-8";
   != '\n'
   != '\n'
+  | 
 
 - var rnd = Math.floor(Math.random()*100000000);
-:stylus_nowrap
-  @font-face {
-    font-family: '#{font.fontname}';
-    src: url('../font/#{font.fontname}.eot?#{rnd}');
-    src: url('../font/#{font.fontname}.eot?#{rnd}#iefix') format('embedded-opentype'),
-         url('../font/#{font.fontname}.woff?#{rnd}') format('woff'),
-         url('../font/#{font.fontname}.ttf?#{rnd}') format('truetype'),
-         url('../font/#{font.fontname}.svg?#{rnd}##{font.fontname}') format('svg');
-    font-weight: normal;
-    font-style: normal;
-  }
-  /* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
-  /* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
-  /*
-  @media screen and (-webkit-min-device-pixel-ratio:0) {
-    @font-face {
-      font-family: '#{font.fontname}';
-      src: url('../font/#{font.fontname}.svg?#{rnd}##{font.fontname}') format('svg');
-    }
-  }
-  */
-
+| @font-face {
+|   font-family: '#{font.fontname}';
+|   src: url('../font/#{font.fontname}.eot?#{rnd}');
+|   src: url('../font/#{font.fontname}.eot?#{rnd}#iefix') format('embedded-opentype'),
+|        url('../font/#{font.fontname}.woff?#{rnd}') format('woff'),
+|        url('../font/#{font.fontname}.ttf?#{rnd}') format('truetype'),
+|        url('../font/#{font.fontname}.svg?#{rnd}##{font.fontname}') format('svg');
+|   font-weight: normal;
+|   font-style: normal;
+| }
+| /* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+| /* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+| /*
+| @media screen and (-webkit-min-device-pixel-ratio:0) {
+|   @font-face {
+|     font-family: '#{font.fontname}';
+|     src: url('../font/#{font.fontname}.svg?#{rnd}##{font.fontname}') format('svg');
+|   }
+| }
+| */
+| 
+| 
 - if (!meta.css_use_suffix)
-  | [class^="#{meta.css_prefix_text}"]:before, [class*=" #{meta.css_prefix_text}"]:before
+  |[class^="#{meta.css_prefix_text}"]:before, [class*=" #{meta.css_prefix_text}"]:before 
 - else
-  | [class$="#{meta.css_prefix_text}"]:before, [class*="#{meta.css_prefix_text} "]:before
+  |[class$="#{meta.css_prefix_text}"]:before, [class*="#{meta.css_prefix_text} "]:before 
 
 | {
 |   font-family: "#{font.fontname}";
@@ -61,6 +62,7 @@
 |   /* Uncomment for 3D effect */
 |   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 | }
+| 
 
 - var i, g, css, hex, chr
 - for (i in glyphs)
