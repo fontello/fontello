@@ -347,6 +347,8 @@ N.wire.once('navigate.done', function () {
 
     N.app.fontName('');
     //N.app.fontSize(N.runtime.config.glyph_size.val);
+    N.app.cssPrefixText('icon-');
+    N.app.cssUseSuffix(false);
 
     _.each(N.app.fontsList.fonts, function(font) {
       _.each(font.glyphs, function(glyph) {
