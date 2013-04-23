@@ -43,7 +43,9 @@
                         "stylus"        : "~ 0.32.1",
                         "uglify-js"     : "~ 2.2.5",
                         "mongoose"      : "~ 3.6.4",
-                        "cookie"        : "~ 0.0.5"
+                        "cookie"        : "~ 0.0.5",
+                        "ttf2eot"       : "*",
+                        "ttf2woff"      : "*"
                       },
   "devDependencies" : {
                         "jshint"        : "*",

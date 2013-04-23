@@ -38,14 +38,13 @@ require()
 export PATH="$PWD/bin:$PATH"
 export PATH="$PWD/node_modules/.bin:$PATH"
 export PATH="$PWD/support/font-builder/bin:$PATH"
-export PATH="$PWD/support/font-builder/support/ttf2eot:$PATH"
 export PATH="$PWD/support/font-builder/support/ttfautohint/frontend:$PATH"
 
 
 ## CHECK DEPENDENCIES ##########################################################
 
 
-for dep in font_merge.py fontconvert.py fontdemo.py ttfautohint ttf2eot jade zip; do
+for dep in font_merge.py fontconvert.py fontdemo.py ttfautohint jade zip; do
   require $dep
 done
 
