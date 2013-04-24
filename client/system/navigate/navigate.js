@@ -15,7 +15,44 @@
 // ######################################################################## //
 
 
+var _ = require('lodash');
+
+
 var History = window.History; // History.js
+
+
+// Takes a params hash (can be nested) and tries to parse each string-value as
+// number or boolean. Returns a new hash with parsed values.
+//
+function castParamTypes(inputValue) {
+  var parsedValue;
+
+  if (_.isArray(inputValue)) {
+    return _.map(inputValue, castParamTypes);
+
+  } else if (_.isObject(inputValue)) {
+    parsedValue = {};
+
+    _.forEach(inputValue, function (value, key) {
+      parsedValue[key] = castParamTypes(value);
+    });
+
+    return parsedValue;
+
+  } else if ('true' === inputValue) {
+    return true;
+
+  } else if ('false' === inputValue) {
+    return false;
+
+  } else if (/^[0-9\.\-]+$/.test(inputValue)) {
+    parsedValue = Number(inputValue);
+    return String(parsedValue) === inputValue ? parsedValue : inputValue;
+
+  } else {
+    return inputValue;
+  }
+}
 
 
 // Returns a normalized URL:
@@ -122,6 +159,8 @@ N.wire.on('navigate.to', function navigate_to(options, callback) {
       return;
     }
 
+    match.params = castParamTypes(match.params);
+
     apiPath = match.meta;
     params  = match.params || {};
     href    = options.href.split('#')[0];
@@ -164,6 +203,16 @@ N.wire.on('navigate.to', function navigate_to(options, callback) {
   // Add anchor hash-prefix if not exists.
   if (anchor && '#' !== anchor.charAt(0)) {
     anchor = '#' + anchor;
+  }
+
+  // Stop here if base URL (all except anchor) haven't changed.
+  if (href === (location.protocol + '//' + location.host + location.pathname)) {
+    if (anchor !== location.hash) {
+      location.hash = anchor;
+    }
+
+    callback();
+    return;
   }
 
   // Fallback for old browsers.
