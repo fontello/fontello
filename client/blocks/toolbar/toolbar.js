@@ -55,6 +55,11 @@ function ToolbarModel() {
   this.fontName       = N.app.fontName;
   this.cssPrefixText  = N.app.cssPrefixText;
   this.cssUseSuffix   = N.app.cssUseSuffix;
+
+  this.fontName.subscribe(function (value) {
+    var cleared = String(value).toLowerCase().replace(/[^a-z0-9_\-]/g, '');
+    if (cleared != value) { N.app.fontName(cleared); }
+  });
 }
 
 

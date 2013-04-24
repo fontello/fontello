@@ -36,6 +36,7 @@
     input#result-fontname.input-medium._popover(type='text',
       placeholder=self.t('file_name_placeholder'),
       autocomplete='off',
+      pattern='[a-z0-9_\-]*',
       data-bind='value: fontName',
       data-content=self.t('file_name_help'),
       data-placement='bottom',
