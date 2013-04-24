@@ -58,7 +58,7 @@ function ToolbarModel() {
 
   this.fontName.subscribe(function (value) {
     var cleared = String(value).toLowerCase().replace(/[^a-z0-9_\-]/g, '');
-    if (cleared != value) { N.app.fontName(cleared); }
+    if (cleared !== value) { N.app.fontName(cleared); }
   });
 }
 

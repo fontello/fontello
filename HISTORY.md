@@ -8,6 +8,8 @@
 * Added count of selected/searched glyphs for each font
 * Added message, when nothing found in search
 * Search field now can be cleared by escape
+* Better file name filtering (replace invalid chars inplace)
+* Improved persistance for all app/font settings
 * IE8 regressions fixes
 * Updated to new (wire-based) nodeca architectire
 
