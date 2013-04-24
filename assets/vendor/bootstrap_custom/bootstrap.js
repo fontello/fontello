@@ -7,5 +7,5 @@
 //= require ../bootstrap/js/bootstrap-typeahead
 
 // Popover must go AFTER tooltip
-//= //require ../bootstrap/js/bootstrap-popover
+//= require ../bootstrap/js/bootstrap-popover
 

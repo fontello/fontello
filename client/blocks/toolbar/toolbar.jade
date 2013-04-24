@@ -10,11 +10,13 @@
       i.icon-search
 
   .btn-group.pull-left
-    a.search-permalink.btn.btn-link._tip(
+    a.search-permalink.btn.btn-link._popover(
       data-bind="visible: searchMode(), attr: { 'href': '/#search=' + searchWord() }",
-      title=self.t('search_permalink_help'),
+      style='display:none',
+      data-content=self.t('search_permalink_help'),
       data-placement='bottom',
-      style='display:none'
+      data-trigger='hover',
+      data-delay='{"show":500,"hide":100}'
     )
       i.icon-link
 
@@ -31,12 +33,14 @@
       | )
 
   .btn-group.pull-right
-    input#result-fontname.input-medium._tip(type='text',
+    input#result-fontname.input-medium._popover(type='text',
       placeholder=self.t('file_name_placeholder'),
       autocomplete='off',
-      title=self.t('file_name_help'),
       data-bind='value: fontName',
-      data-placement='bottom')
+      data-content=self.t('file_name_help'),
+      data-placement='bottom',
+      data-trigger='hover',
+      data-delay='{"show":500,"hide":100}')
 
   .btn-group.pull-right.dropdown
 

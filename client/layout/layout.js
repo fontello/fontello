@@ -6,6 +6,7 @@
 //
 N.wire.on('navigate.done', function () {
   $('._tip').tooltip();
+  $('._popover').popover();
 });
 
 
