@@ -117,7 +117,7 @@ N.wire.on('build_font', function () {
   var config = {
     name: $.trim(N.app.fontName()),
     css_prefix_text: $.trim(N.app.cssPrefixText()),
-    css_use_suffix: $.trim(N.app.cssUseSuffix())
+    css_use_suffix: N.app.cssUseSuffix()
   };
 
   config.glyphs = _.map(N.app.fontsList.selectedGlyphs(), function (glyph) {
