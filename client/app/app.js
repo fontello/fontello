@@ -106,10 +106,13 @@ function GlyphModel(font, data, options) {
     this.selected(!this.selected());
   }.bind(this);
 
-  // Whenver or not glyph should be visible
+  // Visibility depends only on search string:
+  // - if pattern is too short (0 or 1 symbols)
+  // - if pattern found in one of keywords
   //
   this.visible = ko.computed(function () {
-    return 0 <= this.keywords.indexOf(options.searchWord());
+    var word = options.searchWord();
+    return (word.length < 2) || (0 <= this.keywords.indexOf(word));
   }, this);
 
   // Whenever or not glyph should be treaten as "modified"
