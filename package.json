@@ -43,6 +43,7 @@
                         "uglify-js"     : "~ 2.2.5",
                         "mongoose"      : "~ 3.6.4",
                         "cookie"        : "~ 0.0.5",
+                        "knockout"      : "~ 2.2.1",
                         "ttf2eot"       : "*",
                         "ttf2woff"      : "*"
                       },

@@ -8,7 +8,7 @@ packages:
     # in single package, modules become "shared" automatically
     vendor:
       - lodash
-      #- knockout
+      - knockout
       - async
 
     client:

@@ -1,7 +1,7 @@
 'use strict';
 
 
-/*global ko*/
+var ko = require('knockout');
 
 
 function CodesEditorModel() {

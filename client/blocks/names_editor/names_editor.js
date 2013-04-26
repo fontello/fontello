@@ -1,7 +1,8 @@
-/*global ko*/
-
 
 'use strict';
+
+
+var ko = require('knockout');
 
 
 function NamesEditorModel() {

@@ -1,10 +1,8 @@
 'use strict';
 
 
-/*global ko*/
-
-
-var _ = require('lodash');
+var _  = require('lodash');
+var ko = require('knockout');
 
 
 ////////////////////////////////////////////////////////////////////////////////
