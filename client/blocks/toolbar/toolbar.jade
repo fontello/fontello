@@ -50,7 +50,14 @@
       span.caret
 
     ul.dropdown-menu
-      li: a(href='#', data-on-click='import.start')= self.t('menu_import_config')
+      li: a(
+            href='#',
+            data-on-click='import.start',
+            data-content=self.t('menu_import_config_help'),
+            data-placement='top',
+            data-trigger='hover',
+            data-delay='{"show":500,"hide":100}'            
+          )._popover= self.t('menu_import_config')
       li.divider
       li: a(href='#', data-on-click='cmd:reset_selected')= self.t('menu_unselect_all')
       li: a(href='#', data-on-click='cmd:reset_all')= self.t('menu_reset_all')

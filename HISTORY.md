@@ -10,6 +10,8 @@
 * Search field now can be cleared by escape
 * Better file name filtering (replace invalid chars inplace)
 * Improved persistance for all app/font settings
+* You can now import config.json without unzipping first
+* Import can be done by dropping file to fontello page
 * IE8 regressions fixes
 * Updated to new (wire-based) nodeca architectire
 

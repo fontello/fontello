@@ -6,6 +6,9 @@ en-US:
 
   menu_unselect_all: Unselect glyphs
   menu_reset_all: Reset all changes
-  menu_import_config: Import config.json
+  menu_import_config: Import config
+  menu_import_config_help: >
+    Select config.json or the whole fontello zip file.
+    Or just drag and drop file on any place of this page.
   menu_css_prefix_text: 'CSS prefix:'
   menu_css_use_suffix: add after icon name

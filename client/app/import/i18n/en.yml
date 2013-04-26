@@ -5,5 +5,8 @@ en-US:
       enougth modern. Please,
       <a href="http://www.mozilla.org/firefox/new/">upgrade</a>
       it to something better.
-    no_config_chosen: >
-      You must choose a file.
+
+    no_files_chosen: You must choose a file.
+    bad_config_format: "Can't parse config file '#{name}'"
+    bad_zip_format: "Can't unzip '#{name}'"
+    unknown_format: "Can't import '#{name}' - unknown format"

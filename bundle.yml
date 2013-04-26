@@ -4,6 +4,13 @@ bundles:
 
 packages:
   fontello:
+    # vendor make sence only when multiple packages used
+    # in single package, modules become "shared" automatically
+    vendor:
+      - lodash
+      #- knockout
+      - async
+
     client:
       main: client/system/n.js.ejs
       include: client/**.js
