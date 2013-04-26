@@ -45,10 +45,7 @@ function getDownloadID(config) {
   var hash = crypto.createHash('md5');
 
   hash.update('fontello' + N.runtime.version);
-  hash.update(JSON.stringify({
-    fontname: config.font.fontname,
-    glyphs:   config.glyphs
-  }));
+  hash.update(JSON.stringify(config));
 
   return hash.digest('hex');
 }
