@@ -11,7 +11,6 @@ var execFile  = require('child_process').execFile;
 
 // 3rd-party
 var _       = require('lodash');
-var neuron  = require('neuron');
 var async   = require('async');
 var fstools = require('fs-tools');
 
@@ -33,8 +32,9 @@ var logger = N.logger.getLogger('font');
 
 // some generator specific variables
 var TMP_DIR             = '/tmp/fontello';
-var GENERATOR_BIN       = path.join(APP_ROOT, 'bin/generate_font.sh');
 var CONFIG              = N.config.options;
+var BUILDER_BIN         = path.join(APP_ROOT, 'bin/generate_font.sh');
+var BUILDER_CONCURRENCY = CONFIG.builder_concurrency || os.cpus().length;
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -51,85 +51,49 @@ function getDownloadID(config) {
 }
 
 
-// define neuron queue
-var jobMgr = new (neuron.JobManager)();
+// Create worker queue with limited concurrency
+var builderQueue = async.queue(function (config, callback) {
 
+  var font_id = getDownloadID(config)
+    , log_prefix = '[font::' + font_id + '] '
+    , tmp_dir
+    , zipball;
 
-// define neuron job
-jobMgr.addJob('generate-font', {
-  dirname: '/tmp',
-  concurrency: (CONFIG.builder_concurrency || os.cpus().length),
-  work: function (font_id, config) {
-    var self = this
-      , log_prefix = '[font::' + font_id + '] '
-      , tmp_dir
-      , zipball
-      , times;
+  tmp_dir = path.join(TMP_DIR, "fontello-" + font_id);
+  zipball = path.join(DOWNLOAD_DIR, getDownloadPath(font_id));
 
-    try {
-      tmp_dir = path.join(TMP_DIR, "fontello-" + font_id);
-      zipball = path.join(DOWNLOAD_DIR, getDownloadPath(font_id));
-      times   = [JOBS[font_id]];
+  logger.info(log_prefix + 'Start generation: ' + JSON.stringify(config.session));
 
-      logger.info(log_prefix + 'Start generation: ' + JSON.stringify(config.session));
+  var time_enqued = JOBS[font_id];
+  var time_start  = Date.now();
 
-      if (fs.existsSync(zipball)) {
-        logger.info(log_prefix + "File already exists. Doing nothing.");
-        this.finished = true;
-        return;
-      }
-
-      // push timer checkpoint
-      times.push(Date.now());
-
-      async.series([
-        async.apply(fstools.remove, tmp_dir)
-      , async.apply(fstools.mkdir, tmp_dir)
-      , async.apply(fs.writeFile, path.join(tmp_dir, 'config.json'), JSON.stringify(config.session, null, '  '), 'utf8')
-      // Write full config immediately, to avoid app exec from shell script
-      // `log4js` has races with locks on multiple copies run,
-      , async.apply(fs.writeFile, path.join(tmp_dir, 'generator-config.json'), JSON.stringify(fontConfig(config.session), null, '  '), 'utf8')
-      , async.apply(execFile, GENERATOR_BIN, [config.font.fontname, tmp_dir, zipball], {cwd: APP_ROOT})
-      , async.apply(fstools.remove, tmp_dir)
-      ], function (err) {
-        if (err) {
-          logger.error(log_prefix + (err.stack || err.message || err.toString()));
-        }
-
-        // push final checkpoint
-        times.push(Date.now());
-
-        // log some statistical info
-        logger.info(log_prefix + "Generated in " +
-                    ((times[2] - times[0]) / 1000) + "ms " +
-                    "(real: " + ((times[1] - times[0]) / 1000) + "ms)");
-
-        // Record statistics
-        /*
-        stats.push({
-          glyphs: config.glyphs.length
-        , time:   (times[2] - times[0]) / 1000
-        });
-        */
-
-        self.finished = true;
-      });
-    } catch (err) {
-      logger.error(log_prefix + 'Unexpected error happened: ' +
-                   (err.stack || err.message || err.toString()));
-
-      this.finished = true;
+  async.series([
+    async.apply(fstools.remove, tmp_dir)
+  , async.apply(fstools.mkdir, tmp_dir)
+  , async.apply(fs.writeFile, path.join(tmp_dir, 'config.json'), JSON.stringify(config.session, null, '  '), 'utf8')
+  // Write full config immediately, to avoid app exec from shell script
+  // `log4js` has races with locks on multiple copies run,
+  , async.apply(fs.writeFile, path.join(tmp_dir, 'generator-config.json'), JSON.stringify(fontConfig(config.session), null, '  '), 'utf8')
+  , async.apply(execFile, BUILDER_BIN, [config.font.fontname, tmp_dir, zipball], {cwd: APP_ROOT})
+  , async.apply(fstools.remove, tmp_dir)
+  ], function (err) {
+    if (err) {
+      logger.error(log_prefix + (err.stack || err.message || err.toString()));
+      callback();
+      return;
     }
-  }
-});
 
+    // push final checkpoint
+    var time_end = Date.now();
 
-// action after job was finished
-jobMgr.on('finish', function (job, worker) {
-  if ('generate-font' === job.name) {
-    delete JOBS[worker.args[0]];
-  }
-});
+    // log some statistical info
+    logger.info(log_prefix + "Generated in " +
+                ((time_end - time_start) / 1000) + "ms " +
+                "(real: " + ((time_end - time_enqued) / 1000) + "ms)");
+    callback();
+  });
+
+}, BUILDER_CONCURRENCY);
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -157,7 +121,7 @@ module.exports = function (N, apiPath) {
   });
 
   N.wire.on(apiPath, function (env, callback) {
-    var font = fontConfig(env.params), font_id, errmsg;
+    var font = fontConfig(env.params), errmsg;
 
     if (!font || 0 >= font.glyphs.length) {
       callback("Invalid request");
@@ -178,26 +142,52 @@ module.exports = function (N, apiPath) {
       return;
     }
 
-    font_id = getDownloadID(font);
+    var font_id = getDownloadID(font);
 
+    // Mini hack - reply is the same, for all sutiation.
+    // Prepare it in advance, to avoid code duplication
+    env.response.data.id = font_id;
+    env.response.data.status = 'enqueued';
+
+    // Check if task already enquered
     if (JOBS[font_id]) {
       logger.info("Job already in queue: " + JSON.stringify({
         font_id: font_id
       , queue_length: _.keys(JOBS).length
       }));
-    } else {
-      // enqueue new unique job
+
+      callback();
+      return;
+    }
+
+    // Check if task already done earlier (file exists)
+
+    var zipball = path.join(DOWNLOAD_DIR, getDownloadPath(font_id));
+    fs.exists(zipball, function (exists) {
+      if (exists) {
+        // then return fake success, without lock,
+        // to make client go to status polling
+        callback();
+        return;
+      }
+
+      //
+      // Now start rock'n'roll
+      //  
+
+      // create lock & push building task to queue
       JOBS[font_id] = Date.now();
-      jobMgr.enqueue('generate-font', font_id, font);
+      builderQueue.push(font, function() {
+        // remove lock on finish
+        delete JOBS[font_id];
+      });
 
       logger.info("New job created: " + JSON.stringify({
         font_id: font_id
-      , queue_length: _.keys(JOBS).length
+      , queue_length: builderQueue.length()
       }));
-    }
 
-    env.response.data.id = font_id;
-    env.response.data.status = 'enqueued';
-    callback();
+      callback();
+    });
   });
 };
