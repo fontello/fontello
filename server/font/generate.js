@@ -121,24 +121,10 @@ module.exports = function (N, apiPath) {
   });
 
   N.wire.on(apiPath, function (env, callback) {
-    var font = fontConfig(env.params), errmsg;
+    var font = fontConfig(env.params);
 
     if (!font || 0 >= font.glyphs.length) {
       callback("Invalid request");
-      return;
-    }
-
-    if (CONFIG.max_glyphs && CONFIG.max_glyphs < font.glyphs.length) {
-      errmsg = 'Too many icons requested: ' + font.glyphs.length +
-               ' of ' + CONFIG.max_glyphs + ' allowed.';
-
-      env.response.error = {
-        code:     'MAX_GLYPHS_LIMIT'
-      , message:  errmsg
-      };
-
-      logger.warn(errmsg);
-      callback();
       return;
     }
 
