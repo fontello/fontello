@@ -138,6 +138,9 @@ function handleFileSelect(event) {
           return;
         }
 
+        // Unknown format - show error
+        N.wire.emit('notify', t('error.unknown_format', { name: file.name }));
+        next();
       },
       // final callback
       function () {
