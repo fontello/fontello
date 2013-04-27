@@ -121,6 +121,8 @@ gh-pages:
 todo:
 	grep 'TODO' -n -r ./lib 2>/dev/null || test true
 
+fontopen:
+	curl -d @./assets/vendor/fontello/src/config.json http://localhost:3000/
 
-.PHONY: help rebuild-fonts dev-setup lint gh-pages todo dev-server repl
+.PHONY: help rebuild-fonts dev-setup lint gh-pages todo dev-server repl fontopen
 .SILENT: help rebuild-fonts dev-setup lint todo
