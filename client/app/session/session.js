@@ -7,16 +7,7 @@
 var _ = require('lodash');
 
 
-var SERIALIZER_VERSION = 3;
-var STORAGE_KEY        = 'fontello:sessions';
-var KNOWN_FONT_IDS     = {};
-
-
-// Fill in known fonts
-_.each(require('../../../lib/embedded_fonts/configs'), function (o) {
-  KNOWN_FONT_IDS[o.font.fontname] = o.id;
-});
-
+var STORAGE_KEY        = 'fontello:sessions:v4';
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -51,7 +42,7 @@ _.each(require('../../../lib/embedded_fonts/configs'), function (o) {
 
 var store = {};
 
-store.exists = function () {
+store.exists = _.memoize(function () {
   try {
     localStorage.setItem('__ls_test__','__ls_test__');
     localStorage.removeItem('__ls_test__');
@@ -60,11 +51,16 @@ store.exists = function () {
   } catch (e) {
     return false;
   }
+});
+
+store.remove = function (key) {
+  if (!store.exists()) { return; }
+  localStorage.removeItem(key);
 };
 
 store.set = function (key, value) {
   if (!store.exists()) { return; }
-  if (value === undefined) { return localStorage.removeItem(key); }
+  if (value === undefined) { return store.remove(key); }
   localStorage.setItem(key, JSON.stringify(value));
 };
 
@@ -79,14 +75,6 @@ store.get = function (key) {
 
 
 ////////////////////////////////////////////////////////////////////////////////
-
-
-// Try to load session before everything (tweak priority)
-//
-N.wire.once('navigate.done', { priority: -10 }, function () {
-  N.wire.emit('session_load');
-});
-
 
 
 N.wire.on('session_save', _.debounce(function () {
@@ -120,14 +108,13 @@ N.wire.on('session_save', _.debounce(function () {
       }
     });
 
-    session.fonts[font.id] = font_data;
+    session.fonts[font.fontname] = font_data;
   });
 
   //
   // Save
   //
   store.set(STORAGE_KEY, {
-    version:  SERIALIZER_VERSION,
     font_size: N.app.fontSize(),
     // now always write to idx 0, until multisession support added
     sessions: [session]
@@ -178,32 +165,103 @@ N.wire.on('session_load', function () {
     N.app.cssUseSuffix(false); // legacy fallback
   }
 
-  var fonts = {};
+  // reset selection prior to set glyph data
+  // not nesessary now, since we load session only on start
+  _.each(N.app.fontsList.selectedGlyphs(), function (glyph) { glyph.selected(false); });
 
-  // remap session font lists into maps
-  _.each(session.fonts || [], function (font, id) {
-    var glyphs = {};
+  // load glyphs states
+  _.each(session.fonts, function (sessionFont, name) {
+    var targetFont = N.app.fontsList.fontsByName[name];
 
-    _.each(font.glyphs, function (glyph) {
-      glyphs[glyph.uid] = glyph;
+    if (!targetFont) { return; }
+
+    targetFont.collapsed(!!sessionFont.collapsed);
+
+    // create map to lookup glyphs by id
+    var lookup = {};
+    _.each(targetFont.glyphs, function (glyph) {
+      lookup[glyph.uid] = glyph;
     });
 
-    font.glyphs = glyphs;
-    fonts[id] = font;
-  });
+    // fill glyphs state
+    _.each(sessionFont.glyphs, function (glyph) {
 
-  _.each(N.app.fontsList.fonts, function (font) {
-    var session_font = fonts[font.id] || { collapsed: false, glyphs: {} };
+      var targetGlyph = lookup[glyph.uid];
 
-    // set collapsed state of font
-    font.collapsed(!!session_font.collapsed);
-
-    _.each(font.glyphs, function (glyph) {
-      var session_glyph = session_font.glyphs[glyph.uid] || {};
-
-      glyph.selected(!!session_glyph.selected);
-      glyph.code(session_glyph.code || session_glyph.orig_code || glyph.originalCode);
-      glyph.name(session_glyph.css || session_glyph.orig_css || glyph.originalName);
+      targetGlyph.selected(!!glyph.selected);
+      targetGlyph.code(glyph.code || glyph.orig_code || targetGlyph.originalCode);
+      targetGlyph.name(glyph.css || glyph.orig_css || targetGlyph.originalName);
     });
   });
+});
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+// Upgrade session format v3 -> v4
+
+function migrate () {
+
+  var OLD_STORAGE_KEY = 'fontello:sessions';
+  var NEW_STORAGE_KEY = 'fontello:sessions:v4';
+
+  try {
+    var oldStore = store.get(OLD_STORAGE_KEY);
+
+    // Check if have any data
+    if (!oldStore || !_.isObject(oldStore)) { return; }
+
+    if (oldStore.version !== 3) { return store.remove(OLD_STORAGE_KEY); }
+
+    var oldSession = oldStore.sessions[0];
+
+    if (!_.isObject(oldSession)) { return store.remove(OLD_STORAGE_KEY); }
+
+    var newStore = {
+      font_size : oldStore.font_size || 16,
+      sessions  : [{
+        name : "$current$",
+        fontname : oldSession.fontname || '',
+        css_prefix_text: oldSession.css_prefix_text || 'icon-',
+        css_use_suffix: (oldSession.css_use_suffix === true),
+        fonts : {}
+      }]
+    };
+
+    var newSession = newStore.sessions[0];
+
+    // create map to lookup glyphs by id
+    var glyphById = {};
+    _.each(N.app.fontsList.fonts, function (font) {
+      _.each(font.glyphs, function (glyph) {
+        glyphById[glyph.uid] = glyph;
+      });
+    });
+
+    _.each(oldSession.fonts, function (font) {
+      _.each(font.glyphs, function (glyph) {
+        var fontname = glyphById[glyph.uid].font.fontname;
+
+        if (!newSession.fonts[fontname]) {
+          newSession.fonts[fontname] = { collapsed: false, glyphs: [] };
+        }
+
+        newSession.fonts[fontname].glyphs.push(glyph);
+      });
+    });
+
+    store.set(NEW_STORAGE_KEY, newStore);
+
+  } catch (e) {}
+
+  // kill old data - not needed anymore
+  store.remove(OLD_STORAGE_KEY);
+}
+
+
+// Try to load session before everything (tweak priority)
+//
+N.wire.once('navigate.done', { priority: -10 }, function () {
+  migrate ();
+  N.wire.emit('session_load');
 });

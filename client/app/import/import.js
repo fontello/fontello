@@ -24,16 +24,21 @@ function import_config(str, file) {
     N.app.cssUseSuffix(config.css_use_suffix === true);
 
     // reset selection prior to set glyph data
-    _.each(N.app.fontsList.selectedGlyphs, function (glyph) { glyph.selected(false); });
+    _.each(N.app.fontsList.selectedGlyphs(), function (glyph) { glyph.selected(false); });
+
+    // create map to lookup glyphs by id
+    var glyphById = {};
+    _.each(N.app.fontsList.fonts, function (font) {
+      _.each(font.glyphs, function (glyph) {
+        glyphById[glyph.uid] = glyph;
+      });
+    });
 
     _.each(config.glyphs, function (g) {
 
       if (!_.has(fontsByName, g.src)) { return; }
 
-      var font = fontsByName[g.src];
-      var glyph = _.find(font.glyphs, function (glyph) {
-        return glyph.uid === g.uid;
-      });
+      var glyph = glyphById[g.uid];
 
       if (!glyph) { return; }
 
