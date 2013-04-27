@@ -49,7 +49,7 @@ function fixedCharCodeAt(chr) {
 ////////////////////////////////////////////////////////////////////////////////
 
 
-function GlyphModel(font, data, options) {
+function GlyphModel(font, data) {
 
   // Read-only properties
   //
@@ -109,7 +109,7 @@ function GlyphModel(font, data, options) {
   // - if pattern found in one of keywords
   //
   this.visible = ko.computed(function () {
-    var word = options.searchWord();
+    var word = N.app.searchWord();
     return (word.length < 2) || (0 <= this.keywords.indexOf(word));
   }, this);
 
@@ -155,7 +155,7 @@ function GlyphModel(font, data, options) {
 }
 
 
-function FontModel(data, options) {
+function FontModel(data) {
 
   //
   // Essential properties
@@ -206,7 +206,7 @@ function FontModel(data, options) {
   // Array of font glyphs
   //
   this.glyphs = _.map(data.glyphs, function (data) {
-    return new GlyphModel(this, data, options);
+    return new GlyphModel(this, data);
   }, this);
 
   // Array of selected glyphs of a font
@@ -235,10 +235,15 @@ function FontModel(data, options) {
 }
 
 
-function FontsList(options) {
+function FontsList() {
+  // Ordered list, to display on the page
   this.fonts = _.map(embedded_fonts, function (data) {
-    return new FontModel(data, options);
+    return new FontModel(data);
   });
+
+  // Named list, for state import/export
+  this.fontsByName = {};
+  _.each(this.fonts, function (font) { this.fontsByName[font.fontname] = font; }, this);
 
   // Array of selected glyphs from all fonts
   //

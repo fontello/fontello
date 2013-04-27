@@ -137,36 +137,28 @@ N.wire.on('session_save', _.debounce(function () {
 
 
 
-N.wire.on('session_load', function (s) {
+N.wire.on('session_load', function () {
   var session, data;
 
-  if (s) {
-    session = s;
+  if (!store.exists()) { return; }
 
-  } else {
+  // Extract everything from store, if possible
+  data = store.get(STORAGE_KEY);
 
-    if (!store.exists()) { return; }
-
-    // Extract everything from store, if possible
-    data = store.get(STORAGE_KEY);
-
-    if (_.isEmpty(data) || !_.isObject(data)) {
-      data = { sessions: [] };
-    }
-
-    if (_.isNumber(data.font_size) && (data.font_size > 0)) {
-      N.app.fontSize(data.font_size);
-    }
-
-    // Try to find current session
-    session = _.find(data.sessions, function (session) {
-      return '$current$' === session.name;
-    });
-
-    if (!session) {
-      return;
-    }
+  if (_.isEmpty(data) || !_.isObject(data)) {
+    data = { sessions: [] };
   }
+
+  if (_.isNumber(data.font_size) && (data.font_size > 0)) {
+    N.app.fontSize(data.font_size);
+  }
+
+  // Try to find current session
+  session = _.find(data.sessions, function (session) {
+    return '$current$' === session.name;
+  });
+
+  if (!session) { return; }
 
   //
   // Now load session data into models

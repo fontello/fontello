@@ -5,15 +5,6 @@ var _     = require('lodash');
 var async = require('async');
 
 
-var KNOWN_FONT_IDS     = {};
-
-
-// Fill in known fonts
-_.each(require('../../../lib/embedded_fonts/configs'), function (o) {
-  KNOWN_FONT_IDS[o.font.fontname] = o.id;
-});
-
-
 ////////////////////////////////////////////////////////////////////////////////
 
 //
@@ -23,30 +14,33 @@ _.each(require('../../../lib/embedded_fonts/configs'), function (o) {
 // file - original file info
 //
 function import_config(str, file) {
-  var config, session;
 
   try {
-    config  = JSON.parse(str);
-    session = { fontname: config.name, fonts: {} };
+    var config  = JSON.parse(str);
+    var fontsByName = N.app.fontsList.fontsByName;
+
+    N.app.fontName(config.name || '');
+    N.app.cssPrefixText(String(config.css_prefix_text || 'icon-'));
+    N.app.cssUseSuffix(config.css_use_suffix === true);
+
+    // reset selection prior to set glyph data
+    _.each(N.app.fontsList.selectedGlyphs, function (glyph) { glyph.selected(false); });
 
     _.each(config.glyphs, function (g) {
-      var id = KNOWN_FONT_IDS[g.src];
 
-      if (!session.fonts[id]) {
-        session.fonts[id] = { collapsed: false, glyphs: [] };
-      }
+      if (!_.has(fontsByName, g.src)) { return; }
 
-      session.fonts[id].glyphs.push({
-        selected:  true,
-        uid:       g.uid,
-        css:       g.css,
-        code:      g.code,
-        orig_css:  g.orig_css,
-        orig_code: g.orig_code
+      var font = fontsByName[g.src];
+      var glyph = _.find(font.glyphs, function (glyph) {
+        return glyph.uid === g.uid;
       });
-    });
 
-    N.wire.emit('session_load', session);
+      if (!glyph) { return; }
+
+      glyph.selected(true);
+      glyph.code(g.code || g.orig_code || glyph.originalCode);
+      glyph.name(g.css || g.orig_css || glyph.originalName);
+    });
   } catch (e) {
     N.wire.emit('notify', t('error.bad_config_format', { name: file.name }));
   }
