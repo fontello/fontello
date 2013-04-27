@@ -19,7 +19,10 @@ N.wire.once('navigate.done', function () {
   //
   // Init multi-select of glyphs
   //
-  $view.selectable({
+  //$view.selectable({
+  // We attach selectable to "body", to allow start
+  // dragging from the left white space.
+  $('body').selectable({
     filter: 'li.glyph:visible',
     distance: 5,
     stop: function () {

@@ -1,5 +1,5 @@
-/*global store*/
-
+// - Save/Load session
+// - Autoload on start
 
 "use strict";
 
@@ -47,6 +47,39 @@ _.each(require('../../../lib/embedded_fonts/configs'), function (o) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
+// Localstore helpers
+
+var store = {};
+
+store.exists = function () {
+  try {
+    localStorage.setItem('__ls_test__','__ls_test__');
+    localStorage.removeItem('__ls_test__');
+    return true;
+
+  } catch (e) {
+    return false;
+  }
+};
+
+store.set = function (key, value) {
+  if (!store.exists()) { return; }
+  if (value === undefined) { return localStorage.removeItem(key); }
+  localStorage.setItem(key, JSON.stringify(value));
+};
+
+store.get = function (key) {
+  if (!store.exists()) { return undefined; }
+  try {
+    return JSON.parse(localStorage.getItem(key));
+  } catch (e) {
+    return undefined;
+  }
+};
+
+
+////////////////////////////////////////////////////////////////////////////////
+
 
 // Try to load session before everything (tweak priority)
 //
@@ -57,14 +90,14 @@ N.wire.once('navigate.done', { priority: -10 }, function () {
 
 
 N.wire.on('session_save', _.debounce(function () {
-  var storage = Object(store.get(STORAGE_KEY))
-    , session = Object(_.find(storage.sessions || [], function (session) {
-        return '$current$' === session.name;
-      }));
 
-  //
-  // Fill session data
-  //
+  if (!store.exists()) { return; }
+
+  // Now always write to idx 0, until multisession support added
+  // So, don't try to read previous data - overwrite always.
+
+  var session = {};
+
   session.name = '$current$';
   session.fontname = N.app.fontName();
   session.css_prefix_text = N.app.cssPrefixText();
@@ -99,18 +132,27 @@ N.wire.on('session_save', _.debounce(function () {
     // now always write to idx 0, until multisession support added
     sessions: [session]
   });
+
 }, 500));
 
 
 
 N.wire.on('session_load', function (s) {
-  var data, session;
+  var session, data;
 
   if (s) {
     session = s;
+
   } else {
+
+    if (!store.exists()) { return; }
+
     // Extract everything from store, if possible
-    data = store.get(STORAGE_KEY) || { sessions: [] };
+    data = store.get(STORAGE_KEY);
+
+    if (_.isEmpty(data) || !_.isObject(data)) {
+      data = { sessions: [] };
+    }
 
     if (_.isNumber(data.font_size) && (data.font_size > 0)) {
       N.app.fontSize(data.font_size);
