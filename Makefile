@@ -27,7 +27,6 @@ FONTS         += linecons.font
 FONTS         += websymbols-uni.font
 FONT_CONFIGS   = $(foreach f,$(FONTS),src/${f}/config.yml)
 
-
 help:
 	echo "make help           - Print this help"
 	echo "make dev-server     - Run dev server with autoreleat on files change"
@@ -121,8 +120,17 @@ gh-pages:
 todo:
 	grep 'TODO' -n -r ./lib 2>/dev/null || test true
 
+
+FONTELLO_HOST := http://fontello.com
+FONT_DIR      := ./assets/vendor/fontello/src
+
 fontopen:
-	curl -d @./assets/vendor/fontello/src/config.json http://localhost:3000/
+	@if [ ! `which curl` ]; then \
+		echo 'Install curl first.' >&2; \
+	fi
+
+	curl -s -S -o .fontello -d @${FONT_DIR}/config.json ${FONTELLO_HOST}/
+	x-www-browser ${FONTELLO_HOST}/`cat .fontello`
 
 .PHONY: help rebuild-fonts dev-setup lint gh-pages todo dev-server repl fontopen
 .SILENT: help rebuild-fonts dev-setup lint todo
