@@ -44,6 +44,7 @@
                         "mongoose"      : "~ 3.6.4",
                         "cookie"        : "~ 0.0.5",
                         "knockout"      : "~ 2.2.1",
+                        "formidable"    : "~ 1.0.13",
                         "ttf2eot"       : "*",
                         "ttf2woff"      : "*"
                       },
