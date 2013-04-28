@@ -45,6 +45,38 @@ Please, note that these embedded fonts differ from the original files. We did so
 modifications to unify characteristics such as scale, ascent/descent and alignment.
 
 
+## Developers API
+
+Fontello allows easy scripting, to simplify opening you fonts from your existing projects.
+Here is example for `Makefile`:
+
+```makefile
+FONTELLO_HOST := http://fontello.com
+FONT_DIR      := ./assets/vendor/fontello/src
+
+fontopen:
+	@if [ ! `which curl` ]; then \
+		echo 'Install curl first.' >&2; \
+	fi
+
+	curl -s -S -o .fontello -d @${FONT_DIR}/config.json ${FONTELLO_HOST}/
+	x-www-browser ${FONTELLO_HOST}/`cat .fontello`
+
+fontsave:
+	echo 'coming soon...'
+```
+
+### API methods
+
+1. POST request with config.json to `http://fontello.com/` creates session and
+   return you `session_id`. Session is stored for 24h. Every POST request creates
+   new session.
+2. Opening page at address to `http://fontello.com/<session_id>` gives you fontello
+   with config, that you posted before. 
+
+Download support will be added soon.
+
+
 ## Contacts
 
 - Questions: [Google group](https://groups.google.com/group/fontello/)
