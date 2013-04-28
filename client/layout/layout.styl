@@ -5,8 +5,16 @@ body
   padding-top 180px // make the container go all the way to the bottom of the topbar
   padding-bottom 30px
 
+.navbar-fixed-top
+  box-shadow 0 10px 15px 10px #fff;
+  background-color white
+
 .navbar
   box-shadow 0 0 4px #444
+  margin-bottom 0
+  // relative + z-index needed to display shadow
+  position relative
+  z-index 10
 
 .brand
   line-height 20px
