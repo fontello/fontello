@@ -12,6 +12,7 @@ module.exports = function (N, collectionName) {
     {
       ip      : String,
       ts      : Date,
+      url     : String,
       config  : Schema.Types.Mixed
     },
     { strict: true }

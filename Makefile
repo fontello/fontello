@@ -121,7 +121,8 @@ todo:
 	grep 'TODO' -n -r ./lib 2>/dev/null || test true
 
 
-FONTELLO_HOST := http://fontello.com
+#FONTELLO_HOST := http://fontello.com
+FONTELLO_HOST := http://localhost:3000
 FONT_DIR      := ./assets/vendor/fontello/src
 
 fontopen:
@@ -129,7 +130,7 @@ fontopen:
 		echo 'Install curl first.' >&2; \
 	fi
 
-	curl -s -S -o .fontello -d @${FONT_DIR}/config.json ${FONTELLO_HOST}/
+	curl -s -S -o .fontello -F "url=http://dev.nodeca.com" -F "config=@${FONT_DIR}/config.json" ${FONTELLO_HOST}/
 	x-www-browser ${FONTELLO_HOST}/`cat .fontello`
 
 .PHONY: help rebuild-fonts dev-setup lint gh-pages todo dev-server repl fontopen

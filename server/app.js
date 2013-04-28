@@ -19,6 +19,9 @@ function hash(str) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
+var revalidator = require('revalidator');
+var fs          = require('fs');
+var _           = require('lodash');
 
 module.exports = function (N, apiPath) {
   N.validate(apiPath, {
@@ -48,29 +51,74 @@ module.exports = function (N, apiPath) {
       return;
     }
 
-    // Try to extract config
-    var config;
-    try {
-      config = JSON.parse(env.post);
-    } catch (err) {
-      callback({ code: N.io.BAD_REQUEST, message: "Can't parse config data" });
+    // Validate post form
+    var fields = revalidator.validate(env.post.fields, {
+      properties : {
+        url : {
+          format : 'url',
+          maxLength : 200,
+          required  : false,
+          messages: {
+            format: 'Invalid URL format',
+            maxLength: 'URL too long'
+          }
+        }
+      }
+    });
+    if (!fields.valid) {
+      callback({ code: N.io.BAD_REQUEST, message: fields.errors[0].message });
       return;
     }
 
-    // place config to DB & return link id
-    var shortLink = new N.models.ShortLink();
+    var files = revalidator.validate(env.post.files, {
+      properties : {
+        config : {
+          type : 'object',
+          required  : true,
+          messages: {
+            required: 'Missed "config" param - must be file'
+          }
+        }
+      }
+    });
+    if (!files.valid) {
+      callback({ code: N.io.BAD_REQUEST, message: fields.errors[0].message });
+      return;
+    }
 
-    shortLink.ts = Date.now();
-    shortLink.ip = env.request.ip;
-    shortLink.config = config;
-    shortLink.save(function (err, sl) {
+    // Try to extract config
+    var configPath = env.post.files.config.path;
+    var config;
+
+    fs.readFile(configPath, { encoding: 'utf-8'}, function (err, configFile) {
       if (err) {
         callback(err);
         return;
       }
 
-      callback({ code: N.io.OK, message: sl.id });
-      return;
+      try {
+        config = JSON.parse(configFile);
+      } catch (err) {
+        callback({ code: N.io.BAD_REQUEST, message: "Can't parse config data" });
+        return;
+      }
+
+      // place config to DB & return link id
+      var shortLink = new N.models.ShortLink();
+
+      shortLink.ts = Date.now();
+      shortLink.ip = env.request.ip;
+      shortLink.config = config;
+      if (env.post.fields.url) { shortLink.url = env.post.fields.url; }
+
+      shortLink.save(function (err, sl) {
+        if (err) {
+          callback(err);
+          return;
+        }
+
+        callback({ code: N.io.OK, message: sl.id });
+      });
     });
   });
 
@@ -105,7 +153,8 @@ module.exports = function (N, apiPath) {
         }
 
         // inject config to runtime & return main page
-        env.runtime.page_data = sl.toObject().config;
+        env.runtime.page_data = _.pick(sl.toObject(), [ 'config', 'url' ]);
+
         callback();
       });
       return;

@@ -154,6 +154,7 @@ function GlyphModel(font, data) {
   trackCodeChanges(this);
 }
 
+////////////////////////////////////////////////////////////////////////////////
 
 function FontModel(data) {
 
@@ -234,6 +235,7 @@ function FontModel(data) {
   }, this).extend({ throttle: 100 });
 }
 
+////////////////////////////////////////////////////////////////////////////////
 
 function FontsList() {
   // Ordered list, to display on the page
@@ -304,11 +306,12 @@ N.app.fontSize    = ko.observable(N.runtime.config.glyph_size.val);
 N.app.fontName    = ko.observable('');
 N.app.cssPrefixText = ko.observable('icon-');
 N.app.cssUseSuffix  = ko.observable(false);
+N.app.apiMode     = false;
 
 
-// Autosave generator - after every fontlist change
-// emit session change (debounced)
-//
+////////////////////////////////////////////////////////////////////////////////
+
+
 N.wire.once('navigate.done', function () {
 
   //
@@ -338,7 +341,8 @@ N.wire.once('navigate.done', function () {
   // Try to load config before everything (tweak priority)
   //
   if (!_.isEmpty(N.runtime.page_data)) {
-    N.wire.emit('import.obj', N.runtime.page_data);
+    N.app.apiMode = true;
+    N.wire.emit('import.obj', N.runtime.page_data.config);
   } else {
     N.wire.emit('session_load');
   }

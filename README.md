@@ -27,6 +27,41 @@ Don't forget about donations :)
    [details](http://blog.kaelig.fr/post/33373448491/testing-font-face-support-on-mobile-and-tablet).
 
 
+## Developers API
+
+Fontello allows easy scripting, to simplify opening you fonts from your existing projects.
+Here is example for `Makefile`:
+
+```makefile
+FONTELLO_HOST := http://fontello.com
+FONT_DIR      := ./assets/vendor/fontello/src
+
+fontopen:
+	@if [ ! `which curl` ]; then \
+		echo 'Install curl first.' >&2; \
+	fi
+
+	curl -s -S -o .fontello -F "config=@${FONT_DIR}/config.json" ${FONTELLO_HOST}/
+	x-www-browser ${FONTELLO_HOST}/`cat .fontello`
+
+fontsave:
+	echo 'coming soon...'
+```
+
+### API methods
+
+1. `POST http://fontello.com/` creates a session with your config and
+   return you `session_id`. You can use it later to open fontello with you configuration
+   and to automatically download your font. Session is stored for 24h. POST params
+   (form-encoded):
+    - `config` - content of `config.json` for your font
+    - `url` - if used, download button will link to your admin panel, where you can
+      run importing script.
+2. `http://fontello.com/[session_id]` - opening fontello with your config preloaded.
+   When you edit font, your config is automatically sent to server
+3. (not compleete yet) `http://fontello.com/[session_id]/get` - download your font.
+
+
 ## Embedded Fonts <a name="embedded"></a>
 
 Fontello comes with the following embedded set of icon fonts:
@@ -43,38 +78,6 @@ Fontello comes with the following embedded set of icon fonts:
 
 Please, note that these embedded fonts differ from the original files. We did some
 modifications to unify characteristics such as scale, ascent/descent and alignment.
-
-
-## Developers API
-
-Fontello allows easy scripting, to simplify opening you fonts from your existing projects.
-Here is example for `Makefile`:
-
-```makefile
-FONTELLO_HOST := http://fontello.com
-FONT_DIR      := ./assets/vendor/fontello/src
-
-fontopen:
-	@if [ ! `which curl` ]; then \
-		echo 'Install curl first.' >&2; \
-	fi
-
-	curl -s -S -o .fontello -d @${FONT_DIR}/config.json ${FONTELLO_HOST}/
-	x-www-browser ${FONTELLO_HOST}/`cat .fontello`
-
-fontsave:
-	echo 'coming soon...'
-```
-
-### API methods
-
-1. POST request with config.json to `http://fontello.com/` creates session and
-   return you `session_id`. Session is stored for 24h. Every POST request creates
-   new session.
-2. Opening page at address to `http://fontello.com/<session_id>` gives you fontello
-   with config, that you posted before. 
-
-Download support will be added soon.
 
 
 ## Contacts
