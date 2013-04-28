@@ -1,14 +1,15 @@
 {
   "name"            : "fontello",
-  "version"         : "3.0.0",
+  "version"         : "4.0.0",
   "description"     : "Iconic fonts scissors",
   "keywords"        : ["icon", "font", "editor"],
-  "homepage"        : "https://github.com/nodeca/fontomas",
+  "homepage"        : "http://fontello.com/",
 
-  "authors"         : [
+  "contributors"    : [
                         "Roman I Shmelev (https://github.com/shmelev)",
                         "Aleksey Zapparov (https://github.com/ixti)",
-                        "Vitaly Puzrin (https://github.com/puzrin)"
+                        "Vitaly Puzrin (https://github.com/puzrin)",
+                        "Vladimir Zapparov (https://github.com/dervus)"
                       ],
 
   "bugs"            : { "url": "https://github.com/fontello/fontello/issues" },
