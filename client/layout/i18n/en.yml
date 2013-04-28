@@ -8,7 +8,10 @@ en-US:
   menu_feedback: Feedback
   menu_discuss: Discuss in google groups
   menu_bugreports: Report bugs at Github
-
+  menu_bugreports_help: >
+    We prefer communicate via Github. You can also share you ideas there.
+    If you still don't have github's account - it's time to join biggest
+    open source community!
   twitter:
     follow: Follow
     share: Tweet
