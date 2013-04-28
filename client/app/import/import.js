@@ -54,7 +54,7 @@ function import_config(str, file) {
 //
 // Import zip. Try to determine content & call appropriate parsers
 //
-// str  - JSON data
+// data - byte array with zipped content
 // file - original file info
 //
 function import_zip(data, file) {
@@ -189,7 +189,6 @@ N.wire.once('navigate.done', function () {
   // Setup global drag & drop zone
   //
 
-
   var dropZone = $('body');
 
   // add the dataTransfer property for use with the native `drop` event
@@ -203,4 +202,11 @@ N.wire.once('navigate.done', function () {
   });
 
   dropZone.on('drop', handleFileSelect);
+});
+
+//
+// Setup import listener
+//
+N.wire.on('import.obj', function(obj) {
+  import_config(JSON.stringify(obj), {});
 });

@@ -259,9 +259,8 @@ function migrate () {
 }
 
 
-// Try to load session before everything (tweak priority)
+// Try to migrate before everything (tweak priority)
 //
-N.wire.once('navigate.done', { priority: -10 }, function () {
+N.wire.once('navigate.done', { priority: -100 }, function () {
   migrate ();
-  N.wire.emit('session_load');
 });

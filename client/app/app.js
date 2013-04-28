@@ -311,6 +311,10 @@ N.app.cssUseSuffix  = ko.observable(false);
 //
 N.wire.once('navigate.done', function () {
 
+  //
+  // Setup autosave
+  //
+
   N.app.fontsList.isModified.subscribe(function () {
     N.wire.emit('session_save');
   });
@@ -330,6 +334,14 @@ N.wire.once('navigate.done', function () {
   N.app.cssUseSuffix.subscribe(function () {
     N.wire.emit('session_save');
   });
+
+  // Try to load config before everything (tweak priority)
+  //
+  if (!_.isEmpty(N.runtime.page_data)) {
+    N.wire.emit('import.obj', N.runtime.page_data);
+  } else {
+    N.wire.emit('session_load');
+  }
 
   //
   // Basic commands
