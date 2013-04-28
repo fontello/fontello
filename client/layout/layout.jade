@@ -49,14 +49,21 @@ html.no-js(lang='en', itemscope, itemtype='http://schema.org/WebPage')
           .container
             h1.brand= self.t('title')
             ul.nav
-              li: a(href="https://groups.google.com/group/fontello", target="_blank")= self.t('discuss')
+              li.dropdown
+                a.dropdown-toggle(data-toggle='dropdown', href='#')
+                  = self.t('menu_feedback')
+                  b.caret
+                ul.dropdown-menu
+                  li: a(href="https://groups.google.com/group/fontello", target="_blank")= self.t('menu_discuss')
+                  li: a(href="https://github.com/fontello/fontello/issues", target="_blank")= self.t('menu_bugreports')
+
               li: a(href="https://github.com/fontello/fontello", target="_blank") GitHub
-              li: a(href="https://github.com/fontello/fontello/issues", target="_blank")= self.t('bugs')
+
+            ul.nav
               li: a.twitter-follow-button(href="https://twitter.com/puzrin", data-show-count="false", data-show-screen-name="false")= self.t('twitter.follow')
               li: a.twitter-share-button(href="https://twitter.com/share", data-url="http://fontello.com", data-text="#{self.t('twitter.text')}")= self.t('twitter.share')
               li.gplus
                 .g-plusone(data-size="medium")
-              li: a.FlattrButton(style="display:none;", rev="flattr;button:compact;", href="http://fontello.com")
 
       //- top toolbar/tabs
       .toolbar-container

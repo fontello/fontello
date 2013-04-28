@@ -5,8 +5,9 @@ en-US:
     Easy way to create custom icon font for your site. Select
     images from large collection, and make webfont pack with one click.
 
-  bugs: Bug reports
-  discuss: Discuss
+  menu_feedback: Feedback
+  menu_discuss: Discuss in google groups
+  menu_bugreports: Report bugs at Github
 
   twitter:
     follow: Follow

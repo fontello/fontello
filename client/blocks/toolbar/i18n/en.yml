@@ -1,14 +1,12 @@
 en-US:
   download: Download webfont
-  file_name_placeholder: file name
-  file_name_help: Font files will have this name. Use only small 'a'...'z' letters, digits, '-' and '_'.
+  file_name_placeholder: font name
+  file_name_help: Use only small "a"..."z" letters, digits, "-" and "_".
   search_permalink_help: Permanent link to this search
 
   menu_unselect_all: Unselect glyphs
   menu_reset_all: Reset all changes
   menu_import_config: Import config
-  menu_import_config_help: >
-    Select config.json or the whole fontello zip file.
-    Or just drag and drop file on any place of this page.
+  menu_import_config_help: Select config.json or the whole fontello zip file.
   menu_css_prefix_text: 'CSS prefix:'
   menu_css_use_suffix: add after icon name
