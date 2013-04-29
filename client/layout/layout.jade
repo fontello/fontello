@@ -72,13 +72,21 @@ html.no-js(lang='en', itemscope, itemtype='http://schema.org/WebPage')
               li.gplus
                 .g-plusone(data-size="medium")
 
+            ul.nav.pull-right
+              li: a(
+                target='_blank',
+                href='https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=575L9QR4V5TNU',
+                data-content=self.t('menu_donate_help'),
+                data-placement='bottom',
+                data-trigger='hover',
+                data-delay='{"show":500,"hide":100}'
+              )._popover= self.t('menu_donate')
+
       //- top toolbar/tabs
       .toolbar-container
         != self.partial('@fontello.blocks.toolbar')
       .tabs-container.container
         != self.partial('@fontello.blocks.tabs')
-
-        a.donate(target='_blank', href='https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=575L9QR4V5TNU')= self.t('donate')
 
     != self.content
 
