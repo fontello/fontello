@@ -1,37 +1,27 @@
+// Send dowloaded file
+//
+
+
 'use strict';
 
 
-// stdlib
 var http = require('http');
-
-
-// 3rd-party
 var send = require('send');
-
-
-// internal
-var DOWNLOAD_DIR = require('./_common').DOWNLOAD_DIR;
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-// logger of font downloads
-var logger = N.logger.getLogger('font.download');
+var fontBuilder = require('../../lib/font_builder');
 
 
 // font downloader middleware
 var FINGERPRINT_RE = /-([0-9a-f]{32,40})\.[^.]+$/;
 
 
-////////////////////////////////////////////////////////////////////////////////
-
-
-// Send dowloaded file
 module.exports = function (N, apiPath) {
+  var logger  = N.logger.getLogger('font.download')
+    , builder = fontBuilder(N);
+
+
   N.validate(apiPath, {
     file: {
-      type: "string"
+      type: 'string'
     , required: true
     }
   });
@@ -62,7 +52,7 @@ module.exports = function (N, apiPath) {
     }
 
     send(req, env.params.file)
-      .root(DOWNLOAD_DIR)
+      .root(builder.resultDir)
       .on('error', function (err) {
         if (404 === err.status) {
           callback(N.io.NOT_FOUND);

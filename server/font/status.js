@@ -1,40 +1,34 @@
+// Handles requests for font generation status.
+//
+
+
 'use strict';
 
 
-// stdlib
-var path = require('path');
+var fontBuilder = require('../../lib/font_builder');
 
 
-// internal
-var DOWNLOAD_DIR    = require('./_common').DOWNLOAD_DIR;
-var JOBS            = require('./_common').JOBS;
-var getDownloadUrl  = require('./_common').getDownloadUrl;
-var getDownloadPath = require('./_common').getDownloadPath;
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-// request font generation status
 module.exports = function (N, apiPath) {
+  var builder = fontBuilder(N);
+
+
   N.validate(apiPath, {
     id: {
-      type: "string"
+      type: 'string'
     , required: true
     }
   });
 
-  N.wire.on(apiPath, function (env, callback) {
-    var file = path.join(DOWNLOAD_DIR, getDownloadPath(env.params.id));
 
-    if (JOBS[env.params.id]) {
+  N.wire.on(apiPath, function (env, callback) {
+    if (builder.getTask(env.params.id)) {
       env.response.data.status = 'enqueued';
       callback();
       return;
     }
 
-    path.exists(file, function (exists) {
-      if (!exists) {
+    builder.checkResult(env.params.id, function (file) {
+      if (!file) {
         // job not found
         env.response.data.status = 'error';
         env.response.error = 'Unknown font id (probably task crashed, try again).';
@@ -44,7 +38,10 @@ module.exports = function (N, apiPath) {
 
       // job done
       env.response.data.status = 'finished';
-      env.response.data.url = getDownloadUrl(env.params.id);
+      env.response.data.url = N.runtime.router.linkTo('fontello.font.download', {
+        file: file
+      });
+
       callback();
     });
   });
