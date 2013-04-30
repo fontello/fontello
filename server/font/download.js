@@ -28,27 +28,17 @@ module.exports = function (N, apiPath) {
 
 
   N.wire.on(apiPath, function (env, callback) {
-    var match, req, res, filename;
+    var req = env.origin.req
+      , res = env.origin.res;
 
     if ('http' !== env.request.type) {
       callback(N.io.BAD_REQUEST);
       return;
     }
 
-    req = env.origin.req;
-    res = env.origin.res;
-
     if ('GET' !== req.method && 'HEAD' !== req.method) {
       callback(N.io.BAD_REQUEST);
       return;
-    }
-
-    match = FINGERPRINT_RE.exec(env.params.file);
-
-    if (match) {
-      // beautify zipball name
-      filename = 'filename=fontello-' + match[1].substr(0, 8) + '.zip';
-      res.setHeader('Content-Disposition', 'attachment; ' + filename);
     }
 
     send(req, env.params.file)
@@ -58,6 +48,15 @@ module.exports = function (N, apiPath) {
       })
       .on('directory', function () {
         callback(N.io.BAD_REQUEST);
+      })
+      .on('stream', function () {
+        var filename, match = FINGERPRINT_RE.exec(env.params.file);
+
+        if (match) {
+          // Beautify zipball name.
+          filename = 'filename=fontello-' + match[1].substr(0, 8) + '.zip';
+          res.setHeader('Content-Disposition', 'attachment; ' + filename);
+        }
       })
       .on('end', function () {
         logger.info('%s - "%s %s HTTP/%s" %d "%s" - %s'
