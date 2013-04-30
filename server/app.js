@@ -27,8 +27,9 @@ var revalidator = require('revalidator');
 module.exports = function (N, apiPath) {
   N.validate(apiPath, {
     sid: {
-      type: 'string',
-      required: false
+      type: 'string'
+    , required: false
+    , pattern: /^[0-9a-f]{32}$/
     }
   });
 
