@@ -139,7 +139,7 @@ module.exports = function (N, apiPath) {
     // if requested page with config id - try te fetch data,
     // and redirect to main on error
     if (env.params.sid) {
-      N.models.ShortLink.findOne({sid: env.params.sid}, function(err, sl) {
+      N.models.ShortLink.findOne({ sid: env.params.sid }, function(err, sl) {
         if (err) {
           callback(err);
           return;

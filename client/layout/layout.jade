@@ -47,7 +47,8 @@ html.no-js(lang='en', itemscope, itemtype='http://schema.org/WebPage')
       .navbar.navbar-inverse
         .navbar-inner
           .container
-            h1.brand= self.t('title')
+            a(href='/')
+              h1.brand= self.t('title')
             ul.nav
               li.dropdown
                 a.dropdown-toggle(data-toggle='dropdown', href='#')
