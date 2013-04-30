@@ -31,7 +31,7 @@ module.exports = function (N, apiPath) {
     var match, req, res, filename;
 
     if ('http' !== env.request.type) {
-      callback({ code: N.io.BAD_REQUEST, body: 'HTTP ONLY' });
+      callback(N.io.BAD_REQUEST);
       return;
     }
 
@@ -54,25 +54,21 @@ module.exports = function (N, apiPath) {
     send(req, env.params.file)
       .root(builder.outputDir)
       .on('error', function (err) {
-        if (404 === err.status) {
-          callback(N.io.NOT_FOUND);
-          return;
-        }
-
-        callback(err);
+        callback(err.status);
       })
       .on('directory', function () {
         callback(N.io.BAD_REQUEST);
       })
       .on('end', function () {
-        logger.info('%s - "%s %s HTTP/%s" %d "%s" - %s',
-                    req.connection.remoteAddress,
-                    req.method,
-                    req.url,
-                    req.httpVersion,
-                    res.statusCode,
-                    req.headers['user-agent'],
-                    http.STATUS_CODES[res.statusCode]);
+        logger.info('%s - "%s %s HTTP/%s" %d "%s" - %s'
+        , req.connection.remoteAddress
+        , req.method
+        , req.url
+        , req.httpVersion
+        , res.statusCode
+        , req.headers['user-agent'] || ''
+        , http.STATUS_CODES[res.statusCode]
+        );
       })
       .pipe(res);
   });
