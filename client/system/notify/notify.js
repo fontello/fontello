@@ -1,3 +1,19 @@
+/*
+ * Show bulb notification on wire 'notify' events
+ *
+ * Parameters:
+ *
+ *   options (String) - show text in `error` style
+ *
+ *   options (Object)
+ *
+ *   - message         - text to display (can be html)
+ *   - autohide        - timeout (ms), 0 for infinite
+ *   - closeable       - show close element, if set
+ *   - deduplicate     - skip the same messages, if set
+ *   - type            - message style 'error' (default), 'info'
+ */
+
 'use strict';
 
 
