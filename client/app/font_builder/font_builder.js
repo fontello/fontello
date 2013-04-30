@@ -94,11 +94,11 @@ function startBuilder(config) {
     font_id = msg.data.id;
 
     N.wire.emit('notify', {
-      type:    'information'
-    , text:    t('download_banner')
-    , layout:  'bottom'
-    , timeout: 20000 // 20 secs
-    , closeOnSelfClick: false
+      type:     'info'
+    , message:  t('help_us')
+    , autohide: 10000 // 10 secs
+    , deduplicate: true
+    , closable: true
     });
 
     N.wire.emit('build.started');
