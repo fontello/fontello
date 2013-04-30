@@ -7,7 +7,7 @@
 
 var http = require('http');
 var send = require('send');
-var fontBuilder = require('../../lib/font_builder');
+var fontBuilder = require('./_lib/font_builder');
 
 
 // font downloader middleware

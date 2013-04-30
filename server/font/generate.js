@@ -5,8 +5,8 @@
 'use strict';
 
 
-var fontBuilder = require('../../lib/font_builder');
-var fontConfig  = require('../../lib/font_config');
+var fontBuilder = require('./_lib/font_builder');
+var fontConfig  = require('./_lib/font_config');
 
 
 module.exports = function (N, apiPath) {

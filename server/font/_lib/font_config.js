@@ -66,17 +66,13 @@
 
 // stdlib
 var path = require('path');
-
-
-// 3rd-party
 var _ = require('lodash');
 
 
 ////////////////////////////////////////////////////////////////////////////////
 
-
 var APP_ROOT = N.runtime.mainApp.root;
-
+var configs  = require('../../../lib/embedded_fonts/configs');
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -86,7 +82,7 @@ var font_configs = null;
 function get_embedded_font(name) {
   if (null === font_configs) {
     font_configs = {};
-    require('./embedded_fonts/configs').forEach(function (config) {
+    configs.forEach(function (config) {
       font_configs[config.font.fontname] = config;
     });
   }
