@@ -6,7 +6,6 @@
 
 
 var fontBuilder = require('./_lib/font_builder');
-var fontConfig  = require('./_lib/font_config');
 
 
 module.exports = function (N, apiPath) {
@@ -34,19 +33,15 @@ module.exports = function (N, apiPath) {
 
 
   N.wire.on(apiPath, function (env, callback) {
-    var config = fontConfig(env.params)
-      , task   = null;
+    builder.addTask(env.params, function (err, fontId) {
+      if (err) {
+        callback(err);
+        return;
+      }
 
-    if (!config || 0 >= config.glyphs.length) {
-      callback('Invalid request');
-      return;
-    }
-
-    task = builder.addTask(config);
-
-    env.response.data.id     = task.fontId;
-    env.response.data.status = 'enqueued';
-
-    callback();
+      env.response.data.id     = fontId;
+      env.response.data.status = 'enqueued';
+      callback();
+    });
   });
 };

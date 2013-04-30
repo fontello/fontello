@@ -36,7 +36,7 @@ function getFontId(config) {
 }
 
 
-function getResultFilename(fontId) {
+function getOutputName(fontId) {
   var firstDir  = fontId.substr(0, 2)
     , secondDir = fontId.substr(2, 2);
 
@@ -47,36 +47,36 @@ function getResultFilename(fontId) {
 
 // Working procedure for the builder queue.
 //
-function handleTask(task, callback) {
-  var logPrefix = '[font::' + task.fontId + ']'
+function handleTask(taskInfo, callback) {
+  var logPrefix = '[font::' + taskInfo.fontId + ']'
     , timeStart = Date.now()
     , workplan  = [];
 
-  builderLogger.info('%s Start generation: %j', logPrefix, task.config.session);
+  builderLogger.info('%s Start generation: %j', logPrefix, taskInfo.config.session);
 
   //
   // Prepare the workplan.
   //
-  workplan.push(async.apply(fstools.remove, task.tmpDir));
-  workplan.push(async.apply(fstools.mkdir, task.tmpDir));
+  workplan.push(async.apply(fstools.remove, taskInfo.tmpDir));
+  workplan.push(async.apply(fstools.mkdir, taskInfo.tmpDir));
   workplan.push(async.apply(fs.writeFile,
-                            path.join(task.tmpDir, 'config.json'),
-                            JSON.stringify(task.config.session, null, '  '),
+                            path.join(taskInfo.tmpDir, 'config.json'),
+                            JSON.stringify(taskInfo.config.session, null, '  '),
                             'utf8'));
 
   // Write full config immediately, to avoid app exec from shell script
   // `log4js` has races with locks on multiple copies run,
   workplan.push(async.apply(fs.writeFile,
-                            path.join(task.tmpDir, 'generator-config.json'),
-                            JSON.stringify(fontConfig(task.config.session), null, '  '),
+                            path.join(taskInfo.tmpDir, 'generator-config.json'),
+                            JSON.stringify(fontConfig(taskInfo.config.session), null, '  '),
                             'utf8'));
 
   workplan.push(async.apply(execFile,
                             builderBinary,
-                            [ task.config.font.fontname, task.tmpDir, task.zipball ],
+                            [ taskInfo.config.font.fontname, taskInfo.tmpDir, taskInfo.output ],
                             { cwd: builderCwdDir }));
 
-  workplan.push(async.apply(fstools.remove, task.tmpDir));
+  workplan.push(async.apply(fstools.remove, taskInfo.tmpDir));
 
   //
   // Execute the workplan.
@@ -93,79 +93,133 @@ function handleTask(task, callback) {
     builderLogger.info('%s Generated in %dms (real: %dms)',
                        logPrefix,
                        (timeEnd - timeStart) / 1000,
-                       (timeEnd - task.timestamp) / 1000);
+                       (timeEnd - taskInfo.timestamp) / 1000);
     callback();
   });
 }
 
 
-function addTask(config, callback) {
-  var task, fontId = getFontId(config);
+// Ensures font described by `clientConfig` is added to processing queue or
+// already built.
+// 
+function createTask(clientConfig, afterRegistered, afterComplete) {
+  var builderConfig = fontConfig(clientConfig)
+    , fontId        = getFontId(builderConfig)
+    , outputName    = getOutputName(fontId)
+    , outputFile    = path.join(builderOutputDir, outputName)
+    , taskInfo      = null;
 
+  if (!builderConfig || 0 >= builderConfig.glyphs.length) {
+    if (afterRegistered) {
+      afterRegistered('Invalid config.', null);
+    }
+    if (afterComplete) {
+      afterComplete('Invalid config.', null, null);
+    }
+    return;
+  }
+
+  //
   // If task already exists - just register a new callback on it.
+  //
   if (builderTasks.hasOwnProperty(fontId)) {
     builderLogger.info('Job is already in queue: %j', {
       font_id:      fontId
     , queue_length: Object.keys(builderTasks).length
     });
 
-    task = builderTasks[fontId];
+    taskInfo = builderTasks[fontId];
 
-    if (callback) {
-      task.callbacks.push(callback);
+    if (afterComplete) {
+      taskInfo.callbacks.push(afterComplete);
     }
-
-    return task;
+    if (afterRegistered) {
+      afterRegistered(null, fontId);
+    }
+    return;
   }
 
-  task = {
-    fontId:    fontId
-  , config:    config
-  , tmpDir:    path.join(builderTmpDir, 'fontello-' + fontId)
-  , zipball:   path.join(builderOutputDir, getResultFilename(fontId))
-  , timestamp: Date.now()
-  , callbacks: []
-  };
-
-  fs.exists(task.zipball, function (exists) {
+  //
+  // If same task is already done (the result file exists) - use it.
+  //
+  fs.exists(outputFile, function (exists) {
     if (exists) {
-      return; // Already done - do nothing;
+      if (afterRegistered) {
+        afterRegistered(null, fontId);
+      }
+      if (afterComplete) {
+        afterComplete(null, outputName, builderOutputDir);
+      }
+      return;
     }
 
-    builderTasks[fontId] = task;
+    //
+    // Otherwise, create a new task.
+    //
+    taskInfo = {
+      fontId:    fontId
+    , config:    builderConfig
+    , tmpDir:    path.join(builderTmpDir, 'fontello-' + fontId)
+    , output:    outputFile
+    , timestamp: Date.now()
+    , callbacks: []
+    };
 
-    builderQueue.push(task, function (err) {
-      var task = builderTasks[fontId];
+    if (afterComplete) {
+      taskInfo.callbacks.push(afterComplete);
+    }
+
+    builderTasks[fontId] = taskInfo;
+    builderQueue.push(taskInfo, function (err) {
+      var callbacks = builderTasks[fontId].callbacks;
 
       delete builderTasks[fontId];
 
-      task.callbacks.forEach(function (func) { func(err, task); });
+      callbacks.forEach(function (func) {
+        func(err, outputName, builderOutputDir);
+      });
     });
 
     builderLogger.info('New job created: %j', {
       font_id:      fontId
     , queue_length: Object.keys(builderTasks).length
     });
-  });
 
-  return task;
+    if (afterRegistered) {
+      afterRegistered(null, fontId);
+    }
+  });
 }
 
 
-function getTask(fontId) {
-  return builderTasks[fontId] || null;
+function addTask(clientConfig, afterRegistered) {
+  createTask(clientConfig, afterRegistered, null);
+}
+
+
+function executeTask(clientConfig, afterComplete) {
+  createTask(clientConfig, null, afterComplete);
+}
+
+
+function findTask(fontId, callback) {
+  if (builderTasks.hasOwnProperty(fontId)) {
+    callback(null, builderTasks[fontId]);
+  } else {
+    callback(null, null);
+  }
 }
 
 
 function checkResult(fontId, callback) {
-  var filename = getResultFilename(fontId)
+  var filename = getOutputName(fontId)
     , filepath = path.join(builderOutputDir, filename);
 
   fs.exists(filepath, function (exists) {
     if (exists) {
       callback(filename, builderOutputDir);
     } else {
-      callback(null);
+      callback(null, null);
     }
   });
 }
@@ -193,9 +247,11 @@ module.exports = function (N) {
   }
 
   return {
-    addTask:     addTask
-  , getTask:     getTask
+    createTask:  createTask
+  , addTask:     addTask
+  , executeTask: executeTask
+  , findTask:    findTask
   , checkResult: checkResult
-  , resultDir:   builderOutputDir
+  , outputDir:   builderOutputDir
   };
 };

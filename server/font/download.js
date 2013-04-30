@@ -52,7 +52,7 @@ module.exports = function (N, apiPath) {
     }
 
     send(req, env.params.file)
-      .root(builder.resultDir)
+      .root(builder.outputDir)
       .on('error', function (err) {
         if (404 === err.status) {
           callback(N.io.NOT_FOUND);
