@@ -27,10 +27,12 @@ function Notification(options) {
   }
 
   if (options.deduplicate) {
-    var previous = tracker[options.message.toString()];
+    this.track_id = options.message.toString();
+    var previous = tracker[this.track_id];
     if (previous) {
-      clearTimeout(previous.options.timeout);
-      setTimeout($.proxy(previous.hide, previous), previous.options.autohide);
+      // restart timeout
+      clearTimeout(previous.timeout);
+      previous.timeout = setTimeout($.proxy(previous.hide, previous), previous.options.autohide);
       return;
     }
   }
@@ -81,7 +83,9 @@ Notification.prototype = {
       return;
     }
 
-    tracker[this.options.message.toString()] = this;
+    if (this.track_id) {
+      tracker[this.track_id] = this;
+    }
 
     this.isShown = true;
     this.$element
@@ -97,7 +101,9 @@ Notification.prototype = {
       return;
     }
 
-    delete tracker[this.options.message.toString()];
+    if (this.track_id) {
+      delete tracker[this.track_id];
+    }
 
     this.isShown = false;
     this.$element.removeClass('in');
