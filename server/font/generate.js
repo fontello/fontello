@@ -33,7 +33,7 @@ module.exports = function (N, apiPath) {
 
 
   N.wire.on(apiPath, function (env, callback) {
-    builder.addTask(env.params, function (err, fontId) {
+    builder.pushFont(env.params, function (err, fontId) {
       if (err) {
         callback(err);
         return;

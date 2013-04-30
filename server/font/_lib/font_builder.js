@@ -192,13 +192,13 @@ function createTask(clientConfig, afterRegistered, afterComplete) {
 }
 
 
-function addTask(clientConfig, afterRegistered) {
-  createTask(clientConfig, afterRegistered, null);
+function pushFont(clientConfig, callback) {
+  createTask(clientConfig, callback, null);
 }
 
 
-function executeTask(clientConfig, afterComplete) {
-  createTask(clientConfig, null, afterComplete);
+function buildFont(clientConfig, callback) {
+  createTask(clientConfig, null, callback);
 }
 
 
@@ -247,9 +247,8 @@ module.exports = function (N) {
   }
 
   return {
-    createTask:  createTask
-  , addTask:     addTask
-  , executeTask: executeTask
+    pushFont:    pushFont
+  , buildFont:   buildFont
   , findTask:    findTask
   , checkResult: checkResult
   , outputDir:   builderOutputDir
