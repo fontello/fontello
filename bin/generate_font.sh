@@ -49,12 +49,6 @@ for dep in font_merge.py fontconvert.py fontdemo.py ttfautohint jade zip; do
 done
 
 
-## BUILD FONT CONFIG ###########################################################
-
-# no more needs - generate in application
-#node ./fontello.js font_config --input $USER_CONFIG --output $CONFIG
-#cp $USER_CONFIG $CONFIG
-
 ## BUILD FONT ##################################################################
 
 
