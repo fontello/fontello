@@ -19,13 +19,14 @@ function hash(str) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-var revalidator = require('revalidator');
-var fs          = require('fs');
 var _           = require('lodash');
+var fs          = require('fs');
+var crypto      = require('crypto');
+var revalidator = require('revalidator');
 
 module.exports = function (N, apiPath) {
   N.validate(apiPath, {
-    id: {
+    sid: {
       type: 'string',
       required: false
     }
@@ -107,17 +108,18 @@ module.exports = function (N, apiPath) {
       var shortLink = new N.models.ShortLink();
 
       shortLink.ts = Date.now();
+      shortLink.sid = crypto.randomBytes(16).toString('hex');
       shortLink.ip = env.request.ip;
       shortLink.config = config;
       if (env.post.fields.url) { shortLink.url = env.post.fields.url; }
 
-      shortLink.save(function (err, sl) {
+      shortLink.save(function (err) {
         if (err) {
           callback(err);
           return;
         }
 
-        callback({ code: N.io.OK, message: sl.id });
+        callback({ code: N.io.OK, message: shortLink.sid });
       });
     });
   });
@@ -136,8 +138,8 @@ module.exports = function (N, apiPath) {
 
     // if requested page with config id - try te fetch data,
     // and redirect to main on error
-    if (env.params.id) {
-      N.models.ShortLink.findOne({_id: env.params.id}, function(err, sl) {
+    if (env.params.sid) {
+      N.models.ShortLink.findOne({sid: env.params.sid}, function(err, sl) {
         if (err) {
           callback(err);
           return;

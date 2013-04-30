@@ -11,6 +11,7 @@ module.exports = function (N, collectionName) {
   var ShortLink = new Schema(
     {
       ip      : String,
+      sid     : String,
       ts      : Date,
       url     : String,
       config  : Schema.Types.Mixed
@@ -21,6 +22,7 @@ module.exports = function (N, collectionName) {
   // Indexes
   //////////////////////////////////////////////////////////////////////////////
 
+  ShortLink.index({ sid: 1 });
   ShortLink.index({ ts: 1 });
   ShortLink.index({ ip: 1 });
 
