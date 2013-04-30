@@ -32,22 +32,12 @@ module.exports = function (N, apiPath) {
     }
   });
 
-  // Allow http requests only (no rpc)
-  //
-  N.wire.before(apiPath, function app_filter_http(env, callback) {
-    if ('http' !== env.request.type) {
-      callback({ code: N.io.BAD_REQUEST, message: 'HTTP only' });
-      return;
-    }
-    callback();
-  });
-
   // Process post request (user send config file)
   //
   N.wire.on(apiPath, function app_post(env, callback) {
 
-    // if not POST request - continue to next handler
-    if ('POST' !== env.origin.req.method) {
+    // if not POST request via http responder - continue to next handler
+    if (('POST' !== env.origin.req.method) || ('http' !== env.request.type)) {
       callback();
       return;
     }
