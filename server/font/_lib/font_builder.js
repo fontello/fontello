@@ -18,7 +18,7 @@ var builderVersion     = null;
 var builderLogger      = null;
 var builderCwdDir      = null;
 var builderTmpDir      = null;
-var builderResultDir   = null;
+var builderOutputDir   = null;
 var builderBinary      = null;
 var builderQueue       = null;
 var builderTasks       = null;
@@ -122,7 +122,7 @@ function addTask(config, callback) {
     fontId:    fontId
   , config:    config
   , tmpDir:    path.join(builderTmpDir, 'fontello-' + fontId)
-  , zipball:   path.join(builderResultDir, getResultFilename(fontId))
+  , zipball:   path.join(builderOutputDir, getResultFilename(fontId))
   , timestamp: Date.now()
   , callbacks: []
   };
@@ -159,11 +159,11 @@ function getTask(fontId) {
 
 function checkResult(fontId, callback) {
   var filename = getResultFilename(fontId)
-    , filepath = path.join(builderResultDir, filename);
+    , filepath = path.join(builderOutputDir, filename);
 
   fs.exists(filepath, function (exists) {
     if (exists) {
-      callback(filename, builderResultDir);
+      callback(filename, builderOutputDir);
     } else {
       callback(null);
     }
@@ -178,7 +178,7 @@ function setup(N) {
   builderLogger    = N.logger.getLogger('font');
   builderTmpDir    = path.join(os.tmpDir(), 'fontello');
   builderCwdDir    = N.runtime.mainApp.root;
-  builderResultDir = path.join(N.runtime.mainApp.root, 'public', 'download');
+  builderOutputDir = path.join(N.runtime.mainApp.root, 'public', 'download');
   builderBinary    = path.join(N.runtime.mainApp.root, 'bin', 'generate_font.sh');
   builderQueue     = async.queue(handleTask, builderConcurrency);
   builderTasks     = {};
@@ -196,6 +196,6 @@ module.exports = function (N) {
     addTask:     addTask
   , getTask:     getTask
   , checkResult: checkResult
-  , resultDir:   builderResultDir
+  , resultDir:   builderOutputDir
   };
 };
