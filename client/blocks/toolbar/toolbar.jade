@@ -1,77 +1,83 @@
 .container
   #toolbar.btn-toolbar.clearfix
 
-    .btn-group.search-form.pull-left
-      input#search.input-medium.search-query(
-        type='text',
-        placeholder='search',
-        autocomplete='off'
-      )
-      div.i-search-box
-        i.icon-search
+    .pull-left
 
-    .btn-group.pull-left
-      a.search-permalink.btn.btn-link._popover(
-        data-bind="visible: searchMode(), attr: { 'href': '/#search=' + searchWord() }",
-        style='display:none',
-        data-content=self.t('search_permalink_help'),
-        data-placement='bottom',
-        data-trigger='hover',
-        data-delay='{"show":500,"hide":100}'
-      )
-        i.icon-link
+      .btn-group.search-form
+        input#search.input-medium.search-query(
+          type='text',
+          placeholder='search',
+          autocomplete='off'
+        )
+        div.i-search-box
+          i.icon-search
 
-    .btn-group.pull-right
-      a#result-download.btn.btn-info.disabled(
-        data-on-click='build_font',
-        data-bind='css: {disabled: !selectedCount()}')
-        i.icon-download(data-bind='visible: !building()')
-        i.icon-load.animate-spin(style='display:none', data-bind='visible: building()')
-        |  
-        = self.t('download')
-        |  (
-        span#selected-glyphs-count(data-bind='text: selectedCount()') 0
-        | )
+      .btn-group
+        a.search-permalink.btn.btn-link._popover(
+          data-bind="visible: searchMode(), attr: { 'href': '/#search=' + searchWord() }",
+          style='display:none',
+          data-content=self.t('search_permalink_help'),
+          data-placement='bottom',
+          data-trigger='hover',
+          data-container='.navbar-fixed-top'
+          data-delay='{"show":500,"hide":100}'
+        )
+          i.icon-link
 
-    .btn-group.pull-right
-      input#result-fontname.input-medium._popover(type='text',
-        placeholder=self.t('file_name_placeholder'),
-        autocomplete='off',
-        pattern='[a-z0-9_\-]*',
-        data-bind='value: fontName',
-        data-content=self.t('file_name_help'),
-        data-placement='bottom',
-        data-trigger='hover',
-        data-delay='{"show":500,"hide":100}')
+    .pull-right
 
-    .btn-group.pull-right.dropdown
+      .btn-group
+        #glyph-size-slider
+        #glyph-size-value(data-bind="text: fontSize() + 'px'")
 
-      a.btn.dropdown-toggle(data-toggle='dropdown', href='#')
-        i.icon-settings
-        span.caret
+      .btn-group.dropdown
 
-      ul.dropdown-menu
-        li: a(
-              href='#',
-              data-on-click='import.start',
-              data-content=self.t('menu_import_config_help'),
-              data-placement='top',
-              data-trigger='hover',
-              data-delay='{"show":500,"hide":100}'            
-            )._popover= self.t('menu_import_config')
-        li.divider
-        li: a(href='#', data-on-click='cmd:reset_selected')= self.t('menu_unselect_all')
-        li: a(href='#', data-on-click='cmd:reset_all')= self.t('menu_reset_all')
-        li.divider
-        li
-          form.menuitem-form(onsubmit='return false;')
-            fieldset
-              label(for='css-prefix')= self.t('menu_css_prefix_text')
-              input#css-prefix.input-medium(type='text', data-bind='value: cssPrefixText')
-              label.checkbox
-                input(type='checkbox', data-bind='checked: cssUseSuffix')
-                = self.t('menu_css_use_suffix')
+        a.btn.dropdown-toggle(data-toggle='dropdown', href='#')
+          i.icon-settings
+          span.caret
+        ul.dropdown-menu.pull-right
+          li: a(
+                href='#',
+                data-on-click='import.start',
+                data-content=self.t('menu_import_config_help'),
+                data-placement='left',
+                data-trigger='hover',
+                data-container='.navbar-fixed-top'
+                data-delay='{"show":500,"hide":100}'            
+              )._popover= self.t('menu_import_config')
+          li.divider
+          li: a(href='#', data-on-click='cmd:reset_selected')= self.t('menu_unselect_all')
+          li: a(href='#', data-on-click='cmd:reset_all')= self.t('menu_reset_all')
+          li.divider
+          li
+            form.menuitem-form(onsubmit='return false;')
+              fieldset
+                label(for='css-prefix')= self.t('menu_css_prefix_text')
+                input#css-prefix.input-medium(type='text', data-bind='value: cssPrefixText')
+                label.checkbox
+                  input(type='checkbox', data-bind='checked: cssUseSuffix')
+                  = self.t('menu_css_use_suffix')
 
-    .btn-group.pull-right
-      #glyph-size-slider
-      #glyph-size-value(data-bind="text: fontSize() + 'px'")
+      .btn-group
+        input#result-fontname.input-medium._popover(type='text',
+          placeholder=self.t('file_name_placeholder'),
+          autocomplete='off',
+          pattern='[a-z0-9_\-]*',
+          data-bind='value: fontName',
+          data-content=self.t('file_name_help'),
+          data-placement='bottom',
+          data-trigger='hover',
+          data-container='.navbar-fixed-top'
+          data-delay='{"show":500,"hide":100}')
+
+      .btn-group
+        a#result-download.btn.btn-info.disabled(
+          data-on-click='build_font',
+          data-bind='css: {disabled: !selectedCount()}')
+          i.icon-download(data-bind='visible: !building()')
+          i.icon-load.animate-spin(style='display:none', data-bind='visible: building()')
+          |  
+          = self.t('download')
+          |  (
+          span#selected-glyphs-count(data-bind='text: selectedCount()') 0
+          | )

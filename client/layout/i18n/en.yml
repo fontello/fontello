@@ -6,7 +6,7 @@ en-US:
     images from large collection, and make webfont pack with one click.
 
   menu_feedback: Feedback
-  menu_discuss: Discuss in google groups
+  menu_discuss: Ask in Google Groups
   menu_bugreports: Report bugs at Github
   menu_bugreports_help: >
     We prefer communicate via Github. You can also share you ideas there.
@@ -16,7 +16,7 @@ en-US:
 
   menu_donate: donate via PayPal
   menu_donate_help: >
-    Fontello is done not for money, but... you can show,
+    Fontello is done not for money, but you can show,
     how much do you like it :)
 
   twitter:
