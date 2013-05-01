@@ -29,8 +29,6 @@ var STORAGE_KEY        = 'fontello:sessions:v4';
 //          glyphs:     (Array)   list of modified and/or selected glyphs
 //            - selected:   (Boolean) Whenever glyph is selected or not
 //            - uid:        (String) Glyph unique id
-//            - orig_code:  (Number) Glyph original (from the font source) code
-//            - orig_css:   (Number) Glyph original (from the font source) css
 //            - code:       (Number) User defined code
 //            - css:        (String) User defined css name
 //            - svg:        *RESERVED FOR FUTURE USE*
@@ -98,12 +96,10 @@ N.wire.on('session_save', _.debounce(function () {
     _.each(font.glyphs, function (glyph) {
       if (glyph.isModified()) {
         font_data.glyphs.push({
-          uid:        glyph.uid,
-          selected:   glyph.selected(),
-          orig_code:  glyph.originalCode,
-          orig_css:   glyph.originalName,
-          code:       glyph.code(),
-          css:        glyph.name()
+          uid:      glyph.uid,
+          selected: glyph.selected(),
+          code:     glyph.code(),
+          css:      glyph.name()
         });
       }
     });
@@ -189,8 +185,8 @@ N.wire.on('session_load', function () {
       var targetGlyph = lookup[glyph.uid];
 
       targetGlyph.selected(!!glyph.selected);
-      targetGlyph.code(glyph.code || glyph.orig_code || targetGlyph.originalCode);
-      targetGlyph.name(glyph.css || glyph.orig_css || targetGlyph.originalName);
+      targetGlyph.code(glyph.code || targetGlyph.originalCode);
+      targetGlyph.name(glyph.css || targetGlyph.originalName);
     });
   });
 });

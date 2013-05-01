@@ -84,15 +84,10 @@ function GlyphModel(font, data) {
   //
   this.serialize = function () {
     return {
-      uid:       this.uid
-
-    , orig_css:  this.originalName
-    , orig_code: this.originalCode
-
-    , css:       this.name()
-    , code:      this.code()
-
-    , src:       this.font.fontname
+      uid:  this.uid
+    , css:  this.name()
+    , code: this.code()
+    , src:  this.font.fontname
     };
   }.bind(this);
 

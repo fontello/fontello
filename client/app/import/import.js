@@ -43,8 +43,8 @@ function import_config(str, file) {
       if (!glyph) { return; }
 
       glyph.selected(true);
-      glyph.code(g.code || g.orig_code || glyph.originalCode);
-      glyph.name(g.css || g.orig_css || glyph.originalName);
+      glyph.code(g.code || glyph.originalCode);
+      glyph.name(g.css || glyph.originalName);
     });
   } catch (e) {
     N.wire.emit('notify', t('error.bad_config_format', { name: file.name }));

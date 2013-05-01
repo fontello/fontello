@@ -52,7 +52,7 @@ function handleTask(taskInfo, callback) {
     , timeStart = Date.now()
     , workplan  = [];
 
-  builderLogger.info('%s Start generation: %j', logPrefix, taskInfo.config.session);
+  builderLogger.info('%s Start generation: %j', logPrefix, taskInfo.clientConfig);
 
   //
   // Prepare the workplan.
@@ -61,19 +61,19 @@ function handleTask(taskInfo, callback) {
   workplan.push(async.apply(fstools.mkdir, taskInfo.tmpDir));
   workplan.push(async.apply(fs.writeFile,
                             path.join(taskInfo.tmpDir, 'config.json'),
-                            JSON.stringify(taskInfo.config.session, null, '  '),
+                            JSON.stringify(taskInfo.clientConfig, null, '  '),
                             'utf8'));
 
   // Write full config immediately, to avoid app exec from shell script
   // `log4js` has races with locks on multiple copies run,
   workplan.push(async.apply(fs.writeFile,
                             path.join(taskInfo.tmpDir, 'generator-config.json'),
-                            JSON.stringify(fontConfig(taskInfo.config.session), null, '  '),
+                            JSON.stringify(taskInfo.builderConfig, null, '  '),
                             'utf8'));
 
   workplan.push(async.apply(execFile,
                             builderBinary,
-                            [ taskInfo.config.font.fontname, taskInfo.tmpDir, taskInfo.output ],
+                            [ taskInfo.builderConfig.font.fontname, taskInfo.tmpDir, taskInfo.output ],
                             { cwd: builderCwdDir }));
 
   workplan.push(async.apply(fstools.remove, taskInfo.tmpDir));
@@ -157,12 +157,13 @@ function createTask(clientConfig, afterRegistered, afterComplete) {
     // Otherwise, create a new task.
     //
     taskInfo = {
-      fontId:    fontId
-    , config:    builderConfig
-    , tmpDir:    path.join(builderTmpDir, 'fontello-' + fontId)
-    , output:    outputFile
-    , timestamp: Date.now()
-    , callbacks: []
+      fontId:        fontId
+    , clientConfig:  clientConfig
+    , builderConfig: builderConfig
+    , tmpDir:        path.join(builderTmpDir, 'fontello-' + fontId)
+    , output:        outputFile
+    , timestamp:     Date.now()
+    , callbacks:     []
     };
 
     if (afterComplete) {
