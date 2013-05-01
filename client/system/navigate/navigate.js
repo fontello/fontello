@@ -373,7 +373,7 @@ N.wire.once('navigate.done', { priority: 999 }, function () {
 
     // Always focus the link or blur the current focus at least since browsers
     // may not allow to focus certain elements.
-    $(':focus').blur();
+    $(document.activeElement).blur();
     $this.focus();
 
     if ($this.attr('target') || event.isDefaultPrevented()) {
