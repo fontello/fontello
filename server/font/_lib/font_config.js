@@ -80,18 +80,13 @@ _.forEach(fontConfigs, function (config) {
 });
 
 
-// Returns valid glyphs configuration.
-//
-function normalizeGlyphs(input) {
-  if (!_.isArray(input)) {
-    return null;
-  }
-
+function collectGlyphsInfo(input) {
   var result = [];
 
   _.forEach(input, function (inputGlyph) {
-    var fontConfig = fontConfigsByName[inputGlyph.src]
-      , fontGlyph  = null;
+    var fontConfig, fontGlyph;
+
+    fontConfig = fontConfigsByName[inputGlyph.src];
 
     if (!fontConfig) {
       // Unknown glyph source font.
@@ -107,18 +102,14 @@ function normalizeGlyphs(input) {
       return;
     }
 
-    inputGlyph.code = Number(inputGlyph.code || fontGlyph.code);
-    inputGlyph.css  = inputGlyph.css || fontGlyph.css;
-
-    // Make sure glyph config contains all properties from original font as long
-    // as the overriden.
-    result.push(_.defaults(inputGlyph, fontGlyph, { from: fontGlyph.code }));
+    result.push({
+      src:  inputGlyph.src
+    , from: fontGlyph.code
+    , code: Number(inputGlyph.code || fontGlyph.code)
+    , css:  inputGlyph.css || fontGlyph.css
+    , 'css-ext': fontGlyph['css-ext']
+    });
   });
-
-  if (_.isEmpty(result)) {
-    // At least one glyph is required.
-    return null;
-  }
 
   // Sort result by original codes.
   result.sort(function (a, b) { return a.from - b.from; });
@@ -127,8 +118,28 @@ function normalizeGlyphs(input) {
 }
 
 
+function collectFontsInfo(glyphs) {
+  var result = [];
+
+  _(glyphs).pluck('src').unique().forEach(function (fontname) {
+    var config = fontConfigsByName[fontname];
+
+    result.push({
+      fontname:    config.font.fontname
+    , copyright:   config.font.copyright
+    , author:      config.meta.author
+    , license:     config.meta.license
+    , license_url: config.meta.license_url
+    , homepage:    config.meta.homepage
+    });
+  });
+
+  return result;
+}
+
+
 module.exports = function fontConfig(params) {
-  var fontname, fonts, glyphs;
+  var fontname, glyphsInfo, fontsInfo;
 
   if (!_.isObject(params)) {
     return null;
@@ -140,11 +151,12 @@ module.exports = function fontConfig(params) {
     fontname = 'fontello';
   }
 
-  glyphs = normalizeGlyphs(params.glyphs);
+  glyphsInfo = collectGlyphsInfo(params.glyphs);
+  fontsInfo  = collectFontsInfo(glyphsInfo);
 
-  fonts = _.select(fontConfigs, function (config) {
-    return _.detect(glyphs, { src: config.font.fontname });
-  });
+  if (_.isEmpty(glyphsInfo) || _.isEmpty(fontsInfo)) {
+    return null;
+  }
 
   return {
     font: {
@@ -163,8 +175,8 @@ module.exports = function fontConfig(params) {
     , css_prefix_text: params.css_prefix_text
     , css_use_suffix:  params.css_use_suffix
     }
-  , glyphs:     glyphs
   , src_fonts:  fontPathsByName
-  , used_fonts: fonts
+  , glyphs:     glyphsInfo
+  , fonts_info: fontsInfo
   };
 };
