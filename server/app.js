@@ -29,7 +29,7 @@ module.exports = function (N, apiPath) {
     sid: {
       type: 'string'
     , required: false
-    , pattern: /^[0-9a-f]{32}$/
+    , pattern: /^[0-9a-f]+/
     }
   });
 

@@ -2,7 +2,7 @@ router:
   map:
     fontello.app:
       "/({sid})":
-        sid: /[0-9a-f]{32}/
+        sid: /[0-9a-f]+/
       "/#search={search}":
         search: /\S+/
 
