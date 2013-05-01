@@ -40,7 +40,7 @@ function getOutputName(fontId) {
   var firstDir  = fontId.substr(0, 2)
     , secondDir = fontId.substr(2, 2);
 
-  return path.join(firstDir, secondDir, ('fontello-' + fontId + '.zip'));
+  return path.join(firstDir, secondDir, (fontId + '.zip'));
 }
 
 

@@ -16,6 +16,7 @@ module.exports = function (N, apiPath) {
     id: {
       type: 'string'
     , required: true
+    , pattern: /^[0-9a-f]{32}$/
     }
   });
 
@@ -46,7 +47,7 @@ module.exports = function (N, apiPath) {
         // job done
         env.response.data.status = 'finished';
         env.response.data.url = N.runtime.router.linkTo('fontello.font.download', {
-          file: file
+          id: env.params.id
         });
         callback();
       });

@@ -7,8 +7,8 @@ router:
         search: /\S+/
 
     fontello.font.download:
-      "/download/{file}":
-        file: /.+/
+      "/download/{id}":
+        id: /[0-9a-f]{32}/
 
     core.assets:
       "/assets/{path}":
