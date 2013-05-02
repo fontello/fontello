@@ -190,6 +190,7 @@ N.wire.once('navigate.done', function () {
   //
 
   var dropZone = $('body');
+  var dropProgress = false;
 
   // add the dataTransfer property for use with the native `drop` event
   // to capture information about files dropped into the browser window
@@ -199,9 +200,22 @@ N.wire.once('navigate.done', function () {
     event.stopPropagation();
     event.preventDefault();
     event.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+    if (!dropProgress) {
+      dropZone.addClass('drop-progress');
+      dropProgress = true;
+    }
   });
 
-  dropZone.on('drop', handleFileSelect);
+  dropZone.on('dragleave', function () {
+    dropZone.removeClass('drop-progress');
+    dropProgress = false;
+  });
+
+  dropZone.on('drop', function (event) {
+    dropZone.removeClass('drop-progress');
+    dropProgress = false;
+    handleFileSelect(event);
+  });
 });
 
 //
