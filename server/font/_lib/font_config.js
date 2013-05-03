@@ -63,12 +63,17 @@ var path = require('path');
 var fontConfigs       = require('../../../lib/embedded_fonts/configs');
 var fontConfigsByName = {};
 var fontPathsByName   = {};
+var glyphsByUID       = {};
 
 _.forEach(fontConfigs, function (config) {
   var name = config.font.fontname;
 
   fontConfigsByName[name] = config;
   fontPathsByName[name] = path.join(__dirname, '../../../assets/embedded_fonts', name + '.ttf');
+
+  _.forEach(config.glyphs, function (glyph) {
+    glyphsByUID[glyph.uid] = glyph;
+  });
 });
 
 
@@ -76,18 +81,7 @@ function collectGlyphsInfo(input) {
   var result = [];
 
   _.forEach(input, function (inputGlyph) {
-    var fontConfig, fontGlyph;
-
-    fontConfig = fontConfigsByName[inputGlyph.src];
-
-    if (!fontConfig) {
-      // Unknown glyph source font.
-      return;
-    }
-
-    fontGlyph = _.find(fontConfig.glyphs, function (config) {
-      return config.uid === inputGlyph.uid;
-    });
+    var fontGlyph = glyphsByUID[inputGlyph.uid];
 
     if (!fontGlyph) {
       // Unknown glyph UID.
