@@ -64,8 +64,6 @@ function handleTask(taskInfo, callback) {
                             JSON.stringify(taskInfo.clientConfig, null, '  '),
                             'utf8'));
 
-  // Write full config immediately, to avoid app exec from shell script
-  // `log4js` has races with locks on multiple copies run,
   workplan.push(async.apply(fs.writeFile,
                             path.join(taskInfo.tmpDir, 'generator-config.json'),
                             JSON.stringify(taskInfo.builderConfig, null, '  '),
@@ -203,24 +201,15 @@ function buildFont(clientConfig, callback) {
 }
 
 
-function findTask(fontId, callback) {
-  if (builderTasks.hasOwnProperty(fontId)) {
-    callback(null, builderTasks[fontId]);
-  } else {
-    callback(null, null);
-  }
-}
-
-
-function checkResult(fontId, callback) {
+function checkFont(fontId, callback) {
   var filename = getOutputName(fontId)
     , filepath = path.join(builderOutputDir, filename);
 
   fs.exists(filepath, function (exists) {
     if (exists) {
-      callback(filename, builderOutputDir);
+      callback(false, filename, builderOutputDir);
     } else {
-      callback(null, null);
+      callback(builderTasks.hasOwnProperty(fontId), null, null);
     }
   });
 }
@@ -248,10 +237,8 @@ module.exports = function (N) {
   }
 
   return {
-    pushFont:    pushFont
-  , buildFont:   buildFont
-  , findTask:    findTask
-  , checkResult: checkResult
-  , outputDir:   builderOutputDir
+    pushFont:  pushFont
+  , buildFont: buildFont
+  , checkFont: checkFont
   };
 };

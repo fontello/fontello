@@ -38,7 +38,7 @@ module.exports = function (N, apiPath) {
       return;
     }
 
-    builder.checkResult(env.params.id, function (file, directory) {
+    builder.checkFont(env.params.id, function (hasTask, file, directory) {
       if (!file) {
         callback(N.io.NOT_FOUND);
         return;

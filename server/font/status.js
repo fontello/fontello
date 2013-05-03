@@ -22,35 +22,28 @@ module.exports = function (N, apiPath) {
 
 
   N.wire.on(apiPath, function (env, callback) {
-    builder.findTask(env.params.id, function (err, task) {
-      if (err) {
-        env.response.data.status = 'error';
-        callback();
-        return;
-      }
-
-      if (task) {
+    builder.checkFont(env.params.id, function (hasTask, file) {
+      if (hasTask) {
         env.response.data.status = 'enqueued';
         callback();
         return;
       }
 
-      builder.checkResult(env.params.id, function (file) {
-        if (!file) {
-          // job not found
-          env.response.data.status = 'error';
-          env.response.error = 'Unknown font id (probably task crashed, try again).';
-          callback();
-          return;
-        }
-
-        // job done
-        env.response.data.status = 'finished';
-        env.response.data.url = N.runtime.router.linkTo('fontello.font.download', {
-          id: env.params.id
-        });
+      if (!file) {
+        // job not found
+        env.response.data.status = 'error';
+        env.response.error = 'Unknown font id (probably task crashed, try again).';
         callback();
+        return;
+      }
+
+      // job done
+      env.response.data.status = 'finished';
+      env.response.data.url = N.runtime.router.linkTo('fontello.font.download', {
+        id: env.params.id
       });
+
+      callback();
     });
   });
 };
