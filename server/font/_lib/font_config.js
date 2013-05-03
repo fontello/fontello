@@ -124,20 +124,20 @@ function collectFontsInfo(glyphs) {
 }
 
 
-module.exports = function fontConfig(params) {
+module.exports = function fontConfig(clientConfig) {
   var fontname, glyphsInfo, fontsInfo;
 
-  if (!_.isObject(params)) {
+  if (!_.isObject(clientConfig)) {
     return null;
   }
 
-  if (_.isString(params.name)) {
-    fontname = params.name.replace(/[^a-z0-9\-_]+/g, '-');
+  if (_.isString(clientConfig.name)) {
+    fontname = clientConfig.name.replace(/[^a-z0-9\-_]+/g, '-');
   } else {
     fontname = 'fontello';
   }
 
-  glyphsInfo = collectGlyphsInfo(params.glyphs);
+  glyphsInfo = collectGlyphsInfo(clientConfig.glyphs);
   fontsInfo  = collectFontsInfo(glyphsInfo);
 
   if (_.isEmpty(glyphsInfo) || _.isEmpty(fontsInfo)) {
@@ -158,8 +158,8 @@ module.exports = function fontConfig(params) {
     }
   , meta: {
       columns: 4 // Used by the demo page.
-    , css_prefix_text: params.css_prefix_text
-    , css_use_suffix:  params.css_use_suffix
+    , css_prefix_text: clientConfig.css_prefix_text
+    , css_use_suffix:  clientConfig.css_use_suffix
     }
   , src_fonts:  fontPathsByName
   , glyphs:     glyphsInfo
