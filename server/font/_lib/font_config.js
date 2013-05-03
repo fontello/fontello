@@ -1,63 +1,55 @@
-// Expands user config (sent when user clicks Download button, or the one that
-// saved within generated font) into the full config suitable for font builder
-// and demo generator.
+// Converts fonts config from the client (sent when user clicks Download button)
+// into a config suitable for the font builder.
 //
-// User (input) config contains only information provided by UI: desired
-// font name, list of glyphs (each one ha it's uid, original and user defined
-// code and css, original meta information and source font id):
+// Client config structure:
 //
-//    {
-//      name: "foobar",
-//      css_prefix_text: "icon-",
-//      css_use_suffix: false
-//      glyphs: [
-//        {
-//          "search": [ "twitter" ],
-//          "code": 84,
-//          "uid": "b1ec8e90c2c85cf0035849980a3789b3",
-//          "css": "twitter-2",
-//          "src": "zocial",
-//          "from": 84
-//        },
-//        ...
-//      ]
-//    }
+//   name:
+//   css_prefix_text:
+//   css_use_suffix:
+//   glyphs:
+//     - uid:
+//       src: fontname
+//       code: codepoint
+//       css:
 //
-//  Prepared config (output) contains extensive information needed to build
-//  font and it's demo: fontname, fontfamily, license, copyrights, where to
-//  find source font files:
+//     - ...
 //
-//    {
-//      meta: {
-//        columns: 4
-//        css_prefix_text: "icon-",
-//        css_use_suffix: false
-//      }
-//      font: {
-//        fontname: 'tada',
-//        ...
-//        copyright: 'Copyright (C) 2012 by original authors @ fontello.com',
-//        ascent: 850,
-//        ...
-//      },
-//      glyphs: [
-//        {
-//          ...
-//          "uid": "b1ec8e90c2c85cf0035849980a3789b3",
-//          "css": "twitter-2"
-//          ...
-//        },
-//        ...
-//      ],
-//      src_fonts: {
-//        zocial: '/home/ixti/proj/fontello/assets/embedded_fonts/zocial.ttf',
-//        ...
-//      },
-//      used_fonts: [
-//        { /* full config of the used font, i.e. config.yml file */ },
-//        ...
-//      ]
-//    }
+// Resulting builder config:
+//
+//   font:
+//     fontname:
+//     fullname:
+//     familyname:
+//     copyright:
+//     ascent:
+//     descent:
+//     weight:
+//
+//   meta:
+//     columns:
+//     css_prefix_text:
+//     css_use_suffix:
+//
+//   glyphs:
+//     - src:
+//       from: codepoint
+//       code: codepoint
+//       css:
+//       css-ext:
+//
+//     - ...
+//
+//   src_fonts:
+//     zocial: /absolute/path
+//     ...
+//
+//   fonts_info:
+//     fontname:
+//     copyright:
+//     author:
+//     license:
+//     license_url:
+//     homepage:
 //
 
 
