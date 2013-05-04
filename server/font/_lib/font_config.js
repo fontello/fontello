@@ -1,63 +1,55 @@
-// Expands user config (sent when user clicks Download button, or the one that
-// saved within generated font) into the full config suitable for font builder
-// and demo generator.
+// Converts fonts config from the client (sent when user clicks Download button)
+// into a config suitable for the font builder.
 //
-// User (input) config contains only information provided by UI: desired
-// font name, list of glyphs (each one ha it's uid, original and user defined
-// code and css, original meta information and source font id):
+// Client config structure:
 //
-//    {
-//      name: "foobar",
-//      css_prefix_text: "icon-",
-//      css_use_suffix: false
-//      glyphs: [
-//        {
-//          "search": [ "twitter" ],
-//          "code": 84,
-//          "uid": "b1ec8e90c2c85cf0035849980a3789b3",
-//          "css": "twitter-2",
-//          "src": "zocial",
-//          "from": 84
-//        },
-//        ...
-//      ]
-//    }
+//   name:
+//   css_prefix_text:
+//   css_use_suffix:
+//   glyphs:
+//     - uid:
+//       src: fontname
+//       code: codepoint
+//       css:
 //
-//  Prepared config (output) contains extensive information needed to build
-//  font and it's demo: fontname, fontfamily, license, copyrights, where to
-//  find source font files:
+//     - ...
 //
-//    {
-//      meta: {
-//        columns: 4
-//        css_prefix_text: "icon-",
-//        css_use_suffix: false
-//      }
-//      font: {
-//        fontname: 'tada',
-//        ...
-//        copyright: 'Copyright (C) 2012 by original authors @ fontello.com',
-//        ascent: 850,
-//        ...
-//      },
-//      glyphs: [
-//        {
-//          ...
-//          "uid": "b1ec8e90c2c85cf0035849980a3789b3",
-//          "css": "twitter-2"
-//          ...
-//        },
-//        ...
-//      ],
-//      src_fonts: {
-//        zocial: '/home/ixti/proj/fontello/assets/embedded_fonts/zocial.ttf',
-//        ...
-//      },
-//      used_fonts: [
-//        { /* full config of the used font, i.e. config.yml file */ },
-//        ...
-//      ]
-//    }
+// Resulting builder config:
+//
+//   font:
+//     fontname:
+//     fullname:
+//     familyname:
+//     copyright:
+//     ascent:
+//     descent:
+//     weight:
+//
+//   meta:
+//     columns:
+//     css_prefix_text:
+//     css_use_suffix:
+//
+//   glyphs:
+//     - src:
+//       from: codepoint
+//       code: codepoint
+//       css:
+//       css-ext:
+//
+//     - ...
+//
+//   src_fonts:
+//     zocial: /absolute/path
+//     ...
+//
+//   fonts_info:
+//     fontname:
+//     copyright:
+//     author:
+//     license:
+//     license_url:
+//     homepage:
 //
 
 
@@ -71,12 +63,17 @@ var path = require('path');
 var fontConfigs       = require('../../../lib/embedded_fonts/configs');
 var fontConfigsByName = {};
 var fontPathsByName   = {};
+var glyphsByUID       = {};
 
 _.forEach(fontConfigs, function (config) {
   var name = config.font.fontname;
 
   fontConfigsByName[name] = config;
   fontPathsByName[name] = path.join(__dirname, '../../../assets/embedded_fonts', name + '.ttf');
+
+  _.forEach(config.glyphs, function (glyph) {
+    glyphsByUID[glyph.uid] = glyph;
+  });
 });
 
 
@@ -84,18 +81,7 @@ function collectGlyphsInfo(input) {
   var result = [];
 
   _.forEach(input, function (inputGlyph) {
-    var fontConfig, fontGlyph;
-
-    fontConfig = fontConfigsByName[inputGlyph.src];
-
-    if (!fontConfig) {
-      // Unknown glyph source font.
-      return;
-    }
-
-    fontGlyph = _.find(fontConfig.glyphs, function (config) {
-      return config.uid === inputGlyph.uid;
-    });
+    var fontGlyph = glyphsByUID[inputGlyph.uid];
 
     if (!fontGlyph) {
       // Unknown glyph UID.
@@ -138,20 +124,20 @@ function collectFontsInfo(glyphs) {
 }
 
 
-module.exports = function fontConfig(params) {
+module.exports = function fontConfig(clientConfig) {
   var fontname, glyphsInfo, fontsInfo;
 
-  if (!_.isObject(params)) {
+  if (!_.isObject(clientConfig)) {
     return null;
   }
 
-  if (_.isString(params.name)) {
-    fontname = params.name.replace(/[^a-z0-9\-_]+/g, '-');
+  if (_.isString(clientConfig.name)) {
+    fontname = clientConfig.name.replace(/[^a-z0-9\-_]+/g, '-');
   } else {
     fontname = 'fontello';
   }
 
-  glyphsInfo = collectGlyphsInfo(params.glyphs);
+  glyphsInfo = collectGlyphsInfo(clientConfig.glyphs);
   fontsInfo  = collectFontsInfo(glyphsInfo);
 
   if (_.isEmpty(glyphsInfo) || _.isEmpty(fontsInfo)) {
@@ -172,8 +158,8 @@ module.exports = function fontConfig(params) {
     }
   , meta: {
       columns: 4 // Used by the demo page.
-    , css_prefix_text: params.css_prefix_text
-    , css_use_suffix:  params.css_use_suffix
+    , css_prefix_text: clientConfig.css_prefix_text
+    , css_use_suffix:  clientConfig.css_use_suffix
     }
   , src_fonts:  fontPathsByName
   , glyphs:     glyphsInfo

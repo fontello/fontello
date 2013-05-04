@@ -65,8 +65,6 @@ function handleTask(taskInfo, callback) {
                             JSON.stringify(taskInfo.clientConfig, null, '  '),
                             'utf8'));
 
-  // Write full config immediately, to avoid app exec from shell script
-  // `log4js` has races with locks on multiple copies run,
   workplan.push(async.apply(fs.writeFile,
                             path.join(taskInfo.tmpDir, 'generator-config.json'),
                             JSON.stringify(taskInfo.builderConfig, null, '  '),
@@ -194,12 +192,14 @@ function createTask(clientConfig, afterRegistered, afterComplete) {
   });
 }
 
+
 // Push new build task (config) to queue
 // and return `fontId` immediately (via callback)
 //
 function pushFont(clientConfig, callback) {
   createTask(clientConfig, callback, null);
 }
+
 
 // Push new build task (config) to queue
 // and return `fontId` when compleete (via callback)
@@ -209,47 +209,34 @@ function buildFont(clientConfig, callback) {
 }
 
 
-// Search font task in active pool.
-// Return taskInfo or null.
+// Check if font generation complete. Returns
 //
-function findTask(fontId, callback) {
-  if (_.has(builderTasks, fontId)) {
-    callback(null, builderTasks[fontId]);
-  } else {
-    callback(null, null);
-  }
-}
-
-// Check if font generation complete
+// {
+//   pending,   // true if still in queue
+//   file,      // file path from download root
+//   directory  // dowload root
+// }
 //
-function checkResult(fontId, callback) {
+function checkFont(fontId, callback) {
 
   // Check task pool first, to avoid fs kick
   // & make sure that file not partially written
   // 
-  findTask(fontId, function(err, taskInfo) {
-    if (err) {
-      callback(err);
-      return;
-    }
+  if (_.has(builderTasks, fontId)) {
+    callback(null, { pending: true });
+    return;
+  }
 
-    // This fontId is in active tasks -> final result not exists
-    if (taskInfo) {
+  // Ok, we have chance. Check if result exists on disk
+  var filename = getOutputName(fontId)
+    , filepath = path.join(builderOutputDir, filename);
+
+  fs.exists(filepath, function (exists) {
+    if (exists) {
+      callback(null, { pending : false, file: filename, directory: builderOutputDir });
+    } else {
       callback(null, null);
-      return;
     }
-
-    // Ok, we have chance. Check if result exists on disk
-    var filename = getOutputName(fontId)
-      , filepath = path.join(builderOutputDir, filename);
-
-    fs.exists(filepath, function (exists) {
-      if (exists) {
-        callback(null, { file: filename, directory: builderOutputDir });
-      } else {
-        callback(null, null);
-      }
-    });
   });
 }
 
@@ -277,10 +264,8 @@ module.exports = function (N) {
   }
 
   return {
-    pushFont:    pushFont
-  , buildFont:   buildFont
-  , findTask:    findTask
-  , checkResult: checkResult
-  , outputDir:   builderOutputDir
+    pushFont:  pushFont
+  , buildFont: buildFont
+  , checkFont: checkFont
   };
 };

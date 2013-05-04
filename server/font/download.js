@@ -38,13 +38,13 @@ module.exports = function (N, apiPath) {
       return;
     }
 
-    builder.checkResult(env.params.id, function (err, result) {
+    builder.checkFont(env.params.id, function (err, result) {
       if (err) {
         callback(err);
         return;
       }
 
-      if (!result) {
+      if (!result || !result.file) {
         callback(N.io.NOT_FOUND);
         return;
       }
