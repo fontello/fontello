@@ -11,7 +11,6 @@ var fontBuilder = require('./_lib/font_builder');
 module.exports = function (N, apiPath) {
   var builder = fontBuilder(N);
 
-
   N.validate(apiPath, {
     id: {
       type: 'string'
@@ -22,6 +21,7 @@ module.exports = function (N, apiPath) {
 
 
   N.wire.on(apiPath, function (env, callback) {
+
     builder.findTask(env.params.id, function (err, task) {
       if (err) {
         env.response.data.status = 'error';
@@ -35,8 +35,13 @@ module.exports = function (N, apiPath) {
         return;
       }
 
-      builder.checkResult(env.params.id, function (file) {
-        if (!file) {
+      builder.checkResult(env.params.id, function (err, result) {
+        if (err) {
+          callback(err);
+          return;
+        }
+
+        if (!result.file) {
           // job not found
           env.response.data.status = 'error';
           env.response.error = 'Unknown font id (probably task crashed, try again).';

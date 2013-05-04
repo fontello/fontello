@@ -1,6 +1,7 @@
 'use strict';
 
 
+var _          = require('lodash');
 var os         = require('os');
 var path       = require('path');
 var fs         = require('fs');
@@ -99,8 +100,9 @@ function handleTask(taskInfo, callback) {
 }
 
 
-// Ensures font described by `clientConfig` is added to processing queue or
-// already built.
+// (internal) Push new font building task into queue and return
+// `fontId`. Make sure, that task is not duplicated. If we can
+// return result immediately - do it.
 // 
 function createTask(clientConfig, afterRegistered, afterComplete) {
   var builderConfig = fontConfig(clientConfig)
@@ -111,10 +113,10 @@ function createTask(clientConfig, afterRegistered, afterComplete) {
 
   if (!builderConfig || 0 >= builderConfig.glyphs.length) {
     if (afterRegistered) {
-      afterRegistered('Invalid config.', null);
+      afterRegistered('Invalid config.');
     }
     if (afterComplete) {
-      afterComplete('Invalid config.', null, null);
+      afterComplete('Invalid config.');
     }
     return;
   }
@@ -122,7 +124,7 @@ function createTask(clientConfig, afterRegistered, afterComplete) {
   //
   // If task already exists - just register a new callback on it.
   //
-  if (builderTasks.hasOwnProperty(fontId)) {
+  if (_.has(builderTasks, fontId)) {
     builderLogger.info('Job is already in queue: %j', {
       font_id:      fontId
     , queue_length: Object.keys(builderTasks).length
@@ -130,11 +132,11 @@ function createTask(clientConfig, afterRegistered, afterComplete) {
 
     taskInfo = builderTasks[fontId];
 
-    if (afterComplete) {
-      taskInfo.callbacks.push(afterComplete);
-    }
     if (afterRegistered) {
       afterRegistered(null, fontId);
+    }
+    if (afterComplete) {
+      taskInfo.callbacks.push(afterComplete);
     }
     return;
   }
@@ -148,7 +150,7 @@ function createTask(clientConfig, afterRegistered, afterComplete) {
         afterRegistered(null, fontId);
       }
       if (afterComplete) {
-        afterComplete(null, outputName, builderOutputDir);
+        afterComplete(null, fontId);
       }
       return;
     }
@@ -192,40 +194,67 @@ function createTask(clientConfig, afterRegistered, afterComplete) {
   });
 }
 
-
+// Push new build task (config) to queue
+// and return `fontId` immediately (via callback)
+//
 function pushFont(clientConfig, callback) {
   createTask(clientConfig, callback, null);
 }
 
-
+// Push new build task (config) to queue
+// and return `fontId` when compleete (via callback)
+//
 function buildFont(clientConfig, callback) {
   createTask(clientConfig, null, callback);
 }
 
 
+// Search font task in active pool.
+// Return taskInfo or null.
+//
 function findTask(fontId, callback) {
-  if (builderTasks.hasOwnProperty(fontId)) {
+  if (_.has(builderTasks, fontId)) {
     callback(null, builderTasks[fontId]);
   } else {
     callback(null, null);
   }
 }
 
-
+// Check if font generation complete
+//
 function checkResult(fontId, callback) {
-  var filename = getOutputName(fontId)
-    , filepath = path.join(builderOutputDir, filename);
 
-  fs.exists(filepath, function (exists) {
-    if (exists) {
-      callback(filename, builderOutputDir);
-    } else {
-      callback(null, null);
+  // Check task pool first, to avoid fs kick
+  // & make sure that file not partially written
+  // 
+  findTask(fontId, function(err, taskInfo) {
+    if (err) {
+      callback(err);
+      return;
     }
+
+    // This fontId is in active tasks -> final result not exists
+    if (taskInfo) {
+      callback(null, null);
+      return;
+    }
+
+    // Ok, we have chance. Check if result exists on disk
+    var filename = getOutputName(fontId)
+      , filepath = path.join(builderOutputDir, filename);
+
+    fs.exists(filepath, function (exists) {
+      if (exists) {
+        callback(null, { file: filename, directory: builderOutputDir });
+      } else {
+        callback(null, null);
+      }
+    });
   });
 }
 
-
+// Init internals. Must be called prior builder use.
+//
 function setup(N) {
   var builderConcurrency = N.config.options.builder_concurrency || os.cpus().length;
 

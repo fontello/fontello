@@ -38,14 +38,19 @@ module.exports = function (N, apiPath) {
       return;
     }
 
-    builder.checkResult(env.params.id, function (file, directory) {
-      if (!file) {
+    builder.checkResult(env.params.id, function (err, result) {
+      if (err) {
+        callback(err);
+        return;
+      }
+
+      if (!result) {
         callback(N.io.NOT_FOUND);
         return;
       }
 
-      send(req, file)
-        .root(directory)
+      send(req, result.file)
+        .root(result.directory)
         .on('error', function (err) {
           callback(err.status);
         })
