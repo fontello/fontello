@@ -6,6 +6,10 @@ router:
       "/#search={search}":
         search: /\S+/
 
+    fontello.api.download:
+      "/{sid}/get":
+        sid: /[0-9a-f]+/
+
     fontello.font.download:
       "/download/{id}":
         id: /[0-9a-f]{32}/
