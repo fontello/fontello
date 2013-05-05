@@ -125,7 +125,7 @@ N.wire.once('navigate.done', function (data) {
   N.wire.on('api.export',  function () {
     save(function (err) {
       if (err) { return; }
-      window.location(N.app.apiUrl());
+      window.location = N.app.apiUrl();
     });
   });
 
