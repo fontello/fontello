@@ -1,5 +1,7 @@
 en-US:
   download: Download webfont
+  save: Save session
+  export: Export font
 
   file_name_placeholder: font name
   file_name_help: |

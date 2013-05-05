@@ -70,8 +70,10 @@
           data-container='.navbar-fixed-top'
           data-delay='{"show":500,"hide":100}')
 
-      .btn-group
-        a#result-download.btn.btn-info.disabled(
+      //- Show button, depending on mode
+      .btn-group(data-bind='visible: !apiMode()')
+        //- Standard mode - `Download` button
+        button.btn.btn-info.disabled(
           data-on-click='build_font',
           data-bind='css: {disabled: !selectedCount()}')
           i.icon-download(data-bind='visible: !building()')
@@ -81,3 +83,49 @@
           |  (
           span#selected-glyphs-count(data-bind='text: selectedCount()') 0
           | )
+
+      .btn-group(data-bind='visible: apiMode() && apiUrl()', style='display:none')
+        //- API mode, without URL - `Save session` button
+        button.btn.btn-info.disabled(
+          data-on-click='api.update',
+          data-bind='css: {disabled: !selectedCount()}')
+          i.icon-download(data-bind='visible: !saving()')
+          i.icon-load.animate-spin(style='display:none', data-bind='visible: saving()')
+          |  
+          = self.t('save')
+          |  (
+          span#selected-glyphs-count(data-bind='text: selectedCount()') 0
+          | )
+        button.btn.btn-info.disabled.dropdown-toggle(
+          data-toggle='dropdown',
+          data-bind='css: { disabled: !selectedCount() }'
+          )
+            span.caret
+        ul.dropdown-menu.pull-right
+          li: a(
+                href='#',
+                data-on-click='build_font',
+              )= self.t('download')
+
+      .btn-group(data-bind='visible: apiMode() && !apiUrl()', style='display:none')
+        //- API mode, with URL - `Export font` button
+        button.btn.btn-info.disabled(
+          data-on-click='api.export',
+          data-bind='css: { disabled: !selectedCount() }')
+          i.icon-download(data-bind='visible: !saving()')
+          i.icon-load.animate-spin(style='display:none', data-bind='visible: saving()')
+          |  
+          = self.t('export')
+          |  (
+          span#selected-glyphs-count(data-bind='text: selectedCount()') 0
+          | )
+        button.btn.btn-info.disabled.dropdown-toggle(
+          data-toggle='dropdown',
+          data-bind='css: { disabled: !selectedCount() }'
+          )
+            span.caret
+        ul.dropdown-menu.pull-right
+          li: a(
+                href='#',
+                data-on-click='build_font',
+              )= self.t('download')

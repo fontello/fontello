@@ -301,8 +301,31 @@ N.app.fontSize    = ko.observable(N.runtime.config.glyph_size.val);
 N.app.fontName    = ko.observable('');
 N.app.cssPrefixText = ko.observable('icon-');
 N.app.cssUseSuffix  = ko.observable(false);
-N.app.apiMode     = false;
 
+N.app.apiMode     = ko.observable(false);
+N.app.apiUrl      = ko.observable('');
+N.app.apiSessionId  = null;
+
+
+N.app.getConfig   = function () {
+  var config = {
+    name: $.trim(N.app.fontName()),
+    css_prefix_text: $.trim(N.app.cssPrefixText()),
+    css_use_suffix: N.app.cssUseSuffix()
+  };
+
+  config.glyphs = _.map(N.app.fontsList.selectedGlyphs(), function (glyph) {
+    return glyph.serialize();
+  });
+
+  return config;
+};
+
+N.app.serverSave  = function(callback) {
+  if (!N.app.apiSessionId) { return; }
+
+  N.io.rpc('fontello.api.update', { sid: N.app.apiSessionId, config: N.app.getConfig() }, callback);
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -335,8 +358,10 @@ N.wire.once('navigate.done', function () {
 
   // Try to load config before everything (tweak priority)
   //
-  if (!_.isEmpty(N.runtime.page_data)) {
-    N.app.apiMode = true;
+  if (!_.isEmpty(N.runtime.page_data && N.runtime.page_data.sid)) {
+    N.app.apiSessionId = N.runtime.page_data.sid;
+    N.app.apiMode(true);
+    N.app.apiUrl(N.runtime.page_data.url || '');
     N.wire.emit('import.obj', N.runtime.page_data.config);
   } else {
     N.wire.emit('session_load');

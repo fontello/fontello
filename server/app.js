@@ -146,7 +146,7 @@ module.exports = function (N, apiPath) {
         }
 
         // inject config to runtime & return main page
-        env.runtime.page_data = _.pick(sl.toObject(), [ 'config', 'url' ]);
+        env.runtime.page_data = _.pick(sl.toObject(), [ 'config', 'url', 'sid' ]);
 
         callback();
       });

@@ -4,6 +4,7 @@
 var _  = require('lodash');
 var ko = require('knockout');
 
+var savedConfig = null;
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -41,6 +42,8 @@ function ToolbarModel() {
 
   // true, after download button pressed, until font buildeing finished
   this.building = ko.observable(false);
+  // true while saving session
+  this.saving   = ko.observable(false);
 
   //
   // Proxy to global properties
@@ -53,6 +56,8 @@ function ToolbarModel() {
   this.fontName       = N.app.fontName;
   this.cssPrefixText  = N.app.cssPrefixText;
   this.cssUseSuffix   = N.app.cssUseSuffix;
+  this.apiMode        = N.app.apiMode;
+  this.apiUrl         = N.app.apiUrl;
 
   this.fontName.subscribe(function (value) {
     var cleared = String(value).toLowerCase().replace(/[^a-z0-9_\-]/g, '');
@@ -79,6 +84,49 @@ N.wire.once('navigate.done', function (data) {
 
   N.wire.on('build.finished', function () {
     toolbar.building(false);
+  });
+
+
+  function save(callback) {
+    if (!N.app.apiSessionId) { return; }
+
+    // Skip first  save attempt
+    if (!savedConfig) {
+      savedConfig = N.app.getConfig();
+      return;
+    }
+
+    toolbar.saving(true);
+    N.app.serverSave(function(err) {
+      toolbar.saving(false);
+      if (callback) {
+        callback(err);
+      }
+    });
+  }
+
+  //
+  // Autosave session to server in API mode
+  //
+  N.wire.on('session_save',  _.debounce(function () {
+    save();
+  }, 3000));
+
+  //
+  // Save on button press
+  //
+  N.wire.on('api.update', function () {
+    save();
+  });
+
+  //
+  // Export on button press (save & go to pingback url)
+  //
+  N.wire.on('api.export',  function () {
+    save(function (err) {
+      if (err) { return; }
+      window.location(N.app.apiUrl());
+    });
   });
 
   //
