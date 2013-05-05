@@ -131,8 +131,8 @@ module.exports = function fontConfig(clientConfig) {
     return null;
   }
 
-  if (_.isString(clientConfig.name)) {
-    fontname = clientConfig.name.replace(/[^a-z0-9\-_]+/g, '-');
+  if (!_.isEmpty(clientConfig.name)) {
+    fontname = String(clientConfig.name).replace(/[^a-z0-9\-_]+/g, '-');
   } else {
     fontname = 'fontello';
   }
