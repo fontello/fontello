@@ -29,7 +29,11 @@ Don't forget about donations :)
 
 ## Developers API
 
-Fontello allows easy scripting, to simplify opening you fonts from your existing projects.
+Fontello allows easy scripting, to implement different convenient features:
+
+1. Open site from command line, with your configuration, and import edited project
+2. Writing website plugins, to import/export icons via admin panel.
+
 Here is example for `Makefile`:
 
 ```makefile
@@ -59,7 +63,9 @@ fontsave:
       run importing script.
 2. `http://fontello.com/[session_id]` - opening fontello with your config preloaded.
    When you edit font, your config is automatically sent to server
-3. (not compleete yet) `http://fontello.com/[session_id]/get` - download your font.
+3. `http://fontello.com/[session_id]/get` - download your font.
+
+Note. When you open site via API url, `download` button will have another text.
 
 
 ## Embedded Fonts <a name="embedded"></a>
