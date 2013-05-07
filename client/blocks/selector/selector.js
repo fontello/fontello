@@ -22,9 +22,12 @@ N.wire.once('navigate.done', function () {
   //$view.selectable({
   // We attach selectable to "body", to allow start
   // dragging from the left white space.
-  $('body').selectable({
+  $('#selector').selectable({
     filter: 'li.glyph:visible',
-    distance: 5,
+    distance: 3,
+    start: function() {
+      $('#selector').addClass('multicursor');
+    },
     stop: function () {
       var $els = $view.find('.glyph.ui-selected');
 
@@ -37,7 +40,20 @@ N.wire.once('navigate.done', function () {
       $els.each(function () {
         ko.dataFor(this).toggleSelection();
       });
+
+      $('#selector').removeClass('multicursor');
     }
+  });
+
+  //
+  // Additionally setup class switch on mouse down/up,
+  // to change cursor immediately after click on glyph
+  //
+  $('#selector').on('mousedown', '.glyph', function() {
+    $('#selector').addClass('multicursor');
+  });
+  $('#selector').on('mouseup', function() {
+    $('#selector').removeClass('multicursor');
   });
 
   //

@@ -149,7 +149,7 @@ a.src-font-name
 .glyph
   position relative
   float left
-  cursor pointer
+  //cursor pointer
   width 48px
   height 48px
   margin 0 0 8px 8px
@@ -227,13 +227,21 @@ a.src-font-name
     line-height 50px
 
 
+// Helper, shown after click on glyph,
+// to indicate that multiselect possible
+//
+.multicursor
+.multicursor .glyph label
+.ui-selectable-helper
+  cursor crosshair
+
+
 //
 // Animation tweaks
 //
 // - 3 turns, to not abuse peoples
 // - instant, on mouse hover
 //
-
 .glyph .animate-spin
   animation spin 2s 3 linear
   display: inline-block
