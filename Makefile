@@ -121,41 +121,38 @@ todo:
 	grep 'TODO' -n -r ./lib 2>/dev/null || test true
 
 
-#FONTELLO_HOST := http://fontello.com
-FONTELLO_HOST := http://localhost:3000
-FONT_DIR      := ./assets/vendor/fontello/src
+#FONTELLO_HOST ?= http://fontello.com
+FONTELLO_HOST ?= http://localhost:3000
+FONT_DIR      ?= ./assets/vendor/fontello/src
 
 
-fontprepare:
+fontopen:
 	@if test ! `which curl` ; then \
 		echo 'Install curl first.' >&2 ; \
 		exit 128 ; \
 		fi
 	curl --silent --show-error --fail --output .fontello \
-		--form "url=http://dev.nodeca.com" \
 		--form "config=@${FONT_DIR}/config.json" \
 		${FONTELLO_HOST}
+	x-www-browser ${FONTELLO_HOST}/`cat .fontello`
 
 
-fontopen: fontprepare
-	cat .fontello | xargs -I {} x-www-browser ${FONTELLO_HOST}/{}
-
-
-fontsave: fontprepare
+fontsave:
 	@if test ! `which unzip` ; then \
 		echo 'Install unzip first.' >&2 ; \
 		exit 128 ; \
 		fi
-	@if test ! `which find` ; then \
-		echo 'Install find first.' >&2 ; \
+	@if test ! -e .fontello ; then \
+		echo 'Run `make fontopen` first.' >&2 ; \
 		exit 128 ; \
 		fi
-	rm -rf .fontello.src .fontello.zip ${FONT_DIR}
-	cat .fontello | sed 's#^\(.*\)$$#${FONTELLO_HOST}/\1/get#' | \
-		xargs curl --silent --show-error --fail --output .fontello.zip
+	rm -rf .fontello.src .fontello.zip
+	curl --silent --show-error --fail --output .fontello.zip \
+		${FONTELLO_HOST}/`cat .fontello`/get
 	unzip .fontello.zip -d .fontello.src
-	find ./.fontello.src -maxdepth 1 -type d -name 'fontello-*' -print0 | \
-		xargs -0 -I {} mv {} ${FONT_DIR}
+	rm -rf ${FONT_DIR}
+	mv `find ./.fontello.src -maxdepth 1 -name 'fontello-*'` ${FONT_DIR}
+	rm -rf .fontello.src .fontello.zip
 
 
 .PHONY: help rebuild-fonts dev-setup lint gh-pages todo dev-server repl fontopen
