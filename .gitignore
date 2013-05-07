@@ -16,3 +16,5 @@ log/
 /public/download/
 
 .fontello
+.fontello.zip
+.fontello.src
