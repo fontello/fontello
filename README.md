@@ -32,25 +32,12 @@ Don't forget about donations :)
 Fontello allows easy scripting, to implement different convenient features:
 
 1. Open site from command line, with your configuration, and import edited project
+    - [Makefile example](https://gist.github.com/puzrin/5537065). That's a live working code, used
+      for development of fontello itself.
 2. Writing website plugins, to import/export icons via admin panel.
 
-Here is example for `Makefile`:
+When more examples available, those will be added here.
 
-```makefile
-FONTELLO_HOST := http://fontello.com
-FONT_DIR      := ./assets/vendor/fontello/src
-
-fontopen:
-	@if [ ! `which curl` ]; then \
-		echo 'Install curl first.' >&2; \
-	fi
-
-	curl -s -S -o .fontello -F "config=@${FONT_DIR}/config.json" ${FONTELLO_HOST}/
-	x-www-browser ${FONTELLO_HOST}/`cat .fontello`
-
-fontsave:
-	echo 'coming soon...'
-```
 
 ### API methods
 
