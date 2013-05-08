@@ -18,6 +18,7 @@ FONT_TEMPLATES="$PWD/support/font-templates"
 
 mkdir $TMPDIR/css $TMPDIR/font
 
+mv $TMPDIR/font.svg $TMPDIR/font/$FONTNAME.svg
 
 ## HELPERS #####################################################################
 
@@ -44,20 +45,21 @@ export PATH="$PWD/support/font-builder/support/ttfautohint/frontend:$PATH"
 ## CHECK DEPENDENCIES ##########################################################
 
 
-for dep in font_merge.py fontconvert.py fontdemo.py ttfautohint jade zip; do
+for dep in ttfautohint zip; do
   require $dep
 done
 
 
 ## BUILD FONT ##################################################################
 
-
-font_merge.py --config "$CONFIG" --dst_font "$TMPDIR/font/$FONTNAME.ttf"
+fontforge -c "font = fontforge.open('$TMPDIR/font/$FONTNAME.svg'); font.generate('$TMPDIR/font/$FONTNAME.ttf')"
 ttfautohint --latin-fallback --no-info --windows-compatibility \
   --symbol "$TMPDIR/font/$FONTNAME.ttf" "$TMPDIR/font/$FONTNAME-hinted.ttf"
 mv "$TMPDIR/font/$FONTNAME-hinted.ttf" "$TMPDIR/font/$FONTNAME.ttf"
-fontconvert.py --src_font "$TMPDIR/font/$FONTNAME.ttf" --fonts_dir "$TMPDIR/font"
 ttf2eot < "$TMPDIR/font/$FONTNAME.ttf" > "$TMPDIR/font/$FONTNAME.eot"
+
+./node_modules/.bin/ttf2eot "$TMPDIR/font/$FONTNAME.ttf" "$TMPDIR/font/$FONTNAME.eot"
+./node_modules/.bin/ttf2woff "$TMPDIR/font/$FONTNAME.ttf" "$TMPDIR/font/$FONTNAME.woff"
 
 
 ## BUILD TEMPLATES #############################################################

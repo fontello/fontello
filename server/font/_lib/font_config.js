@@ -57,19 +57,17 @@
 
 
 var _    = require('lodash');
-var path = require('path');
+//var path = require('path');
 
 
-var fontConfigs       = require('../../../lib/embedded_fonts/configs');
+var fontConfigs       = require('../../../lib/embedded_fonts/client_config');
 var fontConfigsByName = {};
-var fontPathsByName   = {};
 var glyphsByUID       = {};
 
 _.forEach(fontConfigs, function (config) {
   var name = config.font.fontname;
 
   fontConfigsByName[name] = config;
-  fontPathsByName[name] = path.join(__dirname, '../../../assets/embedded_fonts', name + '.ttf');
 
   _.forEach(config.glyphs, function (glyph) {
     glyphsByUID[glyph.uid] = glyph;
@@ -90,6 +88,7 @@ function collectGlyphsInfo(input) {
 
     result.push({
       src:  inputGlyph.src
+    , uid:  inputGlyph.uid
     , from: fontGlyph.code
     , code: Number(inputGlyph.code || fontGlyph.code)
     , css:  inputGlyph.css || fontGlyph.css
@@ -153,15 +152,14 @@ module.exports = function fontConfig(clientConfig) {
     , familyname: fontname
     , copyright:  'Copyright (C) 2012 by original authors @ fontello.com'
     , ascent:     850
-    , descent:    150
-    , weight:     'Medium'
+    , descent:    -150
+    , weight:     400
     }
   , meta: {
       columns: 4 // Used by the demo page.
     , css_prefix_text: clientConfig.css_prefix_text
     , css_use_suffix:  clientConfig.css_use_suffix
     }
-  , src_fonts:  fontPathsByName
   , glyphs:     glyphsInfo
   , fonts_info: fontsInfo
   };

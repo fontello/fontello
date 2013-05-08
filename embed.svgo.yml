@@ -1,0 +1,54 @@
+#
+# Temporary solution, until SVGO api finished
+#
+# Transform image coordinates to font coordinates
+#
+
+
+# replace default config
+full: true
+
+plugins:
+
+  - removeDoctype
+  - removeXMLProcInst
+  - removeComments
+  - removeMetadata
+  - removeEditorsNSData
+  - cleanupAttrs
+  - convertStyleToAttrs
+  - removeRasterImages
+  - cleanupNumericValues
+  - convertColors
+  - removeUnknownsAndDefaults
+  - removeNonInheritableGroupAttrs
+  - removeUselessStrokeAndFill
+  - removeViewBox
+  - cleanupEnableBackground
+  - removeHiddenElems
+  - removeEmptyText
+  - moveElemsAttrsToGroup
+  - collapseGroups
+  - moveGroupAttrsToElems
+  - convertTransform
+  - convertPathData:
+
+      applyTransforms: true
+      curveSmoothShorthands: true
+      removeUseless: true
+      collapseRepeated: true
+      leadingZero: true
+      negativeExtraSpace: true
+
+      # override defaults            
+      floatPrecision: 0
+      straightCurves: false
+      lineShorthands: false
+
+  - removeEmptyAttrs
+  - removeEmptyContainers
+  - mergePaths
+  - cleanupIDs
+  - removeUnusedNS
+  #- transformsWithOnePath:
+

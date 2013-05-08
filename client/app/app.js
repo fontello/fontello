@@ -5,8 +5,7 @@ var _  = require('lodash');
 var ko = require('knockout');
 
 
-var embedded_fonts    = require('../../lib/embedded_fonts/configs')
-  , glyphs_map        = require('../../lib/embedded_fonts/glyphs_map')
+var embedded_fonts    = require('../../lib/embedded_fonts/client_config')
   , trackNameChanges  = require('./_namesTracker')
   , trackCodeChanges  = require('./_codesTracker');
 
@@ -66,7 +65,7 @@ function GlyphModel(font, data) {
   // we search by name AND aliases
   this.keywords = [this.originalName].concat(data.search || []).join(',');
 
-  this.charRef = fixedFromCharCode(glyphs_map[font.fontname][data.uid]);
+  this.charRef = fixedFromCharCode(data.charRef);
   this.cssExt  = data['css-ext'];
   this.tooltip = "name: '" + this.originalName + "'" +
                  (data.search ? ',   tags: ' + data.search.join(', ') : '');

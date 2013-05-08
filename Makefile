@@ -27,6 +27,8 @@ FONTS         += linecons.font
 FONTS         += websymbols-uni.font
 FONT_CONFIGS   = $(foreach f,$(FONTS),src/${f}/config.yml)
 
+FONT_DIR 			= ./assets/embedded_fonts
+
 help:
 	echo "make help           - Print this help"
 	echo "make dev-server     - Run dev server with autoreleat on files change"
@@ -52,6 +54,30 @@ rebuild-fonts:
 	fontconvert.py --src_font "assets/embedded_fonts/fontello.ttf" --fonts_dir "assets/embedded_fonts"
 	ttf2eot < "assets/embedded_fonts/fontello.ttf" > "assets/embedded_fonts/fontello.eot"
 	rm -rf ${TMP_PATH}
+
+rebuild:
+	mkdir -p assets/embedded_fonts
+	# build single font
+	mkdir ${TMP_PATH}
+	./build_embedded_fonts.js \
+		-i $(foreach f,$(FONTS), ./src/${f}) \
+		-o $(FONT_DIR)/fontello.svg \
+		-c lib/embedded_fonts/client_config.js \
+		-s lib/embedded_fonts/server_config.js
+
+	fontforge -c 'font = fontforge.open("$(FONT_DIR)/fontello.svg"); font.generate("$(FONT_DIR)/fontello-unhinted.ttf")'
+	ttfautohint --latin-fallback --hinting-limit=200 --hinting-range-max=50 --symbol $(FONT_DIR)/fontello-unhinted.ttf $(FONT_DIR)/fontello.ttf
+	rm $(FONT_DIR)/fontello-unhinted.ttf
+	./node_modules/.bin/ttf2eot "$(FONT_DIR)/fontello.ttf" "$(FONT_DIR)/fontello.eot"
+	./node_modules/.bin/ttf2woff "$(FONT_DIR)/fontello.ttf" "$(FONT_DIR)/fontello.woff"
+
+	#ttfautohint --latin-fallback --no-info --windows-compatibility \
+  #--symbol "${TMP_PATH}/fontello.ttf" "${TMP_PATH}/fontello-hinted.ttf"
+	#mv "${TMP_PATH}/fontello-hinted.ttf" "assets/embedded_fonts/fontello.ttf"
+	#fontconvert.py --src_font "assets/embedded_fonts/fontello.ttf" --fonts_dir "assets/embedded_fonts"
+	#ttf2eot < "assets/embedded_fonts/fontello.ttf" > "assets/embedded_fonts/fontello.eot"
+	#rm -rf ${TMP_PATH}
+
 
 
 dev-server:

@@ -10,6 +10,7 @@ var execFile   = require('child_process').execFile;
 var async      = require('async');
 var crypto     = require('crypto');
 var fontConfig = require('./font_config');
+var serverConfig  = require('../../../lib/embedded_fonts/server_config');
 
 
 // State control variables. Initialized at first use.
@@ -45,6 +46,44 @@ function getOutputName(fontId) {
 }
 
 
+var svgFontTemplate = _.template(
+    '<?xml version="1.0" standalone="no"?>\n' +
+    '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n' +
+    '<svg xmlns="http://www.w3.org/2000/svg">\n' +
+    '<metadata><%= metadata %></metadata>\n' +
+    '<defs>\n' +
+    '<font id="<%= font.fontname %>" horiz-adv-x="<%= fontHeight %>" >\n' +
+
+    '<font-face' +
+      ' font-family="font.familyname"' +
+      ' font-weight="400"' +
+      ' font-stretch="normal"' +
+      ' units-per-em="<%= fontHeight %>"' +
+      //panose-1="2 0 5 3 0 0 0 0 0 0"
+      ' ascent="<%= font.ascent %>"' +
+      ' descent="<%= font.descent %>"' +
+      //bbox="-1.33333 -150.333 1296 850"
+      //underline-thickness="50"
+      //underline-position="-100"
+      //unicode-range="U+002B-1F6AB"
+    ' />\n' +
+
+    '<missing-glyph horiz-adv-x="<%= fontHeight %>" />\n' +
+
+    '<% _.forEach(glyphs, function(glyph) { %>' +
+      '<glyph' +
+        ' glyph-name="<%= glyph.css %>"' +
+        ' unicode="<%= glyph.unicode %>"' +
+        ' d="<%= glyph.d %>"' +
+        ' horiz-adv-x="<%= glyph.width %>"' +
+      ' />\n' +
+    '<% }); %>' +
+
+    '</font>\n' +
+    '</defs>\n' +
+    '</svg>'
+  );
+
 
 // Working procedure for the builder queue.
 //
@@ -55,11 +94,40 @@ function handleTask(taskInfo, callback) {
 
   builderLogger.info('%s Start generation: %j', logPrefix, taskInfo.clientConfig);
 
+  /////// create SVG font first ////////////////////////////////////////////////
+
+  var glyphs = [];
+  var font = taskInfo.builderConfig.font;
+
+  _.forEach(taskInfo.builderConfig.glyphs, function (glyph)  {
+    var uid = glyph.uid;
+    glyphs.push({
+      heigh : serverConfig.uids[uid].svg.height,
+      width : serverConfig.uids[uid].svg.width,
+      d     : serverConfig.uids[uid].svg.d,
+      css   : glyph.css,
+      unicode : '&#x' + glyph.code.toString(16) + ';'
+    });
+  });
+
+  var svgOut = svgFontTemplate({
+    font : font,
+    glyphs : glyphs,
+    metadata: font.copyright,
+    fontHeight : font.ascent - font.descent
+  });
+
+  //////////////////////////////////////////////////////////////////////////////
+
   //
   // Prepare the workplan.
   //
   workplan.push(async.apply(fstools.remove, taskInfo.tmpDir));
   workplan.push(async.apply(fstools.mkdir, taskInfo.tmpDir));
+  workplan.push(async.apply(fs.writeFile,
+                            path.join(taskInfo.tmpDir, 'font.svg'),
+                            svgOut,
+                            'utf8'));
   workplan.push(async.apply(fs.writeFile,
                             path.join(taskInfo.tmpDir, 'config.json'),
                             JSON.stringify(taskInfo.clientConfig, null, '  '),

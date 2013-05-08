@@ -9,7 +9,7 @@ var savedConfig = null;
 ////////////////////////////////////////////////////////////////////////////////
 
 
-var knownKeywords = _(require('../../../lib/embedded_fonts/configs'))
+var knownKeywords = _(require('../../../lib/embedded_fonts/client_config'))
   // get list of keywords of all glyphs in the font,
   // flatten array, make sure all elementes are Strings,
   // and return an array with unique elements only

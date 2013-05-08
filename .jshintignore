@@ -2,7 +2,6 @@
 doc/
 node_modules/
 tmp/
-bin/
 fonts/
 assets/vendor/
 assets/embedded_fonts/

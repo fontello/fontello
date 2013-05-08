@@ -45,6 +45,8 @@
                         "cookie"        : "~ 0.0.5",
                         "knockout"      : "~ 2.2.1",
                         "formidable"    : "~ 1.0.13",
+                        "xmldom"        : "~ 0.1.16",
+                        "svgo"          : "~ 0.3.5",
                         "ttf2eot"       : "*",
                         "ttf2woff"      : "*"
                       },
