@@ -36,9 +36,9 @@ require()
 ## PREPARE PATHS ###############################################################
 
 
-export PATH="$PWD/bin:$PATH"
+#export PATH="$PWD/bin:$PATH"
 export PATH="$PWD/node_modules/.bin:$PATH"
-export PATH="$PWD/support/font-builder/bin:$PATH"
+#export PATH="$PWD/support/font-builder/bin:$PATH"
 export PATH="$PWD/support/font-builder/support/ttfautohint/frontend:$PATH"
 
 
@@ -64,34 +64,24 @@ ttf2eot < "$TMPDIR/font/$FONTNAME.ttf" > "$TMPDIR/font/$FONTNAME.eot"
 
 ## BUILD TEMPLATES #############################################################
 
+# here we can't use pipes, because teplate has @import directive
+jade --obj "$CONFIG" --out "$TMPDIR" --pretty "$FONT_TEMPLATES/demo.jade"
 
-tpl-render.js --locals "$CONFIG" --input "$FONT_TEMPLATES/demo.jade" \
-  --output "$TMPDIR/demo.html" --pretty
-
-tpl-render.js --locals "$CONFIG" --input "$FONT_TEMPLATES/css/css.jade" \
-  --output "$TMPDIR/css/$FONTNAME.css"
-
-tpl-render.js --locals "$CONFIG" --input "$FONT_TEMPLATES/css/css-ie7.jade" \
-  --output "$TMPDIR/css/$FONTNAME-ie7.css"
-
-tpl-render.js --locals "$CONFIG" --input "$FONT_TEMPLATES/css/css-codes.jade" \
-  --output "$TMPDIR/css/$FONTNAME-codes.css"
-
-tpl-render.js --locals "$CONFIG" --input "$FONT_TEMPLATES/css/css-ie7-codes.jade" \
-  --output "$TMPDIR/css/$FONTNAME-ie7-codes.css"
+jade --obj "$CONFIG" --pretty < "$FONT_TEMPLATES/css/css.jade" > "$TMPDIR/css/$FONTNAME.css"
+jade --obj "$CONFIG" --pretty < "$FONT_TEMPLATES/css/css-ie7.jade" > "$TMPDIR/css/$FONTNAME-ie7.css"
+jade --obj "$CONFIG" --pretty < "$FONT_TEMPLATES/css/css-codes.jade" > "$TMPDIR/css/$FONTNAME-codes.css"
+jade --obj "$CONFIG" --pretty < "$FONT_TEMPLATES/css/css-ie7-codes.jade" > "$TMPDIR/css/$FONTNAME-ie7-codes.css"
 
 cp "$FONT_TEMPLATES/css/animation.css" "$TMPDIR/css/animation.css"
 
-tpl-render.js --locals "$CONFIG" --input "$FONT_TEMPLATES/LICENSE.jade" \
-  --output "$TMPDIR/LICENSE.txt"
+jade --obj "$CONFIG" --pretty < "$FONT_TEMPLATES/LICENSE.jade" > "$TMPDIR/LICENSE.txt"
 
 cp "$FONT_TEMPLATES/README.txt" "$TMPDIR/"
 
 
 WOFF64=$(base64 -w0 "$TMPDIR/font/$FONTNAME.woff")
 TTF64=$(base64 -w0 "$TMPDIR/font/$FONTNAME.ttf")
-tpl-render.js --locals "$CONFIG" --input "$FONT_TEMPLATES/css/css-embedded.jade" \
-  --output "$TMPDIR/css/$FONTNAME-embedded.css"
+jade --obj "$CONFIG" --pretty <  "$FONT_TEMPLATES/css/css-embedded.jade" > "$TMPDIR/css/$FONTNAME-embedded.css"
 
 # send replace command via pipe, otherwise sed fails on long arguments
 echo "s|%WOFF64%|$WOFF64|" | sed -i -f - "$TMPDIR/css/$FONTNAME-embedded.css"

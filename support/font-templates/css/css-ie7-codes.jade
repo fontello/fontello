@@ -1,3 +1,5 @@
+-  var unichr = function unichr(code) { if (code > 0xffff) { code -= 0x10000; surrogate1 = 0xd800 + (code >> 10); surrogate2 = 0xdc00 + (code & 0x3ff); return String.fromCharCode(surrogate1, surrogate2); } else { return String.fromCharCode(code); } }
+
 - var i, g, css, hex, chr
 - for (i in glyphs)
   - g = glyphs[i]

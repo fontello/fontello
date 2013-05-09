@@ -1,7 +1,7 @@
 | Font license info
 != '\n\n\n'
 
-- _.forEach(fonts_info, function (info) {
+each info in fonts_info
   | ## #{info.fontname}
   != '\n\n'
   |    #{info.copyright}
@@ -10,4 +10,3 @@
   |    License:   #{info.license} (#{info.license_url})
   |    Homepage:  #{info.homepage}
   != '\n\n\n'
-- })
