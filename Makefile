@@ -82,9 +82,27 @@ lint:
 	jshint . --show-non-errors
 
 
-setup:
-	if test ! -e ./config/application.yml ; then \
-		cp ./config/application.yml.example ./config/application.yml ; \
+dependencies:
+	@if test ! `which npm` ; then \
+		echo "Node.JS and NPM are required for html demo generation." >&2 ; \
+		echo "This is non-fatal error and you'll still be able to build font," >&2 ; \
+		echo "however, to build demo with >> make html << you need:" >&2 ; \
+		echo "  - Install Node.JS and NPM" >&2 ; \
+		echo "  - Run this task once again" >&2 ; \
+		exit 128 ; \
+		fi
+	@if test ! `which ttfautohint` ; then \
+		echo "Trying to install ttf-autohint from repository..." ; \
+		apt-cache policy -q=2 | grep -q 'Candidate' && \
+			sudo apt-get install ttfautohint && \
+			echo "SUCCESS" || echo "FAILED" ; \
+		fi
+	@if test ! `which ttfautohint` ; then \
+		echo "Trying to install ttf-autohint from Debian's repository..." ; \
+		curl --silent --show-error --output /tmp/ttfautohint.deb \
+			http://ftp.de.debian.org/debian/pool/main/t/ttfautohint/ttfautohint_0.95-1_amd64.deb && \
+		sudo dpkg -i /tmp/ttfautohint.deb && \
+			echo "SUCCESS" || echo "FAILED" ; \
 		fi
 
 
