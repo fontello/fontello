@@ -56,30 +56,17 @@
 'use strict';
 
 
-var _    = require('lodash');
-//var path = require('path');
+var _ = require('lodash');
 
 
-var fontConfigs       = require('../../../lib/embedded_fonts/client_config');
-var fontConfigsByName = {};
-var glyphsByUID       = {};
-
-_.forEach(fontConfigs, function (config) {
-  var name = config.font.fontname;
-
-  fontConfigsByName[name] = config;
-
-  _.forEach(config.glyphs, function (glyph) {
-    glyphsByUID[glyph.uid] = glyph;
-  });
-});
+var fontConfigs = require('../../../lib/embedded_fonts/server_config');
 
 
 function collectGlyphsInfo(input) {
   var result = [];
 
   _.forEach(input, function (inputGlyph) {
-    var fontGlyph = glyphsByUID[inputGlyph.uid];
+    var fontGlyph = fontConfigs.uids[inputGlyph.uid];
 
     if (!fontGlyph) {
       // Unknown glyph UID.
@@ -87,12 +74,15 @@ function collectGlyphsInfo(input) {
     }
 
     result.push({
-      src:  inputGlyph.src
-    , uid:  inputGlyph.uid
-    , from: fontGlyph.code
-    , code: Number(inputGlyph.code || fontGlyph.code)
-    , css:  inputGlyph.css || fontGlyph.css
+      src:       fontGlyph.fontname
+    , uid:       inputGlyph.uid
+    , from:      fontGlyph.code
+    , code:      Number(inputGlyph.code || fontGlyph.code)
+    , css:       inputGlyph.css || fontGlyph.css
     , 'css-ext': fontGlyph['css-ext']
+    , heigh:     fontGlyph.svg.height
+    , width:     fontGlyph.svg.width
+    , d:         fontGlyph.svg.d
     });
   });
 
@@ -107,16 +97,7 @@ function collectFontsInfo(glyphs) {
   var result = [];
 
   _(glyphs).pluck('src').unique().forEach(function (fontname) {
-    var config = fontConfigsByName[fontname];
-
-    result.push({
-      fontname:    config.font.fontname
-    , copyright:   config.font.copyright
-    , author:      config.meta.author
-    , license:     config.meta.license
-    , license_url: config.meta.license_url
-    , homepage:    config.meta.homepage
-    });
+    result.push(fontConfigs.fonts[fontname]);
   });
 
   return result;
