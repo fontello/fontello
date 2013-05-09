@@ -110,6 +110,12 @@ cleanup:
 	# cleanup assets
 	rm -rf public/assets
 
+# needed for travis
+setup:
+	if test ! -e ./config/application.yml ; then \
+		cp ./config/application.yml.example ./config/application.yml ; \
+		fi
+
 
 test: cleanup lint
 	node ./fontello.js server --test
