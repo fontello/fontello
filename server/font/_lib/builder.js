@@ -1,14 +1,14 @@
 'use strict';
 
 
-var _            = require('lodash');
-var os           = require('os');
-var path         = require('path');
-var fs           = require('fs');
-var async        = require('async');
-var crypto       = require('crypto');
-var fontConfig   = require('./font_config');
-var generateFont = require('./generate_font');
+var _          = require('lodash');
+var os         = require('os');
+var path       = require('path');
+var fs         = require('fs');
+var async      = require('async');
+var crypto     = require('crypto');
+var fontConfig = require('./config');
+var fontWorker = require('./worker');
 
 
 // State control variables. Initialized at first use.
@@ -199,7 +199,7 @@ function setup(N) {
   builderCwdDir    = N.runtime.mainApp.root;
   builderOutputDir = path.join(N.runtime.mainApp.root, 'public', 'download');
   builderBinary    = path.join(N.runtime.mainApp.root, 'bin', 'generate_font.sh');
-  builderQueue     = async.queue(generateFont, builderConcurrency);
+  builderQueue     = async.queue(fontWorker, builderConcurrency);
   builderTasks     = {};
 
   builderInitialized = true;

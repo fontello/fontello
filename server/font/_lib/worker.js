@@ -101,7 +101,7 @@ var SVG_FONT_TEMPLATE = _.template(
 );
 
 
-module.exports = function generateFont(taskInfo, callback) {
+module.exports = function fontWorker(taskInfo, callback) {
   var logPrefix = '[font::' + taskInfo.fontId + ']'
     , timeStart = Date.now()
     , workplan  = []

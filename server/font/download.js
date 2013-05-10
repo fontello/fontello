@@ -7,7 +7,7 @@
 
 var http = require('http');
 var send = require('send');
-var fontBuilder = require('./_lib/font_builder');
+var fontBuilder = require('./_lib/builder');
 
 
 module.exports = function (N, apiPath) {
