@@ -94,7 +94,7 @@ function createTask(clientConfig, afterRegistered, afterComplete) {
         afterRegistered(null, fontId);
       }
       if (afterComplete) {
-        afterComplete(null, fontId);
+        afterComplete(null, { fontId: fontId, file: outputFile, directory: builderOutputDir });
       }
       return;
     }
@@ -125,7 +125,7 @@ function createTask(clientConfig, afterRegistered, afterComplete) {
       delete builderTasks[fontId];
 
       callbacks.forEach(function (func) {
-        func(err, outputName, builderOutputDir);
+        func(err, { fontId: fontId, file: outputFile, directory: builderOutputDir });
       });
     });
 
@@ -181,7 +181,7 @@ function checkFont(fontId, callback) {
 
   fs.exists(filepath, function (exists) {
     if (exists) {
-      callback(null, { pending : false, file: filename, directory: builderOutputDir });
+      callback(null, { pending: false, file: filename, directory: builderOutputDir });
     } else {
       callback(null, null);
     }

@@ -33,14 +33,14 @@ module.exports = function (N, apiPath) {
       }
 
       // build font
-      builder.buildFont(sl.toObject().config, function(err, fontId) {
+      builder.buildFont(sl.toObject().config, function(err, info) {
         if (err) {
           callback(err);
           return;
         }
 
         // reuse `fontello.font.download` method
-        env.params.id = fontId;
+        env.params.id = info.fontId;
         N.wire.emit('server:fontello.font.download', env);
       });
     });
