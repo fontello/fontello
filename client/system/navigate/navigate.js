@@ -371,10 +371,11 @@ N.wire.once('navigate.done', { priority: 999 }, function () {
   $(document).on('click', 'a', function (event) {
     var $this = $(this);
 
+    // TODO: Do we ready need this? Commented out until the decision.
     // Always focus the link or blur the current focus at least since browsers
     // may not allow to focus certain elements.
-    $(document.activeElement).blur();
-    $this.focus();
+    //$(document.activeElement).blur();
+    //$this.focus();
 
     if ($this.attr('target') || event.isDefaultPrevented()) {
       // skip links that have `target` attribute specified
