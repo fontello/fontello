@@ -9,7 +9,7 @@ var _        = require('lodash');
 var util     = require('util');
 var path     = require('path');
 var fs       = require('fs');
-var fstools  = require('fs');
+var fstools  = require('fs-tools');
 var execFile = require('child_process').execFile;
 var async    = require('async');
 var ttf2eot  = require('ttf2eot');
@@ -28,18 +28,19 @@ var TEMPLATES_DIR = path.join(__dirname, '../../../support/font-templates');
 var JADE_TEMPLATES = {};
 
 _.forEach([
-  // FIXME: Get demo back to work.
-  //'demo.jade'
-  'css/css.jade'
+  'demo.jade'
+, 'css/css.jade'
 , 'css/css-ie7.jade'
 , 'css/css-codes.jade'
 , 'css/css-ie7-codes.jade'
+, 'css/css-embedded.jade'
 , 'LICENSE.jade'
 ], function (name) {
   var file = path.join(TEMPLATES_DIR, name);
 
   JADE_TEMPLATES[name] = jade.compile(fs.readFileSync(file, 'utf8'), {
-    pretty: true
+    pretty: true,
+    filename: file
   });
 });
 
@@ -93,18 +94,19 @@ module.exports = function generateFont(taskInfo, callback) {
     , configOutput = JSON.stringify(taskInfo.clientConfig, null, '  ')
     , svgOutput
     , ttfOutput
-    , woffOutput;
+    , woffOutput
+    , eotOutput;
 
   taskInfo.logger.info('%s Start generation: %j', logPrefix, taskInfo.clientConfig);
 
   // Collect file paths.
   files = {
-    config:    path.join(taskInfo.tmpDir, 'config.json')
-  , svg:       path.join(taskInfo.tmpDir, 'font', fontname + '.svg')
-  , ttf:       path.join(taskInfo.tmpDir, 'font', fontname + '.ttf')
-  , ttfHinted: path.join(taskInfo.tmpDir, 'font', fontname + '-hinted.ttf')
-  , eot:       path.join(taskInfo.tmpDir, 'font', fontname + '.eot')
-  , woff:      path.join(taskInfo.tmpDir, 'font', fontname + '.woff')
+    config:       path.join(taskInfo.tmpDir, 'config.json')
+  , svg:          path.join(taskInfo.tmpDir, 'font', fontname + '.svg')
+  , ttf:          path.join(taskInfo.tmpDir, 'font', fontname + '.ttf')
+  , ttfUnhinted:  path.join(taskInfo.tmpDir, 'font', fontname + '-unhinted.ttf')
+  , eot:          path.join(taskInfo.tmpDir, 'font', fontname + '.eot')
+  , woff:         path.join(taskInfo.tmpDir, 'font', fontname + '.woff')
   };
 
   // Generate initial SVG font.
@@ -113,7 +115,8 @@ module.exports = function generateFont(taskInfo, callback) {
   // Prepare temporary working directory.
   workplan.push(async.apply(fstools.remove, taskInfo.tmpDir));
   workplan.push(async.apply(fstools.mkdir, taskInfo.tmpDir));
-  workplan.push(async.apply(fstools.mkdir(path.dirname(taskInfo.output))));
+  workplan.push(async.apply(fstools.mkdir, path.join(taskInfo.tmpDir, 'font')));
+  workplan.push(async.apply(fstools.mkdir, path.join(taskInfo.tmpDir, 'css')));
 
   // Write clinet config and initial SVG font.
   workplan.push(async.apply(fs.writeFile, files.config, configOutput, 'utf8'));
@@ -122,7 +125,7 @@ module.exports = function generateFont(taskInfo, callback) {
   // Convert SVG to TTF with FontForge.
   workplan.push(async.apply(execFile, FONTFORGE_BIN, [
     '-c'
-  , util.format('font = fontforge.open(%j); font.generate(%j)', files.svg, files.ttf)
+  , util.format('font = fontforge.open(%j); font.generate(%j)', files.svg, files.ttfUnhinted)
   ], { cwd: taskInfo.cwdDir }));
 
   // Autohint the resulting TTF.
@@ -131,9 +134,11 @@ module.exports = function generateFont(taskInfo, callback) {
   , '--no-info'
   , '--windows-compatibility'
   , '--symbol'
+  , files.ttfUnhinted
   , files.ttf
-  , files.ttfHinted
   ], { cwd: taskInfo.cwdDir }));
+
+  workplan.push(async.apply(fstools.remove, files.ttfUnhinted));
 
   // Read the resulting TTF to produce EOT and WOFF.
   workplan.push(function (next) {
@@ -144,7 +149,10 @@ module.exports = function generateFont(taskInfo, callback) {
   });
 
   // Convert TTF to EOT.
-  workplan.push(async.apply(fs.writeFile, files.eot, ttf2eot(ttfOutput), null));
+  workplan.push(function (next) {
+    eotOutput = ttf2eot(ttfOutput);
+    fs.writeFile(files.eot, eotOutput, next);
+  });
 
   // Convert TTF to WOFF.
   workplan.push(function (next) {
@@ -165,15 +173,18 @@ module.exports = function generateFont(taskInfo, callback) {
   , 'css/css-ie7.jade'       : 'css/' + fontname + '-ie7.css'
   , 'css/css-codes.jade'     : 'css/' + fontname + '-codes.css'
   , 'css/css-ie7-codes.jade' : 'css/' + fontname + '-ie7-codes.css'
+  , 'css/css-embedded.jade'  : 'css/' + fontname + '-embedded.css'
   , 'LICENSE.jade'           : 'LICENSE.txt'
   }, function (outputName, inputName) {
     var outputFile = path.join(taskInfo.tmpDir, outputName)
       , result = JADE_TEMPLATES[inputName](taskInfo.builderConfig);
 
-    result = result.replace('%WOFF64%', woffOutput.toString('base64'))
-                   .replace('%TTF64%', ttfOutput.toString('base64'));
+    workplan.push(function (next) {
+      result = result.replace('%WOFF64%', woffOutput.toString('base64'))
+                     .replace('%TTF64%', ttfOutput.toString('base64'));
 
-    workplan.push(async.apply(fs.writeFile, outputFile, result, 'utf8'));
+      fs.writeFile(outputFile, result, 'utf8', next);
+    });
   });
 
   // Copy static files.
@@ -188,12 +199,13 @@ module.exports = function generateFont(taskInfo, callback) {
   });
 
   // Create the zipball.
+  workplan.push(async.apply(fstools.mkdir, path.dirname(taskInfo.output)));
   workplan.push(async.apply(execFile, ZIP_BIN, [
     taskInfo.output
   , '-r'
   , taskInfo.tmpDir
   ], { cwd: taskInfo.cwdDir }));
-  
+
   // Remove temporary files and directories.
   workplan.push(async.apply(fstools.remove, taskInfo.tmpDir));
 
