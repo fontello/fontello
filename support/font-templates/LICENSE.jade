@@ -1,12 +1,12 @@
 | Font license info
 != '\n\n\n'
 
-each info in fonts_info
-  | ## #{info.fontname}
+each info in fonts_list
+  | ## #{info.font.fullname}
   != '\n\n'
-  |    #{info.copyright}
+  |    #{info.font.copyright}
   != '\n\n'
-  |    Author:    #{info.author}
-  |    License:   #{info.license} (#{info.license_url})
-  |    Homepage:  #{info.homepage}
+  |    Author:    #{info.meta.author}
+  |    License:   #{info.meta.license} (#{info.meta.license_url})
+  |    Homepage:  #{info.meta.homepage}
   != '\n\n\n'

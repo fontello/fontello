@@ -199,12 +199,13 @@ module.exports = function generateFont(taskInfo, callback) {
   });
 
   // Create the zipball.
+  workplan.push(async.apply(fstools.remove, taskInfo.output));
   workplan.push(async.apply(fstools.mkdir, path.dirname(taskInfo.output)));
   workplan.push(async.apply(execFile, ZIP_BIN, [
     taskInfo.output
   , '-r'
-  , taskInfo.tmpDir
-  ], { cwd: taskInfo.cwdDir }));
+  , path.basename(taskInfo.tmpDir)
+  ], { cwd: path.dirname(taskInfo.tmpDir) }));
 
   // Remove temporary files and directories.
   workplan.push(async.apply(fstools.remove, taskInfo.tmpDir));

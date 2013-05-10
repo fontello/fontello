@@ -107,7 +107,7 @@ function createTask(clientConfig, afterRegistered, afterComplete) {
     , clientConfig:  clientConfig
     , builderConfig: builderConfig
     , cwdDir:        builderCwdDir
-    , tmpDir:        path.join(builderTmpDir, 'fontello-' + fontId)
+    , tmpDir:        path.join(builderTmpDir, 'fontello-' + fontId.substr(0, 8))
     , output:        outputFile
     , timestamp:     Date.now()
     , callbacks:     []

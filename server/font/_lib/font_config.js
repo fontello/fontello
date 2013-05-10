@@ -39,17 +39,10 @@
 //
 //     - ...
 //
-//   src_fonts:
-//     zocial: /absolute/path
-//     ...
-//
-//   fonts_info:
-//     fontname:
-//     copyright:
-//     author:
-//     license:
-//     license_url:
-//     homepage:
+//   fonts_list:
+//     -     
+//      font:
+//      meta:
 //
 
 
@@ -97,7 +90,10 @@ function collectFontsInfo(glyphs) {
   var result = [];
 
   _(glyphs).pluck('src').unique().forEach(function (fontname) {
-    result.push(fontConfigs.fonts[fontname]);
+    result.push({ 
+      font : fontConfigs.fonts[fontname],
+      meta : fontConfigs.metas[fontname]
+    });
   });
 
   return result;
@@ -123,13 +119,14 @@ module.exports = function fontConfig(clientConfig) {
   if (_.isEmpty(glyphsInfo) || _.isEmpty(fontsInfo)) {
     return null;
   }
-
+console.log(fontsInfo)
   return {
     font: {
       fontname:   fontname
     , fullname:   fontname
       // !!! IMPORTANT for IE6-8 !!!
-      // due bug, EOT must have familyname == fontname
+      // due bug, EOT requires `familyname` begins `fullname`
+      // https://github.com/fontello/fontello/issues/73?source=cc#issuecomment-7791793
     , familyname: fontname
     , copyright:  'Copyright (C) 2012 by original authors @ fontello.com'
     , ascent:     850
@@ -142,6 +139,6 @@ module.exports = function fontConfig(clientConfig) {
     , css_use_suffix:  clientConfig.css_use_suffix
     }
   , glyphs:     glyphsInfo
-  , fonts_info: fontsInfo
+  , fonts_list: fontsInfo
   };
 };
