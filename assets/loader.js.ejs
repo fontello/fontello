@@ -152,6 +152,8 @@ window.NodecaLoader = (function () {
     }
 
     loadAssets(pkgName, shims, function () {
+      var route;
+
       if (!window.JSON || !Object.keys) {
         alert('Init error: failed to load browser shims. Refresh page & try again. ' +
               'If problem still exists - contact administrator.');
@@ -165,9 +167,8 @@ window.NodecaLoader = (function () {
       }
 
       // First try to match full URL, if not matched - try without anchor.
-      var baseUrl = location.protocol + '//' + location.host + location.pathname
-        , route   = N.runtime.router.match(baseUrl + location.hash) ||
-                    N.runtime.router.match(baseUrl);
+      route = N.runtime.router.match(location.href) ||
+              N.runtime.router.match(location.href.split('#')[0]);
 
       if (!route) {
         alert('Init error: failed to detect internal identifier (route) of ' +
@@ -178,9 +179,9 @@ window.NodecaLoader = (function () {
 
       // Execute after DOM is loaded:
       $(function () {
-        N.wire.emit(['navigate.done', 'navigate.done:' + route.meta], {
+        N.wire.emit(['navigate.done', 'navigate.done:' + route.meta.methods.get], {
           url:     location.href
-        , apiPath: route.meta
+        , apiPath: route.meta.methods.get
         , params:  route.params
         });
       });

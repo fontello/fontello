@@ -161,7 +161,7 @@ N.wire.on('navigate.to', function navigate_to(options, callback) {
 
     match.params = castParamTypes(match.params);
 
-    apiPath = match.meta;
+    apiPath = match.meta.methods.get;
     params  = match.params || {};
     href    = options.href.split('#')[0];
     anchor  = options.href.split('#')[1] || '';
@@ -371,7 +371,7 @@ N.wire.once('navigate.done', { priority: 999 }, function () {
   $(document).on('click', 'a', function (event) {
     var $this = $(this);
 
-    // TODO: Do we ready need this? Commented out until the decision.
+    // TODO: Do we really need this? Commented out until the decision.
     // Always focus the link or blur the current focus at least since browsers
     // may not allow to focus certain elements.
     //$(document.activeElement).blur();

@@ -1,11 +1,12 @@
 router:
-  map:
+  http.get.post:
     fontello.app:
       "/({sid})":
         sid: /[0-9a-f]+/
       "/#search={search}":
         search: /\S+/
 
+  http.get:
     fontello.api.download:
       "/{sid}/get":
         sid: /[0-9a-f]+/
@@ -14,12 +15,11 @@ router:
       "/download/{id}":
         id: /[0-9a-f]{32}/
 
+  bin:
     core.assets:
       "/assets/{path}":
         path: /.+/
-        responder: bin
 
     core.static:
       "/{file}":
         file: /favicon.ico|robots.txt|snippet.png|fuckup.log/
-        responder: bin

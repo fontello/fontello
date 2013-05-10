@@ -46,8 +46,8 @@ window.NodecaLoader.execute(function (N, require) {
     return N.runtime.i18n.hasPhrase(N.runtime.locale, phrase);
   };
 
-  (<%- jetson(N.runtime.client_routes) -%>).forEach(function (v) {
-    N.runtime.router.addRoute(v[0], v[1]);
+  (<%- jetson(N.runtime.client_routes) -%>).forEach(function (config) {
+    N.runtime.router.addRoute(config);
   });
 
   N.wire           = new Wire();
