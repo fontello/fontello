@@ -90,7 +90,7 @@ function collectFontsInfo(glyphs) {
   var result = [];
 
   _(glyphs).pluck('src').unique().forEach(function (fontname) {
-    result.push({ 
+    result.push({
       font : fontConfigs.fonts[fontname],
       meta : fontConfigs.metas[fontname]
     });
@@ -119,7 +119,7 @@ module.exports = function fontConfig(clientConfig) {
   if (_.isEmpty(glyphsInfo) || _.isEmpty(fontsInfo)) {
     return null;
   }
-console.log(fontsInfo)
+
   return {
     font: {
       fontname:   fontname

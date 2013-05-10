@@ -47,6 +47,7 @@
                         "formidable"    : "~ 1.0.13",
                         "xmldom"        : "~ 0.1.16",
                         "svgo"          : "~ 0.3.5",
+                        "adm-zip"       : "~ 0.4.2",
                         "ttf2eot"       : "*",
                         "ttf2woff"      : "*"
                       },

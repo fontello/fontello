@@ -15,11 +15,12 @@ var async    = require('async');
 var ttf2eot  = require('ttf2eot');
 var ttf2woff = require('ttf2woff');
 var jade     = require('jade');
+var AdmZip   = require('adm-zip');
 
 
 var FONTFORGE_BIN   = 'fontforge';
 var TTFAUTOHINT_BIN = 'ttfautohint';
-var ZIP_BIN         = 'zip';
+//var ZIP_BIN         = 'zip';
 
 
 var TEMPLATES_DIR = path.join(__dirname, '../../../support/font-templates');
@@ -198,14 +199,41 @@ module.exports = function generateFont(taskInfo, callback) {
     workplan.push(async.apply(fstools.copy, inputFile, outputFile));
   });
 
-  // Create the zipball.
+  // Create zipball
   workplan.push(async.apply(fstools.remove, taskInfo.output));
   workplan.push(async.apply(fstools.mkdir, path.dirname(taskInfo.output)));
+  /* switch to node's module for portability
   workplan.push(async.apply(execFile, ZIP_BIN, [
     taskInfo.output
   , '-r'
   , path.basename(taskInfo.tmpDir)
   ], { cwd: path.dirname(taskInfo.tmpDir) }));
+  */
+  workplan.push(function (next) {
+    var zip = new AdmZip();
+
+    fstools.walk(taskInfo.tmpDir, function (filename, stats, cb) {
+      var shortName = filename.substr(path.dirname(taskInfo.tmpDir).length +1);
+
+      fs.readFile(filename, function(err, data) {
+        if (err) { cb(err); return; }
+        zip.addFile(shortName, data);
+        cb();
+      });
+
+    }, function (err) {
+      if (err) { next(err); return; }
+      // FIXME: zip should be async, but it doesn't work this way (callback not executed)
+      var outBuffer = zip.toBuffer();
+      fs.writeFile(taskInfo.output, outBuffer, next);
+      /*
+      zip.toBuffer(function(outBuffer) {
+        fs.writeFile(taskInfo.output, outBuffer, next);
+      });
+      */
+    });
+  });
+
 
   // Remove temporary files and directories.
   workplan.push(async.apply(fstools.remove, taskInfo.tmpDir));
