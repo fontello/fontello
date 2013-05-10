@@ -24,25 +24,41 @@ var TTFAUTOHINT_BIN = 'ttfautohint';
 
 
 var TEMPLATES_DIR = path.join(__dirname, '../../../support/font-templates');
+var TEMPLATES = {};
 
+_.forEach({
+  'demo.jade'              : 'demo.html'
+, 'css/css.jade'           : 'css/${FONTNAME}.css'
+, 'css/css-ie7.jade'       : 'css/${FONTNAME}-ie7.css'
+, 'css/css-codes.jade'     : 'css/${FONTNAME}-codes.css'
+, 'css/css-ie7-codes.jade' : 'css/${FONTNAME}-ie7-codes.css'
+, 'css/css-embedded.jade'  : 'css/${FONTNAME}-embedded.css'
+, 'LICENSE.jade'           : 'LICENSE.txt'
+, 'css/animation.css'      : 'css/animation.css'
+, 'README.txt'             : 'README.txt'
+}, function (outputName, inputName) {
+  var inputFile = path.join(TEMPLATES_DIR, inputName)
+    , inputData = fs.readFileSync(inputFile, 'utf8')
+    , outputData;
 
-var JADE_TEMPLATES = {};
+  switch (path.extname(inputName)) {
+  case '.jade': // Jade template.
+    outputData = jade.compile(inputData, {
+      pretty:   true
+    , filename: inputFile
+    });
+    break;
 
-_.forEach([
-  'demo.jade'
-, 'css/css.jade'
-, 'css/css-ie7.jade'
-, 'css/css-codes.jade'
-, 'css/css-ie7-codes.jade'
-, 'css/css-embedded.jade'
-, 'LICENSE.jade'
-], function (name) {
-  var file = path.join(TEMPLATES_DIR, name);
+  case '.tpl': // Lodash template.
+    outputData = _.template(inputData);
+    break;
 
-  JADE_TEMPLATES[name] = jade.compile(fs.readFileSync(file, 'utf8'), {
-    pretty: true,
-    filename: file
-  });
+  default: // Static file - just do a copy.
+    outputData = function () { return inputData; };
+    break;
+  }
+
+  TEMPLATES[outputName] = outputData;
 });
 
 
@@ -167,36 +183,18 @@ module.exports = function generateFont(taskInfo, callback) {
     });
   });
 
-  // Write dynamic files.
-  _.forEach({
-    'demo.jade'              : 'demo.html'
-  , 'css/css.jade'           : 'css/' + fontname + '.css'
-  , 'css/css-ie7.jade'       : 'css/' + fontname + '-ie7.css'
-  , 'css/css-codes.jade'     : 'css/' + fontname + '-codes.css'
-  , 'css/css-ie7-codes.jade' : 'css/' + fontname + '-ie7-codes.css'
-  , 'css/css-embedded.jade'  : 'css/' + fontname + '-embedded.css'
-  , 'LICENSE.jade'           : 'LICENSE.txt'
-  }, function (outputName, inputName) {
-    var outputFile = path.join(taskInfo.tmpDir, outputName)
-      , result = JADE_TEMPLATES[inputName](taskInfo.builderConfig);
+  // Write template files. (generate dynamic and copy static)
+  _.forEach(TEMPLATES, function (templateData, templateName) {
+    var outputName = templateName.replace('${FONTNAME}', fontname)
+      , outputFile = path.join(taskInfo.tmpDir, outputName)
+      , outputData = templateData(taskInfo.builderConfig);
 
     workplan.push(function (next) {
-      result = result.replace('%WOFF64%', woffOutput.toString('base64'))
-                     .replace('%TTF64%', ttfOutput.toString('base64'));
+      outputData = outputData.replace('%WOFF64%', woffOutput.toString('base64'))
+                             .replace('%TTF64%', ttfOutput.toString('base64'));
 
-      fs.writeFile(outputFile, result, 'utf8', next);
+      fs.writeFile(outputFile, outputData, 'utf8', next);
     });
-  });
-
-  // Copy static files.
-  _.forEach([
-    'css/animation.css'
-  , 'README.txt'
-  ], function (name) {
-    var inputFile  = path.join(TEMPLATES_DIR, name)
-      , outputFile = path.join(taskInfo.tmpDir, name);
-
-    workplan.push(async.apply(fstools.copy, inputFile, outputFile));
   });
 
   // Create zipball
