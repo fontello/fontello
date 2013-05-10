@@ -1,15 +1,11 @@
 'use strict';
 
 
-//var _ = require('lodash');
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
 // starts download of the result font
 //
-function injectDownloadUrl(id, url) {
+function injectDownloadUrl(id) {
+  var url = N.runtime.router.linkTo('fontello.font.download', { id: id });
+
   $('iframe#' + id).remove();
 
   $('<iframe></iframe>')
@@ -19,92 +15,31 @@ function injectDownloadUrl(id, url) {
 }
 
 
-function notifyError(err) {
-  var msg;
-
-  if (err.code && 100 > err.code) {
-    // do not handle system-wide errors
-    return;
-  }
-
-  // try to extract error message
-  msg = err.message || err.body || (err.code ? 'ERR' + err.code : null);
-
-  N.wire.emit(
-    'notify',
-    t('errors.fatal', { error: msg || 'Unexpected error' })
-  );
-}
-
-
-// poll status update. starts download when font is ready.
-//
-function pollStatus(id) {
-  N.io.rpc('fontello.font.status', { id: id }, function (err, msg) {
-    if (err) {
-      notifyError(err);
-      N.wire.emit('build.finished');
-      return;
-    }
-
-    if ('error' === msg.data.status) {
-      N.wire.emit(
-        'notify',
-        t('errors.generic', { error: msg.data.error || 'Unexpected error.' })
-      );
-      N.wire.emit('build.finished');
-      return;
-    }
-
-    if ('finished' === msg.data.status) {
-      // TODO: normal notify about success
-      N.logger.info('Font successfully generated. ' +
-                    'Your download link: ' + msg.data.url);
-      injectDownloadUrl(id, msg.data.url);
-      N.wire.emit('build.finished');
-      return;
-    }
-
-    if ('enqueued' === msg.data.status) {
-      // TODO: notify about queue
-      N.logger.info('Your request is in progress and will be available soon.');
-      setTimeout(function () {
-        pollStatus(id);
-      }, 500);
-      return;
-    }
-
-    // Unexpected behavior
-    N.logger.error('Unexpected behavior');
-  });
-}
-
-
 function startBuilder(config) {
   N.logger.debug('About to build font', config);
 
-  N.io.rpc('fontello.font.generate', config, function (err, msg) {
-    var font_id;
+  N.wire.emit('notify', {
+    type:        'info'
+  , message:     t('help_us')
+  , autohide:    10000 // 10 secs
+  , deduplicate: true
+  , closable:    true
+  });
+  
+  N.wire.emit('build.started');
 
+  N.io.rpc('fontello.font.generate', config, function (err, response) {
     if (err) {
-      notifyError(err);
+      N.wire.emit('notify', t('errors.fatal', {
+        error: err.message || (err.code ? 'ERR' + err.code : 'Unexpected error')
+      }));
+
+      N.wire.emit('build.finished');
       return;
     }
 
-    font_id = msg.data.id;
-
-    N.wire.emit('notify', {
-      type:     'info'
-    , message:  t('help_us')
-    , autohide: 10000 // 10 secs
-    , deduplicate: true
-    , closable: true
-    });
-
-    N.wire.emit('build.started');
-
-    // start polling
-    pollStatus(font_id);
+    injectDownloadUrl(response.data.id);
+    N.wire.emit('build.finished');
   });
 }
 

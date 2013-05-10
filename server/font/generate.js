@@ -33,14 +33,13 @@ module.exports = function (N, apiPath) {
 
 
   N.wire.on(apiPath, function (env, callback) {
-    builder.pushFont(env.params, function (err, fontId) {
+    builder.buildFont(env.params, function (err, info) {
       if (err) {
         callback(err);
         return;
       }
 
-      env.response.data.id     = fontId;
-      env.response.data.status = 'enqueued';
+      env.response.data.id = info.fontId;
       callback();
     });
   });
