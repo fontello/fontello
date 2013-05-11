@@ -18,3 +18,12 @@ en-US:
     Also, you can drag and drop file to this page.
   menu_css_prefix_text: 'CSS prefix:'
   menu_css_use_suffix: add after icon name
+
+  help_us: >
+    Are you designer?
+    <a href="https://github.com/fontello/fontello/wiki/How-to-help"
+        target="_blank">You can help</a>
+    us improve fontello!
+  build_error: >
+    An error happened during processing your request:
+    <em>"#{error}"</em>. Please, try again later.

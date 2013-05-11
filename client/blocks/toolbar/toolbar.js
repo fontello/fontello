@@ -74,23 +74,11 @@ N.wire.once('navigate.done', function (data) {
     , toolbar = new ToolbarModel();
 
 
-  //
-  // Subscribe for build.started/finished events
-  //
-
-  N.wire.on('build.started', function () {
-    toolbar.building(true);
-  });
-
-  N.wire.on('build.finished', function () {
-    toolbar.building(false);
-  });
-
-
+  // Save user session (loaded via API) back to database
   function save(callback) {
     if (!N.app.apiSessionId) { return; }
 
-    // Skip first  save attempt
+    // Skip first  save attempt (it happens on app init)
     if (!savedConfig) {
       savedConfig = N.app.getConfig();
       return;
@@ -128,6 +116,54 @@ N.wire.once('navigate.done', function (data) {
       window.location = N.app.apiUrl();
     });
   });
+
+  //
+  // build font on button press
+  //
+  N.wire.on('build_font', function () {
+    // That should not happen, but check for safety
+    if (!N.app.fontsList.selectedCount()) {
+      return;
+    }
+
+    var config = N.app.getConfig();
+
+    N.logger.debug('About to build font', config);
+
+    // show ads banner
+    N.wire.emit('notify', {
+      type:        'info'
+    , message:     t('help_us')
+    , autohide:    10000 // 10 secs
+    , deduplicate: true
+    , closable:    true
+    });
+
+    toolbar.building(true);
+
+    N.io.rpc('fontello.font.generate', config, function (err, response) {
+      toolbar.building(false);
+
+      // check status
+      if (err) {
+        if (err.code < 100) { return; } // communication errors already shown by rpc
+        N.wire.emit('notify', t('build_error', {
+          error: err.message || (err.code ? 'ERR' + err.code : 'Unexpected error')
+        }));
+        return;
+      }
+
+      // inject download url via iframe to start download
+      var id = response.data.id;  // generated file id
+      var url = N.runtime.router.linkTo('fontello.font.download', { id: id });
+      $('iframe#' + id).remove();
+      $('<iframe></iframe>')
+        .attr({ id: id, src: url })
+        .css('display', 'none')
+        .appendTo(window.document.body);
+    });
+  });
+
 
   //
   // Initialize jquery fontSize slider
