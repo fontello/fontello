@@ -1,12 +1,11 @@
 router:
-  http.get.post:
+  http.get:
     fontello.app:
       "/({sid})":
         sid: /[0-9a-f]+/
       "/#search={search}":
         search: /\S+/
 
-  http.get:
     fontello.api.download:
       "/{sid}/get":
         sid: /[0-9a-f]+/
@@ -14,6 +13,10 @@ router:
     fontello.font.download:
       "/download/{id}":
         id: /[0-9a-f]{32}/
+
+  http.post:
+    fontello.api.post:
+      "/": ~
 
   bin:
     core.assets:
