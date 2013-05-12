@@ -1,4 +1,4 @@
 en-US:
   author: by
-  license: license -
-  notfound: Ups... nothing found...
+  license: "license:"
+  notfound: Ups! Nothing found...
