@@ -76,7 +76,7 @@ modifications to unify characteristics such as scale, ascent/descent and alignme
 ## Contacts
 
 - Questions: [Google group](https://groups.google.com/group/fontello/)
-- Bug reports: [Issue tracker](https://github.com/nodeca/fontomas/issues)
+- Bug reports: [Issue tracker](https://github.com/fontello/fontello/issues)
 - Suggestion for adding your OFL fonts or other collaborations: vitaly@rcdesign.ru
 
 
