@@ -7,13 +7,19 @@
 var map = Object(null);
 
 
+var PRIVATE_USE_CODEPOINTS_START = 0xE800;
+var PRIVATE_USE_CODEPOINTS_END   = 0xF8FF;
+
+
 ////////////////////////////////////////////////////////////////////////////////
 
 
+// Find free codepoint in the Unicode Private Use Area.
+//
 function findFreeCode() {
-  var code = N.runtime.config.autoguess_charcode.min;
+  var code = PRIVATE_USE_CODEPOINTS_START;
 
-  while (code <= N.runtime.config.autoguess_charcode.max) {
+  while (code <= PRIVATE_USE_CODEPOINTS_END) {
     if (!map[code]) {
       // got unused code
       return code;

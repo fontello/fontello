@@ -6,6 +6,11 @@ var ko = require('knockout');
 
 var savedConfig = null;
 
+
+var GLYPH_SIZE_MIN = 12;
+var GLYPH_SIZE_MAX = 30;
+
+
 ////////////////////////////////////////////////////////////////////////////////
 
 
@@ -173,9 +178,9 @@ N.wire.once('navigate.done', function (data) {
   $('#glyph-size-slider').slider({
     orientation:  'horizontal',
     range:        'min',
-    value:        toolbar.fontSize(),//N.runtime.config.glyph_size.val,
-    min:          N.runtime.config.glyph_size.min,
-    max:          N.runtime.config.glyph_size.max,
+    value:        toolbar.fontSize(),
+    min:          GLYPH_SIZE_MIN,
+    max:          GLYPH_SIZE_MAX,
     slide:        function (event, ui) {
       toolbar.fontSize(Math.round(ui.value));
     }

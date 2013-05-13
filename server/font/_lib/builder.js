@@ -11,6 +11,9 @@ var fontConfig = require('./config');
 var fontWorker = require('./worker');
 
 
+var BUILDER_CONCURRENCY = 1; // Number of concurrenly builded fonts.
+
+
 // State control variables. Initialized at first use.
 //
 var builderInitialized = false;
@@ -191,15 +194,13 @@ function checkFont(fontId, callback) {
 // Init internals. Must be called prior builder use.
 //
 function setup(N) {
-  var builderConcurrency = N.config.options.builder_concurrency || os.cpus().length;
-
   builderVersion   = N.runtime.version;
   builderLogger    = N.logger.getLogger('font');
   builderTmpDir    = path.join(os.tmpDir(), 'fontello');
   builderCwdDir    = N.runtime.mainApp.root;
   builderOutputDir = path.join(N.runtime.mainApp.root, 'public', 'download');
   builderBinary    = path.join(N.runtime.mainApp.root, 'bin', 'generate_font.sh');
-  builderQueue     = async.queue(fontWorker, builderConcurrency);
+  builderQueue     = async.queue(fontWorker, BUILDER_CONCURRENCY);
   builderTasks     = {};
 
   builderInitialized = true;

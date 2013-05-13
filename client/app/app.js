@@ -10,6 +10,9 @@ var embedded_fonts    = require('../../lib/embedded_fonts/client_config')
   , trackCodeChanges  = require('./_codesTracker');
 
 
+var DEFAULT_GLYPH_SIZE = 16;
+
+
 // Int to char, with fix for big numbers
 // see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String/fromCharCode
 //
@@ -296,7 +299,7 @@ N.app = {};
 N.app.searchWord  = ko.observable('').extend({ throttle: 100 });
 N.app.searchMode  = ko.computed(function () { return N.app.searchWord().length > 0; });
 N.app.fontsList   = new FontsList({ searchWord: N.app.searchWord });
-N.app.fontSize    = ko.observable(N.runtime.config.glyph_size.val);
+N.app.fontSize    = ko.observable(DEFAULT_GLYPH_SIZE);
 N.app.fontName    = ko.observable('');
 N.app.cssPrefixText = ko.observable('icon-');
 N.app.cssUseSuffix  = ko.observable(false);

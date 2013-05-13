@@ -3,27 +3,9 @@
 configured: true
 
 
-# Different application-specific constants
-#
-options:
-
-  # Number of sinultaneous font-builder processes
-  # default - amount of CPUs
-  #
-  builder_concurrency: 2
-
-  # Toolbar size slider params
-  #
-  glyph_size:
-    min: 12               # minimal size
-    val: 16               # default size
-    max: 30               # miximum size
-
-  # Mapping defaults
-  #
-  autoguess_charcode:
-    min: 0xe800
-    max: 0xf8ff
+# # Different application-specific constants
+# #
+# options:
 
 
 # Locales
