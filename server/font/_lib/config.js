@@ -135,8 +135,9 @@ module.exports = function fontConfig(clientConfig) {
     }
   , meta: {
       columns: 4 // Used by the demo page.
-    , css_prefix_text: clientConfig.css_prefix_text
-    , css_use_suffix:  clientConfig.css_use_suffix
+      // Set defaults if fields not exists in config
+    , css_prefix_text: clientConfig.css_prefix_text || 'icon-'
+    , css_use_suffix:  Boolean(clientConfig.css_use_suffix)
     }
   , glyphs:     glyphsInfo
   , fonts_list: fontsInfo
