@@ -164,7 +164,7 @@ _.forEach(args.input_fonts, function(fontDir) {
     }
 
     // Cleanup fields list
-    var glyph_data = _.pick(glyph, ['css', 'code', 'uid', 'search']);
+    var glyph_data = _.pick(glyph, ['css', 'code', 'uid', 'search', 'css-ext']);
 
     // Add char code in joined (embedded) font
     glyph_data.charRef = internalCode;
@@ -242,6 +242,9 @@ async.eachSeries(
       var file_name = path.join(tmpDir, glyph.fontname, glyph.uid + '.svg');
       // delete file info & fill glyph.svg with parsed data
       glyph.svg = parseSvgImage(fs.readFileSync(file_name, 'utf8'), file_name);
+
+      // cleanup "transform" property
+      delete glyph.svg.transform;
 
       // fontforge dirty fix
       glyph.svg.d = glyph.svg.d.replace(/zm/g, 'z m');
