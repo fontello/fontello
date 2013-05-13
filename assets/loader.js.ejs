@@ -76,6 +76,27 @@ window.NodecaLoader = (function () {
   function noop() {}
 
 
+  // Returns route match data for the given method (e.g. GET) on the given URL
+  // or null if none is found. Requires N to be initialized.
+  function findRoute(url, method) {
+    var matchArray = N.runtime.router.matchAll(url)
+      , match
+      , index
+      , length;
+
+    for (index = 0, length = matchArray.length; index < length; index += 1) {
+      match = matchArray[index];
+
+      if (Object.prototype.hasOwnProperty.call(match.meta.methods, method)) {
+        return match;
+      }
+    }
+
+    // Not found.
+    return null;
+  }
+
+
   // Load a package with all of associated assets ans dependences.
   // `preload` parameter is an optional array of URLs which are needed to load
   // before the given package.
@@ -166,8 +187,8 @@ window.NodecaLoader = (function () {
 
       // First try to match full URL, if not matched - try without anchor.
       var baseUrl = location.protocol + '//' + location.host + location.pathname
-        , route   = N.runtime.router.match(baseUrl + location.hash) ||
-                    N.runtime.router.match(baseUrl);
+        , route   = findRoute(baseUrl + location.hash, 'get') ||
+                    findRoute(baseUrl, 'get');
 
       if (!route) {
         alert('Init error: failed to detect internal identifier (route) of ' +

@@ -149,7 +149,9 @@ N.wire.on('navigate.to', function navigate_to(options, callback) {
   }
 
   if (options.href) {
-    match = N.runtime.router.match(options.href);
+    match = _.find(N.runtime.router.matchAll(options.href), function (match) {
+      return _.has(match.meta.methods, 'get');
+    });
 
     // It's an external link or 404 error if route is not matched. So perform
     // regular page requesting via HTTP.
