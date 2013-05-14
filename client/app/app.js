@@ -303,7 +303,7 @@ N.app.fontSize      = ko.observable(DEFAULT_GLYPH_SIZE);
 N.app.fontName      = ko.observable('');
 N.app.cssPrefixText = ko.observable('icon-');
 N.app.cssUseSuffix  = ko.observable(false);
-N.app.encoding      = ko.observable('pua')
+N.app.encoding      = ko.observable('pua');
 
 N.app.apiMode     = ko.observable(false);
 N.app.apiUrl      = ko.observable('');
