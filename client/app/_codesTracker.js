@@ -7,8 +7,8 @@
 var map = Object(null);
 
 
-var PRIVATE_USE_CODEPOINTS_START = 0xE800;
-var PRIVATE_USE_CODEPOINTS_END   = 0xF8FF;
+var UNICODE_PRIVATE_USE_AREA_MIN = 0xE800;
+var UNICODE_PRIVATE_USE_AREA_MAX = 0xF8FF;
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -17,9 +17,9 @@ var PRIVATE_USE_CODEPOINTS_END   = 0xF8FF;
 // Find free codepoint in the Unicode Private Use Area.
 //
 function findFreeCode() {
-  var code = PRIVATE_USE_CODEPOINTS_START;
+  var code = UNICODE_PRIVATE_USE_AREA_MIN;
 
-  while (code <= PRIVATE_USE_CODEPOINTS_END) {
+  while (code <= UNICODE_PRIVATE_USE_AREA_MAX) {
     if (!map[code]) {
       // got unused code
       return code;
