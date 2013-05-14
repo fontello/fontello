@@ -16,6 +16,7 @@ var ttf2eot  = require('ttf2eot');
 var ttf2woff = require('ttf2woff');
 var jade     = require('jade');
 var AdmZip   = require('adm-zip');
+var io       = require('../../../lib/system/io');
 
 
 var FONTFORGE_BIN   = 'fontforge';
@@ -140,10 +141,22 @@ module.exports = function fontWorker(taskInfo, callback) {
   workplan.push(async.apply(fs.writeFile, files.svg, svgOutput, 'utf8'));
 
   // Convert SVG to TTF with FontForge.
-  workplan.push(async.apply(execFile, FONTFORGE_BIN, [
-    '-c'
-  , util.format('font = fontforge.open(%j); font.generate(%j)', files.svg, files.ttfUnhinted)
-  ], { cwd: taskInfo.cwdDir }));
+  workplan.push(function (next) {
+    execFile(FONTFORGE_BIN, [
+      '-c',
+      util.format('font = fontforge.open(%j); font.generate(%j)',
+      files.svg,
+      files.ttfUnhinted)
+    ]
+    , { cwd: taskInfo.cwdDir }
+    , function (err) {
+      if (err) {
+        next({ code: io.APP_ERROR, message: 'Fontforge error. Probably, some glyph codes are invalid' });
+        return;
+      }
+      next();
+    });
+  });
 
   // Autohint the resulting TTF.
   workplan.push(async.apply(execFile, TTFAUTOHINT_BIN, [
