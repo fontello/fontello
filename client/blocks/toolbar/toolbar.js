@@ -61,6 +61,7 @@ function ToolbarModel() {
   this.fontName       = N.app.fontName;
   this.cssPrefixText  = N.app.cssPrefixText;
   this.cssUseSuffix   = N.app.cssUseSuffix;
+  this.encoding       = N.app.encoding;
   this.apiMode        = N.app.apiMode;
   this.apiUrl         = N.app.apiUrl;
 

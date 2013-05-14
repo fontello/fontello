@@ -296,13 +296,14 @@ function FontsList() {
 // Create global `model` and properties
 N.app = {};
 
-N.app.searchWord  = ko.observable('').extend({ throttle: 100 });
-N.app.searchMode  = ko.computed(function () { return N.app.searchWord().length > 0; });
-N.app.fontsList   = new FontsList({ searchWord: N.app.searchWord });
-N.app.fontSize    = ko.observable(DEFAULT_GLYPH_SIZE);
-N.app.fontName    = ko.observable('');
+N.app.searchWord    = ko.observable('').extend({ throttle: 100 });
+N.app.searchMode    = ko.computed(function () { return N.app.searchWord().length > 0; });
+N.app.fontsList     = new FontsList({ searchWord: N.app.searchWord });
+N.app.fontSize      = ko.observable(DEFAULT_GLYPH_SIZE);
+N.app.fontName      = ko.observable('');
 N.app.cssPrefixText = ko.observable('icon-');
 N.app.cssUseSuffix  = ko.observable(false);
+N.app.encoding      = ko.observable('pua')
 
 N.app.apiMode     = ko.observable(false);
 N.app.apiUrl      = ko.observable('');
