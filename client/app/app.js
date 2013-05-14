@@ -5,9 +5,9 @@ var _  = require('lodash');
 var ko = require('knockout');
 
 
-var embedded_fonts    = require('../../lib/embedded_fonts/client_config')
-  , trackNameChanges  = require('./_namesTracker')
-  , trackCodeChanges  = require('./_codesTracker');
+var embedded_fonts = require('../../lib/embedded_fonts/client_config');
+var codesTracker   = require('./_codes_tracker');
+var namesTracker   = require('./_names_tracker');
 
 
 var DEFAULT_GLYPH_SIZE = 16;
@@ -145,13 +145,15 @@ function GlyphModel(font, data) {
   , owner: this
   });
 
-  // Register glyph in the names/codes swap-remap handler
+  // Register glyph in the names/codes swap-remap handlers.
   //
-  trackNameChanges(this);
-  trackCodeChanges(this);
+  codesTracker.observe(this);
+  namesTracker.observe(this);
 }
 
+
 ////////////////////////////////////////////////////////////////////////////////
+
 
 function FontModel(data) {
 
@@ -330,6 +332,7 @@ N.app.serverSave  = function(callback) {
   N.io.rpc('fontello.api.update', { sid: N.app.apiSessionId, config: N.app.getConfig() }, callback);
 };
 
+
 ////////////////////////////////////////////////////////////////////////////////
 
 
@@ -356,6 +359,16 @@ N.wire.once('navigate.done', function () {
   });
 
   N.app.cssUseSuffix.subscribe(function () {
+    N.wire.emit('session_save');
+  });
+
+  N.app.encoding.subscribe(function () {
+    var glyphs = N.app.fontsList.selectedGlyphs();
+
+    // Reselect all currently selected glyph to update their codes.
+    _.invoke(glyphs, 'selected', false);
+    _.invoke(glyphs, 'selected', true);
+
     N.wire.emit('session_save');
   });
 
@@ -404,4 +417,15 @@ N.wire.once('navigate.done', function () {
     });
   });
 
+  N.wire.on('cmd:set_encoding_pua', function () {
+    N.app.encoding('pua');
+  });
+
+  N.wire.on('cmd:set_encoding_ascii', function () {
+    N.app.encoding('ascii');
+  });
+
+  N.wire.on('cmd:set_encoding_unicode', function () {
+    N.app.encoding('unicode');
+  });
 });

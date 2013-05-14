@@ -84,11 +84,12 @@ N.wire.on('session_save', _.debounce(function () {
 
   var session = {};
 
-  session.name = '$current$';
-  session.fontname = N.app.fontName();
+  session.name            = '$current$';
+  session.fontname        = N.app.fontName();
   session.css_prefix_text = N.app.cssPrefixText();
-  session.css_use_suffix = N.app.cssUseSuffix();
-  session.fonts = {};
+  session.css_use_suffix  = N.app.cssUseSuffix();
+  session.encoding        = N.app.encoding();
+  session.fonts           = {};
 
   _.each(N.app.fontsList.fonts, function (font) {
     var font_data = { collapsed: font.collapsed(), glyphs: [] };
@@ -159,6 +160,12 @@ N.wire.on('session_load', function () {
     N.app.cssUseSuffix(Boolean(session.css_use_suffix));
   } else {
     N.app.cssUseSuffix(false); // legacy fallback
+  }
+
+  if (_.has(session, 'encoding')) {
+    N.app.encoding(session.encoding);
+  } else {
+    N.app.encoding('pua'); // legacy fallback
   }
 
   // reset selection prior to set glyph data

@@ -57,13 +57,13 @@
                 label.checkbox
                   input(type='checkbox', data-bind='checked: cssUseSuffix')
                   = self.t('menu_css_use_suffix')
-          //-li.divider
-          //-li.dropdown-submenu
+          li.divider
+          li.dropdown-submenu
             a(href='#')= self.t('menu_encoding')
             ul.dropdown-menu
               li: a(
                     href='#'
-                    data-on-click='set_encoding_pua',
+                    data-on-click='cmd:set_encoding_pua',
                     data-content=self.t('menu_encoding_pua_help'),
                     data-placement='right',
                     data-trigger='hover',
@@ -73,7 +73,7 @@
                   )._popover= self.t('menu_encoding_pua')
               li: a(
                     href='#'
-                    data-on-click='set_encoding_ascii',
+                    data-on-click='cmd:set_encoding_ascii',
                     data-content=self.t('menu_encoding_ascii_help'),
                     data-placement='right',
                     data-trigger='hover',
@@ -83,7 +83,7 @@
                   )._popover= self.t('menu_encoding_ascii')
               li: a(
                     href='#'
-                    data-on-click='set_encoding_unicode',
+                    data-on-click='cmd:set_encoding_unicode',
                     data-content=self.t('menu_encoding_unicode_help'),
                     data-placement='right',
                     data-trigger='hover',
