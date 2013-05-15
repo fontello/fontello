@@ -1,6 +1,7 @@
 4.0.0 / ...
 ------------------
 
+* Added easy encoding switch (private use area / text / unicode)
 * Added developers API to do scripting for config upload and font download
 * Added configurable prefixes fir icon names
 * Added persistanse for glyphs size
