@@ -345,6 +345,17 @@ N.app.serverSave  = function(callback) {
 };
 
 
+// Set new code for each selected glyph using currect encoding.
+//
+function updateGlyphCodes() {
+  var glyphs = N.app.fontsList.selectedGlyphs();
+
+  // Reselect all currently selected glyph to update their codes.
+  _.invoke(glyphs, 'selected', false);
+  _.invoke(glyphs, 'selected', true);
+}
+
+
 ////////////////////////////////////////////////////////////////////////////////
 
 
@@ -375,12 +386,6 @@ N.wire.once('navigate.done', function () {
   });
 
   N.app.encoding.subscribe(function () {
-    var glyphs = N.app.fontsList.selectedGlyphs();
-
-    // Reselect all currently selected glyph to update their codes.
-    _.invoke(glyphs, 'selected', false);
-    _.invoke(glyphs, 'selected', true);
-
     N.wire.emit('session_save');
   });
 
@@ -431,13 +436,16 @@ N.wire.once('navigate.done', function () {
 
   N.wire.on('cmd:set_encoding_pua', function () {
     N.app.encoding('pua');
+    updateGlyphCodes();
   });
 
   N.wire.on('cmd:set_encoding_ascii', function () {
     N.app.encoding('ascii');
+    updateGlyphCodes();
   });
 
   N.wire.on('cmd:set_encoding_unicode', function () {
     N.app.encoding('unicode');
+    updateGlyphCodes();
   });
 });
