@@ -42,12 +42,11 @@ var usedCodes = {};
 
 // Returns true if code is valid and not used.
 //
-function checkCode(code) {
+function checkValidCode(code) {
   return code >= UNICODE_CODES_MIN &&
          code <= UNICODE_CODES_MAX &&
          (code < UNICODE_SURROGATE_BLOCK_MIN || code > UNICODE_SURROGATE_BLOCK_MAX) &&
-         !RESTRICTED_CODES[code] &&
-         !usedCodes[code];
+         !RESTRICTED_CODES[code];
 }
 
 
@@ -55,7 +54,7 @@ function checkCode(code) {
 //
 function findCode(min, max) {
   for (var code = min; code <= max; code += 1) {
-    if (checkCode(code)) {
+    if (checkValidCode(code) && !usedCodes[code]) {
       return code;
     }
   }
@@ -81,7 +80,8 @@ function findPrivateUseArea() {
 //
 function findAscii(preferedCode) {
   if (preferedCode &&
-      checkCode(preferedCode) &&
+      checkValidCode(preferedCode) &&
+      !usedCodes[preferedCode] &&
       preferedCode >= ASCII_PRINTABLE_MIN &&
       preferedCode <= ASCII_PRINTABLE_MAX) {
     return preferedCode;
@@ -97,7 +97,7 @@ function findAscii(preferedCode) {
 // Fallbacks to findPrivateUseArea()
 //
 function findUnicode(code) {
-  return checkCode(code) ? code : findPrivateUseArea();
+  return (checkValidCode(code) && !usedCodes[code]) ? code : findPrivateUseArea();
 }
 
 
@@ -150,7 +150,21 @@ function observe(glyph) {
       if (usedCodes[code]) {
         usedCodes[code].code(previousCode);
       }
+
       usedCodes[code] = this;
+
+      // If user enters an invalid code - notify and rollback.
+      if (!checkValidCode(code)) {
+        N.wire.emit('notify', N.runtime.t('fontello.app.invalid_code', {
+          hex: this.customHex()
+        }));
+
+        if (checkValidCode(previousCode)) {
+          this.code(previousCode);
+        } else {
+          this.code(findUnicode(this.originalCode));
+        }
+      }
     }
   }, glyph);
 
