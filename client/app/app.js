@@ -81,6 +81,18 @@ function GlyphModel(font, data) {
   this.name     = ko.observable(this.originalName);
   this.code     = ko.observable(this.originalCode);
 
+  this.selected.subscribe(function () {
+    N.wire.emit('session_save');
+  });
+
+  this.name.subscribe(function () {
+    N.wire.emit('session_save');
+  });
+
+  this.code.subscribe(function () {
+    N.wire.emit('session_save');
+  });
+
   // Serialization. Make sure to update this method to have
   // desired fields sent to the server (by font builder).
   //
