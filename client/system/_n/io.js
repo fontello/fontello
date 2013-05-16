@@ -1,27 +1,21 @@
 /**
  *  io
  *
- *  This module provides realtime communication methods for Nlib based
- *  applications.
+ *  This module provides realtime communication methods for Nodeca.
  **/
 
 
 'use strict';
 
 
-// last xhr to allow interrupt it
-var last_xhr = null;
+var _ = require('lodash');
 
 
-// utilities
-function isFunction(object) {
-  return '[object Function]' === Object.prototype.toString.call(object);
-}
+// Last XMLHttpRequest object used for RPC request to allow interrupt it.
+//var __lastRPCRequest__ = null;
 
 
-// IO status/error codes used by RPC and HTTP servers
-exports.ECOMMUNICATION      = 1;
-exports.EWRONGVER           = 2;
+// IO status/error codes used by RPC and HTTP servers.
 exports.OK                  = 200;
 exports.REDIRECT            = 302;
 exports.NOT_MODIFIED        = 304;
@@ -29,14 +23,28 @@ exports.BAD_REQUEST         = 400;
 exports.NOT_AUTHORIZED      = 401;
 exports.NOT_FOUND           = 404;
 exports.APP_ERROR           = 500;
-exports.INVALID_CSRF_TOKEN  = 450;
+exports.ECOMMUNICATION      = 1000;
+exports.EWRONGVER           = 1001;
+exports.INVALID_CSRF_TOKEN  = 1002;
+exports.CLIENT_ERROR        = 1003;
 
 
-// error constructor
-function error(code, message) {
-  var err = new Error(message);
-  err.code = code;
-  return err;
+// Checks for a non-system error which should be passed to the callback.
+//
+function isNormalCode(code) {
+  return 200 <= code && code <= 299      ||
+         300 <= code && code <= 399      ||
+         exports.NOT_AUTHORIZED === code ||
+         exports.NOT_FOUND      === code ||
+         exports.CLIENT_ERROR   === code;
+}
+
+
+// Checks for a system-level error which should *NOT* be passed to the callback.
+// These errors are emitted to 'io.error' Wire channel.
+//
+function isErrorCode(code) {
+  return !isNormalCode(code);
 }
 
 
@@ -46,22 +54,16 @@ function error(code, message) {
  *  rpc(name, callback) -> Void
  **/
 function rpc(name, params, options, callback) {
-  var xhr, payload;
-
-  payload = {
-    version:  N.runtime.version,
-    method:   name,
-    csrf:     N.runtime.csrf
-  };
+  var xhr;
 
   // Scenario: rpc(name, callback);
-  if (isFunction(params)) {
+  if (_.isFunction(params)) {
     callback = params;
     params   = options  = {};
   }
 
   // Scenario: rpc(name, params[, callback]);
-  if (isFunction(options)) {
+  if (_.isFunction(options)) {
     callback = options;
     options = {};
   }
@@ -70,86 +72,75 @@ function rpc(name, params, options, callback) {
   options   = options || {_retryOnCsrfError: true};
   callback  = callback || $.noop;
 
-  //
-  // Interrupt previous rpc request
-  //
+  // Interrupt previous RPC request.
+  //if (__lastRPCRequest__) {
+  //  (__lastRPCRequest__.reject || $.noop)();
+  //  __lastRPCRequest__ = null;
+  //}
 
-  if (last_xhr) {
-    (last_xhr.reject || $.noop)();
-    last_xhr = null;
-  }
-
-  // fill in payload params
-  payload.params = params;
-
-  //
   // Send request
-  //
-
   N.wire.emit('io.request');
 
-  xhr = last_xhr = $.post('/io/rpc', JSON.stringify(payload));
+  xhr = /*__lastRPCRequest__ =*/ $.post('/io/rpc', JSON.stringify({
+    version: N.runtime.version
+  , method:  name
+  , csrf:    N.runtime.csrf
+  , params:  params
+  }));
 
-  //
-  // Listen for a response
-  //
-
+  // Listen for a response.
   xhr.success(function (data) {
     data = data || {};
 
     if (data.version !== N.runtime.version) {
-      data.error = error(exports.EWRONGVER, 'Client version does not match server.');
+      data.error = {
+        code:    exports.EWRONGVER
+      , message: 'Client version does not match server.'
+      };
       delete data.response;
     }
 
-    // if invalid CSRF token error and retry is allowed
+    // If invalid CSRF token error and retry is allowed.
     if (data.error && exports.INVALID_CSRF_TOKEN === data.error.code && options._retryOnCsrfError) {
-      // renew CSRF token
-      N.runtime.csrf = error.data.token;
+      // Renew CSRF token.
+      N.runtime.csrf = data.error.data.token;
 
-      // only one attempt to retry is allowed
+      // Only one attempt to retry is allowed.
       options._retryOnCsrfError = false;
 
-      // try again
+      // Try again.
       rpc(name, params, options, callback);
       return;
     }
 
-    if (data.error) {
+    if (data.error && isErrorCode(data.error.code)) {
       N.wire.emit('io.error', data.error);
     }
 
-    N.wire.emit('io.complete', {
-      error:    data.error
-    , response: data.response
-    });
+    N.wire.emit('io.complete', { error: data.error, response: data.response });
 
-    // run actual callback
-    callback(data.error, data.response);
+    // Run actual callback only when no error happen or it's a non-system error.
+    if (!data.error || isNormalCode(data.error.code)) {
+      callback(data.error, data.response);
+    }
   });
 
-  //
-  // Listen for an error
-  //
-
+  // Listen for an error.
   xhr.fail(function (jqXHR, status) {
     var err;
 
-    // for possible status values see: http://api.jquery.com/jQuery.ajax/
-
+    // For possible status values see: http://api.jquery.com/jQuery.ajax/
     if ('abort' === status) {
       return;
     }
 
-    N.logger.error('Failed RPC call: ' + status, jqXHR);
+    N.logger.error('Failed RPC call: %s', status, jqXHR);
 
-    // any non-abort error - is communication problem
-    err = error(exports.ECOMMUNICATION, 'Communication error');
+    // Any non-abort error - is a communication problem.
+    err = { code: exports.ECOMMUNICATION };
 
     N.wire.emit('io.error', err);
-    N.wire.emit('io.complete');
-
-    callback(err);
+    N.wire.emit('io.complete', { error: err, response: null });
   });
 }
 

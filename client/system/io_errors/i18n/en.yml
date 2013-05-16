@@ -1,4 +1,6 @@
 en-US:
+  system_error: 'Error #{code}'
+  system_error_with_message: 'Error #{code}: #{message}'
   invalid_csrf_token: Security token expired. Pease, try again.
   application_fuckup: Application Error. Try again later.
   communication_timeout: Communication problems. Try again later.
