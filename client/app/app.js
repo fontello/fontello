@@ -173,9 +173,8 @@ function FontModel(data) {
   // Essential properties
   //
 
-  this.id       = data.id;
   this.fullname = data.font.fullname;
-  this.fontname = data.font.fontname;
+  this.fontname = data.font.fontname; // also used as font id
 
   this.author   = data.meta.author;
   this.license  = data.meta.license;
@@ -205,9 +204,9 @@ function FontModel(data) {
     }
 
     if (this.collapsed()) {
-      $('#font-id-'+this.id + " .font-glyphs").slideUp();
+      $('#'+this.fontname + " .font-glyphs").slideUp();
     } else {
-      $('#font-id-'+this.id + " .font-glyphs").slideDown();
+      $('#'+this.fontname + " .font-glyphs").slideDown();
     }
   }.bind(this);
 
