@@ -122,14 +122,6 @@ function GlyphModel(font, data) {
     return (word.length < 2) || (0 <= this.keywords.indexOf(word));
   }, this);
 
-  // Whenever or not glyph should be treaten as "modified"
-  //
-  this.isModified = ko.computed(function () {
-    return this.selected() ||
-      (this.name() !== this.originalName) ||
-      (this.code() !== this.originalCode);
-  }, this);
-
   // code value as character (for code editor)
   //
   this.customChar = ko.computed({
@@ -156,6 +148,14 @@ function GlyphModel(font, data) {
     }
   , owner: this
   });
+
+  // Whenever or not glyph should be treaten as "modified"
+  //
+  this.isModified = function () {
+    return this.selected() ||
+      (this.name() !== this.originalName) ||
+      (this.code() !== this.originalCode);
+  }.bind(this);
 
   // Register glyph in the names/codes swap-remap handlers.
   //
@@ -213,6 +213,10 @@ function FontModel(data) {
 
   // animate collapse on state change
   this.collapsed.subscribe(this.setCollapseState);
+  // save session on change
+  this.collapsed.subscribe(function () {
+    N.wire.emit('session_save');
+  });
 
 
   // Array of font glyphs
@@ -232,12 +236,6 @@ function FontModel(data) {
   this.selectedCount = ko.computed(function () {
     return this.selectedGlyphs().length;
   }, this);
-
-  // Array of modified glyphs of a font
-  //
-  this.modifiedGlyphs = ko.computed(function () {
-    return _.filter(this.glyphs, function (glyph) { return glyph.isModified(); });
-  }, this).extend({ throttle: 100 });
 
   // Visible glyphs count
   //
@@ -272,34 +270,10 @@ function FontsList() {
     return this.selectedGlyphs().length;
   }, this);
 
-  // Returns array of modified glyphs from all fonts
-  //
-  this.modifiedGlyphs = ko.computed(function () {
-    return _.reduce(this.fonts, function (result, font) {
-      return result.concat(font.modifiedGlyphs());
-    }, []);
-  }, this).extend({ throttle: 100 });
-
   // Count of visible fonts, with reflow compensation
   //
   this.visibleCount = ko.computed(function () {
     return _.reduce(this.fonts, function (cnt, font) { return cnt + (font.visibleCount() ? 1 : 0); }, 0);
-  }, this).extend({ throttle: 100 });
-
-  // Returns whenever font list has modified glyphs or collapsed fonts
-  //
-  this.isModified = ko.computed(function () {
-    var value = false;
-
-    _.each(this.fonts, function (font) {
-      // We need to call collapsed() of each font to have proper deps graph
-      value = font.collapsed() || value;
-    });
-
-    // call modifiedGlyphs() in any case to have proper deps graph
-    value = !!this.modifiedGlyphs().length || value;
-
-    return value;
   }, this).extend({ throttle: 100 });
 }
 
@@ -364,10 +338,6 @@ N.wire.once('navigate.done', function () {
   //
   // Setup autosave
   //
-
-  N.app.fontsList.isModified.subscribe(function () {
-    N.wire.emit('session_save');
-  });
 
   N.app.fontName.subscribe(function () {
     N.wire.emit('session_save');
