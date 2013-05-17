@@ -22,11 +22,11 @@ exports.NOT_MODIFIED        = 304;
 exports.BAD_REQUEST         = 400;
 exports.NOT_AUTHORIZED      = 401;
 exports.NOT_FOUND           = 404;
+exports.CLIENT_ERROR        = 460;
+exports.INVALID_CSRF_TOKEN  = 461;
 exports.APP_ERROR           = 500;
 exports.ECOMMUNICATION      = 1000;
 exports.EWRONGVER           = 1001;
-exports.INVALID_CSRF_TOKEN  = 1002;
-exports.CLIENT_ERROR        = 1003;
 
 
 // Checks for a non-system error which should be passed to the callback.
@@ -121,7 +121,13 @@ function rpc(name, params, options, callback) {
 
     // Run actual callback only when no error happen or it's a non-system error.
     if (!data.error || isNormalCode(data.error.code)) {
-      callback(data.error, data.response);
+      if (false === callback(data.error, data.response)) {
+        // We use 'false' to determine that the callback wants use default error
+        // handling procedure.
+        if (data.error) {
+          N.wire.emit('io.error', data.error);
+        }
+      }
     }
   });
 
