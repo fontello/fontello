@@ -219,18 +219,25 @@ window.NodecaLoader = (function () {
 
     // If it's a first require of the given module, initialize it first.
     if (!target.module) {
+      function resolveI18nPath(path) {
+        if ('@' === path.charAt(0)) {
+          return path.slice(1);
+        } else {
+          return target.apiPath + '.' + path;
+        }
+      }
 
       // Local `t` (translate) function for use only within this module.
       // It allows to use phrase strings relative to the module's API path.
-      function __t__(phrase, params) {
-        if ('.' === phrase.charAt(0)) {
-          phrase = phrase.substr(1);
-        } else {
-          phrase = target.apiPath + '.' + phrase;
-        }
-        return N.runtime.t(phrase, params);
+      function translationHelper(phrase, params) {
+        return N.runtime.t(resolveI18nPath(phrase), params);
       }
 
+      translationHelper.exists = function translationExistsHelper(phrase) {
+        return N.runtime.t.exists(resolveI18nPath(phrase));
+      }
+
+      // `module` variable inside the module body.
       target.module = {
         apiPath: target.apiPath
       , exports: {}
@@ -243,7 +250,7 @@ window.NodecaLoader = (function () {
       , require // pass self
       , target.module.exports
       , target.module
-      , __t__
+      , translationHelper
       );
     }
 
