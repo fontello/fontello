@@ -36,6 +36,6 @@ N.wire.once('navigate.done', function () {
     injectScript('//platform.twitter.com/widgets.js', false, 'twitter-wjs');
 
     // Google +1
-    injectScript('https://apis.google.com/js/plusone.js', true);
+    //injectScript('https://apis.google.com/js/plusone.js', true);
   }, 2000);
 });
