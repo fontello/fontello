@@ -7,8 +7,8 @@ PATH := $(PATH):./support/font-builder/bin
 
 
 FONTS         += fontelico.font
-FONTS         += entypo
 FONTS         += awesome-uni.font
+FONTS         += entypo
 FONTS         += iconic-uni.font
 FONTS         += typicons.font
 FONTS         += modernpics.font
