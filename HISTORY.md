@@ -1,4 +1,11 @@
-4.0.0 / ...
+4.0.1 / ...
+------------------
+
+* Updated FontAwesome to 3.1.1
+* Updated MFG Labs font
+
+
+4.0.0 / 2013-06-02
 ------------------
 
 * Added easy encoding switch (private use area / text / unicode)
