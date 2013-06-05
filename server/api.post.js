@@ -19,8 +19,7 @@ module.exports = function (N, apiPath) {
     // check length
     var len = parseInt(env.origin.req.headers['content-length'], 10);
     if (!len || len > MAX_POST_DATA) {
-      env.err = 413;
-      callback();
+      callback(413); // Request Entity Too Large
       return;
     }
 
