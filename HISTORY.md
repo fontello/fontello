@@ -3,6 +3,7 @@
 
 * Updated FontAwesome to 3.1.1
 * Updated MFG Labs font
+* Updated Typicons font to 2.0
 
 
 4.0.0 / 2013-06-02
