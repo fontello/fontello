@@ -151,7 +151,7 @@ module.exports = function fontWorker(taskInfo, callback) {
     , { cwd: taskInfo.cwdDir }
     , function (err) {
       if (err) {
-        next({ code: io.APP_ERROR, message: 'Fontforge error. Probably, some glyph codes are invalid' });
+        next({ code: io.APP_ERROR, message: 'Fontforge exec error. Probably, missed binary, or some glyph codes are invalid' });
         return;
       }
       next();
