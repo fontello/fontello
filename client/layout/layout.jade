@@ -20,7 +20,7 @@ html.no-js(lang='en', itemscope, itemtype='http://schema.org/WebPage')
     //- the fav and touch icons
     link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
 
-    script(type="text/javascript")
+    script.(type="text/javascript")
       !{self.asset_include('loader.js')}
       NodecaLoader.loadAssets.init(
         !{JSON.stringify(self.head.assets)},
@@ -29,7 +29,7 @@ html.no-js(lang='en', itemscope, itemtype='http://schema.org/WebPage')
 
 
     //- Google Analytics
-    script(type="text/javascript")
+    script.(type="text/javascript")
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-31060395-1']);
       _gaq.push(['_setSiteSpeedSampleRate', 100]);
