@@ -210,13 +210,15 @@ module.exports = function fontWorker(taskInfo, callback) {
     });
   });
 
-  // Create zipball
+  // Create zipball.
+  // Use ".tmp" extension here to prevent Fontello from allowing to
+  // download this file while it's *in progress*.
   workplan.push(async.apply(fstools.remove, taskInfo.output));
   workplan.push(async.apply(fstools.mkdir, path.dirname(taskInfo.output)));
 
   // switch to node's module for portability
   workplan.push(async.apply(execFile, ZIP_BIN, [
-    taskInfo.output
+    taskInfo.output + '.tmp'
   , '-r'
   , path.basename(taskInfo.tmpDir)
   ], { cwd: path.dirname(taskInfo.tmpDir) }));
@@ -244,6 +246,9 @@ module.exports = function fontWorker(taskInfo, callback) {
     });
   });
   */
+
+  // Remove ".tmp" extension from zip file to mark it as *completed*.
+  workplan.push(async.apply(fstools.move, (taskInfo.output + '.tmp'), taskInfo.output));
 
   // Remove temporary files and directories.
   workplan.push(async.apply(fstools.remove, taskInfo.tmpDir));
