@@ -16,7 +16,6 @@ var BUILDER_CONCURRENCY = 1; // Number of concurrenly builded fonts.
 
 // State control variables. Initialized at first use.
 //
-var builderInitialized = false;
 var builderVersion     = null;
 var builderLogger      = null;
 var builderCwdDir      = null;
@@ -196,9 +195,9 @@ function checkFont(fontId, callback) {
   });
 }
 
-// Init internals. Must be called prior builder use.
-//
-function setup(N) {
+
+module.exports = _.once(function (N) {
+  // Init internals at first call.
   builderVersion   = N.runtime.version;
   builderLogger    = N.logger.getLogger('font');
   builderTmpDir    = path.join(os.tmpDir(), 'fontello');
@@ -208,18 +207,10 @@ function setup(N) {
   builderQueue     = async.queue(fontWorker, BUILDER_CONCURRENCY);
   builderTasks     = {};
 
-  builderInitialized = true;
-}
-
-
-module.exports = function (N) {
-  if (!builderInitialized) {
-    setup(N);
-  }
-
+  // Exports.
   return {
     pushFont:  pushFont
   , buildFont: buildFont
   , checkFont: checkFont
   };
-};
+});
