@@ -11,7 +11,7 @@ var request = require('supertest')('http://localhost:3000');
 describe('Server HTTP', function () {
   before(function (done) {
     function init(N) {
-      require('../../lib/hooks.js')(N);
+      require('../../lib/autoload.js')(N);
       N.wire.after('init:server', function() { done(); });
     }
 
