@@ -69,26 +69,6 @@ function createTask(clientConfig, afterRegistered, afterComplete) {
   }
 
   //
-  // If task already exists - just register a new callback on it.
-  //
-  if (_.has(builderTasks, fontId)) {
-    builderLogger.info('Job is already in queue: %j', {
-      font_id:      fontId
-    , queue_length: Object.keys(builderTasks).length
-    });
-
-    taskInfo = builderTasks[fontId];
-
-    if (afterRegistered) {
-      afterRegistered(null, fontId);
-    }
-    if (afterComplete) {
-      taskInfo.callbacks.push(afterComplete);
-    }
-    return;
-  }
-
-  //
   // If same task is already done (the result file exists) - use it.
   //
   fs.exists(outputFile, function (exists) {
@@ -98,6 +78,31 @@ function createTask(clientConfig, afterRegistered, afterComplete) {
       }
       if (afterComplete) {
         afterComplete(null, { fontId: fontId, file: outputFile, directory: builderOutputDir });
+      }
+      return;
+    }
+
+    //
+    // If task already exists - just register a new callback on it.
+    //
+    // NOTE: We must do this *after* async `fs.exists` call to prevent creation
+    // of multiple tasks for one font when user very quickly sends multiple
+    // requests for same font. Multiple tasks for same font will cause an error
+    // in `completeCallback`. (referencing already completed and deleted task)
+    //
+    if (_.has(builderTasks, fontId)) {
+      builderLogger.info('Job is already in queue: %j', {
+        font_id:      fontId
+      , queue_length: Object.keys(builderTasks).length
+      });
+
+      taskInfo = builderTasks[fontId];
+
+      if (afterRegistered) {
+        afterRegistered(null, fontId);
+      }
+      if (afterComplete) {
+        taskInfo.callbacks.push(afterComplete);
       }
       return;
     }
