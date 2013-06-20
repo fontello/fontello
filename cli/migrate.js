@@ -30,7 +30,7 @@ module.exports.commandLineArguments = [
 
 module.exports.run = function (N, args, callback) {
 
-  N.wire.skip('init:models', 'check_migrations');
+  N.wire.skip('init:models', 'migrations_check');
 
   N.wire.emit([
       'init:models'
