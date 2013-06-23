@@ -1,6 +1,6 @@
 {
   "name": "es5-shim",
-  "version": "2.0.8",
+  "version": "2.1.0",
   "description": "ES5 as implementable on previous engines",
   "homepage": "http://github.com/kriskowal/es5-shim/",
   "contributors": [
@@ -24,6 +24,9 @@
   "repository": {
     "type": "git",
     "url": "http://github.com/kriskowal/es5-shim.git"
+  },
+  "scripts": {
+    "minify": "uglifyjs es5-shim.js --source-map=es5-shim.map -b ascii_only=true,beautify=false > es5-shim.min.js; uglifyjs es5-sham.js --source-map=es5-sham.map -b ascii_only=true,beautify=false > es5-sham.min.js"
   },
   "engines": {
     "node": ">=0.2.0"

@@ -1,5 +1,5 @@
 /*!
- * jQuery UI Tooltip 1.10.2
+ * jQuery UI Tooltip 1.10.3
  * http://jqueryui.com
  *
  * Copyright 2013 jQuery Foundation and other contributors
@@ -43,7 +43,7 @@ function removeDescribedBy( elem ) {
 }
 
 $.widget( "ui.tooltip", {
-	version: "1.10.2",
+	version: "1.10.3",
 	options: {
 		content: function() {
 			// support: IE<9, Opera in jQuery <1.7

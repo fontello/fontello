@@ -1,5 +1,5 @@
 /*!
- * jQuery UI Button 1.10.2
+ * jQuery UI Button 1.10.3
  * http://jqueryui.com
  *
  * Copyright 2013 jQuery Foundation and other contributors
@@ -19,9 +19,9 @@ var lastActive, startXPos, startYPos, clickDragged,
 	stateClasses = "ui-state-hover ui-state-active ",
 	typeClasses = "ui-button-icons-only ui-button-icon-only ui-button-text-icons ui-button-text-icon-primary ui-button-text-icon-secondary ui-button-text-only",
 	formResetHandler = function() {
-		var buttons = $( this ).find( ":ui-button" );
+		var form = $( this );
 		setTimeout(function() {
-			buttons.button( "refresh" );
+			form.find( ":ui-button" ).button( "refresh" );
 		}, 1 );
 	},
 	radioGroup = function( radio ) {
@@ -43,7 +43,7 @@ var lastActive, startXPos, startYPos, clickDragged,
 	};
 
 $.widget( "ui.button", {
-	version: "1.10.2",
+	version: "1.10.3",
 	defaultElement: "<button>",
 	options: {
 		disabled: null,
@@ -360,7 +360,7 @@ $.widget( "ui.button", {
 });
 
 $.widget( "ui.buttonset", {
-	version: "1.10.2",
+	version: "1.10.3",
 	options: {
 		items: "button, input[type=button], input[type=submit], input[type=reset], input[type=checkbox], input[type=radio], a, :data(ui-button)"
 	},

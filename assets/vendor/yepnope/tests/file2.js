@@ -1,0 +1,1 @@
+window.file2 = true;

@@ -1,5 +1,5 @@
 /*!
- * jQuery UI Dialog 1.10.2
+ * jQuery UI Dialog 1.10.3
  * http://jqueryui.com
  *
  * Copyright 2013 jQuery Foundation and other contributors
@@ -36,7 +36,7 @@ var sizeRelatedOptions = {
 	};
 
 $.widget( "ui.dialog", {
-	version: "1.10.2",
+	version: "1.10.3",
 	options: {
 		appendTo: "body",
 		autoOpen: true,

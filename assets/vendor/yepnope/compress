@@ -1,0 +1,14 @@
+#/bin/sh
+closure --js yepnope.js --compilation_level ADVANCED_OPTIMIZATIONS > yepnope.closure.min.js
+echo "/*yepnope1.5.x|WTFPL*/" > yepnope.uglify.min.js
+uglifyjs --unsafe yepnope.closure.min.js >> yepnope.uglify.min.js
+m=$(ls -la yepnope.uglify.min.js | awk '{ print $5}')
+gzip -nfc --best yepnope.uglify.min.js > yepnope.min.js.gz
+g=$(ls -la yepnope.min.js.gz | awk '{ print $5}')
+echo "$m bytes minified, $g bytes gzipped"
+rm yepnope.min.js.gz
+mv yepnope.uglify.min.js yepnope.min.js
+rm yepnope.closure.min.js
+if [ "--test" == "$1" ]; then
+  rm yepnope.min.js
+fi
