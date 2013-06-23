@@ -1,7 +1,7 @@
 4.0.1 / ...
 ------------------
 
-* Updated FontAwesome to 3.1.1
+* Updated FontAwesome to 3.2.1
 * Updated MFG Labs font
 * Updated Typicons font to 2.0
 * Switched to node v0.10
