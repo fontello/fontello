@@ -3,9 +3,15 @@
 configured: true
 
 
-# # Different application-specific constants
-# #
-# options:
+# Options - different kind of constants, to keep root space clear
+#
+options:
+
+  # # Cache location for differend needs (styles compiler, mincer, ...),
+  # # anyone can create additional subfolders there.
+  # # Path is relative to main app's root. By default - './.cache'
+  # #
+  # cache_dir: ./.cache
 
 
 # Locales
@@ -32,12 +38,11 @@ bind:
   # SYNOPSIS:
   #
   # <apiPath>:
-  #   mount: [<proto>:][//<host>[:<port>]][/<path>]
+  #   mount: [<proto>:][//[<host>][:<port>]][/<path>]
   #   listen: <address>[:<port = 80>]
   #   ssl:
   #     key:  /path/to/file.key   # Path might be absolute
-  #     cert: /path/to/file.cert  # or relative to the root
-  #     pfs:  /path/to/file.pfx   # of main nodeca application
+  #     cert: /path/to/file.cert  # or relative to the main app
   #
   # SSL EXAMPLE:
   #
