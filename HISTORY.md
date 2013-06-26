@@ -1,10 +1,11 @@
-4.0.1 / ...
+4.0.1 / 2013-06-26
 ------------------
 
 * Updated FontAwesome to 3.2.1
 * Updated MFG Labs font
 * Updated Typicons font to 2.0
 * Switched to node v0.10
+* Added styles cache (improved restart time)
 
 
 4.0.0 / 2013-06-02
