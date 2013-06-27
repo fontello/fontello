@@ -208,6 +208,43 @@ window.NodecaLoader = (function () {
     });
   };
 
+  // Internal module object initializer. Used only at first `require`.
+  function initModule(target) {
+    function resolveI18nPath(path) {
+      if ('@' === path.charAt(0)) {
+        return path.slice(1);
+      } else {
+        return target.apiPath + '.' + path;
+      }
+    }
+
+    // Local `t` (translate) function for use only within this module.
+    // It allows to use phrase strings relative to the module's API path.
+    function translationHelper(phrase, params) {
+      return N.runtime.t(resolveI18nPath(phrase), params);
+    }
+
+    translationHelper.exists = function translationExistsHelper(phrase) {
+      return N.runtime.t.exists(resolveI18nPath(phrase));
+    }
+
+    // `module` variable inside the module body.
+    target.module = {
+      apiPath: target.apiPath
+    , exports: {}
+    };
+
+    // Execute the module's `func` function. It will populate the exports.
+    target.func.call(
+      window // this object
+    , N
+    , require // pass self
+    , target.module.exports
+    , target.module
+    , translationHelper
+    );
+  }
+
 
   // Global-only require used to initialize the loaded packages.
   function require(id) {
@@ -219,39 +256,7 @@ window.NodecaLoader = (function () {
 
     // If it's a first require of the given module, initialize it first.
     if (!target.module) {
-      function resolveI18nPath(path) {
-        if ('@' === path.charAt(0)) {
-          return path.slice(1);
-        } else {
-          return target.apiPath + '.' + path;
-        }
-      }
-
-      // Local `t` (translate) function for use only within this module.
-      // It allows to use phrase strings relative to the module's API path.
-      function translationHelper(phrase, params) {
-        return N.runtime.t(resolveI18nPath(phrase), params);
-      }
-
-      translationHelper.exists = function translationExistsHelper(phrase) {
-        return N.runtime.t.exists(resolveI18nPath(phrase));
-      }
-
-      // `module` variable inside the module body.
-      target.module = {
-        apiPath: target.apiPath
-      , exports: {}
-      };
-
-      // Execute the module's `func` function. It will populate the exports.
-      target.func.call(
-        window // this object
-      , N
-      , require // pass self
-      , target.module.exports
-      , target.module
-      , translationHelper
-      );
+      initModule(target);
     }
 
     return target.module.exports;

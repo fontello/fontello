@@ -12,7 +12,7 @@ packages:
       - async
 
     client:
-      main: client/system/n.js.ejs
+      main: client/system/main.js
       include: client/**.js
       exclude: /(^|\/)_.*/
 
