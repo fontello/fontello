@@ -1,0 +1,1 @@
+`server:<method.name>` chain is for methods, defined in `./server` folder

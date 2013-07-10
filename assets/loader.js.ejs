@@ -17,6 +17,23 @@ window.NodecaLoader = (function () {
     , URL_ES5_SHIM   = <%- JSON.stringify(asset_path('vendor/es5-shim/es5-shim.js')) %>;
 
 
+  // Simple cross-browser `forEach` iterator for arrays.
+  function forEach(array, iterator) {
+    var index, length;
+
+    for (index = 0, length = array.length; index < length; index += 1) {
+      iterator(array[index], index);
+    }
+  }
+
+  function isFunction(object) {
+    return '[object Function]' === Object.prototype.toString.call(object);
+  }
+
+  // Cached non-operable function.
+  function noop() {}
+
+
   // Mapping of package names to package metadata for all available packages at
   // the currect locale. The metadata is an object consists of three keys:
   //
@@ -33,48 +50,12 @@ window.NodecaLoader = (function () {
   var loaded = {};
 
 
-  // Hash-table storage of all the defined modules (from the loaded packages).
-  // A key may be either an absolute path to module files or alias name of the
-  // module. An associated value is the module's metadata object. Such objects
-  // have the following structure:
-  //
-  //   `root`    - Absolute path to the module's directory.
-  //   `apiPath` - Nodeca API path to use with Wire.
-  //               Example: "admin.users.usergroups.create"
-  //   `func`    - Function with all actual code of the module.
-  //               It's executed on the first require.
-  //
-  var modules = {};
-
-
   // Sandbox object passed as an argument to each module.
   // It should be filled via `NodecaLoader.execute`.
   var N = { loader: NodecaLoader };
 
-
-  // Simple cross-browser `forEach` iterator for arrays.
-  function forEach(array, iterator) {
-    var index, length;
-
-    for (index = 0, length = array.length; index < length; index += 1) {
-      iterator(array[index], index);
-    }
-  }
-
-
-  function isArray(object) {
-    return '[object Array]' === Object.prototype.toString.call(object);
-  }
-
-
-  function isFunction(object) {
-    return '[object Function]' === Object.prototype.toString.call(object);
-  }
-
-
-  // Cached non-operable function.
-  function noop() {}
-
+  // For easy debugging only.
+  NodecaLoader.N = N;
 
   // Returns route match data for the given method (e.g. GET) on the given URL
   // or null if none is found. Requires N to be initialized.
@@ -95,6 +76,120 @@ window.NodecaLoader = (function () {
     // Not found.
     return null;
   }
+
+
+  // Storage of registered Node modules.
+  // Keys are absolute file paths like '/absolute/path/to/module.js'
+  var nodeModules = {};
+
+  function registerNodeModule(path, func) {
+    nodeModules[path] = {
+      initialized: false
+    , func: func
+    , internal: { exports: {} }
+    };
+  };
+
+  function requireNodeModule(path) {
+    var module = nodeModules[path];
+
+    if (!module) {
+      throw new Error('Unknown module "' + module + '"');
+    }
+
+    // If it's a first require of the given module, initialize it first.
+    if (!module.initialized) {
+      module.func.call(
+        window // this object
+      , N
+      , requireNodeModule
+      , module.internal.exports
+      , module.internal
+      );
+      module.initialized = true;
+    }
+
+    return module.internal.exports;
+  }
+
+  // Really needed export.
+  NodecaLoader.registerNodeModule = registerNodeModule;
+
+  // For easy debugging only.
+  NodecaLoader.nodeModules       = nodeModules;
+  NodecaLoader.requireNodeModule = requireNodeModule;
+
+
+  // Storage of registered client modules.
+  // Keys are API paths like 'app.method.submethod'
+  var clientModules = {};
+
+  function registerClientModule(apiPath, func) {
+    clientModules[apiPath] = {
+      initialized: false
+    , func: func
+    , internal: { exports: {}, apiPath: apiPath }
+    };
+  };
+
+  // Initialize client module. Used once per module.
+  function initSingleClientModule(module) {
+    function resolveI18nPath(path) {
+      if ('@' === path.charAt(0)) {
+        return path.slice(1);
+      } else {
+        return module.internal.apiPath + '.' + path;
+      }
+    }
+
+    // Local `t` (translate) function for use only within this module.
+    // It allows to use phrase strings relative to the module's API path.
+    function translationHelper(phrase, params) {
+      return N.runtime.t(resolveI18nPath(phrase), params);
+    }
+
+    translationHelper.exists = function translationExistsHelper(phrase) {
+      return N.runtime.t.exists(resolveI18nPath(phrase));
+    }
+
+    // Execute the module's `func` function. It will populate the exports.
+    module.func.call(
+      window // this object
+    , N
+    , requireNodeModule
+    , module.internal.exports
+    , module.internal
+    , translationHelper
+    );
+  }
+
+  // Initializes all loaded client modules. Once per module.
+  function initClientModules() {
+    var apiPath, module;
+
+    for (apiPath in clientModules) {
+      if (!Object.prototype.hasOwnProperty.call(clientModules, apiPath)) {
+        continue;
+      }
+
+      module = clientModules[apiPath];
+
+      if (module.initialized) {
+        continue;
+      }
+
+      initSingleClientModule(module);
+      module.initialized = true;
+    }
+  }
+
+  // Really needed export.
+  NodecaLoader.registerClientModule = registerClientModule;
+
+  // For easy debugging only.
+  NodecaLoader.clientModules          = clientModules;
+  NodecaLoader.initSingleClientModule = initSingleClientModule;
+  NodecaLoader.initClientModules      = initClientModules;
 
 
   // Load a package with all of associated assets ans dependences.
@@ -134,6 +229,7 @@ window.NodecaLoader = (function () {
         load: resources,
         complete: function () {
           forEach(resources, function (res) { loaded[res] = true; });
+          initClientModules();
           callback();
         }
       });
@@ -208,92 +304,18 @@ window.NodecaLoader = (function () {
     });
   };
 
-  // Internal module object initializer. Used only at first `require`.
-  function initModule(target) {
-    function resolveI18nPath(path) {
-      if ('@' === path.charAt(0)) {
-        return path.slice(1);
-      } else {
-        return target.apiPath + '.' + path;
-      }
-    }
-
-    // Local `t` (translate) function for use only within this module.
-    // It allows to use phrase strings relative to the module's API path.
-    function translationHelper(phrase, params) {
-      return N.runtime.t(resolveI18nPath(phrase), params);
-    }
-
-    translationHelper.exists = function translationExistsHelper(phrase) {
-      return N.runtime.t.exists(resolveI18nPath(phrase));
-    }
-
-    // `module` variable inside the module body.
-    target.module = {
-      apiPath: target.apiPath
-    , exports: {}
-    };
-
-    // Execute the module's `func` function. It will populate the exports.
-    target.func.call(
-      window // this object
-    , N
-    , require // pass self
-    , target.module.exports
-    , target.module
-    , translationHelper
-    );
-  }
-
-
-  // Global-only require used to initialize the loaded packages.
-  function require(id) {
-    var target = modules[id];
-
-    if (!target) {
-      throw new Error('Unknown module "' + id + '"');
-    }
-
-    // If it's a first require of the given module, initialize it first.
-    if (!target.module) {
-      initModule(target);
-    }
-
-    return target.module.exports;
-  }
-
-
-  // Defines a module. See comment on `modules` variable for details.
-  function define(identifiers, apiPath, func) {
-    if (!isArray(identifiers)) {
-      identifiers = [ identifiers ];
-    }
-
-    var definition = {
-      identifiers: identifiers
-    , apiPath:     apiPath
-    , func:        func
-    };
-
-    forEach(identifiers, function (id) {
-      modules[id] = definition;
-    });
-  }
+  // Really needed export.
+  NodecaLoader.loadAssets = loadAssets;
 
 
   // Instantly executes the given `func` function passing `N` and `require`
   // as arguments.
   function execute(func) {
-    func.call({}, N, require);
+    func.call({}, N, requireNodeModule);
   }
 
-
-  NodecaLoader.N          = N;
-  NodecaLoader.modules    = modules;
-  NodecaLoader.loadAssets = loadAssets;
-  NodecaLoader.require    = require;
-  NodecaLoader.define     = define;
-  NodecaLoader.execute    = execute;
+  // Really needed export.
+  NodecaLoader.execute = execute;
 
 
   return NodecaLoader;
