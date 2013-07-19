@@ -6,21 +6,22 @@
 
 
 var _        = require('lodash');
-var util     = require('util');
+//var util     = require('util');
 var path     = require('path');
 var fs       = require('fs');
 var fstools  = require('fs-tools');
 var execFile = require('child_process').execFile;
 var async    = require('async');
-var ttf2eot  = require('ttf2eot');
+//var ttf2eot  = require('ttf2eot');
 var ttf2woff = require('ttf2woff');
+var svg2ttf  = require('svg2ttf');
 var jade     = require('jade');
 //var AdmZip   = require('adm-zip');
-var io       = require('../../../lib/system/io');
+//var io       = require('../../../lib/system/io');
 
 
-var FONTFORGE_BIN   = 'fontforge';
-var TTFAUTOHINT_BIN = 'ttfautohint';
+//var FONTFORGE_BIN   = 'fontforge';
+//var TTFAUTOHINT_BIN = 'ttfautohint';
 var ZIP_BIN         = 'zip';
 
 
@@ -112,8 +113,8 @@ module.exports = function fontWorker(taskInfo, callback) {
     , configOutput = JSON.stringify(taskInfo.clientConfig, null, '  ')
     , svgOutput
     , ttfOutput
-    , woffOutput
-    , eotOutput;
+    //, eotOutput
+    , woffOutput;
 
   taskInfo.logger.info('%s Start generation: %j', logPrefix, taskInfo.clientConfig);
 
@@ -139,7 +140,7 @@ module.exports = function fontWorker(taskInfo, callback) {
   // Write clinet config and initial SVG font.
   workplan.push(async.apply(fs.writeFile, files.config, configOutput, 'utf8'));
   workplan.push(async.apply(fs.writeFile, files.svg, svgOutput, 'utf8'));
-
+/*
   // Convert SVG to TTF with FontForge.
   workplan.push(function (next) {
     execFile(FONTFORGE_BIN, [
@@ -157,7 +158,23 @@ module.exports = function fontWorker(taskInfo, callback) {
       next();
     });
   });
+*/
 
+  // Convert SVG to TTF
+  workplan.push(function (next) {
+    var ttf;
+
+    try {
+      ttf = svg2ttf(svgOutput);
+    } catch (e) {
+      next(e);
+      return;
+    }
+    //fs.writeFile(files.ttfUnhinted, ttf.buffer, next);
+    fs.writeFile(files.ttf, ttf.buffer, next);
+  });
+
+/*
   // Autohint the resulting TTF.
   workplan.push(async.apply(execFile, TTFAUTOHINT_BIN, [
     '--latin-fallback'
@@ -169,7 +186,7 @@ module.exports = function fontWorker(taskInfo, callback) {
   ], { cwd: taskInfo.cwdDir }));
 
   workplan.push(async.apply(fstools.remove, files.ttfUnhinted));
-
+*/
   // Read the resulting TTF to produce EOT and WOFF.
   workplan.push(function (next) {
     fs.readFile(files.ttf, null, function (err, data) {
@@ -177,13 +194,18 @@ module.exports = function fontWorker(taskInfo, callback) {
       next(err);
     });
   });
-
+/*
   // Convert TTF to EOT.
   workplan.push(function (next) {
-    eotOutput = ttf2eot(ttfOutput);
+    try {
+      eotOutput = ttf2eot(ttfOutput);
+    } catch (e) {
+      next(e);
+      return;
+    }
     fs.writeFile(files.eot, eotOutput, next);
   });
-
+*/
   // Convert TTF to WOFF.
   workplan.push(function (next) {
     ttf2woff(ttfOutput, {}, function (err, data) {
