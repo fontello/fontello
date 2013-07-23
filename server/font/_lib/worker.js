@@ -12,7 +12,7 @@ var fs       = require('fs');
 var fstools  = require('fs-tools');
 var execFile = require('child_process').execFile;
 var async    = require('async');
-//var ttf2eot  = require('ttf2eot');
+var ttf2eot  = require('ttf2eot');
 var ttf2woff = require('ttf2woff');
 var svg2ttf  = require('svg2ttf');
 var jade     = require('jade');
@@ -21,7 +21,7 @@ var jade     = require('jade');
 
 
 //var FONTFORGE_BIN   = 'fontforge';
-//var TTFAUTOHINT_BIN = 'ttfautohint';
+var TTFAUTOHINT_BIN = 'ttfautohint';
 var ZIP_BIN         = 'zip';
 
 
@@ -113,7 +113,7 @@ module.exports = function fontWorker(taskInfo, callback) {
     , configOutput = JSON.stringify(taskInfo.clientConfig, null, '  ')
     , svgOutput
     , ttfOutput
-    //, eotOutput
+    , eotOutput
     , woffOutput;
 
   taskInfo.logger.info('%s Start generation: %j', logPrefix, taskInfo.clientConfig);
@@ -170,11 +170,11 @@ module.exports = function fontWorker(taskInfo, callback) {
       next(e);
       return;
     }
-    //fs.writeFile(files.ttfUnhinted, ttf.buffer, next);
-    fs.writeFile(files.ttf, ttf.buffer, next);
+    fs.writeFile(files.ttfUnhinted, ttf.buffer, next);
+    //fs.writeFile(files.ttf, ttf.buffer, next);
   });
 
-/*
+
   // Autohint the resulting TTF.
   workplan.push(async.apply(execFile, TTFAUTOHINT_BIN, [
     '--latin-fallback'
@@ -186,7 +186,7 @@ module.exports = function fontWorker(taskInfo, callback) {
   ], { cwd: taskInfo.cwdDir }));
 
   workplan.push(async.apply(fstools.remove, files.ttfUnhinted));
-*/
+
   // Read the resulting TTF to produce EOT and WOFF.
   workplan.push(function (next) {
     fs.readFile(files.ttf, null, function (err, data) {
@@ -194,7 +194,7 @@ module.exports = function fontWorker(taskInfo, callback) {
       next(err);
     });
   });
-/*
+
   // Convert TTF to EOT.
   workplan.push(function (next) {
     try {
@@ -205,7 +205,7 @@ module.exports = function fontWorker(taskInfo, callback) {
     }
     fs.writeFile(files.eot, eotOutput, next);
   });
-*/
+
   // Convert TTF to WOFF.
   workplan.push(function (next) {
     ttf2woff(ttfOutput, {}, function (err, data) {
