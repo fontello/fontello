@@ -17,7 +17,7 @@ var ttf2woff = require('ttf2woff');
 var svg2ttf  = require('svg2ttf');
 var jade     = require('jade');
 //var AdmZip   = require('adm-zip');
-//var io       = require('../../../lib/system/io');
+var io       = require('../../../lib/system/io');
 
 
 //var FONTFORGE_BIN   = 'fontforge';
@@ -140,6 +140,7 @@ module.exports = function fontWorker(taskInfo, callback) {
   // Write clinet config and initial SVG font.
   workplan.push(async.apply(fs.writeFile, files.config, configOutput, 'utf8'));
   workplan.push(async.apply(fs.writeFile, files.svg, svgOutput, 'utf8'));
+
 /*
   // Convert SVG to TTF with FontForge.
   workplan.push(function (next) {
@@ -147,7 +148,7 @@ module.exports = function fontWorker(taskInfo, callback) {
       '-c',
       util.format('font = fontforge.open(%j); font.generate(%j)',
       files.svg,
-      files.ttfUnhinted)
+      files.ttf)
     ]
     , { cwd: taskInfo.cwdDir }
     , function (err) {
@@ -170,22 +171,36 @@ module.exports = function fontWorker(taskInfo, callback) {
       next(e);
       return;
     }
-    fs.writeFile(files.ttfUnhinted, ttf.buffer, next);
-    //fs.writeFile(files.ttf, ttf.buffer, next);
+    fs.writeFile(files.ttf, ttf.buffer, next);
   });
 
 
   // Autohint the resulting TTF.
-  workplan.push(async.apply(execFile, TTFAUTOHINT_BIN, [
-    '--latin-fallback'
-  , '--no-info'
-  , '--windows-compatibility'
-  , '--symbol'
-  , files.ttfUnhinted
-  , files.ttf
-  ], { cwd: taskInfo.cwdDir }));
+  workplan.push(function (next) {
+    fs.rename(files.ttf, files.ttfUnhinted, function (err) {
+      if (err) {
+        next(err);
+        return;
+      }
 
-  workplan.push(async.apply(fstools.remove, files.ttfUnhinted));
+      execFile(TTFAUTOHINT_BIN, [
+        '--latin-fallback'
+      , '--no-info'
+      , '--windows-compatibility'
+      , '--symbol'
+      , files.ttfUnhinted
+      , files.ttf
+      ], { cwd: taskInfo.cwdDir }, function (err) {
+        if (err) {
+          next({ code: io.APP_ERROR, message: 'ttfautohint error' });
+          return;
+        }
+
+        fs.unlink(files.ttfUnhinted, next);
+      });
+    });
+  });
+
 
   // Read the resulting TTF to produce EOT and WOFF.
   workplan.push(function (next) {
@@ -194,6 +209,7 @@ module.exports = function fontWorker(taskInfo, callback) {
       next(err);
     });
   });
+
 
   // Convert TTF to EOT.
   workplan.push(function (next) {
@@ -206,6 +222,7 @@ module.exports = function fontWorker(taskInfo, callback) {
     fs.writeFile(files.eot, eotOutput, next);
   });
 
+
   // Convert TTF to WOFF.
   workplan.push(function (next) {
     ttf2woff(ttfOutput, {}, function (err, data) {
@@ -217,6 +234,7 @@ module.exports = function fontWorker(taskInfo, callback) {
       fs.writeFile(files.woff, data, next);
     });
   });
+
 
   // Write template files. (generate dynamic and copy static)
   _.forEach(TEMPLATES, function (templateData, templateName) {
@@ -231,6 +249,7 @@ module.exports = function fontWorker(taskInfo, callback) {
       fs.writeFile(outputFile, outputData, 'utf8', next);
     });
   });
+
 
   // Create zipball.
   // Use ".tmp" extension here to prevent Fontello from allowing to
@@ -269,11 +288,14 @@ module.exports = function fontWorker(taskInfo, callback) {
   });
   */
 
+
   // Remove ".tmp" extension from zip file to mark it as *completed*.
   workplan.push(async.apply(fstools.move, (taskInfo.output + '.tmp'), taskInfo.output));
 
+
   // Remove temporary files and directories.
   workplan.push(async.apply(fstools.remove, taskInfo.tmpDir));
+
 
   // Execute the workplan.
   async.series(workplan, function (err) {
