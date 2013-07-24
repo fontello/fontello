@@ -166,7 +166,7 @@ module.exports = function fontWorker(taskInfo, callback) {
     var ttf;
 
     try {
-      ttf = svg2ttf(svgOutput);
+      ttf = svg2ttf(svgOutput, { copyright: taskInfo.builderConfig.copyright });
     } catch (e) {
       next(e);
       return;
