@@ -44,7 +44,7 @@
                         "stylus"        : "~ 0.32.1",
                         "svgo"          : "~ 0.3.7",
                         "ttf2eot"       : "~ 1.2.0",
-                        "ttf2woff"      : "~ 1.0.1",
+                        "ttf2woff"      : "~ 1.1.0",
                         "svg2ttf"       : "git://github.com/fontello/svg2ttf.git",
                         "uglify-js"     : "~ 2.3.6",
                         "xmldom"        : "~ 0.1.16"
