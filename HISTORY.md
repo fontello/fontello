@@ -1,3 +1,12 @@
+4.1.0 / --
+------------------
+
+* Don't use `fontforge` anymore (build fonts with node js packages)
+* Woff fix for uncompressed tables
+* Improved restart time (use new `mincer` with better cache)
+* Minor codebase syncs with `nodeca` platform
+
+
 4.0.1 / 2013-06-26
 ------------------
 
