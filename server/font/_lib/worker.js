@@ -195,9 +195,12 @@ module.exports = function fontWorker(taskInfo, callback) {
       , '--symbol'
       , files.ttfUnhinted
       , files.ttf
-      ], { cwd: taskInfo.cwdDir }, function (err) {
+      ], { cwd: taskInfo.cwdDir }, function (err, stdout, stderr) {
         if (err) {
-          next({ code: io.APP_ERROR, message: 'ttfautohint error' });
+          next({
+            code: io.APP_ERROR,
+            message: 'ttfautohint error:\n' + err + '\n' + stdout.toString() + '\n' + stderr.toString()
+          });
           return;
         }
 

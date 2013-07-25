@@ -356,6 +356,10 @@ N.wire.once('navigate.done', function () {
     N.wire.emit('session_save');
   });
 
+  N.app.hinting.subscribe(function () {
+    N.wire.emit('session_save');
+  });
+
   N.app.encoding.subscribe(function () {
     N.wire.emit('session_save');
   });
