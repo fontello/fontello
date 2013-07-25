@@ -166,7 +166,7 @@ module.exports = function fontWorker(taskInfo, callback) {
     var ttf;
 
     try {
-      ttf = svg2ttf(svgOutput, { copyright: taskInfo.builderConfig.copyright });
+      ttf = svg2ttf(svgOutput, { copyright: taskInfo.builderConfig.font.copyright });
     } catch (e) {
       next(e);
       return;
@@ -177,6 +177,11 @@ module.exports = function fontWorker(taskInfo, callback) {
 
   // Autohint the resulting TTF.
   workplan.push(function (next) {
+    if (!taskInfo.builderConfig.hinting) {
+      next();
+      return;
+    }
+
     fs.rename(files.ttf, files.ttfUnhinted, function (err) {
       if (err) {
         next(err);

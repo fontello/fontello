@@ -6,6 +6,7 @@
 //   name:
 //   css_prefix_text:
 //   css_use_suffix:
+//   hinting:
 //   glyphs:
 //     - uid:
 //       src: fontname
@@ -133,6 +134,7 @@ module.exports = function fontConfig(clientConfig) {
     , descent:    -150
     , weight:     400
     }
+  , hinting : clientConfig.hinting !== false
   , meta: {
       columns: 4 // Used by the demo page.
       // Set defaults if fields not exists in config

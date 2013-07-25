@@ -290,6 +290,7 @@ N.app.fontSize      = ko.observable(DEFAULT_GLYPH_SIZE);
 N.app.fontName      = ko.observable('');
 N.app.cssPrefixText = ko.observable('icon-');
 N.app.cssUseSuffix  = ko.observable(false);
+N.app.hinting       = ko.observable(true);
 N.app.encoding      = ko.observable('pua');
 
 N.app.apiMode     = ko.observable(false);
@@ -301,7 +302,8 @@ N.app.getConfig   = function () {
   var config = {
     name: $.trim(N.app.fontName()),
     css_prefix_text: $.trim(N.app.cssPrefixText()),
-    css_use_suffix: N.app.cssUseSuffix()
+    css_use_suffix: N.app.cssUseSuffix(),
+    hinting: N.app.hinting()
   };
 
   config.glyphs = _.map(N.app.fontsList.selectedGlyphs(), function (glyph) {
@@ -401,6 +403,10 @@ N.wire.once('navigate.done', function () {
         glyph.name(glyph.originalName);
       });
     });
+  });
+
+  N.wire.on('cmd:toggle_hinting', function () {
+    N.app.hinting(!N.app.hinting());
   });
 
   N.wire.on('cmd:set_encoding_pua', function () {

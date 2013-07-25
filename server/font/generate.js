@@ -25,6 +25,10 @@ module.exports = function (N, apiPath) {
       type: 'boolean'
     , required: true
     }
+  , hinting: {
+      type: 'boolean'
+    , required: false
+    }
   , glyphs: {
       type: 'array'
     , required: true

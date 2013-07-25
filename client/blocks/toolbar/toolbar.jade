@@ -58,6 +58,16 @@
                   input(type='checkbox', data-bind='checked: cssUseSuffix')
                   = self.t('menu_css_use_suffix')
           li.divider
+          li: a(
+                href='#'
+                data-on-click='cmd:toggle_hinting',
+                data-content=self.t('menu_hinting_help'),
+                data-placement='right',
+                data-trigger='hover',
+                data-container='.navbar-fixed-top'
+                data-delay='{"show":500,"hide":100}'
+                data-bind='{ "css": hinting() ? "icon-check" : "" }'
+              )._popover= self.t('menu_hinting')
           li.dropdown-submenu
             a(href='#')= self.t('menu_encoding')
             ul.dropdown-menu

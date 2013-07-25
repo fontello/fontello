@@ -22,6 +22,7 @@ function import_config(str, file) {
     N.app.fontName(config.name || '');
     N.app.cssPrefixText(String(config.css_prefix_text || 'icon-'));
     N.app.cssUseSuffix(config.css_use_suffix === true);
+    N.app.hinting(config.hinting !== false);  // compatibility with old configs
 
     // reset selection prior to set glyph data
     _.each(N.app.fontsList.selectedGlyphs(), function (glyph) { glyph.selected(false); });

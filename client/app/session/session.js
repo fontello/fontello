@@ -88,6 +88,7 @@ N.wire.on('session_save', _.debounce(function () {
   session.fontname        = N.app.fontName();
   session.css_prefix_text = N.app.cssPrefixText();
   session.css_use_suffix  = N.app.cssUseSuffix();
+  session.hinting         = N.app.hinting();
   session.encoding        = N.app.encoding();
   session.fonts           = {};
 
@@ -167,6 +168,8 @@ N.wire.on('session_load', function () {
   } else {
     N.app.encoding('pua'); // legacy fallback
   }
+
+  N.app.hinting(session.hinting !== false);
 
   // reset selection prior to set glyph data
   // not nesessary now, since we load session only on start
