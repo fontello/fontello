@@ -6,7 +6,7 @@
 
 
 var _        = require('lodash');
-var util     = require('util');
+var format   = require('util').format;
 var path     = require('path');
 var fs       = require('fs');
 var fstools  = require('fs-tools');
@@ -14,15 +14,10 @@ var execFile = require('child_process').execFile;
 var async    = require('async');
 var ttf2eot  = require('ttf2eot');
 var ttf2woff = require('ttf2woff');
-//var svg2ttf  = require('svg2ttf');
+var svg2ttf  = require('svg2ttf');
 var jade     = require('jade');
 //var AdmZip   = require('adm-zip');
 var io       = require('../../../lib/system/io');
-
-
-var FONTFORGE_BIN   = 'fontforge';
-var TTFAUTOHINT_BIN = 'ttfautohint';
-var ZIP_BIN         = 'zip';
 
 
 var TEMPLATES_DIR = path.join(__dirname, '../../../support/font-templates');
@@ -129,24 +124,29 @@ module.exports = function fontWorker(taskInfo, callback) {
   };
 
   // Generate initial SVG font.
+
   svgOutput = SVG_FONT_TEMPLATE(taskInfo.builderConfig);
 
   // Prepare temporary working directory.
+
   workplan.push(async.apply(fstools.remove, taskInfo.tmpDir));
   workplan.push(async.apply(fstools.mkdir, taskInfo.tmpDir));
   workplan.push(async.apply(fstools.mkdir, path.join(taskInfo.tmpDir, 'font')));
   workplan.push(async.apply(fstools.mkdir, path.join(taskInfo.tmpDir, 'css')));
 
   // Write clinet config and initial SVG font.
+
   workplan.push(async.apply(fs.writeFile, files.config, configOutput, 'utf8'));
   workplan.push(async.apply(fs.writeFile, files.svg, svgOutput, 'utf8'));
 
+/*
+  // Convert SVG to TTF with FontForge
 
-  // Convert SVG to TTF with FontForge.
+  var FONTFORGE_BIN = 'fontforge';
   workplan.push(function (next) {
     execFile(FONTFORGE_BIN, [
       '-c',
-      util.format('font = fontforge.open(%j); font.generate(%j)',
+      format('font = fontforge.open(%j); font.generate(%j)',
       files.svg,
       files.ttf)
     ]
@@ -159,9 +159,10 @@ module.exports = function fontWorker(taskInfo, callback) {
       next();
     });
   });
+*/
 
-/*
   // Convert SVG to TTF
+
   workplan.push(function (next) {
     var ttf;
 
@@ -173,9 +174,11 @@ module.exports = function fontWorker(taskInfo, callback) {
     }
     fs.writeFile(files.ttf, ttf.buffer, next);
   });
-*/
+
 
   // Autohint the resulting TTF.
+
+  var TTFAUTOHINT_BIN = 'ttfautohint';
   workplan.push(function (next) {
     if (!taskInfo.builderConfig.hinting) {
       next();
@@ -199,7 +202,7 @@ module.exports = function fontWorker(taskInfo, callback) {
         if (err) {
           next({
             code: io.APP_ERROR,
-            message: 'ttfautohint error:\n' + err + '\n' + stdout.toString() + '\n' + stderr.toString()
+            message: format('ttfautohint error:\n%s\n%s\n%s', err, stdout, stderr)
           });
           return;
         }
@@ -211,6 +214,7 @@ module.exports = function fontWorker(taskInfo, callback) {
 
 
   // Read the resulting TTF to produce EOT and WOFF.
+
   workplan.push(function (next) {
     fs.readFile(files.ttf, null, function (err, data) {
       ttfOutput = data;
@@ -220,6 +224,7 @@ module.exports = function fontWorker(taskInfo, callback) {
 
 
   // Convert TTF to EOT.
+
   workplan.push(function (next) {
     try {
       eotOutput = ttf2eot(ttfOutput);
@@ -232,6 +237,7 @@ module.exports = function fontWorker(taskInfo, callback) {
 
 
   // Convert TTF to WOFF.
+
   workplan.push(function (next) {
     ttf2woff(ttfOutput, {}, function (err, data) {
       if (err) {
@@ -245,6 +251,7 @@ module.exports = function fontWorker(taskInfo, callback) {
 
 
   // Write template files. (generate dynamic and copy static)
+
   _.forEach(TEMPLATES, function (templateData, templateName) {
     var outputName = templateName.replace('${FONTNAME}', fontname)
       , outputFile = path.join(taskInfo.tmpDir, outputName)
@@ -262,10 +269,13 @@ module.exports = function fontWorker(taskInfo, callback) {
   // Create zipball.
   // Use ".tmp" extension here to prevent Fontello from allowing to
   // download this file while it's *in progress*.
+
   workplan.push(async.apply(fstools.remove, taskInfo.output));
   workplan.push(async.apply(fstools.mkdir, path.dirname(taskInfo.output)));
 
   // switch to node's module for portability
+
+  var ZIP_BIN = 'zip';
   workplan.push(async.apply(execFile, ZIP_BIN, [
     taskInfo.output + '.tmp'
   , '-r'
