@@ -43,9 +43,10 @@ rebuild:
 		-s lib/embedded_fonts/server_config.js
 
 	# convert to other formats
-	fontforge -c 'font = fontforge.open("$(FONT_DIR)/fontello.svg"); font.generate("$(FONT_DIR)/fontello-unhinted.ttf")'
-	ttfautohint --latin-fallback --hinting-limit=200 --hinting-range-max=50 --symbol $(FONT_DIR)/fontello-unhinted.ttf $(FONT_DIR)/fontello.ttf
-	rm $(FONT_DIR)/fontello-unhinted.ttf
+	#fontforge -c 'font = fontforge.open("$(FONT_DIR)/fontello.svg"); font.generate("$(FONT_DIR)/fontello-unhinted.ttf")'
+	./node_modules/.bin/svg2ttf "$(FONT_DIR)/fontello.svg" "$(FONT_DIR)/fontello.ttf"
+	#ttfautohint --latin-fallback --hinting-limit=200 --hinting-range-max=50 --symbol $(FONT_DIR)/fontello-unhinted.ttf $(FONT_DIR)/fontello.ttf
+	#rm $(FONT_DIR)/fontello-unhinted.ttf
 	./node_modules/.bin/ttf2eot "$(FONT_DIR)/fontello.ttf" "$(FONT_DIR)/fontello.eot"
 	./node_modules/.bin/ttf2woff "$(FONT_DIR)/fontello.ttf" "$(FONT_DIR)/fontello.woff"
 
