@@ -43,7 +43,7 @@ module.exports = function (N, apiPath) {
         return;
       }
 
-      env.response.data.id = info.fontId;
+      env.res.id = info.fontId;
       callback();
     });
   });

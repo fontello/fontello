@@ -148,7 +148,7 @@ N.wire.once('navigate.done', function (data) {
 
     toolbar.building(true);
 
-    N.io.rpc('fontello.font.generate', config, function (err, response) {
+    N.io.rpc('fontello.font.generate', config, function (err, res) {
       toolbar.building(false);
 
       // check status
@@ -161,7 +161,7 @@ N.wire.once('navigate.done', function (data) {
       }
 
       // inject download url via iframe to start download
-      var id = response.data.id;  // generated file id
+      var id = res.id;  // generated file id
       var url = N.runtime.router.linkTo('fontello.font.download', { id: id });
       $('iframe#' + id).remove();
       $('<iframe></iframe>')

@@ -98,7 +98,7 @@ module.exports = function (N, apiPath) {
 
         shortLink.ts = Date.now();
         shortLink.sid = crypto.randomBytes(16).toString('hex');
-        shortLink.ip = env.request.ip;
+        shortLink.ip = env.req.ip;
         shortLink.config = config;
         if (fields.url) { shortLink.url = fields.url; }
 

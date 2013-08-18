@@ -36,7 +36,7 @@ module.exports = function (N, apiPath) {
     //env.headers['ETag']          = etag;
     //env.headers['Cache-Control'] = 'private, max-age=0, must-revalidate';
 
-    env.response.layout          = 'fontello.layout';
+    env.res.layout          = 'fontello.layout';
 
     // if requested page with config id - try te fetch data,
     // and redirect to main on error

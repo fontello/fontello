@@ -28,7 +28,7 @@ module.exports = function (N, apiPath) {
     var req = env.origin.req
       , res = env.origin.res;
 
-    if ('http' !== env.request.type) {
+    if ('http' !== env.req.type) {
       callback(N.io.BAD_REQUEST);
       return;
     }
