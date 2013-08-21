@@ -43,7 +43,7 @@ Reopen terminal. Install node (long), and set default version:
 
 Install fontello sources & dependencies:
 
-    sudo apt-get install zip inotify-tools fontforge python-fontforge
+    sudo apt-get install zip inotify-tools
     git clone git://github.com/fontello/fontello.git
     cd fontello
     git submodule init
