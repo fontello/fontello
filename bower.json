@@ -1,4 +1,5 @@
 {
+  "name"        : "fontello",
   "dependencies": {
     "yepnope"     : "~1.5.4",
     "jquery"      : "~1.10.1",
