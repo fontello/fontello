@@ -53,6 +53,15 @@ When more examples available, those will be added here.
 Note. When you open site via API url, `download` button will have another text.
 
 
+### Examples
+
+* [Makefile](https://gist.github.com/puzrin/5537065) - quick load iconic font
+  from your project via CLI & save result back.
+* [fontello-cli](https://github.com/paulyoung/fontello-cli) - the same, as above,
+  but written in `node.js`. If you don't like `make` utility, then
+  `fontello-cli` is for you :)
+
+
 ## Contacts
 
 - Questions: [Google group](https://groups.google.com/group/fontello/)
@@ -68,6 +77,7 @@ Note. When you open site via API url, `download` button will have another text.
 - Aleksey Zapparov ([ixti](https://github.com/ixti)).
   [Follow](https://twitter.com/zapparov) on twitter.
 - Evgeny Shkuropat ([shkuropat](https://github.com/shkuropat)).
+- Vladimir Zapparov ([dervus](https://github.com/dervus)).
 
 
 ## License
