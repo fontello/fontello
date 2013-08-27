@@ -86,7 +86,8 @@ Fontello's code (all files, except fonts) is distributed under MIT license. See
 [LICENSE](https://github.com/fontello/fontello/blob/master/LICENSE) file for details.
 
 Embedded fonts are distributed under their primary licenses (SIL OFL / CC BY / CC BY-SA).
-See fonts info on fontello website for credits & links to homepages.
+See fonts info on fontello website for credits & links to homepages. This info is also
+included in generated font archives for your convenience (see LICENSE.txt file).
 
 Generated fonts are intended for web usage, and should not be
 considered/distributed as independent artwork. Consider fontello a
