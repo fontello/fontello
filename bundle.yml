@@ -8,8 +8,8 @@ packages:
     # in single package, modules become "shared" automatically
     vendor:
       - lodash
-      - knockout
-      - async
+    #  - knockout
+    #  - async
 
     client:
       main: client/system/main.js
@@ -40,4 +40,5 @@ packages:
         - loader.js.ejs
         - vendor/json2/json2.js
         - vendor/es5-shim/es5-shim.js
-        - /\.(eot|svg|ttf|woff)$/
+        - icons/src/font/*
+        - embedded_fonts/*

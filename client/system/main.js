@@ -6,7 +6,7 @@
 //= require vendor/jquery-ui/ui/jquery.ui.mouse
 //= require vendor/jquery-ui/ui/jquery.ui.selectable
 //= require vendor/jquery-ui/ui/jquery.ui.slider
-//= require vendor/bootstrap_custom/bootstrap
+//= require bootstrap_custom/
 //= require vendor/jszip/jszip
 //= require vendor/jszip/jszip-inflate
 //= require vendor/jszip/jszip-load
