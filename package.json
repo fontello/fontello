@@ -40,6 +40,7 @@
                         "pointer"       : "~ 0.1.7",
                         "puncher"       : "~ 1.1.1",
                         "revalidator"   : "~ 0.1.5",
+                        "resolve"       : "~ 0.5.0",
                         "send"          : "~ 0.1.0",
                         "stylus"        : "~ 0.32.1",
                         "svgo"          : "~ 0.3.7",
