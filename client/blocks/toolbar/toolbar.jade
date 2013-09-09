@@ -139,39 +139,38 @@
               data-delay='{"show":500,"hide":100}'
               data-bind='{ "css": hinting() ? "icon-check" : "" }'
             )._popover= self.t('menu_hinting')
-        li.dropdown-submenu
-          a(href='#')= self.t('menu_encoding')
-          ul.dropdown-menu
-            li: a(
-                  href='#'
-                  data-on-click='cmd:set_encoding_pua',
-                  data-content=self.t('menu_encoding_pua_help'),
-                  data-placement='right',
-                  data-trigger='hover',
-                  data-container='.layout__fixed'
-                  data-delay='{"show":500,"hide":100}'
-                  data-bind='{ "css": encoding() === "pua" ? "icon-check" : "icon-empty" }'
-                )._popover= self.t('menu_encoding_pua')
-            li: a(
-                  href='#'
-                  data-on-click='cmd:set_encoding_ascii',
-                  data-content=self.t('menu_encoding_ascii_help'),
-                  data-placement='right',
-                  data-trigger='hover',
-                  data-container='.layout__fixed'
-                  data-delay='{"show":500,"hide":100}'            
-                  data-bind='{ "css": encoding() === "ascii" ? "icon-check" : "icon-empty" }'
-                )._popover= self.t('menu_encoding_ascii')
-            li: a(
-                  href='#'
-                  data-on-click='cmd:set_encoding_unicode',
-                  data-content=self.t('menu_encoding_unicode_help'),
-                  data-placement='right',
-                  data-trigger='hover',
-                  data-container='.layout__fixed'
-                  data-delay='{"show":500,"hide":100}'            
-                  data-bind='{ "css": encoding() === "unicode" ? "icon-check" : "icon-empty" }'
-                )._popover= self.t('menu_encoding_unicode')
+        li.divider
+        li.dropdown-header= self.t('menu_encoding')
+        li: a(
+              href='#'
+              data-on-click='cmd:set_encoding_pua',
+              data-content=self.t('menu_encoding_pua_help'),
+              data-placement='right',
+              data-trigger='hover',
+              data-container='.layout__fixed'
+              data-delay='{"show":500,"hide":100}'
+              data-bind='{ "css": encoding() === "pua" ? "icon-check" : "icon-empty" }'
+            )._popover= self.t('menu_encoding_pua')
+        li: a(
+              href='#'
+              data-on-click='cmd:set_encoding_ascii',
+              data-content=self.t('menu_encoding_ascii_help'),
+              data-placement='right',
+              data-trigger='hover',
+              data-container='.layout__fixed'
+              data-delay='{"show":500,"hide":100}'            
+              data-bind='{ "css": encoding() === "ascii" ? "icon-check" : "icon-empty" }'
+            )._popover= self.t('menu_encoding_ascii')
+        li: a(
+              href='#'
+              data-on-click='cmd:set_encoding_unicode',
+              data-content=self.t('menu_encoding_unicode_help'),
+              data-placement='right',
+              data-trigger='hover',
+              data-container='.layout__fixed'
+              data-delay='{"show":500,"hide":100}'            
+              data-bind='{ "css": encoding() === "unicode" ? "icon-check" : "icon-empty" }'
+            )._popover= self.t('menu_encoding_unicode')
 
 
     .btn-group.hidden-xs.hidden-sm.pull-right
