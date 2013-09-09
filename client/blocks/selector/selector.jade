@@ -1,9 +1,9 @@
 #selector.tab-pane.fade
-  ul#selector-fonts.unstyled(data-bind="style: { 'fontSize': fontSize() + 'px' }, css: { 'search-mode': searchMode }")
+  ul#selector-fonts.list-unstyled(data-bind="style: { 'fontSize': fontSize() + 'px' }, css: { 'search-mode': searchMode }")
     // ko foreach: fontsList.fonts
     li.ui-selectable(data-bind="visible: visibleCount, attr: { id: fontname }, css: { _collapsed: collapsed }")
 
-      h3.src-font-head
+      h2.src-font-head
         div.font-counters
           small
             span.search-cnt.icon-search(data-bind='text: visibleCount()')
@@ -25,7 +25,7 @@
           a.icon-github-text(data-bind='visible: github, attr: { href: github }', target='_blank')
           a.icon-dribbble(data-bind='visible: dribbble, attr: { href: dribbble }', target='_blank')
 
-      ul.unstyled.font-glyphs.font-fontello(data-bind='foreach: glyphs')
+      ul.list-inline.font-glyphs.font-fontello(data-bind='foreach: glyphs')
         li.glyph(data-bind='visible: visible, attr: { title: tooltip }')
           input(type='checkbox', data-bind='checked: selected, attr: { id: uid }')
           //- class binding for the label - kludge for IE8, that sucks with input:checked

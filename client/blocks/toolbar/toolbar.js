@@ -26,6 +26,7 @@ var knownKeywords = _(require('../../../lib/embedded_fonts/client_config'))
   .flatten()
   .map(String)
   .uniq()
+  .sort()
   .valueOf();
 
 
@@ -191,20 +192,23 @@ N.wire.once('navigate.done', function (data) {
   //
   // Initialize Twitter Bootstrap typeahead plugin
   //
-
   $('#search')
+    .on('change input keyup typeahead:selected', function () {
+      N.app.searchWord($.trim($(this).val()));
+    })
     .on('keyup', function (e) {
       // Clear content on escape
       if (e.keyCode === 27) {
         $(this).val('');
+        N.app.searchWord('');
       }
-      N.app.searchWord($.trim($(this).val()));
     })
-    .on('focus keyup', _.debounce(function () {
+    /*.on('focus keyup', _.debounce(function () {
       $(this).typeahead('hide');
-    }, 3000))
+    }, 3000))*/
     .typeahead({
-      source: knownKeywords
+      name:  'search',
+      local: knownKeywords
     })
     .focus();
 

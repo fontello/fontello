@@ -3,10 +3,11 @@
 
 .toolbar-container
   position relative
-  background-color #f6f6f6
-  padding-top 15px
-  padding-bottom 15px
-  margin-bottom 15px
+  background-color #fcfcfc
+  padding-top 10px
+  padding-bottom 10px
+  margin-bottom 10px
+  border-bottom 1px solid #eee;
 
 .btn-toolbar
   margin 0
@@ -24,57 +25,47 @@
   width: 100px
   display inline-block
   float: left
-  margin-top 11px
+  margin-top 15px
   margin-left .5em
 
 #glyph-size-value
   display inline-block
   float  left
   //height 29px
-  line-height 30px
+  line-height 34px
   margin 0 1em
   color #666
   font-size 11px
 
-//== "3D" switch
-.btn-group .switch-3d
-  display inline-block
-  float left
-  font-size 11px
-  color grayLight
-  line-height 30px
-  input
-    vertical-align top
-    margin-top 7px
-
 //
-// Search icon tweak
+// Search tweak
 //
 
 .search-form
-  .search-query
-    padding-left 25px
-    border-color #888
-  .i-search-box
-    position absolute
-    color gray
-    top 5px
-    left 8px
-    // restore font size
-    font-size 14px
-  .icon-search:before
-    opacity 1
+  .icon-search
+    border-top-left-radius 20px
+    border-bottom-left-radius 20px
+  input
+    border-top-right-radius 20px !important
+    border-bottom-right-radius 20px !important
 
 .search-permalink
   padding-left 4px
   padding-right 4px
 
 //
-// Inline menu form
+// Settings menu
 //
-.menuitem-form
-  padding 3px 20px
-  margin 0
+.toolbar__settings-menu
+  min-width 200px
+  .checkbox
+    margin-top 5px
+    input
+      margin-right 5px
+      vertical-align text-bottom
+  label
+    margin-bottom 2px
+    font-weight normal
 
 /*
  * jQuery UI Slider 1.8.16
@@ -93,7 +84,7 @@
   border-color #bbb #bbb #ddd #ddd
   border-radius 1em
   background #ddd
-  background-image: linear-gradient(top, #bbb 0%, #fff 80%, #ddd 100%);
+  background-image linear-gradient(to bottom, #bbb 0%, #fff 80%, #ddd 100%)
 
   // fix toolbar fontsize reset
   font-size 14px
@@ -108,7 +99,7 @@
   border-radius 2em
   border 1px solid #aaa
   background #aaa
-  background-image: linear-gradient(top, #fff 0%, #eee 50%, #aaa 100%);
+  background-image linear-gradient(to bottom, #fff 0%, #eee 50%, #aaa 100%)
 
   outline none
 
@@ -117,8 +108,8 @@
     content ""
     width .5em
     height .5em
-    top .35em
-    left .35em
+    top .30em
+    left .30em
     // background-color #000
     border-radius 1em
     box-shadow 0 0.2em 0.15em #888888 inset

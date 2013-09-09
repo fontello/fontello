@@ -46,13 +46,11 @@
         "component": {
             "name": "jquery-ui",
             "scripts": [
-                "ui/jquery-ui.custom.js"
+                "ui/jquery-ui.js"
             ],
             "files": [
-                "ui/i18n/jquery.*.js",
-                "themes/*",
-                "themes/*/*",
-                "themes/*/*/*"
+                "ui/**",
+                "themes/**"
             ],
             "shim": {
                 "deps": [

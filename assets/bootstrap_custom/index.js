@@ -1,11 +1,11 @@
-//= require ../vendor/bootstrap/js/bootstrap-collapse
-//= require ../vendor/bootstrap/js/bootstrap-dropdown
-//= require ../vendor/bootstrap/js/bootstrap-modal
-//= require ../vendor/bootstrap/js/bootstrap-tab
-//= require ../vendor/bootstrap/js/bootstrap-tooltip
-//= require ../vendor/bootstrap/js/bootstrap-transition
-//= require ../vendor/bootstrap/js/bootstrap-typeahead
+//= require ../vendor/bootstrap/js/affix
+//= require ../vendor/bootstrap/js/collapse
+//= require ../vendor/bootstrap/js/dropdown
+//= require ../vendor/bootstrap/js/modal
+//= require ../vendor/bootstrap/js/tab
+//= require ../vendor/bootstrap/js/tooltip
+//= require ../vendor/bootstrap/js/transition
 
 // Popover must go AFTER tooltip
-//= require ../vendor/bootstrap/js/bootstrap-popover
+//= require ../vendor/bootstrap/js/popover
 

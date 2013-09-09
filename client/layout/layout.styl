@@ -4,36 +4,25 @@
 body
   padding-top 180px // make the container go all the way to the bottom of the topbar
   padding-bottom 30px
+  min-width 700px
+
+
+.layout__fixed
+  min-width 700px
+  position fixed
+  top 0
+  width 100%
+  background-color #fff
+  box-shadow 0 10px 15px 10px #fff;
+  z-index 10
+
+.layout__navbar
+  box-shadow 0 1px 3px rgba(0, 0, 0, 0.05)
+  margin-bottom 0
+
 
 .drop-progress
   background-color #ffd
-
-.navbar-fixed-top
-  box-shadow 0 10px 15px 10px #fff;
-  background-color white
-
-.navbar
-  box-shadow 0 0 4px #444
-  margin-bottom 0
-  // relative + z-index needed to display shadow
-  position relative
-  z-index 10
-
-.navbar-inverse .nav > li > a
-  color grayLight
-
-.brand
-  line-height 20px
-  padding-top 0 !important
-  padding-bottom 0 !important
-
-.navbar-inner
-  & > .container
-    position relative
-  .notifications
-    position absolute
-    right 0
-    top 155px
 
 
 // Social buttons
@@ -42,9 +31,7 @@ iframe
   &.twitter-follow-button
   &.twitter-share-button
     margin-left 10px
-    margin-top 9px
-  &.FlattrButton
-    margin-top 10px
+    margin-top 15px
 
 .gplus > div
   top 9px
@@ -65,6 +52,12 @@ iframe
   .FlattrButton
     opacity: 1
 
+// We like to hide ugly file input, but can't use display:none, because
+// Chromium will miss events. So, use .invisible, but position out of screen
+//
+input[type="file"].invisible
+  position absolute
+  left -10000px
 
 // Warning for disabled JS
 //

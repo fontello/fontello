@@ -1,175 +1,179 @@
 .container
-  #toolbar.btn-toolbar.clearfix
+  #toolbar.btn-toolbar
 
-    .pull-left
-
-      .btn-group.search-form
-        input#search.input-medium.search-query(
+    .input-group.col-xs-3.col-md-2.col.pull-left.search-form
+      span.input-group-addon.icon-search.icon-only
+      //- this div required to properly set typeahead ghost input width
+      div
+        input#search.form-control.search-query(
           type='text',
           placeholder='search',
           autocomplete='off'
         )
-        div.i-search-box
-          i.icon-search
 
-      .btn-group
-        a.search-permalink.btn.btn-link._popover(
-          data-bind="visible: searchMode(), attr: { 'href': '/#search=' + searchWord() }",
-          style='display:none',
-          data-content=self.t('search_permalink_help'),
-          data-placement='bottom',
-          data-trigger='hover',
-          data-container='.navbar-fixed-top'
-          data-delay='{"show":500,"hide":100}'
+    .btn-group
+      a.search-permalink.btn.btn-link._popover(
+        data-bind="visible: searchMode(), attr: { 'href': '/#search=' + searchWord() }",
+        style='display:none',
+        data-content=self.t('search_permalink_help'),
+        data-placement='bottom',
+        data-trigger='hover',
+        data-container='.layout__fixed'
+        data-delay='{"show":500,"hide":100}'
+      )
+        i.icon-link
+
+
+
+
+    //- Show button, depending on mode
+    .btn-group.pull-right(data-bind='visible: !apiMode()')
+      //- Standard mode - `Download` button
+      button.btn.btn-danger.disabled(
+        data-on-click='build_font',
+        data-bind='css: {disabled: !selectedCount()}'): strong
+        i.icon-download(data-bind='visible: !building()')
+        i.icon-load.animate-spin(style='display:none', data-bind='visible: building()')
+        |  
+        = self.t('download')
+        |  (
+        span#selected-glyphs-count(data-bind='text: selectedCount()') 0
+        | )
+
+    .btn-group.pull-right(data-bind='visible: apiMode() && !apiUrl()', style='display:none')
+      //- API mode, without URL - `Save session` button
+      button.btn.btn-info.disabled(
+        data-on-click='api.update',
+        data-bind='css: {disabled: !selectedCount()}'): strong
+        i.icon-download(data-bind='visible: !saving()')
+        i.icon-load.animate-spin(style='display:none', data-bind='visible: saving()')
+        |  
+        = self.t('save')
+        |  (
+        span#selected-glyphs-count(data-bind='text: selectedCount()') 0
+        | )
+      button.btn.btn-info.disabled.dropdown-toggle(
+        data-toggle='dropdown',
+        data-bind='css: { disabled: !selectedCount() }'
         )
-          i.icon-link
-
-    .pull-right
-
-      .btn-group
-        #glyph-size-slider
-        #glyph-size-value(data-bind="text: fontSize() + 'px'")
-
-      .btn-group.dropdown
-
-        a.btn.dropdown-toggle(data-toggle='dropdown', href='#')
-          i.icon-settings
           span.caret
-        ul.dropdown-menu.pull-right
-          li: a(
-                href='#',
-                data-on-click='import.start',
-                data-content=self.t('menu_import_config_help'),
-                data-placement='left',
-                data-trigger='hover',
-                data-container='.navbar-fixed-top'
-                data-delay='{"show":500,"hide":100}'            
-              )._popover= self.t('menu_import_config')
-          li.divider
-          li: a(href='#', data-on-click='cmd:reset_selected')= self.t('menu_unselect_all')
-          li: a(href='#', data-on-click='cmd:reset_all')= self.t('menu_reset_all')
-          li.divider
-          li
-            form.menuitem-form(onsubmit='return false;')
-              fieldset
-                label(for='css-prefix')= self.t('menu_css_prefix_text')
-                input#css-prefix.input-medium(type='text', data-bind='value: cssPrefixText')
-                label.checkbox
-                  input(type='checkbox', data-bind='checked: cssUseSuffix')
-                  = self.t('menu_css_use_suffix')
-          li.divider
-          li: a(
-                href='#'
-                data-on-click='cmd:toggle_hinting',
-                data-content=self.t('menu_hinting_help'),
-                data-placement='right',
-                data-trigger='hover',
-                data-container='.navbar-fixed-top'
-                data-delay='{"show":500,"hide":100}'
-                data-bind='{ "css": hinting() ? "icon-check" : "" }'
-              )._popover= self.t('menu_hinting')
-          li.dropdown-submenu
-            a(href='#')= self.t('menu_encoding')
-            ul.dropdown-menu
-              li: a(
-                    href='#'
-                    data-on-click='cmd:set_encoding_pua',
-                    data-content=self.t('menu_encoding_pua_help'),
-                    data-placement='right',
-                    data-trigger='hover',
-                    data-container='.navbar-fixed-top'
-                    data-delay='{"show":500,"hide":100}'
-                    data-bind='{ "css": encoding() === "pua" ? "icon-check" : "icon-empty" }'
-                  )._popover= self.t('menu_encoding_pua')
-              li: a(
-                    href='#'
-                    data-on-click='cmd:set_encoding_ascii',
-                    data-content=self.t('menu_encoding_ascii_help'),
-                    data-placement='right',
-                    data-trigger='hover',
-                    data-container='.navbar-fixed-top'
-                    data-delay='{"show":500,"hide":100}'            
-                    data-bind='{ "css": encoding() === "ascii" ? "icon-check" : "icon-empty" }'
-                  )._popover= self.t('menu_encoding_ascii')
-              li: a(
-                    href='#'
-                    data-on-click='cmd:set_encoding_unicode',
-                    data-content=self.t('menu_encoding_unicode_help'),
-                    data-placement='right',
-                    data-trigger='hover',
-                    data-container='.navbar-fixed-top'
-                    data-delay='{"show":500,"hide":100}'            
-                    data-bind='{ "css": encoding() === "unicode" ? "icon-check" : "icon-empty" }'
-                  )._popover= self.t('menu_encoding_unicode')
+      ul.dropdown-menu.pull-right
+        li: a(
+              href='#',
+              data-on-click='build_font',
+            )= self.t('download')
 
-      .btn-group
-        input#result-fontname.input-medium._popover(type='text',
-          placeholder=self.t('file_name_placeholder'),
-          autocomplete='off',
-          pattern='[a-z0-9_\-]*',
-          data-bind='value: fontName',
-          data-content=self.t('file_name_help'),
-          data-placement='bottom',
-          data-trigger='hover',
-          data-container='.navbar-fixed-top'
-          data-delay='{"show":500,"hide":100}')
+    .btn-group.pull-right(data-bind='visible: apiMode() && apiUrl()', style='display:none')
+      //- API mode, with URL - `Export font` button
+      button.btn.btn-info.disabled(
+        data-on-click='api.export',
+        data-bind='css: { disabled: !selectedCount() }'): strong
+        i.icon-download(data-bind='visible: !saving()')
+        i.icon-load.animate-spin(style='display:none', data-bind='visible: saving()')
+        |  
+        = self.t('export')
+        |  (
+        span#selected-glyphs-count(data-bind='text: selectedCount()') 0
+        | )
+      button.btn.btn-info.disabled.dropdown-toggle(
+        data-toggle='dropdown',
+        data-bind='css: { disabled: !selectedCount() }'
+        )
+          span.caret
+      ul.dropdown-menu.pull-right
+        li: a(
+              href='#',
+              data-on-click='build_font',
+            )= self.t('download')
 
-      //- Show button, depending on mode
-      .btn-group(data-bind='visible: !apiMode()')
-        //- Standard mode - `Download` button
-        button.btn.btn-info.disabled(
-          data-on-click='build_font',
-          data-bind='css: {disabled: !selectedCount()}')
-          i.icon-download(data-bind='visible: !building()')
-          i.icon-load.animate-spin(style='display:none', data-bind='visible: building()')
-          |  
-          = self.t('download')
-          |  (
-          span#selected-glyphs-count(data-bind='text: selectedCount()') 0
-          | )
 
-      .btn-group(data-bind='visible: apiMode() && !apiUrl()', style='display:none')
-        //- API mode, without URL - `Save session` button
-        button.btn.btn-info.disabled(
-          data-on-click='api.update',
-          data-bind='css: {disabled: !selectedCount()}')
-          i.icon-download(data-bind='visible: !saving()')
-          i.icon-load.animate-spin(style='display:none', data-bind='visible: saving()')
-          |  
-          = self.t('save')
-          |  (
-          span#selected-glyphs-count(data-bind='text: selectedCount()') 0
-          | )
-        button.btn.btn-info.disabled.dropdown-toggle(
-          data-toggle='dropdown',
-          data-bind='css: { disabled: !selectedCount() }'
-          )
-            span.caret
-        ul.dropdown-menu.pull-right
-          li: a(
-                href='#',
-                data-on-click='build_font',
-              )= self.t('download')
+    .btn-group.pull-right
+      input#result-fontname.form-control._popover(type='text',
+        placeholder=self.t('file_name_placeholder'),
+        autocomplete='off',
+        pattern='[a-z0-9_\-]*',
+        data-bind='value: fontName',
+        data-content=self.t('file_name_help'),
+        data-placement='bottom',
+        data-trigger='hover',
+        data-container='.layout__fixed'
+        data-delay='{"show":500,"hide":100}')
 
-      .btn-group(data-bind='visible: apiMode() && apiUrl()', style='display:none')
-        //- API mode, with URL - `Export font` button
-        button.btn.btn-info.disabled(
-          data-on-click='api.export',
-          data-bind='css: { disabled: !selectedCount() }')
-          i.icon-download(data-bind='visible: !saving()')
-          i.icon-load.animate-spin(style='display:none', data-bind='visible: saving()')
-          |  
-          = self.t('export')
-          |  (
-          span#selected-glyphs-count(data-bind='text: selectedCount()') 0
-          | )
-        button.btn.btn-info.disabled.dropdown-toggle(
-          data-toggle='dropdown',
-          data-bind='css: { disabled: !selectedCount() }'
-          )
-            span.caret
-        ul.dropdown-menu.pull-right
-          li: a(
-                href='#',
-                data-on-click='build_font',
-              )= self.t('download')
+
+    .btn-group.dropdown.pull-right
+
+      button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown')
+        i.icon-settings
+        span.caret
+      ul.dropdown-menu.pull-right.toolbar__settings-menu
+        li: a(
+              href='#',
+              data-on-click='import.start',
+              data-content=self.t('menu_import_config_help'),
+              data-placement='left',
+              data-trigger='hover',
+              data-container='.layout__fixed'
+              data-delay='{"show":500,"hide":100}'            
+            )._popover= self.t('menu_import_config')
+        li.divider
+        li: a(href='#', data-on-click='cmd:reset_selected')= self.t('menu_unselect_all')
+        li: a(href='#', data-on-click='cmd:reset_all')= self.t('menu_reset_all')
+        li.divider
+        li
+          form.navbar-form(onsubmit='return false;')
+            .form-group
+              label(for='css-prefix')= self.t('menu_css_prefix_text')
+              input#css-prefix.form-control(type='text', data-bind='value: cssPrefixText')
+            .checkbox
+              label
+                input(type='checkbox', data-bind='checked: cssUseSuffix')
+                = self.t('menu_css_use_suffix')
+        li.divider
+        li: a(
+              href='#'
+              data-on-click='cmd:toggle_hinting',
+              data-content=self.t('menu_hinting_help'),
+              data-placement='right',
+              data-trigger='hover',
+              data-container='.layout__fixed'
+              data-delay='{"show":500,"hide":100}'
+              data-bind='{ "css": hinting() ? "icon-check" : "" }'
+            )._popover= self.t('menu_hinting')
+        li.dropdown-submenu
+          a(href='#')= self.t('menu_encoding')
+          ul.dropdown-menu
+            li: a(
+                  href='#'
+                  data-on-click='cmd:set_encoding_pua',
+                  data-content=self.t('menu_encoding_pua_help'),
+                  data-placement='right',
+                  data-trigger='hover',
+                  data-container='.layout__fixed'
+                  data-delay='{"show":500,"hide":100}'
+                  data-bind='{ "css": encoding() === "pua" ? "icon-check" : "icon-empty" }'
+                )._popover= self.t('menu_encoding_pua')
+            li: a(
+                  href='#'
+                  data-on-click='cmd:set_encoding_ascii',
+                  data-content=self.t('menu_encoding_ascii_help'),
+                  data-placement='right',
+                  data-trigger='hover',
+                  data-container='.layout__fixed'
+                  data-delay='{"show":500,"hide":100}'            
+                  data-bind='{ "css": encoding() === "ascii" ? "icon-check" : "icon-empty" }'
+                )._popover= self.t('menu_encoding_ascii')
+            li: a(
+                  href='#'
+                  data-on-click='cmd:set_encoding_unicode',
+                  data-content=self.t('menu_encoding_unicode_help'),
+                  data-placement='right',
+                  data-trigger='hover',
+                  data-container='.layout__fixed'
+                  data-delay='{"show":500,"hide":100}'            
+                  data-bind='{ "css": encoding() === "unicode" ? "icon-check" : "icon-empty" }'
+                )._popover= self.t('menu_encoding_unicode')
+
+
+    .btn-group.hidden-xs.hidden-sm.pull-right
+      #glyph-size-slider
+      #glyph-size-value(data-bind="text: fontSize() + 'px'")
