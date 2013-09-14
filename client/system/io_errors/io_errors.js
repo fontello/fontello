@@ -13,7 +13,7 @@ N.wire.on('io.error', function (err) {
     break;
 
   case N.io.APP_ERROR:
-    N.wire.emit('notify', t('application_fuckup'));
+    N.wire.emit('notify', err.message || t('application_fuckup'));
     break;
 
   case N.io.ECOMMUNICATION:
@@ -22,10 +22,7 @@ N.wire.on('io.error', function (err) {
 
   default:
     if (err.message) {
-      N.wire.emit('notify', t('system_error_with_message', {
-        code:    err.code
-      , message: err.message
-      }));
+      N.wire.emit('notify', err.message);
     } else {
       N.wire.emit('notify', t('system_error', { code: err.code }));
     }

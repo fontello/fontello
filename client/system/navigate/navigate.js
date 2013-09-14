@@ -112,6 +112,12 @@ function renderFromHistory(data, callback) {
 }
 
 
+// Ignore next History 'statechange' event if true.
+//
+// NOTE: The event handler *always* resets this variable to false after each call.
+var __dryHistoryChange__ = false;
+
+
 // Reference to a function to be used on next fire of history 'statechange' event
 // to perform content injection/replacement.
 //
@@ -129,6 +135,7 @@ var __completeCallback__ = null;
 
 // API path of current page. Updated via `navigate.done` event.
 var __currentApiPath__ = null;
+var __currentParams__  = {};
 
 
 // Performs RPC navigation to the specified page. Allowed options:
@@ -136,9 +143,6 @@ var __currentApiPath__ = null;
 //    options.href
 //    options.apiPath
 //    options.params
-//    options.render       - optional function; default is `renderNewContent`
-//    options.replaceState - `true` to use `History.replaceState` instead of
-//                           `History.pushState`
 //
 // `href` and `apiPath` parameters are calculated from each other.
 // So they are mutually exclusive.
@@ -219,7 +223,7 @@ N.wire.on('navigate.to', function navigate_to(options, callback) {
   }
 
   // History is enabled - try RPC navigation.
-  N.io.rpc(apiPath, params, function (err, response) {
+  N.io.rpc(apiPath, params, function (err, res) {
     if (err && N.io.REDIRECT === err.code) {
       var redirectUrl = document.createElement('a');
 
@@ -239,11 +243,7 @@ N.wire.on('navigate.to', function navigate_to(options, callback) {
         window.location = redirectUrl.href;
         callback();
       } else {
-        N.wire.emit('navigate.to', {
-          href:    redirectUrl.href
-        , render:  options.render
-        , history: options.history
-        }, callback);
+        N.wire.emit('navigate.to', { href: redirectUrl.href }, callback);
       }
       return;
     }
@@ -261,7 +261,7 @@ N.wire.on('navigate.to', function navigate_to(options, callback) {
     }
 
     /*
-    if (response.layout !== N.runtime.layout) {
+    if (res.layout !== N.runtime.layout) {
       // Layout was changed - perform normal page loading.
       //
       // TODO: Prevent double page requesting. The server should not perform
@@ -273,28 +273,41 @@ N.wire.on('navigate.to', function navigate_to(options, callback) {
     }
     */
 
-    N.loader.loadAssets((response.view || apiPath).split('.')[0], function () {
+    N.loader.loadAssets(apiPath.split('.')[0], function () {
       var state = {
         apiPath: apiPath
+      , params:  params
       , anchor:  anchor
-      , view:    response.view   || apiPath
-    //, layout:  response.layout || null
-      , locals:  response.data   || {}
+      , view:    apiPath
+    //, layout:  res.layout || null
+      , locals:  res   || {}
       };
 
       // Set one-use callbacks for history 'statechange' handler.
       // The handler will reset these to defaults (`renderFromHistory` and null).
-      __renderCallback__   = options.render || renderNewContent;
+      __renderCallback__   = renderNewContent;
       __completeCallback__ = callback;
 
-      if (options.replaceState) {
-        History.replaceState(state, response.data.head.title, href);
-      } else {
-        History.pushState(state, response.data.head.title, href);
-      }
+      History.pushState(state, res.head.title, href);
     });
   });
 });
+
+
+// Replace current History state without data fetching and rendering.
+//
+//   options.href  - full url of new history state. (required)
+//   options.title - new page title. (required)
+//   options.data  - data for history renderer; it will be used when user will
+//                   return to this page using history navigation. (optional)
+//
+N.wire.on('navigate.replace', function navigate_replace(options, callback) {
+  __dryHistoryChange__ = true;
+  __completeCallback__ = callback;
+
+  History.replaceState(options.data || {}, options.title, options.href);
+});
+
 
 //
 // Bind History's statechange handler. It fires when:
@@ -306,7 +319,22 @@ N.wire.on('navigate.to', function navigate_to(options, callback) {
 
 if (History.enabled) {
   History.Adapter.bind(window, 'statechange', function () {
-    var state = History.getState();
+    var state    = History.getState()
+      , render   = __renderCallback__
+      , complete = __completeCallback__;
+
+    // Dry history change - just reset the flag and callback parameters for next
+    // history state change, and invoke complete callback.
+    if (__dryHistoryChange__) {
+      __dryHistoryChange__ = false;
+      __renderCallback__   = renderFromHistory;
+      __completeCallback__ = null;
+
+      if (complete) {
+        complete();
+      }
+      return;
+    }
 
     // We have no state data for the initial page (received via HTTP responder).
     // So request that data via RPC and place into History.
@@ -323,7 +351,7 @@ if (History.enabled) {
       }
 
       // Retrieve data.
-      N.io.rpc(match.meta.methods.get, castParamTypes(match.params || {}), function (err, response) {
+      N.io.rpc(match.meta.methods.get, castParamTypes(match.params || {}), function (err, res) {
         var a, data, url;
 
         // Simple way to parse URL in browser.
@@ -333,10 +361,11 @@ if (History.enabled) {
         // Result state data.
         data = {
           apiPath: match.meta.methods.get
+        , params:  castParamTypes(match.params || {})
         , anchor:  a.hash
-        , view:    response.view   || match.meta.methods.get
-      //, layout:  response.layout || null
-        , locals:  response.data   || {}
+        , view:    match.meta.methods.get
+      //, layout:  res.layout || null
+        , locals:  res   || {}
         };
 
         // State URL without anchor. (due to a problem in History.js; see above)
@@ -349,17 +378,14 @@ if (History.enabled) {
       return;
     }
 
-    var render   = __renderCallback__
-      , complete = __completeCallback__;
-
     // Restore callbacks to defaults. It's needed to ensure using right renderer
     // on regular history state changes - when user clicks back/forward buttons
     // in his browser.
     __renderCallback__   = renderFromHistory;
     __completeCallback__ = null;
 
-    var exitEventData = { apiPath: __currentApiPath__, url: state.url }
-      , doneEventData = { apiPath: state.data.apiPath, url: state.url };
+    var exitEventData = { apiPath: __currentApiPath__, params: __currentParams__, url: state.url }
+      , doneEventData = { apiPath: state.data.apiPath, params: state.data.params, url: state.url };
 
     // Invoke exit handlers.
     N.wire.emit(['navigate.exit:' + __currentApiPath__, 'navigate.exit'], exitEventData, function (err) {
@@ -392,6 +418,7 @@ if (History.enabled) {
 
 N.wire.on('navigate.done', { priority: -999 }, function apipath_set(data) {
   __currentApiPath__ = data.apiPath;
+  __currentParams__  = data.params;
 });
 
 //

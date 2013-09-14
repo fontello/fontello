@@ -94,7 +94,7 @@ window.NodecaLoader = (function () {
     var module = nodeModules[path];
 
     if (!module) {
-      throw new Error('Unknown module "' + module + '"');
+      throw new Error('Unknown module "' + path + '"');
     }
 
     // If it's a first require of the given module, initialize it first.

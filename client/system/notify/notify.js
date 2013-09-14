@@ -24,10 +24,17 @@ var DEFAULT_OPTIONS = {
   info: {
     closable: false
   , autohide: 5000
+  , css:      'info'
+  }
+, warning: {
+    closable: false
+  , autohide: 5000
+  , css:      'warning'
   }
 , error: {
     closable: false
   , autohide: 10000
+  , css:      'danger'
   }
 };
 
@@ -59,7 +66,7 @@ function Notification(options) {
 
   this.options = options;
   this.isShown  = false;
-  this.$element = $('<div class="alert alert-' + type + ' fade" />');
+  this.$element = $('<div class="alert alert-' + (DEFAULT_OPTIONS[type] || {}).css + ' fade" />');
 
   // get container, where to insert notice
   if (options.container) {

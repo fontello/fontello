@@ -6,8 +6,8 @@ packages:
   fontello:
     # vendor make sence only when multiple packages used
     # in single package, modules become "shared" automatically
-    vendor:
-      - lodash
+    #vendor:
+    #  - lodash
     #  - knockout
     #  - async
 
