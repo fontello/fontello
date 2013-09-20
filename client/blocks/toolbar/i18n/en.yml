@@ -12,10 +12,11 @@ en-US:
 
   menu_unselect_all: Unselect glyphs
   menu_reset_all: Reset all changes
-  menu_import_config: Import config
-  menu_import_config_help: >
-    Select config.json or the whole fontello's zip archive.
-    Also, you can drag and drop file to this page.
+  menu_import: Import
+  menu_import_help: >
+    Select config.json or the whole fontello's zip archive
+    to continue your work. Also you can import custom SVG
+    images and fonts.
   menu_css_prefix_text: 'CSS prefix:'
   menu_css_use_suffix: add after icon name
 

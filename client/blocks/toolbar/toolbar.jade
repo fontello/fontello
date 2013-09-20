@@ -109,12 +109,12 @@
         li: a(
               href='#',
               data-on-click='import.start',
-              data-content=self.t('menu_import_config_help'),
+              data-content=self.t('menu_import_help'),
               data-placement='left',
               data-trigger='hover',
               data-container='.layout__fixed'
               data-delay='{"show":500,"hide":100}'            
-            )._popover= self.t('menu_import_config')
+            )._popover= self.t('menu_import')
         li.divider
         li: a(href='#', data-on-click='cmd:reset_selected')= self.t('menu_unselect_all')
         li: a(href='#', data-on-click='cmd:reset_all')= self.t('menu_reset_all')
