@@ -235,9 +235,9 @@ function FontModel(data) {
     }
 
     if (this.collapsed()) {
-      $('#'+this.fontname + " .font-glyphs").slideUp();
+      $('#'+this.fontname + " .selector__glyphs-container").slideUp();
     } else {
-      $('#'+this.fontname + " .font-glyphs").slideDown();
+      $('#'+this.fontname + " .selector__glyphs-container").slideDown();
     }
   }.bind(this);
 

@@ -23,13 +23,13 @@ N.wire.once('navigate.done', function () {
   // We attach selectable to "body", to allow start
   // dragging from the left white space.
   $('#selector').selectable({
-    filter: 'li.glyph:visible',
+    filter: '.selector__glyph:visible',
     distance: 3,
     start: function() {
-      $('#selector').addClass('multicursor');
+      $('#selector').addClass('_multicursor');
     },
     stop: function () {
-      var $els = $view.find('.glyph.ui-selected');
+      var $els = $view.find('.selector__glyph.ui-selected');
 
       // prevent from double-triggering event,
       // otherwise click event will be fired as well
@@ -41,7 +41,7 @@ N.wire.once('navigate.done', function () {
         ko.dataFor(this).toggleSelection();
       });
 
-      $('#selector').removeClass('multicursor');
+      $('#selector').removeClass('_multicursor');
     }
   });
 
@@ -50,10 +50,10 @@ N.wire.once('navigate.done', function () {
   // to change cursor immediately after click on glyph
   //
   $('#selector').on('mousedown', '.glyph', function() {
-    $('#selector').addClass('multicursor');
+    $('#selector').addClass('_multicursor');
   });
   $('#selector').on('mouseup', function() {
-    $('#selector').removeClass('multicursor');
+    $('#selector').removeClass('_multicursor');
   });
 
   //

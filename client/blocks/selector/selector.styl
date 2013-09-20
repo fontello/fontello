@@ -11,50 +11,32 @@
 #selector
   position relative
 
-.src-font-head
+////////////////////////////////////////////////////////////////////////////////
+// Font header content
+
+.selector__font-header
   margin-top 0px
 
-// Custom icons controls
-a.selector__font-control
-  color #999
-  
-
-// Font license & links
-//
-.icon-mail
-.icon-home
-.icon-twitter-bird
-.icon-github-text
-.icon-dribbble
-  &:before
-    width auto
-    opacity 1
-    font-size: 120%
-    margin-left .2em
-a
-  &.icon-mail
-  &.icon-home
-  &.icon-twitter-bird
-  &.icon-github-text
-  &.icon-dribbble
-    transition all .5s ease
-    color #444
-    opacity .4
-
-    &:hover
-      opacity 1
-.font-details
+small.selector__font-details
   margin-left 1em
   margin-right 1em
   font-size 14px
 
-/* Collapser & animations */
-a.src-font-name
+a.selector__font-link
+  color grayLight
+  margin-left .2em
+
+a.selector__font-control
+  color grayLight
+
+a.selector__font-name
   color inherit
   text-decoration none
   outline 0 none
 
-.src-font-name:after
+// collapser & animations on state/hover change
+
+.selector__font-name:after
   transition all .5s ease
   border-left 6px solid transparent
   border-right 6px solid transparent
@@ -68,90 +50,73 @@ a.src-font-name
   margin-left 8px
   opacity 0
 
-.src-font-head:hover .src-font-name:after
+.selector__font-header:hover .selector__font-name:after
   opacity 1
 
-.src-font-head
-  position relative
-  transition font-size .5s ease
+.selector__font-header
+  transition opacity .5s ease
 
-  .src-font-name
-  .font-details    
-    transition opacity .5s ease
+.selector__font-name
+  transition font-size .5s ease
 
 ._collapsed
 
-  .src-font-head
+  .selector__font-header
     font-size 18px
     line-height 24px
 
-    .src-font-name
-    .font-details    
+    .selector__font-name
+    .selector__font-details
       opacity .2
 
     &:hover
-      .src-font-name
-      .font-details    
+      .selector__font-name
+      .selector__font-details
         opacity .7
 
+  .selector__font-name:after
+    border-bottom 0 none
+    border-top 3px solid #333
+    border-left 3px solid transparent
+    border-right 3px solid transparent
+    margin-left 5px
 
-._collapsed .src-font-name:after
-  border-bottom 0 none
-  border-top 3px solid #333
-  border-left 3px solid transparent
-  border-right 3px solid transparent
-  margin-left 5px
-
-//
 // Counters near font name
-//
 
-.font-counters
+.selector__font-cnt
   position absolute
   left -10em
   width 10em
   text-align right
 
-  .selected-cnt
-  .search-cnt
-    font-size 14px
-    color red
-    margin-right .5em
-    opacity .6
+.selector__font-cnt-selected
+.selector__font-cnt-search
+  font-size 14px
+  color red
+  margin-right .5em
+  opacity .6
 
-  .search-cnt
-    color green
-    display none
+.selector__font-cnt-search
+  color green
+  display none
 
-.search-mode .font-counters
-  .selected-cnt
+.search-mode
+  .selector__font-cnt-selected
     display none
-  .search-cnt
+  .selector__font-cnt-search
     display inline
 
-#local-files
-  /* chrome/opera doesn't trigger events on "display: none;" elements */
-  /* so, do some tricks to safely hide element */
+////////////////////////////////////////////////////////////////////////////////
+// glyphs
 
-  /* display: none; */
-  width 0px
-  height 0px
-  position absolute
-  top -100px
-  visibility hidden
-
-//
-// Message, when nothing found
-//
-.search-not-found
-  display block
-
-.font-glyphs
-  display inline-block
-  user-select none
+.selector__glyphs-container
   margin-bottom 20px
 
-.glyph
+.selector__glyphs-list
+  display inline-block
+  user-select none
+
+.selector__glyph
   position relative
   float left
   //cursor pointer
@@ -159,50 +124,44 @@ a.src-font-name
   height 48px
   margin 0 0 8px 8px
 
-  label
-    font-weight normal
-    border 1px #ccc solid
-    border-radius 6px
-    position absolute
-    width 100%
-    height 100%
-    margin 0
-    overflow hidden
+.selector__glyph-label
+  font-weight normal
+  border 2px solid transparent
+  border-radius 30px
+  position absolute
+  width 100%
+  height 100%
+  margin 0
+  overflow hidden
 
-    //transition all .1s ease
-    //box-shadow 1px 1px 3px #eee
+  font-size inherit
+  text-align center
 
-    font-size inherit
-    text-align center
+  &:hover
+    background #333
+    color #fff
 
-    > span
-      line-height 48px
+.selector__glyph-span
+  line-height 48px
 
-    &:hover
-      background #333
-      color #fff
-      //opacity .8
+.selector__glyph-input
+  position absolute
+  left -10000px
 
-  input
-    position absolute
-    left -10000px
-
-  input:checked + label
-    background-color #fffdfd
+  &:checked + .selector__glyph-label
     border-color #d88
-    box-shadow 0 0 0px 2px #d88 inset, 1px 1px 3px 1px #eee
-
     &:hover
       background #666
 
-  &.ui-selecting label
+.selector__glyph.ui-selecting
+
+  .selector__glyph-label
     background-color #eeffee
     border-color #8d8
     &:hover
       color inherit
-    //box-shadow 0 0 3px #ada inset
 
-  &.ui-selecting input:checked + label
+  .selector__glyph-input:checked + .selector__glyph-label
     background-color #eeffee
     border-color #666
     box-shadow 0 0 3px #666 inset
@@ -211,46 +170,56 @@ a.src-font-name
 
 // IE8 compatibility layer. Input:checked does not work (no ideas why),
 // so, apply "checked" class to label manually, via knockout
-.glyph
-  label.checked
+.selector__glyph
+  .selector__glyph-label.checked
     background-color #fffdfd
     border-color #d88
-    box-shadow 0 0 0px 2px #d88 inset, 1px 1px 3px 1px #eee
     &:hover
       background #666
-  &.ui-selecting label.checked
+  &.ui-selecting .selector__glyph-label.checked
     background-color #eeffee
     border-color #666
-    box-shadow 0 0 3px #666 inset
     &:hover
       color inherit
 
 
-// Chrome hack - it has different icon alligment, no ideas why
-//
-@media screen and (-webkit-min-device-pixel-ratio:0)
-  .glyph > label > span
-    line-height 50px
-
-
-// Helper, shown after click on glyph,
-// to indicate that multiselect possible
-//
-.multicursor
-.multicursor .glyph label
-.ui-selectable-helper
-  cursor crosshair
-
-
-//
 // Animation tweaks
 //
 // - 3 turns, to not abuse peoples
 // - instant, on mouse hover
 //
-.glyph .animate-spin
+.selector__glyph .animate-spin
   animation spin 2s 3 linear
   display: inline-block
 
-.glyph:hover .animate-spin
+.selector__glyph:hover .animate-spin
     animation-iteration-count infinite
+
+// Chrome hack - it has different icon alligment, no ideas why
+//
+@media screen and (-webkit-min-device-pixel-ratio:0)
+  .selector__glyph > label > span
+    line-height 50px
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Misc
+
+// Message, when nothing found
+.selector__search-not-found
+  display block
+
+// Help for custom icons block
+.selector__custom-helper
+  margin-bottom 30px
+  padding 15px
+  border-radius 3px
+  background-color #f8f8f8
+  text-align center
+
+// Helper, shown after click on glyph,
+// to indicate that multiselect possible
+._multicursor
+._multicursor .selector__glyph label
+.ui-selectable-helper
+  cursor crosshair
