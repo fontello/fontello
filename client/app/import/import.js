@@ -92,56 +92,76 @@ function isSvgFont(data) {
   return (data.indexOf('<font') + 1);
 }
 
-function coordinateTransform(path) {
-  return path;
-}
-
 //
 // Import svg files. Try to determine content & call appropriate parsers
 //
 // data - text content
-// file - original file info
 //
-function import_svg(data, file) {
-  if (!isSvgFont(data)) {
-    console.error(file.name + " does not contain fonts");
-    return;
-  }
-  var customFont = _.find(N.app.fontsList.fonts, {isCustom: true});
+function import_svg(data) {
+  var xmlDoc;
+  var customFont;
+  var maxRef;
+  var charRefCode;
 
-  if (!customFont) {
-    console.error("The custom font does not exist");
-    return;
-  }
+  xmlDoc = (new XMLDOMParser()).parseFromString(data, "application/xml");
 
-  var xmlDoc = (new XMLDOMParser()).parseFromString(data, "application/xml");
-  var svgGlyps = xmlDoc.getElementsByTagName('glyph');
-
-  var maxRef = _.max(customFont.glyphs(), function(glyph) { // calculate charRef with max char code
+  customFont = _.find(N.app.fontsList.fonts, {isCustom: true});
+  
+  // calculate charRef with max char code
+  maxRef = _.max(customFont.glyphs(), function(glyph) {
     return glyph.charRef.charCodeAt(0);
   }).charRef;
 
-  var charRefCode = (!maxRef) ? 0xe800 : maxRef.charCodeAt(0) + 1; // get next char code
+  // get next char code
+  charRefCode = (!maxRef) ? 0xe800 : maxRef.charCodeAt(0) + 1;
 
-  customFont.glyphs.valueWillMutate();
+  if (!isSvgFont(data)) {
+    var svgTag = xmlDoc.getElementsByTagName('svg')[0];
+    var pathTags = xmlDoc.getElementsByTagName('path');
 
-  _.each(svgGlyps, function (svgGlyph) {
-    var d = _.find(svgGlyph.attributes, {name: 'd'}).value;
+    if (pathTags.length !== 1) {
+      throw "SVG file has multiple contours";
+    }
+    
+    var d = _.find(pathTags[0].attributes, {name: 'd'}).value;
 
-    customFont.glyphs.peek().push(
+    // getting viewBox values array
+    var viewBox = ((_.find(svgTag.attributes, {name: 'viewBox'}) || {}).value || '').split(' ');
+
+    customFont.glyphs.push(
       new N.models.GlyphModel(customFont, {
-        css:    (_.find(svgGlyph.attributes, {name: 'glyph-name'}).value || 'glyph'), // default name
-        // FIXME replace with fixedFromCharCode
-        code:   (_.find(svgGlyph.attributes, {name: 'unicode'}).value.charCodeAt(0) || 0),
-        uid:    uid(),
-        charRef:  charRefCode++,
-        path:   coordinateTransform(d),
-        width:  _.find(svgGlyph.attributes, {name: 'horiz-adv-x'}).value
+        css:     'glyph', // default name
+        code:    charRefCode,
+        uid:     uid(),
+        charRef: charRefCode++,
+        path:    d,
+        width:   (viewBox[2] || parseInt(_.find(svgTag.attributes, {name: 'width'}).value, 10))
       })
     );
-  });
 
-  customFont.glyphs.valueHasMutated();
+  } else { // is svg font
+    var svgGlyps = xmlDoc.getElementsByTagName('glyph');
+
+    customFont.glyphs.valueWillMutate();
+
+    _.each(svgGlyps, function (svgGlyph) {
+      var d = _.find(svgGlyph.attributes, {name: 'd'}).value;
+
+      customFont.glyphs.peek().push(
+        new N.models.GlyphModel(customFont, {
+          css:     (_.find(svgGlyph.attributes, {name: 'glyph-name'}).value || 'glyph'), // default name
+          // FIXME replace with fixedFromCharCode
+          code:    (_.find(svgGlyph.attributes, {name: 'unicode'}).value.charCodeAt(0) || 0),
+          uid:     uid(),
+          charRef: charRefCode++,
+          path:    d,
+          width:   _.find(svgGlyph.attributes, {name: 'horiz-adv-x'}).value
+        })
+      );
+    });
+
+    customFont.glyphs.valueHasMutated();
+  }
 }
 
 // Handles change event of file input
@@ -200,7 +220,7 @@ function handleFileSelect(event) {
           return;
         }  else if (file.type === 'image/svg+xml') {
           reader.onload = function (e) {
-            import_svg(e.target.result, file);
+            import_svg(e.target.result);
             next();
           };
           reader.readAsText(file);
