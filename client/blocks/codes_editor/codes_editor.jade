@@ -10,7 +10,7 @@
           data-bind='click: toggleSelection'
         )
 
-      .center.font-fontello(data-bind='text: charRef')
+      .center(data-bind='text: charRef, css: {"font-custom_icons": font.isCustom, "font-fontello": !font.isCustom}')
 
       .bottom
         span.code-prefix U+

@@ -5,10 +5,11 @@ var _  = require('lodash');
 var ko = require('knockout');
 
 
+
 var embedded_fonts = require('../../lib/embedded_fonts/client_config');
 var codesTracker   = require('./_codes_tracker');
 var namesTracker   = require('./_names_tracker');
-
+var fontface = require('./_lib/fontface.js');
 
 var DEFAULT_GLYPH_SIZE = 16;
 
@@ -58,7 +59,7 @@ function GlyphModel(font, data) {
   this.uid          = data.uid;
   this.originalName = data.css;
   this.originalCode = data.code;
-
+  
   //
   // Helper properties
   //
@@ -69,6 +70,7 @@ function GlyphModel(font, data) {
   this.keywords = [this.originalName].concat(data.search || []).join(',');
 
   this.charRef = fixedFromCharCode(data.charRef);
+
   this.cssExt  = data['css-ext'];
   this.tooltip = "name: '" + this.originalName + "'" +
                  (data.search ? ',   tags: ' + data.search.join(', ') : '');
@@ -80,6 +82,11 @@ function GlyphModel(font, data) {
   this.selected = ko.observable(false);
   this.name     = ko.observable(this.originalName);
   this.code     = ko.observable(this.originalCode);
+  
+  this.svg      = {
+    path:  data.path,
+    width: data.width
+  };
 
   this.selected.subscribe(function () {
     N.wire.emit('session_save');
@@ -165,30 +172,54 @@ function GlyphModel(font, data) {
 
 
 ////////////////////////////////////////////////////////////////////////////////
-
-
 function FontModel(data) {
+  var self = this;
 
   //
   // Essential properties
   //
+  this.fullname = (data.font || {}).fullname;
+  this.fontname = (data.font || {}).fontname; // also used as font id
 
-  this.fullname = data.font.fullname;
-  this.fontname = data.font.fontname; // also used as font id
+  this.author   = (data.meta || {}).author;
+  this.license  = (data.meta || {}).license;
+  this.homepage = (data.meta || {}).homepage;
+  this.email    = (data.meta || {}).email;
+  this.twitter  = (data.meta || {}).twitter;
+  this.github   = (data.meta || {}).github;
+  this.dribbble = (data.meta || {}).dribbble;
 
-  this.author   = data.meta.author;
-  this.license  = data.meta.license;
-  this.homepage = data.meta.homepage;
-  this.email    = data.meta.email;
-  this.twitter  = data.meta.twitter;
-  this.github   = data.meta.github;
-  this.dribbble = data.meta.dribbble;
+  this.isCustom = data.isCustom;
 
   //
   // View state properties
   //
 
   this.collapsed = ko.observable(false);
+
+  // Array of font glyphs
+  //
+  this.glyphs = ko.observableArray(_.map(data.glyphs, function (data) {
+    return new GlyphModel(self, data);
+  }));
+
+  // Array of selected glyphs of a font
+  //
+  this.selectedGlyphs = ko.computed(function () {
+    return _.filter(this.glyphs(), function (glyph) { return glyph.selected(); });
+  }, this).extend({ throttle: 100 });
+
+  // selected glyphs count
+  //
+  this.selectedCount = ko.computed(function () {
+    return this.selectedGlyphs().length;
+  }, this);
+
+  // Visible glyphs count
+  //
+  this.visibleCount = ko.computed(function () {
+    return _.reduce(this.glyphs(), function (cnt, glyph) { return cnt + (glyph.visible() ? 1 : 0); }, 0);
+  }, this).extend({ throttle: 100 });
 
   //
   // Helpers
@@ -217,43 +248,103 @@ function FontModel(data) {
     N.wire.emit('session_save');
   });
 
+  this.makeSvgFont = function() {
+    var conf             = {};
+    conf.font            = {};
+    conf.font.copyright  = this.license;
+    conf.font.fontname   = this.fontname;
+    conf.font.familyname = this.fontname;
+    conf.font.ascent     = 850;
+    conf.font.descent    = -150;
+    
+    conf.glyphs = _.map(this.glyphs(), function(glyph){
+      return {
+        css:    glyph.originalName,
+        code:   glyph.charRef.charCodeAt(0),
+        d:      glyph.svg.path,
+        width:  glyph.svg.width
+      };
+    });
 
-  // Array of font glyphs
+    var svgFontTemplate = _.template(
+      '<?xml version="1.0" standalone="no"?>\n' +
+      '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n' +
+      '<svg xmlns="http://www.w3.org/2000/svg">\n' +
+      '<metadata>${font.copyright}</metadata>\n' +
+      '<defs>\n' +
+      '<font id="_${font.fontname}" horiz-adv-x="${font.ascent - font.descent}" >\n' +
+
+      '<font-face' +
+      ' font-family="${font.familyname}"' +
+      ' font-weight="400"' +
+      ' font-stretch="normal"' +
+      ' units-per-em="${font.ascent - font.descent}"' +
+      ' ascent="${font.ascent}"' +
+      ' descent="${font.descent}"' +
+      ' />\n' +
+
+      '<missing-glyph horiz-adv-x="${font.ascent - font.descent}" />\n' +
+
+      '<% glyphs.forEach(function(glyph) { %>' +
+        '<glyph' +
+        ' glyph-name="${glyph.css}"' +
+        ' unicode="&#x${glyph.code.toString(16)};"' +
+        ' d="${glyph.d}"' +
+        ' horiz-adv-x="${glyph.width}"' +
+        ' />\n' +
+      '<% }); %>' +
+
+      '</font>\n' +
+      '</defs>\n' +
+      '</svg>'
+    );
+
+    return svgFontTemplate(conf);
+  };
+
+  // Subscribe to glyph updates
   //
-  this.glyphs = _.map(data.glyphs, function (data) {
-    return new GlyphModel(this, data);
+  this.glyphs.subscribe(function () {
+    if (!this.isCustom) { return; }
+
+    N.wire.emit('session_save');
+
+    var ff = fontface(this.makeSvgFont(), this.fontname);
+
+    var styleTemplate =
+      '<style id="ff_${fontId}" type="text/css">\n ${fontface}' +
+      '  .font-${fontId} { font-family: "fml_customFont"; }\n' +
+      '</style>\n';
+
+    var style = _.template(styleTemplate, {
+      fontface : ff,
+      fontId : this.fontname
+    });
+
+    $('#ff_' + this.fontname).remove();
+    $(style).appendTo("head");
   }, this);
 
-  // Array of selected glyphs of a font
-  //
-  this.selectedGlyphs = ko.computed(function () {
-    return _.filter(this.glyphs, function (glyph) { return glyph.selected(); });
-  }, this).extend({ throttle: 100 });
-
-  // selected glyphs count
-  //
-  this.selectedCount = ko.computed(function () {
-    return this.selectedGlyphs().length;
-  }, this);
-
-  // Visible glyphs count
-  //
-  this.visibleCount = ko.computed(function () {
-    return _.reduce(this.glyphs, function (cnt, glyph) { return cnt + (glyph.visible() ? 1 : 0); }, 0);
-  }, this).extend({ throttle: 100 });
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 function FontsList() {
-  // Ordered list, to display on the page
-  this.fonts = _.map(embedded_fonts, function (data) {
-    return new FontModel(data);
-  });
+  this.fonts = [];
 
-  // Named list, for state import/export
-  this.fontsByName = {};
-  _.each(this.fonts, function (font) { this.fontsByName[font.fontname] = font; }, this);
+  // Set the Custom font
+  this.fonts.push(new FontModel({
+    font: {
+      fontname: 'custom_icons',
+      fullname: t('custom_icons_name')
+    },
+    isCustom : true
+  }));
+
+  // Ordered list, to display on the page
+  this.fonts.push.apply(this.fonts, _.map(embedded_fonts, function (data) {
+    return new FontModel(data);
+  }));
 
   // Array of selected glyphs from all fonts
   //
@@ -274,11 +365,15 @@ function FontsList() {
   this.visibleCount = ko.computed(function () {
     return _.reduce(this.fonts, function (cnt, font) { return cnt + (font.visibleCount() ? 1 : 0); }, 0);
   }, this).extend({ throttle: 100 });
+
+  // Search font by name
+  //
+  this.getFont = function(name) {
+    return _.find(this.fonts, function(font) { return font.fontname === name; });
+  };
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////
-
 
 // Create global `model` and properties
 N.app = {};
@@ -293,9 +388,13 @@ N.app.cssUseSuffix  = ko.observable(false);
 N.app.hinting       = ko.observable(true);
 N.app.encoding      = ko.observable('pua');
 
-N.app.apiMode     = ko.observable(false);
-N.app.apiUrl      = ko.observable('');
+N.app.apiMode       = ko.observable(false);
+N.app.apiUrl        = ko.observable('');
 N.app.apiSessionId  = null;
+
+N.models = {};
+N.models.FontModel  = FontModel;
+N.models.GlyphModel = GlyphModel;
 
 
 N.app.getConfig   = function () {
@@ -319,7 +418,6 @@ N.app.serverSave  = function(callback) {
   N.io.rpc('fontello.api.update', { sid: N.app.apiSessionId, config: N.app.getConfig() }, callback);
 };
 
-
 // Set new code for each selected glyph using currect encoding.
 //
 function updateGlyphCodes() {
@@ -329,7 +427,6 @@ function updateGlyphCodes() {
   _.invoke(glyphs, 'selected', false);
   _.invoke(glyphs, 'selected', true);
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -426,5 +523,9 @@ N.wire.once('navigate.done', function () {
   N.wire.on('cmd:set_encoding_unicode', function () {
     N.app.encoding('unicode');
     updateGlyphCodes();
+  });
+
+  N.wire.on('cmd:clear_custom_icons', function () {
+    N.app.fontsList.getFont('custom_icons').glyphs([]);
   });
 });

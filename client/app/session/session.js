@@ -95,16 +95,34 @@ N.wire.on('session_save', _.debounce(function () {
   _.each(N.app.fontsList.fonts, function (font) {
     var font_data = { collapsed: font.collapsed(), glyphs: [] };
 
-    _.each(font.glyphs, function (glyph) {
-      if (glyph.isModified()) {
+    // for custom icons we always have to store ALL
+    // glyphs + their state
+    if (font.isCustom) {
+      _.each(font.glyphs(), function (glyph) {
         font_data.glyphs.push({
+          css:      glyph.name(),
+          code:     glyph.code(),
           uid:      glyph.uid,
           selected: glyph.selected(),
-          code:     glyph.code(),
-          css:      glyph.name()
+          svg: {
+            path  : (glyph.svg || {}).path || '',
+            width : (glyph.svg || {}).width || 0
+          }
         });
-      }
-    });
+      });
+    } else {
+      // for regular fonts store state of modified glyphs only
+      _.each(font.glyphs(), function (glyph) {
+        if (glyph.isModified()) {
+          font_data.glyphs.push({
+            uid:      glyph.uid,
+            selected: glyph.selected(),
+            code:     glyph.code(),
+            css:      glyph.name()
+          });
+        }
+      });
+    }
 
     session.fonts[font.fontname] = font_data;
   });
@@ -173,26 +191,64 @@ N.wire.on('session_load', function () {
 
   // reset selection prior to set glyph data
   // not nesessary now, since we load session only on start
-  _.each(N.app.fontsList.selectedGlyphs(), function (glyph) { glyph.selected(false); });
+  //_.each(N.app.fontsList.selectedGlyphs(), function (glyph) { glyph.selected(false); });
 
   // load glyphs states
   _.each(session.fonts, function (sessionFont, name) {
-    var targetFont = N.app.fontsList.fontsByName[name];
+    var targetFont = N.app.fontsList.getFont(name);
 
+    // Do nothing for unknown fonts
     if (!targetFont) { return; }
 
     targetFont.collapsed(!!sessionFont.collapsed);
 
+    //
+    // for custom icons - import glyphs & set their state
+    //
+    if (targetFont.fontname === 'custom_icons') {
+      var glyphs = [];
+      var charRefCode = 0xE800;
+
+      _.each(sessionFont.glyphs, function (glyph) {
+        // skip broken glyphs
+        if (!glyph.code || !glyph.css || !glyph.svg ||
+            (!glyph.svg || {}).path || (!glyph.svg || {}).width) {
+          return;
+        }
+
+        glyphs.push(new N.models.GlyphModel(targetFont, {
+          css:      glyph.css,
+          code:     glyph.code,
+          uid:      glyph.uid,
+          selected: glyph.selected,
+          charRef:  charRefCode++,
+          path:     glyph.svg.path,
+          width:    glyph.svg.width
+        }));
+      });
+
+      // init observable array
+      targetFont.glyphs(glyphs);
+      return;
+    }
+
+    //
+    // for existing fonts - set states only
+    //
+
     // create map to lookup glyphs by id
     var lookup = {};
-    _.each(targetFont.glyphs, function (glyph) {
+    _.each(targetFont.glyphs(), function (glyph) {
       lookup[glyph.uid] = glyph;
     });
 
     // fill glyphs state
     _.each(sessionFont.glyphs, function (glyph) {
-
       var targetGlyph = lookup[glyph.uid];
+
+      // FIXME: temporary fix, when we got uid that does not exists
+      // in our collection. Investigate how that can happen.
+      if (!targetGlyph) { return; }
 
       targetGlyph.selected(!!glyph.selected);
       targetGlyph.code(glyph.code || targetGlyph.originalCode);

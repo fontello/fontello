@@ -3,7 +3,14 @@
 
 var _     = require('lodash');
 var async = require('async');
+var XMLDOMParser = require('xmldom').DOMParser;
 
+function uid() {
+  /*jshint bitwise: false*/
+  return 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace(/[x]/g, function() {
+    return ((Math.random()*16)|0).toString(16);
+  });
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -17,7 +24,7 @@ function import_config(str, file) {
 
   try {
     var config  = JSON.parse(str);
-    var fontsByName = N.app.fontsList.fontsByName;
+    var getFont = _.memoize(N.app.fontsList.getFont);
 
     N.app.fontName(config.name || '');
     N.app.cssPrefixText(String(config.css_prefix_text || 'icon-'));
@@ -37,7 +44,7 @@ function import_config(str, file) {
 
     _.each(config.glyphs, function (g) {
 
-      if (!_.has(fontsByName, g.src)) { return; }
+      if (!getFont(g.src)) { return; }
 
       var glyph = glyphById[g.uid];
 
@@ -81,6 +88,62 @@ function import_zip(data, file) {
   }
 }
 
+function isSvgFont(data) {
+  return (data.indexOf('<font') + 1);
+}
+
+function coordinateTransform(path) {
+  return path;
+}
+
+//
+// Import svg files. Try to determine content & call appropriate parsers
+//
+// data - text content
+// file - original file info
+//
+function import_svg(data, file) {
+  if (!isSvgFont(data)) {
+    console.error(file.name + " does not contain fonts");
+    return;
+  }
+  var customFont = _.find(N.app.fontsList.fonts, {isCustom: true});
+
+  if (!customFont) {
+    console.error("The custom font does not exist");
+    return;
+  }
+
+  var xmlDoc = (new XMLDOMParser()).parseFromString(data, "application/xml");
+  var svgGlyps = xmlDoc.getElementsByTagName('glyph');
+
+  var maxRef = _.max(customFont.glyphs(), function(glyph) { // calculate charRef with max char code
+    return glyph.charRef.charCodeAt(0);
+  }).charRef;
+
+  var charRefCode = (!maxRef) ? 0xe800 : maxRef.charCodeAt(0) + 1; // get next char code
+
+  customFont.glyphs.valueWillMutate();
+
+  _.each(svgGlyps, function (svgGlyph) {
+    var d = _.find(svgGlyph.attributes, {name: 'd'}).value;
+
+    customFont.glyphs.peek().push(
+      new N.models.GlyphModel(customFont, {
+        css:    (_.find(svgGlyph.attributes, {name: 'glyph-name'}).value || 'glyph'), // default name
+        // FIXME replace with fixedFromCharCode
+        code:   (_.find(svgGlyph.attributes, {name: 'unicode'}).value.charCodeAt(0) || 0),
+        uid:    uid(),
+        charRef:  charRefCode++,
+        path:   coordinateTransform(d),
+        width:  _.find(svgGlyph.attributes, {name: 'horiz-adv-x'}).value
+      })
+    );
+  });
+
+  customFont.glyphs.valueHasMutated();
+}
+
 // Handles change event of file input
 //
 function handleFileSelect(event) {
@@ -118,6 +181,7 @@ function handleFileSelect(event) {
         // and importer
         //
 
+        
         // Chrome omits type on JSON files, so check it by extention
         if (file.name.match(/[.]json$/)) {
           reader.onload = function (e) {
@@ -126,15 +190,20 @@ function handleFileSelect(event) {
           };
           reader.readAsText(file);
           return;
-        }
-
-        if (file.type === 'application/zip') {
+        } else if (file.type === 'application/zip') {
           reader.onload = function (e) {
             import_zip(e.target.result, file);
             next();
           };
           // Don't use readAsBinaryString() for IE 10 compatibility
           reader.readAsArrayBuffer(file);
+          return;
+        }  else if (file.type === 'image/svg+xml') {
+          reader.onload = function (e) {
+            import_svg(e.target.result, file);
+            next();
+          };
+          reader.readAsText(file);
           return;
         }
 

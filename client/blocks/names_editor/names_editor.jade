@@ -3,7 +3,7 @@
   #preview-font.row(data-bind="style: { fontSize: fontSize() + 'px' }")
     // ko foreach: { data: selectedGlyphs, beforeRemove: hideGlyph }
     .preview-glyph.col-xs-3
-      span.font-fontello.icon(data-bind='text: charRef')
+      span.icon(data-bind='text: charRef, css: {"font-custom_icons": font.isCustom, "font-fontello": !font.isCustom}')
       span.prefix(data-bind='visible: !$parent.cssUseSuffix(), text: $parent.cssPrefixText')
       input.glyph-name(data-bind='value: name')
       span.suffix(data-bind='visible: $parent.cssUseSuffix, text: $parent.cssPrefixText')

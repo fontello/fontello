@@ -1,4 +1,6 @@
 en-US:
   author: by
   license: "license:"
-  notfound: Ups! Nothing found...
+  notfound: Oops! Nothing found...
+  custom_icons_help: Here you can drag custom SVG icons or SVG font
+  clear_icons: clear
