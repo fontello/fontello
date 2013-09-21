@@ -246,8 +246,7 @@ N.wire.on('session_load', function () {
     _.each(sessionFont.glyphs, function (glyph) {
       var targetGlyph = lookup[glyph.uid];
 
-      // FIXME: temporary fix, when we got uid that does not exists
-      // in our collection. Investigate how that can happen.
+      // Check if glyph with this `uid` really exists
       if (!targetGlyph) { return; }
 
       targetGlyph.selected(!!glyph.selected);

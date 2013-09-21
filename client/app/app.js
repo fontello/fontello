@@ -79,7 +79,7 @@ function GlyphModel(font, data) {
   // Actual properties state
   //
 
-  this.selected = ko.observable(false);
+  this.selected = ko.observable(!!data.selected);
   this.name     = ko.observable(this.originalName);
   this.code     = ko.observable(this.originalCode);
   
