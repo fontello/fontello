@@ -114,18 +114,52 @@ a.selector__font-name
 
 .selector__glyphs-container
   margin-bottom 20px
+  margin-left 10px
 
 .selector__glyphs-list
   display inline-block
+  padding 0
   user-select none
+
 
 .selector__glyph
   position relative
   float left
-  margin 0 0 8px 8px
-  // 48px content + 2*2px border = 52px
+  margin 0 8px 8px 0
   width 48px 
   height 48px
+  list-style none
+.selector__glyph-span
+  line-height 48px
+// Chrome hack - it has different icon alligment, no ideas why
+@media screen and (-webkit-min-device-pixel-ratio:0)
+  .selector__glyph-span
+    line-height 50px
+
+
+.selector__glyph-delete
+  position absolute
+  right -10px
+  top -5px
+  display none
+  width 20px
+  height 20px
+  font-size 16px
+  line-height 20px
+  text-align center
+  border-radius 20px
+  background-color #f8f8f8
+  box-shadow 0 0 5px 2px #f8f8f8
+
+  &:before
+    width auto
+    margin 0
+
+  &:hover
+    display block
+
+.selector__glyph:hover .selector__glyph-delete
+  display block
 
 .selector__glyph-label
   font-weight normal
@@ -156,14 +190,6 @@ a.selector__font-name
   &:hover
     background #333
     color #fff
-
-.selector__glyph-span
-  line-height 48px
-
-// Chrome hack - it has different icon alligment, no ideas why
-@media screen and (-webkit-min-device-pixel-ratio:0)
-  .selector__glyph-span
-    line-height 50px
 
 .selector__glyph-input
   position absolute

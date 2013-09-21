@@ -120,6 +120,11 @@ function GlyphModel(font, data) {
     this.selected(!this.selected());
   }.bind(this);
 
+  this.remove = function () {
+    this.selected(false); // "untrack"
+    this.font.glyphs.remove(this);
+  }.bind(this);
+
   // Visibility depends only on search string:
   // - if pattern is too short (0 or 1 symbols)
   // - if pattern found in one of keywords
@@ -526,6 +531,11 @@ N.wire.once('navigate.done', function () {
   });
 
   N.wire.on('cmd:clear_custom_icons', function () {
-    N.app.fontsList.getFont('custom_icons').glyphs([]);
+    var custom_icons = N.app.fontsList.getFont('custom_icons');
+
+    custom_icons.glyphs().forEach(function (glyph) {
+      glyph.selected(false);
+    });
+    custom_icons.glyphs([]);
   });
 });
