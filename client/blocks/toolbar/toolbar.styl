@@ -12,28 +12,28 @@
 .btn-toolbar
   margin 0
 
-//== Make toolbar background non-transparent
-//.navbar-fixed-top
-//  background-color #fff
+.toolbar__size-slider
+  width 150px
+  display inline-block
+  float left
+  // return common view
+  box-shadow none !important
+  border-color transparent !important
+  background-color transparent
 
-//== Dirty fix typeahead & tooltip z-index, to be over static container
-.typeahead.dropdown-menu
-.tooltip
-  z-index 1050
-
+/*
 #glyph-size-slider
   width: 100px
   display inline-block
   float: left
   margin-top 15px
   margin-left .5em
-
-#glyph-size-value
+*/
+.toolbar__size-indicator
   display inline-block
   float  left
-  //height 29px
   line-height 34px
-  margin 0 1em
+  margin 0 1em 0 0
   color #666
   font-size 11px
 
@@ -76,6 +76,7 @@
  *
  * http://docs.jquery.com/UI/Slider#theming
  */
+/*
 .ui-slider
   position relative
   text-align left
@@ -118,21 +119,6 @@
 
 .ui-slider .ui-slider-range
   display none;
-/*
-  position: absolute;
-  z-index: 1;
-  font-size: .7em;
-  display: block;
-  border: 0;
-  background-position: 0 0
-  color: #ffffff;
-  background-color: #0064cd;
-  background-repeat: repeat-x;
-  background-image: linear-gradient(top, #049cdb, #0064cd);
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  border-color: #0064cd #0064cd #003f81;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-*/
 
 .ui-slider-horizontal
   height .4em
@@ -147,3 +133,4 @@
     left 0
   .ui-slider-range-max
     right 0
+*/

@@ -5,7 +5,7 @@
 //= require vendor/jquery-ui/ui/jquery.ui.widget
 //= require vendor/jquery-ui/ui/jquery.ui.mouse
 //= require vendor/jquery-ui/ui/jquery.ui.selectable
-//= require vendor/jquery-ui/ui/jquery.ui.slider
+////-= require vendor/jquery-ui/ui/jquery.ui.slider
 //= require bootstrap_custom/
 //= require vendor/typeahead.js/dist/typeahead
 //= require vendor/jszip/jszip

@@ -174,5 +174,8 @@
 
 
     .btn-group.hidden-xs.hidden-sm.pull-right
-      #glyph-size-slider
-      #glyph-size-value(data-bind="text: fontSize() + 'px'")
+      input#glyph-size-slider.toolbar__size-slider.form-control(
+        type='range',
+        data-bind='value: fontSize, valueUpdate: "input", attr: { min: fontSizeMin, max: fontSizeMax }'
+      )
+      #glyph-size-value.toolbar__size-indicator(data-bind="text: fontSize() + 'px'")

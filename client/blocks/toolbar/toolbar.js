@@ -39,8 +39,12 @@ function ToolbarModel() {
   //
 
   this.fontSize = ko.observable(N.app.fontSize());
+  this.fontSizeMin = GLYPH_SIZE_MIN;
+  this.fontSizeMax = GLYPH_SIZE_MAX;
 
   this.fontSize.subscribe(_.debounce(function (value) {
+    if ((value < GLYPH_SIZE_MIN) || (value > GLYPH_SIZE_MAX)) { return; }
+
     N.app.fontSize(value);
     N.wire.emit('session_save');
   }, 500));
@@ -178,6 +182,7 @@ N.wire.once('navigate.done', function (data) {
   //
 
   toolbar.fontSize(N.app.fontSize()); // Sync with global, to track first session load
+  /*
   $('#glyph-size-slider').slider({
     orientation:  'horizontal',
     range:        'min',
@@ -188,6 +193,7 @@ N.wire.once('navigate.done', function (data) {
       toolbar.fontSize(Math.round(ui.value));
     }
   });
+*/
 
   //
   // Initialize Twitter Bootstrap typeahead plugin
