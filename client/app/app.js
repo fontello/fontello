@@ -498,7 +498,7 @@ N.wire.once('navigate.done', function () {
     N.app.cssUseSuffix(false);
 
     _.each(N.app.fontsList.fonts, function(font) {
-      _.each(font.glyphs, function(glyph) {
+      _.each(font.glyphs(), function(glyph) {
         glyph.selected(false);
         glyph.code(glyph.originalCode);
         glyph.name(glyph.originalName);

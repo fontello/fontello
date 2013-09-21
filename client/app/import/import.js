@@ -37,7 +37,7 @@ function import_config(str, file) {
     // create map to lookup glyphs by id
     var glyphById = {};
     _.each(N.app.fontsList.fonts, function (font) {
-      _.each(font.glyphs, function (glyph) {
+      _.each(font.glyphs(), function (glyph) {
         glyphById[glyph.uid] = glyph;
       });
     });
