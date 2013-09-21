@@ -122,14 +122,14 @@ a.selector__font-name
 .selector__glyph
   position relative
   float left
-  //cursor pointer
-  width 48px
-  height 48px
   margin 0 0 8px 8px
+  // 48px content + 2*2px border = 52px
+  width 48px 
+  height 48px
 
 .selector__glyph-label
   font-weight normal
-  border 2px solid transparent
+  //border 2px solid transparent
   border-radius 30px
   position absolute
   width 100%
@@ -140,6 +140,19 @@ a.selector__font-name
   font-size inherit
   text-align center
 
+  // hack to not use border on main obj - that breaks
+  // glyph aligment in webkit 
+  &:before
+    position absolute
+    content ''
+    display block
+    left 0
+    right 0
+    top 0
+    bottom 0
+    border-radius 30px
+    border 2px solid transparent
+
   &:hover
     background #333
     color #fff
@@ -147,12 +160,18 @@ a.selector__font-name
 .selector__glyph-span
   line-height 48px
 
+// Chrome hack - it has different icon alligment, no ideas why
+@media screen and (-webkit-min-device-pixel-ratio:0)
+  .selector__glyph-span
+    line-height 50px
+
 .selector__glyph-input
   position absolute
   left -10000px
 
   &:checked + .selector__glyph-label
-    border-color #d88
+    &:before
+      border-color #d88
     &:hover
       background #666
 
@@ -160,31 +179,35 @@ a.selector__font-name
 
   .selector__glyph-label
     background-color #eeffee
-    border-color #8d8
+    &:before
+      border-color #8d8
     &:hover
       color inherit
 
   .selector__glyph-input:checked + .selector__glyph-label
     background-color #eeffee
-    border-color #666
-    box-shadow 0 0 3px #666 inset
+    &:before
+      border-color #666
     &:hover
       color inherit
 
 // IE8 compatibility layer. Input:checked does not work (no ideas why),
 // so, apply "checked" class to label manually, via knockout
+/*
 .selector__glyph
   .selector__glyph-label.checked
     background-color #fffdfd
-    border-color #d88
+    &:before
+      border-color #d88
     &:hover
       background #666
   &.ui-selecting .selector__glyph-label.checked
     background-color #eeffee
-    border-color #666
+    &before:
+      border-color #666
     &:hover
       color inherit
-
+*/
 
 // Animation tweaks
 //
@@ -197,12 +220,6 @@ a.selector__font-name
 
 .selector__glyph:hover .animate-spin
     animation-iteration-count infinite
-
-// Chrome hack - it has different icon alligment, no ideas why
-//
-@media screen and (-webkit-min-device-pixel-ratio:0)
-  .selector__glyph > label > span
-    line-height 50px
 
 
 ////////////////////////////////////////////////////////////////////////////////
