@@ -56,10 +56,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     this.name     = ko.observable(this.originalName);
     this.code     = ko.observable(this.originalCode);
     
-    this.svg      = {
-      path:  data.path,
-      width: data.width
-    };
+    this.svg      = data.svg;
 
     this.selected.subscribe(function () {
       N.wire.emit('session_save');

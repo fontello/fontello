@@ -125,8 +125,10 @@ function import_svg(data) {
         css:     'glyph', // default name
         code:    allocatedRefCode,
         charRef: allocatedRefCode++,
-        path:    d,
-        width:   (viewBox[2] || parseInt(_.find(svgTag.attributes, { name: 'width' }).value, 10))
+        svg: {
+          path:    d,
+          width:   (viewBox[2] || parseInt(_.find(svgTag.attributes, { name: 'width' }).value, 10))
+        }
       })
     );
 
@@ -147,10 +149,11 @@ function import_svg(data) {
         new N.models.GlyphModel(customFont, {
           css:     glyphName,
           code:    glyphCode,
-          uid:     uid(),
           charRef: allocatedRefCode++,
-          path:    d,
-          width:   _.find(svgGlyph.attributes, { name: 'horiz-adv-x' }).value
+          svg: {
+            path:  d,
+            width: _.find(svgGlyph.attributes, { name: 'horiz-adv-x' }).value
+          }
         })
       );
     });

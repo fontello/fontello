@@ -222,8 +222,7 @@ N.wire.on('session_load', function () {
           uid:      glyph.uid,
           selected: glyph.selected,
           charRef:  charRefCode++,
-          path:     glyph.svg.path,
-          width:    glyph.svg.width
+          svg:      glyph.svg
         }));
       });
 
