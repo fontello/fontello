@@ -5,12 +5,8 @@ var _     = require('lodash');
 var async = require('async');
 var XMLDOMParser = require('xmldom').DOMParser;
 
-function uid() {
-  /*jshint bitwise: false*/
-  return 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace(/[x]/g, function() {
-    return ((Math.random()*16)|0).toString(16);
-  });
-}
+var utils = require('../../_lib/utils.js');
+
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -98,22 +94,18 @@ function isSvgFont(data) {
 // data - text content
 //
 function import_svg(data) {
-  var xmlDoc;
-  var customFont;
-  var maxRef;
-  var charRefCode;
 
-  xmlDoc = (new XMLDOMParser()).parseFromString(data, "application/xml");
+  var xmlDoc = (new XMLDOMParser()).parseFromString(data, "application/xml");
 
-  customFont = _.find(N.app.fontsList.fonts, {isCustom: true});
+  var customFont = _.find(N.app.fontsList.fonts, {isCustom: true});
   
-  // calculate charRef with max char code
-  maxRef = _.max(customFont.glyphs(), function(glyph) {
-    return glyph.charRef.charCodeAt(0);
+  // Allocate reference code, used to show generated font on fontello page
+  // That's for internal needs, don't confuse with glyph (model) code
+  var maxRef = _.max(customFont.glyphs(), function(glyph) {
+    return utils.fixedCharCodeAt(glyph.charRef);
   }).charRef;
 
-  // get next char code
-  charRefCode = (!maxRef) ? 0xe800 : maxRef.charCodeAt(0) + 1;
+  var allocatedRefCode = (!maxRef) ? 0xe800 : utils.fixedCharCodeAt(maxRef) + 1;
 
   if (!isSvgFont(data)) {
     var svgTag = xmlDoc.getElementsByTagName('svg')[0];
@@ -123,19 +115,18 @@ function import_svg(data) {
       throw "SVG file has multiple contours";
     }
     
-    var d = _.find(pathTags[0].attributes, {name: 'd'}).value;
+    var d = _.find(pathTags[0].attributes, { name: 'd' }).value;
 
     // getting viewBox values array
-    var viewBox = ((_.find(svgTag.attributes, {name: 'viewBox'}) || {}).value || '').split(' ');
+    var viewBox = ((_.find(svgTag.attributes, { name: 'viewBox' }) || {}).value || '').split(' ');
 
     customFont.glyphs.push(
       new N.models.GlyphModel(customFont, {
         css:     'glyph', // default name
-        code:    charRefCode,
-        uid:     uid(),
-        charRef: charRefCode++,
+        code:    allocatedRefCode,
+        charRef: allocatedRefCode++,
         path:    d,
-        width:   (viewBox[2] || parseInt(_.find(svgTag.attributes, {name: 'width'}).value, 10))
+        width:   (viewBox[2] || parseInt(_.find(svgTag.attributes, { name: 'width' }).value, 10))
       })
     );
 
@@ -145,17 +136,21 @@ function import_svg(data) {
     customFont.glyphs.valueWillMutate();
 
     _.each(svgGlyps, function (svgGlyph) {
-      var d = _.find(svgGlyph.attributes, {name: 'd'}).value;
+      var d = _.find(svgGlyph.attributes, { name: 'd' }).value;
+
+      var glyphCodeAsChar = _.find(svgGlyph.attributes, { name: 'unicode' }).value;
+
+      var glyphCode = glyphCodeAsChar ? utils.fixedCharCodeAt(glyphCodeAsChar) : 0xE800;
+      var glyphName = _.find(svgGlyph.attributes, { name: 'glyph-name' }).value || 'glyph';
 
       customFont.glyphs.peek().push(
         new N.models.GlyphModel(customFont, {
-          css:     (_.find(svgGlyph.attributes, {name: 'glyph-name'}).value || 'glyph'), // default name
-          // FIXME replace with fixedFromCharCode
-          code:    (_.find(svgGlyph.attributes, {name: 'unicode'}).value.charCodeAt(0) || 0),
+          css:     glyphName,
+          code:    glyphCode,
           uid:     uid(),
-          charRef: charRefCode++,
+          charRef: allocatedRefCode++,
           path:    d,
-          width:   _.find(svgGlyph.attributes, {name: 'horiz-adv-x'}).value
+          width:   _.find(svgGlyph.attributes, { name: 'horiz-adv-x' }).value
         })
       );
     });
