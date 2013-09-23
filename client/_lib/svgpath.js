@@ -27,11 +27,12 @@ function SvgPath(pathString) {
 }
 
 
-
-
 var pathCommand = /([achlmrqstvz])[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029,]*((-?\d*\.?\d*(?:e[\-+]?\d+)?[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029]*,?[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029]*)+)/ig;
 var pathValues = /(-?\d*\.?\d*(?:e[\-+]?\d+)?)[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029]*,?[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029]*/ig;
-       
+// Object with keys == absolute commands names. Simplifies names check
+var absoluteCommands = _.zipObject(_.map('ACHLMRQSTVZ'.split(''), function(val) { return [ val, true ]; }));
+
+
 // Parser code is shamelessly borrowed from Raphael
 // https://github.com/DmitryBaranovskiy/raphael/
 //
@@ -69,6 +70,14 @@ SvgPath.prototype.parsePath = function(pathString) {
     }
   });
 
+  // First command MUST be always M or m.
+  // Make it always M, to avoid unnecesary checks in translate/abs
+  if (data[0][0].toLowerCase() !== 'm') {
+    throw "Path MUST start woth MoveTo command";
+  } else {
+    data[0][0] = 'M';
+  }
+
   return data;
 };
 
@@ -78,8 +87,7 @@ SvgPath.prototype.parsePath = function(pathString) {
 SvgPath.prototype.toString = function() {
   return _.flatten(this._p).join(' ')
     // Optimizations
-    // FIXME
-    //.replace(/ ?([achlmqrstvxz]) ?/gi, '')
+    .replace(/ ?([achlmqrstvxz]) ?/gi, '$1')
     .replace(/ \-/g, '-');
 };
 
@@ -91,37 +99,34 @@ SvgPath.prototype.translate = function(x, y) {
 
   y = y || 0;
 
-  p.forEach(function(segment, idx) {
+  p.forEach(function(segment) {
 
     var cmd = segment[0];
 
     // Shift coords only for commands with absolute values
-    if (!/[ACHLMRQSTVZ]/.test(cmd)) { return; }
+    if (!_.has(absoluteCommands, cmd)) { return; }
 
     var name   = cmd.toLowerCase();
 
     // H is the only command, with shifted coords parity
     if (name === 'h') {
-      p[idx][1] += y;
+      segment[1] += y;
       return;
     }
 
-    // ARC params are: [rx, ry, x-axis-rotation, large-arc-flag, sweep-flag, x, y]
+    // ARC is: ['A', rx, ry, x-axis-rotation, large-arc-flag, sweep-flag, x, y]
     // touch x,y only
     if (name === 'a') {
-      p[idx][6] += x;
-      p[idx][7] += y;
+      segment[6] += x;
+      segment[7] += y;
       return;
     }
 
-    var params = segment.slice(1);
-
-    // All other commands have [x1, y1, x2, y2, x3, y3, ...] format
-    params.forEach(function(val, i) {
-      params[i] = i % 2 ? val + x : val + y;
+    // All other commands have [cmd, x1, y1, x2, y2, x3, y3, ...] format
+    segment.forEach(function(val, i) {
+      if (!i) { return; } // skip command
+      segment[i] = i % 2 ? val + x : val + y;
     });
-
-    p[idx] = [cmd].concat(params);
   });
 
   return this;
@@ -136,40 +141,35 @@ SvgPath.prototype.scale = function(sx, sy) {
 
   sy = (!sy && (sy !== 0)) ? sx : sy;
 
-  p.forEach(function(segment, idx) {
+  p.forEach(function(segment) {
 
-    var cmd    = segment[0];
-    var name   = cmd.toLowerCase();
+    var name   = segment[0].toLowerCase();
 
     // H & h are the only command, with shifted coords parity
     if (name === 'h') {
-      p[idx][1] *= sy;
+      segment[1] *= sy;
       return;
     }
 
-    // ARC params are: [rx, ry, x-axis-rotation, large-arc-flag, sweep-flag, x, y]
+    // ARC is: ['A', rx, ry, x-axis-rotation, large-arc-flag, sweep-flag, x, y]
     // touch rx, ry, x,y only
     if (name === 'a') {
-      p[idx][1] *= sx;
-      p[idx][2] *= sy;
-      p[idx][6] *= sx;
-      p[idx][7] *= sy;
+      segment[1] *= sx;
+      segment[2] *= sy;
+      segment[6] *= sx;
+      segment[7] *= sy;
       return;
     }
 
-    var params = segment.slice(1);
-
-    // All other commands have [x1, y1, x2, y2, x3, y3, ...] format
-    params.forEach(function(val, i) {
-      params[i] = i % 2 ? val * sx : val * sy;
+    // All other commands have [cmd, x1, y1, x2, y2, x3, y3, ...] format
+    segment.forEach(function(val, i) {
+      if (!i) { return; } // skip command
+      segment[i] *= i % 2 ? sx : sy;
     });
-
-    p[idx] = [cmd].concat(params);
   });
 
   return this;
 };
-
 
 
 // Round coords with given decimal precition.
@@ -180,29 +180,28 @@ SvgPath.prototype.toFixed = function(d) {
 
   d = d || 0;
 
-  p.forEach(function(segment, idx) {
+  p.forEach(function(segment) {
 
     // Special processing for ARC:
-    // [rx, ry, x-axis-rotation, large-arc-flag, sweep-flag, x, y]
+    // [cmd, rx, ry, x-axis-rotation, large-arc-flag, sweep-flag, x, y]
     // don't touch flags and rotation
     if (segment[0].toLowerCase() === 'a') {
-      p[idx][1] = p[idx][1].toFixed(d);
-      p[idx][2] = p[idx][2].toFixed(d);
-      p[idx][6] = p[idx][6].toFixed(d);
-      p[idx][7] = p[idx][7].toFixed(d);
+      segment[1] = segment[1].toFixed(d);
+      segment[2] = segment[2].toFixed(d);
+      segment[6] = segment[6].toFixed(d);
+      segment[7] = segment[7].toFixed(d);
       return;
     }
 
     segment.forEach(function(val, i) {
-      if (i === 0) { return; }
-      p[idx][i] = p[idx][i].toFixed(d);
+      if (!i) { return; }
+      segment[i] = +segment[i].toFixed(d);
     });
 
   });
 
   return this;
 };
-
 
 
 module.exports = SvgPath;
