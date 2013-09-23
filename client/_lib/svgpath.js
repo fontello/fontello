@@ -78,7 +78,8 @@ SvgPath.prototype.parsePath = function(pathString) {
 SvgPath.prototype.toString = function() {
   return _.flatten(this._p).join(' ')
     // Optimizations
-    .replace(/ ?([achlmqrstvxz]) ?/gi, '')
+    // FIXME
+    //.replace(/ ?([achlmqrstvxz]) ?/gi, '')
     .replace(/ \-/g, '-');
 };
 
@@ -120,7 +121,7 @@ SvgPath.prototype.translate = function(x, y) {
       params[i] = i % 2 ? val + x : val + y;
     });
 
-    p[idx] = [name].concat(params);
+    p[idx] = [cmd].concat(params);
   });
 
   return this;

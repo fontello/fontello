@@ -6,6 +6,7 @@ var async = require('async');
 var XMLDOMParser = require('xmldom').DOMParser;
 
 var utils = require('../../_lib/utils.js');
+var svgpath       = require('../../_lib/svgpath');
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -118,19 +119,52 @@ function import_svg(data) {
     var d = _.find(pathTags[0].attributes, { name: 'd' }).value;
 
     // getting viewBox values array
-    var viewBox = ((_.find(svgTag.attributes, { name: 'viewBox' }) || {}).value || '').split(' ');
+    var viewBox = _.map(
+      ((_.find(svgTag.attributes, { name: 'viewBox' }) || {}).value || '').split(' '),
+      function(val) { return parseInt(val, 10); }
+    );
 
-    customFont.glyphs.push(
+    // getting base parameters
+    var fontHeigth = 1000; // constant
+    var ascend = 850;
+
+    var attr = {};
+    
+    _.forEach(['x', 'y', 'width', 'height'], function(key) {
+      attr[key] = parseInt((_.find(svgTag.attributes, { name: key }) || {}).value, 10);
+    });
+
+    var x      = viewBox[0] || attr.x || 0;
+    var y      = viewBox[2] || attr.y || 0;
+    var width  = viewBox[3] || attr.width;
+    var height = viewBox[4] || attr.height;
+
+    var scale  = fontHeigth / height;
+
+    // path transformation apply
+
+    width = Math.round(width * scale); // new width
+    d = svgpath(d)
+      .translate(x, -y)
+      .scale(scale)
+      .scale(-1, 1)
+      .translate(ascend, 0)
+      .toFixed(1)
+      .toString();
+
+    customFont.glyphs.valueWillMutate();
+    customFont.glyphs.peek().push(
       new N.models.GlyphModel(customFont, {
         css:     'glyph', // default name
         code:    allocatedRefCode,
         charRef: allocatedRefCode++,
         svg: {
           path:    d,
-          width:   (viewBox[2] || parseInt(_.find(svgTag.attributes, { name: 'width' }).value, 10))
+          width:   width
         }
       })
     );
+    customFont.glyphs.valueHasMutated();
 
   } else { // is svg font
     var svgGlyps = xmlDoc.getElementsByTagName('glyph');
