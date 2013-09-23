@@ -1,18 +1,26 @@
 'use strict';
 var _  = require('lodash');
+var svg2ttf = require('svg2ttf');
 
 module.exports = function(svg, fontId) {
-  // + make dataUri
-  // + create style description string
+  if (!svg) {
+    return;
+  }
 
-  var cfg = {dataUri : 'data:image/svg+xml,' + encodeURIComponent(svg), fontId : fontId};
+  var ttfStr = String.fromCharCode.apply(null, svg2ttf(svg, {}).buffer);
+  var fontInfo = {
+    svgDataUri : 'data:image/svg+xml,' + encodeURIComponent(svg),
+    ttfDataUri : 'data:font/truetype;base64,' + btoa(ttfStr),
+    fontId : fontId
+  };
 
-  var list =
+  var fontfaceTemplate =
   '  @font-face {\n' +
   '    font-family: "fml_customFont";\n' +
-  '    src: url("${dataUri}") format("svg");\n' +
+  '    src: url("${svgDataUri}") format("svg");\n' +
+  '    src: url("${ttfDataUri}") format("truetype");\n' +
   '    font-weight: normal;\n' +
   '    font-style: normal;\n' +
   '  }\n';
-  return _.template(list, cfg);
+  return _.template(fontfaceTemplate, fontInfo);
 };

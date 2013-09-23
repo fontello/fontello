@@ -226,9 +226,12 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     });
 
     this.makeSvgFont = function() {
+      if(!this.glyphs().length) {
+        return;
+      }
+
       var conf             = {};
       conf.font            = {};
-      conf.font.copyright  = this.license;
       conf.font.fontname   = this.fontname;
       conf.font.familyname = this.fontname;
       conf.font.ascent     = 850;
@@ -253,10 +256,8 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
         '<?xml version="1.0" standalone="no"?>\n' +
         '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n' +
         '<svg xmlns="http://www.w3.org/2000/svg">\n' +
-        '<metadata>${font.copyright}</metadata>\n' +
         '<defs>\n' +
         '<font id="_${font.fontname}" horiz-adv-x="${font.ascent - font.descent}" >\n' +
-
         '<font-face' +
         ' font-family="${font.familyname}"' +
         ' font-weight="400"' +
