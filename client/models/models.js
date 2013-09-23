@@ -8,10 +8,11 @@ var ko = require('knockout');
 
 var codesTracker   = require('./_lib/codes_tracker');
 var namesTracker   = require('./_lib/names_tracker');
-var fontface       = require('./_lib/fontface.js');
+var fontface       = require('./_lib/fontface');
 
-var utils          = require('../_lib/utils.js');
+var utils          = require('../_lib/utils');
 var embedded_fonts = require('../../lib/embedded_fonts/client_config');
+var SvgPath        = require('../_lib/svgpath');
 
 
 function uid() {
@@ -237,7 +238,13 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
         return {
           css:    glyph.originalName,
           code:   glyph.charRef.charCodeAt(0),
-          d:      glyph.svg.path,
+
+          d:      new SvgPath(glyph.svg.path)
+                    .scale(1, -1)
+                    .translate(0, conf.font.ascent)
+                    .toFixed(1)
+                    .toString(),
+
           width:  glyph.svg.width
         };
       });

@@ -1,12 +1,12 @@
 'use strict';
 
 
-var _     = require('lodash');
-var async = require('async');
+var _       = require('lodash');
+var async   = require('async');
 var XMLDOMParser = require('xmldom').DOMParser;
 
-var utils = require('../../_lib/utils.js');
-var svgpath       = require('../../_lib/svgpath');
+var utils   = require('../../_lib/utils');
+var SvgPath = require('../../_lib/svgpath');
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -126,7 +126,6 @@ function import_svg(data) {
 
     // getting base parameters
     var fontHeigth = 1000; // constant
-    var ascend = 850;
 
     var attr = {};
     
@@ -135,22 +134,18 @@ function import_svg(data) {
     });
 
     var x      = viewBox[0] || attr.x || 0;
-    var y      = viewBox[2] || attr.y || 0;
-    var width  = viewBox[3] || attr.width;
-    var height = viewBox[4] || attr.height;
+    var y      = viewBox[1] || attr.y || 0;
+    var width  = viewBox[2] || attr.width;
+    var height = viewBox[3] || attr.height;
 
+    // Scale to standard grid
     var scale  = fontHeigth / height;
-
-    // path transformation apply
-
+    d = new SvgPath(d)
+              .translate(-x, -y)
+              .scale(scale)
+              .toFixed(1)
+              .toString();
     width = Math.round(width * scale); // new width
-    d = svgpath(d)
-      .translate(x, -y)
-      .scale(scale)
-      .scale(-1, 1)
-      .translate(ascend, 0)
-      .toFixed(1)
-      .toString();
 
     customFont.glyphs.valueWillMutate();
     customFont.glyphs.peek().push(
@@ -178,6 +173,13 @@ function import_svg(data) {
 
       var glyphCode = glyphCodeAsChar ? utils.fixedCharCodeAt(glyphCodeAsChar) : 0xE800;
       var glyphName = _.find(svgGlyph.attributes, { name: 'glyph-name' }).value || 'glyph';
+
+      // Translate font coonds to single SVG image coords
+      d = new SvgPath(d)
+                .translate(0, -850)
+                .scale(1, -1)
+                .toFixed(1)
+                .toString();
 
       customFont.glyphs.peek().push(
         new N.models.GlyphModel(customFont, {
