@@ -11,6 +11,7 @@
 //= require vendor/jszip/jszip
 //= require vendor/jszip/jszip-inflate
 //= require vendor/jszip/jszip-load
+//= require vendor/base64/base64
 //= require_self
 //= require client
 

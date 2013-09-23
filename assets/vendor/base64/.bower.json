@@ -1,0 +1,14 @@
+{
+  "name": "base64",
+  "homepage": "https://github.com/davidchambers/Base64.js",
+  "version": "0.1.3",
+  "_release": "0.1.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.1.3",
+    "commit": "15896a461e41db065f90675a81cf28214723b24a"
+  },
+  "_source": "git://github.com/davidchambers/Base64.js.git",
+  "_target": "~0.1.3",
+  "_originalSource": "base64"
+}
