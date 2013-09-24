@@ -66,8 +66,16 @@ N.wire.once('navigate.done', { priority: -90 }, function () {
     if (!_.isEmpty(N.app.fontCopyright)) { config.copyright = N.app.fontCopyright; }
     if (!_.isEmpty(N.app.fontFullName)) { config.fullname = N.app.fontFullName; }
 
-    config.glyphs = _.map(N.app.fontsList.selectedGlyphs(), function (glyph) {
-      return glyph.serialize();
+    config.glyphs = [];
+
+    _.forEach(N.app.fontsList.fonts, function (font) {
+      _.forEach(font.glyphs(), function (glyph) {
+
+        if ((glyph.font.fontname === 'custom_icons') || glyph.selected()) {
+          config.glyphs.push(glyph.serialize());
+        }
+
+      });
     });
 
     return config;

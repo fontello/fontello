@@ -75,12 +75,19 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     // desired fields sent to the server (by font builder).
     //
     this.serialize = function () {
-      return {
-        uid:  this.uid
-      , css:  this.name()
-      , code: this.code()
-      , src:  this.font.fontname
+      var res = {
+        uid       : this.uid,
+        css       : this.name(),
+        code      : this.code(),
+        src       : this.font.fontname,
       };
+
+      if (this.font.isCustom) {
+        res['selected'] = this.selected();
+        res['svg'] = this.svg;
+      }
+
+      return res;
     }.bind(this);
 
     //

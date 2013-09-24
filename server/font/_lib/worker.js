@@ -253,6 +253,13 @@ module.exports = function fontWorker(taskInfo, callback) {
   // Write template files. (generate dynamic and copy static)
 
   _.forEach(TEMPLATES, function (templateData, templateName) {
+
+    // don't create license file when no copyright data exists
+
+    if ((templateName === 'LICENSE.txt') && (!taskInfo.builderConfig.fonts_list.length)) {
+      return;
+    }
+
     var outputName = templateName.replace('${FONTNAME}', fontname)
       , outputFile = path.join(taskInfo.tmpDir, outputName)
       , outputData = templateData(taskInfo.builderConfig);

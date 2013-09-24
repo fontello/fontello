@@ -12,7 +12,13 @@
 //       src: fontname
 //       code: codepoint
 //       css:
+// 
+// For custom icons
 //
+//       selected: flag
+//       svg:
+//         - path:
+//           width:
 //     - ...
 //
 // Resulting builder config:
@@ -55,29 +61,39 @@ var _ = require('lodash');
 
 var fontConfigs = require('../../../lib/embedded_fonts/server_config');
 
-
 function collectGlyphsInfo(input) {
   var result = [];
 
   _.forEach(input, function (inputGlyph) {
-    var fontGlyph = fontConfigs.uids[inputGlyph.uid];
 
-    if (!fontGlyph) {
-      // Unknown glyph UID.
-      return;
+    if(inputGlyph.src === 'custom_icons') {
+      result.push({
+        src:       inputGlyph.src
+      , uid:       inputGlyph.uid
+      , code:      Number(inputGlyph.code)
+      , css:       inputGlyph.css
+      , width:     inputGlyph.svg.width
+      , d:         inputGlyph.svg.path
+      , selected:  inputGlyph.selected
+      });
+    } else {
+      var fontGlyph = fontConfigs.uids[inputGlyph.uid];
+
+      if (!fontGlyph) {
+        // Unknown glyph UID.
+        return;
+      }
+
+      result.push({
+        src:       fontGlyph.fontname
+      , uid:       inputGlyph.uid
+      , code:      Number(inputGlyph.code || fontGlyph.code)
+      , css:       inputGlyph.css || fontGlyph.css
+      , 'css-ext': fontGlyph['css-ext']
+      , width:     fontGlyph.svg.width
+      , d:         fontGlyph.svg.d
+      });
     }
-
-    result.push({
-      src:       fontGlyph.fontname
-    , uid:       inputGlyph.uid
-    , from:      fontGlyph.code
-    , code:      Number(inputGlyph.code || fontGlyph.code)
-    , css:       inputGlyph.css || fontGlyph.css
-    , 'css-ext': fontGlyph['css-ext']
-    , heigh:     fontGlyph.svg.height
-    , width:     fontGlyph.svg.width
-    , d:         fontGlyph.svg.d
-    });
   });
 
   // Sort result by original codes.
@@ -86,22 +102,26 @@ function collectGlyphsInfo(input) {
   return result;
 }
 
+// collect fonts metadata required to build license info
 
 function collectFontsInfo(glyphs) {
   var result = [];
 
   _(glyphs).pluck('src').unique().forEach(function (fontname) {
-    result.push({
-      font : fontConfigs.fonts[fontname],
-      meta : fontConfigs.metas[fontname]
-    });
-  });
+    var font = fontConfigs.fonts[fontname];
+    var meta = fontConfigs.metas[fontname];
 
+    if (font && meta) {
+      result.push({ font : font, meta : meta });
+    }
+
+  });
   return result;
 }
 
 
 module.exports = function fontConfig(clientConfig) {
+
   var fontname, glyphsInfo, fontsInfo;
 
   if (!_.isObject(clientConfig)) {
@@ -117,7 +137,7 @@ module.exports = function fontConfig(clientConfig) {
   glyphsInfo = collectGlyphsInfo(clientConfig.glyphs);
   fontsInfo  = collectFontsInfo(glyphsInfo);
 
-  if (_.isEmpty(glyphsInfo) || _.isEmpty(fontsInfo)) {
+  if (_.isEmpty(glyphsInfo)) {
     return null;
   }
 
