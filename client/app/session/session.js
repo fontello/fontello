@@ -90,6 +90,10 @@ N.wire.on('session_save', _.debounce(function () {
   session.css_use_suffix  = N.app.cssUseSuffix();
   session.hinting         = N.app.hinting();
   session.encoding        = N.app.encoding();
+  session.font_fullname   = N.app.fontFullName();
+  session.font_units      = N.app.fontUnitsPerEm();
+  session.font_ascent     = N.app.fontAscent();
+  session.font_copyright  = N.app.fontCopyright();
   session.fonts           = {};
 
   _.each(N.app.fontsList.fonts, function (font) {
@@ -169,23 +173,13 @@ N.wire.on('session_load', function () {
 
   N.app.fontName(session.fontname);
 
-  if (_.has(session, 'css_prefix_text')) {
-    N.app.cssPrefixText(String(session.css_prefix_text));
-  } else {
-    N.app.cssPrefixText('icon-'); // legacy fallback
-  }
-
-  if (_.has(session, 'css_use_suffix')) {
-    N.app.cssUseSuffix(Boolean(session.css_use_suffix));
-  } else {
-    N.app.cssUseSuffix(false); // legacy fallback
-  }
-
-  if (_.has(session, 'encoding')) {
-    N.app.encoding(session.encoding);
-  } else {
-    N.app.encoding('pua'); // legacy fallback
-  }
+  if (_.has(session, 'css_prefix_text')) { N.app.cssPrefixText(String(session.css_prefix_text)); }
+  if (_.has(session, 'css_use_suffix')) { N.app.cssUseSuffix(Boolean(session.css_use_suffix)); }
+  if (_.has(session, 'encoding')) { N.app.encoding(String(session.encoding)); }
+  if (!_.isEmpty(session.font_fullname)) { N.app.fontFullName(String(session.font_fullname)); }
+  if (_.has(session, 'font_units')) { N.app.fontUnitsPerEm(Number(session.font_units)); }
+  if (_.has(session, 'font_ascent')) { N.app.fontAscent(Number(session.font_ascent)); }
+  if (_.has(session, 'font_copyright')) { N.app.fontCopyright(Number(session.font_copyright)); }
 
   N.app.hinting(session.hinting !== false);
 

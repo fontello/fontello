@@ -28,6 +28,11 @@ function import_config(str, file) {
     N.app.cssUseSuffix(config.css_use_suffix === true);
     N.app.hinting(config.hinting !== false);  // compatibility with old configs
 
+    N.app.fontUnitsPerEm(Number(config.units_per_em) || 1000);
+    N.app.fontAscent(Number(config.ascent) || 850);
+    N.app.fontFullName(String(config.copyright) || '');
+    N.app.fontCopyright(String(config.fullname) || '');
+
     // reset selection prior to set glyph data
     _.each(N.app.fontsList.selectedGlyphs(), function (glyph) { glyph.selected(false); });
 

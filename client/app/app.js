@@ -5,8 +5,18 @@
 var _  = require('lodash');
 var ko = require('knockout');
 
-
-var DEFAULT_GLYPH_SIZE = 16;
+// Set font-specific variables to defaults
+// Used in app init & settings menu
+//
+function reset_font() {
+  N.app.fontName('');
+  N.app.cssPrefixText('icon-');
+  N.app.cssUseSuffix(false);
+  N.app.fontUnitsPerEm(1000);
+  N.app.fontAscent(850);
+  N.app.fontFullName('');
+  N.app.fontCopyright('');
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -17,28 +27,44 @@ N.wire.once('navigate.done', { priority: -90 }, function () {
 
   N.app = {};
 
+  // App params
+  //
   N.app.searchWord    = ko.observable('').extend({ throttle: 100 });
   N.app.searchMode    = ko.computed(function () { return N.app.searchWord().length > 0; });
   N.app.fontsList     = new N.models.FontsList({ searchWord: N.app.searchWord });
-  N.app.fontSize      = ko.observable(DEFAULT_GLYPH_SIZE);
-  N.app.fontName      = ko.observable('');
-  N.app.cssPrefixText = ko.observable('icon-');
-  N.app.cssUseSuffix  = ko.observable(false);
-  N.app.hinting       = ko.observable(true);
-  N.app.encoding      = ko.observable('pua');
-
+  N.app.fontSize      = ko.observable(16);
   N.app.apiMode       = ko.observable(false);
   N.app.apiUrl        = ko.observable('');
   N.app.apiSessionId  = null;
+  N.app.hinting       = ko.observable(true);
+  N.app.encoding      = ko.observable('pua');
 
+  // Font Params
+  //
+  N.app.fontName      = ko.observable();
+  N.app.cssPrefixText = ko.observable();
+  N.app.cssUseSuffix  = ko.observable();
+  // This font params needed only if one wish to create custom font,
+  // or play with baseline. Can be tuned via advanced settings
+  N.app.fontUnitsPerEm  = ko.observable();
+  N.app.fontAscent      = ko.observable();
+  N.app.fontFullName    = ko.observable();
+  N.app.fontCopyright   = ko.observable();
+
+  reset_font(); // init font params
 
   N.app.getConfig   = function () {
     var config = {
-      name: $.trim(N.app.fontName()),
-      css_prefix_text: $.trim(N.app.cssPrefixText()),
-      css_use_suffix: N.app.cssUseSuffix(),
-      hinting: N.app.hinting()
+      name:             $.trim(N.app.fontName()),
+      css_prefix_text:  $.trim(N.app.cssPrefixText()),
+      css_use_suffix:   N.app.cssUseSuffix(),
+      hinting:          N.app.hinting(),
+      units_per_em:     N.app.fontUnitsPerEm(),
+      ascent:           N.app.fontAscent()
     };
+
+    if (!_.isEmpty(N.app.fontCopyright)) { config.copyright = N.app.fontCopyright; }
+    if (!_.isEmpty(N.app.fontFullName)) { config.fullname = N.app.fontFullName; }
 
     config.glyphs = _.map(N.app.fontsList.selectedGlyphs(), function (glyph) {
       return glyph.serialize();
@@ -131,10 +157,7 @@ N.wire.once('navigate.done', { priority: -10 }, function () {
       }
     }
 
-    N.app.fontName('');
-    //N.app.fontSize(N.runtime.config.glyph_size.val);
-    N.app.cssPrefixText('icon-');
-    N.app.cssUseSuffix(false);
+    reset_font();
 
     _.each(N.app.fontsList.fonts, function(font) {
       _.each(font.glyphs(), function(glyph) {
