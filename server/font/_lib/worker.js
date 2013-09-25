@@ -172,7 +172,7 @@ module.exports = function fontWorker(taskInfo, callback) {
       next(e);
       return;
     }
-    fs.writeFile(files.ttf, ttf.buffer, next);
+    fs.writeFile(files.ttf, new Buffer(ttf.buffer), next);
   });
 
 
