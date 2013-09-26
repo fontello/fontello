@@ -7,6 +7,10 @@ var crypto      = require('crypto');
 var revalidator = require('revalidator');
 var formidable  = require('formidable');
 
+
+var config_schema = require('./font/_lib/config_schema');
+
+
 var MAX_POST_DATA = 10 * 1000 * 1024; // Max post data in bytes
 var MAX_POST_FIELDS = 20;
 
@@ -90,6 +94,21 @@ module.exports = function (N, apiPath) {
           config = JSON.parse(configFile);
         } catch (err) {
           callback({ code: N.io.BAD_REQUEST, message: "Can't parse config data" });
+          return;
+        }
+
+        // Validate config content
+        var chk_config = revalidator.validate(config, config_schema);
+        var error;
+        if (!chk_config.valid) {
+
+          // generate error text
+          error = ['Invalid config format:'].concat(_.map(
+            chk_config.errors,
+            function (e) { return '- ' + e.property + ' ' + e.message; }
+          )).join('\n');
+
+          callback({ code: N.io.BAD_REQUEST, message: error });
           return;
         }
 
