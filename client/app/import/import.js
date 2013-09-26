@@ -4,9 +4,9 @@
 var _       = require('lodash');
 var async   = require('async');
 var XMLDOMParser = require('xmldom').DOMParser;
+var SvgPath = require('svgpath');
 
 var utils   = require('../../_lib/utils');
-var SvgPath = require('../../_lib/svgpath');
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -148,7 +148,8 @@ function import_svg(data) {
     d = new SvgPath(d)
               .translate(-x, -y)
               .scale(scale)
-              .toFixed(1)
+              .abs()
+              .round(1)
               .toString();
     width = Math.round(width * scale); // new width
 
@@ -183,7 +184,8 @@ function import_svg(data) {
       d = new SvgPath(d)
                 .translate(0, -850)
                 .scale(1, -1)
-                .toFixed(1)
+                .abs()
+                .round(1)
                 .toString();
 
       customFont.glyphs.peek().push(
