@@ -82,7 +82,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
         src       : this.font.fontname,
       };
 
-      if (this.font.isCustom) {
+      if (this.font.fontname === 'custom_icons') {
         res['selected'] = this.selected();
         res['svg'] = this.svg;
       }
@@ -172,8 +172,6 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     this.twitter  = (data.meta || {}).twitter;
     this.github   = (data.meta || {}).github;
     this.dribbble = (data.meta || {}).dribbble;
-
-    this.isCustom = data.isCustom;
 
     //
     // View state properties
@@ -301,7 +299,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     // Subscribe to glyph updates
     //
     this.glyphs.subscribe(function () {
-      if (!this.isCustom) { return; }
+      if (this.fontname !== 'custom_icons') { return; }
 
       N.wire.emit('session_save');
 
@@ -335,7 +333,6 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
         fontname: 'custom_icons',
         fullname: t('custom_icons_name')
       },
-      isCustom : true
     }));
 
     // Ordered list, to display on the page

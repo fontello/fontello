@@ -101,7 +101,7 @@ N.wire.on('session_save', _.debounce(function () {
 
     // for custom icons we always have to store ALL
     // glyphs + their state
-    if (font.isCustom) {
+    if (font.fontname === 'custom_icons') {
       _.each(font.glyphs(), function (glyph) {
         font_data.glyphs.push({
           css:      glyph.name(),

@@ -21,7 +21,12 @@ function import_config(str, file) {
 
   try {
     var config  = JSON.parse(str);
-    var getFont = _.memoize(N.app.fontsList.getFont);
+    var customFont = _.find(N.app.fontsList.fonts, { fontname: 'custom_icons' });
+    var maxRef = _.max(customFont.glyphs(), function(glyph) {
+      return utils.fixedCharCodeAt(glyph.charRef);
+    }).charRef;
+
+    var allocatedRefCode = (!maxRef) ? 0xe800 : utils.fixedCharCodeAt(maxRef) + 1;
 
     N.app.fontName(config.name || '');
     N.app.cssPrefixText(String(config.css_prefix_text || 'icon-'));
@@ -36,6 +41,9 @@ function import_config(str, file) {
     // reset selection prior to set glyph data
     _.each(N.app.fontsList.selectedGlyphs(), function (glyph) { glyph.selected(false); });
 
+    // remove custom glyphs
+    customFont.glyphs([]);
+
     // create map to lookup glyphs by id
     var glyphById = {};
     _.each(N.app.fontsList.fonts, function (font) {
@@ -46,7 +54,27 @@ function import_config(str, file) {
 
     _.each(config.glyphs, function (g) {
 
-      if (!getFont(g.src)) { return; }
+      if (!N.app.fontsList.getFont(g.src)) { return; }
+
+      if ( g.src === 'custom_icons') {
+        customFont.glyphs.valueWillMutate();
+        customFont.glyphs.peek().push(
+          new N.models.GlyphModel(customFont, {
+            uid:      g.uid,
+            css:      g.css,
+            code:     g.code,
+            charRef:  allocatedRefCode++,
+            selected: g.selected,
+            svg: {
+              path:    g.svg.path,
+              width:   g.svg.width
+            }
+          })
+        );
+        customFont.glyphs.valueHasMutated();
+
+        return;
+      }
 
       var glyph = glyphById[g.uid];
 
@@ -103,7 +131,7 @@ function import_svg(data) {
 
   var xmlDoc = (new XMLDOMParser()).parseFromString(data, "application/xml");
 
-  var customFont = _.find(N.app.fontsList.fonts, {isCustom: true});
+  var customFont = _.find(N.app.fontsList.fonts, { fontname: 'custom_icons' });
   
   // Allocate reference code, used to show generated font on fontello page
   // That's for internal needs, don't confuse with glyph (model) code
