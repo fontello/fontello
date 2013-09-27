@@ -67,6 +67,10 @@ function collectGlyphsInfo(input) {
   _.forEach(input, function (inputGlyph) {
 
     if(inputGlyph.src === 'custom_icons') {
+
+      // for custom glyphs use only selected ones      
+      if (!inputGlyph.selected) { return; }
+
       result.push({
         src:       inputGlyph.src
       , uid:       inputGlyph.uid
@@ -74,26 +78,25 @@ function collectGlyphsInfo(input) {
       , css:       inputGlyph.css
       , width:     inputGlyph.svg.width
       , d:         inputGlyph.svg.path
-      , selected:  inputGlyph.selected
       });
-    } else {
-      var fontGlyph = fontConfigs.uids[inputGlyph.uid];
-
-      if (!fontGlyph) {
-        // Unknown glyph UID.
-        return;
-      }
-
-      result.push({
-        src:       fontGlyph.fontname
-      , uid:       inputGlyph.uid
-      , code:      Number(inputGlyph.code || fontGlyph.code)
-      , css:       inputGlyph.css || fontGlyph.css
-      , 'css-ext': fontGlyph['css-ext']
-      , width:     fontGlyph.svg.width
-      , d:         fontGlyph.svg.d
-      });
+      return;
     }
+
+    // For exmbedded fonts take pregenerated info
+
+    var glyph = fontConfigs.uids[inputGlyph.uid];
+    if (!glyph) { return; }
+
+    result.push({
+      src:       glyph.fontname
+    , uid:       inputGlyph.uid
+    , code:      Number(inputGlyph.code || glyph.code)
+    , css:       inputGlyph.css || glyph.css
+    , 'css-ext': glyph['css-ext']
+    , width:     glyph.svg.width
+    , d:         glyph.svg.d
+    });
+
   });
 
   // Sort result by original codes.
