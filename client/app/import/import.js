@@ -35,8 +35,8 @@ function import_config(str, file) {
 
     N.app.fontUnitsPerEm(Number(config.units_per_em) || 1000);
     N.app.fontAscent(Number(config.ascent) || 850);
-    N.app.fontFullName(String(config.copyright) || '');
-    N.app.fontCopyright(String(config.fullname) || '');
+    N.app.fontFullName(String(config.fullname) || '');
+    N.app.fontCopyright(String(config.copyright) || '');
 
     // reset selection prior to set glyph data
     _.each(N.app.fontsList.selectedGlyphs(), function (glyph) { glyph.selected(false); });

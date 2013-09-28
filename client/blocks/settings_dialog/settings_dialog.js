@@ -9,11 +9,14 @@ var ko = require('knockout');
 N.wire.once('navigate.done', function () {
 
   function SettingsModel() {
-    this.units    = ko.observable(1);
-    this.ascent   = ko.observable(1);
-    this.descent  = ko.observable(1);
-    this.baseline = ko.observable(1);
-    this.hinting  = ko.observable(false);
+    this.units      = ko.observable(1);
+    this.ascent     = ko.observable(1);
+    this.descent    = ko.observable(1);
+    this.baseline   = ko.observable(1);
+    this.hinting    = ko.observable();
+    this.encoding   = ko.observable();
+    this.fullname   = ko.observable();
+    this.copyright  = ko.observable();
 
     // Lock to avoid circular updates
     var dependencies = true;
@@ -87,6 +90,9 @@ N.wire.once('navigate.done', function () {
     settings.units(N.app.fontUnitsPerEm());
     settings.ascent(N.app.fontAscent());
     settings.hinting(N.app.hinting());
+    settings.encoding(N.app.encoding());
+    settings.fullname(N.app.fontFullName());
+    settings.copyright(N.app.fontCopyright());
 
     ko.applyBindings(settings, $dialog.get(0));
 
@@ -95,8 +101,9 @@ N.wire.once('navigate.done', function () {
     $dialog.find('#st__descent').numeric({ decimal: false });
     $dialog.find('#st__baseline').numeric();
 
+    $dialog.find('._popover').popover();
+
     $dialog.on('shown.bs.modal', function () {
-      //$(this).find('input').focus();
     });
 
     $dialog.on('hidden.bs.modal', function () {
@@ -112,6 +119,9 @@ N.wire.once('navigate.done', function () {
     N.app.fontUnitsPerEm(settings.units());
     N.app.fontAscent(settings.ascent());
     N.app.hinting(settings.hinting());
+    N.app.encoding(settings.encoding());
+    N.app.fontFullName(settings.fullname());
+    N.app.fontCopyright(settings.copyright());
     $dialog.modal('hide');
   });
 

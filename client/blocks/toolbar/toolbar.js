@@ -67,7 +67,6 @@ function ToolbarModel() {
   this.cssPrefixText  = N.app.cssPrefixText;
   this.cssUseSuffix   = N.app.cssUseSuffix;
   this.hinting        = N.app.hinting;
-  this.encoding       = N.app.encoding;
   this.apiMode        = N.app.apiMode;
   this.apiUrl         = N.app.apiUrl;
 

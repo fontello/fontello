@@ -20,21 +20,6 @@ en-US:
   menu_css_prefix_text: 'CSS prefix:'
   menu_css_use_suffix: add after icon name
 
-  menu_encoding: Set encoding
-  menu_encoding_pua: Private Use Area
-  menu_encoding_pua_help: >
-    This is the most compatible selection for all browsers.
-    Also, this codes are ignored by screen readers. Used by default.
-  menu_encoding_ascii: Text characters (ASCII)
-  menu_encoding_ascii_help: >
-    This encoding is convenient for designers, who plan to import
-    font to graphics software
-  menu_encoding_unicode: Unicode
-  menu_encoding_unicode_help: >
-    Try to follow default glyph codes. That can be useful, when
-    you page can be looked without font, and you wish to see similar
-    symbols instead. It helps not for all glyphs, and probably PUA
-    encoding will be a better choice.
   menu_advanced_settings: Advanced font settings...
 
   help_us: >

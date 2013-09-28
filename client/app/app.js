@@ -63,8 +63,8 @@ N.wire.once('navigate.done', { priority: -90 }, function () {
       ascent:           N.app.fontAscent()
     };
 
-    if (!_.isEmpty(N.app.fontCopyright)) { config.copyright = N.app.fontCopyright; }
-    if (!_.isEmpty(N.app.fontFullName)) { config.fullname = N.app.fontFullName; }
+    if (!_.isEmpty(N.app.fontCopyright())) { config.copyright = N.app.fontCopyright(); }
+    if (!_.isEmpty(N.app.fontFullName())) { config.fullname = N.app.fontFullName(); }
 
     config.glyphs = [];
 
@@ -111,29 +111,21 @@ N.wire.once('navigate.done', { priority: -10 }, function () {
   // Setup autosave
   //
 
-  N.app.fontName.subscribe(function () {
-    N.wire.emit('session_save');
-  });
-
-  N.app.fontSize.subscribe(function () {
-    N.wire.emit('session_save');
-  });
-
-  N.app.cssPrefixText.subscribe(function () {
-    N.wire.emit('session_save');
-  });
-
-  N.app.cssUseSuffix.subscribe(function () {
-    N.wire.emit('session_save');
-  });
-
-  N.app.hinting.subscribe(function () {
-    N.wire.emit('session_save');
-  });
-
-  N.app.encoding.subscribe(function () {
-    N.wire.emit('session_save');
-  });
+  [ 'fontName'
+  , 'fontSize'
+  , 'cssPrefixText'
+  , 'cssUseSuffix'
+  , 'hinting'
+  , 'encoding'
+  , 'fontUnitsPerEm'
+  , 'fontAscent'
+  , 'fontFullName'
+  , 'fontCopyright'
+  ].forEach(function (key) {
+    N.app[key].subscribe(function () {
+      N.wire.emit('session_save');
+    });    
+  })
 
   // Try to load config before everything (tweak priority)
   if (!_.isEmpty(N.runtime.page_data && N.runtime.page_data.sid)) {

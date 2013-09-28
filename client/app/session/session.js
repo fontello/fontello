@@ -176,10 +176,10 @@ N.wire.on('session_load', function () {
   if (_.has(session, 'css_prefix_text')) { N.app.cssPrefixText(String(session.css_prefix_text)); }
   if (_.has(session, 'css_use_suffix')) { N.app.cssUseSuffix(Boolean(session.css_use_suffix)); }
   if (_.has(session, 'encoding')) { N.app.encoding(String(session.encoding)); }
-  if (!_.isEmpty(session.font_fullname)) { N.app.fontFullName(String(session.font_fullname)); }
   if (_.has(session, 'font_units')) { N.app.fontUnitsPerEm(Number(session.font_units)); }
   if (_.has(session, 'font_ascent')) { N.app.fontAscent(Number(session.font_ascent)); }
-  if (_.has(session, 'font_copyright')) { N.app.fontCopyright(Number(session.font_copyright)); }
+  if (_.has(session, 'font_fullname')) { N.app.fontFullName(String(session.font_fullname)); }
+  if (_.has(session, 'font_copyright')) { N.app.fontCopyright(String(session.font_copyright)); }
 
   N.app.hinting(session.hinting !== false);
 

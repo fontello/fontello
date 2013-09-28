@@ -1,43 +1,94 @@
 .modal.fade
-  .modal-dialog
+  .modal-dialog.settings__dialog
     .modal-content()
-      .modal-header
+      .modal-header.settings__header
         button.close(type='button', data-dismiss='modal') &times;
         h4.modal-title= self.t('settings_title')
       .modal-body
         form.form-horizontal
-          .form-group
-            label.col-sm-3.control-label(for='st__upm')= self.t('units_per_em')
-            .col-sm-8
-              input#st__upm.form-control(type='text', data-bind='value: units')
-              //- span.help-block= self.t('units_per_em_help')
-          .form-group
-            label.col-sm-3.control-label(for='st__ascent')= self.t('ascent')
-            .col-sm-8
-              input#st__ascent.form-control(type='text', data-bind='value: ascent')
-              //- span.help-block= self.t('ascent_help')
-          .form-group
-            label.col-sm-3.control-label(for='st__descent')= self.t('descent')
-            .col-sm-8
-              input#st__descent.form-control(type='text', data-bind='value: descent')
-              //- span.help-block= self.t('descent_help')
-          .form-group
-            label.col-sm-3.control-label(for='st__baseline')= self.t('baseline')
-            .col-sm-8
-              .input-group
-                span.input-group-addon %
-                input#st__baseline.form-control(type='text', data-bind='value: baseline')
-          .form-group
-            .col-sm-offset-3.col-sm-8
-              .checkbox
-                label
-                  input(type='checkbox', data-bind='checked: hinting')
-                  | #{self.t('hinting')}
+          fieldset.settings__fieldset
+            legend= self.t('fieldset_options')
+            .form-group
+              label.col-sm-3.control-label= self.t('hinting')
+              .col-sm-4
+                .checkbox(
+                  data-content=self.t('hinting_help')
+                  data-placement='right',
+                  data-trigger='hover',
+                  data-container='.settings__dialog'
+                  data-delay='{"show":500,"hide":100}'
+                )._popover
+                  label
+                    input(type='checkbox', data-bind='checked: hinting')
+                    | #{self.t('hinting_enable')}
+            .form-group
+              label.col-sm-3.control-label= self.t('encoding')
+              .col-sm-4
+                .radio(
+                  data-content=self.t('encoding_pua_help')
+                  data-placement='right',
+                  data-trigger='hover',
+                  data-container='.settings__dialog'
+                  data-delay='{"show":500,"hide":100}'
+                )._popover
+                  label
+                    input(type='radio', name='encoding', value='pua', data-bind='checked: encoding')
+                    | #{self.t('encoding_pua')}
+                .radio(
+                  data-content=self.t('encoding_ascii_help')
+                  data-placement='right',
+                  data-trigger='hover',
+                  data-container='.settings__dialog'
+                  data-delay='{"show":500,"hide":100}'
+                )._popover
+                  label
+                    input(type='radio', name='encoding', value='ascii', data-bind='checked: encoding')
+                    | #{self.t('encoding_ascii')}
+                .radio(
+                  data-content=self.t('encoding_unicode_help')
+                  data-placement='right',
+                  data-trigger='hover',
+                  data-container='.settings__dialog'
+                  data-delay='{"show":500,"hide":100}'
+                )._popover
+                  label
+                    input(type='radio', name='encoding', value='unicode', data-bind='checked: encoding')
+                    | #{self.t('encoding_unicode')}
 
-      .modal-footer
-        button.btn.btn-default(
-          type='button',
-          data-dismiss='modal')= self.t('btn_cancel')
-        button.btn.btn-primary(
-          type='button',
-          data-on-click='cmd:settings_dialog.save')= self.t('btn_ok')
+          fieldset.settings__fieldset
+            legend= self.t('fieldset_metrics')
+            .form-group
+              label.col-sm-3.control-label(for='st__upm')= self.t('units_per_em')
+              .col-sm-3
+                input#st__upm.form-control(type='text', data-bind='value: units')
+              label.col-sm-3.control-label(for='st__ascent')= self.t('ascent')
+              .col-sm-3
+                input#st__ascent.form-control(type='text', data-bind='value: ascent')
+            .form-group
+              label.col-sm-3.control-label(for='st__baseline')= self.t('baseline')
+              .col-sm-3
+                .input-group
+                  input#st__baseline.form-control(type='text', data-bind='value: baseline')
+                  span.input-group-addon %
+              label.col-sm-3.control-label(for='st__descent')= self.t('descent')
+              .col-sm-3
+                input#st__descent.form-control(type='text', data-bind='value: descent')
+
+          fieldset.settings__fieldset
+            legend= self.t('fieldset_development')
+            .form-group
+              p.col-sm-offset-3.col-sm-9= self.t('development_help')
+            .form-group
+              label.col-sm-3.control-label(for='st__fullname')= self.t('fullname')
+              .col-sm-9
+                input#st__fullname.form-control(type='text', data-bind='value: fullname')
+            .form-group
+              label.col-sm-3.control-label(for='st__copyright')= self.t('copyright')
+              .col-sm-9
+                input#st__copyright.form-control(type='text', data-bind='value: copyright')
+
+          .row.settings__buttons
+            .col-sm-offset-3.col-sm-9
+              button.btn.btn-primary.pull-right(
+                type='button',
+                data-on-click='cmd:settings_dialog.save')= self.t('btn_save')
