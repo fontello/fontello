@@ -124,8 +124,8 @@ N.wire.once('navigate.done', { priority: -10 }, function () {
   ].forEach(function (key) {
     N.app[key].subscribe(function () {
       N.wire.emit('session_save');
-    });    
-  })
+    });
+  });
 
   // Try to load config before everything (tweak priority)
   if (!_.isEmpty(N.runtime.page_data && N.runtime.page_data.sid)) {
