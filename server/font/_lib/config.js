@@ -57,44 +57,54 @@
 
 
 var _ = require('lodash');
+var svgpath = require('svgpath');
 
 
 var fontConfigs = require('../../../lib/embedded_fonts/server_config');
 
-function collectGlyphsInfo(input) {
+function collectGlyphsInfo(clientConfig) {
   var result = [];
+  var scale = clientConfig.units_per_em / 1000;
 
-  _.forEach(input, function (inputGlyph) {
+  _.forEach(clientConfig.glyphs, function (glyph) {
 
-    if(inputGlyph.src === 'custom_icons') {
+    if(glyph.src === 'custom_icons') {
 
       // for custom glyphs use only selected ones      
-      if (!inputGlyph.selected) { return; }
+      if (!glyph.selected) { return; }
 
       result.push({
-        src:       inputGlyph.src
-      , uid:       inputGlyph.uid
-      , code:      Number(inputGlyph.code)
-      , css:       inputGlyph.css
-      , width:     inputGlyph.svg.width
-      , d:         inputGlyph.svg.path
+        src:      glyph.src
+      , uid:      glyph.uid
+      , code:     glyph.code
+      , css:      glyph.css
+      , width:    +(glyph.svg.width * scale).toFixed(1)
+      , d:        svgpath(glyph.svg.path)
+                    .scale(-scale)
+                    .translate(0, clientConfig.ascent)
+                    .abs().round(0).rel()
+                    .toString()
       });
       return;
     }
 
     // For exmbedded fonts take pregenerated info
 
-    var glyph = fontConfigs.uids[inputGlyph.uid];
-    if (!glyph) { return; }
+    var glyphEmbedded = fontConfigs.uids[glyph.uid];
+    if (!glyphEmbedded) { return; }
 
     result.push({
-      src:       glyph.fontname
-    , uid:       inputGlyph.uid
-    , code:      Number(inputGlyph.code || glyph.code)
-    , css:       inputGlyph.css || glyph.css
-    , 'css-ext': glyph['css-ext']
-    , width:     glyph.svg.width
-    , d:         glyph.svg.d
+      src:        glyphEmbedded.fontname
+    , uid:        glyph.uid
+    , code:       glyph.code || glyphEmbedded.code
+    , css:        glyph.css || glyphEmbedded.css
+    , 'css-ext':  glyphEmbedded['css-ext']
+    , width:      +(glyphEmbedded.svg.width * scale).toFixed(1)
+    , d:          svgpath(glyphEmbedded.svg.d)
+                    .scale(-scale)
+                    .translate(0, clientConfig.ascent)
+                    .abs().round(0).rel()
+                    .toString()
     });
 
   });
@@ -137,7 +147,7 @@ module.exports = function fontConfig(clientConfig) {
     fontname = 'fontello';
   }
 
-  glyphsInfo = collectGlyphsInfo(clientConfig.glyphs);
+  glyphsInfo = collectGlyphsInfo(clientConfig);
   fontsInfo  = collectFontsInfo(glyphsInfo);
 
   if (_.isEmpty(glyphsInfo)) {
@@ -153,8 +163,8 @@ module.exports = function fontConfig(clientConfig) {
       // https://github.com/fontello/fontello/issues/73?source=cc#issuecomment-7791793
     , familyname: fontname
     , copyright:  'Copyright (C) 2012 by original authors @ fontello.com'
-    , ascent:     850
-    , descent:    -150
+    , ascent:     clientConfig.ascent
+    , descent:    clientConfig.ascent - clientConfig.units_per_em
     , weight:     400
     }
   , hinting : clientConfig.hinting !== false

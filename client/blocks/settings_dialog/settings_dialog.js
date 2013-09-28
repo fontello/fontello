@@ -35,7 +35,7 @@ N.wire.once('navigate.done', function () {
       var descent = ascent - units;
       this.ascent(ascent);
       this.descent(descent);
-      this.baseline(+(descent / units * 100).toFixed(2));
+      this.baseline(+((-descent) / units * 100).toFixed(2));
 
       dependencies = true;
     }, this);
@@ -116,8 +116,8 @@ N.wire.once('navigate.done', function () {
   });
 
   N.wire.on('cmd:settings_dialog.save', function settings_dialog_save() {
-    N.app.fontUnitsPerEm(settings.units());
-    N.app.fontAscent(settings.ascent());
+    N.app.fontUnitsPerEm(+settings.units());
+    N.app.fontAscent(+settings.ascent());
     N.app.hinting(settings.hinting());
     N.app.encoding(settings.encoding());
     N.app.fontFullName(settings.fullname());

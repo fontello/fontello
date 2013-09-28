@@ -63,8 +63,8 @@ N.wire.once('navigate.done', { priority: -90 }, function () {
       ascent:           N.app.fontAscent()
     };
 
-    if (!_.isEmpty(N.app.fontCopyright())) { config.copyright = N.app.fontCopyright(); }
-    if (!_.isEmpty(N.app.fontFullName())) { config.fullname = N.app.fontFullName(); }
+    if (!_.isEmpty(N.app.fontCopyright())) { config.copyright = $.trim(N.app.fontCopyright()); }
+    if (!_.isEmpty(N.app.fontFullName())) { config.fullname = $.trim(N.app.fontFullName()); }
 
     config.glyphs = [];
 

@@ -52,7 +52,7 @@ function getOutputName(fontId) {
 // 
 function createTask(clientConfig, afterRegistered, afterComplete) {
   var builderConfig = fontConfig(clientConfig)
-    , fontId        = getFontId(builderConfig)
+    , fontId        = getFontId(clientConfig)
     , outputName    = getOutputName(fontId)
     , outputFile    = path.join(builderOutputDir, outputName)
     , taskInfo      = null;
