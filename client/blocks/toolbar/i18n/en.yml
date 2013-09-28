@@ -20,11 +20,6 @@ en-US:
   menu_css_prefix_text: 'CSS prefix:'
   menu_css_use_suffix: add after icon name
 
-  menu_hinting: Hinting
-  menu_hinting_help: >
-    Adding font hints can make glyphs more sharp on small scale,
-    but increase font size. We use `ttfautohint` for hinting.
-
   menu_encoding: Set encoding
   menu_encoding_pua: Private Use Area
   menu_encoding_pua_help: >
@@ -40,6 +35,7 @@ en-US:
     you page can be looked without font, and you wish to see similar
     symbols instead. It helps not for all glyphs, and probably PUA
     encoding will be a better choice.
+  menu_advanced_settings: Advanced font settings...
 
   help_us: >
     Are you designer?

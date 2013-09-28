@@ -129,17 +129,6 @@
                 input(type='checkbox', data-bind='checked: cssUseSuffix')
                 = self.t('menu_css_use_suffix')
         li.divider
-        li: a(
-              href='#'
-              data-on-click='cmd:toggle_hinting',
-              data-content=self.t('menu_hinting_help'),
-              data-placement='right',
-              data-trigger='hover',
-              data-container='.layout__fixed'
-              data-delay='{"show":500,"hide":100}'
-              data-bind='{ "css": hinting() ? "icon-check" : "" }'
-            )._popover= self.t('menu_hinting')
-        li.divider
         li.dropdown-header= self.t('menu_encoding')
         li: a(
               href='#'
@@ -171,6 +160,8 @@
               data-delay='{"show":500,"hide":100}'            
               data-bind='{ "css": encoding() === "unicode" ? "icon-check" : "icon-empty" }'
             )._popover= self.t('menu_encoding_unicode')
+        li.divider
+        li: a(href='#', data-on-click='cmd:settings_dialog')= self.t('menu_advanced_settings')
 
 
     .btn-group.hidden-xs.hidden-sm.pull-right

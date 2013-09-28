@@ -1,0 +1,14 @@
+en-US:
+  settings_title: Anvanced font settings
+
+  units_per_em: Units per em
+  units_per_em_help: Font glyphs height
+  ascent: Ascent
+  ascent_help: Height above baseline
+  descent: Descent
+  descent_help: Height below baseline (negative)
+  baseline: Baseline
+  hinting: Do hinting
+
+  btn_cancel: Cancel
+  btn_ok: Save changes
