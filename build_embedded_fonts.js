@@ -7,18 +7,10 @@ var fs        = require('fs');
 var path      = require('path');
 var _         = require('lodash');
 var yaml      = require('js-yaml');
-var fstools   = require('fs-tools');
-var async     = require('async');
-var execFile  = require('child_process').execFile;
 var domparser      = require('xmldom').DOMParser;
 var ArgumentParser = require('argparse').ArgumentParser;
+var SvgPath   = require('svgpath');
 
-
-var svgImageTemplate = _.template(
-    '<svg height="<%= height %>" width="<%= width %>" xmlns="http://www.w3.org/2000/svg">' +
-    '<path d="<%= d %>"<% if (transform) { %> transform="<%= transform %>"<% } %>/>' +
-    '</svg>'
-  );
 
 var svgFontTemplate = _.template(
     '<?xml version="1.0" standalone="no"?>\n' +
@@ -182,16 +174,15 @@ _.forEach(args.input_fonts, function(fontDir) {
     var file_name = path.join(fontDir, 'src', 'svg', glyph_data.css + '.svg');
     var svg = parseSvgImage(fs.readFileSync(file_name, 'utf8'), file_name);
 
-    var transform =
-     'translate(0, -150) ' +
-     'translate(0 500) scale(1 -1) translate(0 -500)';
+    // FIXME: Apply transform from svg file. Now we understand
+    // pure paths only.
+    var scale = 1000 / svg.height;
 
-    glyph_data.svg.file = svgImageTemplate({
-      height : svg.height,
-      width  : svg.width,
-      d      : svg.d,
-      transform : svg.transform ? transform + ' ' + svg.transform : transform
-    });
+    glyph_data.svg.width = +(svg.width * scale).toFixed(1);
+    glyph_data.svg.d = new SvgPath(svg.d)
+                            .scale(scale)
+                            .abs().round(0).rel()
+                            .toString();
 
     configServer.uids[glyph.uid] = _.clone(glyph_data, true);
   });
@@ -199,93 +190,45 @@ _.forEach(args.input_fonts, function(fontDir) {
   configClient.push(client_font_info);
 });
 
-////////////////////////////////////////////////////////////////////////////////
-
 //
-// Parse SVG sources, recalculate coordinates & apply transform
+// Write out configs
 //
 
-var tmpDir;
+fs.writeFileSync(args.output_client, 'module.exports = ' + JSON.stringify(configClient, null, 2), 'utf8');
+fs.writeFileSync(args.output_server, 'module.exports = ' + JSON.stringify(configServer, null, 2), 'utf8');
 
-tmpDir = path.resolve('./tmp');
-//tmpDir = fstools.tmpdir();
-fstools.mkdirSync(tmpDir);
+//
+// Prepare SVG structures & write font file
+//
 
+var font = {
+  fontname: 'fontello',
+  familyname: 'fontello',
+  ascent: 850,
+  descent: -150
+};
 
-// write glyphs with transform rules, splitted by dirs, because SVGO crashes on big folders
-_.forEach(configServer.uids, function(glyph) {
-  fstools.mkdirSync(path.join(tmpDir, glyph.fontname));
-  fs.writeFileSync(path.join(tmpDir, glyph.fontname, glyph.uid + '.svg'), glyph.svg.file, 'utf8');
+var glyphs = [];
+
+_.forEach(configServer.uids, function (glyph) {
+  glyphs.push({
+    heigh : glyph.svg.height,
+    width : glyph.svg.width,
+    d     : new SvgPath(glyph.svg.d)
+                  .scale(1, -1)
+                  .translate(0, 850)
+                  .abs().round(0).rel()
+                  .toString(),
+    css   : glyph.uid,
+    unicode : '&#x' + glyph.charRef.toString(16) + ';'
+  });
 });
 
-// Optimize by directories and then write out final configs
-async.eachSeries(
-  _.keys(configServer.fonts),
-  // iterator
-  function (fontname, next) {
-    console.log('running SVGO on font ' + fontname);
-    execFile(
-      path.resolve('./node_modules/.bin/svgo'),
-      [ '-f', path.join(tmpDir, fontname), '--config', path.resolve('./embed.svgo.yml') ],
-      next
-    );
-  },
-  // callback
-  function (err) {
-    if (err) {
-      console.log(err);
-      process.exit(1);
-    }
+var svgOut = svgFontTemplate({
+  font : font,
+  glyphs : glyphs,
+  metadata: 'internal font for fontello.com website',
+  fontHeight : font.ascent - font.descent
+});
 
-    // load back glyph data
-    _.forEach(configServer.uids, function(glyph) {
-      var file_name = path.join(tmpDir, glyph.fontname, glyph.uid + '.svg');
-      // delete file info & fill glyph.svg with parsed data
-      glyph.svg = parseSvgImage(fs.readFileSync(file_name, 'utf8'), file_name);
-
-      // cleanup "transform" property
-      delete glyph.svg.transform;
-
-      // fontforge dirty fix
-      glyph.svg.d = glyph.svg.d.replace(/zm/g, 'z m');
-    });
-
-    // Write out configs
-    fs.writeFileSync(args.output_client, 'module.exports = ' + JSON.stringify(configClient, null, 2), 'utf8');
-    fs.writeFileSync(args.output_server, 'module.exports = ' + JSON.stringify(configServer, null, 2), 'utf8');
-
-    // cleanup
-    fstools.removeSync(tmpDir);
-
-
-    // Prepare SVG structures & write font file
-
-    var font = {
-      fontname: 'fontello',
-      familyname: 'fontello',
-      ascent: 850,
-      descent: -150
-    };
-
-    var glyphs = [];
-
-    _.forEach(configServer.uids, function (glyph) {
-      glyphs.push({
-        heigh : glyph.svg.height,
-        width : glyph.svg.width,
-        d     : glyph.svg.d,
-        css   : glyph.uid,
-        unicode : '&#x' + glyph.charRef.toString(16) + ';'
-      });
-    });
-
-    var svgOut = svgFontTemplate({
-      font : font,
-      glyphs : glyphs,
-      metadata: 'internal font for fontello.com website',
-      fontHeight : font.ascent - font.descent
-    });
-
-    fs.writeFileSync(args.output, svgOut, 'utf8');
-  }
-);
+fs.writeFileSync(args.output, svgOut, 'utf8');

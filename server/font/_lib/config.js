@@ -80,7 +80,7 @@ function collectGlyphsInfo(clientConfig) {
       , css:      glyph.css
       , width:    +(glyph.svg.width * scale).toFixed(1)
       , d:        svgpath(glyph.svg.path)
-                    .scale(-scale)
+                    .scale(scale, -scale)
                     .translate(0, clientConfig.ascent)
                     .abs().round(0).rel()
                     .toString()
@@ -101,7 +101,7 @@ function collectGlyphsInfo(clientConfig) {
     , 'css-ext':  glyphEmbedded['css-ext']
     , width:      +(glyphEmbedded.svg.width * scale).toFixed(1)
     , d:          svgpath(glyphEmbedded.svg.d)
-                    .scale(-scale)
+                    .scale(scale, -scale)
                     .translate(0, clientConfig.ascent)
                     .abs().round(0).rel()
                     .toString()
