@@ -171,7 +171,7 @@ N.wire.on('session_load', function () {
   // Now load session data into models
   //
 
-  N.app.fontList.lock();
+  N.app.fontsList.lock();
 
   N.app.fontName(session.fontname);
 
@@ -250,6 +250,6 @@ N.wire.on('session_load', function () {
     });
   });
 
-  N.app.fontList.lock();
+  N.app.fontsList.unlock();
 
 });
