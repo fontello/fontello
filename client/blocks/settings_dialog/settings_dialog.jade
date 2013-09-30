@@ -78,10 +78,11 @@
             legend= self.t('fieldset_development')
             .form-group
               p.col-sm-offset-3.col-sm-9= self.t('development_help')
-            .form-group
-              label.col-sm-3.control-label(for='st__fullname')= self.t('fullname')
-              .col-sm-9
-                input#st__fullname.form-control(type='text', data-bind='value: fullname')
+            //-
+              .form-group
+                label.col-sm-3.control-label(for='st__fullname')= self.t('fullname')
+                .col-sm-9
+                  input#st__fullname.form-control(type='text', data-bind='value: fullname')
             .form-group
               label.col-sm-3.control-label(for='st__copyright')= self.t('copyright')
               .col-sm-9

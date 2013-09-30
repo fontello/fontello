@@ -154,6 +154,8 @@ module.exports = function fontConfig(clientConfig) {
     return null;
   }
 
+  var defaultCopyright = 'Copyright (C) ' + new Date().getFullYear() + ' by original authors @ fontello.com';
+
   return {
     font: {
       fontname:   fontname
@@ -162,7 +164,7 @@ module.exports = function fontConfig(clientConfig) {
       // due bug, EOT requires `familyname` begins `fullname`
       // https://github.com/fontello/fontello/issues/73?source=cc#issuecomment-7791793
     , familyname: fontname
-    , copyright:  'Copyright (C) 2012 by original authors @ fontello.com'
+    , copyright:  !_.isEmpty(fontsInfo) ? defaultCopyright : (clientConfig.copyright || defaultCopyright)
     , ascent:     clientConfig.ascent
     , descent:    clientConfig.ascent - clientConfig.units_per_em
     , weight:     400
