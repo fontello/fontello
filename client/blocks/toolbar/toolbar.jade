@@ -42,7 +42,7 @@
 
     .btn-group.pull-right(data-bind='visible: apiMode() && !apiUrl()', style='display:none')
       //- API mode, without URL - `Save session` button
-      button.btn.btn-info.disabled(
+      button.btn.btn-danger.disabled(
         data-on-click='api.update',
         data-bind='css: {disabled: !selectedCount()}'): strong
         i.icon-download(data-bind='visible: !saving()')
@@ -52,7 +52,7 @@
         |  (
         span#selected-glyphs-count(data-bind='text: selectedCount()') 0
         | )
-      button.btn.btn-info.disabled.dropdown-toggle(
+      button.btn.btn-danger.disabled.dropdown-toggle(
         data-toggle='dropdown',
         data-bind='css: { disabled: !selectedCount() }'
         )
@@ -65,7 +65,7 @@
 
     .btn-group.pull-right(data-bind='visible: apiMode() && apiUrl()', style='display:none')
       //- API mode, with URL - `Export font` button
-      button.btn.btn-info.disabled(
+      button.btn.btn-danger.disabled(
         data-on-click='api.export',
         data-bind='css: { disabled: !selectedCount() }'): strong
         i.icon-download(data-bind='visible: !saving()')
@@ -75,7 +75,7 @@
         |  (
         span#selected-glyphs-count(data-bind='text: selectedCount()') 0
         | )
-      button.btn.btn-info.disabled.dropdown-toggle(
+      button.btn.btn-danger.disabled.dropdown-toggle(
         data-toggle='dropdown',
         data-bind='css: { disabled: !selectedCount() }'
         )
