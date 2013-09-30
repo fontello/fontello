@@ -171,6 +171,8 @@ N.wire.on('session_load', function () {
   // Now load session data into models
   //
 
+  N.app.fontList.lock();
+
   N.app.fontName(session.fontname);
 
   if (_.has(session, 'css_prefix_text')) { N.app.cssPrefixText(String(session.css_prefix_text)); }
@@ -247,4 +249,7 @@ N.wire.on('session_load', function () {
       targetGlyph.name(glyph.css || targetGlyph.originalName);
     });
   });
+
+  N.app.fontList.lock();
+
 });

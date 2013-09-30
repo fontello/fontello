@@ -57,7 +57,6 @@ function import_config(str, file) {
       if (!N.app.fontsList.getFont(g.src)) { return; }
 
       if ( g.src === 'custom_icons') {
-        customFont.glyphs.valueWillMutate();
         customFont.glyphs.peek().push(
           new N.models.GlyphModel(customFont, {
             uid:      g.uid,
@@ -71,8 +70,6 @@ function import_config(str, file) {
             }
           })
         );
-        customFont.glyphs.valueHasMutated();
-
         return;
       }
 
@@ -81,8 +78,8 @@ function import_config(str, file) {
       if (!glyph) { return; }
 
       glyph.selected(true);
-      glyph.code(g.code || glyph.orig_code || glyph.originalCode);
-      glyph.name(g.css || glyph.orig_css || glyph.originalName);
+      glyph.code(g.code || glyph.originalCode);
+      glyph.name(g.css || glyph.originalName);
     });
   } catch (e) {
     N.wire.emit('notify', t('error.bad_config_format', { name: file.name }));
@@ -139,8 +136,6 @@ function import_svg_font(data) {
 
   var svgGlyps = xmlDoc.getElementsByTagName('glyph');
 
-  customFont.glyphs.valueWillMutate();
-
   _.each(svgGlyps, function (svgGlyph) {
     var d = _.find(svgGlyph.attributes, { name: 'd' }).value;
 
@@ -169,9 +164,6 @@ function import_svg_font(data) {
       })
     );
   });
-
-  customFont.glyphs.valueHasMutated();
-
 }
 
 //
@@ -230,7 +222,6 @@ function import_svg_image(data) {
             .toString();
   width = Math.round(width * scale); // new width
 
-  customFont.glyphs.valueWillMutate();
   customFont.glyphs.peek().push(
     new N.models.GlyphModel(customFont, {
       css:     'glyph', // default name
@@ -242,7 +233,6 @@ function import_svg_image(data) {
       }
     })
   );
-  customFont.glyphs.valueHasMutated();
 }
 
 // Handles change event of file input
@@ -267,6 +257,8 @@ function handleFileSelect(event) {
     N.wire.emit('notify', t('error.no_files_chosen'));
     return;
   }
+
+  N.app.fontsList.lock();
 
   try {
     async.map(files,
@@ -320,6 +312,7 @@ function handleFileSelect(event) {
       },
       // final callback
       function () {
+        N.app.fontsList.unlock();
         // we must "reset" value of input field, otherwise Chromium will
         // not fire change event if the same file will be chosen twice, e.g.
         // import file -> made changes -> import same file

@@ -363,6 +363,19 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
       return _.reduce(this.fonts, function (cnt, font) { return cnt + (font.visibleCount() ? 1 : 0); }, 0);
     }, this).extend({ throttle: 100 });
 
+    // Lock/Unlock ko refreshes, needed on mass imports
+    //
+    this.lock = function () {
+      this.fonts.forEach(function(font) {
+        font.glyphs.valueWillMutate();
+      });
+    };
+    this.unlock = function () {
+      this.fonts.forEach(function(font) {
+        font.glyphs.valueHasMutated();
+      });
+    };
+
     // Search font by name
     //
     this.getFont = function(name) {
