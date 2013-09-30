@@ -21,7 +21,7 @@ function import_config(str, file) {
 
   try {
     var config  = JSON.parse(str);
-    var getFont = _.memoize(function(name) { return N.app.fontsList.getFont(name) });
+    var getFont = _.memoize(function(name) { return N.app.fontsList.getFont(name); });
     var customIcons = getFont('custom_icons');
     var maxRef = _.max(customIcons.glyphs(), function(glyph) {
       return utils.fixedCharCodeAt(glyph.charRef);
