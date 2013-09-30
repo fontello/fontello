@@ -21,8 +21,9 @@ function import_config(str, file) {
 
   try {
     var config  = JSON.parse(str);
-    var customFont = _.find(N.app.fontsList.fonts, { fontname: 'custom_icons' });
-    var maxRef = _.max(customFont.glyphs(), function(glyph) {
+    var getFont = _.memoize(function(name) { return N.app.fontsList.getFont(name) });
+    var customIcons = getFont('custom_icons');
+    var maxRef = _.max(customIcons.glyphs(), function(glyph) {
       return utils.fixedCharCodeAt(glyph.charRef);
     }).charRef;
 
@@ -42,7 +43,7 @@ function import_config(str, file) {
     _.each(N.app.fontsList.selectedGlyphs(), function (glyph) { glyph.selected(false); });
 
     // remove custom glyphs
-    customFont.glyphs([]);
+    customIcons.glyphs([]);
 
     // create map to lookup glyphs by id
     var glyphById = {};
@@ -54,11 +55,11 @@ function import_config(str, file) {
 
     _.each(config.glyphs, function (g) {
 
-      if (!N.app.fontsList.getFont(g.src)) { return; }
+      if (!getFont(g.src)) { return; }
 
       if ( g.src === 'custom_icons') {
-        customFont.glyphs.peek().push(
-          new N.models.GlyphModel(customFont, {
+        customIcons.glyphs.peek().push(
+          new N.models.GlyphModel(customIcons, {
             uid:      g.uid,
             css:      g.css,
             code:     g.code,
@@ -124,11 +125,11 @@ function import_zip(data, file) {
 function import_svg_font(data) {
   var xmlDoc = (new XMLDOMParser()).parseFromString(data, "application/xml");
 
-  var customFont = N.app.fontsList.getFont('custom_icons');
+  var customIcons = N.app.fontsList.getFont('custom_icons');
     
   // Allocate reference code, used to show generated font on fontello page
   // That's for internal needs, don't confuse with glyph (model) code
-  var maxRef = _.max(customFont.glyphs(), function(glyph) {
+  var maxRef = _.max(customIcons.glyphs(), function(glyph) {
     return utils.fixedCharCodeAt(glyph.charRef);
   }).charRef;
 
@@ -171,8 +172,8 @@ function import_svg_font(data) {
               .round(1)
               .toString();
 
-    customFont.glyphs.peek().push(
-      new N.models.GlyphModel(customFont, {
+    customIcons.glyphs.peek().push(
+      new N.models.GlyphModel(customIcons, {
         css:     glyphName,
         code:    glyphCode,
         charRef: allocatedRefCode++,
@@ -194,11 +195,11 @@ function import_svg_font(data) {
 function import_svg_image(data) {
   var xmlDoc = (new XMLDOMParser()).parseFromString(data, "application/xml");
 
-  var customFont = N.app.fontsList.getFont('custom_icons');
+  var customIcons = N.app.fontsList.getFont('custom_icons');
   
   // Allocate reference code, used to show generated font on fontello page
   // That's for internal needs, don't confuse with glyph (model) code
-  var maxRef = _.max(customFont.glyphs(), function(glyph) {
+  var maxRef = _.max(customIcons.glyphs(), function(glyph) {
     return utils.fixedCharCodeAt(glyph.charRef);
   }).charRef;
 
@@ -241,8 +242,8 @@ function import_svg_image(data) {
             .toString();
   width = Math.round(width * scale); // new width
 
-  customFont.glyphs.peek().push(
-    new N.models.GlyphModel(customFont, {
+  customIcons.glyphs.peek().push(
+    new N.models.GlyphModel(customIcons, {
       css:     'glyph', // default name
       code:    allocatedRefCode,
       charRef: allocatedRefCode++,

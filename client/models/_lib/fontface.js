@@ -16,7 +16,7 @@ module.exports = function(svg, fontId) {
 
   var fontfaceTemplate =
   '  @font-face {\n' +
-  '    font-family: "fml_customFont";\n' +
+  '    font-family: "fml_${fontId}";\n' +
   '    src: url("${svgDataUri}") format("svg");\n' +
   '    src: url("${ttfDataUri}") format("truetype");\n' +
   '    font-weight: normal;\n' +

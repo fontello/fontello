@@ -310,7 +310,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
 
       var styleTemplate =
         '<style id="ff_${fontId}" type="text/css">\n ${fontface}' +
-        '  .font-${fontId} { font-family: "fml_customFont"; }\n' +
+        '  .font-${fontId} { font-family: "fml_${fontId}"; }\n' +
         '</style>\n';
 
       var style = _.template(styleTemplate, {
