@@ -134,22 +134,34 @@ function import_svg_font(data) {
 
   var allocatedRefCode = (!maxRef) ? 0xe800 : utils.fixedCharCodeAt(maxRef) + 1;
 
+  var svgFont = xmlDoc.getElementsByTagName('font')[0];
   var svgFontface = xmlDoc.getElementsByTagName('font-face')[0];
   var svgGlyps = xmlDoc.getElementsByTagName('glyph');
 
-  _.each(svgGlyps, function (svgGlyph) {
-    var d = _.find(svgGlyph.attributes, { name: 'd' }).value;
+  var fontHorizAdvX = svgFont.getAttribute('horiz-adv-x');
+  var fontAscent = svgFontface.getAttribute('ascent');
+  var fontUnitsPerEm = svgFontface.getAttribute('units-per-em') || 1000;
 
-    var glyphCodeAsChar = _.find(svgGlyph.attributes, { name: 'unicode' }).value;
+  var scale = 1000 / fontUnitsPerEm;
+
+  _.each(svgGlyps, function (svgGlyph) {
+    var d = svgGlyph.getAttribute('d');
+
+    // FIXME
+    // Now just ignore glyphs without image, however
+    // that can be space. Does anyone needs it?
+    if (!d) { return; }
+
+
+    var glyphCodeAsChar = svgGlyph.getAttribute('unicode');
 
     var glyphCode = glyphCodeAsChar ? utils.fixedCharCodeAt(glyphCodeAsChar) : 0xE800;
-    var glyphName = _.find(svgGlyph.attributes, { name: 'glyph-name' }).value || 'glyph';
+    var glyphName = svgGlyph.getAttribute('glyph-name') || 'glyph';
+    var glyphHorizAdvX =  svgGlyph.hasAttribute('horiz-adv-x') ? svgGlyph.getAttribute('horiz-adv-x') : fontHorizAdvX;
 
-    var fontAscent = _.find(svgFontface.attributes, { name: 'ascent' }).value;
-    var fontUnitsPerEm = _.find(svgFontface.attributes, { name: 'units-per-em' }).value || 1000;
+    if (!glyphHorizAdvX) { return; } // ignore zero-width glyphs
 
-    var scale = 1000 / fontUnitsPerEm;
-    var width = _.find(svgGlyph.attributes, { name: 'horiz-adv-x' }).value * scale;
+    var width = glyphHorizAdvX * scale;
 
     // Translate font coonds to single SVG image coords
     d = new SvgPath(d)
@@ -198,11 +210,11 @@ function import_svg_image(data) {
     throw "SVG file has multiple contours";
   }
   
-  var d = _.find(pathTags[0].attributes, { name: 'd' }).value;
+  var d = pathTags[0].getAttribute('d');
 
   // getting viewBox values array
   var viewBox = _.map(
-    ((_.find(svgTag.attributes, { name: 'viewBox' }) || {}).value || '').split(' '),
+    (svgTag.getAttribute('viewBox') || '').split(' '),
     function(val) { return parseInt(val, 10); }
   );
 
@@ -211,7 +223,7 @@ function import_svg_image(data) {
   var attr = {};
   
   _.forEach(['x', 'y', 'width', 'height'], function(key) {
-    attr[key] = parseInt((_.find(svgTag.attributes, { name: key }) || {}).value, 10);
+    attr[key] = parseInt(svgTag.getAttribute(key), 10);
   });
 
   var x      = viewBox[0] || attr.x || 0;
