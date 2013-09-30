@@ -44,7 +44,7 @@ module.exports = {
               additionalProperties: false,
               properties: {
                 path:   { type: 'string',  required: true },
-                width:  { type: 'integer', required: true,  minimum: 10 },
+                width:  { type: 'number', required: true,  minimum: 10 },
               }
             }
           }
