@@ -53,7 +53,8 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     // Actual properties state
     //
 
-    this.selected = ko.observable(!!data.selected);
+    // actual `selected` value will be set after codes/names trackers init
+    this.selected = ko.observable(false);
     this.name     = ko.observable(this.originalName);
     this.code     = ko.observable(this.originalCode);
     
@@ -151,6 +152,8 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     //
     codesTracker.observe(this);
     namesTracker.observe(this);
+
+    this.selected(!!data.selected);
   }
 
 
