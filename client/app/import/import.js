@@ -118,21 +118,17 @@ function import_zip(data, file) {
   }
 }
 
-function isSvgFont(data) {
-  return (data.indexOf('<font') + 1);
-}
-
 //
-// Import svg files. Try to determine content & call appropriate parsers
+// Import svg fonts from svg files.
 //
 // data - text content
 //
-function import_svg(data) {
 
+function import_svg_font(data) {
   var xmlDoc = (new XMLDOMParser()).parseFromString(data, "application/xml");
 
-  var customFont = _.find(N.app.fontsList.fonts, { fontname: 'custom_icons' });
-  
+  var customFont = N.app.fontsList.getFont('custom_icons');
+    
   // Allocate reference code, used to show generated font on fontello page
   // That's for internal needs, don't confuse with glyph (model) code
   var maxRef = _.max(customFont.glyphs(), function(glyph) {
@@ -141,96 +137,112 @@ function import_svg(data) {
 
   var allocatedRefCode = (!maxRef) ? 0xe800 : utils.fixedCharCodeAt(maxRef) + 1;
 
-  if (!isSvgFont(data)) {
-    var svgTag = xmlDoc.getElementsByTagName('svg')[0];
-    var pathTags = xmlDoc.getElementsByTagName('path');
+  var svgGlyps = xmlDoc.getElementsByTagName('glyph');
 
-    if (pathTags.length !== 1) {
-      throw "SVG file has multiple contours";
-    }
-    
-    var d = _.find(pathTags[0].attributes, { name: 'd' }).value;
+  customFont.glyphs.valueWillMutate();
 
-    // getting viewBox values array
-    var viewBox = _.map(
-      ((_.find(svgTag.attributes, { name: 'viewBox' }) || {}).value || '').split(' '),
-      function(val) { return parseInt(val, 10); }
-    );
+  _.each(svgGlyps, function (svgGlyph) {
+    var d = _.find(svgGlyph.attributes, { name: 'd' }).value;
 
-    // getting base parameters
-    var fontHeigth = 1000; // constant
+    var glyphCodeAsChar = _.find(svgGlyph.attributes, { name: 'unicode' }).value;
 
-    var attr = {};
-    
-    _.forEach(['x', 'y', 'width', 'height'], function(key) {
-      attr[key] = parseInt((_.find(svgTag.attributes, { name: key }) || {}).value, 10);
-    });
+    var glyphCode = glyphCodeAsChar ? utils.fixedCharCodeAt(glyphCodeAsChar) : 0xE800;
+    var glyphName = _.find(svgGlyph.attributes, { name: 'glyph-name' }).value || 'glyph';
 
-    var x      = viewBox[0] || attr.x || 0;
-    var y      = viewBox[1] || attr.y || 0;
-    var width  = viewBox[2] || attr.width;
-    var height = viewBox[3] || attr.height;
-
-    // Scale to standard grid
-    var scale  = fontHeigth / height;
+    // Translate font coonds to single SVG image coords
     d = new SvgPath(d)
-              .translate(-x, -y)
-              .scale(scale)
+              .translate(0, -850)
+              .scale(1, -1)
               .abs()
               .round(1)
               .toString();
-    width = Math.round(width * scale); // new width
 
-    customFont.glyphs.valueWillMutate();
     customFont.glyphs.peek().push(
       new N.models.GlyphModel(customFont, {
-        css:     'glyph', // default name
-        code:    allocatedRefCode,
+        css:     glyphName,
+        code:    glyphCode,
         charRef: allocatedRefCode++,
         svg: {
-          path:    d,
-          width:   width
+          path:  d,
+          width: _.find(svgGlyph.attributes, { name: 'horiz-adv-x' }).value
         }
       })
     );
-    customFont.glyphs.valueHasMutated();
+  });
 
-  } else { // is svg font
-    var svgGlyps = xmlDoc.getElementsByTagName('glyph');
+  customFont.glyphs.valueHasMutated();
 
-    customFont.glyphs.valueWillMutate();
+}
 
-    _.each(svgGlyps, function (svgGlyph) {
-      var d = _.find(svgGlyph.attributes, { name: 'd' }).value;
+//
+// Import svg image from svg files.
+//
+// data - text content
+//
 
-      var glyphCodeAsChar = _.find(svgGlyph.attributes, { name: 'unicode' }).value;
+function import_svg_image(data) {
+  var xmlDoc = (new XMLDOMParser()).parseFromString(data, "application/xml");
 
-      var glyphCode = glyphCodeAsChar ? utils.fixedCharCodeAt(glyphCodeAsChar) : 0xE800;
-      var glyphName = _.find(svgGlyph.attributes, { name: 'glyph-name' }).value || 'glyph';
+  var customFont = N.app.fontsList.getFont('custom_icons');
+  
+  // Allocate reference code, used to show generated font on fontello page
+  // That's for internal needs, don't confuse with glyph (model) code
+  var maxRef = _.max(customFont.glyphs(), function(glyph) {
+    return utils.fixedCharCodeAt(glyph.charRef);
+  }).charRef;
 
-      // Translate font coonds to single SVG image coords
-      d = new SvgPath(d)
-                .translate(0, -850)
-                .scale(1, -1)
-                .abs()
-                .round(1)
-                .toString();
+  var allocatedRefCode = (!maxRef) ? 0xe800 : utils.fixedCharCodeAt(maxRef) + 1;
+  var svgTag = xmlDoc.getElementsByTagName('svg')[0];
+  var pathTags = xmlDoc.getElementsByTagName('path');
 
-      customFont.glyphs.peek().push(
-        new N.models.GlyphModel(customFont, {
-          css:     glyphName,
-          code:    glyphCode,
-          charRef: allocatedRefCode++,
-          svg: {
-            path:  d,
-            width: _.find(svgGlyph.attributes, { name: 'horiz-adv-x' }).value
-          }
-        })
-      );
-    });
-
-    customFont.glyphs.valueHasMutated();
+  if (pathTags.length !== 1) {
+    throw "SVG file has multiple contours";
   }
+  
+  var d = _.find(pathTags[0].attributes, { name: 'd' }).value;
+
+  // getting viewBox values array
+  var viewBox = _.map(
+    ((_.find(svgTag.attributes, { name: 'viewBox' }) || {}).value || '').split(' '),
+    function(val) { return parseInt(val, 10); }
+  );
+
+  // getting base parameters
+
+  var attr = {};
+  
+  _.forEach(['x', 'y', 'width', 'height'], function(key) {
+    attr[key] = parseInt((_.find(svgTag.attributes, { name: key }) || {}).value, 10);
+  });
+
+  var x      = viewBox[0] || attr.x || 0;
+  var y      = viewBox[1] || attr.y || 0;
+  var width  = viewBox[2] || attr.width;
+  var height = viewBox[3] || attr.height;
+
+  // Scale to standard grid
+  var scale  = 1000 / height;
+  d = new SvgPath(d)
+            .translate(-x, -y)
+            .scale(scale)
+            .abs()
+            .round(1)
+            .toString();
+  width = Math.round(width * scale); // new width
+
+  customFont.glyphs.valueWillMutate();
+  customFont.glyphs.peek().push(
+    new N.models.GlyphModel(customFont, {
+      css:     'glyph', // default name
+      code:    allocatedRefCode,
+      charRef: allocatedRefCode++,
+      svg: {
+        path:    d,
+        width:   width
+      }
+    })
+  );
+  customFont.glyphs.valueHasMutated();
 }
 
 // Handles change event of file input
@@ -289,7 +301,13 @@ function handleFileSelect(event) {
           return;
         }  else if (file.type === 'image/svg+xml') {
           reader.onload = function (e) {
-            import_svg(e.target.result);
+
+            if ((e.target.result.indexOf('<font') + 1)) {
+              import_svg_font(e.target.result);
+            } else {
+              import_svg_image(e.target.result);
+            }
+
             next();
           };
           reader.readAsText(file);
