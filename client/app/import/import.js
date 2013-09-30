@@ -134,6 +134,7 @@ function import_svg_font(data) {
 
   var allocatedRefCode = (!maxRef) ? 0xe800 : utils.fixedCharCodeAt(maxRef) + 1;
 
+  var svgFontface = xmlDoc.getElementsByTagName('font-face')[0];
   var svgGlyps = xmlDoc.getElementsByTagName('glyph');
 
   _.each(svgGlyps, function (svgGlyph) {
@@ -144,10 +145,16 @@ function import_svg_font(data) {
     var glyphCode = glyphCodeAsChar ? utils.fixedCharCodeAt(glyphCodeAsChar) : 0xE800;
     var glyphName = _.find(svgGlyph.attributes, { name: 'glyph-name' }).value || 'glyph';
 
+    var fontAscent = _.find(svgFontface.attributes, { name: 'ascent' }).value;
+    var fontUnitsPerEm = _.find(svgFontface.attributes, { name: 'units-per-em' }).value || 1000;
+
+    var scale = 1000 / fontUnitsPerEm;
+    var width = _.find(svgGlyph.attributes, { name: 'horiz-adv-x' }).value * scale;
+
     // Translate font coonds to single SVG image coords
     d = new SvgPath(d)
-              .translate(0, -850)
-              .scale(1, -1)
+              .translate(0, -fontAscent)
+              .scale(scale, -scale)
               .abs()
               .round(1)
               .toString();
@@ -159,7 +166,7 @@ function import_svg_font(data) {
         charRef: allocatedRefCode++,
         svg: {
           path:  d,
-          width: _.find(svgGlyph.attributes, { name: 'horiz-adv-x' }).value
+          width: width
         }
       })
     );
