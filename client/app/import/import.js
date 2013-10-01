@@ -122,7 +122,7 @@ function import_zip(data, file) {
 // data - text content
 //
 
-function import_svg_font(data) {
+function import_svg_font(data, file) {
   var xmlDoc = (new XMLDOMParser()).parseFromString(data, "application/xml");
 
   var customIcons = N.app.fontsList.getFont('custom_icons');
@@ -192,7 +192,7 @@ function import_svg_font(data) {
 // data - text content
 //
 
-function import_svg_image(data) {
+function import_svg_image(data, file) {
   var xmlDoc = (new XMLDOMParser()).parseFromString(data, "application/xml");
 
   var customIcons = N.app.fontsList.getFont('custom_icons');
@@ -208,7 +208,7 @@ function import_svg_image(data) {
   var pathTags = xmlDoc.getElementsByTagName('path');
 
   if (pathTags.length !== 1) {
-    throw "SVG file has multiple contours";
+    N.wire.emit('notify', t('error.bad_svg_image', { name: file.name }));
   }
   
   var d = pathTags[0].getAttribute('d');
@@ -315,13 +315,13 @@ function handleFileSelect(event) {
           reader.onload = function (e) {
 
             if ((e.target.result.indexOf('<font') + 1)) {
-              import_svg_font(e.target.result);
+              import_svg_font(e.target.result, file);
             } else {
-              import_svg_image(e.target.result);
+              import_svg_image(e.target.result, file);
             }
-
             next();
           };
+
           reader.readAsText(file);
           return;
         }

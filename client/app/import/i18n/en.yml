@@ -10,3 +10,7 @@ en-US:
     bad_config_format: "Can't parse config file '#{name}'"
     bad_zip_format: "Can't unzip '#{name}'"
     unknown_format: "Can't import '#{name}' - unknown format"
+
+    bad_svg_image: >
+      '#{name}' contains multiple contours. Please, join those
+      first in editor, and try import again.
