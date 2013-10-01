@@ -1,10 +1,14 @@
-4.1.0 / --
+5.0.0 / --
 ------------------
 
+* (!) Added custom SVG import support
+* Reorganized settings, font metrics can be changed now
 * Don't use `fontforge` anymore (build fonts with node js packages)
 * Woff fix for uncompressed tables
 * Improved restart time (use new `mincer` with better cache)
-* Minor codebase syncs with `nodeca` platform
+* Moved client models to separate block
+* Migrated to Twitter Bootstrap 3.0
+* Code refactoring/cleanup
 
 
 4.0.1 / 2013-06-26
