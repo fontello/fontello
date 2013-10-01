@@ -122,7 +122,7 @@ function import_zip(data, file) {
 // data - text content
 //
 
-function import_svg_font(data, file) {
+function import_svg_font(data/*, file*/) {
   var xmlDoc = (new XMLDOMParser()).parseFromString(data, "application/xml");
 
   var customIcons = N.app.fontsList.getFont('custom_icons');
