@@ -181,7 +181,7 @@ _.forEach(args.input_fonts, function(fontDir) {
     glyph_data.svg.width = +(svg.width * scale).toFixed(1);
     glyph_data.svg.d = new SvgPath(svg.d)
                             .scale(scale)
-                            .abs().round(0).rel()
+                            .abs().round(1).rel()
                             .toString();
 
     configServer.uids[glyph.uid] = _.clone(glyph_data, true);
