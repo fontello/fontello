@@ -9,6 +9,25 @@ var SvgPath = require('svgpath');
 var utils   = require('../../_lib/utils');
 
 
+// path functions borrowed from node.js `path`
+// https://github.com/joyent/node/blob/master/lib/path.js
+
+// Split a filename into [root, dir, basename, ext], unix version
+// 'root' is just a slash, or nothing.
+var splitPathRe =
+    /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
+function splitPath(filename) {
+  return splitPathRe.exec(filename).slice(1);
+}
+function basename(path, ext) {
+  var f = splitPath(path)[2];
+  // TODO: make this comparison case-insensitive on windows?
+  if (ext && f.substr(-1 * ext.length) === ext) {
+    f = f.substr(0, f.length - ext.length);
+  }
+  return f;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 
 //
@@ -244,12 +263,13 @@ function import_svg_image(data, file) {
 
   customIcons.glyphs.peek().push(
     new N.models.GlyphModel(customIcons, {
-      css:     'glyph', // default name
-      code:    allocatedRefCode,
-      charRef: allocatedRefCode++,
+      css:      basename(file.name.toLowerCase(), '.svg')
+                  .replace(/\s/g, '-'),
+      code:     allocatedRefCode,
+      charRef:  allocatedRefCode++,
       svg: {
-        path:    d,
-        width:   width
+        path:   d,
+        width:  width
       }
     })
   );
