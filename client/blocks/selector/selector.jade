@@ -17,10 +17,8 @@
       .selector__glyphs-container
         ul.selector__glyphs-list.font-custom_icons(data-bind='visible: visibleCount(), foreach: glyphs')
           li.selector__glyph(data-bind='visible: visible')
-            input.selector__glyph-input(type='checkbox', data-bind='checked: selected, attr: { id: uid }')
-            //- class binding for the label - kludge for IE8, that sucks with input:checked
-            label.selector__glyph-label(data-bind="attr: { 'for': uid }, css: { checked: selected }")
-              span.selector__glyph-span(data-bind='css: cssExt, text: charRef')
+            .selector__glyph-inner(data-bind="click: toggleSelection, attr: { 'for': uid }, css: { checked: selected }")
+              span.selector__glyph-image(data-bind='css: cssExt, text: charRef')
             a.selector__glyph-delete.icon-remove(href='#', data-bind='click: remove')
 
         .selector__custom-helper(data-bind='visible: !visibleCount()')= self.t('custom_icons_help')
@@ -53,10 +51,8 @@
       .selector__glyphs-container
         ul.selector__glyphs-list.font-fontello(data-bind='foreach: glyphs')
           li.selector__glyph(data-bind='visible: visible, attr: { title: tooltip }')
-            input.selector__glyph-input(type='checkbox', data-bind='checked: selected, attr: { id: uid }')
-            //- class binding for the label - kludge for IE8, that sucks with input:checked
-            label.selector__glyph-label(data-bind="attr: { 'for': uid }, css: { checked: selected }")
-              span.selector__glyph-span(data-bind='css: cssExt, text: charRef')
+            .selector__glyph-inner(data-bind="click: toggleSelection, attr: { 'for': uid }, css: { checked: selected }")
+              span.selector__glyph-image(data-bind='css: cssExt, text: charRef')
     // /ko
     // /ko
     li.selector__search-not-found(data-bind='visible: !fontsList.visibleCount()')= self.t('notfound')

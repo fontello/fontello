@@ -129,11 +129,11 @@ a.selector__font-name
   width 48px 
   height 48px
   list-style none
-.selector__glyph-span
+.selector__glyph-image
   line-height 48px
 // Chrome hack - it has different icon alligment, no ideas why
 @media screen and (-webkit-min-device-pixel-ratio:0)
-  .selector__glyph-span
+  .selector__glyph-image
     line-height 50px
 
 
@@ -161,7 +161,7 @@ a.selector__font-name
 .selector__glyph:hover .selector__glyph-delete
   display block
 
-.selector__glyph-label
+.selector__glyph-inner
   font-weight normal
   //border 2px solid transparent
   border-radius 30px
@@ -191,49 +191,29 @@ a.selector__font-name
     background #333
     color #fff
 
-.selector__glyph-input
-  position absolute
-  left -10000px
-
-  &:checked + .selector__glyph-label
-    &:before
-      border-color #d88
-    &:hover
-      background #666
-
 .selector__glyph.ui-selecting
 
-  .selector__glyph-label
+  .selector__glyph-inner
     background-color #eeffee
     &:before
       border-color #8d8
     &:hover
       color inherit
 
-  .selector__glyph-input:checked + .selector__glyph-label
-    background-color #eeffee
-    &:before
-      border-color #666
-    &:hover
-      color inherit
-
-// IE8 compatibility layer. Input:checked does not work (no ideas why),
-// so, apply "checked" class to label manually, via knockout
-/*
 .selector__glyph
-  .selector__glyph-label.checked
+  .selector__glyph-inner.checked
     background-color #fffdfd
     &:before
       border-color #d88
     &:hover
       background #666
-  &.ui-selecting .selector__glyph-label.checked
+  &.ui-selecting .selector__glyph-inner.checked
     background-color #eeffee
     &before:
       border-color #666
     &:hover
       color inherit
-*/
+
 
 // Animation tweaks
 //
