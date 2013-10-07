@@ -1,4 +1,4 @@
-5.0.0 / --
+5.0.0 / 2013-10-07
 ------------------
 
 * (!) Added custom SVG import support
