@@ -47,7 +47,7 @@ function ToolbarModel() {
 
     N.app.fontSize(value);
     N.wire.emit('session_save');
-  }, 500));
+  }, 50));
 
 
   // true, after download button pressed, until font buildeing finished
