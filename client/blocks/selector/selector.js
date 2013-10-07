@@ -56,9 +56,4 @@ N.wire.once('navigate.done', function () {
     $('#selector').removeClass('_multicursor');
   });
 
-  //
-  // Setup default collapse state
-  //
-  N.app.fontsList.fonts.forEach(function (font) { font.setCollapseState(); });
-
 });

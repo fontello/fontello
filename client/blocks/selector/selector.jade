@@ -17,7 +17,7 @@
       .selector__glyphs-container
         ul.selector__glyphs-list.font-custom_icons(data-bind='visible: visibleCount(), foreach: glyphs')
           li.selector__glyph(data-bind='visible: visible')
-            .selector__glyph-inner(data-bind="click: toggleSelection, attr: { 'for': uid }, css: { checked: selected }")
+            .selector__glyph-inner(data-bind="click: toggleSelection, css: { checked: selected }")
               span.selector__glyph-image(data-bind='css: cssExt, text: charRef')
             a.selector__glyph-delete.icon-remove(href='#', data-bind='click: remove')
 
@@ -51,7 +51,7 @@
       .selector__glyphs-container
         ul.selector__glyphs-list.font-fontello(data-bind='foreach: glyphs')
           li.selector__glyph(data-bind='visible: visible, attr: { title: tooltip }')
-            .selector__glyph-inner(data-bind="click: toggleSelection, attr: { 'for': uid }, css: { checked: selected }")
+            .selector__glyph-inner(data-bind="click: toggleSelection, css: { checked: selected }")
               span.selector__glyph-image(data-bind='css: cssExt, text: charRef')
     // /ko
     // /ko

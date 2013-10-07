@@ -214,20 +214,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
       this.collapsed(!this.collapsed());
     }.bind(this);
 
-    this.setCollapseState = function (state) {
-      if (state === true || state === false) {
-        this.collapsed(state);
-      }
 
-      if (this.collapsed()) {
-        $('#'+this.fontname + " .selector__glyphs-container").slideUp();
-      } else {
-        $('#'+this.fontname + " .selector__glyphs-container").slideDown();
-      }
-    }.bind(this);
-
-    // animate collapse on state change
-    this.collapsed.subscribe(this.setCollapseState);
     // save session on change
     this.collapsed.subscribe(function () {
       N.wire.emit('session_save');
