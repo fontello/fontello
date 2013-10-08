@@ -37,9 +37,11 @@ N.wire.once('navigate.done', function () {
         return;
       }
 
+      N.app.fontsList.lock();
       $els.each(function () {
         ko.dataFor(this).toggleSelection();
       });
+      N.app.fontsList.unlock();
 
       $('#selector').removeClass('_multicursor');
     }

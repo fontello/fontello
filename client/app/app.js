@@ -142,9 +142,7 @@ N.wire.once('navigate.done', { priority: -10 }, function () {
   //
 
   N.wire.on('cmd:reset_selected', function () {
-    _.each(N.app.fontsList.selectedGlyphs(), function (glyph) {
-      glyph.selected(false);
-    });
+    N.app.fontsList.unselectAll();
   });
 
   N.wire.on('cmd:reset_all', function (src) {
@@ -159,13 +157,16 @@ N.wire.once('navigate.done', { priority: -10 }, function () {
 
     reset_font();
 
+    N.app.fontsList.unselectAll();
+
+    N.app.fontsList.lock();
     _.each(N.app.fontsList.fonts, function(font) {
       _.each(font.glyphs(), function(glyph) {
-        glyph.selected(false);
         glyph.code(glyph.originalCode);
         glyph.name(glyph.originalName);
       });
     });
+    N.app.fontsList.unlock();
   });
 
   N.wire.on('cmd:toggle_hinting', function () {
@@ -190,9 +191,10 @@ N.wire.once('navigate.done', { priority: -10 }, function () {
   N.wire.on('cmd:clear_custom_icons', function () {
     var custom_icons = N.app.fontsList.getFont('custom_icons');
 
-    custom_icons.glyphs().forEach(function (glyph) {
-      glyph.selected(false);
+    N.app.fontsList.lock();
+    custom_icons.glyphs.peek().slice().forEach(function (glyph) {
+      custom_icons.removeGlyph(glyph.uid);
     });
-    custom_icons.glyphs([]);
+    N.app.fontsList.unlock();
   });
 });

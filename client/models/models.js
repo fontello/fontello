@@ -26,7 +26,8 @@ function uid() {
 
 N.wire.once('navigate.done', { priority: -100 }, function () {
 
-  function GlyphModel(font, data) {
+  function GlyphModel(data, parent) {
+    var self = this;
 
     // Read-only properties
     //
@@ -38,7 +39,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     // Helper properties
     //
 
-    this.font = font;
+    this.font = parent;
 
     // we search by name AND aliases
     this.keywords = [this.originalName].concat(data.search || []).join(',');
@@ -77,32 +78,31 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     //
     this.serialize = function () {
       var res = {
-        uid       : this.uid,
-        css       : this.name(),
-        code      : this.code(),
-        src       : this.font.fontname,
+        uid       : self.uid,
+        css       : self.name(),
+        code      : self.code(),
+        src       : self.font.fontname,
       };
 
-      if (this.font.fontname === 'custom_icons') {
-        res['selected'] = this.selected();
-        res['svg'] = this.svg;
+      if (self.font.fontname === 'custom_icons') {
+        res['selected'] = self.selected();
+        res['svg'] = self.svg;
       }
 
       return res;
-    }.bind(this);
+    };
 
     //
     // Helpers
     //
 
     this.toggleSelection = function () {
-      this.selected(!this.selected());
-    }.bind(this);
+      self.selected(!self.selected());
+    };
 
     this.remove = function () {
-      this.selected(false); // "untrack"
-      this.font.glyphs.remove(this);
-    }.bind(this);
+      self.font.removeGlyph(self.uid);
+    };
 
     // Visibility depends only on search string:
     // - if pattern is too short (0 or 1 symbols)
@@ -143,11 +143,12 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     // Whenever or not glyph should be treaten as "modified"
     //
     this.isModified = function () {
-      return this.selected() ||
-        (this.name() !== this.originalName) ||
-        (this.code() !== this.originalCode);
-    }.bind(this);
+      return self.selected() ||
+        (self.name() !== self.originalName) ||
+        (self.code() !== self.originalCode);
+    };
 
+    // FIXME: do better cleanup on glyph remove
     // Register glyph in the names/codes swap-remap handlers.
     //
     codesTracker.observe(this);
@@ -159,7 +160,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
 
   ////////////////////////////////////////////////////////////////////////////////
 
-  function FontModel(data) {
+  function FontModel(data, parent) {
     var self = this;
 
     //
@@ -182,37 +183,132 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
 
     this.collapsed = ko.observable(false);
 
-    // Array of font glyphs
-    //
-    this.glyphs = ko.observableArray(_.map(data.glyphs, function (data) {
-      return new GlyphModel(self, data);
-    }));
+    // Map for fast lookup
+    // { id: glyph }
+    this.glyphMap = {};
 
-    // Array of selected glyphs of a font
-    //
-    this.selectedGlyphs = ko.computed(function () {
-      return _.filter(this.glyphs(), function (glyph) { return glyph.selected(); });
-    }, this).extend({ throttle: 100 });
+    // track subscribtions for cleanup
+    this.subscriptions = {};
 
-    // selected glyphs count
-    //
-    this.selectedCount = ko.computed(function () {
-      return this.selectedGlyphs().length;
-    }, this);
+    // font glyphs objervable array
+    this.glyphs = ko.observableArray();
+    // selected glyphs uids observable array
+    // dont't store full glyphs for simplisity
+    this.selectedGlyphs = ko.observableArray();
+
+    // State flags for bulk updates
+    var _locked = false;
+    var _selected_dirty = false;
+    var _glyphs_dirty = false;
+
+    this.lock = function () {
+      _locked = true;
+    };
+
+    this.unlock = function () {
+      if (_glyphs_dirty) {
+        this.glyphs.valueHasMutated();
+        _glyphs_dirty = false;
+      }
+      if (_selected_dirty) {
+        this.selectedGlyphs.valueHasMutated();
+        _selected_dirty = false;
+      }
+      _locked = false;
+    };
+
+    this.addGlyph = function (data) {
+      var glyph = new GlyphModel(data, this);
+
+      this.glyphMap[glyph.uid] = glyph;
+      if (parent) {
+        parent.track(glyph);
+      }
+
+      if (!_locked) {
+        this.glyphs.push(glyph);
+        if (glyph.selected()) {
+          this.selectedGlyphs.push(glyph.uid);
+        }
+      } else {
+        _glyphs_dirty = true;
+        this.glyphs.peek().push(glyph);
+        if (glyph.selected()) {
+          _selected_dirty = true;
+          this.selectedGlyphs.peek().push(glyph.uid);
+        }
+      }
+
+      this.subscriptions[glyph.uid] = this.subscriptions[glyph.uid] || [];
+
+      this.subscriptions[glyph.uid].push(
+        glyph.selected.subscribe(function (value) {
+          var selectedList = self.selectedGlyphs.peek();
+
+          if (value) {
+            if (selectedList.indexOf(glyph.uid) !== -1) { return; }
+            selectedList.push(glyph.uid);
+          } else {
+            var idx = selectedList.indexOf(glyph.uid);
+            if (idx === -1) { return; }
+            selectedList.splice(idx, 1);
+          }
+
+          if (!_locked) {
+            self.selectedGlyphs.valueHasMutated();
+          } else {
+            _selected_dirty = true;
+          }
+        })
+      );
+    };
+
+    this.removeGlyph = function (uid) {
+      // when no param - remove all
+      if (!uid) {
+        self.glyphs.peek().slice().forEach(function (g) { self.removeGlyph(g.uid); });
+        return;
+      }
+
+      self.glyphMap[uid].selected(false);
+
+      _.forEach(self.subscriptions[uid], function (subs) { subs.dispose(); });
+
+      parent.untrack(this.glyphMap[uid]);
+
+      var idx = _.findIndex(self.glyphs.peek(), function (g) { return g.uid === uid; });
+      if (idx !== -1) {
+        self.glyphs.peek().splice(idx, 1);
+      }
+      if (!_locked) {
+        self.glyphs.valueHasMutated();
+      } else {
+        _glyphs_dirty = true;
+      }
+
+      delete self.glyphMap[uid];
+    };
 
     // Visible glyphs count
     //
     this.visibleCount = ko.computed(function () {
-      return _.reduce(this.glyphs(), function (cnt, glyph) { return cnt + (glyph.visible() ? 1 : 0); }, 0);
-    }, this).extend({ throttle: 100 });
+      return _.reduce(self.glyphs(), function (cnt, glyph) { return cnt + (glyph.visible() ? 1 : 0); }, 0);
+    }).extend({ throttle: 100 });
+
+    // selected glyphs count
+    //
+    this.selectedCount = ko.computed(function () {
+      return self.selectedGlyphs().length;
+    }).extend({ throttle: 100 });
+
 
     //
     // Helpers
     //
 
     this.toggleCollapsed = function () {
-      this.collapsed(!this.collapsed());
-    }.bind(this);
+      self.collapsed(!self.collapsed());
+    };
 
 
     // save session on change
@@ -286,14 +382,28 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
       return svgFontTemplate(conf);
     };
 
-    // Subscribe to glyph updates
+    //
+    // Init
+    //
+
+    // Load glyphs
+    //
+    this.lock();
+
+    _.forEach(data.glyphs, function (glyphData) {
+      self.addGlyph(glyphData);
+    });
+
+    this.unlock();
+
+    // Rebuild font on glyphs list change
     //
     this.glyphs.subscribe(function () {
-      if (this.fontname !== 'custom_icons') { return; }
+      if (self.fontname !== 'custom_icons') { return; }
 
       N.wire.emit('session_save');
 
-      var ff = fontface(this.makeSvgFont(), this.fontname);
+      var ff = fontface(self.makeSvgFont(), self.fontname);
 
       var styleTemplate =
         '<style id="ff_${fontId}" type="text/css">\n ${fontface}' +
@@ -302,47 +412,114 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
 
       var style = _.template(styleTemplate, {
         fontface : ff,
-        fontId : this.fontname
+        fontId : self.fontname
       });
 
-      $('#ff_' + this.fontname).remove();
+      $('#ff_' + self.fontname).remove();
       $(style).appendTo("head");
-    }, this);
-
+    });
   }
 
 
   ////////////////////////////////////////////////////////////////////////////////
 
   function FontsList() {
+    var self = this;
     this.fonts = [];
 
-    // Set the Custom font
-    this.fonts.push(new FontModel({
-      font: {
-        fontname: 'custom_icons',
-        fullname: t('custom_icons_name')
-      },
-    }));
+    // Map for fast glyph lookup
+    // { id: glyph }
+    this.glyphMap = {};
 
-    // Ordered list, to display on the page
-    this.fonts.push.apply(this.fonts, _.map(embedded_fonts, function (data) {
-      return new FontModel(data);
-    }));
+    // track subscribtions for cleanup
+    this.subscriptions = {};
 
     // Array of selected glyphs from all fonts
     //
-    this.selectedGlyphs = ko.computed(function () {
-      return _.reduce(this.fonts, function (result, font) {
-        return result.concat(font.selectedGlyphs());
-      }, []);
-    }, this).extend({ throttle: 100 });
+    this.selectedGlyphs = ko.observableArray();
 
     // Count of selected glyphs from all fonts
     //
     this.selectedCount = ko.computed(function () {
-      return this.selectedGlyphs().length;
-    }, this);
+      return self.selectedGlyphs().length;
+    }).extend({ throttle: 100 });
+
+    // State flags for bulk updates
+    var _locked = false;
+    var _selected_dirty = false;
+
+    // Lock/Unlock ko refreshes, needed on mass imports
+    //
+    this.lock = function () {
+      _locked = true;
+      this.fonts.forEach(function(font) { font.lock(); });
+    };
+    this.unlock = function () {
+      this.fonts.forEach(function(font) { font.unlock(); });
+      _locked = false;
+
+      if (_selected_dirty) {
+        _selected_dirty = false;
+        this.selectedGlyphs.valueHasMutated();
+      }
+    };
+
+    this.track = function (glyph) {
+      this.glyphMap[glyph.uid] = glyph;
+
+      if (!_locked) {
+        if (glyph.selected()) {
+          this.selectedGlyphs.push(glyph);
+        }
+      } else {
+        if (glyph.selected()) {
+          _selected_dirty = true;
+          this.selectedGlyphs.peek().push(glyph);
+        }
+      }
+
+      this.subscriptions[glyph.uid] = this.subscriptions[glyph.uid] || [];
+
+      glyph.selected.subscribe(function (value) {
+        var selectedList = self.selectedGlyphs.peek();
+        if (value) {
+          //if (_.findIndex(selectedList, function(g) { return g.uid === glyph.uid; }) !== -1) { return; }
+          selectedList.push(glyph);
+        } else {
+          var idx = _.findIndex(selectedList, function(g) { return g.uid === glyph.uid; });
+          if (idx === -1) { return; }
+          selectedList.splice(idx, 1);
+        }
+
+        if (!_locked) {
+          self.selectedGlyphs.valueHasMutated();
+        } else {
+          _selected_dirty = true;
+        }
+      });
+    };
+
+    this.untrack = function (glyph) {
+      _.forEach(self.subscriptions[glyph.uid], function (subs) { subs.dispose(); });
+      delete self.glyphMap[uid];
+    };
+
+    //
+    // Init
+    //
+
+    // Create custom icons stub
+    this.fonts.push(new FontModel(
+      {
+        font: { fontname: 'custom_icons', fullname: t('custom_icons_name') }
+      },
+      self
+    ));
+
+    // Ordered list, to display on the page
+    this.fonts.push.apply(this.fonts, _.map(embedded_fonts, function (data) {
+      return new FontModel(data, self);
+    }));
 
     // Count of visible fonts, with reflow compensation
     //
@@ -350,17 +527,13 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
       return _.reduce(this.fonts, function (cnt, font) { return cnt + (font.visibleCount() ? 1 : 0); }, 0);
     }, this).extend({ throttle: 100 });
 
-    // Lock/Unlock ko refreshes, needed on mass imports
-    //
-    this.lock = function () {
-      this.fonts.forEach(function(font) {
-        font.glyphs.valueWillMutate();
+
+    this.unselectAll = function() {
+      this.lock();
+      this.selectedGlyphs.peek().slice().forEach(function (glyph) {
+        glyph.selected(false);
       });
-    };
-    this.unlock = function () {
-      this.fonts.forEach(function(font) {
-        font.glyphs.valueHasMutated();
-      });
+      this.unlock();
     };
 
     // Search font by name

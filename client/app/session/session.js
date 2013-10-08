@@ -202,8 +202,9 @@ N.wire.on('session_load', function () {
     // for custom icons - import glyphs & set their state
     //
     if (targetFont.fontname === 'custom_icons') {
-      var glyphs = [];
       var charRefCode = 0xE800;
+
+      targetFont.lock();
 
       _.each(sessionFont.glyphs, function (glyph) {
         // skip broken glyphs
@@ -212,18 +213,17 @@ N.wire.on('session_load', function () {
           return;
         }
 
-        glyphs.push(new N.models.GlyphModel(targetFont, {
+        targetFont.addGlyph({
           css:      glyph.css,
           code:     glyph.code,
           uid:      glyph.uid,
           selected: glyph.selected,
           charRef:  charRefCode++,
           svg:      glyph.svg
-        }));
+        });
       });
 
-      // init observable array
-      targetFont.glyphs(glyphs);
+      targetFont.unlock();
       return;
     }
 

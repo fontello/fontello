@@ -59,10 +59,10 @@ function import_config(str, file) {
     N.app.fontCopyright(String(config.copyright) || '');
 
     // reset selection prior to set glyph data
-    _.each(N.app.fontsList.selectedGlyphs(), function (glyph) { glyph.selected(false); });
+    N.app.fontsList.unselectAll();
 
     // remove custom glyphs
-    customIcons.glyphs([]);
+    customIcons.removeGlyph();
 
     // create map to lookup glyphs by id
     var glyphById = {};
@@ -77,19 +77,17 @@ function import_config(str, file) {
       if (!getFont(g.src)) { return; }
 
       if ( g.src === 'custom_icons') {
-        customIcons.glyphs.peek().push(
-          new N.models.GlyphModel(customIcons, {
-            uid:      g.uid,
-            css:      g.css,
-            code:     g.code,
-            charRef:  allocatedRefCode++,
-            selected: g.selected,
-            svg: {
-              path:    g.svg.path,
-              width:   g.svg.width
-            }
-          })
-        );
+        customIcons.addGlyph({
+          uid:      g.uid,
+          css:      g.css,
+          code:     g.code,
+          charRef:  allocatedRefCode++,
+          selected: g.selected,
+          svg: {
+            path:    g.svg.path,
+            width:   g.svg.width
+          }
+        });
         return;
       }
 
@@ -103,6 +101,7 @@ function import_config(str, file) {
     });
   } catch (e) {
     N.wire.emit('notify', t('error.bad_config_format', { name: file.name }));
+    console.log(e);
   }
 }
 
@@ -191,17 +190,15 @@ function import_svg_font(data/*, file*/) {
               .round(1)
               .toString();
 
-    customIcons.glyphs.peek().push(
-      new N.models.GlyphModel(customIcons, {
-        css:     glyphName,
-        code:    glyphCode,
-        charRef: allocatedRefCode++,
-        svg: {
-          path:  d,
-          width: width
-        }
-      })
-    );
+    customIcons.addGlyph({
+      css:     glyphName,
+      code:    glyphCode,
+      charRef: allocatedRefCode++,
+      svg: {
+        path:  d,
+        width: width
+      }
+    });
   });
 }
 
@@ -261,18 +258,16 @@ function import_svg_image(data, file) {
             .toString();
   width = Math.round(width * scale); // new width
 
-  customIcons.glyphs.peek().push(
-    new N.models.GlyphModel(customIcons, {
-      css:      basename(file.name.toLowerCase(), '.svg')
-                  .replace(/\s/g, '-'),
-      code:     allocatedRefCode,
-      charRef:  allocatedRefCode++,
-      svg: {
-        path:   d,
-        width:  width
-      }
-    })
-  );
+  customIcons.addGlyph({
+    css:      basename(file.name.toLowerCase(), '.svg')
+                .replace(/\s/g, '-'),
+    code:     allocatedRefCode,
+    charRef:  allocatedRefCode++,
+    svg: {
+      path:   d,
+      width:  width
+    }
+  });
 }
 
 // Handles change event of file input
