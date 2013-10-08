@@ -55,8 +55,13 @@ function import_config(str, file) {
 
     N.app.fontUnitsPerEm(Number(config.units_per_em) || 1000);
     N.app.fontAscent(Number(config.ascent) || 850);
-    N.app.fontFullName(String(config.fullname) || '');
-    N.app.fontCopyright(String(config.copyright) || '');
+
+    // Patch broken data to fix original config
+    if (config.fullname === 'undefined') { delete config.fullname; }
+    if (config.copyright === 'undefined') { delete config.copyright; }
+
+    N.app.fontFullName(String(config.fullname || ''));
+    N.app.fontCopyright(String(config.copyright || ''));
 
     // reset selection prior to set glyph data
     N.app.fontsList.unselectAll();

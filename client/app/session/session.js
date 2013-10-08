@@ -180,8 +180,17 @@ N.wire.on('session_load', function () {
   if (_.has(session, 'encoding')) { N.app.encoding(String(session.encoding)); }
   if (_.has(session, 'font_units')) { N.app.fontUnitsPerEm(Number(session.font_units)); }
   if (_.has(session, 'font_ascent')) { N.app.fontAscent(Number(session.font_ascent)); }
-  if (_.has(session, 'font_fullname')) { N.app.fontFullName(String(session.font_fullname)); }
-  if (_.has(session, 'font_copyright')) { N.app.fontCopyright(String(session.font_copyright)); }
+
+  if (_.has(session, 'font_fullname')) {
+    // patch broken data
+    if (session.font_fullname === 'undefined') { delete session.font_fullname; }
+    N.app.fontFullName(String(session.font_fullname || ''));
+  }
+  if (_.has(session, 'font_copyright')) {
+    // patch broken data
+    if (session.font_copyright === 'undefined') { delete session.font_copyright; }
+    N.app.fontCopyright(String(session.font_copyright || ''));
+  }
 
   N.app.hinting(session.hinting !== false);
 
