@@ -1,11 +1,15 @@
 #names-editor.tab-pane(data-bind="css: { 'css-use-suffix': cssUseSuffix() }")
 
   #preview-font.row(data-bind="style: { fontSize: fontSize() + 'px' }")
-    // ko foreach: { data: selectedGlyphs, beforeRemove: hideGlyph }
+    // ko foreach: { data: selectedGlyphs }
     .preview-glyph.col-xs-3
-      span.icon(data-bind='text: charRef, css: { "font-custom_icons": font.fontname == "custom_icons", "font-fontello": font.fontname != "custom_icons" }')
+      span.icon(data-bind='text: charRef, css: (font.fontname === "custom_icons") ? "font-custom_icons" : "font-fontello"')
       span.prefix(data-bind='visible: !$parent.cssUseSuffix(), text: $parent.cssPrefixText')
       input.glyph-name(data-bind='value: name')
       span.suffix(data-bind='visible: $parent.cssUseSuffix, text: $parent.cssPrefixText')
-      a.remove.icon-remove(href='#', title=self.t('remove'), data-bind='click: toggleSelection')
+      a.remove.icon-remove(
+        href='#',
+        title=self.t('remove'),
+        data-bind='attr: { "data-id": uid }', data-on-click='names_edit:glyph_remove'
+      )
     // /ko

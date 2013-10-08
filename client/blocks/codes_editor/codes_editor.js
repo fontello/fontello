@@ -6,12 +6,6 @@ var ko = require('knockout');
 
 function CodesEditorModel() {
   this.selectedGlyphs = N.app.fontsList.selectedGlyphs;
-
-  this.hideGlyph = function (glyph) {
-    $(glyph).fadeOut(function () {
-      $(this).remove();
-    });
-  };
 }
 
 
@@ -20,4 +14,17 @@ N.wire.once('navigate.done', function () {
 
   // Bind model and view
   ko.applyBindings(new CodesEditorModel(), $view.get(0));
+
+  // Remove glyph from selection
+  //
+  N.wire.on('codes_edit:glyph_remove', function (event) {
+    var $el    = $(event.currentTarget);
+    var id    = $el.data('id');
+    var glyph = N.app.fontsList.glyphMap[id];
+
+    $el.closest('.result-glyph').fadeOut(function () {
+      glyph.selected(false);
+    });
+  });
+
 });

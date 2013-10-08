@@ -96,10 +96,6 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     // Helpers
     //
 
-    this.toggleSelection = function () {
-      self.selected(!self.selected());
-    };
-
     this.remove = function () {
       self.font.removeGlyph(self.uid);
     };
@@ -305,11 +301,6 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     //
     // Helpers
     //
-
-    this.toggleCollapsed = function () {
-      self.collapsed(!self.collapsed());
-    };
-
 
     // save session on change
     this.collapsed.subscribe(function () {

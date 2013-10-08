@@ -9,15 +9,16 @@
           small
             span.selector__font-cnt-search.icon-search(data-bind='text: visibleCount()')
             span.selector__font-cnt-selected(data-bind='visible: selectedCount, text: selectedCount')
-        a.selector__font-name._collapser(href='#', data-bind='text: fullname, click: toggleCollapsed')
+
+        a.selector__font-name._collapser(href='#', data-bind='text: fullname, attr: { "data-id": fontname }', data-on-click='selector:font_collapse')
 
         small.selector__font-details(data-bind='visible: visibleCount()')
           a.selector__font-control(href='#', data-on-click='cmd:clear_custom_icons')= self.t('clear_icons')
 
       .selector__glyphs-container
         ul.selector__glyphs-list.font-custom_icons(data-bind='visible: visibleCount(), foreach: glyphs')
-          li.selector__glyph(data-bind='visible: visible')
-            .selector__glyph-inner(data-bind="click: toggleSelection, css: { checked: selected }")
+          li.selector__glyph(data-bind='visible: visible, attr: { "data-id": uid, title: tooltip }')
+            .selector__glyph-inner(data-bind="css: { checked: selected }, attr: { 'data-id': uid }", data-on-click='selector:glyph_toggle')
               span.selector__glyph-image(data-bind='css: cssExt, text: charRef')
             a.selector__glyph-delete.icon-remove(href='#', data-bind='click: remove')
 
@@ -32,7 +33,7 @@
             span.selector__font-cnt-search.icon-search(data-bind='text: visibleCount()')
             span.selector__font-cnt-selected(data-bind='visible: selectedCount, text: selectedCount')
 
-        a.selector__font-name._collapser(href='#', data-bind='text: fullname, click: toggleCollapsed')
+        a.selector__font-name._collapser(href='#', data-bind='text: fullname, attr: { "data-id": fontname }', data-on-click='selector:font_collapse')
 
         small.selector__font-details(data-bind='visible: author')= self.t('author')
           |  
@@ -50,8 +51,8 @@
 
       .selector__glyphs-container
         ul.selector__glyphs-list.font-fontello(data-bind='foreach: glyphs')
-          li.selector__glyph(data-bind='visible: visible, attr: { title: tooltip }')
-            .selector__glyph-inner(data-bind="click: toggleSelection, css: { checked: selected }")
+          li.selector__glyph(data-bind='visible: visible, attr: { "data-id": uid, title: tooltip }')
+            .selector__glyph-inner(data-bind="css: { checked: selected }, attr: { 'data-id': uid }", data-on-click='selector:glyph_toggle')
               span.selector__glyph-image(data-bind='css: cssExt, text: charRef')
     // /ko
     // /ko

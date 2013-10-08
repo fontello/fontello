@@ -38,9 +38,14 @@ N.wire.once('navigate.done', function () {
       }
 
       N.app.fontsList.lock();
+
       $els.each(function () {
-        ko.dataFor(this).toggleSelection();
+        var id = $(this).data('id');
+        var glyph = N.app.fontsList.glyphMap[id];
+
+        glyph.selected(!glyph.selected());
       });
+
       N.app.fontsList.unlock();
 
       $('#selector').removeClass('_multicursor');
@@ -56,6 +61,24 @@ N.wire.once('navigate.done', function () {
   });
   $('#selector').on('mouseup', function() {
     $('#selector').removeClass('_multicursor');
+  });
+
+  // Toggle glyph state on click
+  //
+  N.wire.on('selector:glyph_toggle', function (event) {
+    var id = $(event.currentTarget).data('id');
+    var glyph = N.app.fontsList.glyphMap[id];
+
+    glyph.selected(!glyph.selected());
+  });
+
+  // Toggle font collapse state on click
+  //
+  N.wire.on('selector:font_collapse', function (event) {
+    var id = $(event.currentTarget).data('id');
+    var font = N.app.fontsList.getFont(id);
+
+    font.collapsed(!font.collapsed());
   });
 
 });

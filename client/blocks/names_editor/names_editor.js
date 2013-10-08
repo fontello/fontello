@@ -11,12 +11,6 @@ function NamesEditorModel() {
   this.fontSize       = N.app.fontSize;
   this.cssPrefixText  = N.app.cssPrefixText;
   this.cssUseSuffix   = N.app.cssUseSuffix;
-
-  this.hideGlyph      = function (el) {
-    $(el).fadeOut(function () {
-      $(this).remove();
-    });
-  };
 }
 
 
@@ -26,4 +20,18 @@ N.wire.once('navigate.done', function () {
   //
   var $view = $('#names-editor');
   ko.applyBindings(new NamesEditorModel(), $view.get(0));
+
+
+  // Remove glyph from selection
+  //
+  N.wire.on('names_edit:glyph_remove', function (event) {
+    var $el    = $(event.currentTarget);
+    var id    = $el.data('id');
+    var glyph = N.app.fontsList.glyphMap[id];
+
+    $el.closest('.preview-glyph').fadeOut(function () {
+      glyph.selected(false);
+    });
+  });
+
 });
