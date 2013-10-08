@@ -137,9 +137,26 @@ module.exports = function fontConfig(clientConfig) {
 
   var fontname, glyphsInfo, fontsInfo;
 
-  if (!_.isObject(clientConfig)) {
-    return null;
-  }
+  //
+  // Patch broken data to fix original config
+  //
+  if (clientConfig.fullname === 'undefined') { delete clientConfig.fullname; }
+  if (clientConfig.copyright === 'undefined') { delete clientConfig.copyright; }
+
+  //
+  // Fill default values, until replace `revalidator` with something better
+  // That's required for old `config.json`-s.
+  //
+
+  clientConfig.css_use_suffix   = Boolean(clientConfig.css_use_suffix);
+  clientConfig.css_prefix_text  = clientConfig.css_prefix_text || 'icon-';
+  clientConfig.hinting          = (clientConfig.hinting !== false);
+  clientConfig.units_per_em     = +clientConfig.units_per_em || 1000;
+  clientConfig.ascent           = +clientConfig.ascent || 850;
+
+  //
+  // Start creating builder config
+  //
 
   if (!_.isEmpty(clientConfig.name)) {
     fontname = String(clientConfig.name).replace(/[^a-z0-9\-_]+/g, '-');
