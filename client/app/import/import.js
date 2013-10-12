@@ -227,12 +227,17 @@ function import_svg_image(data, file) {
   var allocatedRefCode = (!maxRef) ? 0xe800 : utils.fixedCharCodeAt(maxRef) + 1;
   var svgTag = xmlDoc.getElementsByTagName('svg')[0];
   var pathTags = xmlDoc.getElementsByTagName('path');
+  var cPathTags = pathTags.length;
 
-  if (pathTags.length !== 1) {
-    N.wire.emit('notify', t('error.bad_svg_image', { name: file.name }));
+  if (cPathTags < 1) {
+    N.wire.emit('notify', t('error.svg_image_no_path', { name: file.name }));
   }
   
   var d = pathTags[0].getAttribute('d');
+  for (var i = 1; i < cPathTags; ++i) {
+    d += ' ';
+    d += pathTags[i].getAttribute('d');
+  }
 
   // getting viewBox values array
   var viewBox = _.map(
