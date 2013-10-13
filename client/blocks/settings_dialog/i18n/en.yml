@@ -1,27 +1,27 @@
 en-US:
-  settings_title: Anvanced font settings
+  settings_title: Advanced font settings
 
   fieldset_options: Options
   hinting: Hinting
   hinting_enable: enable
   hinting_help: >
-    Adding font hints can make glyphs more sharp on small scale,
-    but increase font size. We use `ttfautohint` for hinting.
+    Adding font hinting can make glyphs sharper on smaller scales,
+    but increase the font file size. We use `ttfautohint` for hinting.
   encoding: Encoding
   encoding_pua: Private Use Area
   encoding_pua_help: >
     This is the most compatible selection for all browsers.
-    Also, this codes are ignored by screen readers. Used by default.
+    Also, these codes are ignored by screen readers. Used by default.
   encoding_ascii: Text characters
   encoding_ascii_help: >
     This encoding is convenient for designers, who plan to import
-    font to graphics software
+    font into graphics software.
   encoding_unicode: Unicode
   encoding_unicode_help: >
-    Try to follow default glyph codes. That can be useful, when
-    you page can be looked without font, and you wish to see similar
-    symbols instead. It helps not for all glyphs, and probably PUA
-    encoding will be a better choice.
+    Try to follow the default glyph codes. This is useful when
+    your page is being viewed without the font installed, and you want to show similar
+    symbols instead. It doesn't help with all glyphs; PUA
+    encoding is probably a better choice.
 
   fieldset_metrics: Metrics
   units_per_em: Units per em
