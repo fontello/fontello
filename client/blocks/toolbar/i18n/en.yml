@@ -6,9 +6,9 @@ en-US:
   file_name_placeholder: font name
   file_name_help: |
     This name will be used for font files too.
-    Use only small "a"..."z" letters, digits, "-" and "_".
+    Use only lowercase "a"..."z" letters, digits, "-" and "_".
 
-  search_permalink_help: Permanent link to this search results
+  search_permalink_help: Permanent link to these search results
 
   menu_unselect_all: Unselect glyphs
   menu_reset_all: Reset all changes
@@ -28,5 +28,5 @@ en-US:
         target="_blank">You can help</a>
     us improve fontello!
   build_error: >
-    An error happened during processing your request:
+    An error happened while processing your request:
     <em>"#{error}"</em>. Please, try again later.

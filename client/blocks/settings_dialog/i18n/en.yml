@@ -31,7 +31,7 @@ en-US:
 
   fieldset_development: Development
   development_help: >
-    That's only for icon font developers, who use custom
+    This is only for icon font developers, who use custom
     icons to create new fonts.
   fullname: Font Name
   copyright: Copyright
