@@ -2,22 +2,22 @@ en-US:
   title: Fontello - icon fonts generator
   description: Tool to build custom fonts with icons.
   desc_long: >
-    Easy way to create custom icon font for your site. Select
-    images from large collection, and make webfont pack with one click.
+    An easy way to create a custom icon font for your site. Select
+    images from our large collection, and make a webfont pack with one click.
 
   menu_feedback: Feedback
   menu_discuss: Ask in Google Groups
   menu_bugreports: Report bugs at Github
   menu_bugreports_help: >
-    We prefer communicate via Github. You can also share you ideas there.
-    If you still don't have github's account - it's time to join biggest
+    We prefer to communicate via Github. Share you ideas with us there.
+    If you still don't have a Github account - it's time to join the biggest
     open source community!
   menu_how_to_help: How to help us
 
   menu_donate: donate
   menu_donate_help: >
-    Fontello is done not for money, but you can show,
-    how much do you like it :)
+    Fontello is not done for money, but feel free to
+    show us how much you like it :)
 
   twitter:
     follow: Follow
