@@ -233,8 +233,12 @@ a.selector__font-name
 
 // Message, when nothing found
 .selector__search-not-found
-  display block
+  display none
   font-size 14px
+// temporary hack, to hide msg on slow chrome load
+// remove when search results moved to separate pane
+.search-mode .selector__search-not-found
+  display block
 
 // Help for custom icons block
 .selector__custom-helper
