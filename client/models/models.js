@@ -144,13 +144,15 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
         (self.code() !== self.originalCode);
     };
 
+    // Do selection before attaching remapper, to keep codes
+    // on config import
+    this.selected(!!data.selected);
+
     // FIXME: do better cleanup on glyph remove
     // Register glyph in the names/codes swap-remap handlers.
     //
     codesTracker.observe(this);
     namesTracker.observe(this);
-
-    this.selected(!!data.selected);
   }
 
 
