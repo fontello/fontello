@@ -191,10 +191,19 @@ N.wire.once('navigate.done', { priority: -10 }, function () {
   N.wire.on('cmd:clear_custom_icons', function () {
     var custom_icons = N.app.fontsList.getFont('custom_icons');
 
+    // if something selected - delete selected icons
+    // if nothing selected - delete all
+
     N.app.fontsList.lock();
-    custom_icons.glyphs.peek().slice().forEach(function (glyph) {
-      custom_icons.removeGlyph(glyph.uid);
-    });
+    if (_.isEmpty(custom_icons.selectedGlyphs())) {
+      custom_icons.glyphs.peek().slice().forEach(function (glyph) {
+        custom_icons.removeGlyph(glyph.uid);
+      });
+    } else {
+      custom_icons.selectedGlyphs().slice().forEach(function (uid) {
+        custom_icons.removeGlyph(uid);
+      });
+    }
     N.app.fontsList.unlock();
   });
 });

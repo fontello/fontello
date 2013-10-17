@@ -3,4 +3,5 @@ en-US:
   license: "license:"
   notfound: Oops! Nothing found...
   custom_icons_help: Drag custom SVG icons or SVG font here.
-  clear_icons: clear
+  clear_all_icons: clear all icons
+  clear_selected_icons: clear selected icons

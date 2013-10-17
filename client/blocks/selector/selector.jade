@@ -13,13 +13,20 @@
         a.selector__font-name._collapser(href='#', data-bind='text: fullname, attr: { "data-id": fontname }', data-on-click='selector:font_collapse')
 
         small.selector__font-details(data-bind='visible: visibleCount()')
-          a.selector__font-control(href='#', data-on-click='cmd:clear_custom_icons')= self.t('clear_icons')
+          a.selector__font-control(
+            href='#',
+            data-on-click='cmd:clear_custom_icons',
+            data-bind='visible: !selectedCount()')= self.t('clear_all_icons')
+          a.selector__font-control(
+            href='#',
+            data-on-click='cmd:clear_custom_icons',
+            data-bind='visible: selectedCount()')= self.t('clear_selected_icons')
 
       .selector__glyphs-container
         ul.selector__glyphs-list.font-custom_icons(data-bind='visible: visibleCount(), foreach: glyphs')
           li.selector__glyph(data-bind='visible: visible, attr: { "data-id": uid, title: tooltip }')
             .selector__glyph-inner(data-bind="css: { checked: selected }, attr: { 'data-id': uid }", data-on-click='selector:glyph_toggle')
-              span.selector__glyph-image(data-bind='css: cssExt, text: charRef')
+              span.selector__glyph-image(data-bind='text: charRef')
             a.selector__glyph-delete.icon-remove(href='#', data-bind='click: remove')
 
         .selector__custom-helper(data-bind='visible: !visibleCount()')= self.t('custom_icons_help')
@@ -52,8 +59,8 @@
       .selector__glyphs-container
         ul.selector__glyphs-list.font-fontello(data-bind='foreach: glyphs')
           li.selector__glyph(data-bind='visible: visible, attr: { "data-id": uid, title: tooltip }')
-            .selector__glyph-inner(data-bind="css: { checked: selected }, attr: { 'data-id': uid }", data-on-click='selector:glyph_toggle')
-              span.selector__glyph-image(data-bind='css: cssExt, text: charRef')
+            .selector__glyph-inner(data-bind="css: { checked: selected, 'animate-spin': cssExt }, attr: { 'data-id': uid }", data-on-click='selector:glyph_toggle')
+              span.selector__glyph-image(data-bind='text: charRef')
     // /ko
     // /ko
     li.selector__search-not-found(data-bind='visible: !fontsList.visibleCount()')= self.t('notfound')
