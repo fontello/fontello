@@ -19,7 +19,9 @@ N.wire.once('navigate.done', function () {
     var locals = {
       css_name: glyph.name(),
       hex_code: glyph.customHex(),
-      keywords: glyph.search.join(',')
+      keywords: glyph.search.join(','),
+      fontname: glyph.font.fontname,
+      char_ref: glyph.charRef
     };
     $dialog = $(N.runtime.render(module.apiPath, locals)).appendTo('body');
 /*
