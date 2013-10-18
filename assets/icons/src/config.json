@@ -1,235 +1,106 @@
 {
   "name": "icons",
+  "css_prefix_text": "icon-",
+  "css_use_suffix": false,
+  "hinting": true,
+  "units_per_em": 1000,
+  "ascent": 850,
   "glyphs": [
     {
-      "search": [
-        "home"
-      ],
-      "code": 8962,
-      "uid": "513ac180ff85bd275f2b736720cbbf5e",
-      "css": "home",
-      "orig_css": "home",
-      "orig_code": 8962,
-      "src": "entypo",
-      "from": 8962
+      "uid": "9bd60140934a1eb9236fd7a8ab1ff6ba",
+      "css": "load",
+      "code": 59444,
+      "src": "fontelico"
     },
     {
-      "search": [
-        "mail",
-        "email"
-      ],
-      "code": 9993,
-      "uid": "e335adbc2d898c7d85d40c507796e7b4",
-      "css": "mail",
-      "orig_css": "mail",
-      "orig_code": 9993,
-      "src": "entypo",
-      "from": 9993
+      "uid": "62c089cb34e74b3a1200bc7f5314eb4e",
+      "css": "firefox",
+      "code": 59456,
+      "src": "fontelico"
     },
     {
-      "search": [
-        "ok",
-        true,
-        "check",
-        "mark"
-      ],
-      "code": 10003,
-      "uid": "14017aae737730faeda4a6fd8fb3a5f0",
-      "css": "check",
-      "orig_css": "check",
-      "orig_code": 10003,
-      "src": "entypo",
-      "from": 10003
+      "uid": "9c2b737b16ae2c8d66b7bfd29ba5ecd8",
+      "css": "chrome",
+      "code": 59457,
+      "src": "fontelico"
     },
     {
-      "search": [
-        "close",
-        "cancel",
-        "reject"
-      ],
-      "code": 10005,
-      "from": 10005,
-      "uid": "c709da589c923ba3c2ad48d9fc563e93",
-      "css": "remove",
-      "orig_css": "cancel",
-      "orig_code": 10005,
+      "uid": "45861dd1e5ce4fde338bcccf01eeb808",
+      "css": "opera",
+      "code": 59458,
+      "src": "fontelico"
+    },
+    {
+      "uid": "d35a1d35efeb784d1dc9ac18b9b6c2b6",
+      "css": "edit",
+      "code": 59392,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "5bb103cd29de77e0e06a52638527b575",
+      "css": "settings",
+      "code": 61441,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "627abcdb627cb1789e009c08e2678ef9",
+      "css": "twitter-bird",
+      "code": 59393,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "7222571caa5c15f83dcfd447c58d68d9",
+      "css": "search",
+      "code": 61443,
       "src": "entypo"
     },
     {
-      "search": [
-        "load",
-        "progress",
-        "wait"
-      ],
-      "code": 59444,
-      "meta": {
-        "email": "berbentseva_angela@yahoo.com",
-        "author": "Angela Berbentseva, specially for fontello"
-      },
-      "uid": "9bd60140934a1eb9236fd7a8ab1ff6ba",
-      "css-ext": "animate-spin",
-      "css": "load",
-      "orig_css": "spin4",
-      "orig_code": 59444,
-      "src": "fontelico",
-      "from": 59444
+      "uid": "e335adbc2d898c7d85d40c507796e7b4",
+      "css": "mail",
+      "code": 9993,
+      "src": "entypo"
     },
     {
-      "search": [
-        "browser",
-        "firefox"
-      ],
-      "code": 59456,
-      "meta": {
-        "email": "berbentseva_angela@yahoo.com",
-        "author": "Angela Berbentseva"
-      },
-      "uid": "62c089cb34e74b3a1200bc7f5314eb4e",
-      "css": "firefox",
-      "orig_css": "firefox",
-      "orig_code": 59456,
-      "src": "fontelico",
-      "from": 59456
+      "uid": "14017aae737730faeda4a6fd8fb3a5f0",
+      "css": "check",
+      "code": 10003,
+      "src": "entypo"
     },
     {
-      "search": [
-        "browser",
-        "chrome"
-      ],
-      "code": 59457,
-      "meta": {
-        "email": "berbentseva_angela@yahoo.com",
-        "author": "Angela Berbentseva"
-      },
-      "uid": "9c2b737b16ae2c8d66b7bfd29ba5ecd8",
-      "css": "chrome",
-      "orig_css": "chrome",
-      "orig_code": 59457,
-      "src": "fontelico",
-      "from": 59457
+      "uid": "c709da589c923ba3c2ad48d9fc563e93",
+      "css": "remove",
+      "code": 10005,
+      "src": "entypo"
     },
     {
-      "search": [
-        "browser",
-        "opera"
-      ],
-      "code": 59458,
-      "meta": {
-        "email": "berbentseva_angela@yahoo.com",
-        "author": "Angela Berbentseva"
-      },
-      "uid": "45861dd1e5ce4fde338bcccf01eeb808",
-      "css": "opera",
-      "orig_css": "opera",
-      "orig_code": 59458,
-      "src": "fontelico",
-      "from": 59458
+      "uid": "513ac180ff85bd275f2b736720cbbf5e",
+      "css": "home",
+      "code": 8962,
+      "src": "entypo"
     },
     {
-      "search": [
-        "twitter"
-      ],
-      "code": 62211,
-      "meta": {
-        "homepage": "https://twitter.com/about/resources/logos",
-        "author": "Twitter"
-      },
-      "uid": "4c01f5d3ba5fbf029bca8630cce41e6a",
-      "file": "twitter-bird",
-      "transform": {
-        "rescale": 0.9,
-        "offset": 0.05
-      },
-      "css": "twitter-bird",
-      "orig_css": "twitter-bird",
-      "orig_code": 62211,
-      "src": "brandico",
-      "from": 62211
-    },
-    {
-      "search": [
-        "github"
-      ],
-      "code": 62215,
-      "meta": {
-        "twitter": "https://twitter.com/puzrin",
-        "github": "https://github.com/puzrin",
-        "author": "Vitaly Puzrin"
-      },
-      "uid": "24d1008bf15b6c02a5e7a6af026987dd",
-      "file": "github-text",
-      "css": "github-text",
-      "orig_css": "github-text",
-      "orig_code": 62215,
-      "src": "brandico",
-      "from": 62215
-    },
-    {
-      "search": [
-        "dribbble",
-        "social",
-        "logo"
-      ],
-      "code": 62235,
-      "uid": "e8d13cd05bd63219329b2b61835d776c",
-      "css": "dribbble",
-      "orig_css": "dribbble",
-      "orig_code": 62235,
-      "src": "entypo",
-      "from": 62235
-    },
-    {
-      "search": [
-        "download"
-      ],
-      "code": 61440,
-      "uid": "b08cfe8039de2ce815686aced2caef06",
-      "css": "download",
-      "orig_css": "download",
-      "orig_code": 61440,
-      "src": "entypo",
-      "from": 128229
-    },
-    {
-      "search": [
-        "search",
-        "find"
-      ],
-      "code": 61443,
-      "uid": "7222571caa5c15f83dcfd447c58d68d9",
-      "css": "search",
-      "orig_css": "search",
-      "orig_code": 61443,
-      "src": "entypo",
-      "from": 128269
-    },
-    {
-      "search": [
-        "link",
-        "url"
-      ],
-      "code": 61442,
       "uid": "815503841e980c848f55e0271deacead",
       "css": "link",
-      "orig_css": "link",
-      "orig_code": 61442,
-      "src": "entypo",
-      "from": 128279
+      "code": 61442,
+      "src": "entypo"
     },
     {
-      "search": [
-        "wrench",
-        "tools",
-        "settings",
-        "params"
-      ],
-      "code": 61441,
-      "from": 128295,
-      "uid": "5bb103cd29de77e0e06a52638527b575",
-      "css": "settings",
-      "orig_css": "wrench",
-      "orig_code": 61441,
-      "src": "fontawesome"
+      "uid": "b08cfe8039de2ce815686aced2caef06",
+      "css": "download",
+      "code": 61440,
+      "src": "entypo"
+    },
+    {
+      "uid": "e8d13cd05bd63219329b2b61835d776c",
+      "css": "dribbble",
+      "code": 62235,
+      "src": "entypo"
+    },
+    {
+      "uid": "24d1008bf15b6c02a5e7a6af026987dd",
+      "css": "github-text",
+      "code": 62215,
+      "src": "brandico"
     }
   ]
 }
