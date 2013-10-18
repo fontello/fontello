@@ -108,6 +108,7 @@ N.wire.on('session_save', _.debounce(function () {
           code:     glyph.code(),
           uid:      glyph.uid,
           selected: glyph.selected(),
+          search:   glyph.search || [],
           svg: {
             path  : (glyph.svg || {}).path || '',
             width : (glyph.svg || {}).width || 0
@@ -227,6 +228,7 @@ N.wire.on('session_load', function () {
           code:     glyph.code,
           uid:      glyph.uid,
           selected: glyph.selected,
+          search:   glyph.search || [],
           charRef:  charRefCode++,
           svg:      glyph.svg
         });

@@ -42,7 +42,8 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     this.font = parent;
 
     // we search by name AND aliases
-    this.keywords = [this.originalName].concat(data.search || []).join(',');
+    this.search  = data.search || [];
+    this.keywords = [this.originalName].concat(this.search).join(',');
 
     this.charRef = utils.fixedFromCharCode(data.charRef);
 
@@ -87,6 +88,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
       if (self.font.fontname === 'custom_icons') {
         res['selected'] = self.selected();
         res['svg'] = self.svg;
+        res['search'] = self.search;
       }
 
       return res;

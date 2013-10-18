@@ -38,6 +38,11 @@ module.exports = {
             css:  { type: 'string',  required: true },
             code: { type: 'integer', required: true,  minimum: 1 },
             src:  { type: 'string',  required: true,  pattern: /^custom_icons$/ },
+            search: {
+              type: 'array',
+              required: false,
+              items: { type: 'string' }
+            },
             svg: {
               type: 'object',
               required: true,

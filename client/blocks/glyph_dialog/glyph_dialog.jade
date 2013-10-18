@@ -1,0 +1,35 @@
+.modal.fade
+  .modal-dialog.glyph-dialog__dialog
+    .modal-content()
+      .modal-header.glyph-dialog__header
+        button.close(type='button', data-dismiss='modal') &times;
+        h4.modal-title= self.t('title')
+      .modal-body
+        form.form-horizontal
+
+          fieldset.glyph-dialog__fieldset
+            legend= self.t('fieldset_defaults')
+            .form-group
+              label.col-sm-4.control-label(for='gopt__css_name')= self.t('css_name')
+              .col-sm-4
+                input#gopt__css_name.form-control(type='text', value=self.css_name)
+            .form-group
+              label.col-sm-4.control-label(for='gopt__hex_code')= self.t('hex_code')
+              .col-sm-4
+                .input-group
+                  span.input-group-addon 0x
+                  input#gopt__code.form-control(type='text', value=self.hex_code)
+
+          fieldset.glyph-dialog__fieldset
+            legend= self.t('fieldset_search')
+            .form-group
+              label.col-sm-4.control-label(for='gopt__keywords')= self.t('keywords')
+              .col-sm-8
+                input#gopt__keywords.form-control(type='text', value=self.keywords)
+
+
+          .row.glyph-dialog__buttons
+            .col-sm-offset-3.col-sm-9
+              button.btn.btn-primary.pull-right(
+                type='button',
+                data-on-click='cmd:glyph_options.save')= self.t('btn_save')

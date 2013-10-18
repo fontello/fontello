@@ -88,6 +88,7 @@ function import_config(str, file) {
           code:     g.code,
           charRef:  allocatedRefCode++,
           selected: g.selected,
+          search:   g.search || [],
           svg: {
             path:    g.svg.path,
             width:   g.svg.width
@@ -199,6 +200,7 @@ function import_svg_font(data/*, file*/) {
       css:     glyphName,
       code:    glyphCode,
       charRef: allocatedRefCode++,
+      search:  [glyphName],
       svg: {
         path:  d,
         width: width
@@ -263,11 +265,13 @@ function import_svg_image(data, file) {
             .toString();
   width = Math.round(width * scale); // new width
 
+  var glyphName = basename(file.name.toLowerCase(), '.svg').replace(/\s/g, '-');
+
   customIcons.addGlyph({
-    css:      basename(file.name.toLowerCase(), '.svg')
-                .replace(/\s/g, '-'),
+    css:      glyphName,
     code:     allocatedRefCode,
     charRef:  allocatedRefCode++,
+    search:   [glyphName],
     svg: {
       path:   d,
       width:  width
