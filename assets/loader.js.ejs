@@ -197,6 +197,7 @@ window.NodecaLoader = (function () {
   // before the given package.
   function loadAssets(pkgName, preload, callback) {
     var resources;
+    var sheduled = {};
 
     if (isFunction(preload)) {
       callback = preload;
@@ -214,12 +215,14 @@ window.NodecaLoader = (function () {
     forEach(assets[pkgName].packagesQueue, function (dependency) {
       var pkgDist = assets[dependency];
 
-      if (pkgDist.css && !loaded[pkgDist.css]) {
+      if (pkgDist.css && !loaded[pkgDist.css] && !sheduled[pkgDist.css]) {
         resources.push(pkgDist.css);
+        sheduled[pkgDist.css] = true;
       }
 
-      if (pkgDist.js && !loaded[pkgDist.js]) {
+      if (pkgDist.js && !loaded[pkgDist.js] && !sheduled[pkgDist.js]) {
         resources.push(pkgDist.js);
+        sheduled[pkgDist.js] = true;
       }
     });
 
