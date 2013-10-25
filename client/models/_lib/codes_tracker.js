@@ -154,6 +154,16 @@ function allocateCode(glyph, encoding) {
 function observe(glyph) {
   var previousCode = glyph.code();
 
+  // If new glyph created with "selected" flag,
+  // mark it's code as allocated
+  //
+  // Also, fix code if busy, however, that should not happen
+  //
+  if (glyph.selected()) {
+    // unicode -> don't try to remap by default
+    allocateCode(glyph, 'unicode');
+  }
+
   // Keep track on previous code value.
   glyph.code.subscribe(function (code) {
     previousCode = code;

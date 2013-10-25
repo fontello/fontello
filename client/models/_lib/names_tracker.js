@@ -44,6 +44,15 @@ function allocate(model, name, prevName) {
 exports.observe = function (model) {
   var prev = model.name();
 
+  // If new glyph created with "selected" flag,
+  // mark it's code as allocated
+  //
+  // Also, fix code if busy, however, that should not happen
+  //
+  if (model.selected()) {
+    // unicode -> don't try to remap by default
+    allocate(model, model.name(), null);
+  }
   // keep track on previous name value
   model.name.subscribe(function (name) {
     prev = name;
