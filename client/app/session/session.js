@@ -157,7 +157,7 @@ N.wire.on('session_load', function () {
     data = { sessions: [] };
   }
 
-  if (_.isNumber(data.font_size) && (data.font_size > 0)) {
+  if (+data.font_size > 0) {
     N.app.fontSize(data.font_size);
   }
 

@@ -180,19 +180,6 @@ N.wire.once('navigate.done', function (data) {
   // Initialize jquery fontSize slider
   //
 
-  toolbar.fontSize(N.app.fontSize()); // Sync with global, to track first session load
-  /*
-  $('#glyph-size-slider').slider({
-    orientation:  'horizontal',
-    range:        'min',
-    value:        toolbar.fontSize(),
-    min:          GLYPH_SIZE_MIN,
-    max:          GLYPH_SIZE_MAX,
-    slide:        function (event, ui) {
-      toolbar.fontSize(Math.round(ui.value));
-    }
-  });
-*/
 
   //
   // Initialize Twitter Bootstrap typeahead plugin
