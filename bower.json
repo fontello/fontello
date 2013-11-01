@@ -9,6 +9,6 @@
     "json2"       : "*",
     "base64"      : "~0.1.3",
     "typeahead.js": "~0.9.3",
-    "bootstrap"   : "~3.0.0"
+    "bootstrap"   : "~3.0.1"
   }
 }
