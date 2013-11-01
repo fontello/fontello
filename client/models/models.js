@@ -215,7 +215,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
         _selected_dirty = false;
       }
 
-      if (_locked > 0) { _locked--; };
+      if (_locked > 0) { _locked--; }
     };
 
     this.addGlyph = function (data) {
@@ -459,7 +459,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
         this.selectedGlyphs.valueHasMutated();
       }
 
-      if (_locked > 0) { _locked--; };
+      if (_locked > 0) { _locked--; }
     };
 
     this.track = function (glyph) {
