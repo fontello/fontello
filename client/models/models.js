@@ -392,12 +392,22 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
 
     this.unlock();
 
+
     // Rebuild font on glyphs list change
+    // Track previous value and rebuild only on list grow
     //
-    this.glyphs.subscribe(function () {
-      if (self.fontname !== 'custom_icons') { return; }
+
+    var prevGlyphs = [];
+
+    this.glyphs.subscribe(function (currentGlyphs) {
+      var prev = prevGlyphs;
+      prevGlyphs = currentGlyphs.slice();
 
       N.wire.emit('session_save');
+
+      if (self.fontname !== 'custom_icons') { return; }
+
+      if (prev.length >= currentGlyphs.length) { return; }
 
       var ff = fontface(self.makeSvgFont(), self.fontname);
 
