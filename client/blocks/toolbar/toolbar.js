@@ -43,7 +43,7 @@ function ToolbarModel() {
   this.fontSizeMax = GLYPH_SIZE_MAX;
 
   this.fontSize.subscribe(_.debounce(function (value) {
-    if ((value < GLYPH_SIZE_MIN) || (value > GLYPH_SIZE_MAX)) { return; }
+    if (value < GLYPH_SIZE_MIN) { return; }
 
     N.app.fontSize(value);
     N.wire.emit('session_save');
