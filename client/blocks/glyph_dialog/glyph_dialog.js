@@ -13,7 +13,7 @@ N.wire.once('navigate.done', function () {
   N.wire.on('cmd:glyph_options', function gopt_dialog(event) {
     var $el    = $(event.currentTarget);
     var id    = $el.data('id');
-    glyph = N.app.fontsList.glyphMap[id];
+    glyph = N.app.fontsList.getGlyph(id);
 
     // Render dialog window.
     var locals = {
@@ -60,4 +60,13 @@ N.wire.once('navigate.done', function () {
     $dialog.modal('hide');
   });
 
+  N.wire.on('cmd:glyph_remove', function settings_dialog_save() {
+    if (!window.confirm(t('confirm_delete'))) {
+      return;
+    }
+
+    $dialog.modal('hide');
+
+    glyph.remove();
+  });
 });

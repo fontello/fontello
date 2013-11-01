@@ -41,7 +41,7 @@ N.wire.once('navigate.done', function () {
 
       $els.each(function () {
         var id = $(this).data('id');
-        var glyph = N.app.fontsList.glyphMap[id];
+        var glyph = N.app.fontsList.getGlyph(id);
 
         glyph.selected(!glyph.selected());
       });
@@ -67,7 +67,7 @@ N.wire.once('navigate.done', function () {
   //
   N.wire.on('selector:glyph_toggle', function (event) {
     var id = $(event.currentTarget).data('id');
-    var glyph = N.app.fontsList.glyphMap[id];
+    var glyph = N.app.fontsList.getGlyph(id);
 
     glyph.selected(!glyph.selected());
   });

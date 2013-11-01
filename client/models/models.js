@@ -539,6 +539,11 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     this.getFont = function(name) {
       return _.find(this.fonts, function(font) { return font.fontname === name; });
     };
+
+    this.getGlyph = function(uid) {
+      return this.glyphMap[uid];
+    };
+
   }
 
 

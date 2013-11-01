@@ -20,7 +20,7 @@ N.wire.once('navigate.done', function () {
   N.wire.on('codes_edit:glyph_remove', function (event) {
     var $el    = $(event.currentTarget);
     var id    = $el.data('id');
-    var glyph = N.app.fontsList.glyphMap[id];
+    var glyph = N.app.fontsList.getGlyph(id);
 
     $el.closest('.result-glyph').fadeOut(function () {
       glyph.selected(false);

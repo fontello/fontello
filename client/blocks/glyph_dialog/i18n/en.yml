@@ -8,4 +8,7 @@ en-US:
   fieldset_search: Search
   keywords: Keywords
 
-  btn_save: Save
+  btn_save: Save glyph
+  btn_delete: Delete glyph
+
+  confirm_delete: 'Are you sure?'
