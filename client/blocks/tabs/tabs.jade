@@ -4,3 +4,4 @@ ul#tabs.nav.nav-tabs
         data-target='#names-editor')= self.t('names_editor')
   li: a(data-bind="css: { disabled: !selectedCount() }, attr: { 'data-toggle': selectedCount() ? 'tab' : '' }",
         data-target='#codes-editor')= self.t('codes_editor')
+  li.pull-right: a(href='https://github.com/fontello/fontello/wiki/Help', target='_blank')= self.t('help')
