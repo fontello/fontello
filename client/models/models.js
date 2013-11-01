@@ -197,12 +197,12 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     this.selectedGlyphs = ko.observableArray();
 
     // State flags for bulk updates
-    var _locked = false;
+    var _locked = 0; // can be nested
     var _selected_dirty = false;
     var _glyphs_dirty = false;
 
     this.lock = function () {
-      _locked = true;
+      _locked++;
     };
 
     this.unlock = function () {
@@ -214,7 +214,8 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
         this.selectedGlyphs.valueHasMutated();
         _selected_dirty = false;
       }
-      _locked = false;
+
+      if (_locked > 0) { _locked--; };
     };
 
     this.addGlyph = function (data) {
@@ -440,23 +441,25 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     }).extend({ throttle: 100 });
 
     // State flags for bulk updates
-    var _locked = false;
+    var _locked = 0;  // can be nested
     var _selected_dirty = false;
 
     // Lock/Unlock ko refreshes, needed on mass imports
     //
     this.lock = function () {
-      _locked = true;
+      _locked++;
       this.fonts.forEach(function(font) { font.lock(); });
     };
     this.unlock = function () {
       this.fonts.forEach(function(font) { font.unlock(); });
-      _locked = false;
+      _locked--;
 
       if (_selected_dirty) {
         _selected_dirty = false;
         this.selectedGlyphs.valueHasMutated();
       }
+
+      if (_locked > 0) { _locked--; };
     };
 
     this.track = function (glyph) {
