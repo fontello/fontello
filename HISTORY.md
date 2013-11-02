@@ -1,11 +1,16 @@
-5.0.1 / WIP
+5.0.1 / 2013-11-02
 ------------------
 
 - Removed almost all interface animation effects, to make it more responsive
 - Fixed config defaults, that caused API problems with old config formats
 - Rewritten selected glyphs tracker, now keep glyphs order by selection time
 - Updated FontAwesome to 4.0.1
-- 5.0.0 regressions fixes
+- Glyph options dialog for custom icons
+- Added `Help` link
+- Changed way to track selection - keep order now
+- Increased input width for char codes
+- Spelling fixes
+- regressions fixes
 
 
 5.0.0 / 2013-10-07
