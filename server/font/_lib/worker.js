@@ -217,7 +217,7 @@ module.exports = function fontWorker(taskInfo, callback) {
 
   workplan.push(function (next) {
     fs.readFile(files.ttf, null, function (err, data) {
-      ttfOutput = data;
+      ttfOutput = new Uint8Array(data);
       next(err);
     });
   });
@@ -232,7 +232,7 @@ module.exports = function fontWorker(taskInfo, callback) {
       next(e);
       return;
     }
-    fs.writeFile(files.eot, eotOutput, next);
+    fs.writeFile(files.eot, new Buffer(eotOutput.buffer), next);
   });
 
 
