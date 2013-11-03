@@ -239,14 +239,13 @@ module.exports = function fontWorker(taskInfo, callback) {
   // Convert TTF to WOFF.
 
   workplan.push(function (next) {
-    ttf2woff(ttfOutput, {}, function (err, data) {
-      if (err) {
-        next(err);
-        return;
-      }
-      woffOutput = data.buffer;
-      fs.writeFile(files.woff, woffOutput, next);
-    });
+    try {
+      woffOutput = ttf2woff(ttfOutput);
+    } catch (e) {
+      next(e);
+      return;
+    }
+    fs.writeFile(files.woff, new Buffer(woffOutput.buffer), next);
   });
 
 
