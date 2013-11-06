@@ -23,5 +23,4 @@ en-US:
       to path in an editor, and try import again.
 
     bad_svg_container: >
-      '#{name}' contains container '#{node}'. Please, convert it
-      to paths or groups in an editor, and try import again.
+      '#{name}' may be imported incorrect

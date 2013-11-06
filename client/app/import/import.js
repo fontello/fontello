@@ -224,7 +224,7 @@ function combinePath(obj, file) {
     }
 
     if (obj.tagName !== "g" && obj.tagName !== "svg") {
-      N.wire.emit('notify', t('error.bad_svg_container', { name: file.name, node: obj.nodeName }));
+      N.wire.emit('notify', t('error.bad_svg_container', { name: file.name }));
       return "";
     }
 
