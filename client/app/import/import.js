@@ -210,6 +210,26 @@ function import_svg_font(data/*, file*/) {
 }
 
 //
+// Combine multimle paths to single path
+//
+// obj - xmlObject
+//
+function combinePath(obj) {
+  var pathTags = _.toArray(obj.getElementsByTagName('path'));
+  var path = "";
+
+  if (pathTags.length > 1) {
+    path = _.map(pathTags, function(elem) {
+      return elem.getAttribute('d');
+    }).join(" ");
+  } else {
+    path = pathTags[0].getAttribute('d');
+  }
+
+  return path.replace(/\s+/g, ' ');
+}
+
+//
 // Import svg image from svg files.
 //
 // data - text content
@@ -228,13 +248,8 @@ function import_svg_image(data, file) {
 
   var allocatedRefCode = (!maxRef) ? 0xe800 : utils.fixedCharCodeAt(maxRef) + 1;
   var svgTag = xmlDoc.getElementsByTagName('svg')[0];
-  var pathTags = xmlDoc.getElementsByTagName('path');
-
-  if (pathTags.length !== 1) {
-    N.wire.emit('notify', t('error.bad_svg_image', { name: file.name }));
-  }
   
-  var d = pathTags[0].getAttribute('d');
+  var d = combinePath(xmlDoc);
 
   // getting viewBox values array
   var viewBox = _.map(
