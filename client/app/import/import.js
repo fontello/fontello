@@ -210,6 +210,75 @@ function import_svg_font(data/*, file*/) {
 }
 
 //
+// Combine multimle paths to single path
+//
+// obj - xmlObject
+//
+function combinePath(obj, file) {
+  var childs;
+  var path = "";
+
+  if (obj.hasChildNodes()) {
+    if (obj.hasAttribute('transform')) {
+      N.wire.emit('notify', t('error.bad_svg_has_transform', { name: file.name, node: obj.nodeName }));
+    }
+
+    if (obj.tagName !== "g" && obj.tagName !== "svg") {
+      N.wire.emit('notify', t('error.bad_svg_container', { name: file.name }));
+      return "";
+    }
+
+    childs = _.toArray(obj.childNodes);
+    path += _.reduce(childs, function(prev, elem) {
+      return prev += combinePath(elem, file);
+    }, "");
+  } else {
+    if (obj.nodeType === 3) {
+      return "";
+    }
+
+    if (obj.hasAttribute('transform')) {
+      N.wire.emit('notify', t('error.bad_svg_has_transform', { name: file.name, node: obj.nodeName }));
+    }
+
+    switch (obj.nodeName) {
+      case 'path':
+        return obj.getAttribute('d');
+
+      case 'circle':
+        N.wire.emit('notify', t('error.bad_svg_node', { name: file.name, node: obj.nodeName }));
+        return "";
+        
+      case 'ellipse':
+        N.wire.emit('notify', t('error.bad_svg_node', { name: file.name, node: obj.nodeName }));
+        return "";
+        
+      case 'line':
+        N.wire.emit('notify', t('error.bad_svg_node', { name: file.name, node: obj.nodeName }));
+        return "";
+        
+      case 'polygon':
+        N.wire.emit('notify', t('error.bad_svg_node', { name: file.name, node: obj.nodeName }));
+        return "";
+        
+      case 'polyline':
+        N.wire.emit('notify', t('error.bad_svg_node', { name: file.name, node: obj.nodeName }));
+        return "";
+
+      case 'rect':
+        N.wire.emit('notify', t('error.bad_svg_node', { name: file.name, node: obj.nodeName }));
+        return "";
+
+      default:
+        N.wire.emit('notify', t('error.bad_svg_node', { name: file.name, node: obj.nodeName }));
+        return "";
+    }
+  }
+
+  return path.replace(/\s+/g, ' ');
+}
+
+//
 // Import svg image from svg files.
 //
 // data - text content
@@ -228,13 +297,8 @@ function import_svg_image(data, file) {
 
   var allocatedRefCode = (!maxRef) ? 0xe800 : utils.fixedCharCodeAt(maxRef) + 1;
   var svgTag = xmlDoc.getElementsByTagName('svg')[0];
-  var pathTags = xmlDoc.getElementsByTagName('path');
-
-  if (pathTags.length !== 1) {
-    N.wire.emit('notify', t('error.bad_svg_image', { name: file.name }));
-  }
   
-  var d = pathTags[0].getAttribute('d');
+  var d = combinePath(svgTag, file);
 
   // getting viewBox values array
   var viewBox = _.map(
