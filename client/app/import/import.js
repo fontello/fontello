@@ -237,16 +237,42 @@ function combinePath(obj, file) {
       return "";
     }
 
-    if (obj.nodeName !== 'path') {
-      N.wire.emit('notify', t('error.bad_svg_node', { name: file.name, node: obj.nodeName }));
-      return "";
-    }
-
     if (obj.hasAttribute('transform')) {
       N.wire.emit('notify', t('error.bad_svg_has_transform', { name: file.name, node: obj.nodeName }));
     }
-    
-    return obj.getAttribute('d');
+
+    switch (obj.nodeName) {
+      case 'path':
+        return obj.getAttribute('d');
+
+      case 'circle':
+        N.wire.emit('notify', t('error.bad_svg_node', { name: file.name, node: obj.nodeName }));
+        return "";
+        
+      case 'ellipse':
+        N.wire.emit('notify', t('error.bad_svg_node', { name: file.name, node: obj.nodeName }));
+        return "";
+        
+      case 'line':
+        N.wire.emit('notify', t('error.bad_svg_node', { name: file.name, node: obj.nodeName }));
+        return "";
+        
+      case 'polygon':
+        N.wire.emit('notify', t('error.bad_svg_node', { name: file.name, node: obj.nodeName }));
+        return "";
+        
+      case 'polyline':
+        N.wire.emit('notify', t('error.bad_svg_node', { name: file.name, node: obj.nodeName }));
+        return "";
+
+      case 'rect':
+        N.wire.emit('notify', t('error.bad_svg_node', { name: file.name, node: obj.nodeName }));
+        return "";
+
+      default:
+        N.wire.emit('notify', t('error.bad_svg_node', { name: file.name, node: obj.nodeName }));
+        return "";
+    }
   }
 
   return path.replace(/\s+/g, ' ');
