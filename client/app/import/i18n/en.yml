@@ -14,7 +14,7 @@ en-US:
       '#{name}' contains multiple contours. Please, join those
       first in an editor, and try import again.
 
-    bad_svg_need_transform: >
+    bad_svg_has_transform: >
       '#{name}' contains trasformations on node '#{node}'. 
       Please, apply those first in an editor, and try import again.
 

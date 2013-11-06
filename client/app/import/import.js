@@ -220,7 +220,7 @@ function combinePath(obj, file) {
 
   if (obj.hasChildNodes()) {
     if (obj.hasAttribute('transform')) {
-      N.wire.emit('notify', t('error.bad_svg_need_transform', { name: file.name, node: obj.nodeName }));
+      N.wire.emit('notify', t('error.bad_svg_has_transform', { name: file.name, node: obj.nodeName }));
     }
 
     if (obj.tagName !== "g" && obj.tagName !== "svg") {
@@ -243,7 +243,7 @@ function combinePath(obj, file) {
     }
 
     if (obj.hasAttribute('transform')) {
-      N.wire.emit('notify', t('error.bad_svg_need_transform', { name: file.name, node: obj.nodeName }));
+      N.wire.emit('notify', t('error.bad_svg_has_transform', { name: file.name, node: obj.nodeName }));
     }
     
     return obj.getAttribute('d');
