@@ -13,3 +13,15 @@ en-US:
     bad_svg_image: >
       '#{name}' contains multiple contours. Please, join those
       first in an editor, and try import again.
+
+    bad_svg_need_transform: >
+      '#{name}' contains trasformations on node '#{node}'. 
+      Please, apply those first in an editor, and try import again.
+
+    bad_svg_node: >
+      '#{name}' contains node '#{node}'. Please, convert it
+      to path in an editor, and try import again.
+
+    bad_svg_container: >
+      '#{name}' contains container '#{node}'. Please, convert it
+      to paths or groups in an editor, and try import again.

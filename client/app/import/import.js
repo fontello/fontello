@@ -214,16 +214,39 @@ function import_svg_font(data/*, file*/) {
 //
 // obj - xmlObject
 //
-function combinePath(obj) {
-  var pathTags = _.toArray(obj.getElementsByTagName('path'));
+function combinePath(obj, file) {
+  var childs;
   var path = "";
 
-  if (pathTags.length > 1) {
-    path = _.map(pathTags, function(elem) {
-      return elem.getAttribute('d');
-    }).join(" ");
+  if (obj.hasChildNodes()) {
+    if (obj.hasAttribute('transform')) {
+      N.wire.emit('notify', t('error.bad_svg_need_transform', { name: file.name, node: obj.nodeName }));
+    }
+
+    if (obj.tagName !== "g" && obj.tagName !== "svg") {
+      N.wire.emit('notify', t('error.bad_svg_container', { name: file.name, node: obj.nodeName }));
+      return "";
+    }
+
+    childs = _.toArray(obj.childNodes);
+    path += _.reduce(childs, function(prev, elem) {
+      return prev += combinePath(elem, file);
+    }, "");
   } else {
-    path = pathTags[0].getAttribute('d');
+    if (obj.nodeType === 3) {
+      return "";
+    }
+
+    if (obj.nodeName !== 'path') {
+      N.wire.emit('notify', t('error.bad_svg_node', { name: file.name, node: obj.nodeName }));
+      return "";
+    }
+
+    if (obj.hasAttribute('transform')) {
+      N.wire.emit('notify', t('error.bad_svg_need_transform', { name: file.name, node: obj.nodeName }));
+    }
+    
+    return obj.getAttribute('d');
   }
 
   return path.replace(/\s+/g, ' ');
@@ -249,7 +272,7 @@ function import_svg_image(data, file) {
   var allocatedRefCode = (!maxRef) ? 0xe800 : utils.fixedCharCodeAt(maxRef) + 1;
   var svgTag = xmlDoc.getElementsByTagName('svg')[0];
   
-  var d = combinePath(xmlDoc);
+  var d = combinePath(svgTag, file);
 
   // getting viewBox values array
   var viewBox = _.map(
