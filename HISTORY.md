@@ -1,3 +1,9 @@
+5.0.2 / WIP
+------------------
+
+- Better message on attempt to import TTF/WOFF/OTF
+
+
 5.0.1 / 2013-11-02
 ------------------
 

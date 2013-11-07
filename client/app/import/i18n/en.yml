@@ -13,3 +13,11 @@ en-US:
     bad_svg_image: >
       '#{name}' contains multiple contours. Please, join those
       first in an editor, and try import again.
+
+    need_svg_font: >
+      We don't support import of fonts in TTF / WOFF / OTF formats.
+      Please, convert to SVG format first. You can do it with
+      <a href="http://fontforge.org" target="_blank">FontForge</a>,
+      for example. See 
+      <a href="https://github.com/fontello/fontello/wiki/How-to-use-custom-images" target="_blank">help</a> 
+      for details.

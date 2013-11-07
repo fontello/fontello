@@ -318,6 +318,11 @@ function handleFileSelect(event) {
         // and importer
         //
 
+        if (file.name.match(/[.](woff|ttf|otf)$/i)) {
+          N.wire.emit('notify', t('error.need_svg_font', { name: file.name }));
+          next();
+          return;
+        }
         
         // Chrome omits type on JSON files, so check it by extention
         if (file.name.match(/[.]json$/)) {
