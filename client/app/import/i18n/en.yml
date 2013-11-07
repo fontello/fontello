@@ -11,8 +11,7 @@ en-US:
     unknown_format: "Can't import '#{name}' - unknown format"
 
     bad_svg_image: >
-      '#{name}' contains multiple contours. Please, join those
-      first in an editor, and try import again.
+      '#{name}' contains multiple paths/shapes. Please, make them a compound path, and try import again.
 
     need_svg_font: >
       We don't support import of fonts in TTF / WOFF / OTF formats.
