@@ -16,6 +16,7 @@ var ttf2eot  = require('ttf2eot');
 var ttf2woff = require('ttf2woff');
 var svg2ttf  = require('svg2ttf');
 var jade     = require('jade');
+var b64      = require('Base64');
 //var AdmZip   = require('adm-zip');
 var io       = require('../../../lib/system/io');
 
@@ -227,12 +228,12 @@ module.exports = function fontWorker(taskInfo, callback) {
 
   workplan.push(function (next) {
     try {
-      eotOutput = ttf2eot(ttfOutput);
+      eotOutput = ttf2eot(ttfOutput).buffer;
     } catch (e) {
       next(e);
       return;
     }
-    fs.writeFile(files.eot, new Buffer(eotOutput.buffer), next);
+    fs.writeFile(files.eot, new Buffer(eotOutput), next);
   });
 
 
@@ -240,12 +241,12 @@ module.exports = function fontWorker(taskInfo, callback) {
 
   workplan.push(function (next) {
     try {
-      woffOutput = ttf2woff(ttfOutput);
+      woffOutput = ttf2woff(ttfOutput).buffer;
     } catch (e) {
       next(e);
       return;
     }
-    fs.writeFile(files.woff, new Buffer(woffOutput.buffer), next);
+    fs.writeFile(files.woff, new Buffer(woffOutput), next);
   });
 
 
@@ -264,8 +265,8 @@ module.exports = function fontWorker(taskInfo, callback) {
       , outputData = templateData(taskInfo.builderConfig);
 
     workplan.push(function (next) {
-      outputData = outputData.replace('%WOFF64%', woffOutput.toString('base64'))
-                             .replace('%TTF64%', ttfOutput.toString('base64'));
+      outputData = outputData.replace('%WOFF64%', b64.btoa(String.fromCharCode.apply(null, woffOutput)))
+                             .replace('%TTF64%', b64.btoa(String.fromCharCode.apply(null, ttfOutput)));
 
       fs.writeFile(outputFile, outputData, 'utf8', next);
     });
