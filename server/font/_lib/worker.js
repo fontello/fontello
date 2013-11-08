@@ -16,6 +16,8 @@ var ttf2eot  = require('ttf2eot');
 var ttf2woff = require('ttf2woff');
 var svg2ttf  = require('svg2ttf');
 var jade     = require('jade');
+var b64      = require('base64-js');
+
 //var AdmZip   = require('adm-zip');
 var io       = require('../../../lib/system/io');
 
@@ -264,8 +266,8 @@ module.exports = function fontWorker(taskInfo, callback) {
       , outputData = templateData(taskInfo.builderConfig);
 
     workplan.push(function (next) {
-      outputData = outputData.replace('%WOFF64%', (new Buffer(woffOutput).toString('base64')))
-                             .replace('%TTF64%', (new Buffer(ttfOutput).toString('base64')));
+      outputData = outputData.replace('%WOFF64%', b64.fromByteArray(woffOutput))
+                             .replace('%TTF64%', b64.fromByteArray(ttfOutput));
 
       fs.writeFile(outputFile, outputData, 'utf8', next);
     });
