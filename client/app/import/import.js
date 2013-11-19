@@ -431,10 +431,12 @@ N.wire.once('navigate.done', function () {
 
   dropZone.on('dragleave', function () {
     // !!! we can get `dragleave` events from child elements
-    // Now those are disavled via CSS.
+    // http://stackoverflow.com/questions/7110353/html5-dragleave-fired-when-hovering-a-child-element
+    // http://stackoverflow.com/questions/10867506/dragleave-of-parent-element-fires-when-dragging-over-children-elements
+
+    // Do trottling to filter events
     clearTimeout(dropTimer);
     dropTimer = setTimeout(function () {
-      console.log('dragleave fired')
       dropZone.removeClass('drop-progress');
       dropProgress = false;
     }, 100);
