@@ -410,15 +410,19 @@ N.wire.once('navigate.done', function () {
 
   var dropZone = $('body');
   var dropProgress = false;
+  var dropTimer;
 
   // add the dataTransfer property for use with the native `drop` event
   // to capture information about files dropped into the browser window
   $.event.props.push("dataTransfer");
 
-  dropZone.on('dragover', function (event) {
+  dropZone.on('dragenter dragover', function (event) {
     event.stopPropagation();
     event.preventDefault();
     event.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+
+    clearTimeout(dropTimer);
+
     if (!dropProgress) {
       dropZone.addClass('drop-progress');
       dropProgress = true;
@@ -426,8 +430,14 @@ N.wire.once('navigate.done', function () {
   });
 
   dropZone.on('dragleave', function () {
-    dropZone.removeClass('drop-progress');
-    dropProgress = false;
+    // !!! we can get `dragleave` events from child elements
+    // Now those are disavled via CSS.
+    clearTimeout(dropTimer);
+    dropTimer = setTimeout(function () {
+      console.log('dragleave fired')
+      dropZone.removeClass('drop-progress');
+      dropProgress = false;
+    }, 100);
   });
 
   dropZone.on('drop', function (event) {
