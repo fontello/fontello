@@ -127,8 +127,8 @@
             if (key) { self.remove(key); }
           });
           localStorage.setItem(self.ns + key, JSON.stringify(obj));
-        } catch (e) {
-          err = e;
+        } catch (_e) {
+          err = _e;
         }
       } else {
         err = e;
