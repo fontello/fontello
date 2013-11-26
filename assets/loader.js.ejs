@@ -1,9 +1,9 @@
 //= require vendor/modernizr.custom
-//= require vendor/yepnope/yepnope
+//= require ./bag
 //= require_self
 
 
-/*global yepnope*/
+/*global basket*/
 
 
 window.NodecaLoader = (function () {
@@ -88,7 +88,7 @@ window.NodecaLoader = (function () {
     , func: func
     , internal: { exports: {} }
     };
-  };
+  }
 
   function requireNodeModule(path) {
     var module = nodeModules[path];
@@ -130,7 +130,7 @@ window.NodecaLoader = (function () {
     , func: func
     , internal: { exports: {}, apiPath: apiPath }
     };
-  };
+  }
 
   // Initialize client module. Used once per module.
   function initSingleClientModule(module) {
@@ -150,7 +150,7 @@ window.NodecaLoader = (function () {
 
     translationHelper.exists = function translationExistsHelper(phrase) {
       return N.runtime.t.exists(resolveI18nPath(phrase));
-    }
+    };
 
     // Execute the module's `func` function. It will populate the exports.
     module.func.call(
@@ -192,6 +192,14 @@ window.NodecaLoader = (function () {
   NodecaLoader.initClientModules      = initClientModules;
 
 
+  //
+  // Configure `bag.js loader
+  //
+  var bag = new window.Bag({
+    timeout: 20000,
+    stores: ['indexeddb', 'websql']
+  });
+
   // Load a package with all of associated assets ans dependences.
   // `preload` parameter is an optional array of URLs which are needed to load
   // before the given package.
@@ -226,15 +234,30 @@ window.NodecaLoader = (function () {
       }
     });
 
-    // NOTE: YepNope will *only* call `complete` when `resources` is not empty.
+
     if (resources.length > 0) {
-      yepnope({
-        load: resources,
-        complete: function () {
-          forEach(resources, function (res) { loaded[res] = true; });
-          initClientModules();
-          callback();
+
+      var res_list = [];
+      forEach(resources, function(url) {
+        res_list.push({
+          url: url,
+          // storage key = file path without hash
+          key: url.replace(/-[0-9a-f]{32}([.][a-z]+)$/, '$1')
+        });
+      });
+
+      bag.require(res_list, function(err, data) {
+        if (err) {
+          alert(err ? err : 'Failed to load assets: timeout');
+          return;
         }
+
+        forEach(resources, function(url) {
+          loaded[url] = true;
+        });
+        
+        initClientModules();
+        callback();
       });
     } else {
       callback();
@@ -263,7 +286,7 @@ window.NodecaLoader = (function () {
     // Choose necessary polyfills.
     if (!window.JSON) {
       // JSON is required for Opera < 11 + IE < 8
-      //See: http://caniuse.com/json
+      // See: http://caniuse.com/json
       shims.push(URL_JSON2_SHIM);
     }
     if (!Object.keys) {
@@ -279,7 +302,7 @@ window.NodecaLoader = (function () {
       }
 
       if (!N.wire) {
-        alert('Init error: failed to load core JS files. Refresh page & try again. ' +
+        alert('Assets init error. Refresh page & try again. ' +
               'If problem still exists - contact administrator.');
         return;
       }

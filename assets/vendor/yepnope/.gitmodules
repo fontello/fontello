@@ -1,3 +1,0 @@
-[submodule "build/UglifyJS"]
-	path = build/UglifyJS
-	url = https://github.com/mishoo/UglifyJS.git

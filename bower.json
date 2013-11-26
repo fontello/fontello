@@ -1,7 +1,6 @@
 {
   "name"        : "fontello",
   "dependencies": {
-    "yepnope"     : "~1.5.4",
     "jquery"      : "~1.10.1",
     "jquery-ui"   : "~1.10.3",
     "es5-shim"    : "~2.1.0",
