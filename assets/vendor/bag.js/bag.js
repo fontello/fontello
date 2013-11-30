@@ -79,7 +79,98 @@
   // Adapters for Store class
 
   var DomStorage = function (namespace) {
-    this.ns = namespace + '__';
+    var self = this;
+    var _ns = namespace + '__';
+    var _storage = localStorage;
+
+
+    this.init = function (callback) {
+      callback();
+    };
+
+
+    this.remove = function (key, callback) {
+      callback = callback || _nope;
+      _storage.removeItem(_ns + key);
+      callback();
+    };
+
+
+    this.set = function (key, value, expire, callback) {
+      var obj = {
+        value: value,
+        expire: expire
+      };
+
+      var err;
+
+      try {
+        _storage.setItem(_ns + key, JSON.stringify(obj));
+      } catch (e) {
+        // On quota error try to reset storage & try again.
+        // Just remove all keys, without conditions, no optimizations needed.
+        if (e.name.toUpperCase().indexOf('QUOTA') >= 0) {
+          try {
+            _each(_storage, function(val, name) {
+              var key = name.split(_ns)[ 1 ];
+              if (key) { self.remove(key); }
+            });
+            _storage.setItem(_ns + key, JSON.stringify(obj));
+          } catch (e2) {
+            err = e2;
+          }
+        } else {
+          err = e;
+        }
+      }
+
+      callback(err);
+    };
+
+
+    this.get = function (key, raw, callback) {
+      if (_isFunction(raw)) {
+        callback = raw;
+        raw = false;
+      }
+
+      var err, data;
+
+      try {
+        data = JSON.parse(_storage.getItem(_ns + key));
+        data = raw ? data : data.value;
+      } catch (e) {
+        err = new Error('Can\'t read key: ' + key);
+      }
+
+      callback(err, data);
+    };
+
+
+    this.clear = function (expiredOnly, callback) {
+      var now = +new Date();
+
+      _each(_storage, function(val, name) {
+        var key = name.split(_ns)[ 1 ];
+
+        if (!key) { return; }
+
+        if (!expiredOnly) {
+          self.remove(key);
+          return;
+        }
+
+        var raw;
+        self.get(key, true, function(err, data) {
+          raw = data; // can use this hack, because get is sync;
+        });
+        if (raw && (raw.expire > 0) && ((raw.expire - now) < 0)) {
+          self.remove(key);
+        }
+      });
+
+      callback();
+    };
   };
 
 
@@ -94,106 +185,98 @@
   };
 
 
-  DomStorage.prototype.init = function (callback) {
-    callback();
-  };
-
-
-  DomStorage.prototype.remove = function (key, callback) {
-    callback = callback || _nope;
-    localStorage.removeItem(this.ns + key);
-    callback();
-  };
-
-
-  DomStorage.prototype.set = function (key, value, expire, callback) {
-    var self = this;
-    var obj = {
-      value: value,
-      expire: expire
-    };
-
-    var err;
-
-    try {
-      localStorage.setItem(self.ns + key, JSON.stringify(obj));
-    } catch (e) {
-      // On quota error try to reset storage & try again.
-      // Just remove all keys, without conditions, no optimizations needed.
-      if (e.name.toUpperCase().indexOf('QUOTA') >= 0) {
-        try {
-          _each(localStorage, function(val, name) {
-            var key = name.split(self.ns)[ 1 ];
-            if (key) { self.remove(key); }
-          });
-          localStorage.setItem(self.ns + key, JSON.stringify(obj));
-        } catch (e2) {
-          err = e2;
-        }
-      } else {
-        err = e;
-      }
-    }
-
-    callback(err);
-  };
-
-
-  DomStorage.prototype.get = function (key, raw, callback) {
-    if (_isFunction(raw)) {
-      callback = raw;
-      raw = false;
-    }
-
-    var obj = localStorage.getItem(this.ns + key);
-
-    if (obj === null) {
-      callback(new Error('key not found: ' + key));
-      return;
-    }
-
-    var err, data;
-
-    try {
-      data = JSON.parse(obj);
-      data = raw ? data : data.value;
-    } catch (e) {
-      err = new Error('Can\'t unserialise data: ' + obj);
-    }
-
-    callback(err, data);
-  };
-
-
-  DomStorage.prototype.clear = function (expiredOnly, callback) {
-    var self = this;
-    var now = +new Date();
-
-    _each(localStorage, function(val, name) {
-      var key = name.split(self.ns)[ 1 ];
-
-      if (!key) { return; }
-
-      if (!expiredOnly) {
-        self.remove(key);
-        return;
-      }
-
-      var raw;
-      self.get(key, true, function(err, data) {
-        raw = data; // can use this hack, because get is sync;
-      });
-      if (raw && (raw.expire > 0) && ((raw.expire - now) < 0)) {
-        self.remove(key);
-      }
-    });
-
-    callback();
-  };
-
 
   var WebSql = function (namespace) {
-    this.ns = namespace;
+    var db;
+
+
+    this.init = function (callback) {
+      db = window.openDatabase(namespace, '1.0', 'bag.js db', 2e5);
+
+      if (!db) { return callback('Can\'t open webdql database'); }
+
+      db.transaction(function (tx) {
+        tx.executeSql(
+          'CREATE TABLE IF NOT EXISTS kv (key TEXT PRIMARY KEY, value TEXT, expire INTEGER KEY)',
+          [],
+          function () { return callback(); },
+          function (tx, err) { return callback(err); }
+        );
+      });
+    };
+
+
+    this.remove = function (key, callback) {
+      callback = callback || _nope;
+      db.transaction(function (tx) {
+        tx.executeSql(
+          'DELETE FROM kv WHERE key = ?',
+          [key],
+          function () { return callback(); },
+          function (tx, err) { return callback(err); }
+        );
+      });
+    };
+
+
+    this.set = function (key, value, expire, callback) {
+      db.transaction(function (tx) {
+        tx.executeSql(
+          'INSERT OR REPLACE INTO kv (key, value, expire) VALUES (?, ?, ?)',
+          [key, JSON.stringify(value), expire],
+          function () { return callback(); },
+          function (tx, err) { return callback(err); }
+        );
+      });
+    };
+
+
+    this.get = function (key, callback) {
+      db.readTransaction(function (tx) {
+        tx.executeSql(
+          'SELECT value FROM kv WHERE key = ?',
+          [key],
+          function (tx, result) {
+            if (result.rows.length === 0) {
+              return callback(new Error('key not found: ' + key));
+            }
+            var value = result.rows.item(0).value;
+            var err, data;
+            try {
+              data = JSON.parse(value);
+            } catch (e) {
+              err = new Error('Can\'t unserialise data: ' + value);
+            }
+            callback(err, data);
+          },
+          function (tx, err) { return callback(err); }
+        );
+      });
+    };
+
+
+    this.clear = function (expiredOnly, callback) {
+
+      db.transaction(function (tx) {
+        if (expiredOnly) {
+          tx.executeSql(
+            'DELETE FROM kv WHERE expire > 0 AND expire < ?',
+            [+new Date()],
+            function () { return callback(); },
+            function (tx, err) { return callback(err); }
+          );
+        } else {
+          db.transaction(function (tx) {
+            tx.executeSql(
+              'DELETE FROM kv',
+              [],
+              function () { return callback(); },
+              function (tx, err) { return callback(err); }
+            );
+          });
+        }
+      });
+    };
   };
 
 
@@ -202,97 +285,106 @@
   };
 
 
-  WebSql.prototype.init = function (callback) {
-    var db = this.db = window.openDatabase(this.ns, '1.0', 'bag.js db', 2e5);
-
-    if (!db) { return callback('Can\'t open webdql database'); }
-
-    db.transaction(function (tx) {
-      tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS kv (key TEXT PRIMARY KEY, value TEXT, expire INTEGER KEY)',
-        [],
-        function () { return callback(); },
-        function (tx, err) { return callback(err); }
-      );
-    });
-  };
-
-
-  WebSql.prototype.remove = function (key, callback) {
-    callback = callback || _nope;
-    this.db.transaction(function (tx) {
-      tx.executeSql(
-        'DELETE FROM kv WHERE key = ?',
-        [key],
-        function () { return callback(); },
-        function (tx, err) { return callback(err); }
-      );
-    });
-  };
-
-
-  WebSql.prototype.set = function (key, value, expire, callback) {
-    this.db.transaction(function (tx) {
-      tx.executeSql(
-        'INSERT OR REPLACE INTO kv (key, value, expire) VALUES (?, ?, ?)',
-        [key, JSON.stringify(value), expire],
-        function () { return callback(); },
-        function (tx, err) { return callback(err); }
-      );
-    });
-  };
-
-
-  WebSql.prototype.get = function (key, callback) {
-    this.db.readTransaction(function (tx) {
-      tx.executeSql(
-        'SELECT value FROM kv WHERE key = ?',
-        [key],
-        function (tx, result) {
-          if (result.rows.length === 0) {
-            return callback(new Error('key not found: ' + key));
-          }
-          var value = result.rows.item(0).value;
-          var err, data;
-          try {
-            data = JSON.parse(value);
-          } catch (e) {
-            err = new Error('Can\'t unserialise data: ' + value);
-          }
-          callback(err, data);
-        },
-        function (tx, err) { return callback(err); }
-      );
-    });
-  };
-
-
-  WebSql.prototype.clear = function (expiredOnly, callback) {
-
-    if (expiredOnly) {
-      this.db.transaction(function (tx) {
-        tx.executeSql(
-          'DELETE FROM kv WHERE expire > 0 AND expire < ?',
-          [+new Date()],
-          function () { return callback(); },
-          function (tx, err) { return callback(err); }
-        );
-      });
-    } else {
-      this.db.transaction(function (tx) {
-        tx.executeSql(
-          'DELETE FROM kv',
-          [],
-          function () { return callback(); },
-          function (tx, err) { return callback(err); }
-        );
-      });
-    }
-  };
-
 
   var Idb = function (namespace) {
-    this.ns = namespace;
+    var db;
+
+    this.init = function (callback) {
+      var idb = this.idb = window.indexedDB; /* || window.webkitIndexedDB ||
+                           window.mozIndexedDB || window.msIndexedDB;*/
+
+      var req = idb.open(namespace, 2 /*version*/);
+
+      req.onsuccess = function(e) {
+        db = e.target.result;
+        callback();
+      };
+      req.onblocked = function(e) {
+        callback(new Error('IndexedDB blocked. ' + e.target.errorCode));
+      };
+      req.onerror = function(e) {
+        callback(new Error('IndexedDB opening error. ' + e.target.errorCode));
+      };
+      req.onupgradeneeded = function(e) {
+        db = e.target.result;
+        if (db.objectStoreNames.contains('kv')) {
+          db.deleteObjectStore('kv');
+        }
+        var store = db.createObjectStore('kv', { keyPath: 'key' });
+        store.createIndex("expire", "expire", { unique: false });
+      };
+    };
+
+
+    this.remove = function (key, callback) {
+      var tx = db.transaction('kv', 'readwrite');
+
+      tx.oncomplete = function () { callback(); };
+      tx.onerror = tx.onabort = function (e) { callback(new Error('Key remove error: ', e.target)); };
+
+      tx.objectStore('kv').delete(key).onerror = function () { tx.abort(); };
+    };
+
+
+    this.set = function (key, value, expire, callback) {
+      var tx = db.transaction('kv', 'readwrite');
+
+      tx.oncomplete = function () { callback(); };
+      tx.onerror = tx.onabort = function (e) { callback(new Error('Key set error: ', e.target)); };
+      
+      tx.objectStore('kv').put({
+        key: key,
+        value: value,
+        expire: expire
+      }).onerror = function () { tx.abort(); };
+    };
+
+
+    this.get = function (key, callback) {
+      var err, result;
+      var tx = db.transaction('kv');
+
+      tx.oncomplete = function () { callback(err, result); };
+      tx.onerror = tx.onabort = function (e) { callback(new Error('Key get error: ', e.target)); };
+
+      tx.objectStore('kv').get(key).onsuccess = function(e) {
+        if (e.target.result) {
+          result = e.target.result.value;
+        } else {
+          err = new Error('key not found: ' + key);
+        }
+      };
+    };
+
+
+    this.clear = function (expiredOnly, callback) {
+      var keyrange = window.IDBKeyRange; /* ||
+                     window.webkitIDBKeyRange || window.msIDBKeyRange;*/
+      var tx, store;
+
+      tx = db.transaction('kv', 'readwrite');
+      store = tx.objectStore('kv');
+
+      tx.oncomplete = function () { callback(); };
+      tx.onerror = tx.onabort = function (e) { callback(new Error('Clear error: ', e.target)); };
+      
+      if (expiredOnly) {
+
+        var cursor = store.index('expire').openCursor(keyrange.bound(1, +new Date()));
+
+        cursor.onsuccess = function (e) {
+          var cursor = e.target.result;
+          if (cursor) {
+            store.delete(cursor.primaryKey).onerror = function () { tx.abort(); };
+            cursor.continue();
+          }
+        };
+
+      } else {
+        // Just clear everything
+        tx.objectStore('kv').clear().onerror = function () { tx.abort(); };
+      }
+    };
   };
 
 
@@ -303,127 +395,6 @@
               window.msIndexedDB*/);
   };
 
-
-  Idb.prototype.init = function (callback) {
-    var self = this;
-    var idb = this.idb = window.indexedDB; /* || window.webkitIndexedDB ||
-                         window.mozIndexedDB || window.msIndexedDB;*/
-
-    var req = idb.open(self.ns, 2 /*version*/);
-
-    req.onsuccess = function(e) {
-      self.db = e.target.result;
-      callback();
-    };
-    req.onblocked = function(e) {
-      callback(new Error('IndexedDB blocked. ' + e.target.errorCode));
-    };
-    req.onerror = function(e) {
-      callback(new Error('IndexedDB opening error. ' + e.target.errorCode));
-    };
-    req.onupgradeneeded = function(e) {
-      self.db = e.target.result;
-      if (self.db.objectStoreNames.contains('kv')) {
-        self.db.deleteObjectStore('kv');
-      }
-      var store = self.db.createObjectStore('kv', { keyPath: 'key' });
-      store.createIndex("expire", "expire", { unique: false });
-    };
-  };
-
-
-  Idb.prototype.remove = function (key, callback) {
-    var tx = this.db.transaction('kv', 'readwrite');
-
-    tx.oncomplete = function () { callback(); };
-    tx.onerror = tx.onabort = function (e) { callback(new Error('Key remove error: ', e.target)); };
-
-    var req = tx.objectStore('kv').delete(key);
-
-    req.onerror = function () { tx.abort(); };
-  };
-
-
-  Idb.prototype.set = function (key, value, expire, callback) {
-    var tx = this.db.transaction('kv', 'readwrite');
-
-    tx.oncomplete = function () { callback(); };
-    tx.onerror = tx.onabort = function (e) { callback(new Error('Key set error: ', e.target)); };
-
-    var req = tx.objectStore('kv').put({ key: key, value: value, expire: expire });
-
-    req.onerror = function () { tx.abort(); };
-  };
-
-
-  Idb.prototype.get = function (key, callback) {
-    var err, result;
-    var tx = this.db.transaction('kv');
-
-    tx.oncomplete = function () { callback(err, result); };
-    tx.onerror = tx.onabort = function (e) { callback(new Error('Key get error: ', e.target)); };
-
-    var req = tx.objectStore('kv').get(key);
-
-    req.onsuccess = function(e) {
-      if (e.target.result) {
-        result = e.target.result.value;
-      } else {
-        err = new Error('key not found: ' + key);
-      }
-    };
-    req.onerror = function () { tx.abort(); };
-  };
-
-
-  Idb.prototype.clear = function (expiredOnly, callback) {
-    var keyrange = window.IDBKeyRange; /* ||
-                   window.webkitIDBKeyRange || window.msIDBKeyRange;*/
-    var self = this, keys = [], tx, tx_read;
-    
-    if (expiredOnly) {
-      tx_read = this.db.transaction('kv');
-
-      tx_read.onerror = function (e) { callback(new Error('Remove expired (read) error: ', e.target)); };
-
-      var cursor = tx_read.objectStore('kv').index('expire').openCursor(keyrange.bound(1, +new Date()));
-
-      cursor.onsuccess = function (e) {
-        var cursor = e.target.result;
-        if (cursor) {
-          keys.push(cursor.primaryKey);
-          cursor.continue();
-        }
-      };
-
-      tx_read.oncomplete = function () {
-        // nothing to clear - complete immediately
-        if (!keys.length) { return callback(); }
-
-        // create transaction to remove keys
-        tx = self.db.transaction('kv', 'readwrite');
-
-        var store = tx.objectStore('kv');
-        _each(keys, function(key) {
-          store.delete(key);
-        });
-
-        tx.oncomplete = function () { callback(); };
-        tx.onerror = function (e) { callback(new Error('Remove expired (clear) error: ', e.target)); };
-      };
-
-    } else {
-      // Just clear everything
-      tx = this.db.transaction('kv', 'readwrite');
-
-      tx.oncomplete = function () { callback(); };
-      tx.onerror = tx.onabort = function (e) { callback(new Error('Clear error: ', e.target)); };
-
-      var req = tx.objectStore('kv').clear();
-
-      req.onerror = function () { tx.abort(); };
-    }
-  };
 
 
   /////////////////////////////////////////////////////////////////////////////
@@ -442,12 +413,12 @@
   var Storage = function (namespace, storesList) {
     var self = this;
 
-    this.db = null;
+    var db = null;
 
     // States of db init singletone process
     // 'done' / 'progress' / 'failed' / undefined
-    this.initState = undefined;
-    this.initStack = [];
+    var initState;
+    var initStack = [];
 
     _each(storesList, function(name) {
       // do storage names case insensitive
@@ -457,96 +428,90 @@
         throw new Error('Wrong storage adapter name: ' + name, storesList);
       }
 
-      if (storeAdapters[name].prototype.exists() && !self.db) {
-        self.db = new storeAdapters[name](namespace);
+      if (storeAdapters[name].prototype.exists() && !db) {
+        db = new storeAdapters[name](namespace);
         return false; // terminate search on first success
       }
     });
 
-    if (!self.db) {
+    if (!db) {
       // If no adaprets - don't make error for correct fallback.
       // Just log that we continue work without storing results.
       console.log('None of requested storages available: ' + storesList);
     }
-  };
 
 
-  Storage.prototype.init = function (callback) {
-    var self = this;
+    this.init = function (callback) {
+      if (!db) { return callback(new Error('No available db')); }
 
-    if (!this.db) { return callback(new Error('No available db')); }
+      if (initState === 'done') { return callback(); }
 
-    if (this.initState === 'done') { return callback(); }
+      if (initState === 'progress') {
+        initStack.push(callback);
+        return;
+      }
 
-    if (this.initState === 'progress') {
-      this.initStack.push(callback);
-      return;
-    }
+      initStack.push(callback);
+      initState = 'progress';
 
-    this.initStack.push(callback);
-    this.initState = 'progress';
+      db.init(function (err) {
+        initState = !err ? 'done' : 'failed';
+        _each(initStack, function (cb) {
+          cb(err);
+        });
+        initStack = [];
 
-    this.db.init(function (err) {
-      self.initState = !err ? 'done' : 'failed';
-      _each(self.initStack, function (cb) {
-        cb(err);
+        // Clear expired. A bit dirty without callback,
+        // but we don't care until clear compleete
+        if (!err) { self.clear(true); }
       });
-      self.initStack = [];
-
-      // Clear expired. A bit dirty without callback,
-      // but we don't care until clear compleete
-      if (!err) { self.clear(true); }
-    });
-  };
+    };
 
 
-  Storage.prototype.set = function (key, value, expire, callback) {
-    var self = this;
-    if (_isFunction(expire)) {
-      callback = expire;
-      expire = undefined;
-    }
-    callback = callback || _nope;
-    expire = expire ? +(new Date()) + (expire * 1000) : 0;
+    this.set = function (key, value, expire, callback) {
+      if (_isFunction(expire)) {
+        callback = expire;
+        expire = undefined;
+      }
+      callback = callback || _nope;
+      expire = expire ? +(new Date()) + (expire * 1000) : 0;
 
-    this.init(function(err) {
-      if (err) { return callback(err); }
-      self.db.set(key, value, expire, callback);
-    });
-  };
-
-
-  Storage.prototype.get = function (key, callback) {
-    var self = this;
-    this.init(function(err) {
-      if (err) { return callback(err); }
-      self.db.get(key, callback);
-    });
-  };
+      this.init(function(err) {
+        if (err) { return callback(err); }
+        db.set(key, value, expire, callback);
+      });
+    };
 
 
-  Storage.prototype.remove = function (key, callback) {
-    var self = this;
-    callback = callback || _nope;
-    this.init(function(err) {
-      if (err) { return callback(err); }
-      self.db.remove(key, callback);
-    });
-  };
+    this.get = function (key, callback) {
+      this.init(function(err) {
+        if (err) { return callback(err); }
+        db.get(key, callback);
+      });
+    };
 
 
-  Storage.prototype.clear = function (expiredOnly, callback) {
-    var self = this;
-    if (_isFunction(expiredOnly)) {
-      callback = expiredOnly;
-      expiredOnly = false;
-    }
-    callback = callback || _nope;
+    this.remove = function (key, callback) {
+      callback = callback || _nope;
+      this.init(function(err) {
+        if (err) { return callback(err); }
+        db.remove(key, callback);
+      });
+    };
 
-    this.init(function(err) {
-      if (err) { return callback(err); }
-      self.db.clear(expiredOnly, callback);
-    });
+
+    this.clear = function (expiredOnly, callback) {
+      if (_isFunction(expiredOnly)) {
+        callback = expiredOnly;
+        expiredOnly = false;
+      }
+      callback = callback || _nope;
+
+      this.init(function(err) {
+        if (err) { return callback(err); }
+        db.clear(expiredOnly, callback);
+      });
+    };
   };
 
 
@@ -560,7 +525,7 @@
 
     options = options || {};
 
-    this.prefix       = options.namespace || 'bag';
+    this.prefix       = options.prefix || 'bag';
     this.timeout      = options.timeout || 20;    // 20 seconds
     this.expire       = options.expire || 30*24;  // 30 days
     this.isValidItem  = options.isValidItem || null;
@@ -594,7 +559,6 @@
           }
         }
       };
-
 
       setTimeout(function () {
         if (xhr.readyState < 4) {
@@ -797,28 +761,13 @@
     };
 
 
-    this.remove = function (key, callback) {
-      this._createStorage();
-      storage.remove(key, callback);
-    };
-
-
-    this.get = function (key, callback) {
-      this._createStorage();
-      storage.get(key, callback);
-    };
-
-
-    this.set = function (key, data, expire, callback) {
-      this._createStorage();
-      storage.set(key, data, expire, callback);
-    };
-
-
-    this.clear = function (expiredOnly, callback) {
-      this._createStorage();
-      storage.clear(expiredOnly, callback);
-    };
+    // Create proxy methods (init store then subcall)
+    _each(['remove', 'get', 'set', 'clear'], function(method) {
+      self[method] = function () {
+        self._createStorage();
+        storage[method].apply(storage, arguments);
+      };
+    });
 
 
     this.addHandler = function (types, handler) {

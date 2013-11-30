@@ -1,7 +1,7 @@
 {
   "name": "bag.js",
   "main": "bag.js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/nodeca/bag.js",
   "authors": [ "Vitaly Puzrin <vitaly@rcdesign.ru>" ],
   "description": "JS / CSS / resources loader with cache in IndexedDB/Websql/localStorage + key/value storage",
@@ -11,6 +11,8 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "test"
+    "test",
+    "Makefile",
+    "package.json"
   ]
 }
