@@ -1,0 +1,16 @@
+{
+  "name": "bag.js",
+  "main": "bag.js",
+  "version": "0.1.0",
+  "homepage": "https://github.com/nodeca/bag.js",
+  "authors": [ "Vitaly Puzrin <vitaly@rcdesign.ru>" ],
+  "description": "JS / CSS / resources loader with cache in IndexedDB/Websql/localStorage + key/value storage",
+  "keywords": [ "loader", "localstorage", "indexeddb", "websql", "caching", "asset" ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test"
+  ]
+}
