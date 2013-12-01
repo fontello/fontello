@@ -24,14 +24,14 @@ describe('Server HTTP', function () {
     });
   });
 
-  it("/ GET", function (done) {
+  it('/ GET', function (done) {
     request
       .get('/')
       .expect(/fontello/)
       .expect(200, done);
   });
 
-  it("/ HEAD", function (done) {
+  it('/ HEAD', function (done) {
     request
       .head('/')
       .expect('')

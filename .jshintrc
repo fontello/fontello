@@ -14,7 +14,7 @@
   "noempty"       : true,   // Prohibit use of empty blocks.
   "nonew"         : true,   // Prohibit use of constructors for side-effects.
   "plusplus"      : false,  // Prohibit use of `++` & `--`.
-  "quotmark"      : false,  // Quotation mark consistency:
+  "quotmark"      : "single",  // Quotation mark consistency:
                             // false : do nothing (default)
                             // true : ensure whatever is used is consistent
                             // "single" : require single quotes

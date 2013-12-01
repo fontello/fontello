@@ -147,7 +147,7 @@ function import_zip(data, file) {
 //
 
 function import_svg_font(data/*, file*/) {
-  var xmlDoc = (new XMLDOMParser()).parseFromString(data, "application/xml");
+  var xmlDoc = (new XMLDOMParser()).parseFromString(data, 'application/xml');
 
   var customIcons = N.app.fontsList.getFont('custom_icons');
     
@@ -216,7 +216,7 @@ function import_svg_font(data/*, file*/) {
 //
 
 function import_svg_image(data, file) {
-  var xmlDoc = (new XMLDOMParser()).parseFromString(data, "application/xml");
+  var xmlDoc = (new XMLDOMParser()).parseFromString(data, 'application/xml');
 
   var customIcons = N.app.fontsList.getFont('custom_icons');
   
@@ -414,7 +414,7 @@ N.wire.once('navigate.done', function () {
 
   // add the dataTransfer property for use with the native `drop` event
   // to capture information about files dropped into the browser window
-  $.event.props.push("dataTransfer");
+  $.event.props.push('dataTransfer');
 
   dropZone.on('dragenter dragover', function (event) {
     event.stopPropagation();

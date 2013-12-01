@@ -1,7 +1,7 @@
 // Show / run migrations
 //
 
-"use strict";
+'use strict';
 
 
 var async = require('async');

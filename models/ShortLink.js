@@ -29,11 +29,11 @@ module.exports = function (N, collectionName) {
   // Init
   //////////////////////////////////////////////////////////////////////////////
 
-  N.wire.on("init:models", function emit_init_ShortLink(__, callback) {
-    N.wire.emit("init:models." + collectionName, ShortLink, callback);
+  N.wire.on('init:models', function emit_init_ShortLink(__, callback) {
+    N.wire.emit('init:models.' + collectionName, ShortLink, callback);
   });
 
-  N.wire.on("init:models." + collectionName, function init_model_ShortLink(schema) {
+  N.wire.on('init:models.' + collectionName, function init_model_ShortLink(schema) {
     N.models[collectionName] = Mongoose.model(collectionName, schema);
   });
 

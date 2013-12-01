@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 
 var _           = require('lodash');
@@ -93,7 +93,7 @@ module.exports = function (N, apiPath) {
         try {
           config = JSON.parse(configFile);
         } catch (err) {
-          callback({ code: N.io.BAD_REQUEST, message: "Can't parse config data" });
+          callback({ code: N.io.BAD_REQUEST, message: 'Can\'t parse config data' });
           return;
         }
 

@@ -1,7 +1,7 @@
 // Show / apply seeds
 //
 
-"use strict";
+'use strict';
 
 
 // stdlib
@@ -10,8 +10,8 @@ var fs    = require('fs');
 
 
 // 3rd-party
-var async   = require("async");
-var fstools = require("fs-tools");
+var async   = require('async');
+var fstools = require('fs-tools');
 
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -48,7 +48,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     this.charRef = utils.fixedFromCharCode(data.charRef);
 
     this.cssExt  = data['css-ext'];
-    this.tooltip = "name: '" + this.originalName + "'" +
+    this.tooltip = 'name: \'' + this.originalName + '\'' +
                    (data.search ? ',   tags: ' + data.search.join(', ') : '');
 
     //
@@ -128,7 +128,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     this.customHex = ko.computed({
       read: function () {
         var code = this.code().toString(16).toUpperCase();
-        return "0000".substr(0, Math.max(4 - code.length, 0)) + code;
+        return '0000'.substr(0, Math.max(4 - code.length, 0)) + code;
       }
     , write: function (value) {
         // value must be HEX string - omit invalid chars
@@ -422,7 +422,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
       });
 
       $('#ff_' + self.fontname).remove();
-      $(style).appendTo("head");
+      $(style).appendTo('head');
     });
   }
 

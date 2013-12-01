@@ -1,7 +1,7 @@
 // - Save/Load session
 // - Autoload on start
 
-"use strict";
+'use strict';
 
 
 var _ = require('lodash');

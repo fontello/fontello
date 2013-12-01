@@ -1,4 +1,7 @@
-"use strict";
+// Run tests & exit
+//
+
+'use strict';
 
 
 // stdlib
@@ -40,7 +43,7 @@ module.exports.commandLineArguments = [
 
 module.exports.run = function (N, args, callback) {
   if (!process.env.NODECA_ENV) {
-    callback("You must provide NODECA_ENV in order to run nodeca test");
+    callback('You must provide NODECA_ENV in order to run nodeca test');
     return;
   }
 

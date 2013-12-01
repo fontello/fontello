@@ -53,7 +53,7 @@ var svgFontTemplate = _.template(
 
 function parseSvgImage(data, filename) {
 
-  var doc = (new domparser()).parseFromString(data, "application/xml");
+  var doc = (new domparser()).parseFromString(data, 'application/xml');
   var svg = doc.getElementsByTagName('svg')[0];
 
   if (!svg.hasAttribute('height')) {

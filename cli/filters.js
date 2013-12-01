@@ -1,4 +1,7 @@
-"use strict";
+// Show wire listeners
+//
+
+'use strict';
 
 
 var _ = require('lodash');
