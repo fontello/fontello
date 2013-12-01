@@ -86,9 +86,9 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
       };
 
       if (self.font.fontname === 'custom_icons') {
-        res['selected'] = self.selected();
-        res['svg'] = self.svg;
-        res['search'] = self.search;
+        res.selected = self.selected();
+        res.svg = self.svg;
+        res.search = self.search;
       }
 
       return res;
