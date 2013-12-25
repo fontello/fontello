@@ -3,7 +3,9 @@ Fontello - icon font scissors
 
 [![Build Status](https://travis-ci.org/fontello/fontello.png)](https://travis-ci.org/fontello/fontello)
 
-Website: [fontello.com](http://fontello.com/)
+website: [fontello.com](http://fontello.com/), help: [wiki](https://github.com/fontello/fontello/wiki/Help)
+
+![](https://rawgithub.com/fontello/fontello/master/fontello-image.svg)
 
 This tool lets you combine icon webfonts for your own project. With fontello you can:
 
@@ -79,6 +81,8 @@ Note. When you open site via API url, `download` button will have another text.
   [Follow](https://twitter.com/zapparov) on twitter.
 - Evgeny Shkuropat ([shkuropat](https://github.com/shkuropat)).
 - Vladimir Zapparov ([dervus](https://github.com/dervus)).
+
+Thanks [Hermanto Lim](mailto:nackle2k10@gmail.com) for the image.
 
 
 ## License
