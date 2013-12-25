@@ -1,5 +1,7 @@
 // json-schema for incoming font config validation
 //
+'use strict';
+
 
 module.exports = {
 
