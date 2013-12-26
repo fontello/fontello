@@ -82,7 +82,7 @@ Note. When you open site via API url, `download` button will have another text.
 - Evgeny Shkuropat ([shkuropat](https://github.com/shkuropat)).
 - Vladimir Zapparov ([dervus](https://github.com/dervus)).
 
-Thanks [Hermanto Lim](mailto:nackle2k10@gmail.com) for the image.
+Thanks to [Hermanto Lim](https://github.com/nackle2k10) for the image.
 
 
 ## License
