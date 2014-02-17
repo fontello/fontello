@@ -34,7 +34,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     this.uid          = data.uid || uid();
     this.originalName = data.css;
     this.originalCode = data.code;
-    
+
     //
     // Helper properties
     //
@@ -59,7 +59,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     this.selected = ko.observable(false);
     this.name     = ko.observable(this.originalName);
     this.code     = ko.observable(this.originalCode);
-    
+
     this.svg      = data.svg;
 
     this.selected.subscribe(function () {
@@ -206,6 +206,9 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     };
 
     this.unlock = function () {
+      if (!_locked) { return; }   // Exit if already unlocked;
+      if (--_locked) { return; }  // Exit if lock was nested
+
       if (_glyphs_dirty) {
         this.glyphs.valueHasMutated();
         _glyphs_dirty = false;
@@ -214,8 +217,6 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
         this.selectedGlyphs.valueHasMutated();
         _selected_dirty = false;
       }
-
-      if (_locked > 0) { _locked--; }
     };
 
     this.addGlyph = function (data) {
@@ -327,7 +328,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
       //
       conf.font.ascent     = +(N.app.fontAscent() * N.app.fontUnitsPerEm() / 1000).toFixed(0);
       conf.font.descent    = conf.font.ascent - 1000;
-      
+
       conf.glyphs = _.map(this.glyphs(), function(glyph){
         return {
           css:    glyph.originalName,
@@ -457,19 +458,22 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     // Lock/Unlock ko refreshes, needed on mass imports
     //
     this.lock = function () {
+      // lock fonts only once
+      if (!_locked) {
+        this.fonts.forEach(function(font) { font.lock(); });
+      }
       _locked++;
-      this.fonts.forEach(function(font) { font.lock(); });
     };
     this.unlock = function () {
+      if (!_locked) { return; }   // Exit if already unlocked;
+      if (--_locked) { return; }  // Exit if lock was nested
+
       this.fonts.forEach(function(font) { font.unlock(); });
-      _locked--;
 
       if (_selected_dirty) {
         _selected_dirty = false;
         this.selectedGlyphs.valueHasMutated();
       }
-
-      if (_locked > 0) { _locked--; }
     };
 
     this.track = function (glyph) {

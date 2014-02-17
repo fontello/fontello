@@ -150,7 +150,7 @@ function import_svg_font(data/*, file*/) {
   var xmlDoc = (new XMLDOMParser()).parseFromString(data, 'application/xml');
 
   var customIcons = N.app.fontsList.getFont('custom_icons');
-    
+
   // Allocate reference code, used to show generated font on fontello page
   // That's for internal needs, don't confuse with glyph (model) code
   var maxRef = _.max(customIcons.glyphs(), function(glyph) {
@@ -219,7 +219,7 @@ function import_svg_image(data, file) {
   var xmlDoc = (new XMLDOMParser()).parseFromString(data, 'application/xml');
 
   var customIcons = N.app.fontsList.getFont('custom_icons');
-  
+
   // Allocate reference code, used to show generated font on fontello page
   // That's for internal needs, don't confuse with glyph (model) code
   var maxRef = _.max(customIcons.glyphs(), function(glyph) {
@@ -233,7 +233,7 @@ function import_svg_image(data, file) {
   if (pathTags.length !== 1) {
     N.wire.emit('notify', t('error.bad_svg_image', { name: file.name }));
   }
-  
+
   var d = pathTags[0].getAttribute('d');
 
   // getting viewBox values array
@@ -245,7 +245,7 @@ function import_svg_image(data, file) {
   // getting base parameters
 
   var attr = {};
-  
+
   _.forEach(['x', 'y', 'width', 'height'], function(key) {
     attr[key] = parseInt(svgTag.getAttribute(key), 10);
   });
@@ -323,7 +323,7 @@ function handleFileSelect(event) {
           next();
           return;
         }
-        
+
         // Chrome omits type on JSON files, so check it by extention
         if (file.name.match(/[.]json$/)) {
           reader.onload = function (e) {
