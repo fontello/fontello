@@ -1,7 +1,13 @@
-5.0.2 / WIP
+5.1.0 / 2014-02-18
 ------------------
 
+- Fixed generated CSS with base64 encoded fonts for big files
+- Fixed UI inconsistency after config import (improved locks logic)
+- Improved drag & drop handling
+- Fonts refresh
 - Better message on attempt to import TTF/WOFF/OTF
+- DB config format change - now use single URI
+- Different internal engine & dependencies updates
 
 
 5.0.1 / 2013-11-02
