@@ -32,7 +32,7 @@ locales:
 # Security settings (currently - policy headers)
 #
 security:
-  X-Content-Security-Policy: >
+  Content-Security-Policy: >
     default-src *; style-src 'unsafe-inline' *;
     script-src 'self' 'unsafe-inline' 'unsafe-eval' www.google-analytics.com platform.twitter.com;
     connect-src 'self' www.google-analytics.com platform.twitter.com
