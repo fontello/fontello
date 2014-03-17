@@ -92,6 +92,9 @@ module.exports.run = function (N, args, callback) {
         }
       });
 
+      // Expose N to globals for tests
+      global.TEST_N = N;
+
       mocha.run(function (err) {
         if (err) {
           callback(err);

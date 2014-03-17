@@ -110,6 +110,7 @@ dependencies:
 cleanup:
 	# cleanup assets
 	rm -rf public/assets
+	rm -rf .cache
 
 # needed for travis
 setup:
@@ -119,8 +120,9 @@ setup:
 
 
 test: cleanup lint
-	node ./fontello.js server --test
-	mocha --timeout 40000 ./test/server/
+	#node ./fontello.js server --test
+	@NODECA_ENV=test node ./fontello.js migrate --all
+	@NODECA_ENV=test ./fontello.js test
 
 
 todo:

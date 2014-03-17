@@ -14,16 +14,7 @@ module.exports.parserParameters = {
 };
 
 
-module.exports.commandLineArguments = [
-  {
-    args: ['--test'],
-    options: {
-      help:   'Start server an terminates immediately, ' +
-              'with code 0 on init success.',
-      action: 'storeTrue'
-    }
-  }
-];
+module.exports.commandLineArguments = [];
 
 
 module.exports.run = function (N, args, callback) {
@@ -32,21 +23,5 @@ module.exports.run = function (N, args, callback) {
       'init:models',
       'init:bundle',
       'init:server'
-    ], N,
-
-    function (err) {
-      if (err) {
-        callback(err);
-        return;
-      }
-
-      // for `--test` just exit on success
-      if (args.test) {
-        process.stdout.write('Server exec test OK\n');
-        process.exit(0);
-      }
-
-      callback();
-    }
-  );
+    ], N, callback);
 };
