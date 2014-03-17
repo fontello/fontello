@@ -12,7 +12,7 @@ describe('HTTP alive', function () {
   it('/ GET', function (done) {
     request
       .get('/')
-      .expect(/fontello/)
+      .expect(/<!DOCTYPE html>/)
       .expect(200, done);
   });
 

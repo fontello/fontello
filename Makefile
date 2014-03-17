@@ -120,9 +120,8 @@ setup:
 
 
 test: cleanup lint
-	#node ./fontello.js server --test
 	@NODECA_ENV=test node ./fontello.js migrate --all
-	@NODECA_ENV=test ./fontello.js test
+	@NODECA_ENV=test NODECA_NOMINIFY=1 ./fontello.js test
 
 
 todo:
