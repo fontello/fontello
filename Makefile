@@ -101,7 +101,7 @@ dependencies:
 	@if test ! `which ttfautohint` ; then \
 		echo "Trying to install ttf-autohint from Debian's repository..." ; \
 		curl --silent --show-error --output /tmp/ttfautohint.deb \
-			http://ftp.de.debian.org/debian/pool/main/t/ttfautohint/ttfautohint_0.95-1_amd64.deb && \
+			http://snapshot.debian.org/archive/debian/20130418T033038Z/pool/main/t/ttfautohint/ttfautohint_0.95-1_amd64.deb && \
 		sudo dpkg -i /tmp/ttfautohint.deb && \
 			echo "SUCCESS" || echo "FAILED" ; \
 		fi
