@@ -1,4 +1,4 @@
-!!! 5
+doctype html
 html
   head
     //if lt IE 9
@@ -6,6 +6,7 @@ html
 
     meta(charset='UTF-8')
 
+    != '<style>'
     :stylus
       @import "bootstrap"
 
@@ -50,6 +51,7 @@ html
           display inline
       .i-code
         display none
+    != '</style>'
 
     link(rel='stylesheet', href='css/#{font.fontname}.css')
     link(rel='stylesheet', href='css/animation.css')
