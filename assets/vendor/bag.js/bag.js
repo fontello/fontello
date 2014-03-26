@@ -331,7 +331,7 @@
 
       tx.oncomplete = function () { callback(); };
       tx.onerror = tx.onabort = function (e) { callback(new Error('Key set error: ', e.target)); };
-      
+
       tx.objectStore('kv').put({
         key: key,
         value: value,
@@ -367,7 +367,7 @@
 
       tx.oncomplete = function () { callback(); };
       tx.onerror = tx.onabort = function (e) { callback(new Error('Clear error: ', e.target)); };
-      
+
       if (expiredOnly) {
 
         var cursor = store.index('expire').openCursor(keyrange.bound(1, +new Date()));
@@ -529,7 +529,7 @@
     this.timeout      = options.timeout || 20;    // 20 seconds
     this.expire       = options.expire || 30*24;  // 30 days
     this.isValidItem  = options.isValidItem || null;
-    
+
     this.stores = _isArray(options.stores) ? options.stores : ['indexeddb', 'websql', 'localstorage'];
 
     var storage = null;
@@ -658,12 +658,52 @@
     }
 
 
+    //---- helpers to set absolute sourcemap url
+
+    var sourceMappingRe = /(?:^([ \t]*\/\/[@|#][ \t]+sourceMappingURL=)(.+?)([ \t]*)$)|(?:^([ \t]*\/\*[@#][ \t]+sourceMappingURL=)(.+?)([ \t]*\*\/[ \t])*$)/mg;
+
+    function parse_url(url) {
+      var pattern = new RegExp("^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?");
+      var matches = url.match(pattern);
+      return {
+        scheme: matches[2],
+        authority: matches[4],
+        path: matches[5],
+        query: matches[7],
+        fragment: matches[9]
+      };
+    }
+
+    function patchMappingUrl(obj) {
+      var refUrl = parse_url(obj.url);
+      var done = false;
+      var res = obj.data.replace(sourceMappingRe, function(match, p1, p2, p3, p4, p5, p6) {
+        if (!match) { return; }
+        done = true;
+        // select matched group of params
+        if (!p1) { p1 = p4; p2 = p5; p3 = p6; }
+        var mapUrl = parse_url(p2);
+
+        var scheme = (mapUrl.scheme ? mapUrl.scheme : refUrl.scheme) || window.location.protocol.slice(0,-1);
+        var authority = (mapUrl.authority ? mapUrl.authority : refUrl.authority) || window.location.host;
+        var path = mapUrl.path[0] === '/' ? mapUrl.path : refUrl.path.split('/').slice(0,-1).join('/') + '/' + mapUrl.path;
+        return p1 + (scheme + '://' + authority + path) + p3;
+      });
+      return done ? res : '';
+    }
+
+    //----
+
     var handlers = {
       'application/javascript': function injectScript(obj) {
-        var script = document.createElement('script');
+        var script = document.createElement('script'), txt;
 
-        // add script name for dev tools
-        var txt = obj.data + '\n//@ sourceURL=' + obj.url;
+        // try to change sourcemap address to absolute
+        txt = patchMappingUrl(obj);
+        if (!txt) {
+          // or add script name for dev tools
+          txt = obj.data + '\n//# sourceURL=' + obj.url;
+        }
 
         // Have to use .text, since we support IE8,
         // which won't allow appending to a script
@@ -673,10 +713,14 @@
       },
 
       'text/css': function injectStyle(obj) {
-        var style = document.createElement('style');
+        var style = document.createElement('style'), txt;
 
-        // add style name for dev tools
-        var txt = obj.data + '\n/*# sourceURL=' + obj.url + '<url> */';
+        // try to change sourcemap address to absolute
+        txt = patchMappingUrl(obj);
+        if (!txt) {
+          // or add stylesheet script name for dev tools
+          txt = obj.data + '\n/*# sourceURL=' + obj.url + ' */';
+        }
 
         if (style.styleSheet) {
           style.styleSheet.cssText = txt; // IE method

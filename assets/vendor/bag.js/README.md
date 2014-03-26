@@ -3,23 +3,33 @@ bag.js - JS / CSS loader + KV storage
 
 [![Build Status](https://travis-ci.org/nodeca/bag.js.png?branch=master)](https://travis-ci.org/nodeca/bag.js)
 
-__bag.js__ is loader for js / css files, that uses browser local stores for
-caching. Consider it as alternative for other types of loaders for modern
-browsers, that reduce number of server requests, especially for mobile devices.
-Also __bag.js__  can be used as simple key/value storage, that don't require
-you to know details about IndexedDB and WebSQL.
+__bag.js__ is loader for js / css aand other files, that uses browser local
+stores for caching. Consider it as alternative for other types of loaders for
+modern browsers, that reduce number of server requests, especially for mobile
+devices. Also __bag.js__  can be used as simple key/value storage, that don't
+require you to know details about IndexedDB and WebSQL.
 
-This project is inspired by [basket.js](http://addyosmani.github.io/basket.js/).
-Key differences are:
+This project is inspired by [basket.js](http://addyosmani.github.io/basket.js/),
+but provides more storages for big assets and universal key/value interface.
+Key features are:
 
-- Support more storages (IndexedDB / WebSQL) - good, when you have big assets
-- KV storage for objects
+- Parallel load and sequential execution for JS / CSS and other types of files
+- Use IndexedDB / WebSQL / localStorage - good, when you have big assets.
+- KV storage for objects, with simple interface.
 - No promisses, use callbacks instead, like in node.js
-- More simple way to prioritize scripts execution - use Array in `require`
-  params, instead of chained calls.
-- Multiple instances with different storage options
-- Embedded injector for CSS files
-- additional `set` method, to use `bag.js` as KV storage
+- Simple way to prioritize scripts execution.
+- You can use multiple instances with different storage options. For example
+  Indexeddb + WebSQL for assets and localStorage for user settings.
+- No external dependencies.
+- 3.2K when minified+gzipped
+- Partial compatibility with [basket.js](http://addyosmani.github.io/basket.js/).
+
+Install via bower:
+
+```
+bower install bag.js
+```
+
 
 ### Examples
 
@@ -71,8 +81,7 @@ bag.require(files, function(err) {
 ```
 
 You can skip `new` keyword. Aslo, you can use chained style - when `require`
-called without callback, info is just remembered in internal stack. That's
-experimental feature, just to make `bag.js` interface close to `basket.js`:
+called without callback, info is just remembered in internal stack:
 
 ``` javascript
 
@@ -87,7 +96,7 @@ window.Bag()
   });
 ```
 
-Using as kv storage:
+Using as key/value storage:
 
 ``` javascript
 var obj = { lorem: 'ipsum' };
@@ -122,20 +131,22 @@ bag.set('dolorem', obj, function(err) {
 API
 ---
 
-### new Bag(options)
+### new Bag([options])
 
 Object constructor. You can also define options after constructor call, via
-instance properties (they have the same names). Options:
+instance properties (they have the same names). Options (hash):
 
 - `prefix` - Data namespace. Default - `bag`. Used to separate data for
    multiple instances.
 - `stores` - Array of storage names to use, ordered by preference.
   Default `['indexeddb', 'websql', 'localstorage']`.
 - `timeout` - files loading timeout, in seconds. Default 20.
-- `expire` - `require()` data expiration, in hours. Default - 1 month. 0 - don't expire.
+- `expire` - `require()` data expiration, in hours. Default - 1 month. 0 or
+  unset - don't expire.
 
-Note: you can skip `new` keyword, calling `Bag()` will return you new instance anyway.
+Note 1: you can skip `new` keyword, calling `Bag()` will return you new instance anyway.
 
+Note 2: `prefix` must be set before `require`/`get`/`set`/`remove`/`clear` calls. Other options can be changed anytime.
 
 ### .require(files [, callback(err, data)])
 
@@ -143,12 +154,12 @@ Note: you can skip `new` keyword, calling `Bag()` will return you new instance a
 2. Inject known types into page (js/css by default), if execution not disabled.
    When multiple files requested (files are `Array`), those are loaded in
    parallel, but injected in defined order.
-3. Return result in callback
+3. Return result in callback.
 
 `files` param can be:
 
-- `Object` - resource info (see details below)
-- `String` - just resource url, other params will be default
+- `Object` - resource info (see details below).
+- `String` - just resource url, other params will be default.
 - `Array(Object|String)` - list of resources to load in parallel.
 
 resource info:
@@ -165,10 +176,12 @@ resource info:
 callback params:
 
 - `err` - error info if loading failed
-- `data` - (Array|String) with loaded content, dependong on `files` type.
+- `data` - (Array|String) with loaded content, dependong on `files` type. When
+  single resource requester (`Object`|`String`), `data` is `String`. When
+  `Array` of resourses requested, or chained call done, data is array of strings.
 
-Note, if you pass resources info not in short form, objects are extended with
-loaded data.
+Note, if you pass resources info not in short form, input objects are extended
+with loaded data.
 
 
 ### .get(key, callback(err, data))
@@ -197,7 +210,7 @@ Remove `key` data from store. Call `callback` when compleete. If error happens,
 error info passed in first callback's param.
 
 
-### .clear(expiredOnly [, callback(err)])
+### .clear([expiredOnly] [, callback(err)])
 
 Clear all storage data (in your namespace), or just expired objects when called
 as `bag.clear(true, ...)`. Callback is optional.
@@ -209,7 +222,8 @@ Add handler for loaded files with specified mime types. By default, handlers
 for `application/javascript` and `text/css` already exist. If you set
 `execute: false` in resource info, then handler will not be applied.
 
-`types` - `String` with mime type or `Array` of strings
+- `types` - `String` with mime type or `Array` of strings.
+- `handler` - function to "execute" file of that type.
 
 
 ### .removeHandler(types)

@@ -1,7 +1,7 @@
 {
   "name": "bag.js",
   "main": "bag.js",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/nodeca/bag.js",
   "authors": [
     "Vitaly Puzrin <vitaly@rcdesign.ru>"
@@ -24,13 +24,13 @@
     "Makefile",
     "package.json"
   ],
-  "_release": "0.1.1",
+  "_release": "0.1.2",
   "_resolution": {
     "type": "version",
-    "tag": "0.1.1",
-    "commit": "2e282ae11565c4b085b41928c4b7c4e2f6b1bff2"
+    "tag": "0.1.2",
+    "commit": "2a52f23a3e569aeb60862723db779bad066bba14"
   },
   "_source": "git://github.com/nodeca/bag.js.git",
-  "_target": "~0.1.0",
+  "_target": "~0.1.1",
   "_originalSource": "bag.js"
 }
