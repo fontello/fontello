@@ -2,11 +2,13 @@ bundles:
   fontello:
     - fontello
 
+  lib:
+    - lib
+
 packages:
   fontello:
-    vendor:
-      - kernel: ./lib/system/client/kernel.js
-      - fs: ./lib/system/dummy.js
+    depends:
+      - lib
 
     client:
       main: assets/main_fontello.js
@@ -39,3 +41,12 @@ packages:
         - vendor/es5-shim/es5-shim.js
         - icons/src/font/*
         - embedded_fonts/*
+
+  lib:
+    vendor:
+      - knockout
+      - kernel: ./lib/system/client/kernel.js
+      - fs: ./lib/system/dummy.js
+
+    client:
+      main: assets/main_lib.js

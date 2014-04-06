@@ -1,0 +1,14 @@
+//= require vendor/jquery/dist/jquery
+//= require vendor/history.js/scripts/uncompressed/history.adapter.jquery
+//= require vendor/history.js/scripts/uncompressed/history
+//= require vendor/jquery-ui/ui/jquery.ui.core
+//= require vendor/jquery-ui/ui/jquery.ui.widget
+//= require vendor/jquery-ui/ui/jquery.ui.mouse
+//= require vendor/jquery-ui/ui/jquery.ui.selectable
+//= require vendor/jszip/jszip
+//= require vendor/jszip/jszip-inflate
+//= require vendor/jszip/jszip-load
+//= require vendor/base64/base64
+//= require vendor/jquery.numeric
+//= require kernel_init
+//= require client
