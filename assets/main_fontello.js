@@ -13,18 +13,5 @@
 //= require vendor/jszip/jszip-load
 //= require vendor/base64/base64
 //= require vendor/jquery.numeric
-//= require_self
+//= require kernel_init
 //= require client
-
-
-window.NodecaLoader.execute(function (N, require) {
-  'use strict';
-
-  // Initialize client N.
-  //
-  // NOTE: We have to use this `init` variable here because our `require` parser
-  // ignores expressions like require('something')(arg)
-  var init = require('../../lib/system/client/n.js.ejs');
-
-  init(N);
-});

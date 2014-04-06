@@ -29,8 +29,6 @@ function show(message) {
     $notice.appendTo('body').find('.close').click(hide);
   }
 
-  console.error('%j', $notice);
-
   $notice.find('.message').html(message);
   $notice.show();
 }

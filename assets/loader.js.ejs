@@ -82,15 +82,33 @@ window.NodecaLoader = (function () {
   // Keys are absolute file paths like '/absolute/path/to/module.js'
   var nodeModules = {};
 
+  // Storage of module aliases. Needed for vendor modules short names.
+  // Keys are short name, values are real paths.
+  var nodeModulesAliases = {};
+
   function registerNodeModule(path, func) {
-    nodeModules[path] = {
+    // Don't overwrite
+    nodeModules[path] = nodeModules[path] || {
       initialized: false
     , func: func
     , internal: { exports: {} }
     };
   }
 
+  function registerNodeModuleAlias(alias, path) {
+    if (!/^[a-z0-9._-]+$/g.test(alias)) {
+      throw new Error('Only [ a..z, A..Z, 1..9, ., _, - ] chars allowed for aliases');
+    }
+    // Don't overwrite
+    nodeModulesAliases[alias] = nodeModulesAliases[alias] || path;
+  }
+
   function requireNodeModule(path) {
+
+    if (nodeModulesAliases[path]) {
+      path = nodeModulesAliases[path];
+    }
+
     var module = nodeModules[path];
 
     if (!module) {
@@ -113,7 +131,8 @@ window.NodecaLoader = (function () {
   }
 
   // Really needed export.
-  NodecaLoader.registerNodeModule = registerNodeModule;
+  NodecaLoader.registerNodeModule      = registerNodeModule;
+  NodecaLoader.registerNodeModuleAlias = registerNodeModuleAlias;
 
   // For easy debugging only.
   NodecaLoader.nodeModules       = nodeModules;
