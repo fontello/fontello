@@ -185,6 +185,7 @@ N.wire.once('navigate.done', function (data) {
   // Initialize Twitter Bootstrap typeahead plugin
   //
 
+  /*global Bloodhound*/
   // constructs the suggestion engine
   var keywords = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
@@ -205,9 +206,6 @@ N.wire.once('navigate.done', function (data) {
         N.app.searchWord('');
       }
     })
-    /*.on('focus keyup', _.debounce(function () {
-      $(this).typeahead('hide');
-    }, 3000))*/
     .typeahead({
       hint: true,
       highlight: true,
