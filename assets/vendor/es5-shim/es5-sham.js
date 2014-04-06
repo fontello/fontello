@@ -1,6 +1,8 @@
 // Copyright 2009-2012 by contributors, MIT License
 // vim: ts=4 sts=4 sw=4 expandtab
 
+//Add semicolon to prevent IIFE from being passed as argument to concated code.
+;
 // Module systems magic dance
 (function (definition) {
     // RequireJS
@@ -36,7 +38,7 @@ if ((supportsAccessors = owns(prototypeOfObject, "__defineGetter__"))) {
 // ES5 15.2.3.2
 // http://es5.github.com/#x15.2.3.2
 if (!Object.getPrototypeOf) {
-    // https://github.com/kriskowal/es5-shim/issues#issue/2
+    // https://github.com/es-shims/es5-shim/issues#issue/2
     // http://ejohn.org/blog/objectgetprototypeof/
     // recommended by fschaefer on github
     Object.getPrototypeOf = function getPrototypeOf(object) {
@@ -233,7 +235,7 @@ if (!Object.create) {
 
 // Patch for WebKit and IE8 standard mode
 // Designed by hax <hax.github.com>
-// related issue: https://github.com/kriskowal/es5-shim/issues#issue/5
+// related issue: https://github.com/es-shims/es5-shim/issues#issue/5
 // IE8 Reference:
 //     http://msdn.microsoft.com/en-us/library/dd282900.aspx
 //     http://msdn.microsoft.com/en-us/library/dd229916.aspx

@@ -21,7 +21,7 @@
     // Account for jankitude on images
     > img,
     > a > img {
-      .img-responsive();
+      &:extend(.img-responsive);
       line-height: 1;
     }
   }
@@ -91,6 +91,7 @@
   // Hover/focus state
   &:hover,
   &:focus {
+    outline: none;
     color: @carousel-control-color;
     text-decoration: none;
     .opacity(.9);
@@ -205,8 +206,8 @@
 
   // Scale up the controls a smidge
   .carousel-control {
-    .glyphicons-chevron-left,
-    .glyphicons-chevron-right,
+    .glyphicon-chevron-left,
+    .glyphicon-chevron-right,
     .icon-prev,
     .icon-next {
       width: 30px;

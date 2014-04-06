@@ -1091,9 +1091,11 @@ describe('Array', function() {
                 {},
                 Object.create && Object.create(null) || null,
                 /foo/,
-                arguments,
-                document.getElementsByTagName("div")
+                arguments
             ];
+            if (typeof document !== 'undefined') {
+                objects.push(document.getElementsByTagName('div'));
+            }
 
             objects.forEach(function (v) {
                 expect(Array.isArray(v)).toBe(false);
@@ -1216,6 +1218,28 @@ describe('Array', function() {
         });
         it('runshould have the right length', function () {
             expect(test.splice.length).toBe(2);
+        });
+
+        it('should work with objects - adding 1', function () {
+            var obj = {};
+            test.splice.call(obj, 0, 0, 1, 2, 3);
+            expect(obj.length).toEqual(3);
+        });
+        it('should work with objects - adding 2', function () {
+            var obj = {0:1, length: 1};
+            test.splice.call(obj, 1, 0, 2, 3);
+            expect(obj.length).toEqual(3);
+        });
+        it('should work with objects - removing', function () {
+            var obj = {0:1, 1:2, 2: 3, length: 3};
+            test.splice.call(obj, 0, 3);
+            expect(obj.length).toEqual(0);
+        });
+        it('should work with objects - replacing', function () {
+            var obj = {0:99, length: 1};
+            test.splice.call(obj, 0, 1, 1, 2, 3);
+            expect(obj.length).toEqual(3);
+            expect(obj[0]).toEqual(1);
         });
     });
 

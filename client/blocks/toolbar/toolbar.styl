@@ -13,7 +13,7 @@
   margin 0
 
 .toolbar__size-slider
-  width 150px
+  width 150px !important
   display inline-block
   float left
   // return common view
@@ -29,11 +29,17 @@
   margin-top 15px
   margin-left .5em
 */
+.toolbar__size-slider
+  // Chrome ignode left/righ paddings.
+  // So, reset defaults to use margins from next element
+  padding-right 0px
+  padding-left 0px
+
 .toolbar__size-indicator
   display inline-block
   float  left
   line-height 34px
-  margin 0 1em 0 0
+  margin 0 1em 0 0.5em
   color #666
   font-size 11px
 
@@ -41,13 +47,8 @@
 // Search tweak
 //
 
-.search-form
-  .icon-search
-    border-top-left-radius 20px
-    border-bottom-left-radius 20px
-  input
-    border-top-right-radius 20px !important
-    border-bottom-right-radius 20px !important
+.toolbar__search
+  border-radius 20px
 
 .search-permalink
   padding-left 4px

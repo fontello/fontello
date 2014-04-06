@@ -1,4 +1,3 @@
-
 `es5-shim.js` and `es5-shim.min.js` monkey-patch a JavaScript context to
 contain all EcmaScript 5 methods that can be faithfully emulated with a
 legacy JavaScript engine.
@@ -38,103 +37,98 @@ So in order to run the tests against the built-in methods, invalidate that file 
 * Date.now
 * Date.prototype.toJSON
 * Function.prototype.bind
-    * /!\ Caveat: the bound function's length is always 0.
-    * /!\ Caveat: the bound function has a prototype property.
-    * /!\ Caveat: bound functions do not try too hard to keep you
+    * :warning: Caveat: the bound function has a prototype property.
+    * :warning: Caveat: bound functions do not try too hard to keep you
       from manipulating their ``arguments`` and ``caller`` properties.
-    * /!\ Caveat: bound functions don't have checks in ``call`` and
+    * :warning: Caveat: bound functions don't have checks in ``call`` and
       ``apply`` to avoid executing as a constructor.
+* Number.prototype.toFixed
 * Object.keys
+* String.prototype.split
 * String.prototype.trim
-
-### Untested ###
-
 * Date.parse (for ISO parsing)
 * Date.prototype.toISOString
+* parseInt
 
 ## Shams
 
-* /?\ Object.create
+* :warning: Object.create
 
-    For the case of simply "begetting" an object that
-    inherits prototypically from another, this should work
-    fine across legacy engines.
+    For the case of simply "begetting" an object that inherits
+    prototypically from another, this should work fine across legacy
+    engines.
 
-    /!\ Object.create(null) will work only in browsers that
-    support prototype assignment.  This creates an object
-    that does not have any properties inherited from
-    Object.prototype.  It will silently fail otherwise.
+    :warning: Object.create(null) will work only in browsers that
+    support prototype assignment.  This creates an object that does not
+    have any properties inherited from Object.prototype.  It will
+    silently fail otherwise.
 
-    /!\ The second argument is passed to
-    Object.defineProperties which will probably fail
-    silently.
+    :warning: The second argument is passed to Object.defineProperties
+    which will probably fail either silently or with extreme predudice.
 
-* /?\ Object.getPrototypeOf
+* :warning: Object.getPrototypeOf
 
-    This will return "undefined" in some cases.  It uses
-    __proto__ if it's available.  Failing that, it uses
-    constructor.prototype, which depends on the constructor
-    property of the object's prototype having not been
-    replaced.  If your object was created like this, it
-    won't work:
+    This will return "undefined" in some cases.  It uses `__proto__` if
+    it's available.  Failing that, it uses constructor.prototype, which
+    depends on the constructor property of the object's prototype having
+    not been replaced.  If your object was created like this, it won't
+    work:
 
         function Foo() {
         }
         Foo.prototype = {};
 
-    Because the prototype reassignment destroys the
-    constructor property.
+    Because the prototype reassignment destroys the constructor
+    property.
 
     This will work for all objects that were created using
     `Object.create` implemented with this library.
 
-* /!\ Object.getOwnPropertyNames
+* :warning: Object.getOwnPropertyNames
 
-    This method uses Object.keys, so it will not be accurate
-    on legacy engines.
+    This method uses Object.keys, so it will not be accurate on legacy
+    engines.
 
 * Object.isSealed
 
-    Returns "false" in all legacy engines for all objects,
-    which is conveniently guaranteed to be accurate.
+    Returns "false" in all legacy engines for all objects, which is
+    conveniently guaranteed to be accurate.
 
 * Object.isFrozen
 
-    Returns "false" in all legacy engines for all objects,
-    which is conveniently guaranteed to be accurate.
+    Returns "false" in all legacy engines for all objects, which is
+    conveniently guaranteed to be accurate.
 
 * Object.isExtensible
 
-    Works like a charm, by trying very hard to extend the
-    object then redacting the extension.
+    Works like a charm, by trying very hard to extend the object then
+    redacting the extension.
 
-### Fail silently
+### May fail
 
-* /!\ Object.getOwnPropertyDescriptor
-    
-    The behavior of this shim does not conform to ES5.  It
-    should probably not be used at this time, until its
-    behavior has been reviewed and been confirmed to be
-    useful in legacy engines.
+* :warning: Object.getOwnPropertyDescriptor
 
-* /!\ Object.defineProperty
+    The behavior of this shim does not conform to ES5.  It should
+    probably not be used at this time, until its behavior has been
+    reviewed and been confirmed to be useful in legacy engines.
 
-    This method will silently fail to set "writable",
-    "enumerable", and "configurable" properties.
-    
-    Providing a getter or setter with "get" or "set" on a
-    descriptor will silently fail on engines that lack
-    "__defineGetter__" and "__defineSetter__", which include
-    all versions of IE up to version 8 so far.
+* :warning: Object.defineProperty
 
-    IE 8 provides a version of this method but it only works
-    on DOM objects.  Thus, the shim will not get installed
-    and attempts to set "value" properties will fail
-    silently on non-DOM objects.
+    In the worst of circumstances, IE 8 provides a version of this
+    method that only works on DOM objects.  This sham will not be
+    installed.  The given version of `defineProperty` will throw an
+    exception if used on non-DOM objects.
 
-    https://github.com/kriskowal/es5-shim/issues#issue/5
+    In slightly better circumstances, this method will silently fail to
+    set "writable", "enumerable", and "configurable" properties.
 
-* /!\ Object.defineProperties
+    Providing a getter or setter with "get" or "set" on a descriptor
+    will silently fail on engines that lack "__defineGetter__" and
+    "__defineSetter__", which include all versions of IE.
+
+    https://github.com/es-shims/es5-shim/issues#issue/5
+
+* :warning: Object.defineProperties
 
     This uses the Object.defineProperty shim
 

@@ -1,15 +1,12 @@
 .container
   #toolbar.btn-toolbar
 
-    .input-group.col-xs-3.col-md-2.col.pull-left.search-form
-      span.input-group-addon.icon-search.icon-only
-      //- this div required to properly set typeahead ghost input width
-      div
-        input#search.form-control.search-query(
-          type='text',
-          placeholder='search',
-          autocomplete='off'
-        )
+    .btn-group
+      input#search.form-control.toolbar__search(
+        type='text',
+        placeholder='search',
+        autocomplete='off'
+      )
 
     .btn-group
       a.search-permalink.btn.btn-link._popover(
@@ -113,7 +110,7 @@
               data-placement='left',
               data-trigger='hover',
               data-container='.layout__fixed'
-              data-delay='{"show":500,"hide":100}'            
+              data-delay='{"show":500,"hide":100}'
             )._popover= self.t('menu_import')
         li.divider
         li: a(href='#', data-on-click='cmd:reset_selected')= self.t('menu_unselect_all')
@@ -133,7 +130,7 @@
 
 
     .btn-group.hidden-xs.hidden-sm.pull-right
-      input#glyph-size-slider.toolbar__size-slider.form-control(
+      input#glyph-size-slider.form-control.toolbar__size-slider(
         type='range',
         data-bind='value: fontSize, valueUpdate: "input", attr: { min: fontSizeMin, max: fontSizeMax }'
       )

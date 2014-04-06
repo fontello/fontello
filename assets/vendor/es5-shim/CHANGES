@@ -1,3 +1,15 @@
+2.3.0
+ - parseInt is now properly shimmed in ES3 browsers to default the radix
+ - update URLs to point to the new organization
+
+2.2.0
+ - Function.prototype.bind shim now reports correct length on a bound function
+ - fix node 0.6.x v8 bug in Array#forEach
+ - test improvements
+
+2.1.0
+ - Object.create fixes
+ - tweaks to the Object.defineProperties shim
 
 2.0.0
  - Separate reliable shims from dubious shims (shams).

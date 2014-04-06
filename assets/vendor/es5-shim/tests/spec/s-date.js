@@ -1,5 +1,5 @@
 describe('Date', function () {
-    
+
     describe('now', function () {
         it('should be the current time', function () {
             expect(Date.now() === new Date().getTime()).toBe(true);
@@ -50,7 +50,7 @@ describe('Date', function () {
             expect(Date.parse("+275760-09-13T00:00:00.001Z")).toBeFalsy();        //NaN           NaN           NaN           8.64e15 + 1   8.64e15 + 1
             expect(Date.parse("-271821-04-19T23:59:59.999Z")).toBeFalsy();        //NaN           NaN           NaN           -8.64e15 - 1  -8.6400000864e15 - 1
 
-            // https://github.com/kriskowal/es5-shim/issues/80 Safari bug with leap day
+            // https://github.com/es-shims/es5-shim/issues/80 Safari bug with leap day
             expect(Date.parse("2034-03-01T00:00:00.000Z") -
                         Date.parse("2034-02-27T23:59:59.999Z")).toBe(86400001);   //86400001      86400001       86400001       86400001      1
 
@@ -99,18 +99,26 @@ describe('Date', function () {
     });
 
     describe("valueOf", function(){
+        // Note that new Date(1970, 0).valueOf() is 0 in UTC timezone.
+        // Check check that it's a number (and an int), not that it's "truthy".
         var actual = (new Date(1970, 0));
         beforeEach(function(){
             actual = (new Date(1970, 0)).valueOf();
         });
+        it("should give a numeric value", function(){
+            expect(typeof actual).toBe("number");
+        });
+        it("should not be NaN", function(){
+            expect(isNaN(actual)).toBe(false);
+        });
         it("should give an int value", function(){
-            expect(parseInt(actual, 10)).toBeTruthy();
+            expect(actual).toBe(Math.floor(actual));
         });
     });
 
     describe("toISOString", function () {
         // TODO: write the rest of the test.
-       
+
         it('should support extended years', function () {
             expect(new Date(-62198755200000).toISOString().indexOf('-000001-01-01')).toBe(0);
             expect(new Date(8.64e15).toISOString().indexOf('+275760-09-13')).toBe(0);
