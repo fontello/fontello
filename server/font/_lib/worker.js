@@ -182,6 +182,16 @@ module.exports = function fontWorker(taskInfo, callback) {
 
   var TTFAUTOHINT_BIN = 'ttfautohint';
   workplan.push(function (next) {
+    var max_segments = _.max(taskInfo.builderConfig.glyphs, function (glyph) { return glyph.segments; }).segments;
+
+    // KLUDGE :)
+    // Don't allow hinting if font has "strange" glyphs.
+    // That's useless anyway, and can hang ttfautohint < 1.0
+    if (max_segments > 500) {
+      next();
+      return;
+    }
+
     if (!taskInfo.builderConfig.hinting) {
       next();
       return;

@@ -67,11 +67,17 @@ function collectGlyphsInfo(clientConfig) {
   var scale = clientConfig.units_per_em / 1000;
 
   _.forEach(clientConfig.glyphs, function (glyph) {
+    var sp;
 
     if(glyph.src === 'custom_icons') {
 
       // for custom glyphs use only selected ones      
       if (!glyph.selected) { return; }
+
+      sp = svgpath(glyph.svg.path)
+              .scale(scale, -scale)
+              .translate(0, clientConfig.ascent)
+              .abs().round(0).rel();
 
       result.push({
         src:      glyph.src
@@ -79,11 +85,8 @@ function collectGlyphsInfo(clientConfig) {
       , code:     glyph.code
       , css:      glyph.css
       , width:    +(glyph.svg.width * scale).toFixed(1)
-      , d:        svgpath(glyph.svg.path)
-                    .scale(scale, -scale)
-                    .translate(0, clientConfig.ascent)
-                    .abs().round(0).rel()
-                    .toString()
+      , d:        sp.toString()
+      , segments: sp.segments.length
       });
       return;
     }
@@ -93,6 +96,11 @@ function collectGlyphsInfo(clientConfig) {
     var glyphEmbedded = fontConfigs.uids[glyph.uid];
     if (!glyphEmbedded) { return; }
 
+    sp = svgpath(glyphEmbedded.svg.d)
+            .scale(scale, -scale)
+            .translate(0, clientConfig.ascent)
+            .abs().round(0).rel();
+
     result.push({
       src:        glyphEmbedded.fontname
     , uid:        glyph.uid
@@ -100,11 +108,8 @@ function collectGlyphsInfo(clientConfig) {
     , css:        glyph.css || glyphEmbedded.css
     , 'css-ext':  glyphEmbedded['css-ext']
     , width:      +(glyphEmbedded.svg.width * scale).toFixed(1)
-    , d:          svgpath(glyphEmbedded.svg.d)
-                    .scale(scale, -scale)
-                    .translate(0, clientConfig.ascent)
-                    .abs().round(0).rel()
-                    .toString()
+    , d:        sp.toString()
+    , segments: sp.segments.length
     });
 
   });
