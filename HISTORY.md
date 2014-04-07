@@ -1,3 +1,11 @@
+5.1.1 / WIP
+------------------
+
+- Minor fonts update
+- Nodeca core sync
+- Dependencies update
+
+
 5.1.0 / 2014-02-18
 ------------------
 
