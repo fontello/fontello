@@ -115,7 +115,7 @@ function collectGlyphsInfo(clientConfig) {
   });
 
   // Sort result by original codes.
-  result.sort(function (a, b) { return a.from - b.from; });
+  result.sort(function (a, b) { return a.code - b.code; });
 
   return result;
 }
