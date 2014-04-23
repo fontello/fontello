@@ -13,9 +13,9 @@ html.no-js(lang='en', itemscope, itemtype='http://schema.org/WebPage')
     meta(itemprop="image", content="/snippet.png")
 
     //- styles
-    - if (self.head.stylesheets[self.apiPath.split('.').shift()])
+    if self.head.stylesheets[self.apiPath.split('.').shift()]
       each cssPath in self.head.stylesheets[self.apiPath.split('.').shift()]
-        link(rel='stylesheet', href=cssPath)    
+        link(rel='stylesheet', href=cssPath)
 
     //- the fav and touch icons
     link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
@@ -27,18 +27,8 @@ html.no-js(lang='en', itemscope, itemtype='http://schema.org/WebPage')
         '!{self.apiPath.split(".").shift()}'
       );
 
-
-    //- Google Analytics
-    script(type="text/javascript").
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-31060395-1']);
-      _gaq.push(['_setSiteSpeedSampleRate', 100]);
-      _gaq.push(['_trackPageview']);
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
+    if self.inject_header
+      != self.inject_header
 
   body
     .layout__fixed
