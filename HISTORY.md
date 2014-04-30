@@ -4,6 +4,7 @@
 - Minor fonts update
 - Nodeca core sync
 - Dependencies update
+- Removed security headers due cross issues
 
 
 5.1.0 / 2014-02-18
