@@ -1,8 +1,7 @@
 doctype html
 html
   head
-    //if lt IE 9
-      script(src='http://html5shim.googlecode.com/svn/trunk/html5.js').
+    <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
     meta(charset='UTF-8')
 
@@ -55,8 +54,7 @@ html
 
     link(rel='stylesheet', href='css/#{font.fontname}.css')
     link(rel='stylesheet', href='css/animation.css')
-    //if IE 7
-      link(rel='stylesheet', href='css/#{font.fontname}-ie7.css')
+    <!--[if IE 7]><link rel="stylesheet" href="css/#{font.fontname}-ie7.css"><![endif]-->
 
     script.
       function toggleCodes(on) {
