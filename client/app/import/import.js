@@ -106,7 +106,7 @@ function import_config(str, file) {
       glyph.name(g.css || glyph.originalName);
     });
   } catch (e) {
-    N.wire.emit('notify', t('error.bad_config_format', { name: file.name }));
+    N.wire.emit('notify', t('err_bad_config_format', { name: file.name }));
     console.log(e);
   }
 }
@@ -133,10 +133,10 @@ function import_zip(data, file) {
     // If not fontello archive - scan it and try to import everything known
     _.each(zip.files, function(f) {
       // Currently show error for all entries
-      N.wire.emit('notify', t('error.unknown_format', { name: f.name }));
+      N.wire.emit('notify', t('err_unknown_format', { name: f.name }));
     });
   } catch (e) {
-    N.wire.emit('notify', t('error.bad_zip', { name: file.name }));
+    N.wire.emit('notify', t('err_bad_zip', { name: file.name }));
   }
 }
 
@@ -231,7 +231,7 @@ function import_svg_image(data, file) {
   var pathTags = xmlDoc.getElementsByTagName('path');
 
   if (pathTags.length !== 1) {
-    N.wire.emit('notify', t('error.bad_svg_image', { name: file.name }));
+    N.wire.emit('notify', t('err_bad_svg_image', { name: file.name }));
   }
 
   var d = pathTags[0].getAttribute('d');
@@ -298,7 +298,7 @@ function handleFileSelect(event) {
 
   if (files === []) {
     // Unexpected behavior. Should not happen in real life.
-    N.wire.emit('notify', t('error.no_files_chosen'));
+    N.wire.emit('notify', t('err_no_files_chosen'));
     return;
   }
 
@@ -319,7 +319,7 @@ function handleFileSelect(event) {
         //
 
         if (file.name.match(/[.](woff|ttf|otf)$/i)) {
-          N.wire.emit('notify', t('error.need_svg_font', { name: file.name }));
+          N.wire.emit('notify', t('err_need_svg_font', { name: file.name }));
           next();
           return;
         }
@@ -356,7 +356,7 @@ function handleFileSelect(event) {
         }
 
         // Unknown format - show error
-        N.wire.emit('notify', t('error.unknown_format', { name: file.name }));
+        N.wire.emit('notify', t('err_unknown_format', { name: file.name }));
         next();
       },
       // final callback
@@ -369,7 +369,7 @@ function handleFileSelect(event) {
       }
     );
   } catch (err) {
-    N.wire.emit('notify', t('error.invalid_browser'));
+    N.wire.emit('notify', t('err_invalid_browser'));
   }
 }
 

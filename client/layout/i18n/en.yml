@@ -19,9 +19,8 @@ en-US:
     Fontello is not done for money, but feel free to
     show us how much you like it :)
 
-  twitter:
-    follow: Follow
-    share: Tweet
-    text: Fontello - icon webfonts generator, open source
+  twitter_follow: Follow
+  twitter_share: Tweet
+  twitter_text: Fontello - icon webfonts generator, open source
 
   nojs_alert: Fontello will not work without javascript!
