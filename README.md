@@ -63,6 +63,7 @@ Note. When you open site via API url, `download` button will have another text.
   but written in `node.js`. If you don't like `make` utility, then
   `fontello-cli` is for you :)
 * [fontello_rails_converter](https://github.com/railslove/fontello_rails_converter) - Ruby CLI gem for interacting with the API.  Additional features (Sass conversion) for Rails integration, but should work for every project.
+* [grunt-fontello](https://github.com/jubalm/grunt-fontello) - lightweight integration with grunt
 
 
 ## Contacts
