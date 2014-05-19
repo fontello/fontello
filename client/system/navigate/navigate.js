@@ -24,7 +24,7 @@ var History = window.History; // History.js
 // Takes a params hash (can be nested) and tries to parse each string-value as
 // number or boolean. Returns a new hash with parsed values.
 //
-function castParamTypes(inputValue) {
+/*function castParamTypes(inputValue) {
   var parsedValue;
 
   if (_.isArray(inputValue)) {
@@ -52,7 +52,7 @@ function castParamTypes(inputValue) {
   } else {
     return inputValue;
   }
-}
+}*/
 
 
 // Returns a normalized URL:
@@ -171,7 +171,8 @@ N.wire.on('navigate.to', function navigate_to(options, callback) {
     }
 
     apiPath = match.meta.methods.get;
-    params = castParamTypes(match.params || {});
+    //params = castParamTypes(match.params || {});
+    params = match.params || {};
 
   } else if (options.apiPath) {
     apiPath = options.apiPath;
@@ -351,7 +352,8 @@ if (History.enabled) {
       }
 
       // Retrieve data.
-      N.io.rpc(match.meta.methods.get, castParamTypes(match.params || {}), function (err, res) {
+      //N.io.rpc(match.meta.methods.get, castParamTypes(match.params || {}), function (err, res) {
+      N.io.rpc(match.meta.methods.get, match.params || {}, function (err, res) {
         var a, data, url;
 
         // Simple way to parse URL in browser.
@@ -361,7 +363,8 @@ if (History.enabled) {
         // Result state data.
         data = {
           apiPath: match.meta.methods.get
-        , params:  castParamTypes(match.params || {})
+        //, params:  castParamTypes(match.params || {})
+        , params:  match.params || {}
         , anchor:  a.hash
         , view:    match.meta.methods.get
       //, layout:  res.layout || null
