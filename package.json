@@ -22,7 +22,7 @@
                         "argparse"      : "~ 0.1.5",
                         "async"         : "~ 0.9.0",
                         "autoprefixer"  : "~ 1.1.20140319",
-                        "babelfish"     : "~ 0.4.0",
+                        "babelfish"     : "~ 1.0.1",
                         "base64-js"     : "~ 0.0.4",
                         "cookie"        : "~ 0.1.0",
                         "csswring"      : "~ 0.2.0",
