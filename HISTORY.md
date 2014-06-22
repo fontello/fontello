@@ -1,7 +1,9 @@
-5.1.1 / WIP
+5.2.0 / 2014.06.22
 ------------------
 
-- Minor fonts update
+- FontAwesome update to 4.1.0
+- Added font version display if exists
+- Other minor fonts updates
 - Nodeca core sync
 - Dependencies update
 - Removed security headers due cross issues
