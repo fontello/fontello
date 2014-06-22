@@ -42,6 +42,7 @@
 
         a.selector__font-name._collapser(href='#', data-bind='text: fullname, attr: { "data-id": fontname }', data-on-click='selector:font_collapse')
 
+        small.selector__font-details(data-bind='visible: version, text: ("v"+version)')
         small.selector__font-details(data-bind='visible: author')= self.t('author')
           |  
           span(data-bind='text: author')

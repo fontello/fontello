@@ -168,6 +168,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     //
     this.fullname = (data.font || {}).fullname;
     this.fontname = (data.font || {}).fontname; // also used as font id
+    this.version  = (data.font || {}).version;
 
     this.author   = (data.meta || {}).author;
     this.license  = (data.meta || {}).license;
