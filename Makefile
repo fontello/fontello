@@ -164,5 +164,5 @@ fontsave:
 	rm -rf .fontello.src .fontello.zip
 
 
-.PHONY: help rebuild-fonts dev-setup lint gh-pages todo dev-server repl fontopen
-.SILENT: help rebuild-fonts dev-setup lint todo
+.PHONY: help rebuild dev-setup lint gh-pages todo dev-server repl fontopen
+.SILENT: help rebuild dev-setup lint todo
