@@ -9,9 +9,6 @@ en-US:
   err_bad_zip_format: "Can't unzip '#{name}'"
   err_unknown_format: "Can't import '#{name}' - unknown format"
 
-  err_bad_svg_image: >
-    '#{name}' contains multiple paths/shapes. Please, make them a compound path, and try import again.
-
   err_need_svg_font: >
     We don't support import of fonts in TTF / WOFF / OTF formats.
     Please, convert to SVG format first. You can do it with
@@ -19,3 +16,17 @@ en-US:
     for example. See 
     <a href="https://github.com/fontello/fontello/wiki/How-to-use-custom-images" target="_blank">help</a> 
     for details.
+
+  err_invalid_format: Invalid file format.
+
+  err_skiped_tags: >
+    If image looks not as expected please convert to
+    <a href="https://github.com/fontello/fontello/wiki/How-to-use-custom-images#importing-svg-images">compound path</a>
+    manualy.
+    <br><br>
+    Skipped tags and attributes: #{skipped}
+
+  err_merge_path: >
+    If image looks not as expected please convert to
+    <a href="https://github.com/fontello/fontello/wiki/How-to-use-custom-images#importing-svg-images">compound path</a>
+    manualy.

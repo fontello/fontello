@@ -7,6 +7,7 @@ var XMLDOMParser = require('xmldom').DOMParser;
 var SvgPath = require('svgpath');
 
 var utils   = require('../../_lib/utils');
+var svg_flatten = require('../../_lib/svg_flatten');
 
 
 // path functions borrowed from node.js `path`
@@ -216,7 +217,6 @@ function import_svg_font(data/*, file*/) {
 //
 
 function import_svg_image(data, file) {
-  var xmlDoc = (new XMLDOMParser()).parseFromString(data, 'application/xml');
 
   var customIcons = N.app.fontsList.getFont('custom_icons');
 
@@ -227,43 +227,34 @@ function import_svg_image(data, file) {
   }).charRef;
 
   var allocatedRefCode = (!maxRef) ? 0xe800 : utils.fixedCharCodeAt(maxRef) + 1;
-  var svgTag = xmlDoc.getElementsByTagName('svg')[0];
-  var pathTags = xmlDoc.getElementsByTagName('path');
+  var result = svg_flatten(data);
 
-  if (pathTags.length !== 1) {
-    N.wire.emit('notify', t('err_bad_svg_image', { name: file.name }));
+  if (result.error) {
+    N.wire.emit('notify', t('err_invalid_format'));
+    return;
   }
 
-  var d = pathTags[0].getAttribute('d');
+  // Collect ignored tags and attrs
+  // We need to have array with unique values because
+  // some tags and attrs have same names (viewBox, style, glyphRef, title).
+  //
+  var skipped = _.union(result.ignoredTags, result.ignoredAttrs);
 
-  // getting viewBox values array
-  var viewBox = _.map(
-    (svgTag.getAttribute('viewBox') || '').split(' '),
-    function(val) { return parseInt(val, 10); }
-  );
-
-  // getting base parameters
-
-  var attr = {};
-
-  _.forEach(['x', 'y', 'width', 'height'], function(key) {
-    attr[key] = parseInt(svgTag.getAttribute(key), 10);
-  });
-
-  var x      = viewBox[0] || attr.x || 0;
-  var y      = viewBox[1] || attr.y || 0;
-  var width  = viewBox[2] || attr.width;
-  var height = viewBox[3] || attr.height;
+  if (skipped.length > 0) {
+    N.wire.emit('notify', t('err_skiped_tags', {'skipped' : skipped.toString()}));
+  } else if (!result.guaranteed) {
+    N.wire.emit('notify', t('err_merge_path'));
+  }
 
   // Scale to standard grid
-  var scale  = 1000 / height;
-  d = new SvgPath(d)
-            .translate(-x, -y)
+  var scale  = 1000 / result.height;
+  var d = new SvgPath(result.d)
+            .translate(-result.x, -result.y)
             .scale(scale)
             .abs()
             .round(1)
             .toString();
-  width = Math.round(width * scale); // new width
+  var width = Math.round(result.width * scale); // new width
 
   var glyphName = basename(file.name.toLowerCase(), '.svg').replace(/\s/g, '-');
 
@@ -278,6 +269,7 @@ function import_svg_image(data, file) {
     }
   });
 }
+
 
 // Handles change event of file input
 //
