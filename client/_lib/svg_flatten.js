@@ -180,7 +180,7 @@ function getCoordinates(svg) {
     }
   );
   // If viewBox attr has less than 4 digits it's incorrect
-  if (viewBox && viewBox.length < 4) {
+  if (viewBoxAttr && viewBox.length < 4) {
     return {
       error : new Error('Svg viewbox attr has less than 4 digits')
     };
@@ -206,7 +206,7 @@ function getCoordinates(svg) {
     error: null
   };
 
-  if (!viewBox) {
+  if (!viewBoxAttr) {
     // Only svg width & height attrs are set
     if (result.width && result.height) {
       return result;
@@ -297,6 +297,11 @@ module.exports =  function convert(sourceXml) {
   var processed = processTree(svg, {}, {}, '', '');
 
   var coords = getCoordinates(svg);
+
+  if (coords.error) {
+    result.error = coords.error;
+    return result;
+  }
 
   result.d = processed.path;
   result.width = coords.width;
