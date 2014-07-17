@@ -1,3 +1,10 @@
+5.2.1 / WIP
+------------------
+
+- Improved SVG import - transforms & paths merge are applyed automatically.
+- Fixed import of empty glyphs (space)
+
+
 5.2.0 / 2014.06.22
 ------------------
 

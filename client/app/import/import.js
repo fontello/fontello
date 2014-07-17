@@ -7,7 +7,7 @@ var XMLDOMParser = require('xmldom').DOMParser;
 var SvgPath = require('svgpath');
 
 var utils   = require('../../_lib/utils');
-var svg_flatten = require('../../_lib/svg_flatten');
+var svg_image_flatten = require('./_svg_image_flatten');
 
 
 // path functions borrowed from node.js `path`
@@ -227,7 +227,7 @@ function import_svg_image(data, file) {
   }).charRef;
 
   var allocatedRefCode = (!maxRef) ? 0xe800 : utils.fixedCharCodeAt(maxRef) + 1;
-  var result = svg_flatten(data);
+  var result = svg_image_flatten(data);
 
   if (result.error) {
     N.wire.emit('notify', t('err_invalid_format'));
