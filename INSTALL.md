@@ -1,9 +1,9 @@
 Fontello installation instruction
 =================================
 
-This project requires Ubuntu 12.04 LTS. But it probabply can work on
-more fresh version, Debian and other OS-es. Hovever, it's not tested anywhere else,
-and support is not provided. If you wish, you can send patches, that improve compatibility.
+This project requires Ubuntu 12.04 LTS, but it can probably work on a
+more recent version, Debian and other OS-es. However, it's not tested anywhere else
+and support is not provided. If you wish, you can send patches that improve compatibility.
 
 
 ## MongoDB
