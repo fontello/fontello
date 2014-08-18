@@ -1,7 +1,7 @@
 Fontello installation instruction
 =================================
 
-This project requires Ubuntu 12.04 LTS, but it can probably work on
+This project requires Ubuntu 12.04 LTS, but it can probably work on a
 more recent version, Debian and other OS-es. However, it's not tested anywhere else
 and support is not provided. If you wish, you can send patches that improve compatibility.
 
