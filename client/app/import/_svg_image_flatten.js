@@ -182,14 +182,21 @@ function getCoordinates(svg) {
   // If viewBox attr has less than 4 digits it's incorrect
   if (viewBoxAttr && viewBox.length < 4) {
     return {
-      error : new Error('Svg viewbox attr has less than 4 digits')
+      error : new Error('Svg viewbox attr has less than 4 params')
     };
   }
 
   // getting base parameters
   var attr = {};
   _.forEach(['x', 'y', 'width', 'height'], function (key) {
-    attr[key] = parseInt(svg.getAttribute(key), 10);
+    var val = svg.getAttribute(key);
+
+    // TODO: remove and do properly
+    // Quick hack - ignore values in %. There can be strange cases like
+    // `width="100%" height="100%" viewbox="0 0 1000 1000"`
+    if (val[val.length-1] !== '%') {
+      attr[key] = parseInt(svg.getAttribute(key), 10);
+    }
   });
 
   if (viewBox[2] < 0 || viewBox[3] < 0 || attr.with < 0 || attr.height < 0 ) {

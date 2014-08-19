@@ -231,6 +231,7 @@ function import_svg_image(data, file) {
 
   if (result.error) {
     N.wire.emit('notify', t('err_invalid_format'));
+    console.error(result.error);
     return;
   }
 
