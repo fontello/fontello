@@ -32,7 +32,6 @@ help:
 	echo "make gh-pages       - Build and push the project into gh-pages branch"
 
 
-
 rebuild:
 	mkdir -p assets/embedded_fonts
 	# build single font
@@ -43,13 +42,9 @@ rebuild:
 		-s lib/embedded_fonts/server_config.js
 
 	# convert to other formats
-	#fontforge -c 'font = fontforge.open("$(FONT_DIR)/fontello.svg"); font.generate("$(FONT_DIR)/fontello-unhinted.ttf")'
 	./node_modules/.bin/svg2ttf "$(FONT_DIR)/fontello.svg" "$(FONT_DIR)/fontello.ttf"
-	#ttfautohint --latin-fallback --hinting-limit=200 --hinting-range-max=50 --symbol $(FONT_DIR)/fontello-unhinted.ttf $(FONT_DIR)/fontello.ttf
-	#rm $(FONT_DIR)/fontello-unhinted.ttf
 	./node_modules/.bin/ttf2eot "$(FONT_DIR)/fontello.ttf" "$(FONT_DIR)/fontello.eot"
 	./node_modules/.bin/ttf2woff "$(FONT_DIR)/fontello.ttf" "$(FONT_DIR)/fontello.woff"
-
 
 
 dev-server:
@@ -81,30 +76,6 @@ lint:
 		exit 128 ; \
 		fi
 	jshint . --show-non-errors
-
-
-dependencies:
-	@if test ! `which npm` ; then \
-		echo "Node.JS and NPM are required for html demo generation." >&2 ; \
-		echo "This is non-fatal error and you'll still be able to build font," >&2 ; \
-		echo "however, to build demo with >> make html << you need:" >&2 ; \
-		echo "  - Install Node.JS and NPM" >&2 ; \
-		echo "  - Run this task once again" >&2 ; \
-		exit 128 ; \
-		fi
-	@if test ! `which ttfautohint` ; then \
-		echo "Trying to install ttf-autohint from repository..." ; \
-		apt-cache policy -q=2 | grep -q 'Candidate' && \
-			sudo apt-get install ttfautohint && \
-			echo "SUCCESS" || echo "FAILED" ; \
-		fi
-	@if test ! `which ttfautohint` ; then \
-		echo "Trying to install ttf-autohint from Debian's repository..." ; \
-		curl --silent --show-error --output /tmp/ttfautohint.deb \
-			http://snapshot.debian.org/archive/debian/20130418T033038Z/pool/main/t/ttfautohint/ttfautohint_0.95-1_amd64.deb && \
-		sudo dpkg -i /tmp/ttfautohint.deb && \
-			echo "SUCCESS" || echo "FAILED" ; \
-		fi
 
 
 cleanup:
@@ -162,6 +133,7 @@ fontsave:
 	rm -rf ${FONTELLO_DIR}
 	mv `find ./.fontello.src -maxdepth 1 -name 'fontello-*'` ${FONTELLO_DIR}
 	rm -rf .fontello.src .fontello.zip
+
 
 
 .PHONY: help rebuild dev-setup lint gh-pages todo dev-server repl fontopen

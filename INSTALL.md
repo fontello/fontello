@@ -21,6 +21,8 @@ it - create database and set login/password.
 
 ## node.js
 
+You need node.js 0.10.xx. Unstructions below are for Ubuntu.
+
 Install build dependencies of node:
 
     sudo apt-get install build-essential libssl-dev
@@ -49,16 +51,29 @@ Install fontello sources & dependencies:
     git submodule init
     git submodule update
     npm install
-    make dependencies
 
 Rename example configs in `./config/` folder to real files, and edit, if needed.
 
-Note(!) `make dependencies` just try to install ttfautohint. That's for Ubuntu and Debian.
-For mac & win - just install manually from original website http://www.freetype.org/ttfautohint/
-and make sure, that it's in your PATH.
+
+## ttfautohint
+
+This is optional. Fontello will work without ttfautohint, just don't enable
+hinting options in font settings (it's off by default).
+
+You need ttfautohint v1.1, searchable via PATH.
+
+For MAC install, look info at http://www.freetype.org/ttfautohint/#download
+
+For Ubuntu 12.04, run this script from fontello folder:
+
+   ./support/ttfautohint-ubuntu-12.04.sh
 
 
 ## Run Fontello server
+
+From command line, in fontello folder:
+
+    ./fontello.js
 
 In dev, with auto-restart on files change:
 
@@ -69,6 +84,6 @@ Now you can point your browser to the page http://localhost:3000
 
 ## Rebuilding embedded fonts
 
-Detailed description will be added soon.
+If you update fonts in `./support` folder, run
 
     make rebuild

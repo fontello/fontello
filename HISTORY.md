@@ -1,8 +1,9 @@
-5.2.1 / WIP
+5.3.0 / WIP
 ------------------
 
-- Improved SVG import - transforms & paths merge are applyed automatically.
+- Improved SVG import - transforms & paths merge are applyed automatically
 - Fixed import of empty glyphs (space)
+- Use ttfautohint v1.1
 
 
 5.2.0 / 2014.06.22
