@@ -20,11 +20,7 @@ var _           = require('lodash');
 
 module.exports = function (N, apiPath) {
   N.validate(apiPath, {
-    sid: {
-      type: 'string'
-    , required: false
-    , pattern: /^[0-9a-f]+/
-    }
+    sid: { type: 'string', required: false, pattern: /^[0-9a-f]+/ }
   });
 
   // Process standerd GET/HEAD request

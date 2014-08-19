@@ -446,5 +446,9 @@ N.wire.once('navigate.done', function () {
 // Setup import listener
 //
 N.wire.on('import.obj', function(obj) {
+  N.app.fontsList.lock();
+
   import_config(JSON.stringify(obj), {});
+
+  N.app.fontsList.unlock();
 });
