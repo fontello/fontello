@@ -396,20 +396,21 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
 
 
     // Rebuild font on glyphs list change
-    // Track previous value and rebuild only on list grow
     //
-
-    var prevGlyphs = [];
-
     this.glyphs.subscribe(function (currentGlyphs) {
-      var prev = prevGlyphs;
-      prevGlyphs = currentGlyphs.slice();
 
+      // Only custom icons require font generation
+      if (self.fontname !== 'custom_icons') {
+         return;
+      }
+
+      // Force session save, because we keep custom icons sources in it.
       N.wire.emit('session_save');
 
-      if (self.fontname !== 'custom_icons') { return; }
-
-      if (prev.length >= currentGlyphs.length) { return; }
+      // Empty collection doesn't need font update
+      if (!currentGlyphs.length) {
+        return;
+      }
 
       var ff = fontface(self.makeSvgFont(), self.fontname);
 
