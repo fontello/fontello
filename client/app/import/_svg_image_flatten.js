@@ -176,7 +176,7 @@ function getCoordinates(svg) {
   var viewBox = _.map(
     (viewBoxAttr || '').split(' '),
     function (val) {
-      return parseInt(val, 10);
+      return parseFloat(val);
     }
   );
   // If viewBox attr has less than 4 digits it's incorrect
@@ -195,7 +195,7 @@ function getCoordinates(svg) {
     // Quick hack - ignore values in %. There can be strange cases like
     // `width="100%" height="100%" viewbox="0 0 1000 1000"`
     if (val[val.length-1] !== '%') {
-      attr[key] = parseInt(svg.getAttribute(key), 10);
+      attr[key] = parseFloat(svg.getAttribute(key));
     }
   });
 
