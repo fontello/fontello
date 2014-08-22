@@ -250,8 +250,9 @@ function import_svg_image(data, file) {
   // Scale to standard grid
   var scale  = 1000 / result.height;
   var d = new SvgPath(result.d)
-            .translate(-result.x, -result.y)
+            .translate(-result.x - result.width/2, -result.y - result.height/2)
             .scale(scale)
+            .translate(result.width/2*scale, result.height/2*scale)
             .abs()
             .round(1)
             .toString();
