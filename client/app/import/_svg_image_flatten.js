@@ -10,8 +10,15 @@ var SvgPath = require('svgpath');
 var quietTags = {};
 var notQuietAtts = {};
 
-['desc', 'title'].forEach(function (key) { quietTags[key] = true; });
+// Ok to skip this attrs
+[
+  'desc',
+  'title',
+  'metadata',
+  'defs'
+].forEach(function (key) { quietTags[key] = true; });
 
+// Should warn on this attrs skip
 [
   'requiredFeatures',
   'requiredExtensions',
@@ -174,11 +181,12 @@ function getCoordinates(svg) {
   // getting viewBox values array
   var viewBoxAttr = svg.getAttribute('viewBox');
   var viewBox = _.map(
-    (viewBoxAttr || '').split(' '),
+    (viewBoxAttr || '').split(/(?: *, *| +)/g),
     function (val) {
-      return parseInt(val, 10);
+      return parseFloat(val);
     }
   );
+
   // If viewBox attr has less than 4 digits it's incorrect
   if (viewBoxAttr && viewBox.length < 4) {
     return {
@@ -194,12 +202,12 @@ function getCoordinates(svg) {
     // TODO: remove and do properly
     // Quick hack - ignore values in %. There can be strange cases like
     // `width="100%" height="100%" viewbox="0 0 1000 1000"`
-    if (val[val.length-1] !== '%') {
-      attr[key] = parseInt(svg.getAttribute(key), 10);
+    if (val.length && val[val.length-1] !== '%') {
+      attr[key] = parseFloat(svg.getAttribute(key));
     }
   });
 
-  if (viewBox[2] < 0 || viewBox[3] < 0 || attr.with < 0 || attr.height < 0 ) {
+  if (viewBox[2] < 0 || viewBox[3] < 0 || attr.width < 0 || attr.height < 0 ) {
     return {
       error : new Error('Svg sizes can`t be negative')
     };
@@ -225,7 +233,7 @@ function getCoordinates(svg) {
     return result;
   }
 
-  if ( (result.x !== 0 && viewBox[0] !== 0 && result.x !== viewBox[0]) ) {
+  /*if ( (result.x !== 0 && viewBox[0] !== 0 && result.x !== viewBox[0]) ) {
     result.error = new Error('Not implemented yet. Svg attr x not equals viewbox x');
     // TODO: Need transform
     return result;
@@ -234,10 +242,11 @@ function getCoordinates(svg) {
     result.error = new Error('Not implemented yet. Svg attr y not equals viewbox y');
     // TODO: Need transform
     return result;
-  }
+  }*/
 
-  if (viewBox[0]) { result.x = viewBox[0]; }
-  if (viewBox[1]) { result.y = viewBox[1]; }
+  /*if (viewBox[0]) { result.x = viewBox[0]; }
+  if (viewBox[1]) { result.y = viewBox[1]; }*/
+
   // viewBox is set and attrs not set
   if (!result.width && !result.height) {
     result.width = viewBox[2];
@@ -245,7 +254,9 @@ function getCoordinates(svg) {
     return result;
   }
 
-  // viewBox and attrs are set and values on width and height are equals
+  return result;
+
+  /*// viewBox and attrs are set and values on width and height are equals
   if (viewBox[2] === result.width && viewBox[3] === result.height) {
     return result;
   }
@@ -260,7 +271,7 @@ function getCoordinates(svg) {
   // viewBox and attrs are set, but have different sizes. Need to transform image
   result.error = new Error('Not implemented yet. Svg viewbox sizes are different with svg sizes');
   // TODO: Implement transform
-  return result;
+  return result;*/
 }
 /**
  *
