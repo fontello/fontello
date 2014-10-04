@@ -54,7 +54,6 @@
   "devDependencies" : {
                         "jshint"        : "*",
                         "mocha"         : "*",
-                        "supertest"     : "*",
-                        "chai"          : "*"
+                        "supertest"     : "~ 0.13.0"
                       }
 }
