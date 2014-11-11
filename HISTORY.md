@@ -1,6 +1,7 @@
 5.3.0 / WIP
 ------------------
 
+- FA update to 4.2.0
 - Improved SVG import - transforms & paths merge are applyed automatically
 - Fixed import of empty glyphs (space)
 - Use ttfautohint v1.1
