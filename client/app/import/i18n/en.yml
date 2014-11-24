@@ -22,11 +22,11 @@ en-US:
   err_skiped_tags: >
     If image looks not as expected please convert to
     <strong><a href="https://github.com/fontello/fontello/wiki/How-to-use-custom-images#importing-svg-images" target="_blank">compound path</a></strong>
-    manualy.
+    manually.
     <br><br>
     Skipped tags and attributes: #{skipped}
 
   err_merge_path: >
     If image looks not as expected please convert to
     <strong><a href="https://github.com/fontello/fontello/wiki/How-to-use-custom-images#importing-svg-images" target="_blank">compound path</a></strong>
-    manualy.
+    manually.
