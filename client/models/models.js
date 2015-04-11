@@ -327,7 +327,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
       // We always make font in 1000 units per em grid. So, if user
       // changes metrics - recalculate ascent/descent to get tha same baseline.
       //
-      conf.font.ascent     = +(N.app.fontAscent() * N.app.fontUnitsPerEm() / 1000).toFixed(0);
+      conf.font.ascent     = +(N.app.fontAscent() * 1000 / N.app.fontUnitsPerEm()).toFixed(0);
       conf.font.descent    = conf.font.ascent - 1000;
 
       conf.glyphs = _.map(this.glyphs(), function(glyph){
