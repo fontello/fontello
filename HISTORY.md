@@ -1,10 +1,13 @@
 5.3.0 / WIP
 ------------------
 
-- FA update to 4.2.0
-- Improved SVG import - transforms & paths merge are applyed automatically
-- Fixed import of empty glyphs (space)
-- Use ttfautohint v1.1
+- Added font smoothing as in TWBS
+- Make demo icons "copypasteable".
+- Fixed custom icons size in UI if adfanced settings changed.
+- FA update to 4.2.0.
+- Improved SVG import - transforms & paths merge are applyed automatically.
+- Fixed import of empty glyphs (space).
+- Use ttfautohint v1.1.
 
 
 5.2.0 / 2014.06.22
