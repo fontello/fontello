@@ -11,7 +11,7 @@ webfont pack. Details available in LICENSE.txt file.
 - If your project is open-source, usually, it will be ok to make LICENSE.txt
   file publically available in your repository.
 
-- Fonts, used in Fontello, don't require to make clickable links on your site.
+- Fonts, used in Fontello, don't require a clickable link on your site.
   But any kind of additional authors crediting is welcome.
 ================================================================================
 
@@ -29,8 +29,8 @@ Comments on archive content
 
 - LICENSE.txt - license info about source fonts, used to build your one.
 
-- config.json - keeps your settings. You can import it back to fontello anytime,
-  to continue your work
+- config.json - keeps your settings. You can import it back into fontello
+  anytime, to continue your work
 
 
 Why so many CSS files ?
@@ -38,17 +38,17 @@ Why so many CSS files ?
 
 Because we like to fit all your needs :)
 
-- basic file, <your_font_name>.css - is usually enougth, in contains @font-face
-  and character codes definition
+- basic file, <your_font_name>.css - is usually enough, it contains @font-face
+  and character code definitions
 
 - *-ie7.css - if you need IE7 support, but still don't wish to put char codes
   directly into html
 
 - *-codes.css and *-ie7-codes.css - if you like to use your own @font-face
-  rules, but still wish to benefit of css generation. That can be very
-  convenient for automated assets build systems. When you need to update font -
-  no needs to manually edit files, just override old version with archive
-  content. See fontello source codes for example.
+  rules, but still wish to benefit from css generation. That can be very
+  convenient for automated asset build systems. When you need to update font -
+  no need to manually edit files, just override old version with archive
+  content. See fontello source code for examples.
 
 - *-embedded.css - basic css file, but with embedded WOFF font, to avoid
   CORS issues in Firefox and IE9+, when fonts are hosted on the separate domain.
@@ -63,11 +63,11 @@ Because we like to fit all your needs :)
 Attention for server setup
 --------------------------
 
-You MUST setup server to reply with proper `mime-types` for font files. In other
-case, some browsers will fail to show fonts.
+You MUST setup server to reply with proper `mime-types` for font files -
+otherwise some browsers will fail to show fonts.
 
 Usually, `apache` already has necessary settings, but `nginx` and other
-webservers should be tuned. Here is list of mime types for our file extentions:
+webservers should be tuned. Here is list of mime types for our file extensions:
 
 - `application/vnd.ms-fontobject` - eot
 - `application/x-font-woff` - woff
