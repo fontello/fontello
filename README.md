@@ -45,8 +45,8 @@ When more examples available, those will be added here.
    return you `session_id`. You can use it later to open fontello with you configuration
    and to automatically download your font. Session is stored for 24h. POST params
    (form-encoded):
-    - `config` - content of `config.json` for your font
-    - `url` - if used, download button will link to your admin panel, where you can
+    - `config` - (Required) content of `config.json` for your font
+    - `url` - (Optional) if used, download button will link to your admin panel, where you can
       run importing script.
 2. `http://fontello.com/[session_id]` - opening fontello with your config preloaded.
    When you edit font, your config is automatically sent to server
