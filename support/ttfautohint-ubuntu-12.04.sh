@@ -14,8 +14,8 @@ git checkout v1.1
 # Handle bootstrap's dependency: automake
 # need more fresh version, than in 12.04 LTS repo
 if ! which automake > /dev/null; then
-  wget http://archive.ubuntu.com/ubuntu/pool/main/a/automake1.13/automake_1.13.3-1.1ubuntu2_all.deb
-  sudo dpkg -i automake_1.13.3-1.1ubuntu2_all.deb
+  wget http://archive.ubuntu.com/ubuntu/pool/main/a/automake-1.14/automake_1.14.1-3ubuntu1_all.deb
+  sudo dpkg -i automake_1.14.1-3ubuntu1_all.deb
 fi
 
 # Run bootstrap
