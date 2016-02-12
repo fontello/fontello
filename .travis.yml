@@ -5,3 +5,4 @@ before_script: "npm install"
 script: "make setup test"
 services:
   - mongodb
+sudo: false
