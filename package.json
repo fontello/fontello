@@ -52,7 +52,7 @@
                         "xmldom"        : "~ 0.1.16"
                       },
   "devDependencies" : {
-                        "jshint"        : "*",
+                        "jshint"        : "2.5.6",
                         "mocha"         : "*",
                         "supertest"     : "~ 0.13.0"
                       }
