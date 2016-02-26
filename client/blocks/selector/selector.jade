@@ -24,8 +24,8 @@
 
       .selector__glyphs-container
         ul.selector__glyphs-list.font-custom_icons(data-bind='visible: visibleCount(), foreach: glyphs')
-          li.selector__glyph(data-bind='visible: visible, attr: { "data-id": uid, title: tooltip }')
-            .selector__glyph-inner(data-bind="css: { checked: selected }, attr: { 'data-id': uid }", data-on-click='selector:glyph_toggle')
+          li.selector__glyph(role='checkbox', tabindex='0', data-bind='visible: visible, attr: { "data-id": uid, title: tooltip, "aria-checked": selected() ? "true" : "false" }', data-on-click='selector:glyph_toggle')
+            .selector__glyph-inner(data-bind="css: { checked: selected }, attr: { 'data-id': uid }")
               span.selector__glyph-image(data-bind='text: charRef')
             a.selector__glyph-delete.icon-edit(href='#', data-bind='attr: { "data-id": uid }', data-on-click='cmd:glyph_options')
 
@@ -59,8 +59,8 @@
 
       .selector__glyphs-container
         ul.selector__glyphs-list.font-fontello(data-bind='foreach: glyphs')
-          li.selector__glyph(data-bind='visible: visible, attr: { "data-id": uid, title: tooltip }')
-            .selector__glyph-inner(data-bind="css: { checked: selected, 'animate-spin': cssExt }, attr: { 'data-id': uid }", data-on-click='selector:glyph_toggle')
+          li.selector__glyph(role='checkbox', tabindex='0', data-bind='visible: visible, attr: { "data-id": uid, title: tooltip, "aria-checked": selected() ? "true" : "false" }, event: { keypress: selectOnEnter }', data-on-click='selector:glyph_toggle')
+            .selector__glyph-inner(data-bind="css: { checked: selected, 'animate-spin': cssExt }, attr: { 'data-id': uid }")
               span.selector__glyph-image(data-bind='text: charRef')
     // /ko
     // /ko

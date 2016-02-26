@@ -124,6 +124,7 @@ a.selector__font-name
 
 .selector__glyph
   position relative
+  border-radius 30px
   float left
   margin 0 8px 8px 0
   width 48px 
@@ -187,9 +188,9 @@ a.selector__font-name
     border-radius 30px
     border 2px solid transparent
 
-  &:hover
-    background #333
-    color #fff
+.selector__glyph-inner:hover, .selector__glyph:focus .selector__glyph-inner
+  background #333
+  color #fff
 
 .selector__glyph.ui-selecting
 
@@ -201,18 +202,23 @@ a.selector__font-name
       color inherit
 
 .selector__glyph
-  .selector__glyph-inner.checked
-    background-color #fffdfd
-    &:before
-      border-color #d88
-    &:hover
-      background #666
-  &.ui-selecting .selector__glyph-inner.checked
-    background-color #eeffee
-    &before:
-      border-color #666
-    &:hover
-      color inherit
+  .selector__glyph-inner
+    &.checked
+      background-color #fffdfd
+      &:before
+        border-color #d88
+  &.ui-selecting
+    .selector__glyph-inner
+      &.checked
+        background-color #efe
+
+.selector__glyph .selector__glyph-inner.checked:hover, .selector__glyph:focus .selector__glyph-inner.checked
+  background #666
+
+.selector__glyph.ui-selecting .selector__glyph-inner.checkedbefore:border-color #666,
+.selector__glyph.ui-selecting .selector__glyph-inner.checked:hover
+  color inherit
+
 
 
 // Animation tweaks

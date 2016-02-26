@@ -98,6 +98,14 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     // Helpers
     //
 
+    this.selectOnEnter = function (glyph, event) {
+      if ((event.keyCode || event.which) === 13) {
+        self.selected(!self.selected());
+      }
+      
+      return true;
+    };
+
     this.remove = function () {
       self.font.removeGlyph(self.uid);
     };
