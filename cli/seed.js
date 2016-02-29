@@ -5,40 +5,38 @@
 
 
 // stdlib
-var path  = require('path');
-var fs    = require('fs');
+const path  = require('path');
+const fs    = require('fs');
 
 
 // 3rd-party
-var _       = require('lodash');
-var async   = require('async');
-var fstools = require('fs-tools');
-var format  = require('util').format;
+const _     = require('lodash');
+const co    = require('co');
+const glob  = require('glob');
 
 
 ////////////////////////////////////////////////////////////////////////////////
 
 
-var SEEDS_DIR = 'db/seeds';
+const SEEDS_DIR = 'db/seeds';
 
 
 ////////////////////////////////////////////////////////////////////////////////
 
 
-function seed_run(N, app_name, seed_path, callback) {
+function seed_run(N, app_name, seed_path) {
+  /*eslint-disable no-console*/
   console.log('Applying seed...\n');
 
-  require(seed_path)(N, function (err) {
-    var prefix = '  ' + app_name + ':' + path.basename(seed_path) + ' -- ';
+  let basename = path.basename(seed_path);
 
-    if (err) {
-      console.log(prefix + 'failed\n');
-      callback(err);
-      return;
-    }
-
-    console.log(prefix + 'success\n');
-    callback();
+  return require(seed_path)(N).then(function () {
+    // May be, that's not correct to write console directly,
+    // but it's cheap and enougth
+    console.log(`  ${app_name}:${basename} -- success\n`);
+  }).catch(function (err) {
+    console.log(`  ${app_name}:${basename} -- failed\n`);
+    throw err;
   });
 }
 
@@ -48,7 +46,7 @@ module.exports.parserParameters = {
     'Or, all seeds from `./db/seeds/seed-name/` folder. If <seed-name>' +
     'missed, then script will show all available seeds for given app. ' +
     'If `-a` missed, then all seed for all apps will be shown.',
-  epilog : 'Note: Loading seeds is limited to development/test enviroment. ' +
+  epilog : 'Note: Loading seeds is limited to development/test environment. ' +
     'If you really need to run seed  on production/stageing, use ' +
     'option -f.',
   help: 'show or run existing seeds'
@@ -56,21 +54,22 @@ module.exports.parserParameters = {
 
 module.exports.commandLineArguments = [
   {
-    args: ['-f'],
+    args: [ '-f' ],
     options: {
       help: 'force run without env checking',
-      action: 'storeTrue'
+      action: 'storeTrue',
+      dest: 'force'
     }
   },
   {
-    args: ['-a', '--app'],
+    args: [ '-a', '--app' ],
     options: {
       help: 'application name',
       type: 'string'
     }
   },
   {
-    args: ['-n'],
+    args: [ '-n' ],
     options: {
       metavar: 'SEED_NUMBER',
       dest: 'seed_numbers',
@@ -80,7 +79,7 @@ module.exports.commandLineArguments = [
     }
   },
   {
-    args: ['seed'],
+    args: [ 'seed' ],
     options: {
       metavar: 'SEED_NAME',
       help: 'seed name',
@@ -90,108 +89,106 @@ module.exports.commandLineArguments = [
   }
 ];
 
-module.exports.run = function (N, args, callback) {
-  var app_name = args.app;
-  var seed_name = args.seed;
+module.exports.run = function (N, args) {
+  let app_name = args.app;
+  let seed_name = args.seed;
+  let env = N.environment;
 
   function get_app_path(app_name) {
-    for (var i = 0; i < N.runtime.apps.length; i++) {
-      if (app_name === N.runtime.apps[i].name) {
-        return N.runtime.apps[i].root;
-      }
-    }
-    return null;
+    let app = N.apps.some(a => a.name === app_name);
+    return app ? app.root : null;
   }
 
-  N.wire.emit([
-      'init:models'
-    ], N,
+  return co(function* () {
+    yield N.wire.emit('init:models', N);
 
-    function (err) {
-      if (err) {
-        callback(err);
-        return;
+    /*eslint-disable no-console*/
+
+    // If seed name exists - execute seed by name
+    //
+    if (!!app_name && !!seed_name) {
+      // protect production env from accident run
+      if ([ 'development', 'test' ].indexOf(env) === -1 && !args.force) {
+        throw `Error: Can't run seed from ${env} environment. Please, use -f to force.`;
       }
 
-      // If seed name exists - execute seed by name
-      //
-      if (!!app_name && !!seed_name) {
-        var env = N.runtime.env;
-        if ('development' !== env && 'testing' !== env && !args.force) {
-          console.log(format('Error: Can\'t run seed from %s enviroment. Please, use -f to force.', env));
-          process.exit(1);
-        }
+      let seed_path = path.join(get_app_path(app_name), SEEDS_DIR, seed_name);
 
-        var seed_path = path.join(get_app_path(app_name), SEEDS_DIR, seed_name);
-        if (!fs.existsSync(seed_path)) {
-          console.log(format('Error: Application "%s" - does not have %s', app_name, seed_name));
-          process.exit(1);
-        }
-
-        seed_run(N, app_name, seed_path, callback);
+      try {
+        fs.readFileSync(seed_path);
+      } catch (__) {
+        throw `Error: Application "${app_name}" - does not have ${seed_name}`;
       }
-      else {
-        // No seed name - show existing list or execute by number,
-        // depending on `-n` argument
-        //
-        var apps;
-        if (app_name) {
-          apps = [{name: app_name, root: get_app_path(app_name)}];
-        }
-        else {
-          apps = N.runtime.apps;
-        }
 
-        // Collect seeds
-        //
-        var seed_list = [];
-        _.forEach(apps, function (app) {
+      yield seed_run(N, app_name, seed_path);
 
-          var seed_dir = path.join(app.root, SEEDS_DIR);
-          fstools.walkSync(seed_dir, /\.js$/, function (file) {
-            // skip files when
-            // - filename starts with _, e.g.: /foo/bar/_baz.js
-            // - dirname in path starts _, e.g. /foo/_bar/baz.js
-            if (file.match(/(^|\/|\\)_/)) { return; }
-
-            seed_list.push({ name: app.name, seed_path: file });
-          });
-        });
-
-        // Execute seed by number
-        //
-        if (!_.isEmpty(args.seed_numbers)) {
-          // check that specified seed exists
-          _.forEach(args.seed_numbers, function(number) {
-            if (!seed_list[number-1]) {
-              console.log(format('Seed number %d not exists', number));
-              process.exit(1);
-            }
-          });
-
-          // Execute seeds
-          async.forEachSeries(args.seed_numbers, function(seed_number, next) {
-            seed_run(N, seed_list[seed_number-1].name, seed_list[seed_number-1].seed_path, next);
-          }, function () {
-            process.exit(0);
-          });
-
-          return;
-        }
-
-        //
-        // No params - just display seeds list
-        //
-        console.log('Available seeds:\n');
-
-        _.forEach(seed_list, function(seed, idx) {
-          console.log(format('  %d. %s: %s', idx + 1, seed.name, path.basename(seed.seed_path)));
-        });
-
-        console.log('\nSeeds are shown in `<APP>: <SEED_NAME>` form.');
-        console.log('See `seed --help` for details');
-        process.exit(0);
-      }
+      return N.wire.emit('exit.shutdown');
     }
-  );
+
+    // No seed name - show existing list or execute by number,
+    // depending on `-n` argument
+    //
+    let apps;
+    if (app_name) {
+      apps = [ { name: app_name, root: get_app_path(app_name) } ];
+    } else {
+      apps = N.apps;
+    }
+
+    // Collect seeds
+    //
+    let seed_list = [];
+    apps.forEach(function (app) {
+      let seed_dir = path.join(app.root, SEEDS_DIR);
+
+      glob.sync('**/*.js', { cwd: seed_dir })
+        // skip files when
+        // - filename starts with _, e.g.: /foo/bar/_baz.js
+        // - dirname in path starts _, e.g. /foo/_bar/baz.js
+        .filter(name => !/^[._]|\\[._]|\/[_.]/.test(name))
+        .forEach(file => seed_list.push({
+          name:      app.name,
+          seed_path: path.join(seed_dir, file)
+        }));
+    });
+
+    // Execute seed by number
+    //
+    if (!_.isEmpty(args.seed_numbers)) {
+      // protect production env from accident run
+      if ([ 'development', 'test' ].indexOf(env) === -1 && !args.force) {
+        throw `Error: Can't run seed from ${env} environment. Please, use -f to force.`;
+      }
+
+      // check that specified seed exists
+      for (let i = 0; i < args.seed_numbers.length; i++) {
+        if (!seed_list[args.seed_numbers[i] - 1]) {
+          console.log(`Seed number ${args.seed_numbers[i]} does not exist`);
+          return N.wire.emit('exit.shutdown', 1);
+        }
+      }
+
+      // Execute seeds
+      for (let i = 0; i < args.seed_numbers.length; i++) {
+        let n = args.seed_numbers[i] - 1;
+
+        yield seed_run(N, seed_list[n].name, seed_list[n].seed_path);
+      }
+
+      return N.wire.emit('exit.shutdown');
+    }
+
+    //
+    // No params - just display seeds list
+    //
+    console.log('Available seeds:\n');
+
+    _.forEach(seed_list, function (seed, idx) {
+      console.log(`  ${idx + 1}. ${seed.name}: ${path.basename(seed.seed_path)}`);
+    });
+
+    console.log('\nSeeds are shown in `<APP>: <SEED_NAME>` form.');
+    console.log('See `seed --help` for details');
+    return N.wire.emit('exit.shutdown');
+  });
 };

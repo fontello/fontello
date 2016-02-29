@@ -4,7 +4,8 @@
 'use strict';
 
 
-var _ = require('lodash');
+const _  = require('lodash');
+const co = require('co');
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -40,50 +41,43 @@ module.exports.commandLineArguments = [
 ];
 
 
-module.exports.run = function (N, args, callback) {
+module.exports.run = function (N, args) {
 
-  // Reduce log level
-  N.logger.setLevel('info');
+  return co(function* () {
+    // Reduce log level
+    N.logger.setLevel('info');
 
-  N.wire.emit([
-      'init:models',
-      'init:bundle',
-      'init:server'
-    ], N,
+    yield Promise.resolve()
+      .then(() => N.wire.emit('init:models', N))
+      .then(() => N.wire.emit('init:bundle', N))
+      .then(() => N.wire.emit('init:server', N));
 
-    function (err) {
-      if (err) {
-        callback(err);
+    /*eslint-disable no-console*/
+    console.log('\n');
+
+    _.forEach(N.wire.stat(), function (hook) {
+      // try to filter by pattern, if set
+      if (args.mask && (hook.name.indexOf(args.mask) === -1)) {
         return;
       }
 
-      console.log('\n');
+      if (args.short) {
+        // short formst
+        console.log(`- ${hook.name}`);
+      } else {
+        // long format
+        console.log(`\n${hook.name} -->\n`);
+        _.forEach(hook.listeners, function (h) {
+          console.log(
+            `  - [${h.priority}] ${h.name}     (cnt: ${h.ncalled})` +
+            (h.ensure ? '    !permanent' : '')
+          );
+        });
+      }
+    });
 
-      _.each(N.wire.stat(), function (hook) {
-        // try to filter by pattern, if set
-        if (args.mask && (-1 === hook.name.indexOf(args.mask))) {
-          return;
-        }
+    console.log('\n');
 
-        if (args.short) {
-          // short formst
-          console.log('- ' + hook.name);
-        } else {
-          // long format
-          console.log('\n' + hook.name + ' -->\n');
-          _.each(hook.listeners, function (handler) {
-            console.log(
-              '  - ' +
-              '[' + handler.priority + '] ' + handler.name +
-              '     (cnt: ' + handler.ncalled + ')' +
-              (handler.ensure ? '    !permanent' : '')
-            );
-          });
-        }
-      });
-
-      console.log('\n');
-      process.exit(0);
-    }
-  );
+    return N.wire.emit('exit.shutdown');
+  });
 };

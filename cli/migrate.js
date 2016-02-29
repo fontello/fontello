@@ -4,13 +4,12 @@
 'use strict';
 
 
-var async = require('async');
+const co = require('co');
 
 
 ////////////////////////////////////////////////////////////////////////////////
 
 
-//exports.commandName       = 'migrate';
 exports.parserParameters  = {
   addHelp:      true,
   help:         'run migrations',
@@ -20,7 +19,7 @@ exports.parserParameters  = {
 
 module.exports.commandLineArguments = [
   {
-    args: ['--all'],
+    args: [ '--all' ],
     options: {
       help:   'run all migrations',
       action: 'storeTrue'
@@ -28,93 +27,54 @@ module.exports.commandLineArguments = [
   }
 ];
 
-module.exports.run = function (N, args, callback) {
+module.exports.run = function (N, args) {
 
-  N.wire.skip('init:models', 'migrations_check');
+  return co(function* () {
+    N.wire.skip('init:models', 'migrations_check');
 
-  N.wire.emit([
-      'init:models'
-    ], N,
+    yield N.wire.emit('init:models', N);
 
-    function (err) {
-      if (err) {
-        callback(err);
-        return;
-      }
+    /*eslint-disable no-console*/
 
-      var Migration = N.models.Migration;
+    let Migration = N.models.Migration;
 
-      // fetch used migrations from db
-      Migration.getLastState(function (err, currentMigrations) {
-        var outstandingMigrations;
+    // fetch used migrations from db
+    let currentMigrations = yield Migration.getLastState();
 
-        if (err) {
-          callback(err);
-          return;
-        }
+    let outstandingMigrations = Migration.checkMigrations(N, currentMigrations);
 
-        outstandingMigrations = Migration.checkMigrations(N, currentMigrations);
-
-        if (0 === outstandingMigrations.length) {
-          console.log(args.all  ? 'Already up-to-date.'
-                                : 'You have no outstanding migrations');
-          process.exit(0);
-        }
-
-        function formatMigrationTitle(migration) {
-          return migration.appName + ':' + migration.step;
-        }
-
-        if (!args.all) {
-          console.log('You have ' + outstandingMigrations.length +
-                      ' outstanding migration(s):\n');
-
-          outstandingMigrations.forEach(function (migration) {
-            console.log('  ' + formatMigrationTitle(migration));
-          });
-
-          console.log('\nRun `migrate` command with `--all` to apply them.');
-          process.exit(0);
-        }
-
-        console.log('Applying ' + outstandingMigrations.length +
-                    ' outstanding migration(s):\n');
-
-        async.forEachSeries(outstandingMigrations, function (migration, next) {
-          var up;
-
-          process.stdout.write('  ' + formatMigrationTitle(migration) + ' ... ');
-
-          try {
-            up = require(migration.filename).up;
-          } catch (err) {
-            console.log('FAILED');
-            next(err);
-            return;
-          }
-
-          up(N, function (err) {
-            if (err) {
-              console.log('FAILED');
-              next(err);
-              return;
-            }
-
-            // All ok. Write step to db
-            Migration.markPassed(migration.appName, migration.step, function (err) {
-              console.log(err ? 'FAILED' : 'OK');
-              next(err);
-            });
-          });
-        }, function (err) {
-          if (err) {
-            callback(err);
-            return;
-          }
-
-          process.exit(0);
-        });
-      });
+    if (outstandingMigrations.length === 0) {
+      console.log(args.all  ? 'Already up-to-date.'
+                            : 'You have no outstanding migrations');
+      return N.wire.emit('exit.shutdown');
     }
-  );
+
+    if (!args.all) {
+      console.log(`You have ${outstandingMigrations.length} outstanding migration(s):\n`);
+
+      outstandingMigrations.forEach(function (migration) {
+        console.log(`  ${migration.appName}:${migration.step}`);
+      });
+
+      console.log('\nRun `migrate` command with `--all` to apply them.');
+      return N.wire.emit('exit.shutdown');
+    }
+
+    console.log(`Applying ${outstandingMigrations.length} outstanding migration(s):\n`);
+
+    for (let i = 0; i < outstandingMigrations.length; i++) {
+      let migration = outstandingMigrations[i];
+
+      process.stdout.write(`  ${migration.appName}:${migration.step} ... `);
+
+      yield require(migration.filename).up(N);
+
+      console.log('OK');
+
+          // All ok. Write step to db
+      yield Migration.markPassed(migration.appName, migration.step);
+    }
+
+    return N.wire.emit('exit.shutdown');
+  });
 };
