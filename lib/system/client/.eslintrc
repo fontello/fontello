@@ -1,0 +1,11 @@
+env:
+  node: false
+  browser: true
+
+globals:
+  $: false
+  N: false
+  module: false
+  exports: true
+  require: false
+  t: false
