@@ -1,0 +1,106 @@
+{
+  "name": "icons",
+  "css_prefix_text": "icon-",
+  "css_use_suffix": false,
+  "hinting": true,
+  "units_per_em": 1000,
+  "ascent": 850,
+  "glyphs": [
+    {
+      "uid": "9bd60140934a1eb9236fd7a8ab1ff6ba",
+      "css": "load",
+      "code": 59444,
+      "src": "fontelico"
+    },
+    {
+      "uid": "62c089cb34e74b3a1200bc7f5314eb4e",
+      "css": "firefox",
+      "code": 59456,
+      "src": "fontelico"
+    },
+    {
+      "uid": "9c2b737b16ae2c8d66b7bfd29ba5ecd8",
+      "css": "chrome",
+      "code": 59457,
+      "src": "fontelico"
+    },
+    {
+      "uid": "45861dd1e5ce4fde338bcccf01eeb808",
+      "css": "opera",
+      "code": 59458,
+      "src": "fontelico"
+    },
+    {
+      "uid": "d35a1d35efeb784d1dc9ac18b9b6c2b6",
+      "css": "edit",
+      "code": 59392,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "5bb103cd29de77e0e06a52638527b575",
+      "css": "settings",
+      "code": 61441,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "627abcdb627cb1789e009c08e2678ef9",
+      "css": "twitter-bird",
+      "code": 59393,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "7222571caa5c15f83dcfd447c58d68d9",
+      "css": "search",
+      "code": 61443,
+      "src": "entypo"
+    },
+    {
+      "uid": "e335adbc2d898c7d85d40c507796e7b4",
+      "css": "mail",
+      "code": 9993,
+      "src": "entypo"
+    },
+    {
+      "uid": "14017aae737730faeda4a6fd8fb3a5f0",
+      "css": "check",
+      "code": 10003,
+      "src": "entypo"
+    },
+    {
+      "uid": "c709da589c923ba3c2ad48d9fc563e93",
+      "css": "remove",
+      "code": 10005,
+      "src": "entypo"
+    },
+    {
+      "uid": "513ac180ff85bd275f2b736720cbbf5e",
+      "css": "home",
+      "code": 8962,
+      "src": "entypo"
+    },
+    {
+      "uid": "815503841e980c848f55e0271deacead",
+      "css": "link",
+      "code": 61442,
+      "src": "entypo"
+    },
+    {
+      "uid": "b08cfe8039de2ce815686aced2caef06",
+      "css": "download",
+      "code": 61440,
+      "src": "entypo"
+    },
+    {
+      "uid": "e8d13cd05bd63219329b2b61835d776c",
+      "css": "dribbble",
+      "code": 62235,
+      "src": "entypo"
+    },
+    {
+      "uid": "24d1008bf15b6c02a5e7a6af026987dd",
+      "css": "github-text",
+      "code": 62215,
+      "src": "brandico"
+    }
+  ]
+}

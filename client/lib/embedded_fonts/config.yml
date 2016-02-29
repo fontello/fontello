@@ -1,0 +1,11 @@
+inherit: false
+recursive: false
+public: true
+type:
+  widget_css:
+    - fontface_fontello.css
+  bin:
+    - font/fontello.eot
+    - font/fontello.svg
+    - font/fontello.ttf
+    - font/fontello.woff

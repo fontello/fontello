@@ -1,0 +1,12 @@
+inherit: false
+recursive: false
+public: true
+type:
+  widget_css:
+    - index.css
+    - src/css/icons-codes.css
+  bin:
+    - src/font/icons.eot
+    - src/font/icons.svg
+    - src/font/icons.ttf
+    - src/font/icons.woff

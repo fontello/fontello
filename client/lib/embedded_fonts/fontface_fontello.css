@@ -1,0 +1,12 @@
+.font-fontello { font-family: 'fontello'; }
+
+@font-face {
+  font-family: 'fontello';
+  src: url('$$ asset_url("./client/lib/embedded_fonts/font/fontello.eot") $$');
+  src: url('$$ asset_url("./client/lib/embedded_fonts/font/fontello.eot") $$'?#iefix) format('embedded-opentype'),
+       url('$$ asset_url("./client/lib/embedded_fonts/font/fontello.woff") $$') format('woff'),
+       url('$$ asset_url("./client/lib/embedded_fonts/font/fontello.ttf") $$') format('truetype'),
+       url('$$ asset_url("./client/lib/embedded_fonts/font/fontello.svg") $$'#entypo) format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

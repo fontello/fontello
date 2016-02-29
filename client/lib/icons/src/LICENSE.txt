@@ -1,0 +1,39 @@
+Font license info
+
+
+## Fontelico
+
+   Copyright (C) 2012 by Fontello project
+
+   Author:    Crowdsourced, for Fontello project
+   License:   SIL (http://scripts.sil.org/OFL)
+   Homepage:  http://fontello.com
+
+
+## Brandico
+
+   (C) 2012 by Vitaly Puzrin
+
+   Author:    Crowdsourced, for Fontello project
+   License:   SIL (http://scripts.sil.org/OFL)
+   Homepage:  
+
+
+## Font Awesome
+
+   Copyright (C) 2012 by Dave Gandy
+
+   Author:    Dave Gandy
+   License:   SIL ()
+   Homepage:  http://fortawesome.github.com/Font-Awesome/
+
+
+## Entypo
+
+   Copyright (C) 2012 by Daniel Bruce
+
+   Author:    Daniel Bruce
+   License:   CC BY-SA (http://creativecommons.org/licenses/by-sa/2.0/)
+   Homepage:  http://www.entypo.com
+
+
