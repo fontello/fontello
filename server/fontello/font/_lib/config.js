@@ -60,7 +60,7 @@ var _ = require('lodash');
 var svgpath = require('svgpath');
 
 
-var fontConfigs = require('../../../lib/embedded_fonts/server_config');
+var fontConfigs = require('../../../../lib/embedded_fonts/server_config');
 
 function collectGlyphsInfo(clientConfig) {
   var result = [];
@@ -125,7 +125,7 @@ function collectGlyphsInfo(clientConfig) {
 function collectFontsInfo(glyphs) {
   var result = [];
 
-  _(glyphs).pluck('src').unique().forEach(function (fontname) {
+  _(glyphs).map('src').uniq().forEach(function (fontname) {
     var font = fontConfigs.fonts[fontname];
     var meta = fontConfigs.metas[fontname];
 

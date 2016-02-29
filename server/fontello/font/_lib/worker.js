@@ -19,10 +19,10 @@ var jade     = require('jade');
 var b64      = require('base64-js');
 
 //var AdmZip   = require('adm-zip');
-var io       = require('../../../lib/system/io');
+var io       = require('../../../../lib/system/io');
 
 
-var TEMPLATES_DIR = path.join(__dirname, '../../../support/font-templates');
+var TEMPLATES_DIR = path.join(__dirname, '../../../../support/font-templates');
 var TEMPLATES = {};
 
 _.forEach({
@@ -182,7 +182,7 @@ module.exports = function fontWorker(taskInfo, callback) {
 
   var TTFAUTOHINT_BIN = 'ttfautohint';
   workplan.push(function (next) {
-    var max_segments = _.max(taskInfo.builderConfig.glyphs, function (glyph) { return glyph.segments; }).segments;
+    var max_segments = _.maxBy(taskInfo.builderConfig.glyphs, function (glyph) { return glyph.segments; }).segments;
 
     // KLUDGE :)
     // Don't allow hinting if font has "strange" glyphs.

@@ -198,12 +198,12 @@ function checkFont(fontId, callback) {
 
 module.exports = _.once(function (N) {
   // Init internals at first call.
-  builderVersion   = N.runtime.version;
+  builderVersion   = N.version_hash;
   builderLogger    = N.logger.getLogger('font');
   builderTmpDir    = path.join(os.tmpDir(), 'fontello');
-  builderCwdDir    = N.runtime.mainApp.root;
-  builderOutputDir = path.join(N.runtime.mainApp.root, 'public', 'download');
-  builderBinary    = path.join(N.runtime.mainApp.root, 'bin', 'generate_font.sh');
+  builderCwdDir    = N.mainApp.root;
+  builderOutputDir = path.join(N.mainApp.root, 'assets', 'public', 'download');
+  builderBinary    = path.join(N.mainApp.root, 'bin', 'generate_font.sh');
   builderQueue     = async.queue(fontWorker, BUILDER_CONCURRENCY);
   builderTasks     = {};
 
