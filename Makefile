@@ -80,8 +80,7 @@ lint:
 
 cleanup:
 	# cleanup assets
-	rm -rf public/assets
-	rm -rf .cache
+	rm -rf assets/cache
 
 # needed for travis
 setup:

@@ -4,3 +4,5 @@
   database:
 
     mongo: localhost/fontello-test
+
+  fork: 1
