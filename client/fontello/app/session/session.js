@@ -42,7 +42,7 @@ var store = {};
 
 store.exists = _.memoize(function () {
   try {
-    localStorage.setItem('__ls_test__','__ls_test__');
+    localStorage.setItem('__ls_test__', '__ls_test__');
     localStorage.removeItem('__ls_test__');
     return true;
 
@@ -58,16 +58,16 @@ store.remove = function (key) {
 
 store.set = function (key, value) {
   if (!store.exists()) { return; }
-  if (value === undefined) { return store.remove(key); }
+  if (_.isUndefined(value)) { return store.remove(key); }
   localStorage.setItem(key, JSON.stringify(value));
 };
 
 store.get = function (key) {
-  if (!store.exists()) { return undefined; }
+  if (!store.exists()) { return; }
   try {
     return JSON.parse(localStorage.getItem(key));
   } catch (e) {
-    return undefined;
+    return;
   }
 };
 
@@ -138,7 +138,7 @@ N.wire.on('session_save', _.debounce(function () {
   store.set(STORAGE_KEY, {
     font_size: N.app.fontSize(),
     // now always write to idx 0, until multisession support added
-    sessions: [session]
+    sessions: [ session ]
   });
 
 }, 500));
@@ -163,7 +163,7 @@ N.wire.on('session_load', function () {
 
   // Try to find current session
   session = _.find(data.sessions, function (session) {
-    return '$current$' === session.name;
+    return session.name === '$current$';
   });
 
   if (!session) { return; }

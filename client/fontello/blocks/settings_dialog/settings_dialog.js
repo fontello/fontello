@@ -23,15 +23,15 @@ N.wire.once('navigate.done', function () {
     var prev_units;
 
     // On units per em change - scale ascent/descent and keep them integer.
-    this.units.subscribe(function(units) {
+    this.units.subscribe(function (units) {
       prev_units = +units;
     }, null, 'beforeChange');
 
-    this.units.subscribe(function(units) {
+    this.units.subscribe(function (units) {
       dependencies = false;
 
       var scale = +units / (prev_units);
-      var ascent = +(this.ascent()*scale).toFixed(0);
+      var ascent = +(this.ascent() * scale).toFixed(0);
       var descent = ascent - units;
       this.ascent(ascent);
       this.descent(descent);
@@ -41,11 +41,11 @@ N.wire.once('navigate.done', function () {
     }, this);
 
 
-    this.baseline.subscribe(function(baseline) {
+    this.baseline.subscribe(function (baseline) {
       if (dependencies) {
         dependencies = false;
 
-        var ascent = +(this.units() * (1-(+baseline)/100)).toFixed(0);
+        var ascent = +(this.units() * (1 - (+baseline) / 100)).toFixed(0);
         this.ascent(ascent);
         this.descent(ascent - this.units());
 
@@ -54,7 +54,7 @@ N.wire.once('navigate.done', function () {
     }, this);
 
 
-    this.ascent.subscribe(function(ascent) {
+    this.ascent.subscribe(function (ascent) {
       if (dependencies) {
         dependencies = false;
 
@@ -67,7 +67,7 @@ N.wire.once('navigate.done', function () {
     }, this);
 
 
-    this.descent.subscribe(function(descent) {
+    this.descent.subscribe(function (descent) {
       if (dependencies) {
         dependencies = false;
 
@@ -96,8 +96,8 @@ N.wire.once('navigate.done', function () {
 
     ko.applyBindings(settings, $dialog.get(0));
 
-    $dialog.find('#st__upm').numeric({ decimal: false, negative: false});
-    $dialog.find('#st__ascent').numeric({ decimal: false, negative: false});
+    $dialog.find('#st__upm').numeric({ decimal: false, negative: false });
+    $dialog.find('#st__ascent').numeric({ decimal: false, negative: false });
     $dialog.find('#st__descent').numeric({ decimal: false });
     $dialog.find('#st__baseline').numeric();
 

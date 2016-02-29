@@ -6,7 +6,7 @@ var _  = require('lodash');
 var svg2ttf = require('svg2ttf');
 var b64     = require('base64-js');
 
-module.exports = function(svg, fontId) {
+module.exports = function (svg, fontId) {
   if (!svg) {
     return;
   }

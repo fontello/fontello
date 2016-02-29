@@ -12,7 +12,7 @@
 //       src: fontname
 //       code: codepoint
 //       css:
-// 
+//
 // For custom icons
 //
 //       selected: flag
@@ -47,7 +47,7 @@
 //     - ...
 //
 //   fonts_list:
-//     -     
+//     -
 //      font:
 //      meta:
 //
@@ -69,9 +69,9 @@ function collectGlyphsInfo(clientConfig) {
   _.forEach(clientConfig.glyphs, function (glyph) {
     var sp;
 
-    if(glyph.src === 'custom_icons') {
+    if (glyph.src === 'custom_icons') {
 
-      // for custom glyphs use only selected ones      
+      // for custom glyphs use only selected ones
       if (!glyph.selected) { return; }
 
       sp = svgpath(glyph.svg.path)
@@ -80,13 +80,13 @@ function collectGlyphsInfo(clientConfig) {
               .abs().round(0).rel();
 
       result.push({
-        src:      glyph.src
-      , uid:      glyph.uid
-      , code:     glyph.code
-      , css:      glyph.css
-      , width:    +(glyph.svg.width * scale).toFixed(1)
-      , d:        sp.toString()
-      , segments: sp.segments.length
+        src:      glyph.src,
+        uid:      glyph.uid,
+        code:     glyph.code,
+        css:      glyph.css,
+        width:    +(glyph.svg.width * scale).toFixed(1),
+        d:        sp.toString(),
+        segments: sp.segments.length
       });
       return;
     }
@@ -102,14 +102,14 @@ function collectGlyphsInfo(clientConfig) {
             .abs().round(0).rel();
 
     result.push({
-      src:        glyphEmbedded.fontname
-    , uid:        glyph.uid
-    , code:       glyph.code || glyphEmbedded.code
-    , css:        glyph.css || glyphEmbedded.css
-    , 'css-ext':  glyphEmbedded['css-ext']
-    , width:      +(glyphEmbedded.svg.width * scale).toFixed(1)
-    , d:        sp.toString()
-    , segments: sp.segments.length
+      src:       glyphEmbedded.fontname,
+      uid:       glyph.uid,
+      code:      glyph.code || glyphEmbedded.code,
+      css:       glyph.css || glyphEmbedded.css,
+      'css-ext': glyphEmbedded['css-ext'],
+      width:     +(glyphEmbedded.svg.width * scale).toFixed(1),
+      d:         sp.toString(),
+      segments:  sp.segments.length
     });
 
   });
@@ -180,25 +180,25 @@ module.exports = function fontConfig(clientConfig) {
 
   return {
     font: {
-      fontname:   fontname
-    , fullname:   fontname
+      fontname:   fontname,
+      fullname:   fontname,
       // !!! IMPORTANT for IE6-8 !!!
       // due bug, EOT requires `familyname` begins `fullname`
       // https://github.com/fontello/fontello/issues/73?source=cc#issuecomment-7791793
-    , familyname: fontname
-    , copyright:  !_.isEmpty(fontsInfo) ? defaultCopyright : (clientConfig.copyright || defaultCopyright)
-    , ascent:     clientConfig.ascent
-    , descent:    clientConfig.ascent - clientConfig.units_per_em
-    , weight:     400
-    }
-  , hinting : clientConfig.hinting !== false
-  , meta: {
-      columns: 4 // Used by the demo page.
+      familyname: fontname,
+      copyright: !_.isEmpty(fontsInfo) ? defaultCopyright : (clientConfig.copyright || defaultCopyright),
+      ascent:    clientConfig.ascent,
+      descent:   clientConfig.ascent - clientConfig.units_per_em,
+      weight:    400
+    },
+    hinting: clientConfig.hinting !== false,
+    meta: {
+      columns: 4, // Used by the demo page.
       // Set defaults if fields not exists in config
-    , css_prefix_text: clientConfig.css_prefix_text || 'icon-'
-    , css_use_suffix:  Boolean(clientConfig.css_use_suffix)
-    }
-  , glyphs:     glyphsInfo
-  , fonts_list: fontsInfo
+      css_prefix_text: clientConfig.css_prefix_text || 'icon-',
+      css_use_suffix:  Boolean(clientConfig.css_use_suffix)
+    },
+    glyphs: glyphsInfo,
+    fonts_list: fontsInfo
   };
 };

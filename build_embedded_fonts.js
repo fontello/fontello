@@ -7,7 +7,7 @@ var fs        = require('fs');
 var path      = require('path');
 var _         = require('lodash');
 var yaml      = require('js-yaml');
-var domparser      = require('xmldom').DOMParser;
+var Domparser      = require('xmldom').DOMParser;
 var ArgumentParser = require('argparse').ArgumentParser;
 var SvgPath   = require('svgpath');
 
@@ -53,7 +53,7 @@ var svgFontTemplate = _.template(
 
 function parseSvgImage(data, filename) {
 
-  var doc = (new domparser()).parseFromString(data, 'application/xml');
+  var doc = (new Domparser()).parseFromString(data, 'application/xml');
   var svg = doc.getElementsByTagName('svg')[0];
 
   if (!svg.hasAttribute('height')) {
@@ -132,7 +132,7 @@ var internalCode = 0xF000;
 // Scan sources
 //
 
-_.forEach(args.input_fonts, function(fontDir) {
+_.forEach(args.input_fonts, function (fontDir) {
   // Iterate each font
   var cfg = yaml.load(fs.readFileSync(path.resolve(fontDir, 'config.yml'), 'utf8'));
 
@@ -148,7 +148,7 @@ _.forEach(args.input_fonts, function(fontDir) {
   };
 
   // iterate glyphs
-  _.forEach(cfg.glyphs, function(glyph) {
+  _.forEach(cfg.glyphs, function (glyph) {
 
     if (configServer.uids[glyph.uid]) {
       console.log('Duplicated uid "' + glyph.uid + '"in ' + fontDir);
@@ -156,7 +156,7 @@ _.forEach(args.input_fonts, function(fontDir) {
     }
 
     // Cleanup fields list
-    var glyph_data = _.pick(glyph, ['css', 'code', 'uid', 'search', 'css-ext']);
+    var glyph_data = _.pick(glyph, [ 'css', 'code', 'uid', 'search', 'css-ext' ]);
 
     // Add char code in joined (embedded) font
     glyph_data.charRef = internalCode;

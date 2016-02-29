@@ -11,29 +11,25 @@ var fontBuilder = require('./_lib/builder');
 
 
 module.exports = function (N, apiPath) {
-  var logger  = N.logger.getLogger('font.download')
-    , builder = fontBuilder(N);
+  var logger  = N.logger.getLogger('font.download'),
+      builder = fontBuilder(N);
 
 
   N.validate(apiPath, {
-    id: {
-      type: 'string'
-    , required: true
-    , pattern: /^[0-9a-f]{32}$/
-    }
+    id: { type: 'string', required: true, pattern: /^[0-9a-f]{32}$/ }
   });
 
 
   N.wire.on(apiPath, function (env, callback) {
-    var req = env.origin.req
-      , res = env.origin.res;
+    var req = env.origin.req,
+        res = env.origin.res;
 
-    if ('http' !== env.req.type) {
+    if (env.req.type !== 'http') {
       callback(N.io.BAD_REQUEST);
       return;
     }
 
-    if ('GET' !== req.method && 'HEAD' !== req.method) {
+    if (req.method !== 'GET' && req.method !== 'HEAD') {
       callback(N.io.BAD_REQUEST);
       return;
     }
@@ -63,14 +59,14 @@ module.exports = function (N, apiPath) {
           res.setHeader('Content-Disposition', 'attachment; ' + filename);
         })
         .on('end', function () {
-          logger.info('%s - "%s %s HTTP/%s" %d "%s" - %s'
-          , req.connection.remoteAddress
-          , req.method
-          , req.url
-          , req.httpVersion
-          , res.statusCode
-          , req.headers['user-agent'] || ''
-          , http.STATUS_CODES[res.statusCode]
+          logger.info('%s - "%s %s HTTP/%s" %d "%s" - %s',
+            req.connection.remoteAddress,
+            req.method,
+            req.url,
+            req.httpVersion,
+            res.statusCode,
+            req.headers['user-agent'] || '',
+            http.STATUS_CODES[res.statusCode]
           );
         })
         .pipe(res);

@@ -32,7 +32,7 @@ N.wire.once('navigate.done', { priority: 10 }, function () {
   //
 
   N.app.fontsList.selectedCount.subscribe(function (count) {
-    if (0 === count) {
+    if (count === 0) {
       jumpToSelector();
     }
   });

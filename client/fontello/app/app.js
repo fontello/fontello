@@ -81,7 +81,7 @@ N.wire.once('navigate.done', { priority: -90 }, function () {
     return config;
   };
 
-  N.app.serverSave  = function() {
+  N.app.serverSave  = function () {
     if (!N.app.apiSessionId) { return; }
 
     return N.io.rpc('fontello.api.update', { sid: N.app.apiSessionId, config: N.app.getConfig() });
@@ -111,16 +111,16 @@ N.wire.once('navigate.done', { priority: -10 }, function () {
   // Setup autosave
   //
 
-  [ 'fontName'
-  , 'fontSize'
-  , 'cssPrefixText'
-  , 'cssUseSuffix'
-  , 'hinting'
-  , 'encoding'
-  , 'fontUnitsPerEm'
-  , 'fontAscent'
-  , 'fontFullName'
-  , 'fontCopyright'
+  [ 'fontName',
+    'fontSize',
+    'cssPrefixText',
+    'cssUseSuffix',
+    'hinting',
+    'encoding',
+    'fontUnitsPerEm',
+    'fontAscent',
+    'fontFullName',
+    'fontCopyright'
   ].forEach(function (key) {
     N.app[key].subscribe(function () {
       N.wire.emit('session_save');
@@ -150,6 +150,7 @@ N.wire.once('navigate.done', { priority: -10 }, function () {
     // is `src` set, then event was produced
     // by link click and we need confirmation
     if (src) {
+      /*eslint-disable no-alert*/
       if (!window.confirm(t('confirm_app_reset'))) {
         return;
       }
@@ -160,8 +161,8 @@ N.wire.once('navigate.done', { priority: -10 }, function () {
     N.app.fontsList.unselectAll();
 
     N.app.fontsList.lock();
-    _.each(N.app.fontsList.fonts, function(font) {
-      _.each(font.glyphs(), function(glyph) {
+    _.each(N.app.fontsList.fonts, function (font) {
+      _.each(font.glyphs(), function (glyph) {
         glyph.code(glyph.originalCode);
         glyph.name(glyph.originalName);
       });

@@ -26,25 +26,25 @@ var TEMPLATES_DIR = path.join(__dirname, '../../../../support/font-templates');
 var TEMPLATES = {};
 
 _.forEach({
-  'demo.jade'              : 'demo.html'
-, 'css/css.jade'           : 'css/${FONTNAME}.css'
-, 'css/css-ie7.jade'       : 'css/${FONTNAME}-ie7.css'
-, 'css/css-codes.jade'     : 'css/${FONTNAME}-codes.css'
-, 'css/css-ie7-codes.jade' : 'css/${FONTNAME}-ie7-codes.css'
-, 'css/css-embedded.jade'  : 'css/${FONTNAME}-embedded.css'
-, 'LICENSE.jade'           : 'LICENSE.txt'
-, 'css/animation.css'      : 'css/animation.css'
-, 'README.txt'             : 'README.txt'
+  'demo.jade':              'demo.html',
+  'css/css.jade':           'css/${FONTNAME}.css',
+  'css/css-ie7.jade':       'css/${FONTNAME}-ie7.css',
+  'css/css-codes.jade':     'css/${FONTNAME}-codes.css',
+  'css/css-ie7-codes.jade': 'css/${FONTNAME}-ie7-codes.css',
+  'css/css-embedded.jade':  'css/${FONTNAME}-embedded.css',
+  'LICENSE.jade':           'LICENSE.txt',
+  'css/animation.css':      'css/animation.css',
+  'README.txt':             'README.txt'
 }, function (outputName, inputName) {
-  var inputFile = path.join(TEMPLATES_DIR, inputName)
-    , inputData = fs.readFileSync(inputFile, 'utf8')
-    , outputData;
+  var inputFile = path.join(TEMPLATES_DIR, inputName),
+      inputData = fs.readFileSync(inputFile, 'utf8'),
+      outputData;
 
   switch (path.extname(inputName)) {
   case '.jade': // Jade template.
     outputData = jade.compile(inputData, {
-      pretty:   true
-    , filename: inputFile
+      pretty:   true,
+      filename: inputFile
     });
     break;
 
@@ -101,32 +101,33 @@ var SVG_FONT_TEMPLATE = _.template(
 
 
 module.exports = function fontWorker(taskInfo, callback) {
-  var logPrefix = '[font::' + taskInfo.fontId + ']'
-    , timeStart = Date.now()
-    , workplan  = []
-    , fontname  = taskInfo.builderConfig.font.fontname
-    , files
+  var logPrefix = '[font::' + taskInfo.fontId + ']',
+    timeStart = Date.now(),
+    workplan  = [],
+    fontname  = taskInfo.builderConfig.font.fontname,
+    files,
       // All next: generated raw data.
-    , configOutput = JSON.stringify(taskInfo.clientConfig, null, '  ')
-    , svgOutput
-    , ttfOutput
-    , eotOutput
-    , woffOutput;
+    configOutput = JSON.stringify(taskInfo.clientConfig, null, '  '),
+    svgOutput,
+    ttfOutput,
+    eotOutput,
+    woffOutput;
 
   taskInfo.logger.info('%s Start generation: %j', logPrefix, taskInfo.clientConfig);
 
   // Collect file paths.
   files = {
-    config:       path.join(taskInfo.tmpDir, 'config.json')
-  , svg:          path.join(taskInfo.tmpDir, 'font', fontname + '.svg')
-  , ttf:          path.join(taskInfo.tmpDir, 'font', fontname + '.ttf')
-  , ttfUnhinted:  path.join(taskInfo.tmpDir, 'font', fontname + '-unhinted.ttf')
-  , eot:          path.join(taskInfo.tmpDir, 'font', fontname + '.eot')
-  , woff:         path.join(taskInfo.tmpDir, 'font', fontname + '.woff')
+    config:      path.join(taskInfo.tmpDir, 'config.json'),
+    svg:         path.join(taskInfo.tmpDir, 'font', fontname + '.svg'),
+    ttf:         path.join(taskInfo.tmpDir, 'font', fontname + '.ttf'),
+    ttfUnhinted: path.join(taskInfo.tmpDir, 'font', fontname + '-unhinted.ttf'),
+    eot:         path.join(taskInfo.tmpDir, 'font', fontname + '.eot'),
+    woff:        path.join(taskInfo.tmpDir, 'font', fontname + '.woff')
   };
 
   // Generate initial SVG font.
 
+  /*eslint-disable new-cap*/
   svgOutput = SVG_FONT_TEMPLATE(taskInfo.builderConfig);
 
   // Prepare temporary working directory.
@@ -155,7 +156,10 @@ module.exports = function fontWorker(taskInfo, callback) {
     , { cwd: taskInfo.cwdDir }
     , function (err) {
       if (err) {
-        next({ code: io.APP_ERROR, message: 'Fontforge exec error. Probably, missed binary, or some glyph codes are invalid' });
+        next({
+          code: io.APP_ERROR,
+          message: 'Fontforge exec error. Probably, missed binary, or some glyph codes are invalid'
+        });
         return;
       }
       next();
@@ -270,9 +274,9 @@ module.exports = function fontWorker(taskInfo, callback) {
       return;
     }
 
-    var outputName = templateName.replace('${FONTNAME}', fontname)
-      , outputFile = path.join(taskInfo.tmpDir, outputName)
-      , outputData = templateData(taskInfo.builderConfig);
+    var outputName = templateName.replace('${FONTNAME}', fontname),
+        outputFile = path.join(taskInfo.tmpDir, outputName),
+        outputData = templateData(taskInfo.builderConfig);
 
     workplan.push(function (next) {
       outputData = outputData.replace('%WOFF64%', b64.fromByteArray(woffOutput))
@@ -294,9 +298,9 @@ module.exports = function fontWorker(taskInfo, callback) {
 
   var ZIP_BIN = 'zip';
   workplan.push(async.apply(execFile, ZIP_BIN, [
-    taskInfo.output + '.tmp'
-  , '-r'
-  , path.basename(taskInfo.tmpDir)
+    taskInfo.output + '.tmp',
+    '-r',
+    path.basename(taskInfo.tmpDir)
   ], { cwd: path.dirname(taskInfo.tmpDir) }));
   /* archives are sometime broken, use system zip
   workplan.push(function (next) {

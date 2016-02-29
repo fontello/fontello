@@ -21,7 +21,6 @@ var builderLogger      = null;
 var builderCwdDir      = null;
 var builderTmpDir      = null;
 var builderOutputDir   = null;
-var builderBinary      = null;
 var builderQueue       = null;
 var builderTasks       = null;
 
@@ -39,8 +38,8 @@ function getFontId(config) {
 
 
 function getOutputName(fontId) {
-  var firstDir  = fontId.substr(0, 2)
-    , secondDir = fontId.substr(2, 2);
+  var firstDir  = fontId.substr(0, 2),
+      secondDir = fontId.substr(2, 2);
 
   return path.join(firstDir, secondDir, (fontId + '.zip'));
 }
@@ -49,15 +48,15 @@ function getOutputName(fontId) {
 // (internal) Push new font building task into queue and return
 // `fontId`. Make sure, that task is not duplicated. If we can
 // return result immediately - do it.
-// 
+//
 function createTask(clientConfig, afterRegistered, afterComplete) {
-  var builderConfig = fontConfig(clientConfig)
-    , fontId        = getFontId(clientConfig)
-    , outputName    = getOutputName(fontId)
-    , outputFile    = path.join(builderOutputDir, outputName)
-    , taskInfo      = null;
+  var builderConfig = fontConfig(clientConfig),
+      fontId        = getFontId(clientConfig),
+      outputName    = getOutputName(fontId),
+      outputFile    = path.join(builderOutputDir, outputName),
+      taskInfo      = null;
 
-  if (!builderConfig || 0 >= builderConfig.glyphs.length) {
+  if (!builderConfig || builderConfig.glyphs.length <= 0) {
     if (afterRegistered) {
       afterRegistered('Invalid config.');
     }
@@ -91,8 +90,8 @@ function createTask(clientConfig, afterRegistered, afterComplete) {
     //
     if (_.has(builderTasks, fontId)) {
       builderLogger.info('Job is already in queue: %j', {
-        font_id:      fontId
-      , queue_length: Object.keys(builderTasks).length
+        font_id:      fontId,
+        queue_length: Object.keys(builderTasks).length
       });
 
       taskInfo = builderTasks[fontId];
@@ -110,15 +109,15 @@ function createTask(clientConfig, afterRegistered, afterComplete) {
     // Otherwise, create a new task.
     //
     taskInfo = {
-      fontId:        fontId
-    , clientConfig:  clientConfig
-    , builderConfig: builderConfig
-    , cwdDir:        builderCwdDir
-    , tmpDir:        path.join(builderTmpDir, 'fontello-' + fontId.substr(0, 8))
-    , output:        outputFile
-    , timestamp:     Date.now()
-    , callbacks:     []
-    , logger:        builderLogger
+      fontId:        fontId,
+      clientConfig:  clientConfig,
+      builderConfig: builderConfig,
+      cwdDir:        builderCwdDir,
+      tmpDir:        path.join(builderTmpDir, 'fontello-' + fontId.substr(0, 8)),
+      output:        outputFile,
+      timestamp:     Date.now(),
+      callbacks:     [],
+      logger:        builderLogger
     };
 
     if (afterComplete) {
@@ -137,8 +136,8 @@ function createTask(clientConfig, afterRegistered, afterComplete) {
     });
 
     builderLogger.info('New job created: %j', {
-      font_id:      fontId
-    , queue_length: Object.keys(builderTasks).length
+      font_id:      fontId,
+      queue_length: Object.keys(builderTasks).length
     });
 
     if (afterRegistered) {
@@ -176,15 +175,15 @@ function checkFont(fontId, callback) {
 
   // Check task pool first, to avoid fs kick
   // & make sure that file not partially written
-  // 
+  //
   if (_.has(builderTasks, fontId)) {
     callback(null, { pending: true });
     return;
   }
 
   // Ok, we have chance. Check if result exists on disk
-  var filename = getOutputName(fontId)
-    , filepath = path.join(builderOutputDir, filename);
+  var filename = getOutputName(fontId),
+    filepath = path.join(builderOutputDir, filename);
 
   fs.exists(filepath, function (exists) {
     if (exists) {
@@ -203,14 +202,13 @@ module.exports = _.once(function (N) {
   builderTmpDir    = path.join(os.tmpDir(), 'fontello');
   builderCwdDir    = N.mainApp.root;
   builderOutputDir = path.join(N.mainApp.root, 'assets', 'public', 'download');
-  builderBinary    = path.join(N.mainApp.root, 'bin', 'generate_font.sh');
   builderQueue     = async.queue(fontWorker, BUILDER_CONCURRENCY);
   builderTasks     = {};
 
   // Exports.
   return {
-    pushFont:  pushFont
-  , buildFont: buildFont
-  , checkFont: checkFont
+    pushFont:  pushFont,
+    buildFont: buildFont,
+    checkFont: checkFont
   };
 });

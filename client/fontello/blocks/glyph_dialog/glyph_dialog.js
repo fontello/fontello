@@ -52,7 +52,7 @@ N.wire.once('navigate.done', function () {
     glyph.customHex($dialog.find('#gopt__code').val());
 
     var keywords = $dialog.find('#gopt__keywords').val().split(',');
-    glyph.search = _.map(keywords, function(kw) { return $.trim(kw); });
+    glyph.search = _.map(keywords, function (kw) { return $.trim(kw); });
 
     N.wire.emit('search_flush');
     N.wire.emit('session_save');
@@ -61,6 +61,7 @@ N.wire.once('navigate.done', function () {
   });
 
   N.wire.on('cmd:glyph_remove', function settings_dialog_save() {
+    /*eslint-disable no-alert*/
     if (!window.confirm(t('confirm_delete'))) {
       return;
     }

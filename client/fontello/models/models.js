@@ -16,9 +16,9 @@ var embedded_fonts = require('../../../lib/embedded_fonts/client_config');
 
 
 function uid() {
-  /*jshint bitwise: false*/
-  return 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace(/[x]/g, function() {
-    return ((Math.random()*16)|0).toString(16);
+  /*eslint-disable no-bitwise*/
+  return 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace(/[x]/g, function () {
+    return ((Math.random() * 16) | 0).toString(16);
   });
 }
 
@@ -43,7 +43,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
 
     // we search by name AND aliases
     this.search  = data.search || [];
-    this.keywords = [this.originalName].concat(this.search).join(',');
+    this.keywords = [ this.originalName ].concat(this.search).join(',');
 
     this.charRef = utils.fixedFromCharCode(data.charRef);
 
@@ -82,7 +82,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
         uid       : self.uid,
         css       : self.name(),
         code      : self.code(),
-        src       : self.font.fontname,
+        src       : self.font.fontname
       };
 
       if (self.font.fontname === 'custom_icons') {
@@ -102,7 +102,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
       if ((event.keyCode || event.which) === 13) {
         self.selected(!self.selected());
       }
-      
+
       return true;
     };
 
@@ -116,7 +116,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     //
     this.visible = ko.computed(function () {
       var word = N.app.searchWord();
-      return (word.length < 2) || (0 <= this.keywords.indexOf(word));
+      return (word.length < 2) || (this.keywords.indexOf(word) >= 0);
     }, this);
 
     // code value as character (for code editor)
@@ -124,11 +124,11 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     this.customChar = ko.computed({
       read: function () {
         return utils.fixedFromCharCode(this.code());
-      }
-    , write: function (value) {
+      },
+      write: function (value) {
         this.code(utils.fixedCharCodeAt(value));
-      }
-    , owner: this
+      },
+      owner: this
     });
 
     // code value as hex-string (for code editor)
@@ -137,13 +137,13 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
       read: function () {
         var code = this.code().toString(16).toUpperCase();
         return '0000'.substr(0, Math.max(4 - code.length, 0)) + code;
-      }
-    , write: function (value) {
+      },
+      write: function (value) {
         // value must be HEX string - omit invalid chars
         value = 0 + value.replace(/[^0-9a-fA-F]+/g, '');
         this.code(parseInt(value, 16));
-      }
-    , owner: this
+      },
+      owner: this
     });
 
     // Whenever or not glyph should be treaten as "modified"
@@ -322,8 +322,8 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
       N.wire.emit('session_save');
     });
 
-    this.makeSvgFont = function() {
-      if(!this.glyphs().length) {
+    this.makeSvgFont = function () {
+      if (!this.glyphs().length) {
         return;
       }
 
@@ -338,7 +338,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
       conf.font.ascent     = +(N.app.fontAscent() * 1000 / N.app.fontUnitsPerEm()).toFixed(0);
       conf.font.descent    = conf.font.ascent - 1000;
 
-      conf.glyphs = _.map(this.glyphs(), function(glyph){
+      conf.glyphs = _.map(this.glyphs(), function (glyph){
         return {
           css:    glyph.originalName,
           code:   glyph.charRef.charCodeAt(0),
@@ -409,7 +409,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
 
       // Only custom icons require font generation
       if (self.fontname !== 'custom_icons') {
-         return;
+        return;
       }
 
       // Force session save, because we keep custom icons sources in it.
@@ -470,7 +470,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     this.lock = function () {
       // lock fonts only once
       if (!_locked) {
-        this.fonts.forEach(function(font) { font.lock(); });
+        this.fonts.forEach(function (font) { font.lock(); });
       }
       _locked++;
     };
@@ -478,7 +478,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
       if (!_locked) { return; }   // Exit if already unlocked;
       if (--_locked) { return; }  // Exit if lock was nested
 
-      this.fonts.forEach(function(font) { font.unlock(); });
+      this.fonts.forEach(function (font) { font.unlock(); });
 
       if (_selected_dirty) {
         _selected_dirty = false;
@@ -489,12 +489,10 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     this.track = function (glyph) {
       this.glyphMap[glyph.uid] = glyph;
 
-      if (!_locked) {
-        if (glyph.selected()) {
+      if (glyph.selected()) {
+        if (!_locked) {
           this.selectedGlyphs.push(glyph);
-        }
-      } else {
-        if (glyph.selected()) {
+        } else {
           _selected_dirty = true;
           this.selectedGlyphs.peek().push(glyph);
         }
@@ -508,7 +506,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
           //if (_.findIndex(selectedList, function(g) { return g.uid === glyph.uid; }) !== -1) { return; }
           selectedList.push(glyph);
         } else {
-          var idx = _.findIndex(selectedList, function(g) { return g.uid === glyph.uid; });
+          var idx = _.findIndex(selectedList, function (g) { return g.uid === glyph.uid; });
           if (idx === -1) { return; }
           selectedList.splice(idx, 1);
         }
@@ -550,7 +548,7 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     }, this).extend({ throttle: 100 });
 
 
-    this.unselectAll = function() {
+    this.unselectAll = function () {
       this.lock();
       this.selectedGlyphs.peek().slice().forEach(function (glyph) {
         glyph.selected(false);
@@ -560,11 +558,11 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
 
     // Search font by name
     //
-    this.getFont = function(name) {
-      return _.find(this.fonts, function(font) { return font.fontname === name; });
+    this.getFont = function (name) {
+      return _.find(this.fonts, function (font) { return font.fontname === name; });
     };
 
-    this.getGlyph = function(uid) {
+    this.getGlyph = function (uid) {
       return this.glyphMap[uid];
     };
 

@@ -11,16 +11,12 @@ module.exports = function (N, apiPath) {
   var builder = fontBuilder(N);
 
   N.validate(apiPath, {
-    sid: {
-      type: 'string'
-    , required: true
-    , pattern: /^[0-9a-f]+/
-    }
+    sid: { type: 'string', required: true, pattern: /^[0-9a-f]+/ }
   });
 
   N.wire.on(apiPath, function app_post(env, callback) {
 
-    N.models.ShortLink.findOne({ sid: env.params.sid }, function(err, sl) {
+    N.models.ShortLink.findOne({ sid: env.params.sid }, function (err, sl) {
       if (err) {
         callback(err);
         return;
@@ -33,7 +29,7 @@ module.exports = function (N, apiPath) {
       }
 
       // build font
-      builder.buildFont(sl.toObject().config, function(err, info) {
+      builder.buildFont(sl.toObject().config, function (err, info) {
         if (err) {
           callback(err);
           return;

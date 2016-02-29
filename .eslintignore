@@ -2,3 +2,5 @@ assets/**
 
 **/_vendor/**
 **/modernizr.custom.js
+**/jquery.numeric.js
+**/lib/embedded_fonts/**

@@ -42,9 +42,9 @@ function import_config(str, file) {
 
   try {
     var config  = JSON.parse(str);
-    var getFont = _.memoize(function(name) { return N.app.fontsList.getFont(name); });
+    var getFont = _.memoize(function (name) { return N.app.fontsList.getFont(name); });
     var customIcons = getFont('custom_icons');
-    var maxRef = _.maxBy(customIcons.glyphs(), function(glyph) {
+    var maxRef = _.maxBy(customIcons.glyphs(), function (glyph) {
       return utils.fixedCharCodeAt(glyph.charRef);
     });
 
@@ -83,7 +83,7 @@ function import_config(str, file) {
 
       if (!getFont(g.src)) { return; }
 
-      if ( g.src === 'custom_icons') {
+      if (g.src === 'custom_icons') {
         customIcons.addGlyph({
           uid:      g.uid,
           css:      g.css,
@@ -133,7 +133,7 @@ function import_zip(data, file) {
     }
 
     // If not fontello archive - scan it and try to import everything known
-    _.each(zip.files, function(f) {
+    _.each(zip.files, function (f) {
       // Currently show error for all entries
       N.wire.emit('notify', t('err_unknown_format', { name: f.name }));
     });
@@ -155,7 +155,7 @@ function import_svg_font(data/*, file*/) {
 
   // Allocate reference code, used to show generated font on fontello page
   // That's for internal needs, don't confuse with glyph (model) code
-  var maxRef = _.maxBy(customIcons.glyphs(), function(glyph) {
+  var maxRef = _.maxBy(customIcons.glyphs(), function (glyph) {
     return utils.fixedCharCodeAt(glyph.charRef);
   });
 
@@ -202,7 +202,7 @@ function import_svg_font(data/*, file*/) {
       css:     glyphName,
       code:    glyphCode,
       charRef: allocatedRefCode++,
-      search:  [glyphName],
+      search:  [ glyphName ],
       svg: {
         path:  d,
         width: width
@@ -223,7 +223,7 @@ function import_svg_image(data, file) {
 
   // Allocate reference code, used to show generated font on fontello page
   // That's for internal needs, don't confuse with glyph (model) code
-  var maxRef = _.maxBy(customIcons.glyphs(), function(glyph) {
+  var maxRef = _.maxBy(customIcons.glyphs(), function (glyph) {
     return utils.fixedCharCodeAt(glyph.charRef);
   });
 
@@ -243,7 +243,7 @@ function import_svg_image(data, file) {
   var skipped = _.union(result.ignoredTags, result.ignoredAttrs);
 
   if (skipped.length > 0) {
-    N.wire.emit('notify', t('err_skiped_tags', {'skipped' : skipped.toString()}));
+    N.wire.emit('notify', t('err_skiped_tags', { 'skipped' : skipped.toString() }));
   } else if (!result.guaranteed) {
     N.wire.emit('notify', t('err_merge_path'));
   }
@@ -264,7 +264,7 @@ function import_svg_image(data, file) {
     css:      glyphName,
     code:     allocatedRefCode,
     charRef:  allocatedRefCode++,
-    search:   [glyphName],
+    search:   [ glyphName ],
     svg: {
       path:   d,
       width:  width
@@ -382,9 +382,9 @@ N.wire.once('navigate.done', function () {
   // !!! WARNING !!!
   // Chrome does not triggers events, when element has "display: none"
   $input.css({
-    visibility: 'hidden'
-  , position:   'absolute'
-  , left:       '-10000px'
+    visibility: 'hidden',
+    position:   'absolute',
+    left:       '-10000px'
   });
 
   // inject $el into body
@@ -426,7 +426,7 @@ N.wire.once('navigate.done', function () {
   dropZone.on('dragleave', function () {
     // !!! we can get `dragleave` events from child elements
     // http://stackoverflow.com/questions/7110353/html5-dragleave-fired-when-hovering-a-child-element
-    // http://stackoverflow.com/questions/10867506/dragleave-of-parent-element-fires-when-dragging-over-children-elements
+    // http://stackoverflow.com/questions/10867506
 
     // Do trottling to filter events
     clearTimeout(dropTimer);
@@ -446,7 +446,7 @@ N.wire.once('navigate.done', function () {
 //
 // Setup import listener
 //
-N.wire.on('import.obj', function(obj) {
+N.wire.on('import.obj', function (obj) {
   N.app.fontsList.lock();
 
   import_config(JSON.stringify(obj), {});

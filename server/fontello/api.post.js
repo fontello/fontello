@@ -32,7 +32,7 @@ module.exports = function (N, apiPath) {
     form.maxFields = MAX_POST_FIELDS;
 
     // parse form & process result
-    form.parse(env.origin.req, function(err, fields, files) {
+    form.parse(env.origin.req, function (err, fields, files) {
       if (err) {
         callback(err);
         return;
@@ -78,10 +78,10 @@ module.exports = function (N, apiPath) {
       var configPath = files.config.path;
       var config;
 
-      fs.readFile(configPath, { encoding: 'utf-8'}, function (err, configFile) {
+      fs.readFile(configPath, { encoding: 'utf-8' }, function (err, configFile) {
         // Always cleanup posted files
         // Delete is async, but we don't wait result
-        _.forEach(files, function(fileInfo) {
+        _.forEach(files, function (fileInfo) {
           fs.unlink(fileInfo.path, function () {});
         });
 
@@ -92,7 +92,7 @@ module.exports = function (N, apiPath) {
 
         try {
           config = JSON.parse(configFile);
-        } catch (err) {
+        } catch (__) {
           callback({ code: N.io.BAD_REQUEST, message: 'Can\'t parse config data' });
           return;
         }
@@ -103,7 +103,7 @@ module.exports = function (N, apiPath) {
         if (!chk_config.valid) {
 
           // generate error text
-          error = ['Invalid config format:'].concat(_.map(
+          error = [ 'Invalid config format:' ].concat(_.map(
             chk_config.errors,
             function (e) { return '- ' + e.property + ' ' + e.message; }
           )).join('\n');

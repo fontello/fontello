@@ -25,7 +25,7 @@ N.wire.once('navigate.done', function () {
   $('#selector').selectable({
     filter: '.selector__glyph:visible',
     distance: 3,
-    start: function() {
+    start: function () {
       $('#selector').addClass('_multicursor');
     },
     stop: function () {
@@ -33,7 +33,7 @@ N.wire.once('navigate.done', function () {
 
       // prevent from double-triggering event,
       // otherwise click event will be fired as well
-      if (1 === $els.length) {
+      if ($els.length === 1) {
         return;
       }
 
@@ -56,10 +56,10 @@ N.wire.once('navigate.done', function () {
   // Additionally setup class switch on mouse down/up,
   // to change cursor immediately after click on glyph
   //
-  $('#selector').on('mousedown', '.glyph', function() {
+  $('#selector').on('mousedown', '.glyph', function () {
     $('#selector').addClass('_multicursor');
   });
-  $('#selector').on('mouseup', function() {
+  $('#selector').on('mouseup', function () {
     $('#selector').removeClass('_multicursor');
   });
 

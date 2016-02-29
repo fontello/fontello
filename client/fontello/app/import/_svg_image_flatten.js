@@ -124,7 +124,8 @@ function processTree(node, ignoredTags, ignoredAttrs, parentTransforms, path) {
       return;
     }
 
-    var transforms = (item.getAttribute('transform')) ? parentTransforms + ' ' + item.getAttribute('transform') : parentTransforms;
+    var transforms = (item.getAttribute('transform')) ? parentTransforms + ' ' + item.getAttribute('transform') :
+                                                        parentTransforms;
     // Parse nested tags
     if (item.nodeName === 'g') {
       var result = processTree(item, ignoredTags, ignoredAttrs, transforms, path);
@@ -196,18 +197,18 @@ function getCoordinates(svg) {
 
   // getting base parameters
   var attr = {};
-  _.forEach(['x', 'y', 'width', 'height'], function (key) {
+  _.forEach([ 'x', 'y', 'width', 'height' ], function (key) {
     var val = svg.getAttribute(key);
 
     // TODO: remove and do properly
     // Quick hack - ignore values in %. There can be strange cases like
     // `width="100%" height="100%" viewbox="0 0 1000 1000"`
-    if (val.length && val[val.length-1] !== '%') {
+    if (val.length && val[val.length - 1] !== '%') {
       attr[key] = parseFloat(svg.getAttribute(key));
     }
   });
 
-  if (viewBox[2] < 0 || viewBox[3] < 0 || attr.width < 0 || attr.height < 0 ) {
+  if (viewBox[2] < 0 || viewBox[3] < 0 || attr.width < 0 || attr.height < 0) {
     return {
       error : new Error('Svg sizes can`t be negative')
     };
@@ -277,7 +278,8 @@ function getCoordinates(svg) {
  *
  *
  * @param xml
- * @returns {{d: "", width: number, height: number, x: number, y: number, ignoredTagsTags: Array, ignoredAttrs: Array, error: null, guaranteed: boolean}}
+ * @returns {{d: "", width: number, height: number, x: number, y: number, ignoredTagsTags: Array,
+ *            ignoredAttrs: Array, error: null, guaranteed: boolean}}
  */
 module.exports =  function convert(sourceXml) {
 

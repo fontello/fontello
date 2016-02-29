@@ -82,8 +82,8 @@ function ToolbarModel() {
 
 
 N.wire.once('navigate.done', function (data) {
-  var $view   = $('#toolbar')
-    , toolbar = new ToolbarModel();
+  var $view   = $('#toolbar'),
+      toolbar = new ToolbarModel();
 
 
   // Save user session (loaded via API) back to database
@@ -145,11 +145,11 @@ N.wire.once('navigate.done', function (data) {
 
     // show ads banner
     N.wire.emit('notify', {
-      type:        'info'
-    , message:     t('help_us')
-    , autohide:    10000 // 10 secs
-    , deduplicate: true
-    , closable:    true
+      type:        'info',
+      message:     t('help_us'),
+      autohide:    10000, // 10 secs,
+      deduplicate: true,
+      closable:    true
     });
 
     toolbar.building(true);
@@ -183,7 +183,7 @@ N.wire.once('navigate.done', function (data) {
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     // `states` is an array of state names defined in "The Basics"
-    local: $.map(knownKeywords, function(keyword) { return { value: keyword }; })
+    local: $.map(knownKeywords, function (keyword) { return { value: keyword }; })
   });
   keywords.initialize();
 
@@ -220,7 +220,7 @@ N.wire.once('navigate.done', function (data) {
   //
   // Setup initial search string.
   //
-  $.fn.setCursorPosition = function(pos) {
+  $.fn.setCursorPosition = function (pos) {
     if ($(this).get(0).setSelectionRange) {
       $(this).get(0).setSelectionRange(pos, pos);
     } else if ($(this).get(0).createTextRange) {
