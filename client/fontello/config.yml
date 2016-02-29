@@ -1,0 +1,10 @@
+recursive: true
+public: true
+type:
+  widget_css:
+    - "*.css"
+    - "*.styl"
+    - "*.less"
+  widget_i18n: i18n/*.yml
+  widget_view: "*.jade"
+  widget_js: "*.js"
