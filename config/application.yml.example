@@ -27,19 +27,10 @@ options:
     </script>
 
 
-# Locales
+# List of enabled locales (all found locales by default)
 #
 locales:
-
-  # Application locale used by default (first enabled one if not set).
-  #
-  default: en-US
-
-  # # List of enabled locales (all found locales by default).
-  # enabled:
-  #   - en-US
-  #   - en-GB
-  #   - ru-RU
+  - en-US
 
 
 # Security settings (currently - policy headers)
@@ -88,3 +79,9 @@ bind:
   #    res.writeHead(404, { 'Content-Type': 'text/plain' });
   #    res.end('Invalid host ' + req.headers.host);
   #  }
+
+# Amount of child processes to spawn in cluster.
+# "auto" / "true" means it equals to the number of CPU cores;
+# "false" / 0  means don't use cluster at all.
+#
+#fork: auto
