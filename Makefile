@@ -22,7 +22,7 @@ FONTS         += linecons.font
 FONTS         += websymbols-uni.font
 FONT_CONFIGS   = $(foreach f,$(FONTS),src/${f}/config.yml)
 
-FONT_DIR 			= ./assets/embedded_fonts
+FONT_DIR 			= ./client/lib/embedded_fonts/font
 
 help:
 	echo "make help           - Print this help"
@@ -33,7 +33,7 @@ help:
 
 
 rebuild:
-	mkdir -p assets/embedded_fonts
+	mkdir -p $(FONT_DIR)
 	# build single font
 	./build_embedded_fonts.js \
 		-i $(foreach f,$(FONTS), ./src/${f}) \

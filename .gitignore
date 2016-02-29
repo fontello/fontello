@@ -6,7 +6,7 @@ node_modules/
 doc/
 tmp/
 log/
-.cache
+assets/
 
 *.log
 *.swp

@@ -10,43 +10,14 @@ packages:
     depends:
       - lib
 
-    client:
-      main: assets/main_fontello.js
-      include: client/**.js
-      exclude: /(^|\/)_.*/
-
-    views:
-      include: client/**.jade
-      exclude: /(^|\/)_.*/
-
-    i18n_client:
-      include: client/**i18n/*.yml
-
-    styles:
-      main: assets/main_fontello.styl
-      include: client/**.styl
-
-    server:
-      include: server/**.js
-      exclude: /(^|\/)_.*/
-
-    i18n_server:
-      include: server/**i18n/*.yml
-
-    bin:
-      root: assets
-      include:
-        - loader.js.ejs
-        - vendor/json2/json2.js
-        - vendor/es5-shim/es5-shim.js
-        - icons/src/font/*
-        - embedded_fonts/*
+    entries:
+      client/fontello
 
   lib:
+    entries:
+      client/lib
+
     vendor:
       - knockout
       - kernel: ./lib/system/client/kernel.js
       - fs: ./lib/system/dummy.js
-
-    client:
-      main: assets/main_lib.js
