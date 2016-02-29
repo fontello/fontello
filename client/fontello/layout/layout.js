@@ -4,7 +4,7 @@
 // Reassign tooltip handler
 // after every significant page render
 //
-N.wire.after('navigate.done', function () {
+N.wire.after('navigate.done', function reassign_tooltip_handler() {
   $('._tip').tooltip();
   $('._popover').popover();
 });
@@ -12,7 +12,7 @@ N.wire.after('navigate.done', function () {
 
 // Social buttons defered load - after all
 //
-N.wire.once('navigate.done', { priority: 10 }, function () {
+N.wire.once('navigate.done', { priority: 10 }, function load_social_buttons() {
   setTimeout(function () {
     function injectScript(src, async, id) {
       var el, script;

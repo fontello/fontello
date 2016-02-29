@@ -14,7 +14,7 @@ module.exports = function (svg, fontId) {
   var ttf = svg2ttf(svg, {}).buffer;
   var fontInfo = {
     ttfDataUri : 'data:font/truetype;base64,' + b64.fromByteArray(ttf),
-    fontId : fontId
+    fontId
   };
 
   var fontfaceTemplate =

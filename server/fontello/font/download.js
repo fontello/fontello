@@ -20,7 +20,7 @@ module.exports = function (N, apiPath) {
   });
 
 
-  N.wire.on(apiPath, function (env, callback) {
+  N.wire.on(apiPath, function send_dowloaded_file(env, callback) {
     var req = env.origin.req,
         res = env.origin.res;
 

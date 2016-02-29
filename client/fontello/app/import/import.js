@@ -109,6 +109,7 @@ function import_config(str, file) {
     });
   } catch (e) {
     N.wire.emit('notify', t('err_bad_config_format', { name: file.name }));
+    /*eslint-disable no-console*/
     console.log(e);
   }
 }
@@ -205,7 +206,7 @@ function import_svg_font(data/*, file*/) {
       search:  [ glyphName ],
       svg: {
         path:  d,
-        width: width
+        width
       }
     });
   });
@@ -232,6 +233,7 @@ function import_svg_image(data, file) {
 
   if (result.error) {
     N.wire.emit('notify', t('err_invalid_format'));
+    /*eslint-disable no-console*/
     console.error(result.error);
     return;
   }
@@ -243,7 +245,7 @@ function import_svg_image(data, file) {
   var skipped = _.union(result.ignoredTags, result.ignoredAttrs);
 
   if (skipped.length > 0) {
-    N.wire.emit('notify', t('err_skiped_tags', { 'skipped' : skipped.toString() }));
+    N.wire.emit('notify', t('err_skiped_tags', { skipped: skipped.toString() }));
   } else if (!result.guaranteed) {
     N.wire.emit('notify', t('err_merge_path'));
   }
@@ -266,8 +268,8 @@ function import_svg_image(data, file) {
     charRef:  allocatedRefCode++,
     search:   [ glyphName ],
     svg: {
-      path:   d,
-      width:  width
+      path: d,
+      width
     }
   });
 }
@@ -371,7 +373,7 @@ function handleFileSelect(event) {
 ////////////////////////////////////////////////////////////////////////////////
 
 
-N.wire.once('navigate.done', function () {
+N.wire.once('navigate.done', function page_setup() {
 
   //
   // Create regular files selector
@@ -394,7 +396,7 @@ N.wire.once('navigate.done', function () {
   $input.on('change', handleFileSelect);
 
   // handle settings menu click -> open file dialog
-  N.wire.on('import.start', function () {
+  N.wire.on('import.start', function open_file_dlg() {
     $input.click();
   });
 
@@ -446,7 +448,7 @@ N.wire.once('navigate.done', function () {
 //
 // Setup import listener
 //
-N.wire.on('import.obj', function (obj) {
+N.wire.on('import.obj', function setup_import(obj) {
   N.app.fontsList.lock();
 
   import_config(JSON.stringify(obj), {});

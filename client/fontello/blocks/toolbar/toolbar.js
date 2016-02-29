@@ -117,14 +117,14 @@ N.wire.once('navigate.done', function (data) {
   //
   // Save on button press
   //
-  N.wire.on('api.update', function () {
+  N.wire.on('api.update', function api_save() {
     return save();
   });
 
   //
   // Export on button press (save & go to pingback url)
   //
-  N.wire.on('api.export',  function () {
+  N.wire.on('api.export',  function api_export() {
     return save().then(() => {
       window.location = N.app.apiUrl();
     });
@@ -133,7 +133,7 @@ N.wire.once('navigate.done', function (data) {
   //
   // build font on button press
   //
-  N.wire.on('build_font', function () {
+  N.wire.on('build_font', function build_font() {
     // That should not happen, but check for safety
     if (!N.app.fontsList.selectedCount()) {
       return;
@@ -159,10 +159,10 @@ N.wire.once('navigate.done', function (data) {
 
       // inject download url via iframe to start download
       var id = res.id;  // generated file id
-      var url = N.router.linkTo('fontello.font.download', { id: id });
+      var url = N.router.linkTo('fontello.font.download', { id });
       $('iframe#' + id).remove();
       $('<iframe></iframe>')
-        .attr({ id: id, src: url })
+        .attr({ id, src: url })
         .css('display', 'none')
         .appendTo(window.document.body);
     });

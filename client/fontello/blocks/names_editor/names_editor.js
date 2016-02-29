@@ -24,7 +24,7 @@ N.wire.once('navigate.done', function () {
 
   // Remove glyph from selection
   //
-  N.wire.on('names_edit:glyph_remove', function (data) {
+  N.wire.on('names_edit:glyph_remove', function glyph_remove(data) {
     var $el    = data.$this;
     var id    = $el.data('id');
     var glyph = N.app.fontsList.getGlyph(id);

@@ -103,9 +103,9 @@ function updateGlyphCodes() {
 }
 
 
-// Assign  actions handlers
+// Assign actions handlers
 //
-N.wire.once('navigate.done', { priority: -10 }, function () {
+N.wire.once('navigate.done', { priority: -10 }, function page_setup() {
 
   //
   // Setup autosave
@@ -141,11 +141,11 @@ N.wire.once('navigate.done', { priority: -10 }, function () {
   // Basic commands
   //
 
-  N.wire.on('cmd:reset_selected', function () {
+  N.wire.on('cmd:reset_selected', function reset_selected() {
     N.app.fontsList.unselectAll();
   });
 
-  N.wire.on('cmd:reset_all', function (src) {
+  N.wire.on('cmd:reset_all', function reset_all(src) {
 
     // is `src` set, then event was produced
     // by link click and we need confirmation
@@ -170,26 +170,26 @@ N.wire.once('navigate.done', { priority: -10 }, function () {
     N.app.fontsList.unlock();
   });
 
-  N.wire.on('cmd:toggle_hinting', function () {
+  N.wire.on('cmd:toggle_hinting', function toggle_hinting() {
     N.app.hinting(!N.app.hinting());
   });
 
-  N.wire.on('cmd:set_encoding_pua', function () {
+  N.wire.on('cmd:set_encoding_pua', function set_encoding_pua() {
     N.app.encoding('pua');
     updateGlyphCodes();
   });
 
-  N.wire.on('cmd:set_encoding_ascii', function () {
+  N.wire.on('cmd:set_encoding_ascii', function set_encoding_ascii() {
     N.app.encoding('ascii');
     updateGlyphCodes();
   });
 
-  N.wire.on('cmd:set_encoding_unicode', function () {
+  N.wire.on('cmd:set_encoding_unicode', function set_encoding_unicode() {
     N.app.encoding('unicode');
     updateGlyphCodes();
   });
 
-  N.wire.on('cmd:clear_custom_icons', function () {
+  N.wire.on('cmd:clear_custom_icons', function clear_custom_icons() {
     var custom_icons = N.app.fontsList.getFont('custom_icons');
 
     // if something selected - delete selected icons

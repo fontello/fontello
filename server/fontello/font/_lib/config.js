@@ -130,7 +130,7 @@ function collectFontsInfo(glyphs) {
     var meta = fontConfigs.metas[fontname];
 
     if (font && meta) {
-      result.push({ font : font, meta : meta });
+      result.push({ font, meta });
     }
 
   });
@@ -180,7 +180,7 @@ module.exports = function fontConfig(clientConfig) {
 
   return {
     font: {
-      fontname:   fontname,
+      fontname,
       fullname:   fontname,
       // !!! IMPORTANT for IE6-8 !!!
       // due bug, EOT requires `familyname` begins `fullname`

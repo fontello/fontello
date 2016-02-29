@@ -14,7 +14,7 @@ module.exports = function (N, apiPath) {
 
   N.validate(apiPath, config_schema);
 
-  N.wire.on(apiPath, function (env, callback) {
+  N.wire.on(apiPath, function request_font_generation(env, callback) {
     builder.buildFont(env.params, function (err, info) {
       if (err) {
         callback(err);

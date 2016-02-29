@@ -122,10 +122,10 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     // code value as character (for code editor)
     //
     this.customChar = ko.computed({
-      read: function () {
+      read() {
         return utils.fixedFromCharCode(this.code());
       },
-      write: function (value) {
+      write(value) {
         this.code(utils.fixedCharCodeAt(value));
       },
       owner: this
@@ -134,11 +134,11 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
     // code value as hex-string (for code editor)
     //
     this.customHex = ko.computed({
-      read: function () {
+      read() {
         var code = this.code().toString(16).toUpperCase();
         return '0000'.substr(0, Math.max(4 - code.length, 0)) + code;
       },
-      write: function (value) {
+      write(value) {
         // value must be HEX string - omit invalid chars
         value = 0 + value.replace(/[^0-9a-fA-F]+/g, '');
         this.code(parseInt(value, 16));

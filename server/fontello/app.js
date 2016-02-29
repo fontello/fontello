@@ -47,7 +47,7 @@ module.exports = function (N, apiPath) {
         if (!sl) {
           callback({
             code: N.io.REDIRECT,
-            head: { 'Location': '/' }
+            head: { Location: '/' }
           });
           return;
         }

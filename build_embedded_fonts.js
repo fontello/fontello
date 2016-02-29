@@ -89,12 +89,7 @@ function parseSvgImage(data, filename) {
     transform = path.getAttribute('transform');
   }
 
-  return {
-    height    : height,
-    width     : width,
-    d         : d,
-    transform : transform
-  };
+  return { height, width, d, transform };
 }
 
 
@@ -151,6 +146,7 @@ _.forEach(args.input_fonts, function (fontDir) {
   _.forEach(cfg.glyphs, function (glyph) {
 
     if (configServer.uids[glyph.uid]) {
+      /*eslint-disable no-console*/
       console.log('Duplicated uid "' + glyph.uid + '"in ' + fontDir);
       process.exit(1);
     }
@@ -225,8 +221,8 @@ _.forEach(configServer.uids, function (glyph) {
 });
 
 var svgOut = svgFontTemplate({
-  font : font,
-  glyphs : glyphs,
+  font,
+  glyphs,
   metadata: 'internal font for fontello.com website',
   fontHeight : font.ascent - font.descent
 });

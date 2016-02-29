@@ -213,5 +213,5 @@ function observe(glyph) {
 
 module.exports = function (_N) {
   N = _N;
-  return { observe: observe };
+  return { observe };
 };

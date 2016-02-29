@@ -25,10 +25,10 @@ N.wire.once('navigate.done', function () {
   $('#selector').selectable({
     filter: '.selector__glyph:visible',
     distance: 3,
-    start: function () {
+    start() {
       $('#selector').addClass('_multicursor');
     },
-    stop: function () {
+    stop() {
       var $els = $view.find('.selector__glyph.ui-selected');
 
       // prevent from double-triggering event,
@@ -65,7 +65,7 @@ N.wire.once('navigate.done', function () {
 
   // Toggle glyph state on click
   //
-  N.wire.on('selector:glyph_toggle', function (data) {
+  N.wire.on('selector:glyph_toggle', function glyph_toggle(data) {
     var id = data.$this.data('id');
     var glyph = N.app.fontsList.getGlyph(id);
 
@@ -74,7 +74,7 @@ N.wire.once('navigate.done', function () {
 
   // Toggle font collapse state on click
   //
-  N.wire.on('selector:font_collapse', function (data) {
+  N.wire.on('selector:font_collapse', function font_collapse(data) {
     var id = data.$this.data('id');
     var font = N.app.fontsList.getFont(id);
 

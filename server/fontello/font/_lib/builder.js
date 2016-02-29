@@ -75,7 +75,7 @@ function createTask(clientConfig, afterRegistered, afterComplete) {
         afterRegistered(null, fontId);
       }
       if (afterComplete) {
-        afterComplete(null, { fontId: fontId, file: outputFile, directory: builderOutputDir });
+        afterComplete(null, { fontId, file: outputFile, directory: builderOutputDir });
       }
       return;
     }
@@ -109,9 +109,9 @@ function createTask(clientConfig, afterRegistered, afterComplete) {
     // Otherwise, create a new task.
     //
     taskInfo = {
-      fontId:        fontId,
-      clientConfig:  clientConfig,
-      builderConfig: builderConfig,
+      fontId,
+      clientConfig,
+      builderConfig,
       cwdDir:        builderCwdDir,
       tmpDir:        path.join(builderTmpDir, 'fontello-' + fontId.substr(0, 8)),
       output:        outputFile,
@@ -131,7 +131,7 @@ function createTask(clientConfig, afterRegistered, afterComplete) {
       delete builderTasks[fontId];
 
       callbacks.forEach(function (func) {
-        func(err, { fontId: fontId, file: outputFile, directory: builderOutputDir });
+        func(err, { fontId, file: outputFile, directory: builderOutputDir });
       });
     });
 
@@ -206,9 +206,5 @@ module.exports = _.once(function (N) {
   builderTasks     = {};
 
   // Exports.
-  return {
-    pushFont:  pushFont,
-    buildFont: buildFont,
-    checkFont: checkFont
-  };
+  return { pushFont, buildFont, checkFont };
 });

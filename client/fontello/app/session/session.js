@@ -145,7 +145,7 @@ N.wire.on('session_save', _.debounce(function () {
 
 
 
-N.wire.on('session_load', function () {
+N.wire.on('session_load', function session_load() {
   var session, data;
 
   if (!store.exists()) { return; }

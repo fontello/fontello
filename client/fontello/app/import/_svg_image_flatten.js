@@ -150,7 +150,7 @@ function processTree(node, ignoredTags, ignoredAttrs, parentTransforms, path) {
     if (path !== '' && transformedPath !== '') {
       guaranteed = false;
     }
-    path = path + transformedPath;
+    path += transformedPath;
 
     // Check not supported attributes
     _.each(item.attributes, function (item) {
@@ -161,12 +161,7 @@ function processTree(node, ignoredTags, ignoredAttrs, parentTransforms, path) {
     });
   });
 
-  return {
-    path: path,
-    ignoredTags: ignoredTags,
-    ignoredAttrs: ignoredAttrs,
-    guaranteed: guaranteed
-  };
+  return { path, ignoredTags, ignoredAttrs, guaranteed };
 }
 
 /**
@@ -292,16 +287,16 @@ module.exports =  function convert(sourceXml) {
     y: 0,
     ignoredTags: [],
     ignoredAttrs: [],
-    error: error,
+    error,
     guaranteed: false
   };
 
   var xmlDoc = (new XMLDOMParser({
     errorHandler: {
-      error: function (err) {
+      error(err) {
         error = err;
       },
-      fatalError: function (err) {
+      fatalError(err) {
         error = err;
       }
     }
