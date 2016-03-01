@@ -78,7 +78,6 @@
     "raf.js": "0.0.4",
     "readable-stream": "^2.0.5",
     "resolve": "~ 0.7.0",
-    "revalidator": "~ 0.1.5",
     "send": "~ 0.3.0",
     "stylus": "~ 0.45.1",
     "svg2ttf": "~ 3.0.0",

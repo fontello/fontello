@@ -4,7 +4,7 @@
 var _           = require('lodash');
 var fs          = require('fs');
 var crypto      = require('crypto');
-var revalidator = require('revalidator');
+var validator   = require('is-my-json-valid');
 var formidable  = require('formidable');
 
 
@@ -39,9 +39,9 @@ module.exports = function (N, apiPath) {
       }
 
       // Validate post `url` param
-      var chk_fields = revalidator.validate(fields, {
-        properties : {
-          url : {
+      var chk_fields = validator({
+        properties: {
+          url: {
             format : 'url',
             maxLength : 200,
             required  : false,
@@ -51,25 +51,27 @@ module.exports = function (N, apiPath) {
             }
           }
         }
-      });
-      if (!chk_fields.valid) {
+      })(fields);
+
+      if (chk_fields.errors) {
         callback({ code: N.io.BAD_REQUEST, message: chk_fields.errors[0].message });
         return;
       }
 
       // Validate post `config` param
-      var chk_files = revalidator.validate(files, {
-        properties : {
-          config : {
-            type : 'object',
-            required  : true,
+      var chk_files = validator({
+        properties: {
+          config: {
+            type: 'object',
+            required: true,
             messages: {
               required: 'Missed "config" param - must be file'
             }
           }
         }
-      });
-      if (!chk_files.valid) {
+      })(files);
+
+      if (chk_files.errors) {
         callback({ code: N.io.BAD_REQUEST, message: chk_files.errors[0].message });
         return;
       }
@@ -98,9 +100,9 @@ module.exports = function (N, apiPath) {
         }
 
         // Validate config content
-        var chk_config = revalidator.validate(config, config_schema);
+        var chk_config = validator(config_schema)(config);
         var error;
-        if (!chk_config.valid) {
+        if (chk_config.errors) {
 
           // generate error text
           error = [ 'Invalid config format:' ].concat(_.map(
