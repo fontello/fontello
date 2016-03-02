@@ -68,13 +68,15 @@ N.wire.once('navigate.done', { priority: -90 }, function () {
 
     config.glyphs = [];
 
-    _.forEach(N.app.fontsList.fonts, function (font) {
-      _.forEach(font.glyphs(), function (glyph) {
+    // add selected glyphs first to keep selection order
+    _.forEach(N.app.fontsList.selectedGlyphs(), glyph => {
+      config.glyphs.push(glyph.serialize());
+    });
 
-        if ((glyph.font.fontname === 'custom_icons') || glyph.selected()) {
-          config.glyphs.push(glyph.serialize());
-        }
-
+    // add custom icons (if not elected yet)
+    _(N.app.fontsList.fonts).filter({ fontname: 'custom_icons' }).forEach(font => {
+      _.forEach(font.glyphs(), glyph => {
+        if (!glyph.selected()) config.glyphs.push(glyph.serialize());
       });
     });
 
