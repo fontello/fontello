@@ -14,6 +14,9 @@ router:
       "/download/{id}":
         id: /[0-9a-f]{32}/
 
+    fontello.robots:
+      "/robots.txt": ~
+
   http.post:
     fontello.api.post:
       "/": ~
@@ -25,4 +28,4 @@ router:
 
     core.static:
       "/{file}":
-        file: /favicon.ico|robots.txt|snippet.png|fuckup.log/
+        file: /favicon.ico|snippet.png/
