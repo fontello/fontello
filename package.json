@@ -58,7 +58,7 @@
     "jquery-ui": "^1.10.5",
     "js-yaml": "~ 3.0.2",
     "jszip": "^2.5.0",
-    "knockout": "~ 3.1.0",
+    "knockout": "~ 3.4.0",
     "less": "^2.6.0",
     "level": "^1.4.0",
     "lodash": "^4.5.1",
