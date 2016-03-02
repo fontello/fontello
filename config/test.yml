@@ -1,8 +1,13 @@
 # Configuration for testing
 
 ^test:
-  database:
+  bind:
+    default:
+      listen: 0.0.0.0:3005
+      # To have a complete URLs in the tests
+      mount:  http://localhost:3005
 
+  database:
     mongo: localhost/fontello-test
 
   fork: 1

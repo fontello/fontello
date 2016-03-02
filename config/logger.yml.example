@@ -59,11 +59,3 @@ logger:
       file:   log/rpc.log
     - level:  error
       file:   log/rpc-error.log
-
-
-#^production:
-#  options:
-#    logger:
-#      level: info
-
-

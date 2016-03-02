@@ -1,0 +1,6 @@
+globals:
+  describe: false
+  it: false
+  TEST: false
+  before: false
+  after: false

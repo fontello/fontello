@@ -57,17 +57,7 @@ dev-server:
 
 
 repl:
-	if test ! `which socat` ; then \
-		echo "You need `socat` installed in order to run repl." >&2 ; \
-		echo "   sudo apt-get install socat" >&2 ; \
-		exit 128 ; \
-		fi
-	if test ! -e ./tmp/fontello-repl.sock ; then \
-		echo "You need to start fontello server with --repl." >&2 ; \
-		echo "   ./fontello server --repl" >&2 ; \
-		exit 128 ; \
-		fi
-	socat - UNIX:./tmp/fontello-repl.sock
+	rlwrap socat ./repl.sock stdin
 
 
 lint:
