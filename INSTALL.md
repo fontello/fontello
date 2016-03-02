@@ -8,12 +8,9 @@ and support is not provided. If you wish, you can send patches that improve comp
 
 ## MongoDB
 
-http://docs.mongodb.org/manual/tutorial/install-mongodb-on-debian-or-ubuntu-linux/
+https://docs.mongodb.org/master/tutorial/install-mongodb-on-ubuntu/
 
-Follow instructions on link above. Then edit `/etc/mongodb.conf`,
-add `bind_ip = 127.0.0.1` to the start.
-
-    restart mongodb
+Follow instructions from link above.
 
 If you don't use db auth - no mode actions needed. If you plan to use
 it - create database and set login/password.
@@ -21,7 +18,7 @@ it - create database and set login/password.
 
 ## node.js
 
-You need node.js 0.10.xx. Unstructions below are for Ubuntu.
+You need node.js 4.+. Instructions below are for Ubuntu.
 
 Install build dependencies of node:
 
@@ -29,30 +26,27 @@ Install build dependencies of node:
     sudo apt-get install git curl
     git clone git://github.com/creationix/nvm.git ~/.nvm
 
-Add following code into the end of your shell startup script (`.bashrc` for BASH):
-
-    if [ -s "$HOME/.nvm/nvm.sh" ] ; then
-        . ~/.nvm/nvm.sh # Loads NVM into a shell session.
-    fi
+Install nvm https://github.com/creationix/nvm
 
 Reopen terminal. Install node (long), and set default version:
 
-    nvm install 0.10
-    nvm alias default 0.10
+    nvm install 4
+    nvm alias default 4
 
 
 ## Fontello
 
 Install fontello sources & dependencies:
 
-    sudo apt-get install zip inotify-tools
+    sudo apt-get install zip
     git clone git://github.com/fontello/fontello.git
     cd fontello
     git submodule init
     git submodule update
     npm install
 
-Rename example configs in `./config/` folder to real files, and edit, if needed.
+Rename appropriate example configs in `./config/` folder to real files,
+and edit, if needed.
 
 
 ## ttfautohint
@@ -74,10 +68,6 @@ For Ubuntu 12.04, run this script from fontello folder:
 From command line, in fontello folder:
 
     ./fontello.js
-
-In dev, with auto-restart on files change:
-
-    make dev-server
 
 Now you can point your browser to the page http://localhost:3000
 

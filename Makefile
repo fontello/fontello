@@ -47,24 +47,11 @@ rebuild:
 	./node_modules/.bin/ttf2woff "$(FONT_DIR)/fontello.ttf" "$(FONT_DIR)/fontello.woff"
 
 
-dev-server:
-	if test ! `which inotifywait` ; then \
-		echo "You need 'inotifywait' installed in order to run dev-server." >&2 ; \
-		echo "   sudo apt-get install inotify-tools" >&2 ; \
-		exit 128 ; \
-		fi
-	./support/forever.sh
-
-
 repl:
 	rlwrap socat ./repl.sock stdin
 
 
 lint:
-	if test ! `which eslint` ; then \
-		echo "You need 'eslint' installed in order to run lint." >&2 ; \
-		exit 128 ; \
-		fi
 	eslint .
 
 
