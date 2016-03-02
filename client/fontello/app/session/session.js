@@ -14,15 +14,22 @@ var STORAGE_KEY        = 'fontello:sessions:v4';
 
 
 //  {STORAGE_KEY}:
-//    version:      (Number)  version of serilalizer
-//
 //    font_size:    (Number)  app font scale
 //
 //    sessions:     [Array]   session objects (currently only [0] used)
 //
-//      name:       (String)  session name (now only one, with name `$current$`)
-//      fontname:   (String)  font name, defined by user
-//      fonts:      [Array]   saved fonts data
+//      name:            (String)  session name (now only one, with name `$current$`)
+//      fontname:        (String)  font name, defined by user
+//      css_prefix_text: (String)
+//      css_use_suffix:  (String)
+//      hinting:         (Boolean)
+//      encoding:        (String)
+//      font_fullname:   (String)
+//      font_units:      (Number)
+//      font_ascent:     (Number)
+//      font_copyright:  (String)
+//      selected_glyphs: [Array]   glyphs uids
+//      fonts:           [Array]   saved fonts data
 //
 //        {font_id}:
 //          collapsed:  (Boolean) whenever font is collapsed or not
@@ -95,6 +102,11 @@ N.wire.on('session_save', _.debounce(function () {
   session.font_ascent     = N.app.fontAscent();
   session.font_copyright  = N.app.fontCopyright();
   session.fonts           = {};
+  session.selected_glyphs = [];
+
+  _.forEach(N.app.fontsList.selectedGlyphs(), glyph => {
+    session.selected_glyphs.push(glyph.uid);
+  });
 
   _.each(N.app.fontsList.fonts, function (font) {
     var font_data = { collapsed: font.collapsed(), glyphs: [] };
@@ -107,7 +119,6 @@ N.wire.on('session_save', _.debounce(function () {
           css:      glyph.name(),
           code:     glyph.code(),
           uid:      glyph.uid,
-          selected: glyph.selected(),
           search:   glyph.search || [],
           svg: {
             path  : (glyph.svg || {}).path || '',
@@ -121,7 +132,6 @@ N.wire.on('session_save', _.debounce(function () {
         if (glyph.isModified()) {
           font_data.glyphs.push({
             uid:      glyph.uid,
-            selected: glyph.selected(),
             code:     glyph.code(),
             css:      glyph.name()
           });
@@ -227,7 +237,7 @@ N.wire.on('session_load', function session_load() {
           css:      glyph.css,
           code:     glyph.code,
           uid:      glyph.uid,
-          selected: glyph.selected,
+          selected: glyph.selected, // legacy stuff old format
           search:   glyph.search || [],
           charRef:  charRefCode++,
           svg:      glyph.svg
@@ -261,6 +271,12 @@ N.wire.on('session_load', function session_load() {
     });
   });
 
-  N.app.fontsList.unlock();
+  // load selection state separate to keep order
+  _.forEach(session.selected_glyphs, uid => {
+    if (N.app.fontsList.glyphMap[uid]) {
+      N.app.fontsList.glyphMap[uid].selected(true);
+    }
+  });
 
+  N.app.fontsList.unlock();
 });
