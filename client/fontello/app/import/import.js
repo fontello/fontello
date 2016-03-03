@@ -128,8 +128,9 @@ function import_zip(data, file) {
     // 'fontello-XXXXXX/config.json'. If exists - consider zip
     // as fontello archive & do config import.
     var search = zip.file(/fontello-[0-9a-f]+[\\/]config[.]json/);
+
     if ((search.length === 1) && (search[0].options.dir === false)) {
-      import_config(search[0].data);
+      import_config(search[0].asText());
       return;
     }
 
@@ -139,7 +140,7 @@ function import_zip(data, file) {
       N.wire.emit('notify', t('err_unknown_format', { name: f.name }));
     });
   } catch (e) {
-    N.wire.emit('notify', t('err_bad_zip', { name: file.name }));
+    N.wire.emit('notify', t('err_bad_zip_format', { name: file.name }));
   }
 }
 
@@ -328,7 +329,7 @@ function handleFileSelect(event) {
           };
           reader.readAsText(file);
           return;
-        } else if (file.type === 'application/zip') {
+        } else if (file.type === 'application/zip' || file.name.match(/[.]zip$/)) {
           reader.onload = function (e) {
             import_zip(e.target.result, file);
             next();
