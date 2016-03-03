@@ -4,8 +4,6 @@ config/production.yml
 config/development.yml
 config/logger.yml
 node_modules/
-doc/
-tmp/
 log/
 assets/
 
@@ -14,8 +12,7 @@ assets/
 *.sublime-project
 *.sublime-workspace
 
-/public/assets/
-/public/download/
+download/
 
 .fontello
 .fontello.zip

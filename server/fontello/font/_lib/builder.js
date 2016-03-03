@@ -201,7 +201,7 @@ module.exports = _.once(function (N) {
   builderLogger    = N.logger.getLogger('font');
   builderTmpDir    = path.join(os.tmpDir(), 'fontello');
   builderCwdDir    = N.mainApp.root;
-  builderOutputDir = path.join(N.mainApp.root, 'assets', 'public', 'download');
+  builderOutputDir = path.join(N.mainApp.root, 'download');
   builderQueue     = async.queue(fontWorker, BUILDER_CONCURRENCY);
   builderTasks     = {};
 
