@@ -43,6 +43,14 @@ locales:
 #  X-Frame-Options: DENY
 
 
+# robots.txt custom content
+#
+robots: |
+  User-Agent: *
+  #
+  Disallow: /download
+
+
 # Listening options
 #
 bind:
