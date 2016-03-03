@@ -3,6 +3,11 @@
 configured: true
 
 
+# Default application environment (can be used instead of NODECA_ENV, to change default)
+#
+# env_default: development
+
+
 # Options - different kind of constants, to keep root space clear
 #
 options:
