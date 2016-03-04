@@ -8,11 +8,13 @@
 #preview
   padding-bottom 10px // to show shadow of bottom row elements
 
-#names-editor.names-editor__m-drag-started
+
+.names-editor__m-drag-started
   .preview-glyph-drop
     pointer-events none // to correctly handle 'dragleave' event while sorting
   .preview-glyph-drop.preview-glyph-drop__m-current
     pointer-events auto
+
 
 .preview-glyph
   line-height 1.5em
@@ -20,9 +22,6 @@
   white-space nowrap
   background-color white
   position relative
-
-  &.preview-glyph__m-hovered
-    background lighten(yellow, 70%)
 
   .icon
     display inline-block
@@ -75,7 +74,21 @@
   &:hover .remove
     opacity 1
 
-// Toggle vosual state for suffix-based CSS style
+
+// For drag & drop - disable standard appearance
+.preview-glyph__m-hovered
+  // background inherit
+  left 15px
+  border-left 3px solid #d9534f
+
+.preview-glyph-drop__m-current
+  opacity .4
+  .glyph-name
+    background-color darken(white, 2%) !important
+  .remove
+    opacity 0 !important
+
+// Toggle visual state for suffix-based CSS style
 //
 .css-use-suffix
   .prefix
