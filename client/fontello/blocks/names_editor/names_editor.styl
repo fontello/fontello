@@ -8,6 +8,12 @@
 #preview
   padding-bottom 10px // to show shadow of bottom row elements
 
+#names-editor.names-editor__m-drag-started
+  .preview-glyph-drop
+    pointer-events none // to correctly handle 'dragleave' event while sorting
+  .preview-glyph-drop.preview-glyph-drop__m-current
+    pointer-events auto
+
 .preview-glyph
   line-height 1.5em
   height 1.5em
@@ -15,12 +21,15 @@
   background-color white
   position relative
 
+  &.preview-glyph__m-hovered
+    background lighten(yellow, 70%)
+
   .icon
     display inline-block
     min-width 1em
     text-align center
-    cursor default
     margin-right 0.5em
+    cursor move
 
   .prefix
   .suffix

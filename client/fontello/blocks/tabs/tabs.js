@@ -42,4 +42,15 @@ N.wire.once('navigate.done', { priority: 10 }, function () {
   //
 
   jumpToSelector();
+
+  //
+  // Init import handlers on 'selector' tab and destroy on other tabs
+  //
+  $view.on('show.bs.tab', function (e) {
+    if ($(e.target).data('target') === '#selector') {
+      N.wire.emit('import:listen');
+    } else {
+      N.wire.emit('import:unlisten');
+    }
+  });
 });

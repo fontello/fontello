@@ -373,9 +373,59 @@ function handleFileSelect(event) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
+N.wire.on('import:listen', function init_import_handlers() {
+  //
+  // Setup global drag & drop zone
+  //
+
+  var dropZone = $('body');
+  var dropProgress = false;
+  var dropTimer;
+
+  // add the dataTransfer property for use with the native `drop` event
+  // to capture information about files dropped into the browser window
+  $.event.props.push('dataTransfer');
+
+  dropZone.on('dragenter.fontello.import dragover.fontello.import', function (event) {
+    event.stopPropagation();
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+
+    clearTimeout(dropTimer);
+
+    if (!dropProgress) {
+      dropZone.addClass('drop-progress');
+      dropProgress = true;
+    }
+  });
+
+  dropZone.on('dragleave.fontello.import', function () {
+    // !!! we can get `dragleave` events from child elements
+    // http://stackoverflow.com/questions/7110353/html5-dragleave-fired-when-hovering-a-child-element
+    // http://stackoverflow.com/questions/10867506
+
+    // Do trottling to filter events
+    clearTimeout(dropTimer);
+    dropTimer = setTimeout(function () {
+      dropZone.removeClass('drop-progress');
+      dropProgress = false;
+    }, 100);
+  });
+
+  dropZone.on('drop.fontello.import', function (event) {
+    dropZone.removeClass('drop-progress');
+    dropProgress = false;
+    handleFileSelect(event);
+  });
+});
+
+
+N.wire.on('import:unlisten', function destroy_import_handlers() {
+  $('body').off('.fontello.import');
+});
+
 
 N.wire.once('navigate.done', function page_setup() {
-
   //
   // Create regular files selector
   //
@@ -401,50 +451,9 @@ N.wire.once('navigate.done', function page_setup() {
     $input.click();
   });
 
-  //
-  // Setup global drag & drop zone
-  //
-
-  var dropZone = $('body');
-  var dropProgress = false;
-  var dropTimer;
-
-  // add the dataTransfer property for use with the native `drop` event
-  // to capture information about files dropped into the browser window
-  $.event.props.push('dataTransfer');
-
-  dropZone.on('dragenter dragover', function (event) {
-    event.stopPropagation();
-    event.preventDefault();
-    event.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
-
-    clearTimeout(dropTimer);
-
-    if (!dropProgress) {
-      dropZone.addClass('drop-progress');
-      dropProgress = true;
-    }
-  });
-
-  dropZone.on('dragleave', function () {
-    // !!! we can get `dragleave` events from child elements
-    // http://stackoverflow.com/questions/7110353/html5-dragleave-fired-when-hovering-a-child-element
-    // http://stackoverflow.com/questions/10867506
-
-    // Do trottling to filter events
-    clearTimeout(dropTimer);
-    dropTimer = setTimeout(function () {
-      dropZone.removeClass('drop-progress');
-      dropProgress = false;
-    }, 100);
-  });
-
-  dropZone.on('drop', function (event) {
-    dropZone.removeClass('drop-progress');
-    dropProgress = false;
-    handleFileSelect(event);
-  });
+  N.wire.emit('import:listen');
 });
+
 
 //
 // Setup import listener
