@@ -5,6 +5,7 @@ var _          = require('lodash');
 var os         = require('os');
 var path       = require('path');
 var fs         = require('fs');
+var mz         = require('mz');
 var async      = require('async');
 var crypto     = require('crypto');
 var fontConfig = require('./config');
@@ -148,18 +149,28 @@ function createTask(clientConfig, afterRegistered, afterComplete) {
 
 
 // Push new build task (config) to queue
-// and return `fontId` immediately (via callback)
+// and return `fontId` immediately
 //
-function pushFont(clientConfig, callback) {
-  createTask(clientConfig, callback, null);
+function pushFont(clientConfig) {
+  return new Promise((resolve, reject) => {
+    createTask(clientConfig, (err, fontId) => {
+      if (err) reject(err);
+      else resolve(fontId);
+    }, null);
+  });
 }
 
 
 // Push new build task (config) to queue
-// and return `fontId` when compleete (via callback)
+// and return `fontId` when compleete
 //
-function buildFont(clientConfig, callback) {
-  createTask(clientConfig, null, callback);
+function buildFont(clientConfig) {
+  return new Promise((resolve, reject) => {
+    createTask(clientConfig, null, (err, info) => {
+      if (err) reject(err);
+      else resolve(info);
+    });
+  });
 }
 
 
@@ -171,27 +182,22 @@ function buildFont(clientConfig, callback) {
 //   directory  // dowload root
 // }
 //
-function checkFont(fontId, callback) {
+function checkFont(fontId) {
 
   // Check task pool first, to avoid fs kick
   // & make sure that file not partially written
   //
-  if (_.has(builderTasks, fontId)) {
-    callback(null, { pending: true });
-    return;
-  }
+  if (_.has(builderTasks, fontId)) return Promise.resolve({ pending: true });
 
   // Ok, we have chance. Check if result exists on disk
-  var filename = getOutputName(fontId),
-    filepath = path.join(builderOutputDir, filename);
+  let filename = getOutputName(fontId);
+  let filepath = path.join(builderOutputDir, filename);
 
-  fs.exists(filepath, function (exists) {
-    if (exists) {
-      callback(null, { pending: false, file: filename, directory: builderOutputDir });
-    } else {
-      callback(null, null);
-    }
-  });
+  return mz.fs.exists(filepath)
+    .then(exists => {
+      if (exists) return { pending: false, file: filename, directory: builderOutputDir };
+      return null;
+    });
 }
 
 

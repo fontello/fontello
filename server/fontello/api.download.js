@@ -1,44 +1,31 @@
 // Build & send font, previously defined by api.put
-
-
+//
 'use strict';
 
 
-var fontBuilder = require('./font/_lib/builder');
+const fontBuilder = require('./font/_lib/builder');
 
 
 module.exports = function (N, apiPath) {
-  var builder = fontBuilder(N);
+  const builder = fontBuilder(N);
+
 
   N.validate(apiPath, {
     sid: { type: 'string', required: true, pattern: /^[0-9a-f]+/ }
   });
 
-  N.wire.on(apiPath, function app_post(env, callback) {
 
-    N.models.ShortLink.findOne({ sid: env.params.sid }, function (err, sl) {
-      if (err) {
-        callback(err);
-        return;
-      }
+  N.wire.on(apiPath, function* app_post(env) {
+    let sl = yield N.models.ShortLink.findOne({ sid: env.params.sid }).lean(true);
 
-      // if session id (shortlink) not found - return 404
-      if (!sl) {
-        callback(N.io.NOT_FOUND);
-        return;
-      }
+    // if session id (shortlink) not found - return 404
+    if (!sl) throw N.io.NOT_FOUND;
 
-      // build font
-      builder.buildFont(sl.toObject().config, function (err, info) {
-        if (err) {
-          callback(err);
-          return;
-        }
+    // build font
+    let info = yield builder.buildFont(sl.config);
 
-        // reuse `fontello.font.download` method
-        env.params.id = info.fontId;
-        N.wire.emit('server:fontello.font.download', env);
-      });
-    });
+    // reuse `fontello.font.download` method
+    env.params.id = info.fontId;
+    yield N.wire.emit('server:fontello.font.download', env);
   });
 };

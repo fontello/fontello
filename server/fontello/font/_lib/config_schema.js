@@ -7,6 +7,7 @@ module.exports = {
 
   type: 'object',
   additionalProperties: false,
+  required: true,
   properties: {
     name:             { type: 'string',   required: false, 'default': 'fontello' },
     css_prefix_text:  { type: 'string',   required: false, 'default': 'icon-' },
