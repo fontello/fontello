@@ -9,7 +9,7 @@
 
   bind:
     default:
-      listen: 127.0.0.1:80
+      listen: 0.0.0.0:80
       #forwarded: true
       mount: http://fontello.com
 
@@ -26,3 +26,7 @@
         ga('send', 'pageview');
 
       </script>
+
+    dear_friends:
+      - 195.154.179.69
+      - 62.210.136.151
