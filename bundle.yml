@@ -18,6 +18,9 @@ packages:
       client/lib
 
     vendor:
+      # TODO: add lodash after svg2ttf upgrade
+      - jquery
+      - event-wire
+      - babelfish
       - knockout
-      - kernel: ./lib/system/client/kernel.js
       - fs: ./lib/system/dummy.js

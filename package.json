@@ -43,7 +43,7 @@
     "co": "^4.6.0",
     "compression": "^1.6.1",
     "cookie": "~ 0.1.0",
-    "csswring": "~ 0.2.0",
+    "csswring": "^4.2.1",
     "ejs": "~ 1.0.0",
     "es6-promise": "^3.1.2",
     "event-wire": "^3.1.0",
