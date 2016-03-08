@@ -1,29 +1,26 @@
 // Working procedure for the font builder queue.
 //
-
-
 'use strict';
 
 
-var _        = require('lodash');
-var format   = require('util').format;
-var path     = require('path');
-var fs       = require('fs');
-var fstools  = require('fs-tools');
-var execFile = require('child_process').execFile;
-var async    = require('async');
-var ttf2eot  = require('ttf2eot');
-var ttf2woff = require('ttf2woff');
-var svg2ttf  = require('svg2ttf');
-var jade     = require('jade');
-var b64      = require('base64-js');
-
-//var AdmZip   = require('adm-zip');
-var io       = require('../../../../lib/system/io');
+const _        = require('lodash');
+const path     = require('path');
+const fs       = require('fs');
+const execFile = require('child_process').execFile;
+const async    = require('async');
+const ttf2eot  = require('ttf2eot');
+const ttf2woff = require('ttf2woff');
+const svg2ttf  = require('svg2ttf');
+const jade     = require('jade');
+const b64      = require('base64-js');
+const rimraf   = require('rimraf');
+const mkdirp   = require('mkdirp');
+const io       = require('../../../../lib/system/io');
 
 
-var TEMPLATES_DIR = path.join(__dirname, '../../../../support/font-templates');
-var TEMPLATES = {};
+const TEMPLATES_DIR = path.join(__dirname, '../../../../support/font-templates');
+const TEMPLATES = {};
+
 
 _.forEach({
   'demo.jade':              'demo.html',
@@ -35,33 +32,34 @@ _.forEach({
   'LICENSE.jade':           'LICENSE.txt',
   'css/animation.css':      'css/animation.css',
   'README.txt':             'README.txt'
-}, function (outputName, inputName) {
-  var inputFile = path.join(TEMPLATES_DIR, inputName),
-      inputData = fs.readFileSync(inputFile, 'utf8'),
-      outputData;
+}, (outputName, inputName) => {
+  let inputFile = path.join(TEMPLATES_DIR, inputName);
+  let inputData = fs.readFileSync(inputFile, 'utf8');
+  let outputData;
 
   switch (path.extname(inputName)) {
-  case '.jade': // Jade template.
-    outputData = jade.compile(inputData, {
-      pretty:   true,
-      filename: inputFile
-    });
-    break;
+    case '.jade': // Jade template.
+      outputData = jade.compile(inputData, {
+        pretty: true,
+        filename: inputFile
+      });
+      break;
 
-  case '.tpl': // Lodash template.
-    outputData = _.template(inputData);
-    break;
+    case '.tpl': // Lodash template.
+      outputData = _.template(inputData);
+      break;
 
-  default: // Static file - just do a copy.
-    outputData = function () { return inputData; };
-    break;
+    default: // Static file - just do a copy.
+      outputData = function () {
+        return inputData;
+      };
+      break;
   }
 
   TEMPLATES[outputName] = outputData;
 });
 
-
-var SVG_FONT_TEMPLATE = _.template(
+const SVG_FONT_TEMPLATE = _.template(
   '<?xml version="1.0" standalone="no"?>\n' +
   '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n' +
   '<svg xmlns="http://www.w3.org/2000/svg">\n' +
@@ -100,29 +98,29 @@ var SVG_FONT_TEMPLATE = _.template(
 );
 
 
-module.exports = function fontWorker(taskInfo, callback) {
-  var logPrefix = '[font::' + taskInfo.fontId + ']',
-    timeStart = Date.now(),
-    workplan  = [],
-    fontname  = taskInfo.builderConfig.font.fontname,
-    files,
-      // All next: generated raw data.
-    configOutput = JSON.stringify(taskInfo.clientConfig, null, '  '),
-    svgOutput,
-    ttfOutput,
-    eotOutput,
-    woffOutput;
+module.exports = function fontWorker(taskInfo) {
+  let logPrefix = '[font::' + taskInfo.fontId + ']';
+  let timeStart = Date.now();
+  let workplan = [];
+  let fontname = taskInfo.builderConfig.font.fontname;
+  let files;
+  // All next: generated raw data.
+  let configOutput = JSON.stringify(taskInfo.clientConfig, null, '  ');
+  let svgOutput;
+  let ttfOutput;
+  let eotOutput;
+  let woffOutput;
 
-  taskInfo.logger.info('%s Start generation: %j', logPrefix, taskInfo.clientConfig);
+  taskInfo.logger.info(`${logPrefix} Start generation: ${JSON.stringify(taskInfo.clientConfig)}`);
 
   // Collect file paths.
   files = {
     config:      path.join(taskInfo.tmpDir, 'config.json'),
-    svg:         path.join(taskInfo.tmpDir, 'font', fontname + '.svg'),
-    ttf:         path.join(taskInfo.tmpDir, 'font', fontname + '.ttf'),
-    ttfUnhinted: path.join(taskInfo.tmpDir, 'font', fontname + '-unhinted.ttf'),
-    eot:         path.join(taskInfo.tmpDir, 'font', fontname + '.eot'),
-    woff:        path.join(taskInfo.tmpDir, 'font', fontname + '.woff')
+    svg:         path.join(taskInfo.tmpDir, 'font', `${fontname}.svg`),
+    ttf:         path.join(taskInfo.tmpDir, 'font', `${fontname}.ttf`),
+    ttfUnhinted: path.join(taskInfo.tmpDir, 'font', `${fontname}-unhinted.ttf`),
+    eot:         path.join(taskInfo.tmpDir, 'font', `${fontname}.eot`),
+    woff:        path.join(taskInfo.tmpDir, 'font', `${fontname}.woff`)
   };
 
   // Generate initial SVG font.
@@ -132,10 +130,10 @@ module.exports = function fontWorker(taskInfo, callback) {
 
   // Prepare temporary working directory.
 
-  workplan.push(async.apply(fstools.remove, taskInfo.tmpDir));
-  workplan.push(async.apply(fstools.mkdir, taskInfo.tmpDir));
-  workplan.push(async.apply(fstools.mkdir, path.join(taskInfo.tmpDir, 'font')));
-  workplan.push(async.apply(fstools.mkdir, path.join(taskInfo.tmpDir, 'css')));
+  workplan.push(async.apply(rimraf, taskInfo.tmpDir));
+  workplan.push(async.apply(mkdirp, taskInfo.tmpDir));
+  workplan.push(async.apply(mkdirp, path.join(taskInfo.tmpDir, 'font')));
+  workplan.push(async.apply(mkdirp, path.join(taskInfo.tmpDir, 'css')));
 
   // Write clinet config and initial SVG font.
 
@@ -169,8 +167,8 @@ module.exports = function fontWorker(taskInfo, callback) {
 
   // Convert SVG to TTF
 
-  workplan.push(function (next) {
-    var ttf;
+  workplan.push(next => {
+    let ttf;
 
     try {
       ttf = svg2ttf(svgOutput, { copyright: taskInfo.builderConfig.font.copyright });
@@ -184,9 +182,10 @@ module.exports = function fontWorker(taskInfo, callback) {
 
   // Autohint the resulting TTF.
 
-  var TTFAUTOHINT_BIN = 'ttfautohint';
-  workplan.push(function (next) {
-    var max_segments = _.maxBy(taskInfo.builderConfig.glyphs, function (glyph) { return glyph.segments; }).segments;
+  const TTFAUTOHINT_BIN = 'ttfautohint';
+
+  workplan.push(next => {
+    let max_segments = _.maxBy(taskInfo.builderConfig.glyphs, glyph => glyph.segments).segments;
 
     // KLUDGE :)
     // Don't allow hinting if font has "strange" glyphs.
@@ -201,7 +200,7 @@ module.exports = function fontWorker(taskInfo, callback) {
       return;
     }
 
-    fs.rename(files.ttf, files.ttfUnhinted, function (err) {
+    fs.rename(files.ttf, files.ttfUnhinted, err => {
       if (err) {
         next(err);
         return;
@@ -213,11 +212,11 @@ module.exports = function fontWorker(taskInfo, callback) {
         '--symbol',
         files.ttfUnhinted,
         files.ttf
-      ], { cwd: taskInfo.cwdDir }, function (err, stdout, stderr) {
+      ], { cwd: taskInfo.cwdDir }, (err, stdout, stderr) => {
         if (err) {
           next({
             code: io.APP_ERROR,
-            message: format('ttfautohint error:\n%s\n%s\n%s', err, stdout, stderr)
+            message: `ttfautohint error:\n${err}\n${stdout}\n${stderr}`
           });
           return;
         }
@@ -230,8 +229,8 @@ module.exports = function fontWorker(taskInfo, callback) {
 
   // Read the resulting TTF to produce EOT and WOFF.
 
-  workplan.push(function (next) {
-    fs.readFile(files.ttf, null, function (err, data) {
+  workplan.push(next => {
+    fs.readFile(files.ttf, null, (err, data) => {
       ttfOutput = new Uint8Array(data);
       next(err);
     });
@@ -240,7 +239,7 @@ module.exports = function fontWorker(taskInfo, callback) {
 
   // Convert TTF to EOT.
 
-  workplan.push(function (next) {
+  workplan.push(next => {
     try {
       eotOutput = ttf2eot(ttfOutput).buffer;
     } catch (e) {
@@ -253,7 +252,7 @@ module.exports = function fontWorker(taskInfo, callback) {
 
   // Convert TTF to WOFF.
 
-  workplan.push(function (next) {
+  workplan.push(next => {
     try {
       woffOutput = ttf2woff(ttfOutput).buffer;
     } catch (e) {
@@ -266,7 +265,7 @@ module.exports = function fontWorker(taskInfo, callback) {
 
   // Write template files. (generate dynamic and copy static)
 
-  _.forEach(TEMPLATES, function (templateData, templateName) {
+  _.forEach(TEMPLATES, (templateData, templateName) => {
 
     // don't create license file when no copyright data exists
 
@@ -274,9 +273,9 @@ module.exports = function fontWorker(taskInfo, callback) {
       return;
     }
 
-    var outputName = templateName.replace('${FONTNAME}', fontname),
-        outputFile = path.join(taskInfo.tmpDir, outputName),
-        outputData = templateData(taskInfo.builderConfig);
+    let outputName = templateName.replace('${FONTNAME}', fontname);
+    let outputFile = path.join(taskInfo.tmpDir, outputName);
+    let outputData = templateData(taskInfo.builderConfig);
 
     workplan.push(function (next) {
       outputData = outputData.replace('%WOFF64%', b64.fromByteArray(woffOutput))
@@ -291,12 +290,13 @@ module.exports = function fontWorker(taskInfo, callback) {
   // Use ".tmp" extension here to prevent Fontello from allowing to
   // download this file while it's *in progress*.
 
-  workplan.push(async.apply(fstools.remove, taskInfo.output));
-  workplan.push(async.apply(fstools.mkdir, path.dirname(taskInfo.output)));
+  workplan.push(async.apply(rimraf, taskInfo.output));
+  workplan.push(async.apply(mkdirp, path.dirname(taskInfo.output)));
 
   // switch to node's module for portability
 
-  var ZIP_BIN = 'zip';
+  let ZIP_BIN = 'zip';
+
   workplan.push(async.apply(execFile, ZIP_BIN, [
     taskInfo.output + '.tmp',
     '-r',
@@ -329,27 +329,27 @@ module.exports = function fontWorker(taskInfo, callback) {
 
 
   // Remove ".tmp" extension from zip file to mark it as *completed*.
-  workplan.push(async.apply(fstools.move, (taskInfo.output + '.tmp'), taskInfo.output));
+  workplan.push(async.apply(fs.rename, taskInfo.output + '.tmp', taskInfo.output));
 
 
   // Remove temporary files and directories.
-  workplan.push(async.apply(fstools.remove, taskInfo.tmpDir));
+  workplan.push(async.apply(rimraf, taskInfo.tmpDir));
 
 
   // Execute the workplan.
-  async.series(workplan, function (err) {
-    if (err) {
-      taskInfo.logger.error('%s %s', logPrefix, err.stack || err.message || err.toString());
-      callback(err);
-      return;
-    }
+  return new Promise((resolve, reject) => {
+    async.series(workplan, err => {
+      if (err) {
+        taskInfo.logger.error(`${logPrefix} ${err.stack || err.message || err.toString()}`);
+        reject(err);
+        return;
+      }
 
-    var timeEnd = Date.now();
+      let timeEnd = Date.now();
 
-    taskInfo.logger.info('%s Generated in %dms (real: %dms)',
-                         logPrefix,
-                         (timeEnd - timeStart) / 1000,
-                         (timeEnd - taskInfo.timestamp) / 1000);
-    callback();
+      taskInfo.logger.info(`${logPrefix} Generated in ${(timeEnd - timeStart) / 1000} ` +
+                           `(real: ${(timeEnd - taskInfo.timestamp) / 1000})`);
+      resolve();
+    });
   });
 };
