@@ -9,8 +9,6 @@ const _            = require('lodash');
 const co           = require('co');
 const thenify      = require('thenify');
 const Mocha        = require('mocha');
-const navit        = require('navit');
-const navitPlugins = require('../lib/test/navit_plugins');
 const glob         = require('glob');
 
 
@@ -56,10 +54,14 @@ module.exports.run = function (N, args) {
       throw 'You must provide NODECA_ENV in order to run nodeca test';
     }
 
+    // Expose N to globals for tests
+    global.TEST = { N };
+
     yield Promise.resolve()
       .then(() => N.wire.emit('init:models', N))
       .then(() => N.wire.emit('init:bundle', N))
-      .then(() => N.wire.emit('init:server', N));
+      .then(() => N.wire.emit('init:server', N))
+      .then(() => N.wire.emit('init:tests', N));
 
     let mocha        = new Mocha({ timeout: 10000 });
     let applications = N.apps;
@@ -70,7 +72,6 @@ module.exports.run = function (N, args) {
     // if app set, check that it's valid
     if (args.app) {
       if (!_.find(applications, app => app.name === args.app)) {
-        /*eslint-disable no-console*/
         let msg = `Invalid application name: ${args.app}` +
             'Valid apps are:  ' + _.map(applications, app => app.name).join(', ');
 
@@ -97,12 +98,6 @@ module.exports.run = function (N, args) {
           });
       }
     });
-
-    // Expose N to globals for tests
-    global.TEST = {
-      N,
-      browser: navit().use(navitPlugins)
-    };
 
     yield thenify(cb => mocha.run(cb))();
 
