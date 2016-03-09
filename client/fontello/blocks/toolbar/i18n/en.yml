@@ -1,5 +1,6 @@
 en-US:
-  download: Download webfont
+  download_webfont: Download webfont
+  download_config: Get config only
   save: Save session
   export: Export font
 

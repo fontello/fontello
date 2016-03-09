@@ -70,6 +70,7 @@ function ToolbarModel() {
   this.hinting        = N.app.hinting;
   this.apiMode        = N.app.apiMode;
   this.apiUrl         = N.app.apiUrl;
+  this.getConfig      = N.app.getConfig;
 
   this.fontName.subscribe(function (value) {
     var cleared = String(value).toLowerCase().replace(/[^a-z0-9_\-]/g, '');
