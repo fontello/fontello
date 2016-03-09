@@ -3,22 +3,23 @@
 'use strict';
 
 
-const co       = require('co');
-const thenify  = require('thenify');
-const _        = require('lodash');
-const path     = require('path');
-const mz       = require('mz');
-const fs       = require('fs');
-const ttf2eot  = require('ttf2eot');
-const ttf2woff = require('ttf2woff');
-const svg2ttf  = require('svg2ttf');
-const jade     = require('jade');
-const b64      = require('base64-js');
-const rimraf   = thenify(require('rimraf'));
-const mkdirp   = thenify(require('mkdirp'));
-const glob     = thenify(require('glob'));
-const JSZip    = require('jszip');
-const write    = require('thenify')(require('write-file-atomic'));
+const co        = require('co');
+const thenify   = require('thenify');
+const _         = require('lodash');
+const path      = require('path');
+const mz        = require('mz');
+const fs        = require('fs');
+const ttf2eot   = require('ttf2eot');
+const ttf2woff  = require('ttf2woff');
+const ttf2woff2 = require('ttf2woff2');
+const svg2ttf   = require('svg2ttf');
+const jade      = require('jade');
+const b64       = require('base64-js');
+const rimraf    = thenify(require('rimraf'));
+const mkdirp    = thenify(require('mkdirp'));
+const glob      = thenify(require('glob'));
+const JSZip     = require('jszip');
+const write     = require('thenify')(require('write-file-atomic'));
 
 
 const TEMPLATES_DIR = path.join(__dirname, '../../../../support/font-templates');
@@ -79,7 +80,8 @@ module.exports = co.wrap(function* fontWorker(taskInfo) {
     ttf:         path.join(taskInfo.tmpDir, 'font', `${fontname}.ttf`),
     ttfUnhinted: path.join(taskInfo.tmpDir, 'font', `${fontname}-unhinted.ttf`),
     eot:         path.join(taskInfo.tmpDir, 'font', `${fontname}.eot`),
-    woff:        path.join(taskInfo.tmpDir, 'font', `${fontname}.woff`)
+    woff:        path.join(taskInfo.tmpDir, 'font', `${fontname}.woff`),
+    woff2:       path.join(taskInfo.tmpDir, 'font', `${fontname}.woff2`)
   };
 
 
@@ -175,6 +177,10 @@ module.exports = co.wrap(function* fontWorker(taskInfo) {
   let woffOutput = ttf2woff(ttfOutput).buffer;
 
   yield mz.fs.writeFile(files.woff, new Buffer(woffOutput));
+
+  // Convert TTF to WOFF2.
+  //
+  yield mz.fs.writeFile(files.woff2, ttf2woff2(ttfOutput));
 
 
   // Write template files. (generate dynamic and copy static)

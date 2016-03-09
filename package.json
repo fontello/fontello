@@ -67,6 +67,7 @@
     "thenify": "^3.2.0",
     "ttf2eot": "^2.0.0",
     "ttf2woff": "^2.0.1",
+    "ttf2woff2": "^2.0.3",
     "typeahead.js": "0.11.1",
     "uglify-js": "~ 2.6.2",
     "uglifyify": "^3.0.1",
