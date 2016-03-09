@@ -10,19 +10,19 @@
 - Reorganized configs & folders.
 
 
-5.3.0 / WIP
+5.3.0 / 2015-11-20
 ------------------
 
 - Added font smoothing as in TWBS
 - Make demo icons "copypasteable".
 - Fixed custom icons size in UI if adfanced settings changed.
-- FA update to 4.2.0.
+- FA update to 4.3.0.
 - Improved SVG import - transforms & paths merge are applyed automatically.
 - Fixed import of empty glyphs (space).
 - Use ttfautohint v1.1.
 
 
-5.2.0 / 2014.06.22
+5.2.0 / 2014-06-22
 ------------------
 
 - FontAwesome update to 4.1.0
