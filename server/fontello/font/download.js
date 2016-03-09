@@ -38,9 +38,10 @@ module.exports = function (N, apiPath) {
   N.wire.on(apiPath, function send_dowloaded_file(env, callback) {
     let req = env.origin.req;
     let res = env.origin.res;
+    let root = path.join(N.mainApp.root, 'download');
+    let file = path.join(env.params.id.substr(0, 2), env.params.id.substr(2, 2), `${env.params.id}.zip`);
 
-    send(req, path.join(env.params.id.substr(0, 2), env.params.id.substr(2, 2), `${env.params.id}.zip`))
-      .root(path.join(N.mainApp.root, 'download'))
+    send(req, file, { root, index: false })
       .on('error', function (err) {
         callback(err.status);
       })
