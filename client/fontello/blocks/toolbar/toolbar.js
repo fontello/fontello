@@ -143,15 +143,6 @@ N.wire.once('navigate.done', function (data) {
 
     N.logger.debug('About to build font', config);
 
-    // show ads banner
-    N.wire.emit('notify', {
-      type:        'info',
-      message:     t('help_us'),
-      autohide:    10000, // 10 secs,
-      deduplicate: true,
-      closable:    true
-    });
-
     toolbar.building(true);
 
     return N.io.rpc('fontello.font.generate', config).then(res => {
