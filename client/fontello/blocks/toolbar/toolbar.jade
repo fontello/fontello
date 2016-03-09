@@ -36,10 +36,20 @@
         button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown')
           i.icon-settings
           //-span.caret
+
+        //- Hidden
+        input#toolbar__import(
+          name='file'
+          type='file'
+          style='position: absolute; left: -2000px'
+          data-on-change='import.start'
+        )
+
+        //- data-on-click='import.start',
         ul.dropdown-menu.pull-right.toolbar__settings-menu
           li: a(
                 href='#',
-                data-on-click='import.start',
+                onClick='document.getElementById("toolbar__import").click()'
                 data-content=self.t('menu_import_help'),
                 data-placement='left',
                 data-trigger='hover',

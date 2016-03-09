@@ -426,29 +426,8 @@ N.wire.on('import:unlisten', function destroy_import_handlers() {
 
 
 N.wire.once('navigate.done', function page_setup() {
-  //
-  // Create regular files selector
-  //
-
-  var $input = $('<input type="file">');
-
-  // !!! WARNING !!!
-  // Chrome does not triggers events, when element has "display: none"
-  $input.css({
-    visibility: 'hidden',
-    position:   'absolute',
-    left:       '-10000px'
-  });
-
-  // inject $el into body
-  $input.appendTo('body');
-
-  // listen input changes
-  $input.on('change', handleFileSelect);
-
-  // handle settings menu click -> open file dialog
-  N.wire.on('import.start', function open_file_dlg() {
-    $input.click();
+  N.wire.on('import.start', function handle_file_select(data) {
+    handleFileSelect(data.event);
   });
 
   N.wire.emit('import:listen');
