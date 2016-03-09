@@ -3,23 +3,27 @@
 'use strict';
 
 
+const co       = require('co');
+const thenify  = require('thenify');
 const _        = require('lodash');
 const path     = require('path');
+const mz       = require('mz');
 const fs       = require('fs');
-const execFile = require('child_process').execFile;
-const async    = require('async');
 const ttf2eot  = require('ttf2eot');
 const ttf2woff = require('ttf2woff');
 const svg2ttf  = require('svg2ttf');
 const jade     = require('jade');
 const b64      = require('base64-js');
-const rimraf   = require('rimraf');
-const mkdirp   = require('mkdirp');
-const io       = require('../../../../lib/system/io');
+const rimraf   = thenify(require('rimraf'));
+const mkdirp   = thenify(require('mkdirp'));
+const glob     = thenify(require('glob'));
+const JSZip    = require('jszip');
+const write    = require('thenify')(require('write-file-atomic'));
 
 
 const TEMPLATES_DIR = path.join(__dirname, '../../../../support/font-templates');
 const TEMPLATES = {};
+const SVG_FONT_TEMPLATE = _.template(fs.readFileSync(path.join(TEMPLATES_DIR, 'font/svg.tpl'), 'utf8'));
 
 
 _.forEach({
@@ -50,70 +54,25 @@ _.forEach({
       break;
 
     default: // Static file - just do a copy.
-      outputData = function () {
-        return inputData;
-      };
+      outputData = () => inputData;
       break;
   }
 
   TEMPLATES[outputName] = outputData;
 });
 
-const SVG_FONT_TEMPLATE = _.template(
-  '<?xml version="1.0" standalone="no"?>\n' +
-  '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n' +
-  '<svg xmlns="http://www.w3.org/2000/svg">\n' +
-  '<metadata>${font.copyright}</metadata>\n' +
-  '<defs>\n' +
-  '<font id="${font.fontname}" horiz-adv-x="${font.ascent - font.descent}" >\n' +
 
-  '<font-face' +
-    ' font-family="${font.familyname}"' +
-    ' font-weight="400"' +
-    ' font-stretch="normal"' +
-    ' units-per-em="${font.ascent - font.descent}"' +
-    //panose-1="2 0 5 3 0 0 0 0 0 0"
-    ' ascent="${font.ascent}"' +
-    ' descent="${font.descent}"' +
-    //bbox="-1.33333 -150.333 1296 850"
-    //underline-thickness="50"
-    //underline-position="-100"
-    //unicode-range="U+002B-1F6AB"
-  ' />\n' +
-
-  '<missing-glyph horiz-adv-x="${font.ascent - font.descent}" />\n' +
-
-  '<% glyphs.forEach(function(glyph) { %>' +
-    '<glyph' +
-      ' glyph-name="${glyph.css}"' +
-      ' unicode="&#x${glyph.code.toString(16)};"' +
-      ' d="${glyph.d}"' +
-      ' horiz-adv-x="${glyph.width}"' +
-    ' />\n' +
-  '<% }); %>' +
-
-  '</font>\n' +
-  '</defs>\n' +
-  '</svg>'
-);
-
-
-module.exports = function fontWorker(taskInfo) {
+module.exports = co.wrap(function* fontWorker(taskInfo) {
   let logPrefix = '[font::' + taskInfo.fontId + ']';
   let timeStart = Date.now();
-  let workplan = [];
   let fontname = taskInfo.builderConfig.font.fontname;
   let files;
-  // All next: generated raw data.
-  let configOutput = JSON.stringify(taskInfo.clientConfig, null, '  ');
-  let svgOutput;
-  let ttfOutput;
-  let eotOutput;
-  let woffOutput;
 
   taskInfo.logger.info(`${logPrefix} Start generation: ${JSON.stringify(taskInfo.clientConfig)}`);
 
+
   // Collect file paths.
+  //
   files = {
     config:      path.join(taskInfo.tmpDir, 'config.json'),
     svg:         path.join(taskInfo.tmpDir, 'font', `${fontname}.svg`),
@@ -123,24 +82,30 @@ module.exports = function fontWorker(taskInfo) {
     woff:        path.join(taskInfo.tmpDir, 'font', `${fontname}.woff`)
   };
 
-  // Generate initial SVG font.
 
+  // Generate initial SVG font.
+  //
   /*eslint-disable new-cap*/
-  svgOutput = SVG_FONT_TEMPLATE(taskInfo.builderConfig);
+  let svgOutput = SVG_FONT_TEMPLATE(taskInfo.builderConfig);
+
 
   // Prepare temporary working directory.
+  //
+  yield rimraf(taskInfo.tmpDir);
+  yield mkdirp(taskInfo.tmpDir);
+  yield mkdirp(path.join(taskInfo.tmpDir, 'font'));
+  yield mkdirp(path.join(taskInfo.tmpDir, 'css'));
 
-  workplan.push(async.apply(rimraf, taskInfo.tmpDir));
-  workplan.push(async.apply(mkdirp, taskInfo.tmpDir));
-  workplan.push(async.apply(mkdirp, path.join(taskInfo.tmpDir, 'font')));
-  workplan.push(async.apply(mkdirp, path.join(taskInfo.tmpDir, 'css')));
 
   // Write clinet config and initial SVG font.
+  //
+  let configOutput = JSON.stringify(taskInfo.clientConfig, null, '  ');
 
-  workplan.push(async.apply(fs.writeFile, files.config, configOutput, 'utf8'));
-  workplan.push(async.apply(fs.writeFile, files.svg, svgOutput, 'utf8'));
+  yield mz.fs.writeFile(files.config, configOutput, 'utf8');
+  yield mz.fs.writeFile(files.svg, svgOutput, 'utf8');
 
-/*
+
+  /*
   // Convert SVG to TTF with FontForge
 
   var FONTFORGE_BIN = 'fontforge';
@@ -163,193 +128,122 @@ module.exports = function fontWorker(taskInfo) {
       next();
     });
   });
-*/
+  */
+
 
   // Convert SVG to TTF
+  //
+  let ttf = svg2ttf(svgOutput, { copyright: taskInfo.builderConfig.font.copyright });
 
-  workplan.push(next => {
-    let ttf;
-
-    try {
-      ttf = svg2ttf(svgOutput, { copyright: taskInfo.builderConfig.font.copyright });
-    } catch (e) {
-      next(e);
-      return;
-    }
-    fs.writeFile(files.ttf, new Buffer(ttf.buffer), next);
-  });
+  yield mz.fs.writeFile(files.ttf, new Buffer(ttf.buffer));
 
 
   // Autohint the resulting TTF.
+  //
+  let max_segments = _.maxBy(taskInfo.builderConfig.glyphs, glyph => glyph.segments).segments;
 
-  const TTFAUTOHINT_BIN = 'ttfautohint';
-
-  workplan.push(next => {
-    let max_segments = _.maxBy(taskInfo.builderConfig.glyphs, glyph => glyph.segments).segments;
-
-    // KLUDGE :)
-    // Don't allow hinting if font has "strange" glyphs.
-    // That's useless anyway, and can hang ttfautohint < 1.0
-    if (max_segments > 500) {
-      next();
-      return;
-    }
-
-    if (!taskInfo.builderConfig.hinting) {
-      next();
-      return;
-    }
-
-    fs.rename(files.ttf, files.ttfUnhinted, err => {
-      if (err) {
-        next(err);
-        return;
-      }
-
-      execFile(TTFAUTOHINT_BIN, [
-        '--no-info',
-        '--windows-compatibility',
-        '--symbol',
-        files.ttfUnhinted,
-        files.ttf
-      ], { cwd: taskInfo.cwdDir }, (err, stdout, stderr) => {
-        if (err) {
-          next({
-            code: io.APP_ERROR,
-            message: `ttfautohint error:\n${err}\n${stdout}\n${stderr}`
-          });
-          return;
-        }
-
-        fs.unlink(files.ttfUnhinted, next);
-      });
-    });
-  });
+  // KLUDGE :)
+  // Don't allow hinting if font has "strange" glyphs.
+  // That's useless anyway, and can hang ttfautohint < 1.0
+  if (max_segments <= 500 && taskInfo.builderConfig.hinting) {
+    yield mz.fs.rename(files.ttf, files.ttfUnhinted);
+    yield mz.child_process.execFile('ttfautohint', [
+      '--no-info',
+      '--windows-compatibility',
+      '--symbol',
+      files.ttfUnhinted,
+      files.ttf
+    ], { cwd: taskInfo.cwdDir });
+    yield mz.fs.unlink(files.ttfUnhinted);
+  }
 
 
   // Read the resulting TTF to produce EOT and WOFF.
-
-  workplan.push(next => {
-    fs.readFile(files.ttf, null, (err, data) => {
-      ttfOutput = new Uint8Array(data);
-      next(err);
-    });
-  });
+  //
+  let ttfOutput = new Uint8Array(yield mz.fs.readFile(files.ttf));
 
 
   // Convert TTF to EOT.
+  //
+  let eotOutput = ttf2eot(ttfOutput).buffer;
 
-  workplan.push(next => {
-    try {
-      eotOutput = ttf2eot(ttfOutput).buffer;
-    } catch (e) {
-      next(e);
-      return;
-    }
-    fs.writeFile(files.eot, new Buffer(eotOutput), next);
-  });
+  yield mz.fs.writeFile(files.eot, new Buffer(eotOutput));
 
 
   // Convert TTF to WOFF.
+  //
+  let woffOutput = ttf2woff(ttfOutput).buffer;
 
-  workplan.push(next => {
-    try {
-      woffOutput = ttf2woff(ttfOutput).buffer;
-    } catch (e) {
-      next(e);
-      return;
-    }
-    fs.writeFile(files.woff, new Buffer(woffOutput), next);
-  });
+  yield mz.fs.writeFile(files.woff, new Buffer(woffOutput));
 
 
   // Write template files. (generate dynamic and copy static)
+  //
+  let templatesNames = Object.keys(TEMPLATES);
 
-  _.forEach(TEMPLATES, (templateData, templateName) => {
+  for (let i = 0; i < templatesNames.length; i++) {
+    let templateName = templatesNames[i];
+    let templateData = TEMPLATES[templateName];
 
     // don't create license file when no copyright data exists
-
     if ((templateName === 'LICENSE.txt') && (!taskInfo.builderConfig.fonts_list.length)) {
-      return;
+      continue;
     }
 
     let outputName = templateName.replace('${FONTNAME}', fontname);
     let outputFile = path.join(taskInfo.tmpDir, outputName);
     let outputData = templateData(taskInfo.builderConfig);
 
-    workplan.push(function (next) {
-      outputData = outputData.replace('%WOFF64%', b64.fromByteArray(woffOutput))
-                             .replace('%TTF64%', b64.fromByteArray(ttfOutput));
+    outputData = outputData
+                    .replace('%WOFF64%', b64.fromByteArray(woffOutput))
+                    .replace('%TTF64%', b64.fromByteArray(ttfOutput));
 
-      fs.writeFile(outputFile, outputData, 'utf8', next);
-    });
-  });
+    yield mz.fs.writeFile(outputFile, outputData, 'utf8');
+  }
 
 
   // Create zipball.
   // Use ".tmp" extension here to prevent Fontello from allowing to
   // download this file while it's *in progress*.
-
-  workplan.push(async.apply(rimraf, taskInfo.output));
-  workplan.push(async.apply(mkdirp, path.dirname(taskInfo.output)));
+  //
+  yield rimraf(taskInfo.output);
+  yield mkdirp(path.dirname(taskInfo.output));
 
   // switch to node's module for portability
+  let archiveFiles = yield glob(path.join(taskInfo.tmpDir, '**'), { nodir: true });
+  let zip = new JSZip();
 
-  let ZIP_BIN = 'zip';
+  for (var i = 0; i < archiveFiles.length; i++) {
+    let fileData = yield mz.fs.readFile(archiveFiles[i]);
 
-  workplan.push(async.apply(execFile, ZIP_BIN, [
+    zip.folder(path.basename(taskInfo.tmpDir)).file(path.relative(taskInfo.tmpDir, archiveFiles[i]), fileData);
+  }
+
+  yield write(taskInfo.output, zip.generate({ type: 'nodebuffer', compression: 'DEFLATE' }));
+
+  /*
+  yield mz.child_process.execFile('zip', [
     taskInfo.output + '.tmp',
     '-r',
     path.basename(taskInfo.tmpDir)
-  ], { cwd: path.dirname(taskInfo.tmpDir) }));
-  /* archives are sometime broken, use system zip
-  workplan.push(function (next) {
-    var zip = new AdmZip();
-
-    fstools.walk(taskInfo.tmpDir, function (filename, stats, cb) {
-      var shortName = filename.substr(path.dirname(taskInfo.tmpDir).length +1);
-
-      fs.readFile(filename, function(err, data) {
-        if (err) { cb(err); return; }
-        zip.addFile(shortName, data);
-        cb();
-      });
-
-    }, function (err) {
-      if (err) { next(err); return; }
-      // FIXME: zip should be async, but it doesn't work this way (callback not executed)
-      var outBuffer = zip.toBuffer();
-      fs.writeFile(taskInfo.output, outBuffer, next);
-      //zip.toBuffer(function(outBuffer) {
-      //  fs.writeFile(taskInfo.output, outBuffer, next);
-      //});
-    });
-  });
-  */
+  ], { cwd: path.dirname(taskInfo.tmpDir) });
 
 
   // Remove ".tmp" extension from zip file to mark it as *completed*.
-  workplan.push(async.apply(fs.rename, taskInfo.output + '.tmp', taskInfo.output));
+  //
+  yield mz.fs.rename(`${taskInfo.output}.tmp`, taskInfo.output);
+  */
 
 
   // Remove temporary files and directories.
-  workplan.push(async.apply(rimraf, taskInfo.tmpDir));
+  //
+  yield rimraf(taskInfo.tmpDir);
 
 
-  // Execute the workplan.
-  return new Promise((resolve, reject) => {
-    async.series(workplan, err => {
-      if (err) {
-        taskInfo.logger.error(`${logPrefix} ${err.stack || err.message || err.toString()}`);
-        reject(err);
-        return;
-      }
+  // Done.
+  //
+  let timeEnd = Date.now();
 
-      let timeEnd = Date.now();
-
-      taskInfo.logger.info(`${logPrefix} Generated in ${(timeEnd - timeStart) / 1000} ` +
-                           `(real: ${(timeEnd - taskInfo.timestamp) / 1000})`);
-      resolve();
-    });
-  });
-};
+  taskInfo.logger.info(`${logPrefix} Generated in ${(timeEnd - timeStart) / 1000} ` +
+                       `(real: ${(timeEnd - taskInfo.timestamp) / 1000})`);
+});
