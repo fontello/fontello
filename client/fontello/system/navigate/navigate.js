@@ -508,14 +508,21 @@ N.wire.once('navigate.done', { priority: 999 }, function navigate_click_handler(
       return;
     }
 
-    if ($this.attr('href') === '#') {
+    var href = $this.attr('href');
+
+    if (href.indexOf('data:') === 0) {
+      // Skip data URIs.
+      return;
+    }
+
+    if (href === '#') {
       // Prevent clicks on special "button"-links.
       event.preventDefault();
       return;
     }
 
     N.wire
-      .emit('navigate.to', $this.attr('href'))
+      .emit('navigate.to', href)
       .catch(err => { N.logger.error('%s', err); });
 
     event.preventDefault();
