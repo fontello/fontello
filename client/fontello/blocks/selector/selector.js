@@ -50,6 +50,10 @@ N.wire.once('navigate.done', function () {
 
       $('#selector').removeClass('_multicursor');
     }
+  }).on('mousedown', () => {
+    // We should send blur manually because of issue with jQuery UI selectable,
+    // http://stackoverflow.com/questions/8869708/click-on-jquery-sortable-list-does-not-blur-input
+    $('input').blur();
   });
 
   //
