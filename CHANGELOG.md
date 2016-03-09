@@ -1,3 +1,15 @@
+6.0.0 / WIP
+------------------
+
+- Resync core with fresh nodeca sources. Now use node.js 4.+. #469.
+- Added WOFF2 support, #388.
+- Added glyphs reorder support, #283, #240.
+- Assorted `svg2ttf` (TTF generator) updates: lineGap -> 0, fsType -> 0.
+- Accessibility improve, #468.
+- Fixed zip import, #426.
+- Reorganized configs & folders.
+
+
 5.3.0 / WIP
 ------------------
 
