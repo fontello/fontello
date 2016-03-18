@@ -50,7 +50,7 @@ module.exports = function (N, apiPath) {
       }
 
       // Validate post `url` param
-      let chk_fields = validator({
+      let fields_validator = validator({
         properties: {
           url: {
             format : 'url',
@@ -62,16 +62,16 @@ module.exports = function (N, apiPath) {
             }
           }
         }
-      })(fields);
+      }, { verbose: true });
 
-      if (chk_fields.errors) {
-        callback({ code: N.io.BAD_REQUEST, message: chk_fields.errors[0].message });
+      if (!fields_validator(fields)) {
+        callback({ code: N.io.BAD_REQUEST, message: fields_validator.errors[0].message });
         remove_uploaded_files(files);
         return;
       }
 
       // Validate post `config` param
-      let chk_files = validator({
+      let files_validator = validator({
         properties: {
           config: {
             type: 'object',
@@ -81,10 +81,10 @@ module.exports = function (N, apiPath) {
             }
           }
         }
-      })(files);
+      }, { verbose: true });
 
-      if (chk_files.errors) {
-        callback({ code: N.io.BAD_REQUEST, message: chk_files.errors[0].message });
+      if (!files_validator(files)) {
+        callback({ code: N.io.BAD_REQUEST, message: files_validator.errors[0].message });
         remove_uploaded_files(files);
         return;
       }
@@ -120,13 +120,13 @@ module.exports = function (N, apiPath) {
     }
 
     // Validate config content
-    let chk_config = validator(config_schema)(config);
+    let cfg_validator = validator(config_schema, { verbose: true });
 
-    if (chk_config.errors) {
+    if (!cfg_validator(config)) {
       // generate error text
       let error = [ 'Invalid config format:' ].concat(_.map(
-        chk_config.errors,
-        e => `- ${e.property} ${e.message}`
+        cfg_validator.errors,
+        e => `- ${e.field} ${e.message}`
       )).join('\n');
 
       throw { code: N.io.BAD_REQUEST, message: error };
