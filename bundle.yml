@@ -11,7 +11,8 @@ packages:
       - lib
 
     entries:
-      client/fontello
+      - client/fontello
+      - server/fontello
 
   lib:
     entries:
