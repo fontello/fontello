@@ -53,7 +53,7 @@ module.exports = {
                 additionalProperties: false,
                 properties: {
                   path:   { type: 'string',  required: true },
-                  width:  { type: 'number', required: true,  minimum: 10 }
+                  width:  { type: 'number', required: true,  minimum: 0 }
                 }
               },
               selected: {
