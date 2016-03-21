@@ -30,7 +30,10 @@ module.exports = {
               uid:  { type: 'string',  required: true },
               css:  { type: 'string',  required: true },
               code: { type: 'integer', required: true, minimum: 1 },
-              src:  { type: 'string',  required: true }
+              src:  { type: 'string',  required: true },
+              // Fields below not used but can exists in old config formats
+              selected: { type: 'boolean', required: false },
+              from: { type: 'integer',  required: false }
             }
           },
           // custom icon schema
