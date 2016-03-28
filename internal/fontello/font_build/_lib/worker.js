@@ -153,6 +153,9 @@ module.exports = co.wrap(function* fontWorker(taskInfo) {
       '--no-info',
       '--windows-compatibility',
       '--symbol',
+      // temporary workaround for #464
+      // https://github.com/fontello/fontello/issues/464#issuecomment-202244651
+      '--fallback-script=latn',
       files.ttfUnhinted,
       files.ttf
     ], { cwd: taskInfo.cwdDir });
