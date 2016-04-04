@@ -23,4 +23,5 @@ en-US:
   twitter_share: Tweet
   twitter_text: Fontello - icon webfonts generator, open source
 
-  nojs_alert: Fontello will not work without javascript!
+  nojs: This site will not work without javascript!
+  nocookies: This site will not work if cookies are completely disabled.

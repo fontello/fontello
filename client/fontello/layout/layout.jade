@@ -94,8 +94,11 @@ html.no-js(lang='en', itemscope, itemtype='http://schema.org/WebPage')
 
     != self.content
 
-    .jsnotice
-      .alert.alert-error= self.t('nojs_alert')
+    .nojs
+      .alert.alert-danger= self.t('nojs')
+
+    .nocookies
+      .alert.alert-danger= self.t('nocookies')
 
 
     div#runtime(style="display: none")= JSON.stringify(self.runtime)

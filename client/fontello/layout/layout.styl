@@ -68,21 +68,25 @@ input[type="file"].invisible
   position absolute
   left -10000px
 
-// Warning for disabled JS
+// "No JS" message styles
 //
-.jsnotice
+.nojs
+.nocookies
   display none
-
-.no-js .jsnotice
-  display block
+  left 50%
+  width 500px
+  margin-left -250px
+  text-align center
   position absolute
-  left 30%
-  right 30%
   top 90px
-  z-index 10000
-  font-size 54px
-  line-height 81px
+  font-size 24px
   font-weight bold
+  line-height 1.4em
+  z-index: 1000
+
+.no-js .nojs
+.no-cookies .nocookies
+  display block
 
 p.note
   color #888
