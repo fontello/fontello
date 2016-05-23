@@ -24,8 +24,8 @@
 
       .selector__glyphs-container
         ul.selector__glyphs-list.font-custom_icons(data-bind='visible: visibleCount(), foreach: glyphs')
-          li.selector__glyph(role='checkbox', tabindex='0', data-bind='visible: visible, attr: { "data-id": uid, title: tooltip, "aria-checked": selected() ? "true" : "false" }', data-on-click='selector:glyph_toggle')
-            .selector__glyph-inner(data-bind="css: { checked: selected }, attr: { 'data-id': uid }")
+          li.selector__glyph(role='checkbox', tabindex='0', data-bind='visible: visible, attr: { "data-id": uid, title: tooltip, "aria-checked": selected() ? "true" : "false" }')
+            .selector__glyph-inner(data-bind="css: { checked: selected }, attr: { 'data-id': uid }", data-on-click='selector:glyph_toggle')
               span.selector__glyph-image(data-bind='text: charRef')
             a.selector__glyph-delete.icon-edit(href='#', data-bind='attr: { "data-id": uid }', data-on-click='cmd:glyph_options')
 
