@@ -79,7 +79,7 @@ todo:
 
 #FONTELLO_HOST ?= http://fontello.com
 FONTELLO_HOST ?= http://localhost:3000
-FONTELLO_DIR  ?= ./assets/icons/src
+FONTELLO_DIR  ?= ./client/lib/icons/src
 
 
 fontopen:
