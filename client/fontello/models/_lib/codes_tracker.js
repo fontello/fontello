@@ -85,7 +85,15 @@ function findCode(min, max) {
 
 // Returns first available and valid code in the Unicode Private Use Area.
 //
-function findPrivateUseArea() {
+function findPrivateUseArea(preferredCode) {
+  if (preferredCode &&
+      checkValidCode(preferredCode) &&
+      !usedCodes[preferredCode] &&
+      preferredCode >= UNICODE_PRIVATE_USE_AREA_MIN &&
+      preferredCode <= UNICODE_PRIVATE_USE_AREA_MAX) {
+    return preferredCode;
+  }
+
   var code = findCode(UNICODE_PRIVATE_USE_AREA_MIN, UNICODE_PRIVATE_USE_AREA_MAX);
 
   if (code !== -1) {
@@ -100,13 +108,13 @@ function findPrivateUseArea() {
 // Returns first available and valid printable ASCII code.
 // Fallbacks to findPrivateUseArea()
 //
-function findAscii(preferedCode) {
-  if (preferedCode &&
-      checkValidCode(preferedCode) &&
-      !usedCodes[preferedCode] &&
-      preferedCode >= ASCII_PRINTABLE_MIN &&
-      preferedCode <= ASCII_PRINTABLE_MAX) {
-    return preferedCode;
+function findAscii(preferredCode) {
+  if (preferredCode &&
+      checkValidCode(preferredCode) &&
+      !usedCodes[preferredCode] &&
+      preferredCode >= ASCII_PRINTABLE_MIN &&
+      preferredCode <= ASCII_PRINTABLE_MAX) {
+    return preferredCode;
   }
 
   var code = findCode(ASCII_PRINTABLE_MIN, ASCII_PRINTABLE_MAX);
@@ -130,7 +138,7 @@ function allocateCode(glyph, encoding) {
 
   switch (encoding) {
   case 'pua':
-    newCode = findPrivateUseArea();
+    newCode = findPrivateUseArea(glyph.code());
     break;
 
   case 'ascii':
@@ -138,7 +146,7 @@ function allocateCode(glyph, encoding) {
     break;
 
   case 'unicode':
-    newCode = findUnicode(glyph.originalCode);
+    newCode = findUnicode(glyph.code());
     break;
 
   default:
@@ -203,7 +211,12 @@ function observe(glyph) {
   // When user selects/deselects the glyph - allocate/free a code.
   glyph.selected.subscribe(function (selected) {
     if (selected) {
-      allocateCode(this, N.app.encoding());
+      if (this.code() === this.originalCode) {
+        allocateCode(this, N.app.encoding());
+      } else {
+        // If code modified by user - don't try to remap
+        allocateCode(this, 'unicode');
+      }
     } else {
       usedCodes[this.code()] = null;
     }

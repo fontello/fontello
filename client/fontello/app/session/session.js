@@ -273,8 +273,14 @@ N.wire.on('session_load', function session_load() {
 
   // load selection state separate to keep order
   _.forEach(session.selected_glyphs, uid => {
-    if (N.app.fontsList.glyphMap[uid]) {
-      N.app.fontsList.glyphMap[uid].selected(true);
+    let glyph = N.app.fontsList.glyphMap[uid];
+
+    if (glyph) {
+      let code = glyph.code();
+
+      glyph.selected(true);
+      // prevent code modification via codes tracker
+      glyph.code(code);
     }
   });
 
