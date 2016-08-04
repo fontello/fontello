@@ -1,12 +1,16 @@
-6.0.0 / WIP
+6.0.0 / 2016-08-04
 ------------------
 
-- Resync core with fresh nodeca sources. Now use node.js 4.+. #469.
+- Resync core with fresh nodeca sources + deps bump. Now use
+  node.js 6.+.
 - Added WOFF2 support, #388.
 - Added glyphs reorder support, #283, #240.
 - Assorted `svg2ttf` (TTF generator) updates: lineGap -> 0, fsType -> 0.
 - Accessibility improve, #468.
 - Fixed zip import, #426.
+- Fixed icon custom codes load from localstore, #500
+- Fixed custom glyph unselect on edit call, #497
+- Font Awesome update to 4.6.3
 - Reorganized configs & folders.
 
 
