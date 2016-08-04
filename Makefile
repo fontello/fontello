@@ -1,11 +1,3 @@
-PATH          := ./node_modules/.bin:$(PATH)
-
-# Add local versions of ttf2eot nd ttfautohint to the PATH
-PATH := $(PATH):./support/font-builder/support/ttf2eot
-PATH := $(PATH):./support/font-builder/support/ttfautohint/frontend
-PATH := $(PATH):./support/font-builder/bin
-
-
 FONTS         += fontelico.font
 FONTS         += awesome-uni.font
 FONTS         += entypo
@@ -52,22 +44,11 @@ repl:
 
 
 lint:
-	eslint .
+	./node_modules/.bin/eslint .
 
 
-cleanup:
-	# cleanup assets
-	rm -rf assets/cache
-
-# needed for travis
-setup:
-	if test ! -e ./config/application.yml ; then \
-		cp ./config/application.yml.example ./config/application.yml ; \
-		fi
-
-
-test: cleanup lint
-	@NODECA_ENV=test node ./fontello.js migrate --all
+test: lint
+	@NODECA_ENV=test ./fontello.js migrate --all
 	@NODECA_ENV=test NODECA_NOMINIFY=1 ./fontello.js test
 
 
