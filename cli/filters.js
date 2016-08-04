@@ -5,7 +5,7 @@
 
 
 const _  = require('lodash');
-const co = require('co');
+const co = require('bluebird-co').co;
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -50,7 +50,7 @@ module.exports.run = function (N, args) {
     yield Promise.resolve()
       .then(() => N.wire.emit('init:models', N))
       .then(() => N.wire.emit('init:bundle', N))
-      .then(() => N.wire.emit('init:server', N));
+      .then(() => N.wire.emit('init:services', N));
 
     /*eslint-disable no-console*/
     console.log('\n');
@@ -68,9 +68,14 @@ module.exports.run = function (N, args) {
         // long format
         console.log(`\n${hook.name} -->\n`);
         _.forEach(hook.listeners, function (h) {
+          let flags = [];
+
+          if (h.ensure)   flags.push('permanent');
+          if (h.parallel) flags.push('parallel');
+
           console.log(
             `  - [${h.priority}] ${h.name}     (cnt: ${h.ncalled})` +
-            (h.ensure ? '    !permanent' : '')
+            (flags.length ? '    !' + flags.join(', ') : '')
           );
         });
       }

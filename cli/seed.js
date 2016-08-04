@@ -11,7 +11,7 @@ const fs    = require('fs');
 
 // 3rd-party
 const _     = require('lodash');
-const co    = require('co');
+const co    = require('bluebird-co').co;
 const glob  = require('glob');
 
 
@@ -101,6 +101,9 @@ module.exports.run = function (N, args) {
 
   return co(function* () {
     yield N.wire.emit('init:models', N);
+
+    // load N.router, it's needed to import pictures
+    yield N.wire.emit('init:bundle', N);
 
     /*eslint-disable no-console*/
 

@@ -6,8 +6,7 @@
 
 const path         = require('path');
 const _            = require('lodash');
-const co           = require('co');
-const thenify      = require('thenify');
+const co           = require('bluebird-co').co;
 const Mocha        = require('mocha');
 const glob         = require('glob');
 
@@ -60,10 +59,10 @@ module.exports.run = function (N, args) {
     yield Promise.resolve()
       .then(() => N.wire.emit('init:models', N))
       .then(() => N.wire.emit('init:bundle', N))
-      .then(() => N.wire.emit('init:server', N))
+      .then(() => N.wire.emit('init:services', N))
       .then(() => N.wire.emit('init:tests', N));
 
-    let mocha        = new Mocha({ timeout: 10000 });
+    let mocha        = new Mocha({ timeout: 60000 });
     let applications = N.apps;
 
     mocha.reporter('spec');
@@ -99,7 +98,9 @@ module.exports.run = function (N, args) {
       }
     });
 
-    yield thenify(cb => mocha.run(cb))();
+    yield new Promise((resolve, reject) => {
+      mocha.run(err => (err ? reject(err) : resolve()));
+    });
 
     return N.wire.emit('exit.shutdown');
   });
