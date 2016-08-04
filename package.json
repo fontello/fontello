@@ -43,7 +43,7 @@
     "jade": "~ 1.11.0",
     "javascript-state-machine": "~ 2.3.5",
     "jquery": "^2.2.1",
-    "jquery-ui": "^1.10.5",
+    "jquery-ui": "^1.12.0",
     "js-yaml": "^3.5.3",
     "jszip": "^2.5.0",
     "knockout": "~ 3.4.0",

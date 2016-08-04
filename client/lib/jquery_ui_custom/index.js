@@ -1,7 +1,6 @@
 'use strict';
 
 
-require('jquery-ui/core');
-require('jquery-ui/widget');
-require('jquery-ui/mouse');
-require('jquery-ui/selectable');
+require('jquery-ui/ui/widget');
+require('jquery-ui/ui/widgets/mouse');
+require('jquery-ui/ui/widgets/selectable');
