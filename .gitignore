@@ -1,8 +1,3 @@
-config/fontello.com.yml
-config/application.yml
-config/production.yml
-config/development.yml
-config/logger.yml
 node_modules/
 log/
 assets/

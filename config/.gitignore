@@ -1,0 +1,7 @@
+!application.yml
+!database.yml
+!logger.yml
+!router.yml
+!test.yml
+
+*.yml
