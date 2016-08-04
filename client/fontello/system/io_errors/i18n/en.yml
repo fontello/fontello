@@ -1,6 +1,5 @@
 en-US:
   system_error: 'Error #{code}'
   invalid_csrf_token: Security token expired. Pease, try again.
-  invalid_live_token: Security token expired. Pease, try again.
   application_fuckup: Application Error. Try again later.
   communication_timeout: Communication problems. Try again later.

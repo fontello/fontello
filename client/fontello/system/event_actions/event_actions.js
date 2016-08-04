@@ -27,11 +27,6 @@ function handleAction(apiPath, data) {
 
 N.wire.once('navigate.done', function () {
 
-  // add the dataTransfer property for use with the native `drop` event
-  // to capture information about files dropped into the browser window
-  // http://api.jquery.com/category/events/event-object/
-  $.event.props.push('dataTransfer');
-
   $(document).on('dragenter dragleave dragover drop', '[data-on-dragdrop]', function (event) {
     var data = {
       event,
@@ -41,8 +36,8 @@ N.wire.once('navigate.done', function () {
 
     // We should call `dataTransfer.files` getter before `event.preventDefault()`
     // otherwise after next tick `dataTransfer.files` will be empty in firefox
-    if (data.event.dataTransfer && data.event.dataTransfer.files) {
-      data.files = data.event.dataTransfer.files;
+    if (data.event.originalEvent.dataTransfer && data.event.originalEvent.dataTransfer.files) {
+      data.files = data.event.originalEvent.dataTransfer.files;
     }
 
     handleAction(apiPath, data);

@@ -371,7 +371,7 @@ fsm.onLOAD = function (event, from, to, params) {
       window.history.pushState(null, result.locals.head.title, options.href + options.anchor);
     }
 
-    render(result, true).then(() => {
+    render(result, !params.no_scroll).then(() => {
       fsm.complete();
     });
   });
@@ -462,7 +462,7 @@ N.wire.on('navigate.reload', function navigate_reload(__, callback) {
   fsm.terminate();
 
   navigateCallback = callback;
-  fsm.link({ href: location.href, force: true });
+  fsm.link({ href: location.href, force: true, no_scroll: true });
 });
 
 

@@ -5,6 +5,9 @@
 (function (window) {
   'use strict';
 
+  // Needed because we can't enable only `global` in browserify. Used by Faye.
+  window.global = window.global || window;
+
   //////////////////////////////////////////////////////////////////////////////
   // features testing & setup no-cookies/no-js styles
   //
@@ -22,6 +25,7 @@
       className = docElement.className;
 
   className = className.replace('no-js', '');
+  className += ' js';
   className += testCookies() ? '' : ' no-cookies';
   className = className
                 .replace(/^\s+/, '')
@@ -165,25 +169,6 @@
     );
   }
 
-  // Initializes all loaded client modules. Once per module.
-  /*function initClientModules() {
-    var apiPath, module;
-
-    for (apiPath in clientModules) {
-      if (!has(clientModules, apiPath)) {
-        continue;
-      }
-
-      module = clientModules[apiPath];
-
-      if (module.initialized) {
-        continue;
-      }
-
-      initSingleClientModule(module);
-      module.initialized = true;
-    }
-  }*/
 
   // Really needed export.
   NodecaLoader.registerClientModule = registerClientModule;

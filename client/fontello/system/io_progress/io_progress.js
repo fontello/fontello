@@ -44,9 +44,3 @@ N.wire.on('io.request', function progress_notice_timer_start() {
     show(t('loading'));
   }, 500);
 });
-
-N.wire.on('io.error', function progress_notice_show_err(err) {
-  if (N.io.EWRONGVER === err.code) {
-    show(t('version_mismatch'));
-  }
-});
