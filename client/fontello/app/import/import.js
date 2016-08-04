@@ -285,9 +285,9 @@ function handleFileSelect(event) {
   var files = [];
 
   // Extract files list
-  if (event.dataTransfer && event.dataTransfer.files) {
+  if (event.originalEvent.dataTransfer && event.originalEvent.dataTransfer.files) {
     // Got files via mouse drop
-    files = event.dataTransfer.files;
+    files = event.originalEvent.dataTransfer.files;
   } else if (event.target && event.target.files) {
     // Got files via dialog
     files = event.target.files;
@@ -382,14 +382,11 @@ N.wire.on('import:listen', function init_import_handlers() {
   var dropProgress = false;
   var dropTimer;
 
-  // add the dataTransfer property for use with the native `drop` event
-  // to capture information about files dropped into the browser window
-  $.event.props.push('dataTransfer');
-
   dropZone.on('dragenter.fontello.import dragover.fontello.import', function (event) {
     event.stopPropagation();
     event.preventDefault();
-    event.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+
+    event.originalEvent.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
 
     clearTimeout(dropTimer);
 
