@@ -228,7 +228,9 @@ module.exports = co.wrap(function* fontWorker(taskInfo) {
     zip.folder(path.basename(taskInfo.tmpDir)).file(path.relative(taskInfo.tmpDir, archiveFiles[i]), fileData);
   }
 
-  yield write(taskInfo.output, zip.generate({ type: 'nodebuffer', compression: 'DEFLATE' }));
+  let zipData = yield zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' });
+
+  yield write(taskInfo.output, zipData);
 
   /*
   yield mz.child_process.execFile('zip', [

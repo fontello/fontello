@@ -1,7 +1,7 @@
 'use strict';
 
 
-var JSZip   = require('jszip');
+var JSZip   = require('jszip/dist/jszip.min');
 var _       = require('lodash');
 var async   = require('async');
 var XMLDOMParser = require('xmldom').DOMParser;
@@ -121,27 +121,26 @@ function import_config(str, file) {
 // file - original file info
 //
 function import_zip(data, file) {
-  try {
-    var zip = new JSZip(data);
+  return Promise.resolve()
+    .then(() => JSZip.loadAsync(data))
+    .then(zip => {
+      // Try to search fontello config by known path
+      // 'fontello-XXXXXX/config.json'. If exists - consider zip
+      // as fontello archive & do config import.
+      let search = zip.file(/fontello-[0-9a-f]+[\\/]config[.]json/);
 
-    // Try to search fontello config by known path
-    // 'fontello-XXXXXX/config.json'. If exists - consider zip
-    // as fontello archive & do config import.
-    var search = zip.file(/fontello-[0-9a-f]+[\\/]config[.]json/);
+      if ((search.length === 1) && (search[0].dir === false)) {
+        //import_config(search[0].asText());
+        return search[0].async('string').then(cfg => import_config(cfg));
+      }
 
-    if ((search.length === 1) && (search[0].options.dir === false)) {
-      import_config(search[0].asText());
-      return;
-    }
-
-    // If not fontello archive - scan it and try to import everything known
-    _.each(zip.files, function (f) {
-      // Currently show error for all entries
-      N.wire.emit('notify', t('err_unknown_format', { name: f.name }));
-    });
-  } catch (e) {
-    N.wire.emit('notify', t('err_bad_zip_format', { name: file.name }));
-  }
+      // If not fontello archive - scan it and try to import everything known
+      _.each(zip.files, function (f) {
+        // Currently show error for all entries
+        N.wire.emit('notify', t('err_unknown_format', { name: f.name }));
+      });
+    })
+    .catch(() => N.wire.emit('notify', t('err_bad_zip_format', { name: file.name })));
 }
 
 //
