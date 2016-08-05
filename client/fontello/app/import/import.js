@@ -3,7 +3,6 @@
 
 var JSZip   = require('jszip/dist/jszip.min');
 var _       = require('lodash');
-var async   = require('async');
 var XMLDOMParser = require('xmldom').DOMParser;
 var SvgPath = require('svgpath');
 
@@ -300,73 +299,66 @@ function handleFileSelect(event) {
 
   N.app.fontsList.lock();
 
-  try {
-    async.map(files,
-      function (file, next) {
-        var reader = new FileReader();
+  Promise.all(_.map(files, file => new Promise(resolve => {
+    let reader = new FileReader();
 
-        // that's not needed, but should not be missed
-        reader.onerror = next;
-        reader.onabort = next;
+    // that's not needed, but should not be missed
+    reader.onerror = resolve;
+    reader.onabort = resolve;
 
-        //
-        // Try to detect file type, and call appropriate reader
-        // and importer
-        //
+    //
+    // Try to detect file type, and call appropriate reader
+    // and importer
+    //
 
-        if (file.name.match(/[.](woff|ttf|otf)$/i)) {
-          N.wire.emit('notify', t('err_need_svg_font', { name: file.name }));
-          next();
-          return;
+    if (file.name.match(/[.](woff|ttf|otf)$/i)) {
+      N.wire.emit('notify', t('err_need_svg_font', { name: file.name }));
+      return resolve();
+    }
+
+    // Chrome omits type on JSON files, so check it by extention
+    if (file.name.match(/[.]json$/)) {
+      reader.onload = e => {
+        import_config(e.target.result, file);
+        resolve();
+      };
+      reader.readAsText(file);
+      return;
+
+    } else if (file.type === 'application/zip' || file.name.match(/[.]zip$/)) {
+      reader.onload = e => import_zip(e.target.result, file).then(resolve);
+      // Don't use readAsBinaryString() for IE 10 compatibility
+      reader.readAsArrayBuffer(file);
+      return;
+
+    } else if (file.type === 'image/svg+xml') {
+      reader.onload = e => {
+        if ((e.target.result.indexOf('<font') + 1)) {
+          import_svg_font(e.target.result, file);
+        } else {
+          import_svg_image(e.target.result, file);
         }
+        resolve();
+      };
 
-        // Chrome omits type on JSON files, so check it by extention
-        if (file.name.match(/[.]json$/)) {
-          reader.onload = function (e) {
-            import_config(e.target.result, file);
-            next();
-          };
-          reader.readAsText(file);
-          return;
-        } else if (file.type === 'application/zip' || file.name.match(/[.]zip$/)) {
-          reader.onload = function (e) {
-            import_zip(e.target.result, file);
-            next();
-          };
-          // Don't use readAsBinaryString() for IE 10 compatibility
-          reader.readAsArrayBuffer(file);
-          return;
-        }  else if (file.type === 'image/svg+xml') {
-          reader.onload = function (e) {
+      reader.readAsText(file);
+      return;
+    }
 
-            if ((e.target.result.indexOf('<font') + 1)) {
-              import_svg_font(e.target.result, file);
-            } else {
-              import_svg_image(e.target.result, file);
-            }
-            next();
-          };
-
-          reader.readAsText(file);
-          return;
-        }
-
-        // Unknown format - show error
-        N.wire.emit('notify', t('err_unknown_format', { name: file.name }));
-        next();
-      },
-      // final callback
-      function () {
-        N.app.fontsList.unlock();
-        // we must "reset" value of input field, otherwise Chromium will
-        // not fire change event if the same file will be chosen twice, e.g.
-        // import file -> made changes -> import same file
-        if (event.target && event.target.files) { $(event.target).val(''); }
-      }
-    );
-  } catch (err) {
-    N.wire.emit('notify', t('err_invalid_browser'));
-  }
+    // Unknown format - show error
+    N.wire.emit('notify', t('err_unknown_format', { name: file.name }));
+    resolve();
+  })))
+  .catch(() => N.wire.emit('notify', t('err_invalid_browser')))
+  .then(() => {
+    N.app.fontsList.unlock();
+    // we must "reset" value of input field, otherwise Chromium will
+    // not fire change event if the same file will be chosen twice, e.g.
+    // import file -> made changes -> import same file
+    if (event.target && event.target.files) {
+      $(event.target).val('');
+    }
+  });
 }
 
 
