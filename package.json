@@ -81,7 +81,7 @@
     "xmldom": "~ 0.1.16"
   },
   "devDependencies": {
-    "eslint": "~3.2.2",
+    "eslint": "~3.3.0",
     "eslint-plugin-nodeca": "~1.0.3",
     "mocha": "^3.0.1",
     "supertest": "^2.0.0"
