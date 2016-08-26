@@ -1,7 +1,7 @@
 'use strict';
 
 
-var JSZip   = require('jszip/dist/jszip.min');
+var JSZip   = require('jszip');
 var _       = require('lodash');
 var XMLDOMParser = require('xmldom').DOMParser;
 var SvgPath = require('svgpath');
