@@ -4,6 +4,7 @@
 
 
 const config_schema = require('./font/_lib/config_schema');
+const Promise       = require('bluebird');
 
 
 module.exports = function (N, apiPath) {
