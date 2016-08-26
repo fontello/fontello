@@ -329,7 +329,11 @@
         .then(function () { return N.wire.emit('navigate.done', page_env); })
         .then(function () { return N.wire.emit('navigate.done:' + route.meta.methods.get, page_env); })
         .then(function () { NodecaLoader.booted = true; })
-        .catch(function (err) { alert('Init error: ' + err); });
+        .catch(function (err) {
+          /*eslint-disable no-console*/
+          try { console.error(err); } catch (__) {}
+          alert('Init error: ' + err);
+        });
       });
     });
   };

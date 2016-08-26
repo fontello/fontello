@@ -84,5 +84,17 @@
     "eslint-plugin-nodeca": "~1.0.3",
     "mocha": "^3.0.2",
     "supertest": "^2.0.0"
+  },
+  "browserify": {
+    "transform": [
+      [
+        "babelify",
+        {
+          "presets": [
+            "es2015"
+          ]
+        }
+      ]
+    ]
   }
 }
