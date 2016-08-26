@@ -3,8 +3,8 @@
 'use strict';
 
 
-const co        = require('co');
-const thenify   = require('thenify');
+const Promise   = require('bluebird');
+const co        = require('bluebird-co').co;
 const _         = require('lodash');
 const path      = require('path');
 const mz        = require('mz');
@@ -15,11 +15,10 @@ const ttf2woff2 = require('ttf2woff2');
 const svg2ttf   = require('svg2ttf');
 const jade      = require('jade');
 const b64       = require('base64-js');
-const rimraf    = thenify(require('rimraf'));
-const mkdirp    = thenify(require('mkdirp'));
-const glob      = thenify(require('glob'));
+const rimraf    = Promise.promisify(require('rimraf'));
+const mkdirp    = Promise.promisify(require('mkdirp'));
+const glob      = Promise.promisify(require('glob'));
 const JSZip     = require('jszip');
-const write     = require('thenify')(require('write-file-atomic'));
 
 
 const TEMPLATES_DIR = path.join(__dirname, '../../../../support/font-templates');
@@ -107,32 +106,6 @@ module.exports = co.wrap(function* fontWorker(taskInfo) {
   yield mz.fs.writeFile(files.svg, svgOutput, 'utf8');
 
 
-  /*
-  // Convert SVG to TTF with FontForge
-
-  var FONTFORGE_BIN = 'fontforge';
-  workplan.push(function (next) {
-    execFile(FONTFORGE_BIN, [
-      '-c',
-      format('font = fontforge.open(%j); font.generate(%j)',
-      files.svg,
-      files.ttf)
-    ]
-    , { cwd: taskInfo.cwdDir }
-    , function (err) {
-      if (err) {
-        next({
-          code: io.APP_ERROR,
-          message: 'Fontforge exec error. Probably, missed binary, or some glyph codes are invalid'
-        });
-        return;
-      }
-      next();
-    });
-  });
-  */
-
-
   // Convert SVG to TTF
   //
   let ttf = svg2ttf(svgOutput, { copyright: taskInfo.builderConfig.font.copyright });
@@ -210,15 +183,10 @@ module.exports = co.wrap(function* fontWorker(taskInfo) {
     yield mz.fs.writeFile(outputFile, outputData, 'utf8');
   }
 
-
-  // Create zipball.
-  // Use ".tmp" extension here to prevent Fontello from allowing to
-  // download this file while it's *in progress*.
   //
-  yield rimraf(taskInfo.output);
-  yield mkdirp(path.dirname(taskInfo.output));
+  // Create zipball.
+  //
 
-  // switch to node's module for portability
   let archiveFiles = yield glob(path.join(taskInfo.tmpDir, '**'), { nodir: true });
   let zip = new JSZip();
 
@@ -230,21 +198,7 @@ module.exports = co.wrap(function* fontWorker(taskInfo) {
 
   let zipData = yield zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' });
 
-  yield write(taskInfo.output, zipData);
-
-  /*
-  yield mz.child_process.execFile('zip', [
-    taskInfo.output + '.tmp',
-    '-r',
-    path.basename(taskInfo.tmpDir)
-  ], { cwd: path.dirname(taskInfo.tmpDir) });
-
-
-  // Remove ".tmp" extension from zip file to mark it as *completed*.
-  //
-  yield mz.fs.rename(`${taskInfo.output}.tmp`, taskInfo.output);
-  */
-
+  // TODO: force tmp dir cleanup on fail
 
   // Remove temporary files and directories.
   //
@@ -257,4 +211,6 @@ module.exports = co.wrap(function* fontWorker(taskInfo) {
 
   taskInfo.logger.info(`${logPrefix} Generated in ${(timeEnd - timeStart) / 1000} ` +
                        `(real: ${(timeEnd - taskInfo.timestamp) / 1000})`);
+
+  return zipData;
 });

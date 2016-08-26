@@ -18,7 +18,8 @@ const fontWorker = require('./_lib/worker');
 const crypto     = require('crypto');
 const path       = require('path');
 const os         = require('os');
-const mz         = require('mz');
+const Promise    = require('bluebird');
+const exists     = Promise.promisify(require('level-exists'));
 
 
 // Returns unique identifier for requested list of glyphs.
@@ -48,15 +49,10 @@ module.exports = function (N, apiPath) {
     }
 
     data.fontId = getFontId(N.version_hash, data.config);
-    data.directory = path.join(N.mainApp.root, 'download');
-    data.file = path.join(data.directory, data.fontId.substr(0, 2), data.fontId.substr(2, 2), `${data.fontId}.zip`);
 
-
-    // If same task is already done (the result file exists) - use it.
+    // If same task is already done (result exists) - use it.
     //
-    let exists = yield mz.fs.exists(data.file);
-
-    if (exists) return;
+    if (yield exists(N.downloads, data.fontId)) return;
 
 
     // If task already exists - just return its promise.
@@ -77,7 +73,6 @@ module.exports = function (N, apiPath) {
       builderConfig,
       cwdDir: N.mainApp.root,
       tmpDir: path.join(os.tmpDir(), 'fontello', `fontello-${data.fontId.substr(0, 8)}`),
-      output: data.file,
       timestamp: Date.now(),
       result: null,
       logger
@@ -90,7 +85,14 @@ module.exports = function (N, apiPath) {
     logger.info('New job created: %j', { font_id: data.fontId, queue_length: Object.keys(tasks).length });
 
     // Wait for task finished
-    yield taskInfo.result;
+    let zipData = yield taskInfo.result;
+
+    yield Promise.fromCallback(cb => N.downloads.put(
+      taskInfo.fontId,
+      zipData,
+      { ttl: 5 * 60 * 1000, valueEncoding: 'binary' },
+      cb
+    ));
 
     delete tasks[data.fontId];
   });

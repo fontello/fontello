@@ -8,6 +8,7 @@ assets/
 *.sublime-workspace
 
 download/
+db/
 
 .fontello
 .fontello.zip
