@@ -97,4 +97,4 @@ bind:
 # "auto" / "true" means it equals to the number of CPU cores;
 # "false" / 0  means don't use cluster at all.
 #
-#fork: auto
+fork: 0
