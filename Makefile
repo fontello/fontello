@@ -48,7 +48,6 @@ lint:
 
 
 test: lint
-	@NODECA_ENV=test ./fontello.js migrate --all
 	@NODECA_ENV=test NODECA_NOMINIFY=1 ./fontello.js test
 
 
