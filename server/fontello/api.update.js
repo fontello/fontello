@@ -17,13 +17,22 @@ module.exports = function (N, apiPath) {
   // Update session with client config
   //
   N.wire.on(apiPath, function* api_update(env) {
-    let sl = yield N.models.ShortLink.findOne({ sid: env.params.sid });
+    let linkData = yield Promise.fromCallback(cb => N.shortlinks.get(
+      env.params.sid,
+      { valueEncoding: 'json' },
+      cb
+    ));
 
     // if session id (shortlink) not found - return 404
-    if (!sl) throw 'Session expired';
+    if (!linkData) throw 'Session expired';
 
-    sl.config = env.params.config;
+    linkData.config = env.params.config;
 
-    yield sl.save();
+    yield Promise.fromCallback(cb => N.shortlinks.put(
+      env.params.sid,
+      linkData,
+      { ttl: 6 * 60 * 60 * 1000, valueEncoding: 'json' },
+      cb
+    ));
   });
 };

@@ -42,12 +42,16 @@ module.exports = function (N, apiPath) {
 
     // if requested page with config id - try te fetch data,
     // and redirect to main on error
-    let sl = yield N.models.ShortLink.findOne({ sid: env.params.sid }).lean(true);
+    let linkData = yield Promise.fromCallback(cb => N.shortlinks.get(
+      env.params.sid,
+      { valueEncoding: 'json' },
+      cb
+    ));
 
     // if shortlink not found - redirect to root
-    if (!sl) throw { code: N.io.REDIRECT, head: { Location: '/' } };
+    if (!linkData) throw { code: N.io.REDIRECT, head: { Location: '/' } };
 
     // inject config to runtime & return main page
-    env.runtime.page_data = _.pick(sl, [ 'config', 'url', 'sid' ]);
+    env.runtime.page_data = _.pick(linkData, [ 'config', 'url', 'sid' ]);
   });
 };

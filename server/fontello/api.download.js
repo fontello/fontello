@@ -3,6 +3,9 @@
 'use strict';
 
 
+const Promise = require('bluebird');
+
+
 module.exports = function (N, apiPath) {
 
   N.validate(apiPath, {
@@ -11,7 +14,11 @@ module.exports = function (N, apiPath) {
 
 
   N.wire.on(apiPath, function* app_post(env) {
-    let sl = yield N.models.ShortLink.findOne({ sid: env.params.sid }).lean(true);
+    let sl = yield Promise.fromCallback(cb => N.shortlinks.get(
+      env.params.sid,
+      { valueEncoding: 'json' },
+      cb
+    ));
 
     // if session id (shortlink) not found - return 404
     if (!sl) throw N.io.NOT_FOUND;

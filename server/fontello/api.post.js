@@ -6,6 +6,7 @@ const fs          = require('mz/fs');
 const crypto      = require('crypto');
 const validator   = require('is-my-json-valid');
 const formidable  = require('formidable');
+const Promise     = require('bluebird');
 
 
 const config_schema = require('./font/_lib/config_schema');
@@ -132,16 +133,23 @@ module.exports = function (N, apiPath) {
       throw { code: N.io.BAD_REQUEST, message: error };
     }
 
-    let shortLink = new N.models.ShortLink();
+    let sid = crypto.randomBytes(16).toString('hex');
 
-    shortLink.ts = Date.now();
-    shortLink.sid = crypto.randomBytes(16).toString('hex');
-    shortLink.ip = env.req.ip;
-    shortLink.config = config;
-    if (env.data.fields.url) shortLink.url = env.data.fields.url;
+    let linkData = {
+      ts: Date.now(),
+      ip: env.req.ip,
+      config
+    };
 
-    yield shortLink.save();
+    if (env.data.fields.url) linkData.url = env.data.fields.url;
 
-    throw { code: N.io.OK, message: shortLink.sid };
+    yield Promise.fromCallback(cb => N.shortlinks.put(
+      sid,
+      linkData,
+      { ttl: 6 * 60 * 60 * 1000, valueEncoding: 'json' },
+      cb
+    ));
+
+    throw { code: N.io.OK, message: sid };
   });
 };
