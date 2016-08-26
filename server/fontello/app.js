@@ -19,11 +19,6 @@ module.exports = function (N, apiPath) {
   // Process standerd GET/HEAD request
   //
   N.wire.on(apiPath, function* app(env) {
-    // Page cache headers temporary disabled - seems to cause error
-    // on assets change, 'must-revalidate' does not help.
-    // set headers
-    //env.headers['ETag']          = etag;
-    //env.headers['Cache-Control'] = 'private, max-age=0, must-revalidate';
     env.res.layout = 'fontello.layout';
 
     // No params - return main page
