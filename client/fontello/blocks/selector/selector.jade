@@ -3,7 +3,7 @@
     // ko foreach: fontsList.fonts
 
     // ko if: fontname == "custom_icons"
-    li.ui-selectable(data-bind="visible: visibleCount() || !$root.searchMode(), attr: { id: fontname }, css: { _collapsed: collapsed }")
+    li(data-bind="visible: visibleCount() || !$root.searchMode(), attr: { id: fontname }, css: { _collapsed: collapsed }")
       h2.selector__font-header
         .selector__font-cnt
           small
@@ -33,7 +33,7 @@
     // /ko
 
     // ko ifnot: fontname == "custom_icons"
-    li.ui-selectable(data-bind="visible: visibleCount, attr: { id: fontname }, css: { _collapsed: collapsed }")
+    li(data-bind="visible: visibleCount, attr: { id: fontname }, css: { _collapsed: collapsed }")
       h2.selector__font-header
         .selector__font-cnt
           small

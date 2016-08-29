@@ -192,7 +192,7 @@ a.selector__font-name
   background #333
   color #fff
 
-.selector__glyph.ui-selecting
+.selector__glyph.xselectable-selected
 
   .selector__glyph-inner
     background-color #eeffee
@@ -207,7 +207,7 @@ a.selector__font-name
       background-color #fffdfd
       &:before
         border-color #d88
-  &.ui-selecting
+  &.xselectable-selected
     .selector__glyph-inner
       &.checked
         background-color #efe
@@ -215,8 +215,8 @@ a.selector__font-name
 .selector__glyph .selector__glyph-inner.checked:hover, .selector__glyph:focus .selector__glyph-inner.checked
   background #666
 
-.selector__glyph.ui-selecting .selector__glyph-inner.checkedbefore:border-color #666,
-.selector__glyph.ui-selecting .selector__glyph-inner.checked:hover
+.selector__glyph.xselectable-selected .selector__glyph-inner.checkedbefore:border-color #666,
+.selector__glyph.xselectable-selected .selector__glyph-inner.checked:hover
   color inherit
 
 
@@ -255,9 +255,10 @@ a.selector__font-name
   background-color #f8f8f8
   text-align center
 
+
 // Helper, shown after click on glyph,
 // to indicate that multiselect possible
 ._multicursor
 ._multicursor .selector__glyph label
-.ui-selectable-helper
+.xselectable-box
   cursor crosshair
