@@ -1,3 +1,14 @@
+7.0.0 / WIP
+------------------
+
+- Reduce requirements - replaced MondoDB with local leveldb.
+- Use leveldb to stoge generated files.
+- Autoclear old data (generated results & sessions).
+- Do not support forking (it was not used anyway).
+- Replace jquery-ui `selectable` with `xselectable`, drop jquery-ui.
+- Resync nodeca core.
+
+
 6.0.0 / 2016-08-04
 ------------------
 
