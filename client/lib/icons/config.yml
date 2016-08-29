@@ -6,7 +6,5 @@ type:
     - index.css
     - src/css/icons-codes.css
   bin:
-    - src/font/icons.eot
-    - src/font/icons.svg
-    - src/font/icons.ttf
     - src/font/icons.woff
+    - src/font/icons.woff2

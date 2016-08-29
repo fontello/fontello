@@ -25,6 +25,7 @@ help:
 
 
 rebuild:
+	rm -rf $(FONT_DIR)
 	mkdir -p $(FONT_DIR)
 	# build single font
 	./build_embedded_fonts.js \
@@ -35,8 +36,10 @@ rebuild:
 
 	# convert to other formats
 	./node_modules/.bin/svg2ttf "$(FONT_DIR)/fontello.svg" "$(FONT_DIR)/fontello.ttf"
-	./node_modules/.bin/ttf2eot "$(FONT_DIR)/fontello.ttf" "$(FONT_DIR)/fontello.eot"
 	./node_modules/.bin/ttf2woff "$(FONT_DIR)/fontello.ttf" "$(FONT_DIR)/fontello.woff"
+	cat "$(FONT_DIR)/fontello.ttf" | ./node_modules/.bin/ttf2woff2 >> "$(FONT_DIR)/fontello.woff2"
+	rm "$(FONT_DIR)/fontello.ttf"
+	rm "$(FONT_DIR)/fontello.svg"
 
 
 repl:

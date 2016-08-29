@@ -6,6 +6,7 @@
 - Autoclear old data (generated results & sessions).
 - Do not support forking (it was not used anyway).
 - Replace jquery-ui `selectable` with `xselectable`, drop jquery-ui.
+- Use only woff/woff2 for site icons.
 - Resync nodeca core.
 
 

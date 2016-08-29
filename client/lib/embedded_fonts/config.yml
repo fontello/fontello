@@ -5,7 +5,5 @@ type:
   widget_css:
     - fontface_fontello.css
   bin:
-    - font/fontello.eot
-    - font/fontello.svg
-    - font/fontello.ttf
     - font/fontello.woff
+    - font/fontello.woff2

@@ -1,10 +1,7 @@
 @font-face {
   font-family: 'icons';
-  src: url('$$ asset_url("./client/lib/icons/src/font/icons.eot") $$');
-  src: url('$$ asset_url("./client/lib/icons/src/font/icons.eot") $$'?#iefix) format('embedded-opentype'),
-       url('$$ asset_url("./client/lib/icons/src/font/icons.woff") $$') format('woff'),
-       url('$$ asset_url("./client/lib/icons/src/font/icons.ttf") $$') format('truetype'),
-       url('$$ asset_url("./client/lib/icons/src/font/icons.svg") $$'#icons) format('svg');
+  src: url('$$ asset_url("./client/lib/icons/src/font/icons.woff2") $$') format('woff2'),
+       url('$$ asset_url("./client/lib/icons/src/font/icons.woff") $$') format('woff');
   font-weight: normal; font-style: normal;
 }
 
