@@ -25,7 +25,8 @@ const JSZip     = require('jszip');
 const TEMPLATES_DIR = path.join(__dirname, '../../../../support/font-templates');
 const TEMPLATES = {};
 const SVG_FONT_TEMPLATE = _.template(fs.readFileSync(path.join(TEMPLATES_DIR, 'font/svg.tpl'), 'utf8'));
-const POLYMER_FONT_TEMPLATE = _.template(fs.readFileSync(path.join(TEMPLATES_DIR, 'font/iron_iconset_svg.tpl'), 'utf8'));
+const POLYMER_FONT_TEMPLATE = _.template(fs.readFileSync(path.join(TEMPLATES_DIR,
+                                         'font/iron_iconset_svg.tpl'), 'utf8'));
 
 
 _.forEach({
@@ -72,10 +73,10 @@ function buildPolymerConfig(originalBuilderConfig) {
   let fontHeight = fontAscent - polymerBuilderConfig.font.descent;
   for (let i = 0; i < polymerBuilderConfig.glyphs.length; i++) {
     let glyph = polymerBuilderConfig.glyphs[i];
-    let xScale = Math.min(1,fontHeight/glyph.width);
-    let yScale = -1 * Math.min(1,fontHeight/glyph.width);
-    let xTranslate = Math.max(0,(fontHeight-glyph.width)/2);
-    let yTranslate = -1 * fontAscent * (2 - Math.min(1,fontHeight/glyph.width));
+    let xScale = Math.min(1, fontHeight / glyph.width);
+    let yScale = -1 * Math.min(1, fontHeight / glyph.width);
+    let xTranslate = Math.max(0, (fontHeight - glyph.width) / 2);
+    let yTranslate = -1 * fontAscent * (2 - Math.min(1, fontHeight / glyph.width));
     polymerBuilderConfig.glyphs[i].d = new SvgPath(glyph.d)
         .translate(xTranslate, yTranslate)
         .scale(xScale, yScale)
