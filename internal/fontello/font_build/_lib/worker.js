@@ -13,6 +13,7 @@ const ttf2eot   = require('ttf2eot');
 const ttf2woff  = require('ttf2woff');
 const ttf2woff2 = require('ttf2woff2');
 const svg2ttf   = require('svg2ttf');
+const SvgPath   = require('svgpath');
 const jade      = require('jade');
 const b64       = require('base64-js');
 const rimraf    = Promise.promisify(require('rimraf'));
@@ -24,6 +25,7 @@ const JSZip     = require('jszip');
 const TEMPLATES_DIR = path.join(__dirname, '../../../../support/font-templates');
 const TEMPLATES = {};
 const SVG_FONT_TEMPLATE = _.template(fs.readFileSync(path.join(TEMPLATES_DIR, 'font/svg.tpl'), 'utf8'));
+const POLYMER_FONT_TEMPLATE = _.template(fs.readFileSync(path.join(TEMPLATES_DIR, 'font/iron_iconset_svg.tpl'), 'utf8'));
 
 
 _.forEach({
@@ -62,6 +64,28 @@ _.forEach({
 });
 
 
+// Builds a builderConfig for Polymer output
+//
+function buildPolymerConfig(originalBuilderConfig) {
+  let polymerBuilderConfig = _.clone(originalBuilderConfig, true);
+  let fontAscent = polymerBuilderConfig.font.ascent;
+  let fontHeight = fontAscent - polymerBuilderConfig.font.descent;
+  for (let i = 0; i < polymerBuilderConfig.glyphs.length; i++) {
+    let glyph = polymerBuilderConfig.glyphs[i];
+    let xScale = Math.min(1,fontHeight/glyph.width);
+    let yScale = -1 * Math.min(1,fontHeight/glyph.width);
+    let xTranslate = Math.max(0,(fontHeight-glyph.width)/2);
+    let yTranslate = -1 * fontAscent * (2 - Math.min(1,fontHeight/glyph.width));
+    polymerBuilderConfig.glyphs[i].d = new SvgPath(glyph.d)
+        .translate(xTranslate, yTranslate)
+        .scale(xScale, yScale)
+        .round(0)
+        .toString();
+  }
+  return polymerBuilderConfig;
+}
+
+
 module.exports = co.wrap(function* fontWorker(taskInfo) {
   let logPrefix = '[font::' + taskInfo.fontId + ']';
   let timeStart = Date.now();
@@ -80,7 +104,8 @@ module.exports = co.wrap(function* fontWorker(taskInfo) {
     ttfUnhinted: path.join(taskInfo.tmpDir, 'font', `${fontname}-unhinted.ttf`),
     eot:         path.join(taskInfo.tmpDir, 'font', `${fontname}.eot`),
     woff:        path.join(taskInfo.tmpDir, 'font', `${fontname}.woff`),
-    woff2:       path.join(taskInfo.tmpDir, 'font', `${fontname}.woff2`)
+    woff2:       path.join(taskInfo.tmpDir, 'font', `${fontname}.woff2`),
+    polymer:     path.join(taskInfo.tmpDir, 'polymer', `${fontname}-iconset-svg.html`)
   };
 
 
@@ -89,6 +114,8 @@ module.exports = co.wrap(function* fontWorker(taskInfo) {
   /*eslint-disable new-cap*/
   let svgOutput = SVG_FONT_TEMPLATE(taskInfo.builderConfig);
 
+  // Generate Polymer iron-iconset-svg
+  let polymerOutput = POLYMER_FONT_TEMPLATE(buildPolymerConfig(taskInfo.builderConfig));
 
   // Prepare temporary working directory.
   //
@@ -96,6 +123,7 @@ module.exports = co.wrap(function* fontWorker(taskInfo) {
   yield mkdirp(taskInfo.tmpDir);
   yield mkdirp(path.join(taskInfo.tmpDir, 'font'));
   yield mkdirp(path.join(taskInfo.tmpDir, 'css'));
+  yield mkdirp(path.join(taskInfo.tmpDir, 'polymer'));
 
 
   // Write clinet config and initial SVG font.
@@ -104,6 +132,7 @@ module.exports = co.wrap(function* fontWorker(taskInfo) {
 
   yield mz.fs.writeFile(files.config, configOutput, 'utf8');
   yield mz.fs.writeFile(files.svg, svgOutput, 'utf8');
+  yield mz.fs.writeFile(files.polymer, polymerOutput, 'utf8');
 
 
   // Convert SVG to TTF

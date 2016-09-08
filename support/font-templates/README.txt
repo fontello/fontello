@@ -25,6 +25,8 @@ Comments on archive content
   twitter bootstrap. Also, you can skip <i> style and assign icon classes
   directly to text elements, if you don't mind about IE7.
 
+- /polymer/*-iconset-svg.html - font in Polymer iron-iconset-svg format
+
 - demo.html - demo file, to show your webfont content
 
 - LICENSE.txt - license info about source fonts, used to build your one.
