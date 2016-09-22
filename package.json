@@ -26,7 +26,7 @@
     "babelfish": "^1.1.2",
     "babelify": "^7.2.0",
     "bagjs": "^2.0.2",
-    "base64-js": "~1.1.1",
+    "base64-js": "~1.2.0",
     "bluebird": "^3.4.3",
     "bluebird-co": "^2.1.2",
     "bootstrap": "3.2.0",
