@@ -36,7 +36,7 @@
     "compression": "^1.6.1",
     "cookie": "^0.3.1",
     "csswring": "^5.1.0",
-    "es6-promise": "^3.3.1",
+    "es6-promise": "^4.0.3",
     "event-wire": "^3.2.2",
     "formidable": "~ 1.0.15",
     "glob": "^7.1.0",
