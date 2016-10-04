@@ -2,4 +2,4 @@ public: true
 inherit: false
 type:
   js:
-    - "!npm:es6-promise"
+    - "!npm:lie/dist/lie.polyfill"

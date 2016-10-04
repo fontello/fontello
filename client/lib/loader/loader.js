@@ -39,7 +39,7 @@
 
   var polyfills = [
     {
-      path: '$$ JSON.stringify(asset_url("es6-promise")) $$',
+      path: '$$ JSON.stringify(asset_url("lie/dist/lie.polyfill")) $$',
       needed: !window.Promise
     }
   ];
