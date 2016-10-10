@@ -117,6 +117,7 @@ module.exports = function (N, apiPath) {
     try {
       config = JSON.parse(configFile);
     } catch (__) {
+      remove_uploaded_files(env.data.files);
       throw { code: N.io.BAD_REQUEST, message: 'Can\'t parse config data' };
     }
 
@@ -130,6 +131,7 @@ module.exports = function (N, apiPath) {
         e => `- ${e.field} ${e.message}`
       )).join('\n');
 
+      remove_uploaded_files(env.data.files);
       throw { code: N.io.BAD_REQUEST, message: error };
     }
 
@@ -149,6 +151,8 @@ module.exports = function (N, apiPath) {
       { ttl: 6 * 60 * 60 * 1000, valueEncoding: 'json' },
       cb
     ));
+
+    remove_uploaded_files(env.data.files);
 
     throw { code: N.io.OK, message: sid };
   });
