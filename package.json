@@ -22,6 +22,7 @@
   "dependencies": {
     "argparse": "^1.0.9",
     "autoprefixer": "^6.5.0",
+    "babel-core": "^6.17.0",
     "babel-preset-es2015": "^6.16.0",
     "babelfish": "^1.1.2",
     "babelify": "^7.2.0",
@@ -60,6 +61,8 @@
     "npm": "^3.10.8",
     "pointer": "^1.0.1",
     "postcss": "^5.2.4",
+    "pug": "^2.0.0-beta6",
+    "pug-runtime": "^2.0.2",
     "puncher": "^1.1.1",
     "readable-stream": "^2.1.5",
     "resolve": "~ 1.1.7",
