@@ -10,9 +10,9 @@ const fs    = require('fs');
 
 
 // 3rd-party
-const _     = require('lodash');
-const co    = require('bluebird-co').co;
-const glob  = require('glob');
+const _       = require('lodash');
+const Promise = require('bluebird');
+const glob    = require('glob');
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -89,7 +89,7 @@ module.exports.commandLineArguments = [
   }
 ];
 
-module.exports.run = function (N, args) {
+module.exports.run = Promise.coroutine(function* (N, args) {
   let app_name = args.app;
   let seed_name = args.seed;
   let env = N.environment;
@@ -99,99 +99,98 @@ module.exports.run = function (N, args) {
     return app ? app.root : null;
   }
 
-  return co(function* () {
-    yield N.wire.emit('init:models', N);
+  yield N.wire.emit('init:models', N);
 
-    // load N.router, it's needed to import pictures
-    yield N.wire.emit('init:bundle', N);
+  // load N.router, it's needed to import pictures
+  yield N.wire.emit('init:bundle', N);
 
-    /*eslint-disable no-console*/
+  /*eslint-disable no-console*/
 
-    // If seed name exists - execute seed by name
-    //
-    if (!!app_name && !!seed_name) {
-      // protect production env from accident run
-      if ([ 'development', 'test' ].indexOf(env) === -1 && !args.force) {
-        throw `Error: Can't run seed from ${env} environment. Please, use -f to force.`;
-      }
-
-      let seed_path = path.join(get_app_path(app_name), SEEDS_DIR, seed_name);
-
-      try {
-        fs.readFileSync(seed_path);
-      } catch (__) {
-        throw `Error: Application "${app_name}" - does not have ${seed_name}`;
-      }
-
-      yield seed_run(N, app_name, seed_path);
-
-      return N.wire.emit('exit.shutdown');
+  // If seed name exists - execute seed by name
+  //
+  if (!!app_name && !!seed_name) {
+    // protect production env from accident run
+    if ([ 'development', 'test' ].indexOf(env) === -1 && !args.force) {
+      throw `Error: Can't run seed from ${env} environment. Please, use -f to force.`;
     }
 
-    // No seed name - show existing list or execute by number,
-    // depending on `-n` argument
-    //
-    let apps;
-    if (app_name) {
-      apps = [ { name: app_name, root: get_app_path(app_name) } ];
-    } else {
-      apps = N.apps;
+    let seed_path = path.join(get_app_path(app_name), SEEDS_DIR, seed_name);
+
+    try {
+      fs.readFileSync(seed_path);
+    } catch (__) {
+      throw `Error: Application "${app_name}" - does not have ${seed_name}`;
     }
 
-    // Collect seeds
-    //
-    let seed_list = [];
-    apps.forEach(function (app) {
-      let seed_dir = path.join(app.root, SEEDS_DIR);
+    yield seed_run(N, app_name, seed_path);
 
-      glob.sync('**/*.js', { cwd: seed_dir })
-        // skip files when
-        // - filename starts with _, e.g.: /foo/bar/_baz.js
-        // - dirname in path starts _, e.g. /foo/_bar/baz.js
-        .filter(name => !/^[._]|\\[._]|\/[_.]/.test(name))
-        .forEach(file => seed_list.push({
-          name:      app.name,
-          seed_path: path.join(seed_dir, file)
-        }));
-    });
-
-    // Execute seed by number
-    //
-    if (!_.isEmpty(args.seed_numbers)) {
-      // protect production env from accident run
-      if ([ 'development', 'test' ].indexOf(env) === -1 && !args.force) {
-        throw `Error: Can't run seed from ${env} environment. Please, use -f to force.`;
-      }
-
-      // check that specified seed exists
-      for (let i = 0; i < args.seed_numbers.length; i++) {
-        if (!seed_list[args.seed_numbers[i] - 1]) {
-          console.log(`Seed number ${args.seed_numbers[i]} does not exist`);
-          return N.wire.emit('exit.shutdown', 1);
-        }
-      }
-
-      // Execute seeds
-      for (let i = 0; i < args.seed_numbers.length; i++) {
-        let n = args.seed_numbers[i] - 1;
-
-        yield seed_run(N, seed_list[n].name, seed_list[n].seed_path);
-      }
-
-      return N.wire.emit('exit.shutdown');
-    }
-
-    //
-    // No params - just display seeds list
-    //
-    console.log('Available seeds:\n');
-
-    _.forEach(seed_list, function (seed, idx) {
-      console.log(`  ${idx + 1}. ${seed.name}: ${path.basename(seed.seed_path)}`);
-    });
-
-    console.log('\nSeeds are shown in `<APP>: <SEED_NAME>` form.');
-    console.log('See `seed --help` for details');
     return N.wire.emit('exit.shutdown');
+  }
+
+  // No seed name - show existing list or execute by number,
+  // depending on `-n` argument
+  //
+  let apps;
+  if (app_name) {
+    apps = [ { name: app_name, root: get_app_path(app_name) } ];
+  } else {
+    apps = N.apps;
+  }
+
+  // Collect seeds
+  //
+  let seed_list = [];
+  apps.forEach(function (app) {
+    let seed_dir = path.join(app.root, SEEDS_DIR);
+
+    glob.sync('**/*.js', { cwd: seed_dir })
+      // skip files when
+      // - filename starts with _, e.g.: /foo/bar/_baz.js
+      // - dirname in path starts _, e.g. /foo/_bar/baz.js
+      .filter(name => !/^[._]|\\[._]|\/[_.]/.test(name))
+      .forEach(file => seed_list.push({
+        name:      app.name,
+        seed_path: path.join(seed_dir, file)
+      }));
   });
-};
+
+  // Execute seed by number
+  //
+  if (!_.isEmpty(args.seed_numbers)) {
+    // protect production env from accident run
+    if ([ 'development', 'test' ].indexOf(env) === -1 && !args.force) {
+      throw `Error: Can't run seed from ${env} environment. Please, use -f to force.`;
+    }
+
+    // check that specified seed exists
+    for (let i = 0; i < args.seed_numbers.length; i++) {
+      if (!seed_list[args.seed_numbers[i] - 1]) {
+        console.log(`Seed number ${args.seed_numbers[i]} does not exist`);
+        return N.wire.emit('exit.shutdown', 1);
+      }
+    }
+
+    // Execute seeds
+    for (let i = 0; i < args.seed_numbers.length; i++) {
+      let n = args.seed_numbers[i] - 1;
+
+      yield seed_run(N, seed_list[n].name, seed_list[n].seed_path);
+    }
+
+    return N.wire.emit('exit.shutdown');
+  }
+
+  //
+  // No params - just display seeds list
+  //
+  console.log('Available seeds:\n');
+
+  _.forEach(seed_list, function (seed, idx) {
+    console.log(`  ${idx + 1}. ${seed.name}: ${path.basename(seed.seed_path)}`);
+  });
+
+  console.log('\nSeeds are shown in `<APP>: <SEED_NAME>` form.');
+  console.log('See `seed --help` for details');
+
+  yield N.wire.emit('exit.shutdown');
+});
