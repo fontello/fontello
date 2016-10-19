@@ -25,3 +25,6 @@ packages:
       - babelfish
       - knockout
       - fs: ./lib/system/dummy.js
+      # template helpers
+      - pug-runtime
+      - jade/lib/runtime
