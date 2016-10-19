@@ -92,9 +92,3 @@ bind:
   #    res.writeHead(404, { 'Content-Type': 'text/plain' });
   #    res.end('Invalid host ' + req.headers.host);
   #  }
-
-# Amount of child processes to spawn in cluster.
-# "auto" / "true" means it equals to the number of CPU cores;
-# "false" / 0  means don't use cluster at all.
-#
-fork: 0
