@@ -16,7 +16,9 @@ describe('HTTP alive', function () {
   it('/ HEAD', function (done) {
     request
       .head('/')
-      .expect('')
+      .expect(res => {
+        if (res.text) throw new Error(`Body should be empty, got ${res.text}`);
+      })
       .expect(200, done);
   });
 });
