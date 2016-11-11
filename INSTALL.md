@@ -97,7 +97,7 @@ For Ubuntu 12.04, run this script from fontello folder: `./support/ttfautohint-u
 
 From command line, in fontello folder:
 
-    ./fontello.js
+    ./server.js
 
 Now you can point your browser to the page http://localhost:3000
 
