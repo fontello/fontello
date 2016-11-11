@@ -4,7 +4,6 @@
 
 
 const Promise   = require('bluebird');
-const co        = require('bluebird-co').co;
 const _         = require('lodash');
 const path      = require('path');
 const mz        = require('mz');
@@ -62,7 +61,7 @@ _.forEach({
 });
 
 
-module.exports = co.wrap(function* fontWorker(taskInfo) {
+module.exports = Promise.coroutine(function* fontWorker(taskInfo) {
   let logPrefix = '[font::' + taskInfo.fontId + ']';
   let timeStart = Date.now();
   let fontname = taskInfo.builderConfig.font.fontname;
