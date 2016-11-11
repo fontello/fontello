@@ -139,7 +139,7 @@ function loadData(options, callback) {
       return;
     }
 
-    N.loader.loadAssets(options.apiPath.split('.')[0], function () {
+    N.loader.loadAssets(options.apiPath.split('.')[0]).then(function () {
 
       // Page loading is terminated
       if (id !== requestID) {
@@ -260,9 +260,13 @@ function loadData(options, callback) {
 
 
 function render(data, scroll) {
+  let preload = [];
+
   return Promise.resolve()
     .then(() => N.wire.emit('navigate.exit:' + lastPageData.apiPath, lastPageData))
     .then(() => N.wire.emit('navigate.exit', lastPageData))
+    .then(() => N.wire.emit('navigate.preload:' + data.apiPath, preload))
+    .then(() => N.loader.loadAssets(preload))
     .then(() => {
       data.state = window.history.state;
 

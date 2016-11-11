@@ -1,5 +1,6 @@
 /*eslint-disable no-alert, object-shorthand*/
 
+'$$ asset_body("lie/dist/lie.polyfill") $$';
 '$$ asset_body("bagjs") $$';
 
 (function (window) {
@@ -36,14 +37,6 @@
 
   //////////////////////////////////////////////////////////////////////////////
 
-
-  var polyfills = [
-    {
-      path: '$$ JSON.stringify(asset_url("lie/dist/lie.polyfill")) $$',
-      needed: !window.Promise
-    }
-  ];
-
   var NodecaLoader = window.NodecaLoader = { booted: false };
   var alert = window.alert;
   var prelude = '$$ asset_body("browser-pack/prelude.js") $$';
@@ -71,12 +64,19 @@
     return value;
   }
 
-  function has(obj, prop) {
-    return Object.prototype.hasOwnProperty.call(obj, prop);
+  // Remove duplicates from an array preserving the order of the elements
+  function uniq(array) {
+    var result = [];
+
+    forEach(array, function (item) {
+      if (result.indexOf() === -1) result.push(item);
+    });
+
+    return result;
   }
 
-  function isFunction(object) {
-    return Object.prototype.toString.call(object) === '[object Function]';
+  function has(obj, prop) {
+    return Object.prototype.hasOwnProperty.call(obj, prop);
   }
 
   // Cached non-operable function.
@@ -184,21 +184,28 @@
   // Load a package with all of its associated assets and dependencies.
   // `preload` parameter is an optional array of URLs which are needed to load
   // before the given package.
-  function loadAssets(pkgName, preload, callback) {
+  function loadAssets(pkgNames, preload) {
     var resources = [];
     var scheduled = {};
+    var loadQueue = [];
 
-    if (isFunction(preload)) {
-      callback = preload;
-      preload  = null;
+    pkgNames = Array.isArray(pkgNames) ? pkgNames : [ pkgNames ];
+
+    if (!pkgNames.length) {
+      return Promise.resolve();
     }
 
-    if (!assets[pkgName]) {
-      callback(new Error('We dont know such package (' + pkgName + ')'));
-      return;
+    for (var i = 0; i < pkgNames.length; i++) {
+      if (!assets[pkgNames[i]]) {
+        return Promise.reject(new Error('Unknown package (' + pkgNames[i] + ')'));
+      }
+
+      loadQueue = loadQueue.concat(assets[pkgNames[i]].packagesQueue.slice(0).reverse());
     }
 
-    forEach(assets[pkgName].packagesQueue.slice(0).reverse(), function (dependency) {
+    loadQueue = uniq(loadQueue);
+
+    forEach(loadQueue, function (dependency) {
       var alreadyLoaded, pkgDist = assets[dependency];
 
       if (pkgDist.css.length) {
@@ -229,23 +236,22 @@
       resources = preload.concat(resources);
     }
 
-    if (resources.length > 0) {
+    if (!resources.length) return Promise.resolve();
 
-      var res_list = [];
-      forEach(resources, function (url) {
-        res_list.push({
-          url: url,
-          // storage key = file path without hash
-          key: url.replace(/-[0-9a-f]{32}([.][a-z]+)$/, '$1')
-        });
+    var res_list = [];
+    forEach(resources, function (url) {
+      res_list.push({
+        url: url,
+        // storage key = file path without hash
+        key: url.replace(/-[0-9a-f]{32}([.][a-z]+)$/, '$1')
       });
+    });
 
-      bag.require(res_list, function (err/*, data*/) {
-        if (err) {
-          alert('Asset load error (bag.js): ' + err);
-          return;
-        }
-
+    return bag.require(res_list)
+      .then(null, function (err) {
+        throw new Error('Asset load error (bag.js): ' + (err.message || err));
+      })
+      .then(function () {
         forEach(resources, function (url) {
           loaded[url] = true;
         });
@@ -253,34 +259,19 @@
         // initClientModules();
 
         if (!N.wire) {
-          alert('Asset load error: "N.Wire" unavailable after asset load.');
-          return;
+          throw new Error('Asset load error: "N.Wire" unavailable after asset load.');
         }
 
-        N.wire.emit('init:assets', {}, function (err) {
-          if (err) {
-            alert('Asset load error: "init:assets" failed. ' + err);
-            return;
-          }
-
-          callback();
+        return N.wire.emit('init:assets', {}).then(null, function (err) {
+          throw new Error('Asset load error: "init:assets" failed. ' + (err.message || err));
         });
       });
-    } else {
-      callback();
-    }
   }
 
 
   // Loads all necessary shims and libraries and assets for given package.
-  loadAssets.init = function init(assetsMap, pkgName) {
-    var shims = polyfills
-                  .filter(function (p) {
-                    return p.needed;
-                  })
-                  .map(function (p) {
-                    return p.path;
-                  });
+  loadAssets.init = function init(assetsMap, pkgName, shims) {
+    shims = shims || [];
 
     // Set internal assets map.
     assets = assetsMap;
@@ -296,11 +287,10 @@
       });
     });
 
-    loadAssets(pkgName, shims, function () {
+    loadAssets(pkgName, shims).then(function () {
       if (!N.wire) {
-        alert('Assets init error. Refresh page & try again. ' +
-              'If problem still exists - contact administrator.');
-        return;
+        throw new Error('Assets init error. Refresh page & try again. ' +
+                        'If problem still exists - contact administrator.');
       }
 
       // First try to match full URL, if not matched - try without anchor.
@@ -309,10 +299,9 @@
                     findRoute(baseUrl, 'get');
 
       if (!route) {
-        alert('Init error: failed to detect internal identifier (route) of ' +
-              'this page. Refresh page & try again. If problem still exists ' +
-              '- contact administrator.');
-        return;
+        throw new Error('Init error: failed to detect internal identifier (route) of ' +
+                        'this page. Refresh page & try again. If problem still exists ' +
+                        '- contact administrator.');
       }
 
       // Execute after DOM is loaded:
@@ -325,16 +314,23 @@
           state:   window.history.state
         };
 
+        var preload = [];
+
         Promise.resolve()
+        .then(function () { return N.wire.emit('navigate.preload:' + route.meta.methods.get, preload); })
+        .then(function () { return loadAssets(preload); })
         .then(function () { return N.wire.emit('navigate.done', page_env); })
         .then(function () { return N.wire.emit('navigate.done:' + route.meta.methods.get, page_env); })
         .then(function () { NodecaLoader.booted = true; })
-        .catch(function (err) {
+        .then(null, function (err) {
           /*eslint-disable no-console*/
           try { console.error(err); } catch (__) {}
           alert('Init error: ' + err);
         });
       });
+    })
+    .then(null, function (err) {
+      alert(err.message || err);
     });
   };
 
