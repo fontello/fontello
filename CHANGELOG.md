@@ -1,4 +1,11 @@
-7.0.0 / WIP
+8.0.0 / WIP
+------------------
+
+- fontello.js -> server.js
+- Resync nodeca core (new loader.js + minor changes)
+
+
+7.0.0 / 2016-10-20
 ------------------
 
 - Reduce requirements - replaced MondoDB with local leveldb.
