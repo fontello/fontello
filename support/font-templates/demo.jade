@@ -130,10 +130,7 @@ html
     #icons.container
       - var col_class = "span" + Math.ceil(12 / meta.columns)
       - var rows_total = Math.ceil(glyphs.length / meta.columns)
-      - function pad(s) {
-      -   if (s.length > 4) return '000000'.slice(0, 6 - s.length) + s;
-      -   return '0000'.slice(0, 4 - s.length) + s;
-      - }
+      - function pad(s) { return s.length === 3 ? '0' + s : s; }
       - for (var row = 0; row < rows_total; row++)
 
         .row
