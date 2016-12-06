@@ -18,11 +18,16 @@
 
 -  var unichr = function unichr(code) { if (code > 0xffff) { code -= 0x10000; surrogate1 = 0xd800 + (code >> 10); surrogate2 = 0xdc00 + (code & 0x3ff); return String.fromCharCode(surrogate1, surrogate2); } else { return String.fromCharCode(code); } }
 
+- function pad(s) {
+-   if (s.length > 4) return '000000'.slice(0, 6 - s.length) + s;
+-   return '0000'.slice(0, 4 - s.length) + s;
+- }
+
 - var i, g, css, hex, chr
 - for (i in glyphs)
   - g = glyphs[i]
   - css = meta.css_use_suffix ? g.css + meta.css_prefix_text : meta.css_prefix_text + g.css
-  - hex = g.code.toString(16)
+  - hex = pad(g.code.toString(16))
   - chr = unichr(g.code)
   != '\n'
   | .#{css} { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x#{hex};&nbsp;'); }

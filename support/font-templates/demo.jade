@@ -130,6 +130,10 @@ html
     #icons.container
       - var col_class = "span" + Math.ceil(12 / meta.columns)
       - var rows_total = Math.ceil(glyphs.length / meta.columns)
+      - function pad(s) {
+      -   if (s.length > 4) return '000000'.slice(0, 6 - s.length) + s;
+      -   return '0000'.slice(0, 4 - s.length) + s;
+      - }
       - for (var row = 0; row < rows_total; row++)
 
         .row
@@ -141,7 +145,7 @@ html
 
             - if (g['css-ext']) css_class += ' ' + g['css-ext']
 
-            - var code = g.code.toString(16)
+            - var code = pad(g.code.toString(16))
               .the-icons(class=col_class, title='Code: 0x#{code}')
                 i(
                   class='demo-icon'
