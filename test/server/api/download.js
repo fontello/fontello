@@ -46,7 +46,11 @@ describe('API.download', function () {
             .then(zip => zip.file(/fontello-[0-9a-f]+\/font\/fontello\.svg/)[0].async('string'))
         ]);
       })
-      .then(values => assert.strictEqual(values[0], values[1]));
+      // copyright year can change, strip it
+      .then(values => assert.strictEqual(
+        values[0].replace(/<metadata>.+<\/metadata>/, ''),
+        values[1].replace(/<metadata>.+<\/metadata>/, ''))
+      );
   });
 
 
@@ -73,6 +77,10 @@ describe('API.download', function () {
             .then(zip => zip.file(/fontello-[0-9a-f]+\/font\/fontello\.svg/)[0].async('string'))
         ]);
       })
-      .then(values => assert.strictEqual(values[0], values[1]));
+      // copyright year can change, strip it
+      .then(values => assert.strictEqual(
+        values[0].replace(/<metadata>.+<\/metadata>/, ''),
+        values[1].replace(/<metadata>.+<\/metadata>/, ''))
+      );
   });
 });
