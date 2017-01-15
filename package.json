@@ -37,7 +37,7 @@
     "cookie": "^0.3.1",
     "csswring": "^5.1.0",
     "event-wire": "^3.2.2",
-    "formidable": "~ 1.0.15",
+    "formidable": "~1.1.1",
     "glob": "^7.1.1",
     "is-my-json-valid": "^2.15.0",
     "jade": "~ 1.11.0",
