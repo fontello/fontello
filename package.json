@@ -82,7 +82,7 @@
     "eslint": "^3.10.2",
     "eslint-plugin-nodeca": "~1.0.3",
     "mocha": "^3.1.2",
-    "supertest": "^2.0.1"
+    "supertest": "^3.0.0"
   },
   "browserify": {
     "transform": [
