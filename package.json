@@ -78,7 +78,7 @@
     "xmldom": "~ 0.1.16"
   },
   "devDependencies": {
-    "acorn": "^4.0.3",
+    "acorn": "^4.0.5",
     "eslint": "^3.10.2",
     "eslint-plugin-nodeca": "~1.0.3",
     "mocha": "^3.1.2",
