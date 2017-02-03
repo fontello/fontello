@@ -62,7 +62,7 @@
     "pug-runtime": "^2.0.2",
     "puncher": "^1.1.1",
     "readable-stream": "^2.2.2",
-    "resolve": "~ 1.1.7",
+    "resolve": "~1.2.0",
     "rimraf": "^2.5.2",
     "send": "^0.14.1",
     "stylus": "~ 0.54.5",
