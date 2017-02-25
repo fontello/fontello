@@ -64,7 +64,7 @@
     "readable-stream": "^2.2.2",
     "resolve": "~ 1.1.7",
     "rimraf": "^2.5.2",
-    "send": "^0.14.1",
+    "send": "^0.15.0",
     "stylus": "~ 0.54.5",
     "svg2ttf": "^4.0.2",
     "svgpath": "^2.2.0",
