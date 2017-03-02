@@ -2,8 +2,8 @@
 
 @font-face {
   font-family: 'fontello';
-  src: url('$$ asset_url("./client/lib/embedded_fonts/font/fontello.woff2") $$') format('woff2'),
-       url('$$ asset_url("./client/lib/embedded_fonts/font/fontello.woff") $$') format('woff');
+  src: url('$$ asset_url(N.mainApp.root + "/client/lib/embedded_fonts/font/fontello.woff2") $$') format('woff2'),
+       url('$$ asset_url(N.mainApp.root + "/client/lib/embedded_fonts/font/fontello.woff") $$') format('woff');
   font-weight: normal;
   font-style: normal;
 }
