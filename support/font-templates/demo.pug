@@ -103,9 +103,9 @@ html
 
     != '</style>'
 
-    //- link(rel='stylesheet', href='css/#{font.fontname}.css')
+    //- link(rel='stylesheet', href='css/' + font.fontname + '.css')
     link(rel='stylesheet', href='css/animation.css')
-    <!--[if IE 7]><link rel="stylesheet" href="css/#{font.fontname}-ie7.css"><![endif]-->
+    <!--[if IE 7]><link rel="stylesheet" href="css/" + font.fontname + "-ie7.css"><![endif]-->
 
     script.
       function toggleCodes(on) {
@@ -143,7 +143,7 @@ html
             - if (g['css-ext']) css_class += ' ' + g['css-ext']
 
             - var code = pad(g.code.toString(16))
-              .the-icons(class=col_class, title='Code: 0x#{code}')
+              .the-icons(class=col_class, title='Code: 0x' + code)
                 i(
                   class='demo-icon'
                   class=css_class

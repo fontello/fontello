@@ -69,7 +69,7 @@ html.no-js(lang='en', itemscope, itemtype='http://schema.org/WebPage')
 
             ul.nav.navbar-nav.hidden-sm
               li: a.twitter-follow-button(href="https://twitter.com/puzrin", data-show-count="false", data-show-screen-name="false")= self.t('twitter_follow')
-              li: a.twitter-share-button(href="https://twitter.com/share", data-url="http://fontello.com", data-text="#{self.t('twitter_text')}")= self.t('twitter_share')
+              li: a.twitter-share-button(href="https://twitter.com/share", data-url="http://fontello.com", data-text=self.t('twitter_text'))= self.t('twitter_share')
               li.gplus
                 .g-plusone(data-size="medium")
 

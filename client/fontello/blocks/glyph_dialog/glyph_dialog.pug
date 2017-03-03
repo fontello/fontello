@@ -10,9 +10,9 @@
           .form-group
             .col-sm-12
               - var font_class = (self.fontname === 'custom_icons') ? "font-custom_icons" : "font-fontello"
-              span.glyph-dialog__char-xl(class=font_class) #{self.char_ref}
-              span.glyph-dialog__char-md(class=font_class) #{self.char_ref}
-              span.glyph-dialog__char-sm(class=font_class) #{self.char_ref}
+              span.glyph-dialog__char-xl(class=font_class)= self.char_ref
+              span.glyph-dialog__char-md(class=font_class)= self.char_ref
+              span.glyph-dialog__char-sm(class=font_class)= self.char_ref
 
 
           fieldset.glyph-dialog__fieldset

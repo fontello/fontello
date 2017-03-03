@@ -12,7 +12,7 @@ const ttf2eot   = require('ttf2eot');
 const ttf2woff  = require('ttf2woff');
 const ttf2woff2 = require('ttf2woff2');
 const svg2ttf   = require('svg2ttf');
-const jade      = require('jade');
+const pug       = require('pug');
 const b64       = require('base64-js');
 const rimraf    = Promise.promisify(require('rimraf'));
 const mkdirp    = Promise.promisify(require('mkdirp'));
@@ -26,25 +26,26 @@ const SVG_FONT_TEMPLATE = _.template(fs.readFileSync(path.join(TEMPLATES_DIR, 'f
 
 
 _.forEach({
-  'demo.jade':              'demo.html',
-  'css/css.jade':           'css/${FONTNAME}.css',
-  'css/css-ie7.jade':       'css/${FONTNAME}-ie7.css',
-  'css/css-codes.jade':     'css/${FONTNAME}-codes.css',
-  'css/css-ie7-codes.jade': 'css/${FONTNAME}-ie7-codes.css',
-  'css/css-embedded.jade':  'css/${FONTNAME}-embedded.css',
-  'LICENSE.jade':           'LICENSE.txt',
-  'css/animation.css':      'css/animation.css',
-  'README.txt':             'README.txt'
+  'demo.pug':              'demo.html',
+  'css/css.pug':           'css/${FONTNAME}.css',
+  'css/css-ie7.pug':       'css/${FONTNAME}-ie7.css',
+  'css/css-codes.pug':     'css/${FONTNAME}-codes.css',
+  'css/css-ie7-codes.pug': 'css/${FONTNAME}-ie7-codes.css',
+  'css/css-embedded.pug':  'css/${FONTNAME}-embedded.css',
+  'LICENSE.pug':           'LICENSE.txt',
+  'css/animation.css':     'css/animation.css',
+  'README.txt':            'README.txt'
 }, (outputName, inputName) => {
   let inputFile = path.join(TEMPLATES_DIR, inputName);
   let inputData = fs.readFileSync(inputFile, 'utf8');
   let outputData;
 
   switch (path.extname(inputName)) {
-    case '.jade': // Jade template.
-      outputData = jade.compile(inputData, {
+    case '.pug': // Pug template.
+      outputData = pug.compile(inputData, {
         pretty: true,
-        filename: inputFile
+        filename: inputFile,
+        filters: [ require('jstransformer-stylus') ]
       });
       break;
 
