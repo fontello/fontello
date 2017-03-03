@@ -24,6 +24,7 @@ packages:
       - event-wire
       - babelfish
       - knockout
-      - fs: ./lib/system/dummy.js
       # template helpers
       - pug-runtime
+      # reuse global bug.js from the loader
+      - bagjs: ./lib/app/bag.js

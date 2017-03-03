@@ -21,14 +21,18 @@ html.no-js(lang='en', itemscope, itemtype='http://schema.org/WebPage')
     link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
 
     script(type="text/javascript").
-      !{self.asset_body('./client/lib/loader/loader.js')}
+      !{self.asset_body(N.mainApp.root + '/client/lib/loader/loader.js')}
+
+      var shims = [];
+
       NodecaLoader.loadAssets.init(
         !{JSON.stringify(self.head.assets)},
-        '!{self.apiPath.split(".").shift()}'
+        '!{self.apiPath.split(".").shift()}',
+        shims
       );
 
-    if self.inject_header
-      != self.inject_header
+    if self.inject_headers
+      != self.inject_headers.join('\n')
 
   body
     .layout__fixed

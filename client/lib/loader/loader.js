@@ -294,7 +294,7 @@
       }
 
       // First try to match full URL, if not matched - try without anchor.
-      var baseUrl = location.protocol + '//' + location.host + location.pathname,
+      var baseUrl = location.protocol + '//' + location.host + location.pathname + location.search,
           route   = findRoute(baseUrl + location.hash, 'get') ||
                     findRoute(baseUrl, 'get');
 
