@@ -25,17 +25,18 @@ describe('API.download', function () {
 
   it('with custom icon', function () {
     return Promise.resolve()
-      .then(() => Promise.fromCallback(cb => request
+      .then(() => request
         .post('/')
+        .field('url', 'http://example.com')
         .attach('config', path.join(__dirname, 'fixtures', 'config_custom.json'))
         .set('Accept', 'application/json')
         .expect(200)
-        .end(cb)))
-      .then(res => Promise.fromCallback(cb => request
+      )
+      .then(res => request
         .get(`/${res.text}/get`)
         .expect(200)
         .parse(binaryParser)
-        .end(cb)))
+      )
       .then(res => {
         let fixture = fs.readFileSync(path.join(__dirname, 'fixtures', 'result_custom.zip'));
 
@@ -47,26 +48,26 @@ describe('API.download', function () {
         ]);
       })
       // copyright year can change, strip it
-      .then(values => assert.strictEqual(
-        values[0].replace(/<metadata>.+<\/metadata>/, ''),
-        values[1].replace(/<metadata>.+<\/metadata>/, ''))
+      .then(([ actual, expected ]) => assert.strictEqual(
+        actual.replace(/<metadata>.+<\/metadata>/, ''),
+        expected.replace(/<metadata>.+<\/metadata>/, ''))
       );
   });
 
 
   it('with fontelico icon', function () {
     return Promise.resolve()
-      .then(() => Promise.fromCallback(cb => request
+      .then(() => request
         .post('/')
         .attach('config', path.join(__dirname, 'fixtures', 'config_fontelico.json'))
         .set('Accept', 'application/json')
         .expect(200)
-        .end(cb)))
-      .then(res => Promise.fromCallback(cb => request
+      )
+      .then(res => request
         .get(`/${res.text}/get`)
         .expect(200)
         .parse(binaryParser)
-        .end(cb)))
+      )
       .then(res => {
         let fixture = fs.readFileSync(path.join(__dirname, 'fixtures', 'result_fontelico.zip'));
 
@@ -78,9 +79,9 @@ describe('API.download', function () {
         ]);
       })
       // copyright year can change, strip it
-      .then(values => assert.strictEqual(
-        values[0].replace(/<metadata>.+<\/metadata>/, ''),
-        values[1].replace(/<metadata>.+<\/metadata>/, ''))
+      .then(([ actual, expected ]) => assert.strictEqual(
+        actual.replace(/<metadata>.+<\/metadata>/, ''),
+        expected.replace(/<metadata>.+<\/metadata>/, ''))
       );
   });
 });
