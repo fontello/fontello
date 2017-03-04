@@ -14,16 +14,6 @@
 // data - event payload
 //
 function handleAction(apiPath, data) {
-  // Temporary hack, because fontello event names conflicts with those
-  // expected in Nodeca. We should not try to load additional packages.
-  /*N.loader.loadAssets(apiPath.split('.')[0]).then(function () {
-    if (N.wire.has(apiPath)) {
-      N.wire.emit(apiPath, data)
-        .catch(err => N.wire.emit('error', err));
-    } else {
-      N.logger.error('Unknown client Wire channel: %s', apiPath);
-    }
-  });*/
   if (N.wire.has(apiPath)) {
     N.wire.emit(apiPath, data)
       .catch(err => N.wire.emit('error', err));
