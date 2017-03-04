@@ -146,7 +146,11 @@ N.wire.once('navigate.done', function (data) {
 
     toolbar.building(true);
 
-    return N.io.rpc('fontello.font.generate', config).then(res => {
+    let rpc_params = {
+      config: new Blob([ JSON.stringify(config) ], { type: 'application/json' })
+    };
+
+    return N.io.rpc('fontello.font.generate', rpc_params).then(res => {
       toolbar.building(false);
 
       // inject download url via iframe to start download
