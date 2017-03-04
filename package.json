@@ -38,7 +38,6 @@
     "csswring": "^5.1.1",
     "email-regex": "^1.0.0",
     "event-wire": "^3.3.1",
-    "formidable": "~ 1.1.1",
     "glob": "^7.1.1",
     "is-my-json-valid": "^2.16.0",
     "javascript-state-machine": "^2.4.0",
