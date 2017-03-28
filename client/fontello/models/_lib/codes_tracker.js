@@ -137,20 +137,20 @@ function allocateCode(glyph, encoding) {
   var newCode;
 
   switch (encoding) {
-  case 'pua':
-    newCode = findPrivateUseArea(glyph.code());
-    break;
+    case 'pua':
+      newCode = findPrivateUseArea(glyph.code());
+      break;
 
-  case 'ascii':
-    newCode = findAscii(glyph.code());
-    break;
+    case 'ascii':
+      newCode = findAscii(glyph.code());
+      break;
 
-  case 'unicode':
-    newCode = findUnicode(glyph.code());
-    break;
+    case 'unicode':
+      newCode = findUnicode(glyph.code());
+      break;
 
-  default:
-    throw new Error('Unknown glyph enumerator: ' + encoding);
+    default:
+      throw new Error('Unknown glyph enumerator: ' + encoding);
   }
 
   glyph.code(newCode);

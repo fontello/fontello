@@ -83,7 +83,6 @@
   "devDependencies": {
     "acorn": "^5.0.0",
     "eslint": "^3.18.0",
-    "eslint-plugin-nodeca": "~1.0.3",
     "mocha": "^3.2.0",
     "supertest": "^3.0.0"
   },

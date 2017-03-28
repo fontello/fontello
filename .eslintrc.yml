@@ -4,9 +4,6 @@ env:
   # Postponed: enable partially (less on server, more on client)
   es6: true
 
-plugins:
-    - nodeca
-
 rules:
   accessor-pairs:         2
   array-bracket-spacing:  [ 2, "always", { "singleValue": true, "objectsInArrays": true, "arraysInArrays": true } ]
@@ -36,7 +33,7 @@ rules:
   handle-callback-err:    2
 
   # Postponed
-  #indent:                 [ 2, 2, { VariableDeclarator: { var: 2, let: 2, const: 3 }, SwitchCase: 1 } ]
+  indent:                 [ 2, 2, { VariableDeclarator: { var: 2, let: 2, const: 3 }, SwitchCase: 1 } ]
 
   # key-spacing:            [ 2, { "align": "value" } ]
   keyword-spacing:        2
@@ -178,12 +175,3 @@ rules:
   # Postponed
   #prefer-template:        1
   require-yield:          1
-
-
-  #
-  # Our custom rules from plugin
-  #
-  #nodeca/no-lodash-aliases:   2
-  #nodeca/no-async-aliases:    2
-  nodeca/indent:              [2, spaces, 2]
-  nodeca/no-wire-anonymous: 1
