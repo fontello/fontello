@@ -42,7 +42,7 @@ When more examples available, those will be added here.
 ### API methods
 
 1. `POST http://fontello.com/` creates a session with your config and
-   return you `session_id`. You can use it later to open fontello with you configuration
+   return you `session_id`. You can use it later to open fontello with your configuration
    and to automatically download your font. Session is stored for 24h. POST params
    (form-encoded):
     - `config` - (Required) content of `config.json` for your font
