@@ -69,7 +69,7 @@
     "send": "^0.15.1",
     "serialize-error": "^2.1.0",
     "stylus": "~ 0.54.5",
-    "svg2ttf": "^4.0.2",
+    "svg2ttf": "^4.0.3",
     "svgpath": "^2.2.1",
     "ttf2eot": "^2.0.0",
     "ttf2woff": "^2.0.1",
