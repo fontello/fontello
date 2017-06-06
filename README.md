@@ -1,6 +1,8 @@
 Fontello - icon font scissors
 =============================
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/fontello/fontello.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/fontello/fontello.png)](https://travis-ci.org/fontello/fontello)
 
 website: [fontello.com](http://fontello.com/), help: [wiki](https://github.com/fontello/fontello/wiki/Help)
