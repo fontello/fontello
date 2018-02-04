@@ -64,6 +64,7 @@ Note. When you open site via API url, `download` button will have another text.
   `fontello-cli` is for you :)
 * [fontello_rails_converter](https://github.com/railslove/fontello_rails_converter) - Ruby CLI gem for interacting with the API.  Additional features (Sass conversion) for Rails integration, but should work for every project.
 * [grunt-fontello](https://github.com/jubalm/grunt-fontello) - lightweight integration with grunt
+* [jekyll-fontello](https://gist.github.com/ericcornelissen/c09b01259496922c64949ad1bb7e0559) - lightweight integration with Jekyll
 
 
 ## Contacts
