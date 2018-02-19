@@ -3,45 +3,32 @@
 'use strict';
 
 
-var _ = require('lodash');
-var StateMachine = require('javascript-state-machine');
+const _            = require('lodash');
+const StateMachine = require('javascript-state-machine');
 
-var lastPageData;
-var navigateCallback;
+let lastPageData;
+let navigateCallback;
 // Incremented request ID
-var requestID = 0;
+let requestID = 0;
 
-var fsm = StateMachine.create({
+let fsm = StateMachine.create({
   initial: 'IDLE',
   error(eventName, from, to, args, errorCode, errorMessage) {
-    var errorReport = 'Navigator error: ' + errorMessage;
+    let errorReport = `Navigator error: ${errorMessage}`;
 
     window.alert(errorReport);
     return errorReport;
   },
 
   events: [
-    // back/forward buttons
-    { name: 'stateChange',   from: 'IDLE',                  to: 'BACK_FORWARD' },
+    // return to initial state from any one
+    { name: 'reset',         to: 'IDLE' },
+    // back/forward buttons + hash change
+    { name: 'historyNav',    to: 'HISTORY_NAV' },
     // link click
-    { name: 'link',          from: 'IDLE',                  to: 'LOAD' },
-    // fake event to remove status check
-    { name: 'terminate',     from: 'IDLE',                  to: 'IDLE' },
-
-    // page data is in cache
-    { name: 'complete',      from: 'BACK_FORWARD',          to: 'IDLE' },
-    // page loading complete
-    { name: 'complete',      from: 'LOAD',                  to: 'IDLE' },
-
-    // terminate page loading by back/forward buttons
-    { name: 'stateChange',   from: 'LOAD',                  to: 'BACK_FORWARD' },
-    // terminate page loading on error or if page is same
-    { name: 'terminate',     from: 'LOAD',                  to: 'IDLE' },
-
+    { name: 'link',          to: 'LOAD' },
     // handle pop history state on anchor change
-    { name: 'changeHash',    from: 'LOAD',                  to: 'HASH_CHANGE' },
-    // anchor change complete
-    { name: 'stateChange',   from: 'HASH_CHANGE',           to: 'IDLE' }
+    { name: 'changeHash',    to: 'HASH_CHANGE' }
   ]
 });
 
@@ -50,7 +37,7 @@ var fsm = StateMachine.create({
 // Local functions
 
 function normalizeURL(url) {
-  var a = document.createElement('a');
+  let a = document.createElement('a');
   a.href = url;
   return a.href.toString();
 }
@@ -68,7 +55,7 @@ function normalizeURL(url) {
 // `force` flag is internal, consider using `navigate.reload` in other modules instead
 //
 function parseOptions(options) {
-  var match, href, anchor, apiPath, params, errorReport, force;
+  let match, href, anchor, apiPath, params, errorReport, force;
 
   if (typeof options === 'string') {
     options = { href: options };
@@ -80,15 +67,16 @@ function parseOptions(options) {
     href = normalizeURL(options.href).split('#')[0];
     anchor = normalizeURL(options.href).slice(href.length) || '';
 
-    match = _.find(N.router.matchAll(href), function (match) {
-      // Filter out methods that we can't get with RPC. Currently, responder
-      // may have 'bin' or 'http' value, and only 'http' corresponds 1x1 to rpc.
-      //
-      // For example, static files (favicon.ico), attachments and assets
-      // shouldn't be handled by the navigator.
-      //
-      return _.has(match.meta.methods, 'get') && match.meta.responder !== 'bin';
-    });
+    // Filter out methods that we can't get with RPC. Currently, responder
+    // may have 'bin' or 'http' value, and only 'http' corresponds 1x1 to rpc.
+    //
+    // For example, static files (favicon.ico), attachments and assets
+    // shouldn't be handled by the navigator.
+    //
+    match = _.find(
+      N.router.matchAll(href),
+      match => _.has(match.meta.methods, 'get') && match.meta.responder !== 'bin'
+    );
 
     if (match) {
       apiPath = match.meta.methods.get;
@@ -128,26 +116,20 @@ function parseOptions(options) {
 
 
 function loadData(options, callback) {
-  var id = ++requestID;
+  let id = ++requestID;
 
   // History is enabled - try RPC navigation.
-  N.io.rpc(options.apiPath, options.params).then(function (res) {
+  N.io.rpc(options.apiPath, options.params).then(res => {
 
-    // Page loading is terminated
-    if (id !== requestID) {
-      callback(null);
-      return;
-    }
+    // Page loading was terminated by new operation
+    if (id !== requestID) return;
 
-    N.loader.loadAssets(options.apiPath.split('.')[0]).then(function () {
+    return N.loader.loadAssets(options.apiPath.split('.')[0]).then(function () {
 
-      // Page loading is terminated
-      if (id !== requestID) {
-        callback(null);
-        return;
-      }
+      // Page loading was terminated by new operation
+      if (id !== requestID) return;
 
-      var state = {
+      let state = {
         apiPath: options.apiPath,
         params: options.params,
         anchor: options.anchor,
@@ -158,28 +140,23 @@ function loadData(options, callback) {
       callback(state);
     });
 
-  }).catch(function (err) {
+  }).catch(err => {
 
     // Page loading is terminated or request was canceled
-    if (id !== requestID || err === 'CANCELED') {
-      callback(null);
-      return;
-    }
+    if (id !== requestID || err === 'CANCELED') return;
 
     if (err && N.io.REDIRECT === err.code) {
-      var redirectUrl = document.createElement('a');
+      let redirectUrl = document.createElement('a');
 
       // Tricky way to parse URL.
       redirectUrl.href = err.head.Location;
 
       // Note, that we try to keep anchor, if exists.
       // That's important for moved threads and last pages redirects.
-      var hash = options.anchor || window.location.hash;
+      let hash = options.anchor || window.location.hash;
 
       // Skip on empty hash to avoid dummy '#' in link
-      if (hash) {
-        redirectUrl.hash = hash;
-      }
+      if (hash) redirectUrl.hash = hash;
 
       // If protocol is changed, we must completely reload the page to keep
       // Same-origin policy for RPC.
@@ -188,9 +165,10 @@ function loadData(options, callback) {
       //   (it uses relative path)
       if (redirectUrl.protocol !== location.protocol) {
         window.location = redirectUrl.href;
-      } else {
-        callback(redirectUrl.href);
+        return;
       }
+
+      callback(redirectUrl.href);
       return;
     }
 
@@ -229,7 +207,7 @@ function loadData(options, callback) {
       //
       // This is a generic error, e.g. forbidden / not found / client error.
 
-      var data = {
+      let data = {
         apiPath: null,
         params: {},
         anchor: '',
@@ -241,7 +219,7 @@ function loadData(options, callback) {
       };
 
       // Here we can customize error behaviour (update apiPath/view)
-      N.wire.emit('navigate.error', data, function () {
+      N.wire.emit('navigate.error', data, () => {
         if (!data.apiPath) {
           window.location = options.href + options.anchor;
           return;
@@ -254,7 +232,7 @@ function loadData(options, callback) {
     }
 
     N.wire.emit('io.error', err);
-    callback(null);
+    fsm.reset();
   });
 }
 
@@ -272,7 +250,7 @@ function render(data, scroll) {
 
       N.runtime.page_data = {};
 
-      var content = $(N.runtime.render(data.view, data.locals, {
+      let content = $(N.runtime.render(data.view, data.locals, {
         apiPath: data.apiPath
       }));
 
@@ -285,7 +263,7 @@ function render(data, scroll) {
     .then(() => {
       if (scroll && !data.no_scroll) {
         // Without this delay firefox on android fails to scroll on long pages
-        setTimeout(function () {
+        setTimeout(() => {
           $(window).scrollTop((data.anchor && $(data.anchor).length) ? $(data.anchor).offset().top : 0);
         }, 50);
       }
@@ -297,24 +275,35 @@ function render(data, scroll) {
 ///////////////////////////////////////////////////////////////////////////////
 // FSM handlers
 
-fsm.onIDLE = function () {
+fsm.onreset = function () {
+  // Call callback from previous operation (navigate.to)
+  // to resolve pending promise
   if (navigateCallback) {
     navigateCallback();
     navigateCallback = null;
   }
+  // Ensure pending requests will be dropped
+  requestID++;
 };
 
-fsm.onLOAD = function (event, from, to, params) {
-  var options = parseOptions(params),
+fsm.onlink = function (event, from, to, params) {
+  // If previous request in progress - cleanup and reenter state
+  if (from !== 'IDLE') {
+    fsm.reset();
+    fsm.link(params);
+    return;
+  }
+
+  let options = parseOptions(params),
       same_url = (options.href === (location.protocol + '//' + location.host + location.pathname + location.search));
 
   // If errors while parsing
   if (!options) {
-    fsm.terminate();
+    fsm.reset();
     return;
   }
 
-  var target = document.createElement('a');
+  let target = document.createElement('a');
 
   target.href = options.href;
 
@@ -339,32 +328,30 @@ fsm.onLOAD = function (event, from, to, params) {
 
   // Stop here if base URL (all except anchor) haven't changed.
 
-  if (same_url && !options.force) {
+  if ((same_url && !options.force) &&
+      // `location.hash = ''` ads # at the end,
+      // we should avoid such case: /foo#bar => /foo
+      !(location.hash && !options.anchor)) {
 
     // Update anchor if it's changed.
     if (location.hash !== options.anchor) {
-
       fsm.changeHash();
+      // that will cause `popstate` event
       location.hash = options.anchor;
       return;
     }
 
-
-    fsm.terminate();
+    // Nothing changed - finish to IDLE state
+    fsm.reset();
     return;
   }
 
-  loadData(options, function (result) {
-    // Loading terminated
-    if (result === null || !fsm.is('LOAD')) {
-      return;
-    }
-
+  loadData(options, result => {
     // Redirect url
     if (typeof result === 'string') {
 
       // Go back to `IDLE` and to `LOAD` again, otherwise `onLOAD` will not emitted
-      fsm.terminate();
+      fsm.reset();
       fsm.link(result);
       return;
     }
@@ -376,16 +363,29 @@ fsm.onLOAD = function (event, from, to, params) {
     }
 
     render(result, !params.no_scroll).then(() => {
-      fsm.complete();
+      fsm.reset();
     });
   });
 };
 
-fsm.onBACK_FORWARD = function () {
-  // stateChange terminate `LOAD` state, also remove old callback
-  navigateCallback = null;
 
-  var options = parseOptions(document.location);
+// Listen after<event>, not after<state>. Because
+// if we reenter the same state, after<state> is not emited.
+fsm.onhistoryNav = function (event, from) {
+  if (from === 'HASH_CHANGE') {
+    // We are here after hash update, then should finish
+    fsm.reset();
+    return;
+  }
+
+  // If previous request in progress - cleanup and reenter state
+  if (from !== 'IDLE') {
+    fsm.reset();
+    fsm.historyNav();
+    return;
+  }
+
+  let options = parseOptions(document.location);
 
   // It's an external link or 404 error if route is not matched. So perform
   // regular page requesting via HTTP.
@@ -394,11 +394,11 @@ fsm.onBACK_FORWARD = function () {
     return;
   }
 
-  loadData(options, function (result) {
+  loadData(options, result => {
     window.history.replaceState(window.history.state, result.locals.head.title, options.href + options.anchor);
 
     render(result, false).then(() => {
-      fsm.complete();
+      fsm.reset();
     });
   });
 };
@@ -408,9 +408,9 @@ fsm.onBACK_FORWARD = function () {
 // statechange handler
 
 if (window.history && window.history.pushState) {
-  window.addEventListener('popstate', function () {
-    fsm.stateChange();
-  });
+  // called on back/forward buttons and go() js method call
+  // TODO: check if this works correctly if we're changing url for popups
+  window.addEventListener('popstate', () => { fsm.historyNav(); });
 }
 
 
@@ -453,7 +453,7 @@ N.wire.on('navigate.get_page_raw', function get_page_raw(params) {
 // So they are mutually exclusive.
 //
 N.wire.on('navigate.to', function navigate_to(options, callback) {
-  fsm.terminate();
+  fsm.reset();
 
   navigateCallback = callback;
   fsm.link(options);
@@ -463,7 +463,7 @@ N.wire.on('navigate.to', function navigate_to(options, callback) {
 // Reload current page.
 //
 N.wire.on('navigate.reload', function navigate_reload(__, callback) {
-  fsm.terminate();
+  fsm.reset();
 
   navigateCallback = callback;
   fsm.link({ href: location.href, force: true, no_scroll: true });
@@ -479,9 +479,9 @@ N.wire.on('navigate.reload', function navigate_reload(__, callback) {
 //   options.state - additional metadata to store (optional)
 //
 N.wire.on('navigate.replace', function navigate_replace(options, callback) {
-  var url = options.href ? normalizeURL(options.href) : normalizeURL(location.href);
-  var title = options.title || document.title;
-  var state = options.state || null;
+  let url = options.href ? normalizeURL(options.href) : normalizeURL(location.href);
+  let title = options.title || document.title;
+  let state = options.state || null;
 
   if (document.title !== title || normalizeURL(location.href) !== url || !_.isEqual(state, window.history.state)) {
     window.history.replaceState(state, title, url);
@@ -499,7 +499,7 @@ N.wire.on('navigate.done', { priority: -999 }, function apipath_set(data) {
 
 N.wire.once('navigate.done', { priority: 999 }, function navigate_click_handler() {
   $(document).on('click', 'a', function (event) {
-    var $this = $(this);
+    let $this = $(this);
 
     if ($this.attr('target') || event.isDefaultPrevented()) {
       // skip links that have `target` attribute specified
@@ -512,7 +512,7 @@ N.wire.once('navigate.done', { priority: 999 }, function navigate_click_handler(
       return;
     }
 
-    var href = $this.attr('href');
+    let href = $this.attr('href');
 
     if (href.indexOf('data:') === 0) {
       // Skip data URIs.

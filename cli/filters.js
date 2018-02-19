@@ -1,11 +1,9 @@
 // Show wire listeners
 //
-
 'use strict';
 
 
 const _       = require('lodash');
-const Promise = require('bluebird');
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -41,12 +39,12 @@ module.exports.commandLineArguments = [
 ];
 
 
-module.exports.run = Promise.coroutine(function* (N, args) {
+module.exports.run = async function (N, args) {
 
   // Reduce log level
   N.logger.setLevel('info');
 
-  yield Promise.resolve()
+  await Promise.resolve()
     .then(() => N.wire.emit('init:models', N))
     .then(() => N.wire.emit('init:bundle', N))
     .then(() => N.wire.emit('init:services', N));
@@ -82,5 +80,5 @@ module.exports.run = Promise.coroutine(function* (N, args) {
 
   console.log('\n');
 
-  yield N.wire.emit('exit.shutdown');
-});
+  await N.wire.emit('exit.shutdown');
+};

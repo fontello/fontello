@@ -24,7 +24,7 @@ N.wire.on('io.error', function io_err_init(err) {
       break;
 
     case N.io.EWRONGVER:
-      N.wire.emit('io.version_mismatch');
+      N.wire.emit('io.version_mismatch', err.hash);
       break;
 
     default:

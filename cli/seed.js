@@ -11,7 +11,6 @@ const fs    = require('fs');
 
 // 3rd-party
 const _       = require('lodash');
-const Promise = require('bluebird');
 const glob    = require('glob');
 
 
@@ -89,7 +88,7 @@ module.exports.commandLineArguments = [
   }
 ];
 
-module.exports.run = Promise.coroutine(function* (N, args) {
+module.exports.run = async function (N, args) {
   let app_name = args.app;
   let seed_name = args.seed;
   let env = N.environment;
@@ -99,10 +98,10 @@ module.exports.run = Promise.coroutine(function* (N, args) {
     return app ? app.root : null;
   }
 
-  yield N.wire.emit('init:models', N);
+  await N.wire.emit('init:models', N);
 
   // load N.router, it's needed to import pictures
-  yield N.wire.emit('init:bundle', N);
+  await N.wire.emit('init:bundle', N);
 
   /*eslint-disable no-console*/
 
@@ -122,7 +121,7 @@ module.exports.run = Promise.coroutine(function* (N, args) {
       throw `Error: Application "${app_name}" - does not have ${seed_name}`;
     }
 
-    yield seed_run(N, app_name, seed_path);
+    await seed_run(N, app_name, seed_path);
 
     return N.wire.emit('exit.shutdown');
   }
@@ -174,7 +173,7 @@ module.exports.run = Promise.coroutine(function* (N, args) {
     for (let i = 0; i < args.seed_numbers.length; i++) {
       let n = args.seed_numbers[i] - 1;
 
-      yield seed_run(N, seed_list[n].name, seed_list[n].seed_path);
+      await seed_run(N, seed_list[n].name, seed_list[n].seed_path);
     }
 
     return N.wire.emit('exit.shutdown');
@@ -192,5 +191,5 @@ module.exports.run = Promise.coroutine(function* (N, args) {
   console.log('\nSeeds are shown in `<APP>: <SEED_NAME>` form.');
   console.log('See `seed --help` for details');
 
-  yield N.wire.emit('exit.shutdown');
-});
+  await N.wire.emit('exit.shutdown');
+};

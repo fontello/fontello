@@ -5,7 +5,6 @@
 
 
 const _       = require('lodash');
-const Promise = require('bluebird');
 const glob    = require('glob');
 const Mocha   = require('mocha');
 const path    = require('path');
@@ -46,7 +45,7 @@ module.exports.commandLineArguments = [
 
 ////////////////////////////////////////////////////////////////////////////////
 
-module.exports.run = Promise.coroutine(function* (N, args) {
+module.exports.run = async function (N, args) {
 
   if (!process.env.NODECA_ENV) {
     throw 'You must provide NODECA_ENV in order to run nodeca test';
@@ -55,7 +54,7 @@ module.exports.run = Promise.coroutine(function* (N, args) {
   // Expose N to globals for tests
   global.TEST = { N };
 
-  yield Promise.resolve()
+  await Promise.resolve()
     .then(() => N.wire.emit('init:models', N))
     .then(() => N.wire.emit('init:bundle', N))
     .then(() => N.wire.emit('init:services', N))
@@ -97,9 +96,9 @@ module.exports.run = Promise.coroutine(function* (N, args) {
     }
   });
 
-  yield new Promise((resolve, reject) => {
+  await new Promise((resolve, reject) => {
     mocha.run(err => (err ? reject(err) : resolve()));
   });
 
-  yield N.wire.emit('exit.shutdown');
-});
+  await N.wire.emit('exit.shutdown');
+};
