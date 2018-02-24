@@ -1,8 +1,23 @@
 8.0.0 / WIP
 ------------------
 
-- fontello.js -> server.js
-- Resync nodeca core (new loader.js + minor changes)
+- Requires node.js 8+ now (with webassembly support).
+- Nodeca core resync.
+- ttf2woff2 -> wawoff2.
+
+
+7.1.0 / 2017-05-27
+------------------
+
+- svg2ttf bump, #607.
+- fontello.js -> server.js.
+- Resync nodeca core (new loader.js + minor changes).
+- FontAwesome update to 4.7.
+- formidable -> built-in multipart POST data parser.
+- jade -> pug.
+- Fix CSS 3-ditits codes, #521.
+- relax api tests - remove copyright year before svg compare.
+- Various code cleanups.
 
 
 7.0.0 / 2016-10-20
