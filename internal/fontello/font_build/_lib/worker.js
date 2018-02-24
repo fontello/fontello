@@ -10,7 +10,7 @@ const mz        = require('mz');
 const fs        = require('fs');
 const ttf2eot   = require('ttf2eot');
 const ttf2woff  = require('ttf2woff');
-const ttf2woff2 = require('ttf2woff2');
+const wawoff2   = require('wawoff2');
 const svg2ttf   = require('svg2ttf');
 const pug       = require('pug');
 const b64       = require('base64-js');
@@ -156,7 +156,9 @@ module.exports = async function fontWorker(taskInfo) {
 
   // Convert TTF to WOFF2.
   //
-  await mz.fs.writeFile(files.woff2, ttf2woff2(ttfOutput));
+  let woff2Output = await wawoff2.compress(ttfOutput);
+
+  await mz.fs.writeFile(files.woff2, woff2Output);
 
 
   // Write template files. (generate dynamic and copy static)
