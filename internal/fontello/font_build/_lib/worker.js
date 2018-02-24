@@ -110,7 +110,7 @@ module.exports = async function fontWorker(taskInfo) {
   //
   let ttf = svg2ttf(svgOutput, { copyright: taskInfo.builderConfig.font.copyright });
 
-  await mz.fs.writeFile(files.ttf, new Buffer(ttf.buffer));
+  await mz.fs.writeFile(files.ttf, ttf.buffer);
 
 
   // Autohint the resulting TTF.
@@ -145,14 +145,14 @@ module.exports = async function fontWorker(taskInfo) {
   //
   let eotOutput = ttf2eot(ttfOutput).buffer;
 
-  await mz.fs.writeFile(files.eot, new Buffer(eotOutput));
+  await mz.fs.writeFile(files.eot, eotOutput);
 
 
   // Convert TTF to WOFF.
   //
   let woffOutput = ttf2woff(ttfOutput).buffer;
 
-  await mz.fs.writeFile(files.woff, new Buffer(woffOutput));
+  await mz.fs.writeFile(files.woff, woffOutput);
 
   // Convert TTF to WOFF2.
   //
