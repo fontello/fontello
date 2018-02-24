@@ -17,7 +17,9 @@
   "license": "MIT",
   "repository": "fontello/fontello",
   "scripts": {
-    "test": "make test"
+    "test": "make test",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "argparse": "^1.0.9",
@@ -78,7 +80,8 @@
     "uglify-js": "^3.1.10",
     "uglifyify": "^4.0.5",
     "write-file-atomic": "^2.3.0",
-    "xmldom": "~ 0.1.27"
+    "xmldom": "~ 0.1.27",
+    "snyk": "^1.69.9"
   },
   "devDependencies": {
     "acorn": "^5.0.0",
@@ -97,5 +100,6 @@
         }
       ]
     ]
-  }
+  },
+  "snyk": true
 }
