@@ -18,12 +18,12 @@ module.exports = function (N, apiPath) {
   });
 
 
-  N.wire.before(apiPath, function* validate(env) {
+  N.wire.before(apiPath, async function validate(env) {
     let path = _.get(env.req, 'files.config.0.path');
 
     if (!path) throw N.io.BAD_REQUEST;
 
-    let file = yield fs.readFile(path, { encoding: 'utf-8' });
+    let file = await fs.readFile(path, { encoding: 'utf-8' });
 
     try {
       env.data.config = JSON.parse(file);
@@ -42,10 +42,10 @@ module.exports = function (N, apiPath) {
   });
 
 
-  N.wire.on(apiPath, function* request_font_generation(env) {
+  N.wire.on(apiPath, async function request_font_generation(env) {
     let params = { config: env.data.config };
 
-    yield N.wire.emit('internal:fontello.font_build', params);
+    await N.wire.emit('internal:fontello.font_build', params);
     env.res.id = params.fontId;
   });
 };

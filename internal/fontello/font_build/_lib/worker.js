@@ -62,7 +62,7 @@ _.forEach({
 });
 
 
-module.exports = Promise.coroutine(function* fontWorker(taskInfo) {
+module.exports = async function fontWorker(taskInfo) {
   let logPrefix = '[font::' + taskInfo.fontId + ']';
   let timeStart = Date.now();
   let fontname = taskInfo.builderConfig.font.fontname;
@@ -92,25 +92,25 @@ module.exports = Promise.coroutine(function* fontWorker(taskInfo) {
 
   // Prepare temporary working directory.
   //
-  yield rimraf(taskInfo.tmpDir);
-  yield mkdirp(taskInfo.tmpDir);
-  yield mkdirp(path.join(taskInfo.tmpDir, 'font'));
-  yield mkdirp(path.join(taskInfo.tmpDir, 'css'));
+  await rimraf(taskInfo.tmpDir);
+  await mkdirp(taskInfo.tmpDir);
+  await mkdirp(path.join(taskInfo.tmpDir, 'font'));
+  await mkdirp(path.join(taskInfo.tmpDir, 'css'));
 
 
   // Write clinet config and initial SVG font.
   //
   let configOutput = JSON.stringify(taskInfo.clientConfig, null, '  ');
 
-  yield mz.fs.writeFile(files.config, configOutput, 'utf8');
-  yield mz.fs.writeFile(files.svg, svgOutput, 'utf8');
+  await mz.fs.writeFile(files.config, configOutput, 'utf8');
+  await mz.fs.writeFile(files.svg, svgOutput, 'utf8');
 
 
   // Convert SVG to TTF
   //
   let ttf = svg2ttf(svgOutput, { copyright: taskInfo.builderConfig.font.copyright });
 
-  yield mz.fs.writeFile(files.ttf, new Buffer(ttf.buffer));
+  await mz.fs.writeFile(files.ttf, new Buffer(ttf.buffer));
 
 
   // Autohint the resulting TTF.
@@ -121,8 +121,8 @@ module.exports = Promise.coroutine(function* fontWorker(taskInfo) {
   // Don't allow hinting if font has "strange" glyphs.
   // That's useless anyway, and can hang ttfautohint < 1.0
   if (max_segments <= 500 && taskInfo.builderConfig.hinting) {
-    yield mz.fs.rename(files.ttf, files.ttfUnhinted);
-    yield mz.child_process.execFile('ttfautohint', [
+    await mz.fs.rename(files.ttf, files.ttfUnhinted);
+    await mz.child_process.execFile('ttfautohint', [
       '--no-info',
       '--windows-compatibility',
       '--symbol',
@@ -132,31 +132,31 @@ module.exports = Promise.coroutine(function* fontWorker(taskInfo) {
       files.ttfUnhinted,
       files.ttf
     ], { cwd: taskInfo.cwdDir });
-    yield mz.fs.unlink(files.ttfUnhinted);
+    await mz.fs.unlink(files.ttfUnhinted);
   }
 
 
   // Read the resulting TTF to produce EOT and WOFF.
   //
-  let ttfOutput = new Uint8Array(yield mz.fs.readFile(files.ttf));
+  let ttfOutput = new Uint8Array(await mz.fs.readFile(files.ttf));
 
 
   // Convert TTF to EOT.
   //
   let eotOutput = ttf2eot(ttfOutput).buffer;
 
-  yield mz.fs.writeFile(files.eot, new Buffer(eotOutput));
+  await mz.fs.writeFile(files.eot, new Buffer(eotOutput));
 
 
   // Convert TTF to WOFF.
   //
   let woffOutput = ttf2woff(ttfOutput).buffer;
 
-  yield mz.fs.writeFile(files.woff, new Buffer(woffOutput));
+  await mz.fs.writeFile(files.woff, new Buffer(woffOutput));
 
   // Convert TTF to WOFF2.
   //
-  yield mz.fs.writeFile(files.woff2, ttf2woff2(ttfOutput));
+  await mz.fs.writeFile(files.woff2, ttf2woff2(ttfOutput));
 
 
   // Write template files. (generate dynamic and copy static)
@@ -180,29 +180,29 @@ module.exports = Promise.coroutine(function* fontWorker(taskInfo) {
                     .replace('%WOFF64%', b64.fromByteArray(woffOutput))
                     .replace('%TTF64%', b64.fromByteArray(ttfOutput));
 
-    yield mz.fs.writeFile(outputFile, outputData, 'utf8');
+    await mz.fs.writeFile(outputFile, outputData, 'utf8');
   }
 
   //
   // Create zipball.
   //
 
-  let archiveFiles = yield glob(path.join(taskInfo.tmpDir, '**'), { nodir: true });
+  let archiveFiles = await glob(path.join(taskInfo.tmpDir, '**'), { nodir: true });
   let zip = new JSZip();
 
   for (var i = 0; i < archiveFiles.length; i++) {
-    let fileData = yield mz.fs.readFile(archiveFiles[i]);
+    let fileData = await mz.fs.readFile(archiveFiles[i]);
 
     zip.folder(path.basename(taskInfo.tmpDir)).file(path.relative(taskInfo.tmpDir, archiveFiles[i]), fileData);
   }
 
-  let zipData = yield zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' });
+  let zipData = await zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' });
 
   // TODO: force tmp dir cleanup on fail
 
   // Remove temporary files and directories.
   //
-  yield rimraf(taskInfo.tmpDir);
+  await rimraf(taskInfo.tmpDir);
 
 
   // Done.
@@ -213,4 +213,4 @@ module.exports = Promise.coroutine(function* fontWorker(taskInfo) {
                        `(real: ${(timeEnd - taskInfo.timestamp) / 1000})`);
 
   return zipData;
-});
+};

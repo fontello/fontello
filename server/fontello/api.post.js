@@ -51,12 +51,12 @@ module.exports = function (N, apiPath) {
 
   // Create session and save config
   //
-  N.wire.on(apiPath, function* save_config(env) {
+  N.wire.on(apiPath, async function save_config(env) {
     let configPath = _.get(env.req, 'files.config.0.path');
     let configFile;
 
     // Extract config
-    configFile = yield fs.readFile(configPath, { encoding: 'utf-8' });
+    configFile = await fs.readFile(configPath, { encoding: 'utf-8' });
 
     let config;
 
@@ -91,7 +91,7 @@ module.exports = function (N, apiPath) {
 
     if (url) linkData.url = url;
 
-    yield Promise.fromCallback(cb => N.shortlinks.put(
+    await Promise.fromCallback(cb => N.shortlinks.put(
       sid,
       linkData,
       { ttl: 6 * 60 * 60 * 1000, valueEncoding: 'json' },

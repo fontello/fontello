@@ -17,8 +17,8 @@ module.exports = function (N, apiPath) {
 
   // Update session with client config
   //
-  N.wire.on(apiPath, function* api_update(env) {
-    let linkData = yield Promise.fromCallback(cb => N.shortlinks.get(
+  N.wire.on(apiPath, async function api_update(env) {
+    let linkData = await Promise.fromCallback(cb => N.shortlinks.get(
       env.params.sid,
       { valueEncoding: 'json' },
       cb
@@ -29,7 +29,7 @@ module.exports = function (N, apiPath) {
 
     linkData.config = env.params.config;
 
-    yield Promise.fromCallback(cb => N.shortlinks.put(
+    await Promise.fromCallback(cb => N.shortlinks.put(
       env.params.sid,
       linkData,
       { ttl: 6 * 60 * 60 * 1000, valueEncoding: 'json' },

@@ -13,8 +13,8 @@ module.exports = function (N, apiPath) {
   });
 
 
-  N.wire.on(apiPath, function* app_post(env) {
-    let sl = yield Promise.fromCallback(cb => N.shortlinks.get(
+  N.wire.on(apiPath, async function app_post(env) {
+    let sl = await Promise.fromCallback(cb => N.shortlinks.get(
       env.params.sid,
       { valueEncoding: 'json' },
       cb
@@ -26,10 +26,10 @@ module.exports = function (N, apiPath) {
     let params = { config: sl.config };
 
     // build font
-    yield N.wire.emit('internal:fontello.font_build', params);
+    await N.wire.emit('internal:fontello.font_build', params);
 
     // reuse `fontello.font.download` method
     env.params.id = params.fontId;
-    yield N.wire.emit('server:fontello.font.download', env);
+    await N.wire.emit('server:fontello.font.download', env);
   });
 };

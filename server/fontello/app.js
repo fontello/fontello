@@ -18,7 +18,7 @@ module.exports = function (N, apiPath) {
 
   // Process standerd GET/HEAD request
   //
-  N.wire.on(apiPath, function* app(env) {
+  N.wire.on(apiPath, async function app(env) {
     env.res.layout = 'fontello.layout';
 
     // No params - return main page
@@ -26,7 +26,7 @@ module.exports = function (N, apiPath) {
 
     // if requested page with config id - try te fetch data,
     // and redirect to main on error
-    let linkData = yield Promise.fromCallback(cb => N.shortlinks.get(
+    let linkData = await Promise.fromCallback(cb => N.shortlinks.get(
       env.params.sid,
       { valueEncoding: 'json' },
       cb

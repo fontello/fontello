@@ -17,11 +17,11 @@ module.exports = function (N, apiPath) {
   });
 
 
-  N.wire.before(apiPath, function* check_font(env) {
+  N.wire.before(apiPath, async function check_font(env) {
     if (env.req.type !== 'http') throw N.io.BAD_REQUEST;
     if (env.origin.req.method !== 'GET' && env.origin.req.method !== 'HEAD') throw N.io.BAD_REQUEST;
 
-    if (!(yield exists(N.downloads, env.params.id))) throw N.io.NOT_FOUND;
+    if (!(await exists(N.downloads, env.params.id))) throw N.io.NOT_FOUND;
   });
 
 
