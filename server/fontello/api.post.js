@@ -5,7 +5,6 @@ const _           = require('lodash');
 const fs          = require('mz/fs');
 const crypto      = require('crypto');
 const validator   = require('is-my-json-valid');
-const Promise     = require('bluebird');
 
 
 const config_schema = require('./font/_lib/config_schema');
@@ -91,12 +90,11 @@ module.exports = function (N, apiPath) {
 
     if (url) linkData.url = url;
 
-    await Promise.fromCallback(cb => N.shortlinks.put(
+    await N.shortlinks.put(
       sid,
       linkData,
-      { ttl: 6 * 60 * 60 * 1000, valueEncoding: 'json' },
-      cb
-    ));
+      { ttl: 6 * 60 * 60 * 1000, valueEncoding: 'json' }
+    );
 
     throw { code: N.io.OK, message: sid };
   });

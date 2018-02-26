@@ -4,7 +4,6 @@
 
 
 const config_schema = require('./font/_lib/config_schema');
-const Promise       = require('bluebird');
 
 
 module.exports = function (N, apiPath) {
@@ -18,22 +17,23 @@ module.exports = function (N, apiPath) {
   // Update session with client config
   //
   N.wire.on(apiPath, async function api_update(env) {
-    let linkData = await Promise.fromCallback(cb => N.shortlinks.get(
-      env.params.sid,
-      { valueEncoding: 'json' },
-      cb
-    ));
+    let linkData;
 
-    // if session id (shortlink) not found - return 404
-    if (!linkData) throw 'Session expired';
+    try {
+      linkData = await N.shortlinks.get(env.params.sid, { valueEncoding: 'json' });
+    } catch (err) {
+      // if session id (shortlink) not found - return 404
+      if (err.type === 'NotFoundError') throw { code: N.io.NOT_FOUND, message: 'Session expired' };
+
+      throw err;
+    }
 
     linkData.config = env.params.config;
 
-    await Promise.fromCallback(cb => N.shortlinks.put(
+    await N.shortlinks.put(
       env.params.sid,
       linkData,
-      { ttl: 6 * 60 * 60 * 1000, valueEncoding: 'json' },
-      cb
-    ));
+      { ttl: 6 * 60 * 60 * 1000, valueEncoding: 'json' }
+    );
   });
 };

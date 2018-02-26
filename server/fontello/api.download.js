@@ -3,9 +3,6 @@
 'use strict';
 
 
-const Promise = require('bluebird');
-
-
 module.exports = function (N, apiPath) {
 
   N.validate(apiPath, {
@@ -14,14 +11,16 @@ module.exports = function (N, apiPath) {
 
 
   N.wire.on(apiPath, async function app_post(env) {
-    let sl = await Promise.fromCallback(cb => N.shortlinks.get(
-      env.params.sid,
-      { valueEncoding: 'json' },
-      cb
-    ));
+    let sl;
 
-    // if session id (shortlink) not found - return 404
-    if (!sl) throw N.io.NOT_FOUND;
+    try {
+      sl = await N.shortlinks.get(env.params.sid, { valueEncoding: 'json' });
+    } catch (err) {
+      // if session id (shortlink) not found - return 404
+      if (err.type === 'NotFoundError') throw N.io.NOT_FOUND;
+
+      throw err;
+    }
 
     let params = { config: sl.config };
 

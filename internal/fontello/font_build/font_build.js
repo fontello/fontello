@@ -87,12 +87,11 @@ module.exports = function (N, apiPath) {
     // Wait for task finished
     let zipData = await taskInfo.result;
 
-    await Promise.fromCallback(cb => N.downloads.put(
+    await N.downloads.put(
       taskInfo.fontId,
       zipData,
-      { ttl: 5 * 60 * 1000, valueEncoding: 'binary' },
-      cb
-    ));
+      { ttl: 5 * 60 * 1000, valueEncoding: 'binary' }
+    );
 
     delete tasks[data.fontId];
   });

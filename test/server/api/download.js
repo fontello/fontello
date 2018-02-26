@@ -84,4 +84,10 @@ describe('API.download', function () {
         expected.replace(/<metadata>.+<\/metadata>/, ''))
       );
   });
+
+
+  it('non-existent url', function () {
+    return request.get('/00000000/get')
+                  .expect(404);
+  });
 });
