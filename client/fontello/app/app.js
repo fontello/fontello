@@ -86,7 +86,10 @@ N.wire.once('navigate.done', { priority: -90 }, function () {
   N.app.serverSave  = function () {
     if (!N.app.apiSessionId) { return; }
 
-    return N.io.rpc('fontello.api.update', { sid: N.app.apiSessionId, config: N.app.getConfig() });
+    return N.io.rpc('fontello.api.update', {
+      sid: N.app.apiSessionId,
+      config: new Blob([ JSON.stringify(N.app.getConfig()) ], { type: 'application.json' })
+    });
   };
 
 });
