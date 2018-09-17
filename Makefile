@@ -1,5 +1,5 @@
 FONTS         += fontelico.font
-FONTS         += awesome-uni.font
+#FONTS         += awesome-uni.font
 FONTS         += awesome5-uni.font
 FONTS         += awesome5-solid-uni.font
 FONTS         += awesome5-brands-uni.font
