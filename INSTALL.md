@@ -42,7 +42,7 @@ git submodule init
 git submodule update
 ```
 
-If you deploy to production, you may probabply wish to override some defaults. Put those to
+If you deploy to production, you may probably wish to override some defaults. Put those to
 additional file in `./config` dir. Here is fontent fon fontello site config for example:
 
 ```yaml
