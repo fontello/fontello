@@ -1,4 +1,12 @@
-8.0.0 / WIP
+9.0.0 / WIP
+------------------
+
+- Use node.js 10+.
+- Deps bump
+- Nodeca core resync.
+
+
+8.0.0 / 2018-08-22
 ------------------
 
 - Requires node.js 8+ now (with webassembly support).
