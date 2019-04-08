@@ -69,31 +69,47 @@ module.exports.run = async function (N, args) {
   // if app set, check that it's valid
   if (args.app) {
     if (!_.find(applications, app => app.name === args.app)) {
-      let msg = `Invalid application name: ${args.app}` +
+      let msg = `Invalid application name: ${args.app}\n` +
           'Valid apps are:  ' + _.map(applications, app => app.name).join(', ');
 
       throw msg;
     }
   }
 
-  _.forEach(applications, app => {
-    if (!args.app || args.app === app.name) {
-      glob.sync('**', { cwd: app.root + '/test' })
-        // skip files when
-        // - filename starts with _, e.g.: /foo/bar/_baz.js
-        // - dirname in path starts _, e.g. /foo/_bar/baz.js
-        .filter(name => !/^[._]|\\[._]|\/[_.]/.test(name))
-        .forEach(file => {
-          // try to filter by pattern, if set
-          if (args.mask && path.basename(file).indexOf(args.mask) === -1) {
-            return;
-          }
+  let testedApps = [];
 
-          if ((/\.js$/).test(file) && path.basename(file)[0] !== '.') {
-            mocha.files.push(`${app.root}/test/${file}`);
-          }
-        });
-    }
+  if (args.app) {
+    // if app is defined, add it and all modules recursively
+    applications.filter(app => args.app === app.name).forEach(function addApp(app) {
+      testedApps.push(app);
+
+      app.config.modules.forEach(m => {
+        let modulePath = path.join(app.root, m);
+
+        applications.filter(app => app.root === modulePath).forEach(addApp);
+      });
+    });
+  } else {
+    // otherwise test all applications
+    testedApps = applications;
+  }
+
+  _.forEach(testedApps, app => {
+    glob.sync('**', { cwd: app.root + '/test' })
+      // skip files when
+      // - filename starts with _, e.g.: /foo/bar/_baz.js
+      // - dirname in path starts _, e.g. /foo/_bar/baz.js
+      .filter(name => !/^[._]|\\[._]|\/[_.]/.test(name))
+      .forEach(file => {
+        // try to filter by pattern, if set
+        if (args.mask && path.basename(file).indexOf(args.mask) === -1) {
+          return;
+        }
+
+        if ((/\.js$/).test(file) && path.basename(file)[0] !== '.') {
+          mocha.files.push(`${app.root}/test/${file}`);
+        }
+      });
   });
 
   await new Promise((resolve, reject) => {
