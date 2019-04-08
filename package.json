@@ -20,12 +20,12 @@
     "test": "make test"
   },
   "dependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
     "argparse": "^1.0.9",
-    "autoprefixer": "^8.0.0",
-    "babel-core": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
+    "autoprefixer": "^9.4.7",
     "babelfish": "^1.1.2",
-    "babelify": "^8.0.0",
+    "babelify": "^10.0.0",
     "bagjs": "^3.0.0",
     "base64-js": "^1.2.0",
     "bluebird": "^3.5.1",
@@ -35,8 +35,8 @@
     "cacheify": "^0.4.2",
     "compression": "^1.6.1",
     "cookie": "^0.3.1",
-    "csswring": "^6.0.2",
-    "email-regex": "^2.0.0",
+    "csswring": "^7.0.0",
+    "email-regex": "^3.0.0",
     "event-wire": "^3.4.0",
     "glob": "^7.1.2",
     "is-my-json-valid": "^2.16.1",
@@ -46,45 +46,45 @@
     "jstransformer-stylus": "^1.3.0",
     "jszip": "^3.1.3",
     "knockout": "~ 3.4.2",
-    "less": "^2.7.2",
-    "level": "^3.0.0",
+    "less": "^3.9.0",
+    "level": "^5.0.1",
     "level-exists": "^2.0.2",
     "level-ttl": "^3.1.1",
     "lie": "^3.1.1",
     "lodash": "^4.17.4",
-    "log4js": "^2.3.12",
+    "log4js": "^4.0.1",
     "mdurl": "^1.0.1",
     "mkdirp": "^0.5.1",
     "multiparty": "^4.1.3",
     "mz": "^2.6.0",
     "negotiator": "^0.6.1",
     "pointer": "^1.0.1",
-    "postcss": "^6.0.14",
+    "postcss": "^7.0.14",
     "pug": "^2.0.0-rc.2",
     "pug-runtime": "^2.0.3",
     "puncher": "^1.1.1",
     "raw-body": "^2.2.0",
-    "readable-stream": "^2.2.6",
+    "readable-stream": "^3.1.1",
     "resolve": "^1.5.0",
     "send": "^0.16.2",
-    "serialize-error": "^2.1.0",
+    "serialize-error": "^4.1.0",
     "stylus": "^0.54.5",
     "svg2ttf": "^4.0.3",
     "svgpath": "^2.2.1",
     "ttf2eot": "^2.0.0",
     "ttf2woff": "^2.0.1",
-    "wawoff2": "^1.0.1",
     "typeahead.js": "0.11.1",
     "uglify-js": "^3.1.10",
-    "uglifyify": "^4.0.5",
+    "uglifyify": "^5.0.0",
+    "wawoff2": "^1.0.1",
     "write-file-atomic": "^2.3.0",
     "xmldom": "~ 0.1.27"
   },
   "devDependencies": {
-    "acorn": "^5.0.0",
-    "eslint": "^3.18.0",
-    "mocha": "^5.0.1",
-    "supertest": "^3.0.0"
+    "acorn": "^6.0.6",
+    "eslint": "^5.13.0",
+    "mocha": "^6.1.1",
+    "supertest": "^4.0.2"
   },
   "browserify": {
     "transform": [
@@ -92,7 +92,7 @@
         "babelify",
         {
           "presets": [
-            "es2015"
+            "@babel/preset-env"
           ]
         }
       ]

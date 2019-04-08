@@ -36,7 +36,7 @@ rules:
   handle-callback-err:    2
 
   # Postponed
-  indent:                 [ 2, 2, { VariableDeclarator: { var: 2, let: 2, const: 3 }, SwitchCase: 1 } ]
+  indent-legacy:          [ 2, 2, { VariableDeclarator: { var: 2, let: 2, const: 3 }, SwitchCase: 1 } ]
 
   # key-spacing:            [ 2, { "align": "value" } ]
   keyword-spacing:        2
