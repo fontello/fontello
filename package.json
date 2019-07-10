@@ -34,9 +34,9 @@
     "browserify": "^16.1.0",
     "cacheify": "^0.4.2",
     "compression": "^1.6.1",
-    "cookie": "^0.3.1",
+    "cookie": "^0.4.0",
     "csswring": "^7.0.0",
-    "email-regex": "^3.0.0",
+    "email-regex": "^4.0.0",
     "event-wire": "^3.4.0",
     "glob": "^7.1.2",
     "is-my-json-valid": "^2.16.1",
@@ -66,7 +66,7 @@
     "raw-body": "^2.2.0",
     "readable-stream": "^3.1.1",
     "resolve": "^1.5.0",
-    "send": "^0.16.2",
+    "send": "^0.17.1",
     "serialize-error": "^4.1.0",
     "stylus": "^0.54.5",
     "svg2ttf": "^4.0.3",
@@ -77,7 +77,7 @@
     "uglify-js": "^3.1.10",
     "uglifyify": "^5.0.0",
     "wawoff2": "^1.0.1",
-    "write-file-atomic": "^2.3.0",
+    "write-file-atomic": "^3.0.0",
     "xmldom": "~ 0.1.27"
   },
   "devDependencies": {
@@ -97,5 +97,10 @@
         }
       ]
     ]
-  }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "Firefox ESR"
+  ]
 }
