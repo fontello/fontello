@@ -15,7 +15,7 @@ const svg2ttf   = require('svg2ttf');
 const pug       = require('pug');
 const b64       = require('base64-js');
 const rimraf    = Promise.promisify(require('rimraf'));
-const mkdirp    = Promise.promisify(require('mkdirp'));
+const mkdirp    = require('mkdirp');
 const glob      = Promise.promisify(require('glob'));
 const JSZip     = require('jszip');
 
