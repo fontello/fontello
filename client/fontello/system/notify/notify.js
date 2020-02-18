@@ -48,6 +48,7 @@ var DEFAULT_OPTIONS = {
 // key - message text
 var tracker = {};
 
+/* eslint-disable no-redeclare */
 function Notification(options) {
   if (!options) {
     options = {};

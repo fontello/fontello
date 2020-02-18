@@ -256,7 +256,11 @@ function render(data, scroll) {
 
       document.title = data.locals.head.title;
 
-      $('#content').replaceWith(content);
+      return N.wire.emit('navigate.content_update', {
+        $: content,
+        locals: data.locals,
+        $replace: $('#content')
+      });
     })
     .then(() => N.wire.emit('navigate.done', data))
     .then(() => N.wire.emit('navigate.done:' + data.apiPath, data))
@@ -316,6 +320,13 @@ fsm.onlink = function (event, from, to, params) {
   // It's an external link or 404 error if route is not matched. So perform
   // regular page requesting via HTTP.
   if (!options.apiPath) {
+    window.location = options.href + options.anchor;
+    return;
+  }
+
+  // Public pages and admin pages have different layouts,
+  // so we need to refresh the page when moving from one to the other.
+  if ((options.apiPath.indexOf('admin.') === 0) !== (lastPageData.apiPath.indexOf('admin.') === 0)) {
     window.location = options.href + options.anchor;
     return;
   }
@@ -390,6 +401,13 @@ fsm.onhistoryNav = function (event, from) {
   // It's an external link or 404 error if route is not matched. So perform
   // regular page requesting via HTTP.
   if (!options.apiPath) {
+    window.location = options.href + options.anchor;
+    return;
+  }
+
+  // Public pages and admin pages have different layouts,
+  // so we need to refresh the page when moving from one to the other.
+  if ((options.apiPath.indexOf('admin.') === 0) !== (lastPageData.apiPath.indexOf('admin.') === 0)) {
     window.location = options.href + options.anchor;
     return;
   }
@@ -514,10 +532,8 @@ N.wire.once('navigate.done', { priority: 999 }, function navigate_click_handler(
 
     let href = $this.attr('href');
 
-    if (href.indexOf('data:') === 0) {
-      // Skip data URIs.
-      return;
-    }
+    if (!href) return; // Skip links without href
+    if (href.indexOf('data:') === 0) return; // Skip data URIs.
 
     if (href === '#') {
       // Prevent clicks on special "button"-links.
@@ -534,7 +550,8 @@ N.wire.once('navigate.done', { priority: 999 }, function navigate_click_handler(
 });
 
 
-// Insert new content into the current page
+// Insert new content into the current page, allowing it to be modified
+// by other hooks in navigate.done (that change quotes, avatars, etc).
 //
 //   options.$        - content to insert
 //   options.$before  - insert before this element
@@ -543,7 +560,7 @@ N.wire.once('navigate.done', { priority: 999 }, function navigate_click_handler(
 //
 // Only one of `$before`, `$after` and `$replace` options should be present.
 //
-N.wire.after('navigate.update', { priority: 999 }, function navigate_update(options) {
+N.wire.after('navigate.content_update', { priority: 999 }, function navigate_update(options) {
   if (options.$replace) {
     options.$replace.replaceWith(options.$);
 
@@ -553,6 +570,4 @@ N.wire.after('navigate.update', { priority: 999 }, function navigate_update(opti
   } else if (options.$after) {
     options.$after.after(options.$);
   }
-
-  return N.wire.emit('navigate.update.done', options);
 });

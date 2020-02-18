@@ -9,12 +9,12 @@ module.exports = {
   additionalProperties: false,
   required: true,
   properties: {
-    name:             { type: 'string',   required: false, 'default': 'fontello' },
-    css_prefix_text:  { type: 'string',   required: false, 'default': 'icon-' },
-    css_use_suffix:   { type: 'boolean',  required: false, 'default': false },
-    hinting:          { type: 'boolean',  required: false, 'default': false },
-    units_per_em:     { type: 'integer',  required: false, 'default': 1000, minimum: 10 },
-    ascent:           { type: 'integer',  required: false, 'default': 850,  minimum: 10 },
+    name:             { type: 'string',   required: false, default: 'fontello' },
+    css_prefix_text:  { type: 'string',   required: false, default: 'icon-' },
+    css_use_suffix:   { type: 'boolean',  required: false, default: false },
+    hinting:          { type: 'boolean',  required: false, default: false },
+    units_per_em:     { type: 'integer',  required: false, default: 1000, minimum: 10 },
+    ascent:           { type: 'integer',  required: false, default: 850,  minimum: 10 },
     fullname:         { type: 'string',   required: false },
     copyright:        { type: 'string',   required: false },
     glyphs: {

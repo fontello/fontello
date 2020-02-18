@@ -307,11 +307,12 @@
       // Execute after DOM is loaded:
       $(function () {
         var page_env = {
-          url:     location.href,
-          anchor:  location.hash,
-          apiPath: route.meta.methods.get,
-          params:  route.params,
-          state:   window.history.state
+          url:        location.href,
+          anchor:     location.hash,
+          apiPath:    route.meta.methods.get,
+          params:     route.params,
+          state:      window.history.state,
+          first_load: true
         };
 
         var preload = [];

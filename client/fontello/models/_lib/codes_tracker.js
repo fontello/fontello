@@ -1,6 +1,8 @@
 'use strict';
 
+/* eslint-disable no-redeclare */
 var N;
+/* eslint-enable no-redeclare */
 
 
 var UNICODE_CODES_MIN = 0x0;
