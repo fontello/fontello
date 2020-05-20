@@ -31,7 +31,7 @@
 | }
 | */
 | 
-|  
+| 
 - if (!meta.css_use_suffix)
   | [class^="#{meta.css_prefix_text}"]:before, [class*=" #{meta.css_prefix_text}"]:before 
 - else
@@ -41,7 +41,7 @@
 |   font-family: "#{font.fontname}";
 |   font-style: normal;
 |   font-weight: normal;
-|   speak: none;
+|   speak: never;
 | 
 |   display: inline-block;
 |   text-decoration: inherit;
@@ -53,7 +53,7 @@
 |   /* For safety - reset parent styles, that can break glyph codes*/
 |   font-variant: normal;
 |   text-transform: none;
-|      
+| 
 |   /* fix buttons height, for twitter bootstrap */
 |   line-height: 1em;
 | 

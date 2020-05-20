@@ -7,7 +7,7 @@
 
 [class^="icon-"]:before, [class*=" icon-"]:before {
   font-family: "icons";
-  speak: none;
+  speak: never;
   opacity: .8;
   text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3);
 
