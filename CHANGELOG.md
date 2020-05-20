@@ -1,6 +1,8 @@
 9.0.0 / WIP
 ------------------
 
+- Bump `svg2ttf` to v5+. `USE_TYPO_METRICS` bit of `OS/2.fsSelection` is now
+  set. Should fix Windows line spacing issues.
 - Use node.js 10+.
 - Deps bump
 - Nodeca core resync.
