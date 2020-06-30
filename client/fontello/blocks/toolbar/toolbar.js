@@ -70,7 +70,6 @@ function ToolbarModel() {
   this.hinting        = N.app.hinting;
   this.apiMode        = N.app.apiMode;
   this.apiUrl         = N.app.apiUrl;
-  this.getConfig      = N.app.getConfig;
 
   this.fontName.subscribe(function (value) {
     var cleared = String(value).toLowerCase().replace(/[^a-z0-9_\-]/g, '');
@@ -206,6 +205,16 @@ N.wire.once('navigate.done', function (data) {
       source: keywords.ttAdapter()
     })
     .focus();
+
+  //
+  // Initialize "get config" button
+  //
+
+  $('.toolbar__get-config').on('click', function (event) {
+    var config = N.app.getConfig();
+    var href = 'data:application/octet-stream,' + encodeURIComponent(JSON.stringify(config, null, '  '));
+    event.target.href = href;
+  });
 
   //
   // Apply KO bindings

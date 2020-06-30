@@ -105,9 +105,7 @@
             span.caret
         ul.dropdown-menu.pull-right
           li: a(href='#' data-on-click='build_font')= self.t('download_webfont')
-          li: a(download='config.json'
-            data-bind='attr: { href: "data:application/octet-stream," + encodeURIComponent(JSON.stringify(getConfig(), null, "  ")) } '
-          )= self.t('download_config')
+          li.toolbar__get-config: a(href='#' download='config.json')= self.t('download_config')
 
 
       .btn-group(data-bind='visible: apiMode() && !apiUrl()', style='display:none')
@@ -129,9 +127,7 @@
             span.caret
         ul.dropdown-menu.pull-right
           li: a(href='#' data-on-click='build_font')= self.t('download_webfont')
-          li: a(download='config.json'
-            data-bind='attr: { href: "data:application/octet-stream," + encodeURIComponent(JSON.stringify(getConfig(), null, "  ")) } '
-          )= self.t('download_config')
+          li.toolbar__get-config: a(href='#' download='config.json')= self.t('download_config')
 
 
       //- Show button, depending on mode
@@ -150,6 +146,4 @@
         button.btn.btn-danger.disabled.dropdown-toggle(data-toggle='dropdown' data-bind='css: { disabled: !selectedCount() }')
           span.caret
         ul.dropdown-menu.pull-right
-          li: a(download='config.json'
-            data-bind='attr: { href: "data:application/octet-stream," + encodeURIComponent(JSON.stringify(getConfig(), null, "  ")) } '
-          )= self.t('download_config')
+          li.toolbar__get-config: a(href='#' download='config.json')= self.t('download_config')
