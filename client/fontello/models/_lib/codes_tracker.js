@@ -164,7 +164,7 @@ function allocateCode(glyph, encoding) {
 }
 
 
-function observe(glyph) {
+function observeGlyph(glyph) {
   var previousCode = glyph.code();
 
   // If new glyph created with "selected" flag,
@@ -209,24 +209,29 @@ function observe(glyph) {
       }
     }
   }, glyph);
+}
 
+
+function observeFontsList(fontsList) {
   // When user selects/deselects the glyph - allocate/free a code.
-  glyph.selected.subscribe(function (selected) {
-    if (selected) {
-      if (this.code() === this.originalCode) {
-        allocateCode(this, N.app.encoding());
+  fontsList.selectedGlyphs.subscribe(function (changes) {
+    changes.forEach(({ status, value }) => {
+      if (status === 'added') {
+        if (value.code() === value.originalCode) {
+          allocateCode(value, N.app.encoding());
+        } else {
+          // If code modified by user - don't try to remap
+          allocateCode(value, 'unicode');
+        }
       } else {
-        // If code modified by user - don't try to remap
-        allocateCode(this, 'unicode');
+        usedCodes[value.code()] = null;
       }
-    } else {
-      usedCodes[this.code()] = null;
-    }
-  }, glyph);
+    });
+  }, fontsList, 'arrayChange');
 }
 
 
 module.exports = function (_N) {
   N = _N;
-  return { observe };
+  return { observeGlyph, observeFontsList };
 };

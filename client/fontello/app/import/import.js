@@ -102,7 +102,7 @@ function import_config(str, file) {
 
       if (!glyph) { return; }
 
-      glyph.selected(true);
+      glyph.toggleSelect(true);
       glyph.code(g.code || glyph.originalCode);
       glyph.name(g.css || glyph.originalName);
     });
@@ -297,8 +297,6 @@ function handleFileSelect(event) {
     return;
   }
 
-  N.app.fontsList.lock();
-
   Promise.all(_.map(files, file => new Promise(resolve => {
     let reader = new FileReader();
 
@@ -351,7 +349,6 @@ function handleFileSelect(event) {
   })))
   .catch(() => N.wire.emit('notify', t('err_invalid_browser')))
   .then(() => {
-    N.app.fontsList.unlock();
     // we must "reset" value of input field, otherwise Chromium will
     // not fire change event if the same file will be chosen twice, e.g.
     // import file -> made changes -> import same file
@@ -426,9 +423,5 @@ N.wire.once('navigate.done', function page_setup() {
 // Setup import listener
 //
 N.wire.on('import.obj', function setup_import(obj) {
-  N.app.fontsList.lock();
-
   import_config(JSON.stringify(obj), {});
-
-  N.app.fontsList.unlock();
 });

@@ -29,7 +29,7 @@ N.wire.once('navigate.done', function () {
     var glyph = N.app.fontsList.getGlyph(id);
 
     $el.closest('.preview-glyph').fadeOut(function () {
-      glyph.selected(false);
+      glyph.toggleSelect(false);
     });
   });
 
@@ -76,8 +76,6 @@ N.wire.once('navigate.done', function () {
       let drag_glyph = N.app.fontsList.getGlyph(drag_glyph_uid);
       let drop_glyph = N.app.fontsList.getGlyph(drop_glyph_uid);
 
-      N.app.fontsList.lock();
-
       // Remove dragged glyph from selected
       N.app.fontsList.selectedGlyphs.remove(drag_glyph);
 
@@ -85,8 +83,6 @@ N.wire.once('navigate.done', function () {
 
       // Insert before target glyph
       N.app.fontsList.selectedGlyphs.splice(insert_index, 0, drag_glyph);
-
-      N.app.fontsList.unlock();
 
       N.wire.emit('session_save');
       return false;

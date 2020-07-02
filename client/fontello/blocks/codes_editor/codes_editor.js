@@ -23,7 +23,7 @@ N.wire.once('navigate.done', function () {
     var glyph = N.app.fontsList.getGlyph(id);
 
     $el.closest('.result-glyph').fadeOut(function () {
-      glyph.selected(false);
+      glyph.toggleSelect(false);
     });
   });
 

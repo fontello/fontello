@@ -40,16 +40,29 @@ N.wire.once('navigate.done', function () {
         return;
       }
 
-      N.app.fontsList.lock();
+      let selectList = [];
+      let unselectList = [];
 
       $els.each(function () {
         let id = $(this).data('id');
         let glyph = N.app.fontsList.getGlyph(id);
 
-        glyph.selected(!glyph.selected());
+        if (glyph.selected()) {
+          unselectList.push(glyph);
+        } else {
+          selectList.push(glyph);
+        }
       });
 
-      N.app.fontsList.unlock();
+      if (selectList.length > 0) {
+        selectList.forEach(glyph => { glyph.selected(true); });
+        N.app.fontsList.selectedGlyphs.push.apply(N.app.fontsList.selectedGlyphs, selectList);
+      }
+
+      if (unselectList.length > 0) {
+        unselectList.forEach(glyph => { glyph.selected(false); });
+        N.app.fontsList.selectedGlyphs.removeAll(unselectList);
+      }
 
       $view.removeClass('_multicursor');
     })
@@ -76,7 +89,7 @@ N.wire.once('navigate.done', function () {
     let id = data.$this.data('id');
     let glyph = N.app.fontsList.getGlyph(id);
 
-    glyph.selected(!glyph.selected());
+    glyph.toggleSelect(!glyph.selected());
   });
 
   // Toggle font collapse state on click

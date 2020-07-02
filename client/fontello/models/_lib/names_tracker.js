@@ -41,7 +41,7 @@ function allocate(model, name, prevName) {
 ////////////////////////////////////////////////////////////////////////////////
 
 
-exports.observe = function (model) {
+exports.observeGlyph = function (model) {
   var prev = model.name();
 
   // If new glyph created with "selected" flag,
@@ -64,27 +64,31 @@ exports.observe = function (model) {
       allocate(model, name, prev);
     }
   });
+};
 
+
+exports.observeFontsList = function (model) {
   // keep track on selected state, before it's actual change
   // handling beforeChange in order to be able to change name
   // (when it's going to be selected) before allocation handler
-  model.selected.subscribe(function (value) {
-    var name = model.name();
+  model.selectedGlyphs.subscribe(function (changes) {
+    changes.forEach(({ status, value }) => {
+      var name = value.name();
 
-    // glyph is going to be unselected:
-    // remove from the map
-    if (value) {
-      map[name] = null;
-      return;
-    }
+      // glyph is unselected: remove from the map
+      if (status === 'deleted') {
+        map[name] = null;
+        return;
+      }
 
-    // glyphs is going to be selected, but it's name already "taken":
-    // find free name and update model
-    if (map[name]) {
-      name = findFreeName(name);
-      model.name(name);
-    }
+      // glyphs is going to be selected, but it's name already "taken":
+      // find free name and update model
+      if (map[name]) {
+        name = findFreeName(name);
+        value.name(name);
+      }
 
-    map[name] = model;
-  }, model, 'beforeChange');
+      map[name] = value;
+    });
+  }, model, 'arrayChange');
 };
