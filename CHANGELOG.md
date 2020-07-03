@@ -5,6 +5,9 @@
   set. Should fix Windows line spacing issues.
 - CSS `speak: none` => `speak: never`, #702.
 - Allow garbage params in query string, #692.
+- Fix slow select on big custom collections, #583.
+- Fix waiting on `level-ttl` write (caused races in tests).
+- Switch to `ko` deferred updates.
 - Use node.js 10+.
 - Deps bump
 - Nodeca core resync.
