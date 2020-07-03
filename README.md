@@ -1,7 +1,7 @@
 Fontello - icon font scissors
 =============================
 
-[![Build Status](https://travis-ci.org/fontello/fontello.png)](https://travis-ci.org/fontello/fontello)
+[![Build Status](https://travis-ci.org/fontello/fontello.svg?branch=master)](https://travis-ci.org/fontello/fontello)
 
 website: [fontello.com](http://fontello.com/), help: [wiki](https://github.com/fontello/fontello/wiki/Help)
 
