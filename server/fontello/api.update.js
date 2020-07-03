@@ -74,10 +74,15 @@ module.exports = function (N, apiPath) {
 
     linkData.config = config;
 
-    await N.shortlinks.put(
-      env.params.sid,
-      linkData,
-      { ttl: 6 * 60 * 60 * 1000, valueEncoding: 'json' }
-    );
+    // N.shortlinks.put is a function from `level-ttl`
+    // that does not support promises (just always returns undefined)
+    await new Promise((resolve, reject) => {
+      N.shortlinks.put(
+        env.params.sid,
+        linkData,
+        { ttl: 6 * 60 * 60 * 1000, valueEncoding: 'json' },
+        err => { if (err) reject(err); else resolve(); }
+      );
+    });
   });
 };

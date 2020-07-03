@@ -87,11 +87,16 @@ module.exports = function (N, apiPath) {
     // Wait for task finished
     let zipData = await taskInfo.result;
 
-    await N.downloads.put(
-      taskInfo.fontId,
-      zipData,
-      { ttl: 5 * 60 * 1000, valueEncoding: 'binary' }
-    );
+    // N.downloads.put is a function from `level-ttl`
+    // that does not support promises (just always returns undefined)
+    await new Promise((resolve, reject) => {
+      N.downloads.put(
+        taskInfo.fontId,
+        zipData,
+        { ttl: 5 * 60 * 1000, valueEncoding: 'binary' },
+        err => { if (err) reject(err); else resolve(); }
+      );
+    });
 
     delete tasks[data.fontId];
   });
