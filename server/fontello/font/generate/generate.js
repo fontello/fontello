@@ -6,7 +6,7 @@
 const _             = require('lodash');
 const validator     = require('is-my-json-valid');
 const config_schema = require('../_lib/config_schema');
-const fs            = require('mz/fs');
+const read          = require('util').promisify(require('fs').readFile);
 
 
 module.exports = function (N, apiPath) {
@@ -23,7 +23,7 @@ module.exports = function (N, apiPath) {
 
     if (!path) throw N.io.BAD_REQUEST;
 
-    let file = await fs.readFile(path, { encoding: 'utf-8' });
+    let file = await read(path, { encoding: 'utf-8' });
 
     try {
       env.data.config = JSON.parse(file);

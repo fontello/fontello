@@ -56,7 +56,6 @@
     "mdurl": "^1.0.1",
     "mkdirp": "^1.0.3",
     "multiparty": "^4.1.3",
-    "mz": "^2.6.0",
     "negotiator": "^0.6.1",
     "pointer": "^1.0.1",
     "postcss": "^7.0.14",

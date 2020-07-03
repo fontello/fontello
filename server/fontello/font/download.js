@@ -4,8 +4,7 @@
 
 
 const http = require('http');
-const Promise = require('bluebird');
-const exists = Promise.promisify(require('level-exists'));
+const exists = require('util').promisify(require('level-exists'));
 
 
 module.exports = function (N, apiPath) {

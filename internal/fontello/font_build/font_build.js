@@ -18,8 +18,7 @@ const fontWorker = require('./_lib/worker');
 const crypto     = require('crypto');
 const path       = require('path');
 const os         = require('os');
-const Promise    = require('bluebird');
-const exists     = Promise.promisify(require('level-exists'));
+const exists     = require('util').promisify(require('level-exists'));
 
 
 // Returns unique identifier for requested list of glyphs.

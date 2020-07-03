@@ -1,7 +1,6 @@
 'use strict';
 
 
-const Promise = require('bluebird');
 const request = require('supertest')(TEST.N.config.bind.default.mount);
 const assert  = require('assert');
 const JSZip   = require('jszip');
