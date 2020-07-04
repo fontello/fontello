@@ -22,71 +22,63 @@ function binaryParser(res, callback) {
 
 describe('API.download', function () {
 
-  it('with custom icon', function () {
-    return Promise.resolve()
-      .then(() => request
-        .post('/')
-        .field('url', 'http://example.com')
-        .attach('config', path.join(__dirname, 'fixtures', 'config_custom.json'))
-        .set('Accept', 'application/json')
-        .expect(200)
-      )
-      .then(res => request
-        .get(`/${res.text}/get`)
-        .expect(200)
-        .parse(binaryParser)
-      )
-      .then(res => {
-        let fixture = fs.readFileSync(path.join(__dirname, 'fixtures', 'result_custom.zip'));
+  it('with custom icon', async function () {
+    let res = await request
+      .post('/')
+      .field('url', 'http://example.com')
+      .attach('config', path.join(__dirname, 'fixtures', 'config_custom.json'))
+      .set('Accept', 'application/json')
+      .expect(200);
 
-        return Promise.all([
-          JSZip.loadAsync(res.body)
-            .then(zip => zip.file(/fontello-[0-9a-f]+\/font\/fontello\.svg/)[0].async('string')),
-          JSZip.loadAsync(fixture)
-            .then(zip => zip.file(/fontello-[0-9a-f]+\/font\/fontello\.svg/)[0].async('string'))
-        ]);
-      })
-      // copyright year can change, strip it
-      .then(([ actual, expected ]) => assert.strictEqual(
-        actual.replace(/<metadata>.+<\/metadata>/, ''),
-        expected.replace(/<metadata>.+<\/metadata>/, ''))
-      );
+    res = await request
+      .get(`/${res.text}/get`)
+      .expect(200)
+      .parse(binaryParser);
+
+    let fixture = fs.readFileSync(path.join(__dirname, 'fixtures', 'result_custom.zip'));
+
+    let actual = await JSZip.loadAsync(res.body)
+      .then(zip => zip.file(/fontello-[0-9a-f]+\/font\/fontello\.svg/)[0].async('string'));
+    let expected = await JSZip.loadAsync(fixture)
+      .then(zip => zip.file(/fontello-[0-9a-f]+\/font\/fontello\.svg/)[0].async('string'));
+
+    // copyright year can change, strip it
+    assert.strictEqual(
+      actual.replace(/<metadata>.+<\/metadata>/, ''),
+      expected.replace(/<metadata>.+<\/metadata>/, '')
+    );
   });
 
 
-  it('with fontelico icon', function () {
-    return Promise.resolve()
-      .then(() => request
-        .post('/')
-        .attach('config', path.join(__dirname, 'fixtures', 'config_fontelico.json'))
-        .set('Accept', 'application/json')
-        .expect(200)
-      )
-      .then(res => request
-        .get(`/${res.text}/get`)
-        .expect(200)
-        .parse(binaryParser)
-      )
-      .then(res => {
-        let fixture = fs.readFileSync(path.join(__dirname, 'fixtures', 'result_fontelico.zip'));
+  it('with fontelico icon', async function () {
+    let res = await request
+      .post('/')
+      .attach('config', path.join(__dirname, 'fixtures', 'config_fontelico.json'))
+      .set('Accept', 'application/json')
+      .expect(200);
 
-        return Promise.all([
-          JSZip.loadAsync(res.body)
-            .then(zip => zip.file(/fontello-[0-9a-f]+\/font\/fontello\.svg/)[0].async('string')),
-          JSZip.loadAsync(fixture)
-            .then(zip => zip.file(/fontello-[0-9a-f]+\/font\/fontello\.svg/)[0].async('string'))
-        ]);
-      })
-      // copyright year can change, strip it
-      .then(([ actual, expected ]) => assert.strictEqual(
-        actual.replace(/<metadata>.+<\/metadata>/, ''),
-        expected.replace(/<metadata>.+<\/metadata>/, ''))
-      );
+    res = await request
+      .get(`/${res.text}/get`)
+      .expect(200)
+      .parse(binaryParser);
+
+    let fixture = fs.readFileSync(path.join(__dirname, 'fixtures', 'result_fontelico.zip'));
+
+    let actual = await JSZip.loadAsync(res.body)
+      .then(zip => zip.file(/fontello-[0-9a-f]+\/font\/fontello\.svg/)[0].async('string'));
+    let expected = await JSZip.loadAsync(fixture)
+      .then(zip => zip.file(/fontello-[0-9a-f]+\/font\/fontello\.svg/)[0].async('string'));
+
+    // copyright year can change, strip it
+    assert.strictEqual(
+      actual.replace(/<metadata>.+<\/metadata>/, ''),
+      expected.replace(/<metadata>.+<\/metadata>/, '')
+    );
   });
 
 
-  it('non-existent url', function () {
-    return request.get('/00000000/get')
+  it('non-existent url', async function () {
+    await request.get('/00000000/get')
                   .expect(404);
   });
 });

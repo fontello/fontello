@@ -6,15 +6,15 @@ var request = require('supertest')(TEST.N.config.bind.default.mount);
 
 describe('HTTP alive', function () {
 
-  it('/ GET', function () {
-    return request
+  it('/ GET', async function () {
+    await request
       .get('/')
       .expect(/<!DOCTYPE html>/)
       .expect(200);
   });
 
-  it('/ HEAD', function () {
-    return request
+  it('/ HEAD', async function () {
+    await request
       .head('/')
       .expect(200, {})
       .expect(res => {
