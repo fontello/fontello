@@ -7,6 +7,15 @@ env:
 parserOptions:
   ecmaVersion: '2017'
 
+ignorePatterns:
+  - 'assets/**'
+  - '**/node_modules'
+  - '**/_vendor/**'
+  - '**/modernizr.custom.js'
+  - '**/jquery.numeric.js'
+  - '**/jquery.xselectable.js'
+  - '**/lib/embedded_fonts/**'
+  
 rules:
   accessor-pairs:         2
   array-bracket-spacing:  [ 2, "always", { "singleValue": true, "objectsInArrays": true, "arraysInArrays": true } ]

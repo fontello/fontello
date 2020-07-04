@@ -1,8 +1,0 @@
-assets/**
-
-**/node_modules
-**/_vendor/**
-**/modernizr.custom.js
-**/jquery.numeric.js
-**/jquery.xselectable.js
-**/lib/embedded_fonts/**
