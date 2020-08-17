@@ -40,7 +40,7 @@ function seed_run(N, app_name, seed_path) {
 }
 
 module.exports.parserParameters = {
-  addHelp: true,
+  add_help: true,
   description: 'That will run `.<app_name>/db/seeds/<seed_name>.js` if exists. ' +
     'Or, all seeds from `./db/seeds/seed-name/` folder. If <seed-name>' +
     'missed, then script will show all available seeds for given app. ' +
@@ -56,7 +56,7 @@ module.exports.commandLineArguments = [
     args: [ '-f' ],
     options: {
       help: 'force run without env checking',
-      action: 'storeTrue',
+      action: 'store_true',
       dest: 'force'
     }
   },
@@ -83,7 +83,7 @@ module.exports.commandLineArguments = [
       metavar: 'SEED_NAME',
       help: 'seed name',
       nargs: '?',
-      defaultValue: null
+      default: null
     }
   }
 ];

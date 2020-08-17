@@ -10,7 +10,7 @@ const _       = require('lodash');
 
 
 module.exports.parserParameters = {
-  addHelp:      true,
+  add_help:     true,
   help:         'list registeres filters',
   description:  'List registered filters'
 };
@@ -23,7 +23,7 @@ module.exports.commandLineArguments = [
       dest:   'mask',
       help:   'Show only channels, containing MASK in name',
       type:   'string',
-      defaultValue: []
+      default: []
     }
   },
 
@@ -32,7 +32,7 @@ module.exports.commandLineArguments = [
     options: {
       dest:   'short',
       help:   'Hide details, show channel names only',
-      action: 'storeTrue'
+      action: 'store_true'
     }
   }
 

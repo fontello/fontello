@@ -14,7 +14,7 @@ const path    = require('path');
 
 
 module.exports.parserParameters = {
-  addHelp: true,
+  add_help: true,
   help: 'run test suites',
   description: 'Run all tests of enabled apps'
 };
@@ -27,7 +27,7 @@ module.exports.commandLineArguments = [
       metavar: 'APP_NAME',
       help: 'Run tests of specific application only',
       nargs: '?',
-      defaultValue: null
+      default: null
     }
   },
 
@@ -37,7 +37,7 @@ module.exports.commandLineArguments = [
       dest:   'mask',
       help:   'Run only tests, containing MASK in name',
       type:   'string',
-      defaultValue: []
+      default: []
     }
   }
 ];

@@ -11,7 +11,7 @@ const inspect = require('util').inspect;
 
 
 module.exports.parserParameters = {
-  addHelp:      true,
+  add_help:     true,
   help:         'dump merged config for all apps',
   description:  'Dump merged config for all apps'
 };

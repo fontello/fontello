@@ -8,7 +8,7 @@
 
 
 module.exports.parserParameters = {
-  addHelp:      true,
+  add_help:     true,
   help:         'compile assets',
   description:  'Compile assets'
 };

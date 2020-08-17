@@ -8,7 +8,7 @@
 
 
 module.exports.parserParameters = {
-  addHelp:      true,
+  add_help:     true,
   help:         'start nodeca server',
   description:  'Start nodeca server'
 };

@@ -22,7 +22,7 @@
   "dependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.3.1",
-    "argparse": "^1.0.9",
+    "argparse": "^2.0.0",
     "autoprefixer": "^9.4.7",
     "babelfish": "^1.1.2",
     "babelify": "^10.0.0",
