@@ -63,7 +63,6 @@
     "pug-runtime": "^3.0.0",
     "puncher": "^1.1.1",
     "raw-body": "^2.2.0",
-    "readable-stream": "^3.1.1",
     "resolve": "^1.5.0",
     "send": "^0.17.1",
     "serialize-error": "^5.0.0",
