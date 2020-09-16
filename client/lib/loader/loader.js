@@ -1,6 +1,5 @@
 /*eslint-disable no-alert, object-shorthand*/
 
-'$$ asset_body("lie/dist/lie.polyfill") $$';
 '$$ asset_body("bagjs") $$';
 
 (function (window) {

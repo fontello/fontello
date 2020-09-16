@@ -1,5 +1,0 @@
-public: true
-inherit: false
-type:
-  js:
-    - "!npm:lie/dist/lie.polyfill"
