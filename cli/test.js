@@ -6,7 +6,6 @@
 
 const _       = require('lodash');
 const glob    = require('glob');
-const Mocha   = require('mocha');
 const path    = require('path');
 
 
@@ -60,6 +59,7 @@ module.exports.run = async function (N, args) {
     .then(() => N.wire.emit('init:services', N))
     .then(() => N.wire.emit('init:tests', N));
 
+  let Mocha        = require('mocha');
   let mocha        = new Mocha({ timeout: 60000 });
   let applications = N.apps;
 
