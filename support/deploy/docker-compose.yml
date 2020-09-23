@@ -1,0 +1,62 @@
+version: '3.5'
+services:
+  nginx:
+    image: jwilder/nginx-proxy
+    labels:
+      # allow letsencrypt to discover nginx service it paired up with
+      com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: 'true'
+    volumes:
+      # socket is used to get events from docker
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      # containers shared between nginx and letsencrypt
+      - nginx-vhostd:/etc/nginx/vhost.d:ro
+      - letsencrypt-certs:/etc/nginx/certs:ro
+      - letsencrypt-challenges:/usr/share/nginx/html/.well-known
+      # various caches
+      - /var/cache/nginx
+      - /etc/nginx/dhparam
+    ports:
+      - '80:80'
+      - '443:443'
+    restart: always
+    environment:
+      - DEFAULT_HOST=${HOST:-fontello.com}
+      - ENABLE_IPV6=true
+
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    volumes:
+      # socket is used to get events from docker
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      # containers shared between nginx and letsencrypt
+      - nginx-vhostd:/etc/nginx/vhost.d
+      - letsencrypt-certs:/etc/nginx/certs
+      - letsencrypt-challenges:/usr/share/nginx/html/.well-known
+      # various caches
+      - /usr/share/nginx/html
+    depends_on:
+      - nginx
+    restart: always
+    environment:
+      - DEFAULT_EMAIL=vitaly@rcdesign.ru
+
+  fontello:
+    build:
+      context: ./fontello
+    volumes:
+      - /var/log/fontello:/app/log
+    restart: always
+    environment:
+      # used as mount for fontello
+      - FONTELLO_PROTO=${PROTO:-https}
+      - FONTELLO_HOST=${HOST:-fontello.com}
+      # these env variables are used by nginx and letsencrypt containers
+      # to auto-generate configs
+      - VIRTUAL_HOST=${HOST:-fontello.com}
+      - VIRTUAL_PORT=80
+      - LETSENCRYPT_HOST=${HOST:-fontello.com}
+
+volumes:
+  nginx-vhostd: ~
+  letsencrypt-certs: ~
+  letsencrypt-challenges: ~
