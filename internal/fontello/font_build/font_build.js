@@ -71,7 +71,7 @@ module.exports = function (N, apiPath) {
       clientConfig: data.config,
       builderConfig,
       cwdDir: N.mainApp.root,
-      tmpDir: path.join(os.tmpDir(), 'fontello', `fontello-${data.fontId.substr(0, 8)}`),
+      tmpDir: path.join(os.tmpdir(), 'fontello', `fontello-${data.fontId.substr(0, 8)}`),
       timestamp: Date.now(),
       result: null,
       logger
