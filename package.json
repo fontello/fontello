@@ -83,17 +83,5 @@
     "mocha": "^8.0.1",
     "supertest": "^4.0.2"
   },
-  "browserify": {
-    "transform": [
-      [
-        "babelify",
-        {
-          "presets": [
-            "@babel/preset-env"
-          ]
-        }
-      ]
-    ]
-  },
   "browserslist": "defaults, not ie 11"
 }
