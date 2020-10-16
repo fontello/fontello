@@ -95,9 +95,5 @@
       ]
     ]
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "Firefox ESR"
-  ]
+  "browserslist": "defaults, not ie 11"
 }
