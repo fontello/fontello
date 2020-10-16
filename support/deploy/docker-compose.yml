@@ -1,7 +1,7 @@
 version: '3.5'
 services:
   nginx:
-    image: jwilder/nginx-proxy
+    image: jwilder/nginx-proxy:4116f2b6fb9b
     labels:
       # allow letsencrypt to discover nginx service it paired up with
       com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: 'true'
@@ -24,7 +24,7 @@ services:
       - ENABLE_IPV6=true
 
   letsencrypt:
-    image: jrcs/letsencrypt-nginx-proxy-companion
+    image: jrcs/letsencrypt-nginx-proxy-companion:v1.13
     volumes:
       # socket is used to get events from docker
       - /var/run/docker.sock:/var/run/docker.sock:ro
