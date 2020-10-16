@@ -29,7 +29,7 @@
     "bagjs": "^3.0.0",
     "base64-js": "^1.2.0",
     "bluebird": "^3.5.1",
-    "bootstrap": "3.2.0",
+    "bootstrap": "3.4.1",
     "browser-pack": "^6.0.2",
     "browserify": "^16.1.0",
     "cacheify": "^0.4.2",
@@ -81,7 +81,7 @@
     "acorn": "^8.0.1",
     "eslint": "^7.3.1",
     "mocha": "^8.0.1",
-    "supertest": "^4.0.2"
+    "supertest": "^5.0.0"
   },
   "browserslist": "defaults, not ie 11"
 }
