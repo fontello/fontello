@@ -1,6 +1,7 @@
 version: '3.5'
 services:
   nginx:
+    # pin nginx to latest commit, because it doesn't have a stable tag (other than latest)
     image: jwilder/nginx-proxy@sha256:4116f2b6fb9b2a41d94149e8261c81ebbfd96aa84882d87f19c45e00a7c3c221
     labels:
       # allow letsencrypt to discover nginx service it paired up with
