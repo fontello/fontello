@@ -8,7 +8,8 @@
 - Fix slow select on big custom collections, #583.
 - Fix waiting on `level-ttl` write (caused races in tests).
 - Switch to `ko` deferred updates.
-- Use node.js 10+.
+- New deploy process via docker.
+- Use node.js 12+.
 - Deps bump
 - Nodeca core resync.
 
