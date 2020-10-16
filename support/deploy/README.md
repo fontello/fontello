@@ -8,8 +8,8 @@ sudo apt-get install docker.io docker-compose git mc
 # enable docker service for auto restarts
 sudo systemctl enable docker
 
-# create empty directory for docker-compose
-git clone https://github.com/fontello/fontello.git
+# clone repository to get deploy scripts
+git clone --depth 10 https://github.com/fontello/fontello.git
 
 # start server
 cd fontello/support/deploy

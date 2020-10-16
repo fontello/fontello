@@ -12,7 +12,7 @@ RUN apt-get install -y --no-install-recommends git ca-certificates
 RUN apt-get install -y --no-install-recommends make gcc g++ libc6-dev curl xz-utils file
 
 WORKDIR /root/ttfautohint-build-script
-RUN git clone -b v1.8.3.1 -c advice.detachedHead=false \
+RUN git clone --depth 10 -b v1.8.3.1 -c advice.detachedHead=false \
       https://github.com/source-foundry/ttfautohint-build.git \
       /root/ttfautohint-build-script
 RUN make
@@ -32,7 +32,7 @@ ENV NODECA_ENV=production
 
 # `add` command busts docker cache for subsequent `git clone` when there's a new commit
 ADD https://api.github.com/repos/fontello/fontello/git/refs/heads/master /root/version.json
-RUN git clone https://github.com/fontello/fontello.git /root/fontello
+RUN git clone --depth 10 https://github.com/fontello/fontello.git /root/fontello
 
 RUN npm i
 RUN ./server.js assets
