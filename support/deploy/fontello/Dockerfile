@@ -31,8 +31,9 @@ ENV NODE_ENV=production
 ENV NODECA_ENV=production
 
 # `add` command busts docker cache for subsequent `git clone` when there's a new commit
-ADD https://api.github.com/repos/fontello/fontello/git/refs/heads/master /root/version.json
-RUN git clone --depth 10 https://github.com/fontello/fontello.git /root/fontello
+ARG BRANCH=master
+ADD https://api.github.com/repos/fontello/fontello/git/refs/heads/$BRANCH /root/version.json
+RUN git clone --depth 10 -b $BRANCH https://github.com/fontello/fontello.git /root/fontello
 
 RUN npm i
 RUN ./server.js assets

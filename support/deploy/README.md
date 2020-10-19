@@ -35,6 +35,14 @@ docker container prune
 docker image prune
 ```
 
+### Deploy different branch
+
+To deploy a different git branch, set $BRANCH as env variable during build:
+
+```sh
+BRANCH=dev docker-compose build
+```
+
 ### Run on localhost
 
 Fontello binds on `https://fontello.com` by default, override it using env variables like this:

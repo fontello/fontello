@@ -43,6 +43,8 @@ services:
 
   fontello:
     build:
+      args:
+        - BRANCH
       context: ./fontello
     volumes:
       - /var/log/fontello:/app/log
