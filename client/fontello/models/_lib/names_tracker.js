@@ -83,7 +83,7 @@ exports.observeFontsList = function (model) {
 
       // glyphs is going to be selected, but it's name already "taken":
       // find free name and update model
-      if (map[name]) {
+      if (map[name] && map[name] !== value) {
         name = findFreeName(name);
         value.name(name);
       }

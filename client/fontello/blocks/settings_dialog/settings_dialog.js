@@ -9,10 +9,10 @@ var ko = require('knockout');
 N.wire.once('navigate.done', function () {
 
   function SettingsModel() {
-    this.units      = ko.observable(1);
-    this.ascent     = ko.observable(1);
-    this.descent    = ko.observable(1);
-    this.baseline   = ko.observable(1);
+    this.units      = ko.observable();
+    this.ascent     = ko.observable();
+    this.descent    = ko.observable();
+    this.baseline   = ko.observable();
     this.hinting    = ko.observable();
     this.encoding   = ko.observable();
     this.fullname   = ko.observable();
@@ -22,20 +22,22 @@ N.wire.once('navigate.done', function () {
     var dependencies = true;
     var prev_units;
 
-    // On units per em change - scale ascent/descent and keep them integer.
+    // On units per em change - scale ascent/descent
     this.units.subscribe(function (units) {
-      prev_units = +units;
+      prev_units = units;
     }, null, 'beforeChange');
 
     this.units.subscribe(function (units) {
       dependencies = false;
 
-      var scale = +units / (prev_units);
-      var ascent = +(this.ascent() * scale).toFixed(0);
-      var descent = ascent - units;
-      this.ascent(ascent);
-      this.descent(descent);
-      this.baseline(+((-descent) / units * 100).toFixed(2));
+      if (typeof prev_units !== 'undefined' && typeof this.baseline() !== 'undefined') {
+        var scale = +units / prev_units;
+        var ascent = +(this.ascent() * scale).toFixed(0);
+        var descent = ascent - units;
+        this.ascent(ascent);
+        this.descent(descent);
+        this.baseline(+(-descent / units * 100).toFixed(2));
+      }
 
       dependencies = true;
     }, this);
@@ -45,9 +47,13 @@ N.wire.once('navigate.done', function () {
       if (dependencies) {
         dependencies = false;
 
-        var ascent = +(this.units() * (1 - (+baseline) / 100)).toFixed(0);
-        this.ascent(ascent);
-        this.descent(ascent - this.units());
+        var units = this.units();
+
+        if (typeof units !== 'undefined') {
+          var ascent = +(units * (1 - +baseline / 100)).toFixed(0);
+          this.ascent(ascent);
+          this.descent(ascent - units);
+        }
 
         dependencies = true;
       }
@@ -58,9 +64,13 @@ N.wire.once('navigate.done', function () {
       if (dependencies) {
         dependencies = false;
 
-        var descent = (+ascent) - this.units();
-        this.descent(descent);
-        this.baseline(+((-descent) / this.units() * 100).toFixed(2));
+        var units = this.units();
+
+        if (typeof units !== 'undefined') {
+          var descent = +ascent - units;
+          this.descent(descent);
+          this.baseline(+(-descent / units * 100).toFixed(2));
+        }
 
         dependencies = true;
       }
@@ -71,8 +81,12 @@ N.wire.once('navigate.done', function () {
       if (dependencies) {
         dependencies = false;
 
-        this.ascent(+this.units() + (+descent));
-        this.baseline(+((-descent) / this.units() * 100).toFixed(2));
+        var units = this.units();
+
+        if (typeof units !== 'undefined') {
+          this.ascent(+units + +descent);
+          this.baseline(+(-descent / units * 100).toFixed(2));
+        }
 
         dependencies = true;
       }

@@ -136,19 +136,22 @@ function findUnicode(code) {
 // Sets a new glyph code using the specified encoding (N.app.encoding).
 //
 function allocateCode(glyph, encoding) {
+  var oldCode = glyph.code();
   var newCode;
+
+  if (usedCodes[oldCode] === glyph) usedCodes[oldCode] = null;
 
   switch (encoding) {
     case 'pua':
-      newCode = findPrivateUseArea(glyph.code());
+      newCode = findPrivateUseArea(oldCode);
       break;
 
     case 'ascii':
-      newCode = findAscii(glyph.code());
+      newCode = findAscii(oldCode);
       break;
 
     case 'unicode':
-      newCode = findUnicode(glyph.code());
+      newCode = findUnicode(oldCode);
       break;
 
     default:
@@ -204,6 +207,7 @@ function observeGlyph(glyph) {
         if (checkValidCode(previousCode)) {
           this.code(previousCode);
         } else {
+          if (usedCodes[this.code()] === glyph) usedCodes[this.code()] = null;
           this.code(findUnicode(this.originalCode));
         }
       }
