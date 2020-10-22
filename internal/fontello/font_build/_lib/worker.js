@@ -128,7 +128,6 @@ module.exports = async function fontWorker(taskInfo) {
     await rename(files.ttf, files.ttfUnhinted);
     await execFile('ttfautohint', [
       '--no-info',
-      '--windows-compatibility',
       '--symbol',
       // temporary workaround for #464
       // https://github.com/fontello/fontello/issues/464#issuecomment-202244651
