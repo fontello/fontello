@@ -3,7 +3,7 @@ Fontello - icon font scissors
 
 [![Build Status](https://travis-ci.org/fontello/fontello.svg?branch=master)](https://travis-ci.org/fontello/fontello)
 
-website: [fontello.com](http://fontello.com/), help: [wiki](https://github.com/fontello/fontello/wiki/Help)
+website: [fontello.com](https://fontello.com/), help: [wiki](https://github.com/fontello/fontello/wiki/Help)
 
 ![](https://rawgithub.com/fontello/fontello/master/fontello-image.svg)
 
@@ -41,16 +41,16 @@ When more examples available, those will be added here.
 
 ### API methods
 
-1. `POST http://fontello.com/` creates a session with your config and
+1. `POST https://fontello.com/` creates a session with your config and
    return you `session_id`. You can use it later to open fontello with your configuration
    and to automatically download your font. Session is stored for 24h. POST params
    (form-encoded):
     - `config` - (Required) content of `config.json` for your font
     - `url` - (Optional) if used, download button will link to your admin panel, where you can
       run importing script.
-2. `http://fontello.com/[session_id]` - opening fontello with your config preloaded.
+2. `https://fontello.com/[session_id]` - opening fontello with your config preloaded.
    When you edit font, your config is automatically sent to server
-3. `http://fontello.com/[session_id]/get` - download your font.
+3. `https://fontello.com/[session_id]/get` - download your font.
 
 Note. When you open site via API url, `download` button will have another text.
 

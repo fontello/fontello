@@ -1,6 +1,8 @@
 9.0.0 / WIP
 ------------------
 
+- (!) Switched to SSL. If you use API - update request links from
+  `http://...` to `https://...` in your scripts.
 - Bump `svg2ttf` to v5+. `USE_TYPO_METRICS` bit of `OS/2.fsSelection` is now
   set. Should fix Windows line spacing issues.
 - CSS `speak: none` => `speak: never`, #702.
