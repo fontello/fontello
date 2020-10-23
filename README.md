@@ -2,7 +2,7 @@ Fontello - icon font scissors
 =============================
 
 [![Build Status](https://travis-ci.org/fontello/fontello.svg?branch=master)](https://travis-ci.org/fontello/fontello)
-[![Gitter](https://badges.gitter.im/fontello/fontello.svg)](https://gitter.im/fontello/fontello?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Gitter](https://badges.gitter.im/fontello/fontello.svg)](https://gitter.im/fontello/fontello)
 
 website: [fontello.com](https://fontello.com/), help: [wiki](https://github.com/fontello/fontello/wiki/Help)
 
@@ -13,19 +13,6 @@ This tool lets you combine icon webfonts for your own project. With fontello you
 1. shrink glyph collections, minimizing font size
 2. merge symbols from several fonts into a single file
 3. access large sets of professional-grade open source icons
-
-Now it's trivial to make a custom icon webfont, exactly for your needs.
-First, select the icons you like. Then update glyph codes (optional), and
-download your webfont bundle. We generate everything you need, ready for publishing
-on your website!
-
-
-## Compatibility
-
-1. Desktop is fully supported. IE6-7 requires alternate CSS.
-2. Mobiles - all modern systems work without problems. There are limits on very old androids
-   and rare browsers. Also, Windows Mobile IE9 sucks, as IE  usually does :) . See
-   [details](http://blog.kaelig.fr/post/33373448491/testing-font-face-support-on-mobile-and-tablet).
 
 
 ## Developers API
@@ -66,25 +53,19 @@ Note. When you open site via API url, `download` button will have another text.
 * [fontello_rails_converter](https://github.com/railslove/fontello_rails_converter) - Ruby CLI gem for interacting with the API.  Additional features (Sass conversion) for Rails integration, but should work for every project.
 * [grunt-fontello](https://github.com/jubalm/grunt-fontello) - lightweight integration with grunt
 
-
-## Contacts
-
-- Questions: [Gitter](https://gitter.im/fontello/fontello)
-- Bug reports: [Issue tracker](https://github.com/fontello/fontello/issues)
-- Suggestion for adding your OFL fonts or other collaborations: vitaly@rcdesign.ru
-
-
 ## Authors
 
-- Roman Shmelev ([shmelev](https://github.com/shmelev))
+- Roman Shmelev ([shmelev](https://github.com/shmelev)).
 - Vitaly Puzrin ([puzrin](https://github.com/puzrin)).
-  [Follow](https://twitter.com/puzrin) on twitter.
 - Aleksey Zapparov ([ixti](https://github.com/ixti)).
-  [Follow](https://twitter.com/zapparov) on twitter.
 - Evgeny Shkuropat ([shkuropat](https://github.com/shkuropat)).
 - Vladimir Zapparov ([dervus](https://github.com/dervus)).
+- Alex Kocharin ([rlidwka](https://github.com/rlidwka)).
 
-Thanks to [Hermanto Lim](https://github.com/nackle2k10) for the image.
+Thanks to:
+
+- [Werner Lemberg](https://github.com/lemzwerg) for help with ttfautohint.
+- [Hermanto Lim](https://github.com/nackle2k10) for the image.
 
 
 ## License
