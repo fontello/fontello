@@ -13,8 +13,9 @@ services:
       - nginx-vhostd:/etc/nginx/vhost.d:ro
       - letsencrypt-certs:/etc/nginx/certs:ro
       - letsencrypt-challenges:/usr/share/nginx/html/.well-known
-      # nginx config
-      - ./nginx/proxy_tweaks.conf:/etc/nginx/conf.d/proxy_tweaks.conf:ro
+      # nginx configs
+      - ./nginx/conf.d/client_max_body_size_10m.conf:/etc/nginx/conf.d/client_max_body_size_10m.conf:ro
+      - ./nginx/conf.d/proxy_redirect_off.conf:/etc/nginx/conf.d/proxy_redirect_off.conf:ro
       # various caches
       - /var/cache/nginx
       - /etc/nginx/dhparam
