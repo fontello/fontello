@@ -2,6 +2,7 @@ Fontello - icon font scissors
 =============================
 
 [![Build Status](https://travis-ci.org/fontello/fontello.svg?branch=master)](https://travis-ci.org/fontello/fontello)
+[![Gitter](https://badges.gitter.im/fontello/fontello.svg)](https://gitter.im/fontello/fontello?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 website: [fontello.com](https://fontello.com/), help: [wiki](https://github.com/fontello/fontello/wiki/Help)
 
@@ -68,7 +69,7 @@ Note. When you open site via API url, `download` button will have another text.
 
 ## Contacts
 
-- Questions: [Google group](https://groups.google.com/group/fontello/)
+- Questions: [Gitter](https://gitter.im/fontello/fontello)
 - Bug reports: [Issue tracker](https://github.com/fontello/fontello/issues)
 - Suggestion for adding your OFL fonts or other collaborations: vitaly@rcdesign.ru
 
