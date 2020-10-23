@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Help (wiki)
+    url: https://github.com/fontello/fontello/wiki/Help
+    about: Please read prior to ask any questions.
+  - name: Questions
+    url: https://gitter.im/fontello/fontello
+    about: Prefer Gitter chat, keep issue tracker for developpers.
