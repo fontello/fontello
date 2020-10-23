@@ -1,5 +1,5 @@
 ---
-name: Suggesion / Other
+name: Suggestion / Other
 about: Any topic, related to fontello development
 title: ''
 labels: ''
