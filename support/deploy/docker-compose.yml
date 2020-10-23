@@ -47,7 +47,7 @@ services:
   fontello:
     build:
       args:
-        - BRANCH
+        BRANCH: ${BRANCH:-master}
       context: ./fontello
     volumes:
       - /var/log/fontello:/app/log
