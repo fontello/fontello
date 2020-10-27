@@ -1,5 +1,5 @@
 # alias node:version as node, so we only need to change it in one place
-FROM node:12-buster-slim AS node
+FROM node:14-buster-slim AS node
 
 #
 # Stage 1 - ttfautohint
