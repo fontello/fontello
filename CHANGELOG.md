@@ -10,6 +10,7 @@
 - Fix slow select on big custom collections, #583.
 - Fix waiting on `level-ttl` write (caused races in tests).
 - Switch to `ko` deferred updates.
+- Gzip client requests to server (when config been sent).
 - Fix deferred updates issues, #714.
 - Fix `os.tmpDir` => `os.tmpdir`, #712.
 - Fix antialiasing properies in CSS wih embedded fonts, #652.

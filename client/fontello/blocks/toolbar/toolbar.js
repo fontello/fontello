@@ -4,6 +4,7 @@
 var Bloodhound = require('typeahead.js/dist/bloodhound.js');
 var _  = require('lodash');
 var ko = require('knockout');
+var deflate = require('pako/lib/deflate');
 
 var savedConfig = null;
 
@@ -146,7 +147,10 @@ N.wire.once('navigate.done', function (data) {
     toolbar.building(true);
 
     let rpc_params = {
-      config: new Blob([ JSON.stringify(config) ], { type: 'application/json' })
+      config: new Blob(
+        [ deflate.gzip(JSON.stringify(config)) ],
+        { type: 'application/octet-stream' }
+      )
     };
 
     return N.io.rpc('fontello.font.generate', rpc_params).then(res => {

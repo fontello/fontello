@@ -4,6 +4,7 @@
 
 var _  = require('lodash');
 var ko = require('knockout');
+var deflate = require('pako/lib/deflate');
 
 // Turn on deferred updates globally for knockout
 //
@@ -92,7 +93,10 @@ N.wire.once('navigate.done', { priority: -90 }, function () {
 
     return N.io.rpc('fontello.api.update', {
       sid: N.app.apiSessionId,
-      config: new Blob([ JSON.stringify(N.app.getConfig()) ], { type: 'application.json' })
+      config: new Blob(
+        [ deflate.gzip(JSON.stringify(N.app.getConfig())) ],
+        { type: 'application/octet-stream' }
+      )
     });
   };
 
