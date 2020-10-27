@@ -204,6 +204,7 @@ function observeGlyph(glyph) {
           hex: this.customHex()
         }));
 
+        /* eslint-disable max-depth */
         if (checkValidCode(previousCode)) {
           this.code(previousCode);
         } else {
