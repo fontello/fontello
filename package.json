@@ -31,7 +31,7 @@
     "bluebird": "^3.5.1",
     "bootstrap": "3.4.1",
     "browser-pack": "^6.0.2",
-    "browserify": "^16.1.0",
+    "browserify": "^17.0.0",
     "cacheify": "^0.4.2",
     "clean-css": "^4.2.1",
     "compression": "^1.6.1",
