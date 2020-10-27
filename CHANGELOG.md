@@ -10,9 +10,13 @@
 - Fix slow select on big custom collections, #583.
 - Fix waiting on `level-ttl` write (caused races in tests).
 - Switch to `ko` deferred updates.
+- Fix deferred updates issues, #714.
+- Fix `os.tmpDir` => `os.tmpdir`, #712.
+- Fix antialiasing properies in CSS wih embedded fonts, #652.
+- Fix ttfautohint options (drop '--windows-compatibility'), #713.
 - New deploy process via docker.
-- Use node.js 12+.
-- Deps bump
+- Use node.js 14 for CI & deploy.
+- Deps bump.
 - Nodeca core resync.
 
 
