@@ -77,7 +77,7 @@ function checkValidCode(code) {
 //
 function findCode(min, max) {
   for (var code = min; code <= max; code += 1) {
-    if (checkValidCode(code) && !usedCodes[code]) {
+    if (checkValidCode(code) && (!usedCodes[code] || !usedCodes[code].selected())) {
       return code;
     }
   }
@@ -90,7 +90,7 @@ function findCode(min, max) {
 function findPrivateUseArea(preferredCode) {
   if (preferredCode &&
       checkValidCode(preferredCode) &&
-      !usedCodes[preferredCode] &&
+      (!usedCodes[preferredCode] || !usedCodes[preferredCode].selected()) &&
       preferredCode >= UNICODE_PRIVATE_USE_AREA_MIN &&
       preferredCode <= UNICODE_PRIVATE_USE_AREA_MAX) {
     return preferredCode;
@@ -113,7 +113,7 @@ function findPrivateUseArea(preferredCode) {
 function findAscii(preferredCode) {
   if (preferredCode &&
       checkValidCode(preferredCode) &&
-      !usedCodes[preferredCode] &&
+      (!usedCodes[preferredCode] || !usedCodes[preferredCode].selected()) &&
       preferredCode >= ASCII_PRINTABLE_MIN &&
       preferredCode <= ASCII_PRINTABLE_MAX) {
     return preferredCode;
@@ -129,7 +129,12 @@ function findAscii(preferredCode) {
 // Fallbacks to findPrivateUseArea()
 //
 function findUnicode(code) {
-  return (checkValidCode(code) && !usedCodes[code]) ? code : findPrivateUseArea();
+  if (checkValidCode(code) &&
+      (!usedCodes[code] || !usedCodes[code].selected())) {
+    return code;
+  }
+
+  return findPrivateUseArea();
 }
 
 
@@ -192,7 +197,7 @@ function observeGlyph(glyph) {
   // When user set the glyph code to a used one - swap them.
   glyph.code.subscribe(function (code) {
     if (this.selected()) {
-      if (usedCodes[code] && usedCodes[code] !== this) {
+      if (usedCodes[code] && usedCodes[code] !== this && usedCodes[oldCode].selected()) {
         usedCodes[code].code(previousCode);
       }
 
