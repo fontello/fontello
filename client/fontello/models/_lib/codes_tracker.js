@@ -197,7 +197,7 @@ function observeGlyph(glyph) {
   // When user set the glyph code to a used one - swap them.
   glyph.code.subscribe(function (code) {
     if (this.selected()) {
-      if (usedCodes[code] && usedCodes[code] !== this && usedCodes[oldCode].selected()) {
+      if (usedCodes[code] && usedCodes[code] !== this && usedCodes[code].selected()) {
         usedCodes[code].code(previousCode);
       }
 
