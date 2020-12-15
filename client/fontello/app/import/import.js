@@ -80,10 +80,12 @@ function import_config(str, file) {
 
     _.each(config.glyphs, function (g) {
 
+      var glyph;
+
       if (!getFont(g.src)) { return; }
 
       if (g.src === 'custom_icons') {
-        customIcons.addGlyph({
+        glyph = customIcons.addGlyph({
           uid:      g.uid,
           css:      g.css,
           code:     g.code,
@@ -95,10 +97,12 @@ function import_config(str, file) {
             width:   g.svg.width
           }
         });
+        // flag this glyph as just imported to prevent overriding code in code_tracker
+        glyph._imported = true;
         return;
       }
 
-      var glyph = glyphById[g.uid];
+      glyph = glyphById[g.uid];
 
       if (!glyph) { return; }
 

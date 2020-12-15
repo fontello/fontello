@@ -218,6 +218,8 @@ N.wire.once('navigate.done', { priority: -100 }, function () {
       parent.track(glyph);
 
       this.glyphs.push(glyph);
+
+      return glyph;
     };
 
     this.removeGlyph = function (uid) {

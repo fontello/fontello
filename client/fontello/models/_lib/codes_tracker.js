@@ -226,6 +226,12 @@ function observeFontsList(fontsList) {
   // When user selects/deselects the glyph - allocate/free a code.
   fontsList.selectedGlyphs.subscribe(function (changes) {
     changes.forEach(({ status, value }) => {
+      if (value._imported) {
+        // ignore first event if this glyph was just imported
+        value._imported = false;
+        return;
+      }
+
       if (status === 'added') {
         if (value.code() === value.originalCode) {
           allocateCode(value, N.app.encoding());
