@@ -33,7 +33,7 @@
     "browser-pack": "^6.0.2",
     "browserify": "^17.0.0",
     "cacheify": "^0.4.2",
-    "clean-css": "^4.2.1",
+    "clean-css": "^5.1.0",
     "compression": "^1.6.1",
     "cookie": "^0.4.0",
     "email-regex": "^4.0.0",
@@ -42,11 +42,11 @@
     "is-my-json-valid": "^2.16.1",
     "javascript-state-machine": "^2.4.0",
     "jquery": "^3.2.1",
-    "js-yaml": "^3.9.0",
+    "js-yaml": "^4.0.0",
     "jstransformer-stylus": "^1.3.0",
     "jszip": "^3.1.3",
     "knockout": "~ 3.5.1",
-    "less": "^3.9.0",
+    "less": "^4.1.1",
     "level": "^6.0.0",
     "level-exists": "^2.0.2",
     "level-ttl": "^3.1.1",
@@ -56,7 +56,7 @@
     "mkdirp": "^1.0.3",
     "multiparty": "^4.1.3",
     "negotiator": "^0.6.1",
-    "pako": "^1.0.11",
+    "pako": "^2.0.3",
     "pointer": "^1.0.1",
     "postcss": "^8.0.3",
     "pug": "^3.0.0",
@@ -66,7 +66,7 @@
     "resolve": "^1.5.0",
     "rimraf": "^3.0.2",
     "send": "^0.17.1",
-    "serialize-error": "^7.0.1",
+    "serialize-error": "^8.0.1",
     "stylus": "^0.54.5",
     "svg2ttf": "^5.0.0",
     "svgpath": "^2.2.1",
@@ -76,12 +76,12 @@
     "typeahead.js": "0.11.1",
     "wawoff2": "^1.0.1",
     "write-file-atomic": "^3.0.0",
-    "xmldom": "^0.3.0"
+    "xmldom": "^0.4.0"
   },
   "devDependencies": {
     "eslint": "^7.3.1",
     "mocha": "^8.0.1",
-    "supertest": "^5.0.0"
+    "supertest": "^6.1.3"
   },
   "browserslist": "defaults, not ie 11"
 }
