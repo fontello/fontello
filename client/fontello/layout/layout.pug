@@ -78,15 +78,13 @@ html.no-js(lang='en', itemscope, itemtype='http://schema.org/WebPage')
                 .g-plusone(data-size="medium")
 
             ul.nav.navbar-nav.navbar-right
-              li: a(
-                target='_blank',
-                href='https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=575L9QR4V5TNU',
-                data-content=self.t('menu_donate_help'),
-                data-placement='bottom',
-                data-trigger='hover',
-                data-container='.layout__fixed'
-                data-delay='{"show":500,"hide":100}'
-              )._popover= self.t('menu_donate')
+              li.dropdown
+                a.dropdown-toggle(data-toggle='dropdown', href='#')
+                  = self.t('menu_donate')
+                ul.dropdown-menu
+                  li.dropdown-header= self.t('menu_donate_help')
+                  li: a(href="https://opencollective.com/puzrin", target="_blank")= self.t('donate_opencollective')
+                  li: a(href="https://patreon.com/puzrin", target="_blank")= self.t('donate_patreon')
 
           .notifications
 
