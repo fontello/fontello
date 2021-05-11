@@ -6,7 +6,7 @@ Fontello - icon font scissors
 
 website: [fontello.com](https://fontello.com/), help: [wiki](https://github.com/fontello/fontello/wiki/Help)
 
-![](https://rawgithub.com/fontello/fontello/master/fontello-image.svg)
+[![](https://opencollective.com/puzrin/tiers/baker.svg?width=770)](https://opencollective.com/puzrin#category-CONTRIBUTE)
 
 This tool lets you combine icon webfonts for your own project. With fontello you can:
 
