@@ -1,0 +1,41 @@
+<%_
+  var need_charset = false;
+  glyphs.forEach(function(g) {
+    if (0xffff < g.code) { need_charset = true; }
+  });
+_%>
+<%_ if (need_charset) { _%>
+@charset "UTF-8";
+<%_ } _%>
+<%_
+  function unichr(code) {
+    if (code > 0xffff) {
+      code -= 0x10000;
+      surrogate1 = 0xd800 + (code >> 10);
+      surrogate2 = 0xdc00 + (code & 0x3ff);
+      return String.fromCharCode(surrogate1, surrogate2);
+    } else {
+      return String.fromCharCode(code);
+    }
+  }
+
+  function pad(s) {
+    return s.length === 3 ? '0' + s : s;
+  }
+
+  var i, g, css, hex, chr;
+_%>
+
+<%_ for (i in glyphs) { _%>
+  <%_
+    g = glyphs[i];
+    css = meta.css_use_suffix ? g.css + meta.css_prefix_text : meta.css_prefix_text + g.css;
+    hex = '\\' + pad(g.code.toString(16));
+    chr = unichr(g.code);
+  _%>
+  <%_ if (0xffff < g.code) { _%>
+.<%- css %>:before { content: '<%- chr %>'; } /* '<%- hex %>' */
+  <%_ } else { _%>
+.<%- css %>:before { content: '<%- hex %>'; } /* '<%- chr %>' */
+  <%_ } _%>
+<%_ } _%>

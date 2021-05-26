@@ -36,6 +36,7 @@
     "clean-css": "^5.1.2",
     "compression": "^1.7.4",
     "cookie": "^0.4.1",
+    "ejs": "^3.1.6",
     "email-regex": "^4.0.0",
     "event-wire": "^4.0.0",
     "glob": "^7.1.6",

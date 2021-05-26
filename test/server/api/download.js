@@ -44,8 +44,8 @@ describe('API.download', function () {
 
     // copyright year can change, strip it
     assert.strictEqual(
-      actual.replace(/<metadata>.+<\/metadata>/, ''),
-      expected.replace(/<metadata>.+<\/metadata>/, '')
+      actual.replace(/<metadata>.+<\/metadata>/, '').trim(),
+      expected.replace(/<metadata>.+<\/metadata>/, '').trim()
     );
   });
 
@@ -71,8 +71,8 @@ describe('API.download', function () {
 
     // copyright year can change, strip it
     assert.strictEqual(
-      actual.replace(/<metadata>.+<\/metadata>/, ''),
-      expected.replace(/<metadata>.+<\/metadata>/, '')
+      actual.replace(/<metadata>.+<\/metadata>/, '').trim(),
+      expected.replace(/<metadata>.+<\/metadata>/, '').trim()
     );
   });
 

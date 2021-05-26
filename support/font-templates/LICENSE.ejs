@@ -1,0 +1,14 @@
+Font license info
+
+
+<%_ for (let info of fonts_list) { _%>
+## <%- info.font.fullname %>
+
+   <%- info.font.copyright %>
+
+   Author:    <%- info.meta.author %>
+   License:   <%- info.meta.license %> (<%- info.meta.license_url %>)
+   Homepage:  <%- info.meta.homepage %>
+
+
+<%_ } _%>
