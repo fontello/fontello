@@ -20,10 +20,10 @@
     "test": "make test"
   },
   "dependencies": {
-    "@babel/core": "^7.2.2",
-    "@babel/preset-env": "^7.13.15",
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.5",
     "argparse": "^2.0.1",
-    "autoprefixer": "^10.2.5",
+    "autoprefixer": "^10.2.6",
     "babelfish": "^1.2.0",
     "babelify": "^10.0.0",
     "bagjs": "^3.0.0",
@@ -48,8 +48,8 @@
     "jszip": "^3.6.0",
     "knockout": "~ 3.5.1",
     "less": "^4.1.1",
-    "level": "^6.0.0",
-    "level-exists": "^2.0.2",
+    "level": "^7.0.0",
+    "level-exists": "^3.0.0",
     "level-ttl": "^3.1.1",
     "lodash": "^4.17.21",
     "log4js": "^6.3.0",
@@ -59,7 +59,7 @@
     "negotiator": "^0.6.2",
     "pako": "^2.0.3",
     "pointer": "^1.0.2",
-    "postcss": "^8.2.13",
+    "postcss": "^8.3.5",
     "pug": "^3.0.2",
     "pug-runtime": "^3.0.1",
     "puncher": "^1.1.1",
@@ -69,7 +69,7 @@
     "send": "^0.17.1",
     "serialize-error": "^8.1.0",
     "stylus": "^0.54.8",
-    "svg2ttf": "^5.2.0",
+    "svg2ttf": "^6.0.1",
     "svgpath": "^2.3.1",
     "terser": "^5.7.0",
     "ttf2eot": "^2.0.0",
@@ -80,8 +80,8 @@
     "xmldom": "^0.6.0"
   },
   "devDependencies": {
-    "eslint": "^7.3.1",
-    "mocha": "^8.3.2",
+    "eslint": "^7.28.0",
+    "mocha": "^9.0.1",
     "supertest": "^6.1.3"
   },
   "browserslist": "defaults, not ie 11"
