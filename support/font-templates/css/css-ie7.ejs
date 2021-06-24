@@ -1,7 +1,7 @@
 <%_ if (!meta.css_use_suffix) { _%>
-[class^="<%- meta.css_prefix_text %>"], [class*="<%- meta.css_prefix_text %>"] {
+[class^="<%- meta.css_prefix_text %>"], [class*=" <%- meta.css_prefix_text %>"] {
 <%_ } else { _%>
-[class$="<%- meta.css_prefix_text %>"], [class*="<%- meta.css_prefix_text %>"] {
+[class$="<%- meta.css_prefix_text %>"], [class*="<%- meta.css_prefix_text %> "] {
 <%_ } _%>
   font-family: '<%- font.fontname %>';
   font-style: normal;

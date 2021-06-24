@@ -33,9 +33,9 @@ _%>
 */
 
 <%_ if (!meta.css_use_suffix) { _%>
-[class^="<%- meta.css_prefix_text %>"]:before, [class*="<%- meta.css_prefix_text %>"]:before {
+[class^="<%- meta.css_prefix_text %>"]:before, [class*=" <%- meta.css_prefix_text %>"]:before {
 <%_ } else { _%>
-[class$="<%- meta.css_prefix_text %>"]:before, [class*="<%- meta.css_prefix_text %>"]:before {
+[class$="<%- meta.css_prefix_text %>"]:before, [class*="<%- meta.css_prefix_text %> "]:before {
 <%_ } _%>
   font-family: "<%- font.fontname %>";
   font-style: normal;
