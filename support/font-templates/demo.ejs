@@ -136,14 +136,18 @@
     .switch input {
       margin-right: 0.3em;
     }
-    .codesOn .i-name {
-      display: none;
+    .i-code::before {
+      content: "("
+    }
+    .i-code::after {
+      content: ")"
     }
     .codesOn .i-code {
       display: inline;
     }
     .i-code {
       display: none;
+      font-weight: 300;
     }
     @font-face {
       font-family: '<%= font.fontname %>';
@@ -229,7 +233,7 @@
           var code = pad(g.code.toString(16));
         _%>
         <div class="<%= col_class %>" title="Code: 0x<%= code %>">
-          <i class="demo-icon <%= css_class %>">&#x<%= code %>;</i> <span class="i-name"><%= css_name %></span><span class="i-code">0x<%= code %></span>
+          <i class="demo-icon <%= css_class %>">&#x<%= code %>;</i> <span class="i-name"><%= css_name %></span> <span class="i-code">0x<%= code %></span>
         </div>
       <%_ } _%>
       </div>
