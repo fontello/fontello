@@ -10,7 +10,6 @@ const fs    = require('fs');
 
 
 // 3rd-party
-const _       = require('lodash');
 const glob    = require('glob');
 
 
@@ -64,7 +63,7 @@ module.exports.commandLineArguments = [
     args: [ '-a', '--app' ],
     options: {
       help: 'application name',
-      type: 'string'
+      type: 'str'
     }
   },
   {
@@ -95,7 +94,7 @@ module.exports.run = async function (N, args) {
 
   function get_app_path(app_name) {
     let app = N.apps.some(a => a.name === app_name);
-    return app ? app.root : null;
+    return app?.root;
   }
 
   await N.wire.emit('init:models', N);
@@ -155,7 +154,7 @@ module.exports.run = async function (N, args) {
 
   // Execute seed by number
   //
-  if (!_.isEmpty(args.seed_numbers)) {
+  if (args.seed_numbers?.length) {
     // protect production env from accident run
     if ([ 'development', 'test' ].indexOf(env) === -1 && !args.force) {
       throw `Error: Can't run seed from ${env} environment. Please, use -f to force.`;
@@ -184,7 +183,7 @@ module.exports.run = async function (N, args) {
   //
   console.log('Available seeds:\n');
 
-  _.forEach(seed_list, function (seed, idx) {
+  seed_list.forEach(function (seed, idx) {
     console.log(`  ${idx + 1}. ${seed.name}: ${path.basename(seed.seed_path)}`);
   });
 

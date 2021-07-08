@@ -34,7 +34,7 @@ N.wire.once('navigate.done', function () {
 
     // We should call `dataTransfer.files` getter before `event.preventDefault()`
     // otherwise after next tick `dataTransfer.files` will be empty in firefox
-    if (data.event.originalEvent.dataTransfer && data.event.originalEvent.dataTransfer.files) {
+    if (data.event.originalEvent.dataTransfer?.files) {
       data.files = data.event.originalEvent.dataTransfer.files;
     }
 
