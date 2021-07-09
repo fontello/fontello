@@ -6,7 +6,9 @@
 //
 N.wire.after('navigate.done', function reassign_tooltip_handler() {
   $('._tip').tooltip();
-  $('._popover').popover();
+  $('._popover').popover({
+    delay: { show: 500, hide: 100 }
+  });
 });
 
 

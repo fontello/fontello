@@ -4,7 +4,7 @@ type:
   widget_css:
     - "*.css"
     - "*.styl"
-    - "*.less"
+    - "*.scss"
   widget_i18n: i18n/*.yml
   widget_view: "*.pug"
   widget_js: "*.js"

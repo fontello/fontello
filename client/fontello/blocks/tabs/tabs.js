@@ -21,7 +21,7 @@ N.wire.once('navigate.done', { priority: 10 }, function () {
   //
 
   function jumpToSelector() {
-    $view.find('a[data-target="#selector"]').tab('show');
+    $view.find('a[data-bs-target="#selector"]').tab('show');
   }
 
   N.wire.on('cmd:reset_all',      jumpToSelector);
@@ -47,7 +47,7 @@ N.wire.once('navigate.done', { priority: 10 }, function () {
   // Init import handlers on 'selector' tab and destroy on other tabs
   //
   $view.on('show.bs.tab', function (e) {
-    if ($(e.target).data('target') === '#selector') {
+    if ($(e.target).data('bs-target') === '#selector') {
       N.wire.emit('import:listen');
     } else {
       N.wire.emit('import:unlisten');

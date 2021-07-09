@@ -1,95 +1,93 @@
 .modal.fade
   .modal-dialog.settings__dialog
-    .modal-content()
+    .modal-content
       .modal-header.settings__header
-        button.close(type='button', data-dismiss='modal') &times;
         h4.modal-title= self.t('title')
+        button.btn-close(type='button', data-bs-dismiss='modal')
       .modal-body
-        form.form-horizontal
+        form
           fieldset.settings__fieldset
             legend= self.t('fieldset_options')
-            .form-group
-              label.col-sm-3.control-label= self.t('hinting')
+            .row.mb-3
+              label.col-sm-3.col-form-label= self.t('hinting')
               .col-sm-4
-                .checkbox(
-                  data-content=self.t('hinting_help')
-                  data-placement='right',
-                  data-trigger='hover',
-                  data-container='.settings__dialog'
-                  data-delay='{"show":500,"hide":100}'
-                )._popover
-                  label
-                    input(type='checkbox', data-bind='checked: hinting')
-                    | #{self.t('hinting_enable')}
-            .form-group
-              label.col-sm-3.control-label= self.t('encoding')
+                .form-control-plaintext
+                  .form-check(
+                    data-bs-content=self.t('hinting_help')
+                    data-bs-placement='right',
+                    data-bs-trigger='hover',
+                    data-bs-container='.settings__dialog'
+                  )._popover
+                    label.form-check-label
+                      input.form-check-input(type='checkbox', data-bind='checked: hinting')
+                      | #{self.t('hinting_enable')}
+            .row.mb-3
+              label.col-sm-3.col-form-label= self.t('encoding')
               .col-sm-4
-                .radio(
-                  data-content=self.t('encoding_pua_help')
-                  data-placement='right',
-                  data-trigger='hover',
-                  data-container='.settings__dialog'
-                  data-delay='{"show":500,"hide":100}'
-                )._popover
-                  label
-                    input(type='radio', name='encoding', value='pua', data-bind='checked: encoding')
-                    | #{self.t('encoding_pua')}
-                .radio(
-                  data-content=self.t('encoding_ascii_help')
-                  data-placement='right',
-                  data-trigger='hover',
-                  data-container='.settings__dialog'
-                  data-delay='{"show":500,"hide":100}'
-                )._popover
-                  label
-                    input(type='radio', name='encoding', value='ascii', data-bind='checked: encoding')
-                    | #{self.t('encoding_ascii')}
-                .radio(
-                  data-content=self.t('encoding_unicode_help')
-                  data-placement='right',
-                  data-trigger='hover',
-                  data-container='.settings__dialog'
-                  data-delay='{"show":500,"hide":100}'
-                )._popover
-                  label
-                    input(type='radio', name='encoding', value='unicode', data-bind='checked: encoding')
-                    | #{self.t('encoding_unicode')}
+                .form-control-plaintext
+                  .form-check(
+                    data-bs-content=self.t('encoding_pua_help')
+                    data-bs-placement='right',
+                    data-bs-trigger='hover',
+                    data-bs-container='.settings__dialog'
+                  )._popover
+                    label.form-check-label
+                      input.form-check-input(type='radio', name='encoding', value='pua', data-bind='checked: encoding')
+                      | #{self.t('encoding_pua')}
+                  .form-check(
+                    data-bs-content=self.t('encoding_ascii_help')
+                    data-bs-placement='right',
+                    data-bs-trigger='hover',
+                    data-bs-container='.settings__dialog'
+                  )._popover
+                    label.form-check-label
+                      input.form-check-input(type='radio', name='encoding', value='ascii', data-bind='checked: encoding')
+                      | #{self.t('encoding_ascii')}
+                  .form-check(
+                    data-bs-content=self.t('encoding_unicode_help')
+                    data-bs-placement='right',
+                    data-bs-trigger='hover',
+                    data-bs-container='.settings__dialog'
+                  )._popover
+                    label.form-check-label
+                      input.form-check-input(type='radio', name='encoding', value='unicode', data-bind='checked: encoding')
+                      | #{self.t('encoding_unicode')}
 
           fieldset.settings__fieldset
             legend= self.t('fieldset_metrics')
-            .form-group
-              label.col-sm-3.control-label(for='st__upm')= self.t('units_per_em')
+            .row.mb-3
+              label.col-sm-3.col-form-label(for='st__upm')= self.t('units_per_em')
               .col-sm-3
                 input#st__upm.form-control(type='text', data-bind='value: units')
-              label.col-sm-3.control-label(for='st__ascent')= self.t('ascent')
+              label.col-sm-3.col-form-label(for='st__ascent')= self.t('ascent')
               .col-sm-3
                 input#st__ascent.form-control(type='text', data-bind='value: ascent')
-            .form-group
-              label.col-sm-3.control-label(for='st__baseline')= self.t('baseline')
+            .row.mb-3
+              label.col-sm-3.col-form-label(for='st__baseline')= self.t('baseline')
               .col-sm-3
                 .input-group
                   input#st__baseline.form-control(type='text', data-bind='value: baseline')
-                  span.input-group-addon %
-              label.col-sm-3.control-label(for='st__descent')= self.t('descent')
+                  span.input-group-text %
+              label.col-sm-3.col-form-label(for='st__descent')= self.t('descent')
               .col-sm-3
                 input#st__descent.form-control(type='text', data-bind='value: descent')
 
           fieldset.settings__fieldset
             legend= self.t('fieldset_development')
-            .form-group
-              p.col-sm-offset-3.col-sm-9= self.t('development_help')
+            .row.mb-3
+              p.offset-sm-3.col-sm-9= self.t('development_help')
             //-
-              .form-group
-                label.col-sm-3.control-label(for='st__fullname')= self.t('fullname')
+              .mb-3
+                label.col-sm-3.col-form-label(for='st__fullname')= self.t('fullname')
                 .col-sm-9
                   input#st__fullname.form-control(type='text', data-bind='value: fullname')
-            .form-group
-              label.col-sm-3.control-label(for='st__copyright')= self.t('copyright')
+            .row.mb-3
+              label.col-sm-3.col-form-label(for='st__copyright')= self.t('copyright')
               .col-sm-9
                 input#st__copyright.form-control(type='text', data-bind='value: copyright')
 
           .row.settings__buttons
-            .col-sm-offset-3.col-sm-9
-              button.btn.btn-primary.pull-right(
+            .offset-sm-3.col-sm-9
+              button.btn.btn-primary.float-end(
                 type='button',
                 data-on-click='cmd:settings_dialog.save')= self.t('btn_save')

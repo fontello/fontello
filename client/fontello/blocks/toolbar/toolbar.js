@@ -1,7 +1,7 @@
 'use strict';
 
 
-var Bloodhound = require('typeahead.js/dist/bloodhound.js');
+var Bloodhound = require('corejs-typeahead/dist/bloodhound.js');
 var _  = require('lodash');
 var ko = require('knockout');
 var deflate = require('pako/lib/deflate');

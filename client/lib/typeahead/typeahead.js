@@ -1,4 +1,4 @@
 'use strict';
 
 
-require('typeahead.js/dist/typeahead.jquery.js');
+require('corejs-typeahead/dist/typeahead.jquery.js');

@@ -115,7 +115,9 @@ N.wire.once('navigate.done', function () {
     $dialog.find('#st__descent').numeric({ decimal: false });
     $dialog.find('#st__baseline').numeric();
 
-    $dialog.find('._popover').popover();
+    $dialog.find('._popover').popover({
+      delay: { show: 500, hide: 100 }
+    });
 
     $dialog.on('shown.bs.modal', function () {
     });
@@ -126,7 +128,7 @@ N.wire.once('navigate.done', function () {
     });
 
     // Show dialog.
-    $dialog.modal();
+    $dialog.modal('show');
   });
 
   N.wire.on('cmd:settings_dialog.save', function settings_dialog_save() {

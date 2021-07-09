@@ -1,0 +1,58 @@
+// Core variables and mixins
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+//@import "var_override.less";    // Modify this for custom colors, font-sizes, etc
+@import "bootstrap/scss/mixins";
+
+.twitter-typeahead {
+  width: 100%;
+}
+
+.tt-menu {
+  min-width: 160px;
+  margin-top: 2px;
+  padding: 5px 0;
+  background-color: $dropdown-bg;
+  border: $dropdown-border-width solid $dropdown-border-color;
+  *border-right-width: 2px;
+  *border-bottom-width: 2px;
+  border-radius: 6px;
+  @include box-shadow(0 5px 10px rgba(0,0,0,.2));
+  -webkit-background-clip: padding-box;
+     -moz-background-clip: padding;
+          background-clip: padding-box;
+}
+
+.tt-suggestion {
+  display: block;
+  padding: 3px 20px;
+}
+
+.tt-suggestion:hover,
+.tt-suggestion.tt-cursor {
+  color: $dropdown-link-hover-color;
+  // #gradient > .vertical(@dropdown-link-hover-bg, darken(@dropdown-link-hover-bg, 5%));
+  background-color: $dropdown-link-hover-bg;
+}
+
+.tt-suggestion.tt-cursor a {
+  color: $dropdown-bg;
+}
+
+.tt-suggestion p {
+  margin: 0;
+}
+
+// Seems that's not needed anymore. If need to rollback,
+// check dialog message send in FF - nick input should not break bottom margin.
+
+// This styles required to properly allign hint text
+// Just copied from .form-control class
+//.tt-hint {
+//  height: $input-height;
+//  padding: $input-btn-padding-y $input-btn-padding-x;
+//  font-size: $font-size-base;
+//  line-height: $line-height-base;
+//  vertical-align: middle;
+//  border: $input-btn-border-width solid $input-border-color;
+//}

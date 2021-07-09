@@ -1,0 +1,28 @@
+// Overrides for Variables.scss
+// to automatically keep new vars on bootstrap updates
+// -----------------------------------------------------
+
+// Theme colors (buttons)
+// -------------------------
+$primary:                 #337ab7;   // old bootstrap 3 value
+
+// Typography
+// -------------------------
+$font-family-sans-serif:  "Helvetica Neue", "Helvetica CY", Arial, sans-serif;
+$font-family-serif:       Georgia, "Times New Roman", "Times CY", serif;
+$font-family-monospace:   Monaco, Consolas, "Lucida Console", monospace;
+
+// bootstrap 5 increased font size to 1rem=16px, it was 14px in bootstrap 3
+$font-size-base:          0.875rem;
+$legend-font-size:        $font-size-base * 1.5;
+
+// Links
+// -------------------------
+$link-color:              #953B39;
+$link-decoration:         none;
+$link-hover-decoration:   underline;
+
+// Other
+// -------------------------
+// bootstrap md=500 is too small, lg=800 is too large
+$modal-md:                600px;
