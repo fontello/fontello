@@ -8,7 +8,7 @@
   margin-bottom 0
   border-bottom: 1px solid #aaa
 
-.nav-tabs a
+.nav-tabs .nav-link
   cursor pointer
 
 .nav-tabs .disabled
@@ -16,12 +16,12 @@
   opacity 0.3
   cursor default
 
-.nav-tabs > li > a
+.nav-tabs > .nav-item > .nav-link
   outline: none
   //transition background-color .5s ease-in-out
 
-.nav-tabs > .active > a,
-.nav-tabs > .active > a:hover
+.nav-tabs > .nav-item > .nav-link.active,
+.nav-tabs > .nav-item > .nav-link.active:hover
   font-weight: bold;
   border-color #aaa #aaa transparent !important
   box-shadow -2px -2px 2px -2px #ccc, 2px -2px 2px -2px #ccc

@@ -37,7 +37,7 @@ html.no-js(lang='en', itemscope, itemtype='http://schema.org/WebPage')
   body
     .layout__fixed
       .layout__navbar.navbar.navbar-dark.bg-dark.navbar-static-top.navbar-expand-md
-        .container
+        .container-fluid
           a.navbar-brand(href="/")= self.t('title')
 
           button.navbar-toggler(
@@ -93,7 +93,7 @@ html.no-js(lang='en', itemscope, itemtype='http://schema.org/WebPage')
       //- top toolbar/tabs
       .toolbar-container
         != self.partial('@fontello.blocks.toolbar')
-      .tabs-container.container
+      .tabs-container.container-fluid
         != self.partial('@fontello.blocks.tabs')
 
     != self.content

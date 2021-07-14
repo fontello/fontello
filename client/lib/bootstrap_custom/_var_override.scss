@@ -4,7 +4,13 @@
 
 // Theme colors (buttons)
 // -------------------------
-$primary:                 #337ab7;   // old bootstrap 3 value
+$primary:                 #337ab7;
+$danger:                  #d9534f;
+
+// set contrast ratio when color changes from light to dark,
+// need at most 3 for danger (#d9534f) to be contrasted with white
+$min-contrast-ratio:      3;
+
 
 // Typography
 // -------------------------
@@ -16,13 +22,27 @@ $font-family-monospace:   Monaco, Consolas, "Lucida Console", monospace;
 $font-size-base:          0.875rem;
 $legend-font-size:        $font-size-base * 1.5;
 
+
 // Links
 // -------------------------
-$link-color:              #953B39;
+$link-color:              #953b39;
 $link-decoration:         none;
 $link-hover-decoration:   underline;
+
+
+// Navbar
+// -------------------------
+$navbar-dark-color:             #bfbfbf;
+$navbar-dark-hover-color:       #fff;
+$navbar-dark-brand-color:       $navbar-dark-color;
+$navbar-dark-brand-hover-color: $navbar-dark-hover-color;
+$navbar-nav-link-padding-x:     .875rem;
+
 
 // Other
 // -------------------------
 // bootstrap md=500 is too small, lg=800 is too large
 $modal-md:                600px;
+
+// form range customization
+$form-range-thumb-bg:     #343a40; // same as btn-outline-secondary color

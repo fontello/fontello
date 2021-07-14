@@ -46,7 +46,8 @@
 @import "bootstrap/scss/utilities/api";
 
 
-// Backports from bootstrap 3 to make design look the same
+// Backports from bootstrap 3 to make design look the same,
+// and other design tweaks
 // -------------------------------------------------------
 legend {
   border-bottom: 1px solid $gray-200;
@@ -67,4 +68,9 @@ legend {
 // but still have .dropdown-toggle class to retain correct border radius in input groups
 .dropdown-toggle.dropdown-toggle-no-caret::after {
   display: none;
+}
+
+.container-fluid {
+  padding-right: 1.25rem;
+  padding-left: 1.25rem;
 }

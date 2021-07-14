@@ -7,7 +7,7 @@
       h2.selector__font-header
         .selector__font-cnt
           small
-            span.selector__font-cnt-search.icon-search(data-bind='text: visibleCount()')
+            span.selector__font-cnt-search(data-bind='text: visibleCount()')
             span.selector__font-cnt-selected(data-bind='visible: selectedCount, text: selectedCount')
 
         a.selector__font-name._collapser(href='#', data-bind='text: fullname, attr: { "data-id": fontname }', data-on-click='selector:font_collapse')
@@ -37,7 +37,7 @@
       h2.selector__font-header
         .selector__font-cnt
           small
-            span.selector__font-cnt-search.icon-search(data-bind='text: visibleCount()')
+            span.selector__font-cnt-search(data-bind='text: visibleCount()')
             span.selector__font-cnt-selected(data-bind='visible: selectedCount, text: selectedCount')
 
         a.selector__font-name._collapser(href='#', data-bind='text: fullname, attr: { "data-id": fontname }', data-on-click='selector:font_collapse')

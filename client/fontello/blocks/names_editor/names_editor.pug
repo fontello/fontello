@@ -2,7 +2,7 @@
 
   #preview-font.row(data-bind="style: { fontSize: fontSize() + 'px' }")
     // ko foreach: { data: selectedGlyphs }
-    .preview-glyph.col-xs-3(data-bind='attr: { "data-id": uid }')
+    .preview-glyph.col-3(data-bind='attr: { "data-id": uid }')
       .preview-glyph-drop
         span.icon(draggable="true" data-bind='attr: { "data-id": uid }, text: charRef, css: (font.fontname === "custom_icons") ? "font-custom_icons" : "font-fontello"')
         span.prefix(data-bind='visible: !$parent.cssUseSuffix(), text: $parent.cssPrefixText')
