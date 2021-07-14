@@ -11,27 +11,22 @@
 .tt-menu {
   min-width: 160px;
   margin-top: 2px;
-  padding: 5px 0;
+  padding: $dropdown-padding-y $dropdown-padding-x;
   background-color: $dropdown-bg;
   border: $dropdown-border-width solid $dropdown-border-color;
-  *border-right-width: 2px;
-  *border-bottom-width: 2px;
-  border-radius: 6px;
-  @include box-shadow(0 5px 10px rgba(0,0,0,.2));
-  -webkit-background-clip: padding-box;
-     -moz-background-clip: padding;
-          background-clip: padding-box;
+  @include border-radius($dropdown-border-radius);
+  @include box-shadow($dropdown-box-shadow);
+  background-clip: padding-box;
 }
 
 .tt-suggestion {
   display: block;
-  padding: 3px 20px;
+  padding: $dropdown-item-padding-y $dropdown-item-padding-x;
 }
 
 .tt-suggestion:hover,
 .tt-suggestion.tt-cursor {
   color: $dropdown-link-hover-color;
-  // #gradient > .vertical(@dropdown-link-hover-bg, darken(@dropdown-link-hover-bg, 5%));
   background-color: $dropdown-link-hover-bg;
 }
 
@@ -56,3 +51,6 @@
 //  vertical-align: middle;
 //  border: $input-btn-border-width solid $input-border-color;
 //}
+.tt-hint {
+  color: #999;
+}
