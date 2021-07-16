@@ -40,3 +40,12 @@
 [submodule "src/linecons.font"]
 	path = src/linecons.font
 	url = git://github.com/fontello/linecons.font.git
+[submodule "src/awesome5-uni.font"]
+	path = src/awesome5-uni.font
+	url = git://github.com/mebur/awesome5-uni.font.git
+[submodule "src/awesome5-solid-uni.font"]
+	path = src/awesome5-solid-uni.font
+	url = git://github.com/mebur/awesome5-solid-uni.font.git
+[submodule "src/awesome5-brands-uni.font"]
+	path = src/awesome5-brands-uni.font
+	url = git://github.com/mebur/awesome5-brands-uni.font.git

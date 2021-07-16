@@ -1,5 +1,8 @@
 FONTS         += fontelico.font
-FONTS         += awesome-uni.font
+#FONTS         += awesome-uni.font
+FONTS         += awesome5-uni.font
+FONTS         += awesome5-solid-uni.font
+FONTS         += awesome5-brands-uni.font
 FONTS         += entypo
 FONTS         += typicons.font
 FONTS         += iconic-uni.font
@@ -37,7 +40,7 @@ rebuild:
 	# convert to other formats
 	./node_modules/.bin/svg2ttf "$(FONT_DIR)/fontello.svg" "$(FONT_DIR)/fontello.ttf"
 	./node_modules/.bin/ttf2woff "$(FONT_DIR)/fontello.ttf" "$(FONT_DIR)/fontello.woff"
-	./node_modules/wawoff/bin/woff2_compress.js "$(FONT_DIR)/fontello.ttf" "$(FONT_DIR)/fontello.woff2"
+	./node_modules/wawoff2/bin/woff2_compress.js "$(FONT_DIR)/fontello.ttf" "$(FONT_DIR)/fontello.woff2"
 	rm "$(FONT_DIR)/fontello.ttf"
 	rm "$(FONT_DIR)/fontello.svg"
 
