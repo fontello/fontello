@@ -109,6 +109,8 @@ function import_config(str, file) {
       glyph.toggleSelect(true);
       glyph.code(g.code || glyph.originalCode);
       glyph.name(g.css || glyph.originalName);
+      // flag this glyph as just imported to prevent overriding code in code_tracker
+      glyph._imported = true;
     });
   } catch (e) {
     N.wire.emit('notify', t('err_bad_config_format', { name: file.name }));
