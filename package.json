@@ -74,8 +74,8 @@
     "svg2ttf": "^6.0.2",
     "svgpath": "^2.3.1",
     "terser": "^5.7.0",
-    "ttf2eot": "^2.0.0",
-    "ttf2woff": "^2.0.2",
+    "ttf2eot": "^3.0.0",
+    "ttf2woff": "^3.0.0",
     "wawoff2": "^2.0.0",
     "write-file-atomic": "^3.0.3",
     "xmldom": "^0.6.0"

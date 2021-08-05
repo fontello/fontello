@@ -155,14 +155,14 @@ module.exports = async function fontWorker(taskInfo) {
 
   // Convert TTF to EOT.
   //
-  let eotOutput = ttf2eot(ttfOutput).buffer;
+  let eotOutput = ttf2eot(ttfOutput);
 
   await write(files.eot, eotOutput);
 
 
   // Convert TTF to WOFF.
   //
-  let woffOutput = ttf2woff(ttfOutput).buffer;
+  let woffOutput = ttf2woff(ttfOutput);
 
   await write(files.woff, woffOutput);
 
