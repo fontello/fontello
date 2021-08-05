@@ -261,6 +261,22 @@
           throw new Error('Asset load error: "N.Wire" unavailable after asset load.');
         }
 
+        // make sure DOM is loaded
+        return new Promise(function (resolve) {
+          if (document.readyState !== 'loading') {
+            resolve();
+            return;
+          }
+
+          function onload() {
+            document.removeEventListener('DOMContentLoaded', onload);
+            resolve();
+          }
+
+          document.addEventListener('DOMContentLoaded', onload);
+        });
+      })
+      .then(function () {
         return N.wire.emit('init:assets', {}).then(null, function (err) {
           throw new Error('Asset load error: "init:assets" failed. ' + (err.message || err));
         });
@@ -303,30 +319,27 @@
                         '- contact administrator.');
       }
 
-      // Execute after DOM is loaded:
-      $(function () {
-        var page_env = {
-          url:        location.href,
-          anchor:     location.hash,
-          apiPath:    route.meta.methods.get,
-          params:     route.params,
-          state:      window.history.state,
-          first_load: true
-        };
+      var page_env = {
+        url:        location.href,
+        anchor:     location.hash,
+        apiPath:    route.meta.methods.get,
+        params:     route.params,
+        state:      window.history.state,
+        first_load: true
+      };
 
-        var preload = [];
+      var preload = [];
 
-        Promise.resolve()
-        .then(function () { return N.wire.emit('navigate.preload:' + route.meta.methods.get, preload); })
-        .then(function () { return loadAssets(preload); })
-        .then(function () { return N.wire.emit('navigate.done', page_env); })
-        .then(function () { return N.wire.emit('navigate.done:' + route.meta.methods.get, page_env); })
-        .then(function () { NodecaLoader.booted = true; })
-        .then(null, function (err) {
-          /*eslint-disable no-console*/
-          try { console.error(err); } catch (__) {}
-          alert('Init error: ' + err);
-        });
+      Promise.resolve()
+      .then(function () { return N.wire.emit('navigate.preload:' + route.meta.methods.get, preload); })
+      .then(function () { return loadAssets(preload); })
+      .then(function () { return N.wire.emit('navigate.done', page_env); })
+      .then(function () { return N.wire.emit('navigate.done:' + route.meta.methods.get, page_env); })
+      .then(function () { NodecaLoader.booted = true; })
+      .then(null, function (err) {
+        /*eslint-disable no-console*/
+        try { console.error(err); } catch (__) {}
+        alert('Init error: ' + err);
       });
     })
     .then(null, function (err) {
