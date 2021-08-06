@@ -137,11 +137,11 @@ Notification.prototype = {
     this.$element.removeClass('in');
 
     timeout = setTimeout(function () {
-      self.$element.off($.support.transition.end);
+      self.$element.off($.support?.transition?.end);
       self.$element.detach();
     }, 500);
 
-    this.$element.one($.support.transition.end, function () {
+    this.$element.one($.support?.transition?.end, function () {
       clearTimeout(timeout);
       self.$element.detach();
     });

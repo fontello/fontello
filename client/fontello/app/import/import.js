@@ -250,7 +250,7 @@ function import_svg_image(data, file) {
   var skipped = _.union(result.ignoredTags, result.ignoredAttrs);
 
   if (skipped.length > 0) {
-    N.wire.emit('notify', t('err_skiped_tags', { skipped: skipped.toString() }));
+    N.wire.emit('notify', t('err_skipped_tags', { skipped: skipped.toString() }));
   } else if (!result.guaranteed) {
     N.wire.emit('notify', t('err_merge_path'));
   }

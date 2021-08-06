@@ -19,14 +19,12 @@ en-US:
 
   err_invalid_format: Invalid file format.
 
-  err_skiped_tags: >
-    If image looks not as expected please convert to
-    <strong><a href="https://github.com/fontello/fontello/wiki/How-to-use-custom-images#importing-svg-images" target="_blank">compound path</a></strong>
-    manually.
+  err_skipped_tags: >
+    If image looks not as expected please convert to compound path manually.
+    See <a href="https://github.com/fontello/fontello/wiki/How-to-use-custom-images#importing-svg-images" target="_blank">wiki</a>.
     <br><br>
     Skipped tags and attributes: #{skipped}
 
   err_merge_path: >
-    If image looks not as expected please convert to
-    <strong><a href="https://github.com/fontello/fontello/wiki/How-to-use-custom-images#importing-svg-images" target="_blank">compound path</a></strong>
-    manually.
+    If image looks not as expected please convert to compound path manually.
+    See <a href="https://github.com/fontello/fontello/wiki/How-to-use-custom-images#importing-svg-images" target="_blank">wiki</a>.
