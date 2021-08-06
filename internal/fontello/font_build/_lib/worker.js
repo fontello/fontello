@@ -75,14 +75,9 @@ _.forEach({
 });
 
 
-module.exports = async function fontWorker(taskInfo) {
-  let logPrefix = '[font::' + taskInfo.fontId + ']';
-  let timeStart = Date.now();
+async function generateFont(taskInfo) {
   let fontname = taskInfo.builderConfig.font.fontname;
   let files;
-
-  taskInfo.logger.info(`${logPrefix} Start generation: ${JSON.stringify(taskInfo.clientConfig)}`);
-
 
   // Collect file paths.
   //
@@ -212,11 +207,24 @@ module.exports = async function fontWorker(taskInfo) {
 
   let zipData = await zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' });
 
-  // TODO: force tmp dir cleanup on fail
+  return zipData;
+}
 
-  // Remove temporary files and directories.
-  //
-  await rimraf(taskInfo.tmpDir);
+
+module.exports = async function fontWorker(taskInfo) {
+  let logPrefix = '[font::' + taskInfo.fontId + ']';
+  let timeStart = Date.now();
+
+  taskInfo.logger.info(`${logPrefix} Start generation: ${JSON.stringify(taskInfo.clientConfig)}`);
+
+  let zipData;
+
+  try {
+    zipData = await generateFont(taskInfo);
+  } finally {
+    // Remove temporary files and directories.
+    await rimraf(taskInfo.tmpDir);
+  }
 
 
   // Done.

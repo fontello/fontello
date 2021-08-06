@@ -164,6 +164,9 @@ N.wire.once('navigate.done', function (data) {
         .attr({ id, src: url })
         .css('display', 'none')
         .appendTo(window.document.body);
+    }, err => {
+      toolbar.building(false);
+      throw err;
     });
   });
 
