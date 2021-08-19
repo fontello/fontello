@@ -6,8 +6,6 @@ var _  = require('lodash');
 var ko = require('knockout');
 var deflate = require('pako/lib/deflate');
 
-var savedConfig = null;
-
 
 var GLYPH_SIZE_MIN = 12;
 var GLYPH_SIZE_MAX = 30;
@@ -90,12 +88,6 @@ N.wire.once('navigate.done', function (data) {
   // Save user session (loaded via API) back to database
   function save() {
     if (!N.app.apiSessionId) { return Promise.resolve(); }
-
-    // Skip first  save attempt (it happens on app init)
-    if (!savedConfig) {
-      savedConfig = N.app.getConfig();
-      return Promise.resolve();
-    }
 
     toolbar.saving(true);
     return N.app.serverSave()
