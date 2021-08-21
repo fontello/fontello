@@ -3,7 +3,7 @@
 
 var JSZip   = require('jszip');
 var _       = require('lodash');
-var XMLDOMParser = require('xmldom').DOMParser;
+var XMLDOMParser = require('@xmldom/xmldom').DOMParser;
 var SvgPath = require('svgpath');
 
 var utils   = require('../../_lib/utils');
