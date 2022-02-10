@@ -80,13 +80,11 @@ html.no-js(lang='en', itemscope, itemtype='http://schema.org/WebPage')
                 .g-plusone(data-size="medium")
 
             ul.navbar-nav.ms-auto
-              li.nav-item.dropdown
-                a.nav-link.dropdown-toggle.dropdown-toggle-no-caret(data-bs-toggle='dropdown', href='#')
-                  = self.t('menu_donate')
-                ul.dropdown-menu.dropdown-menu-end
-                  li.dropdown-header= self.t('menu_donate_help')
-                  li: a.dropdown-item(href="https://opencollective.com/puzrin", target="_blank")= self.t('donate_opencollective')
-                  li: a.dropdown-item(href="https://patreon.com/puzrin", target="_blank")= self.t('donate_patreon')
+              li.nav-item
+                a.nav-link(
+                  href='https://github.com/fontello/fontello?sponsor=1'
+                  target='_blank'
+                )= self.t('menu_donate')
 
           .notifications
 
