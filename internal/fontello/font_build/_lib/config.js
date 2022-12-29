@@ -82,6 +82,7 @@ function collectGlyphsInfo(clientConfig) {
         code:     glyph.code,
         css:      glyph.css,
         width:    +(glyph.svg.width * scale).toFixed(1),
+        height:   +(1000 * scale).toFixed(1),
         d:        sp.toString(),
         segments: sp.segments.length
       });
@@ -106,6 +107,7 @@ function collectGlyphsInfo(clientConfig) {
       css:       glyph.css || glyphEmbedded.css,
       'css-ext': glyphEmbedded['css-ext'],
       width:     +(glyphEmbedded.svg.width * scale).toFixed(1),
+      height:    +(1000 * scale).toFixed(1),
       d:         sp.toString(),
       segments:  sp.segments.length
     });
@@ -184,7 +186,8 @@ module.exports = function fontConfig(clientConfig) {
       copyright: !_.isEmpty(fontsInfo) ? defaultCopyright : (clientConfig.copyright || defaultCopyright),
       ascent:    clientConfig.ascent,
       descent:   clientConfig.ascent - clientConfig.units_per_em,
-      weight:    400
+      weight:    400,
+      height:    400
     },
     hinting: clientConfig.hinting !== false,
     meta: {

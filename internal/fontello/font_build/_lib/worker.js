@@ -28,6 +28,7 @@ const execFile  = promisify(require('child_process').execFile);
 const TEMPLATES_DIR = path.join(__dirname, '../../../../support/font-templates');
 const TEMPLATES = {};
 const SVG_FONT_TEMPLATE = ejs.compile(fs.readFileSync(path.join(TEMPLATES_DIR, 'font/svg.ejs'), 'utf8'));
+const SVG_SYMBOL_TEMPLATE = ejs.compile(fs.readFileSync(path.join(TEMPLATES_DIR, 'images/svg.ejs'), 'utf8'));
 
 
 _.forEach({
@@ -84,6 +85,7 @@ async function generateFont(taskInfo) {
   files = {
     config:      path.join(taskInfo.tmpDir, 'config.json'),
     svg:         path.join(taskInfo.tmpDir, 'font', `${fontname}.svg`),
+    svgSymbols:  path.join(taskInfo.tmpDir, 'images', `${fontname}.svg`),
     ttf:         path.join(taskInfo.tmpDir, 'font', `${fontname}.ttf`),
     ttfUnhinted: path.join(taskInfo.tmpDir, 'font', `${fontname}-unhinted.ttf`),
     eot:         path.join(taskInfo.tmpDir, 'font', `${fontname}.eot`),
@@ -96,13 +98,14 @@ async function generateFont(taskInfo) {
   //
   /*eslint-disable new-cap*/
   let svgOutput = SVG_FONT_TEMPLATE(taskInfo.builderConfig);
-
+  let svgSymbolOutput = SVG_SYMBOL_TEMPLATE(taskInfo.builderConfig);
 
   // Prepare temporary working directory.
   //
   await rimraf(taskInfo.tmpDir);
   await mkdirp(taskInfo.tmpDir);
   await mkdirp(path.join(taskInfo.tmpDir, 'font'));
+  await mkdirp(path.join(taskInfo.tmpDir, 'images'));
   await mkdirp(path.join(taskInfo.tmpDir, 'css'));
 
 
@@ -112,6 +115,7 @@ async function generateFont(taskInfo) {
 
   await write(files.config, configOutput, 'utf8');
   await write(files.svg, svgOutput, 'utf8');
+  await write(files.svgSymbols, svgSymbolOutput, 'utf8');
 
 
   // Convert SVG to TTF
