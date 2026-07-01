@@ -11,6 +11,8 @@
 (function(factory){
 	if(typeof define === 'function' && define.amd){
 		define(['jquery'], factory);
+	}else if(typeof module !== 'undefined' && module.exports){
+		factory(require('jquery'));
 	}else{
         factory(window.jQuery);
     }

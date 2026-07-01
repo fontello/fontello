@@ -87,6 +87,9 @@
     if (typeof define === 'function' && define.amd) {
         // AMD Registration
         define(['jquery'], factory);
+    } else if (typeof module !== 'undefined' && module.exports) {
+        // CommonJS (browserify)
+        module.exports = factory(require('jquery'));
     } else {
         // Browser globals
         factory(jQuery);

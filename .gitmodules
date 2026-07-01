@@ -1,42 +1,52 @@
 [submodule "src/iconic-uni.font"]
 	path = src/iconic-uni.font
-	url = git://github.com/fontello/iconic-uni.font.git
+	url = https://github.com/fontello/iconic-uni.font.git
 [submodule "src/awesome-uni.font"]
 	path = src/awesome-uni.font
-	url = git://github.com/fontello/awesome-uni.font.git
+	url = https://github.com/fontello/awesome-uni.font.git
 [submodule "src/websymbols-uni.font"]
 	path = src/websymbols-uni.font
-	url = git://github.com/fontello/websymbols-uni.font.git
+	url = https://github.com/fontello/websymbols-uni.font.git
 [submodule "src/entypo"]
 	path = src/entypo
-	url = git://github.com/fontello/entypo.git
+	url = https://github.com/fontello/entypo.git
 [submodule "src/brandico.font"]
 	path = src/brandico.font
-	url = git://github.com/fontello/brandico.font.git
+	url = https://github.com/fontello/brandico.font.git
 [submodule "src/modernpics.font"]
 	path = src/modernpics.font
-	url = git://github.com/fontello/modernpics.font.git
-[submodule "src/typicons.font"]
-	path = src/typicons.font
-	url = git://github.com/fontello/typicons.font.git
+	url = https://github.com/fontello/modernpics.font.git
 [submodule "src/meteocons.font"]
 	path = src/meteocons.font
-	url = git://github.com/fontello/meteocons.font.git
+	url = https://github.com/fontello/meteocons.font.git
 [submodule "src/zocial.font"]
 	path = src/zocial.font
-	url = git://github.com/fontello/zocial.font.git
+	url = git@github.com:mebur/zocial.font.git
 [submodule "src/maki.font"]
 	path = src/maki.font
-	url = git://github.com/fontello/maki.font.git
+	url = git@github.com:mebur/maki.font.git
 [submodule "src/fontelico.font"]
 	path = src/fontelico.font
-	url = git://github.com/fontello/fontelico.font.git
+	url = https://github.com/fontello/fontelico.font.git
 [submodule "src/mfglabs.font"]
 	path = src/mfglabs.font
-	url = git://github.com/fontello/mfglabs.font.git
+	url = https://github.com/fontello/mfglabs.font.git
 [submodule "src/elusive.font"]
 	path = src/elusive.font
-	url = git://github.com/fontello/elusive.font.git
+	url = https://github.com/fontello/elusive.font.git
 [submodule "src/linecons.font"]
 	path = src/linecons.font
-	url = git://github.com/fontello/linecons.font.git
+	url = https://github.com/fontello/linecons.font.git
+[submodule "src/awesome5-uni.font"]
+	path = src/awesome5-uni.font
+	url = https://github.com/mebur/awesome5-uni.font.git
+	branch = HEAD
+[submodule "src/awesome6-uni.font"]
+	path = src/awesome6-uni.font
+	url = git@github.com:mebur/awesome6-uni.font.git
+[submodule "src/awesome7-uni.font"]
+	path = src/awesome7-uni.font
+	url = git@github.com:mebur/awesome7-uni.font.git
+[submodule "src/typicons.font"]
+	path = src/typicons.font
+	url = git@github.com:mebur/typicons.font.git

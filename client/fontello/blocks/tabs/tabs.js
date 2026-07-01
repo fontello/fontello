@@ -21,6 +21,7 @@ N.wire.once('navigate.done', { priority: 10 }, function () {
   //
 
   function jumpToSelector() {
+    $('#loading').removeClass('active show');
     $view.find('a[data-bs-target="#selector"]').tab('show');
   }
 
