@@ -76,6 +76,10 @@ function collectGlyphsInfo(clientConfig) {
               .translate(0, clientConfig.ascent)
               .abs().round(0).rel();
 
+      let spImage = svgpath(glyph.svg.path)
+              .scale(scale)
+              .abs().round(0).rel();
+
       result.push({
         src:      glyph.src,
         uid:      glyph.uid,
@@ -84,6 +88,7 @@ function collectGlyphsInfo(clientConfig) {
         width:    +(glyph.svg.width * scale).toFixed(1),
         height:   +(1000 * scale).toFixed(1),
         d:        sp.toString(),
+        d_image:  spImage.toString(),
         segments: sp.segments.length
       });
       return;
@@ -100,6 +105,10 @@ function collectGlyphsInfo(clientConfig) {
             .translate(0, clientConfig.ascent)
             .abs().round(0).rel();
 
+    let spImage = svgpath(glyphEmbedded.svg.d)
+            .scale(scale)
+            .abs().round(0).rel();
+
     result.push({
       src:       glyphEmbedded.fontname,
       uid:       glyph.uid,
@@ -109,6 +118,7 @@ function collectGlyphsInfo(clientConfig) {
       width:     +(glyphEmbedded.svg.width * scale).toFixed(1),
       height:    +(1000 * scale).toFixed(1),
       d:         sp.toString(),
+      d_image:   spImage.toString(),
       segments:  sp.segments.length
     });
 
