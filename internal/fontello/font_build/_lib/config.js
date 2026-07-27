@@ -76,13 +76,19 @@ function collectGlyphsInfo(clientConfig) {
               .translate(0, clientConfig.ascent)
               .abs().round(0).rel();
 
+      let spImage = svgpath(glyph.svg.path)
+              .scale(scale)
+              .abs().round(0).rel();
+
       result.push({
         src:      glyph.src,
         uid:      glyph.uid,
         code:     glyph.code,
         css:      glyph.css,
         width:    +(glyph.svg.width * scale).toFixed(1),
+        height:   +(1000 * scale).toFixed(1),
         d:        sp.toString(),
+        d_image:  spImage.toString(),
         segments: sp.segments.length
       });
       return;
@@ -99,6 +105,10 @@ function collectGlyphsInfo(clientConfig) {
             .translate(0, clientConfig.ascent)
             .abs().round(0).rel();
 
+    let spImage = svgpath(glyphEmbedded.svg.d)
+            .scale(scale)
+            .abs().round(0).rel();
+
     result.push({
       src:       glyphEmbedded.fontname,
       uid:       glyph.uid,
@@ -106,7 +116,9 @@ function collectGlyphsInfo(clientConfig) {
       css:       glyph.css || glyphEmbedded.css,
       'css-ext': glyphEmbedded['css-ext'],
       width:     +(glyphEmbedded.svg.width * scale).toFixed(1),
+      height:    +(1000 * scale).toFixed(1),
       d:         sp.toString(),
+      d_image:   spImage.toString(),
       segments:  sp.segments.length
     });
 
@@ -184,7 +196,8 @@ module.exports = function fontConfig(clientConfig) {
       copyright: !_.isEmpty(fontsInfo) ? defaultCopyright : (clientConfig.copyright || defaultCopyright),
       ascent:    clientConfig.ascent,
       descent:   clientConfig.ascent - clientConfig.units_per_em,
-      weight:    400
+      weight:    400,
+      height:    400
     },
     hinting: clientConfig.hinting !== false,
     meta: {

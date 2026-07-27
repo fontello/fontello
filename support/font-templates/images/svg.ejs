@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" display="none">
+<metadata><![CDATA[<%= font.copyright %>]]></metadata>
+<% glyphs.forEach(function(glyph) { %>
+<symbol id="<%= meta.css_prefix_text %><%= glyph.css %>" viewBox="0 0 <%= glyph.width %> <%= glyph.height %>">
+  <path d="<%= glyph.d_image %>" />
+</symbol>
+<% }); %>
+</svg>
